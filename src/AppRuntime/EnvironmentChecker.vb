@@ -38,7 +38,7 @@ Public Class EnvironmentChecker
         If Not CheckLLMConfig() Then Return False
 
         ' 3. 检查 MySQL 配置（若启用 mysql 检索策略）
-        If _config.LiteratureSearchStrategy = "mysql" Then
+        If _config.Literature.LiteratureSearchStrategy = "mysql" Then
             If Not CheckMySqlConfig() Then Return False
         End If
 
@@ -53,10 +53,10 @@ Public Class EnvironmentChecker
     Private Function CheckToolPaths() As Boolean
         Dim allOk As Boolean = True
 
-        allOk = allOk AndAlso CheckSingleTool("Rscript", _config.RscriptPath)
-        allOk = allOk AndAlso CheckSingleTool("wkhtmltopdf", _config.WkHtmlToPdfPath)
-        allOk = allOk AndAlso CheckSingleTool("Rsharp", _config.RsharpPath)
-        allOk = allOk AndAlso CheckSingleTool("Python", _config.PythonPath)
+        allOk = allOk AndAlso CheckSingleTool("Rscript", _config.Tools.RscriptPath)
+        allOk = allOk AndAlso CheckSingleTool("wkhtmltopdf", _config.Tools.WkHtmlToPdfPath)
+        allOk = allOk AndAlso CheckSingleTool("Rsharp", _config.Tools.RsharpPath)
+        allOk = allOk AndAlso CheckSingleTool("Python", _config.Tools.PythonPath)
 
         If Not allOk Then
             LogInfo("")
@@ -88,18 +88,18 @@ Public Class EnvironmentChecker
         LogInfo("----- 检查大语言模型配置 -----")
         Dim ok As Boolean = True
 
-        If String.IsNullOrWhiteSpace(_config.LLMServiceUrl) Then
+        If String.IsNullOrWhiteSpace(_config.LLM.LLMServiceUrl) Then
             LogInfo("  [X] LLM 服务 URL 未配置")
             ok = False
         Else
-            LogInfo($"  [OK] LLM 服务 URL：{_config.LLMServiceUrl}")
+            LogInfo($"  [OK] LLM 服务 URL：{_config.LLM.LLMServiceUrl}")
         End If
 
-        If String.IsNullOrWhiteSpace(_config.LLMModelName) Then
+        If String.IsNullOrWhiteSpace(_config.LLM.LLMModelName) Then
             LogInfo("  [X] LLM 模型名称未配置")
             ok = False
         Else
-            LogInfo($"  [OK] LLM 模型名称：{_config.LLMModelName}")
+            LogInfo($"  [OK] LLM 模型名称：{_config.LLM.LLMModelName}")
         End If
 
         If Not ok Then
@@ -118,21 +118,21 @@ Public Class EnvironmentChecker
         LogInfo("----- 检查 MySQL 数据库配置 -----")
         Dim ok As Boolean = True
 
-        If String.IsNullOrWhiteSpace(_config.MySqlHost) Then
+        If String.IsNullOrWhiteSpace(_config.MySql.MySqlHost) Then
             LogInfo("  [X] MySQL 主机未配置")
             ok = False
         End If
-        If String.IsNullOrWhiteSpace(_config.MySqlDatabase) Then
+        If String.IsNullOrWhiteSpace(_config.MySql.MySqlDatabase) Then
             LogInfo("  [X] MySQL 数据库名未配置")
             ok = False
         End If
-        If String.IsNullOrWhiteSpace(_config.MySqlUser) Then
+        If String.IsNullOrWhiteSpace(_config.MySql.MySqlUser) Then
             LogInfo("  [X] MySQL 用户名未配置")
             ok = False
         End If
 
         If ok Then
-            LogInfo($"  [OK] MySQL：{_config.MySqlUser}@{_config.MySqlHost}:{_config.MySqlPort}/{_config.MySqlDatabase}")
+            LogInfo($"  [OK] MySQL：{_config.MySql.MySqlUser}@{_config.MySql.MySqlHost}:{_config.MySql.MySqlPort}/{_config.MySql.MySqlDatabase}")
         Else
             LogInfo("")
             LogInfo("MySQL 配置不完整，无法启用 PubMed 本地镜像检索。")
@@ -151,7 +151,7 @@ Public Class EnvironmentChecker
         Try
             Using client As New HttpClient()
                 client.Timeout = TimeSpan.FromSeconds(15)
-                Dim tagsUrl = _config.LLMServiceUrl.TrimEnd("/"c) & "/api/tags"
+                Dim tagsUrl = _config.LLM.LLMServiceUrl.TrimEnd("/"c) & "/api/tags"
                 LogInfo($"  正在连接：{tagsUrl}")
                 Dim resp = Await client.GetAsync(tagsUrl)
                 If resp.IsSuccessStatusCode Then
@@ -163,13 +163,13 @@ Public Class EnvironmentChecker
                         Dim modelExists As Boolean = False
                         For Each m As JsonObject In models
                             Dim name = m("name")?.ToString()
-                            If name = _config.LLMModelName Then
+                            If name = _config.LLM.LLMModelName Then
                                 modelExists = True
                                 Exit For
                             End If
                         Next
                         If Not modelExists Then
-                            LogInfo($"  [!] 指定的模型 {_config.LLMModelName} 未在服务中找到，请确认模型名称是否正确")
+                            LogInfo($"  [!] 指定的模型 {_config.LLM.LLMModelName} 未在服务中找到，请确认模型名称是否正确")
                             LogInfo("  当前可用模型列表：")
                             For Each m As JsonObject In models
                                 LogInfo($"      - {m("name")?.ToString()}")

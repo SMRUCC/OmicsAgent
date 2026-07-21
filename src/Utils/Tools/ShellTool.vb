@@ -33,7 +33,7 @@ Public Class ShellTool
                 Return $"{{""error"": ""R script file not found: {EscapeJson(absScriptPath)}""}}"
             End If
 
-            Return RunProcess(_config.RscriptPath, $"--vanilla ""{absScriptPath}"" {args}".Trim(), timeout_seconds)
+            Return RunProcess(_config.Tools.RscriptPath, $"--vanilla ""{absScriptPath}"" {args}".Trim(), timeout_seconds)
         Catch ex As Exception
             Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
         End Try
@@ -51,7 +51,7 @@ Public Class ShellTool
                 Return $"{{""error"": ""Python script file not found: {EscapeJson(absScriptPath)}""}}"
             End If
 
-            Return RunProcess(_config.PythonPath, $"""{absScriptPath}"" {args}".Trim(), timeout_seconds)
+            Return RunProcess(_config.Tools.PythonPath, $"""{absScriptPath}"" {args}".Trim(), timeout_seconds)
         Catch ex As Exception
             Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
         End Try
@@ -69,7 +69,7 @@ Public Class ShellTool
                 Return $"{{""error"": ""Rsharp script file not found: {EscapeJson(absScriptPath)}""}}"
             End If
 
-            Return RunProcess(_config.RsharpPath, $"""{absScriptPath}"" {args}".Trim(), timeout_seconds)
+            Return RunProcess(_config.Tools.RsharpPath, $"""{absScriptPath}"" {args}".Trim(), timeout_seconds)
         Catch ex As Exception
             Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
         End Try
@@ -95,7 +95,7 @@ Public Class ShellTool
             End If
 
             Dim args = $"--page-size A3 --orientation Portrait {extra_args} ""{absHtmlPath}"" ""{absPdfPath}"""
-            Return RunProcess(_config.WkHtmlToPdfPath, args, timeout_seconds)
+            Return RunProcess(_config.Tools.WkHtmlToPdfPath, args, timeout_seconds)
         Catch ex As Exception
             Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
         End Try
