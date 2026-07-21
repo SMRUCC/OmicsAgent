@@ -109,7 +109,7 @@ Return your plan as JSON:
     End Function
 
     Protected Overrides Async Function GenerateConclusionAsync(plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)
-        Return "研究报告已生成完成。报告以中文撰写，包含完整的引言、材料与方法、结果、讨论和结论章节。所有图表均配有中英文双语图注。报告以 A3 大小 HTML 文件形式生成，并已通过 wkhtmltopdf 工具转换为 PDF 文件。"
+        Return Await Task.FromResult("研究报告已生成完成。报告以中文撰写，包含完整的引言、材料与方法、结果、讨论和结论章节。所有图表均配有中英文双语图注。报告以 A3 大小 HTML 文件形式生成，并已通过 wkhtmltopdf 工具转换为 PDF 文件。")
     End Function
 
     ''' <summary>收集所有模块的结论文本</summary>

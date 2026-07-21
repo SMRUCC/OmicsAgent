@@ -1,4 +1,5 @@
 Imports System.Net.Http
+Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 
 ' ============================================================================
 ' 运行环境检查模块 - 检查外部工具路径与 LLM 服务可用性
@@ -155,12 +156,12 @@ Public Class EnvironmentChecker
                 Dim resp = Await client.GetAsync(tagsUrl)
                 If resp.IsSuccessStatusCode Then
                     Dim json = Await resp.Content.ReadAsStringAsync()
-                    Dim jobj = JObject.Parse(json)
-                    Dim models = jobj("models")
+                    Dim jobj As JsonObject = Await JsonObject.Parse(json)
+                    Dim models As JsonArray = jobj("models")
                     If models IsNot Nothing AndAlso models.Count > 0 Then
                         LogInfo($"  [OK] LLM 服务可用，已加载 {models.Count} 个模型")
                         Dim modelExists As Boolean = False
-                        For Each m In models
+                        For Each m As JsonObject In models
                             Dim name = m("name")?.ToString()
                             If name = _config.LLMModelName Then
                                 modelExists = True
@@ -170,7 +171,7 @@ Public Class EnvironmentChecker
                         If Not modelExists Then
                             LogInfo($"  [!] 指定的模型 {_config.LLMModelName} 未在服务中找到，请确认模型名称是否正确")
                             LogInfo("  当前可用模型列表：")
-                            For Each m In models
+                            For Each m As JsonObject In models
                                 LogInfo($"      - {m("name")?.ToString()}")
                             Next
                             Return False
