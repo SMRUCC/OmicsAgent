@@ -146,7 +146,7 @@ Public Class KnowledgeBaseBuilder
             Next
 
             ' 补充获取存在 PMC 全文记录的文献全文（agent_glm.txt 第 34 行要求检索 PMC 全文）
-            Await FetchPmcFullTextAsync()
+            FetchPmcFullText()
         Catch ex As Exception
             LogInfo($"[警告] NCBI 在线文献检索失败：{ex.Message}")
         End Try
@@ -157,7 +157,7 @@ Public Class KnowledgeBaseBuilder
     ''' 在 NCBI 摘要检索之后，补充获取存在 PubMed Central 全文记录的文献全文内容。
     ''' 需求（agent_glm.txt 第 34 行）：NCBI 检索应获取标题、引用、摘要以及 PMC 全文（若可用）。
     ''' </summary>
-    Private Async Function FetchPmcFullTextAsync() As Task
+    Private Sub FetchPmcFullText()
         Try
             Dim scriptPath = Path.Combine(_context.ScriptsDir, "fetch_pmc.py")
             File.WriteAllText(scriptPath, GeneratePmcFetchScript(_context.KnowledgeDir), Encoding.UTF8)
@@ -169,7 +169,7 @@ Public Class KnowledgeBaseBuilder
             ' PMC 全文获取失败不应中断已检索到的摘要的使用
             LogInfo($"[警告] PMC 全文获取失败（不影响已检索到的摘要）：{ex.Message}")
         End Try
-    End Function
+    End Sub
 
     ''' <summary>
     ''' 生成 PMC 全文获取 Python 脚本。基于 Bio.Entrez 将 pubmed PMID 关联至 pmc，
