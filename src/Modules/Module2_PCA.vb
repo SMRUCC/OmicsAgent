@@ -1,3 +1,4 @@
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Ollama
 
 ' ============================================================================
@@ -65,7 +66,7 @@ Return your plan as JSON:
             Dim json = ExtractJsonFromResponse(resp.output)
             Dim plan As ModulePlan
             If Not String.IsNullOrEmpty(json) Then
-                plan = Newtonsoft.Json.JsonConvert.DeserializeObject(Of ModulePlan)(json)
+                plan = json.LoadJSON(Of ModulePlan)
             Else
                 plan = New ModulePlan() With {.ModuleName = ModuleName, .Goal = resp.output}
             End If

@@ -126,8 +126,8 @@ Public Class ShellTool
             Dim stdoutSb As New StringBuilder()
             Dim stderrSb As New StringBuilder()
 
-            p.OutputDataReceived = Sub(s, e) stdoutSb.AppendLine(e.Data)
-            p.ErrorDataReceived = Sub(s, e) stderrSb.AppendLine(e.Data)
+            AddHandler p.OutputDataReceived, Sub(s, e) stdoutSb.AppendLine(e.Data)
+            AddHandler p.ErrorDataReceived, Sub(s, e) stderrSb.AppendLine(e.Data)
 
             p.Start()
             p.BeginOutputReadLine()

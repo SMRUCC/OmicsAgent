@@ -54,6 +54,12 @@ Public Class AnalysisContext
     ''' <summary>分析工作区根目录路径</summary>
     Public Property WorkspaceDir As String = ""
 
+    Public ReadOnly Property AnalysisDir As String
+        Get
+            Return Path.Combine(WorkspaceDir, "analysis")
+        End Get
+    End Property
+
     ''' <summary>临时文件目录路径</summary>
     Public ReadOnly Property TmpDir As String
         Get

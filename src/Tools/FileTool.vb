@@ -1,10 +1,8 @@
+Imports Microsoft.VisualBasic.CommandLine.Reflection
+
 ' ============================================================================
 ' 文件操作 Function Calling 工具集 - 注册到 LLM 供其读写工作区文件
 ' ============================================================================
-Imports System.ComponentModel
-Imports System.IO
-Imports System.Text
-Imports Microsoft.VisualBasic.CommandLine.Reflection
 
 ''' <summary>
 ''' 文件操作工具集，提供工作区内的文件读写、目录列举、文件存在性检查等功能。
@@ -56,7 +54,7 @@ Public Class FileTool
     ) As String
         Try
             Dim absPath = ResolvePath(path)
-            Dim dir = Path.GetDirectoryName(absPath)
+            Dim dir = System.IO.Path.GetDirectoryName(absPath)
             If Not String.IsNullOrEmpty(dir) AndAlso Not Directory.Exists(dir) Then
                 Directory.CreateDirectory(dir)
             End If
