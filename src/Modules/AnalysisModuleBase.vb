@@ -92,7 +92,7 @@ Public MustInherit Class AnalysisModuleBase
             _context.ModuleResults.Add(New ModuleResult() With {
                 .ModuleName = ModuleName,
                 .ModuleIndex = ModuleIndex,
-                .conclusion = conclusion,
+                .Conclusion = conclusion,
                 .OutputDir = OutputDir
             })
 
@@ -102,6 +102,13 @@ Public MustInherit Class AnalysisModuleBase
             PathUtils.WriteAllText(ConclusionFile, $"Module {ModuleName} failed with error: {ex.Message}{vbCrLf}{vbCrLf}Stack trace:{vbCrLf}{ex.StackTrace}")
         End Try
     End Function
+
+    Public Class ModuleResult
+        Public Property ModuleName As String
+        Public Property ModuleIndex As Integer
+        Public Property Conclusion As String
+        Public Property OutputDir As String
+    End Class
 
     ''' <summary>调用 LLM 生成分析计划</summary>
     Protected MustOverride Function GeneratePlanAsync(cancellationToken As CancellationToken) As Task(Of ModulePlan)

@@ -1,4 +1,5 @@
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports OmicsAgent.AnalysisModuleBase
 
 ' ============================================================================
 ' 数据模型 - 分析上下文、模块计划、组学数据描述等
@@ -130,6 +131,7 @@ Public Class AnalysisContext
     ' 配置
     ' ------------------------------------------------------------------
     Public Property Config As AgentConfig
+    Public Property ModuleResults As New List(Of ModuleResult)
 
     ' ------------------------------------------------------------------
     ' 工作区初始化
