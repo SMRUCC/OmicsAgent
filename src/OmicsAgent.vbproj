@@ -33,10 +33,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="gcmodeller\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\dataframework-netcore5.vbproj" />
     <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\mime\application%json\JSON-netcore5.vbproj" />
