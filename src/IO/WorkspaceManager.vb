@@ -90,7 +90,7 @@ Namespace IO
         Public Function ListModuleConclusions() As List(Of String)
             Dim list As New List(Of String)()
             If Not Directory.Exists(WorkspaceDir) Then Return list
-            For Each dir In Directory.GetDirectories(WorkspaceDir)
+            For Each dir As String In Directory.GetDirectories(WorkspaceDir)
                 Dim name = Path.GetFileName(dir)
                 If name.StartsWith("analysis_modules_") Then
                     Dim f = Path.Combine(dir, "conclusion.txt")
