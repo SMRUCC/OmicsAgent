@@ -5,34 +5,35 @@
     <TargetFramework>net10.0</TargetFramework>
     <RootNamespace>OmicsAgent</RootNamespace>
     <AssemblyName>research</AssemblyName>
-    <OptionExplicit>On</OptionExplicit>
+    <UseWindowsForms>false</UseWindowsForms>
     <OptionStrict>Off</OptionStrict>
-    <OptionCompare>Binary</OptionCompare>
+    <OptionExplicit>On</OptionExplicit>
     <OptionInfer>On</OptionInfer>
     <LangVersion>latest</LangVersion>
     <Nullable>disable</Nullable>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <Prefer32Bit>false</Prefer32Bit>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Platforms>x64</Platforms>
+    <PlatformTarget>x64</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Version>1.0.0</Version>
     <Company>OmicsAgent</Company>
-    <Product>Omics Research Agent</Product>
-    <Description>LLM-driven omics data analysis agent based on local Ollama service</Description>
+    <Product>Omics Data Analysis LLM Agent</Product>
+    <Description>An LLM-driven agent for automated omics data analysis pipeline generation based on Ollama.</Description>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="data\**" />
-    <Compile Remove="python\**" />
-    <Compile Remove="rscript\**" />
-    <EmbeddedResource Remove="data\**" />
-    <EmbeddedResource Remove="python\**" />
-    <EmbeddedResource Remove="rscript\**" />
-    <None Remove="data\**" />
-    <None Remove="python\**" />
-    <None Remove="rscript\**" />
+    <Import Include="System.ComponentModel" />
+    <Import Include="System.IO" />
+    <Import Include="System.Text" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Threading" />
+    <Import Include="System.Threading.Tasks" />
+    <Import Include="Microsoft.VisualBasic" />
   </ItemGroup>
 
-  <ItemGroup>
+ <ItemGroup>
     <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\dataframework-netcore5.vbproj" />
     <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\mime\application%json\JSON-netcore5.vbproj" />
@@ -43,13 +44,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="..\rscript\*.R">
+    <None Update="config.ini.template">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="..\gcmodeller\*.R">
+    <None Update="rscript\*.R">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="..\python\*.py">
+    <None Update="python\*.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="gcmodeller\*.R">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="data\**\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

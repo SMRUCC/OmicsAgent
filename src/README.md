@@ -1,240 +1,316 @@
-# OmicsAgent - LLM 驱动的组学数据分析 Agent
+# Omics Data Analysis LLM Agent
 
-基于本地 Ollama 大语言模型服务的组学数据分析智能体，能够自主设计分析方案、编写 R 脚本代码、执行完整的生物信息学分析流程，并生成研究报告。
+基于 Ollama 大语言模型的组学数据分析 Agent，能够根据用户的研究主题自动设计分析方案，编写 R 脚本代码实现整个组学生物信息学数据分析流程。
 
-## 环境要求
+## 项目概述
 
-- **.NET 10 SDK** 或更高版本
-- **R 环境**（4.0+），需安装以下 R 包：
-  - `limma`, `clusterProfiler`, `WGCNA`, `e1071`, `bnlearn`, `plspm`, `impute`
-  - `ggplot2`, `pheatmap`, `FactoMineR`, `RColorBrewer`, `showtext`
-  - `ropls`（用于 OPLS-DA）
-- **wkhtmltopdf**（用于 HTML 转 PDF）
-- **Python 3.8+**（用于 NCBI 在线检索，仅在线检索模式需要）
-- **Ollama** 本地服务，已拉取支持 function calling 的模型（如 `llama3.1`, `qwen2.5`）
-- **MySQL**（可选，仅本地 PubMed 镜像检索模式需要）
-- **GCModeller** 的 Rsharp 工具（PubMedQueryTool 依赖）
+本项目是一个 VB.NET 项目，基于 .NET 10 环境，使用本地安装的 Ollama 大语言模型服务提供 LLM 接入能力。Agent 会根据用户的研究主题，设计分析方案，然后编写 R 脚本代码实现整个组学生物信息学数据分析流程，包括：
+
+1. 表达矩阵数据预处理
+2. 总体样本 PCA/PLSDA/OPLSDA 分析
+3. 差异分析比对组别设计
+4. LIMMA 差异比较分析
+5. KEGG 生物学功能分析（富集 + GSVA）
+6. 生物学性状关联分析（WGCNA）
+7. 进阶分析（CMeans 模糊聚类 + bnlearn 动态贝叶斯网络 + PLS-PM 因果路径）
+8. 结果表格整理（xlsx）
+9. 论文初稿撰写（PDF）
 
 ## 项目结构
 
 ```
 OmicsAgent/
-├── OmicsAgent.vbproj          # VB.NET 工程文件（.NET 10）
-├── Program.vb                  # 主入口，命令行参数解析
+├── OmicsAgent.vbproj          ' VB.NET 项目文件
+├── app.manifest               ' 应用程序清单
+├── Program.vb                 ' 主程序入口
 ├── Config/
-│   ├── AppConfig.vb            # 应用配置数据模型
-│   └── EnvironmentChecker.vb   # 运行环境检查器
-├── IO/
-│   ├── IniFile.vb              # INI 文件读写
-│   ├── CsvValidator.vb         # CSV 格式验证
-│   └── WorkspaceManager.vb     # 工作区文件夹管理
+│   └── AgentConfig.vb         ' INI 配置管理
+├── Environment/
+│   └── EnvironmentChecker.vb  ' 运行环境检查
 ├── Models/
-│   └── ResearchInput.vb        # 输入数据模型
-├── Knowledge/
-│   ├── KnowledgeBaseBuilder.vb # 知识库构建器
-│   ├── PubMedLocalSearcher.vb  # 本地 MySQL 检索
-│   └── NcbiOnlineSearcher.vb   # NCBI 在线检索
-├── Agent/
-│   ├── OmicsAnalysisAgent.vb   # 主编排器
-│   ├── AnalysisModuleBase.vb   # 分析模块基类
-│   ├── RScriptRunner.vb        # R 脚本执行器
-│   ├── ReportGenerator.vb      # 报告生成器
-│   └── Modules/
-│       ├── PreprocessingModule.vb    # 模块1: 数据预处理
-│       ├── MultivariateModule.vb     # 模块2: PCA/PLSDA/OPLSDA
-│       ├── DifferentialModule.vb     # 模块3: LIMMA 差异分析
-│       ├── KeggEnrichmentModule.vb   # 模块4: KEGG 富集 + GSVA
-│       ├── WgcnaModule.vb            # 模块5: WGCNA 共表达网络
-│       ├── CMeansModule.vb           # 模块6: CMeans 软聚类
-│       ├── BnlearnModule.vb          # 模块7: bnlearn 动态贝叶斯网络
-│       └── PlspmModule.vb            # 模块8: PLS-PM 因果路径分析
-├── Tools/
-│   ├── PubMedQueryTool.vb      # PubMed 查询工具（用户提供）
-│   ├── FileReadTool.vb         # 文件读取工具（LLM 函数调用）
-│   ├── ShellTool.vb            # Shell 命令执行工具
-│   └── RScriptTool.vb          # R 脚本执行工具
+│   └── AnalysisContext.vb     ' 数据模型
 ├── Utils/
-│   ├── JsonHelper.vb           # JSON 辅助工具
-│   └── Logger.vb               # 日志工具
-├── rscript/
-│   └── omics_tools.R           # R 工具函数库
-├── python/
-│   └── ncbi_search.py          # NCBI 在线检索脚本
-└── bin/
-    └── config.ini.example      # 配置文件模板
+│   ├── CsvUtils.vb            ' CSV 工具类
+│   └── PathUtils.vb           ' 路径工具类
+├── Tools/
+│   ├── FileTool.vb            ' 文件操作 Function Calling 工具
+│   └── ShellTool.vb           ' 命令行执行 Function Calling 工具
+├── Knowledge/
+│   └── KnowledgeBaseBuilder.vb ' 知识库构建模块
+├── Modules/
+│   ├── AnalysisModuleBase.vb   ' 分析模块基类
+│   ├── Module1_Preprocessing.vb
+│   ├── Module2_PCA.vb
+│   ├── Module3_ComparisonDesign.vb
+│   ├── Module4_Limma.vb
+│   ├── Module5_KEGG.vb
+│   ├── Module6_WGCNA.vb
+│   ├── Module7_Advanced.vb
+│   ├── Module8_ResultTables.vb
+│   └── Module9_Report.vb
+├── rscript/                    ' R 语言工具函数脚本
+│   ├── preprocess_expression.R
+│   ├── pca_plsda_analysis.R
+│   ├── limma_diff_analysis.R
+│   ├── kegg_gsva_analysis.R
+│   ├── wgcna_analysis.R
+│   ├── cmeans_clustering.R
+│   ├── bnlearn_analysis.R
+│   └── plspm_analysis.R
+├── gcmodeller/                 ' R# 语言工具函数脚本
+│   ├── kegg_background.R
+│   └── matrix_io.R
+├── python/                     ' Python 命令行工具脚本
+│   └── pubmed_search.py
+├── data/                       ' KEGG 通路背景模型等数据文件
+├── config.ini.template         ' INI 配置文件模板
+└── README.md
 ```
 
-## 编译
+## 依赖项
+
+### 外部工具
+
+1. **Rscript** - R 语言脚本解释器（必需）
+   - 安装 R 4.0+，并确保 Rscript 在 PATH 中或在 INI 配置中指定路径
+   - 需要的 R 包：limma, ggplot2, pheatmap, VennDiagram, clusterProfiler, GSVA, WGCNA, e1071, bnlearn, igraph, plspm
+
+2. **wkhtmltopdf** - HTML 转 PDF 工具（必需）
+   - 下载地址：https://wkhtmltopdf.org/
+   - 用于将 HTML 报告转换为 PDF 文件
+
+3. **Rsharp** - R# 语言解释器（必需）
+   - GCModeller 项目提供的 R 语言变体解释器
+   - 用于执行 R# 脚本
+
+4. **Python** - Python 脚本解释器（必需）
+   - Python 3.10+
+   - 需要的 Python 包：biopython（用于 PubMed 在线检索）
+
+### NuGet 包
+
+- MySql.Data - MySQL 数据库连接
+- Newtonsoft.Json - JSON 序列化
+- DocumentFormat.OpenXml - xlsx 表格生成
+
+## 编译与运行
+
+### 编译
 
 ```bash
-cd OmicsAgent
 dotnet build -c Release
 ```
 
-编译产物位于 `bin/Release/net10.0/`，可执行文件名为 `research.exe`（Windows）或 `research`（Linux/macOS）。
+编译后的可执行文件位于 `bin/x64/Release/net10.0/research.exe`。
 
-## 使用方法
+### 部署目录结构
 
-### 命令行参数
-
-```
-research --research <path> --expression <path> --annotation <path>
-         --sampleinfo <path> --workspace <path>
-         [--references <dir>] [--config <ini_path>]
-```
-
-| 参数 | 说明 |
-|------|------|
-| `--research <path>` | 研究主题描述文本文件（必填） |
-| `--expression <path>` | 表达矩阵 CSV 文件或目录（必填） |
-| `--annotation <path>` | 分子注释 CSV 文件（必填） |
-| `--sampleinfo <path>` | 样本元数据 CSV 文件或目录（必填） |
-| `--workspace <path>` | 输出工作区目录（必填） |
-| `--references <dir>` | 参考文献文本文件目录（可选） |
-| `--config <ini_path>` | INI 配置文件路径（可选，默认 `config.ini`） |
-
-### 输入文件格式
-
-#### 1. 研究主题文件（research.txt）
-
-纯文本文件，描述研究主题、疾病、物种、组织、组学类型、是否时间序列设计等。例如：
+将编译后的可执行文件及其依赖项部署到以下目录结构：
 
 ```
-研究主题：非酒精性脂肪肝病（NAFLD）的转录组学分析
-疾病：NAFLD
-物种：Homo sapiens
-组织：肝脏活检
-组学类型：转录组（RNA-seq）
-实验设计：正常对照 vs 早期脂肪肝 vs 晚期纤维化，每组 10 例
-时间序列：否
-特殊说明：关注脂质代谢和炎症通路
+deploy/
+├── bin/
+│   └── research.exe            ' 编译后的可执行程序
+├── rscript/                    ' R 语言工具函数脚本
+├── gcmodeller/                 ' R# 语言工具函数脚本
+├── python/                     ' Python 命令行工具脚本
+├── data/                       ' KEGG 通路背景模型等数据文件
+└── config.ini                  ' INI 配置文件（从 config.ini.template 复制）
 ```
 
-#### 2. 表达矩阵 CSV（expression.csv）
+### 配置
 
-第一列为分子 ID，其余列为样本表达值：
+1. 从 `config.ini.template` 复制一份 `config.ini`
+2. 根据实际环境填写配置信息：
+   - `[tools]` 节：填写 Rscript、wkhtmltopdf、Rsharp、Python 的路径
+   - `[llm]` 节：填写 Ollama 服务 URL、模型名称、API Key
+   - `[mysql]` 节：填写 PubMed 本地镜像 MySQL 数据库连接参数
+   - `[literature]` 节：配置文献检索策略
+   - `[analysis]` 节：配置分析参数
 
-```csv
-ID,S1,S2,S3,C1,C2,C3
-gene1,5.2,5.5,5.1,4.8,4.9,5.0
-gene2,7.1,7.3,7.0,6.5,6.7,6.6
-...
-```
-
-#### 3. 注释文件 CSV（annotation.csv）
-
-```csv
-id,type,name,class,kegg
-gene1,rna,GeneSymbol1,Enzyme,hsa:1234
-gene2,rna,GeneSymbol2,Transporter,hsa:5678
-...
-```
-
-#### 4. 样本信息 CSV（sampleinfo.csv）
-
-```csv
-sample_id,sample_info,time
-S1,Treatment,0
-S2,Treatment,0
-C1,Control,0
-...
-```
-
-`sample_info` 列为分组信息，`time` 列为时间点（时间序列设计时需要）。
-
-### 运行示例
+### 运行
 
 ```bash
-research \
-  --research ./data/research.txt \
-  --expression ./data/expression.csv \
-  --annotation ./data/annotation.csv \
-  --sampleinfo ./data/sampleinfo.csv \
-  --workspace ./workspace \
-  --references ./data/references \
-  --config ./config.ini
+research.exe --research=research.txt --expression=data.csv --annotation=anno.csv --sampleinfo=sample.csv
 ```
+
+## 命令行参数
+
+### 必需参数
+
+- `--research=<path>` - 研究主题描述文件路径（txt 纯文本）
+- `--expression=<path>` - 表达矩阵 CSV 文件路径，或包含多组学矩阵的文件夹路径
+- `--annotation=<path>` - 分子注释信息 CSV 文件路径
+- `--sampleinfo=<path>` - 样本元数据 CSV 文件路径，或包含多组学元数据的文件夹路径
+
+### 可选参数
+
+- `--reference=<path>` - 参考文献文件夹路径（文件夹内为 txt 文件）
+- `--workspace=<path>` - 工作区文件夹路径（默认在表达矩阵所在位置创建 analysis 文件夹）
+- `--config=<path>` - INI 配置文件路径（默认为 ./config.ini）
+- `--skip-literature` - 跳过文献检索步骤
+- `--skip-kb` - 跳过知识库构建步骤
+- `--module=<n>` - 仅执行指定模块（1-9），多个模块用逗号分隔
+- `--help` - 显示帮助信息
+
+## 输入文件格式要求
+
+### research 文件
+
+纯文本文件，描述研究主题和样本数据基础信息，例如：
+
+```
+研究主题：肝癌发生发展过程中的代谢重编程机制
+物种：人类（Homo sapiens）
+组织来源：肝组织
+样本类型：肝癌组织 vs 癌旁正常组织
+研究目的：通过代谢组学分析揭示肝癌发生发展过程中的代谢通路变化，
+        识别关键的差异代谢物和异常调控的代谢通路，
+        为肝癌的早期诊断和治疗提供潜在的生物标志物。
+```
+
+### expression 文件
+
+CSV 格式，行为分子表达数据，列为样本数据：
+- 第一行为样本 ID
+- 第一列为分子 ID
+- 其他单元格为表达值
+
+```
+id,sample1,sample2,sample3,sample4
+M0001,1.23,2.34,0.98,1.56
+M0002,4.56,3.21,5.67,4.32
+...
+```
+
+### annotation 文件
+
+CSV 格式，分子注释信息表：
+- `id` 列：分子 ID（与表达矩阵第一列对应）
+- `type` 列：分子类别（rna/protein/metabolite/lipid 等）
+- `name` 列：分子名称
+- `class` 或 `category` 列：分子分类类别
+- `kegg` 列：KEGG 数据库 ID
+
+### sampleinfo 文件
+
+CSV 格式，样本元数据信息表：
+- `ID` 列：样本 ID（与表达矩阵第一行对应）
+- `sample_name` 列：样本显示标签
+- `sample_info` 列：样本分组标签
+- 其他可选列：`line`（品种/菌株）、`time`（采集时间点）等
 
 ## 工作区输出结构
 
 ```
-workspace/
-├── agent.log                          # Agent 运行日志
-├── research_kb/
-│   ├── kb.json                        # 知识库（LLM 提取的结构化知识）
-│   ├── reference_01.txt               # 参考文献文本
+analysis/
+├── research_kb/                ' 生物学知识信息
+│   ├── kb.json
+│   ├── reference1.txt
 │   └── ...
-├── analysis_modules_1_preprocessing/
-│   ├── conclusion.txt                 # 模块结论
-│   ├── tables/                        # 结果表格 CSV
-│   ├── figures/                       # 结果图 PNG
-│   └── scripts/                       # 生成的 R 脚本
-├── analysis_modules_2_multivariate/
-│   └── ...
-├── analysis_modules_3_differential/
-│   └── ...
-├── ...（其他模块）
-├── scripts/                           # 所有 R 脚本副本
-├── tmp/                               # 临时文件
-├── report.html                        # HTML 报告
-└── report.pdf                         # PDF 研究报告
+├── analysis_modules_1/         ' 模块 1 分析结果
+│   ├── conclusion.txt
+│   ├── tables/
+│   └── figures/
+├── analysis_modules_2/         ' 模块 2 分析结果
+│   ├── conclusion.txt
+│   ├── tables/
+│   └── figures/
+├── ...
+├── analysis_modules_9/         ' 模块 9 分析结果
+│   ├── conclusion.txt
+│   ├── tables/
+│   └── figures/
+└── report.pdf                  ' 最终结果报告 PDF 文件
+tmp/                            ' 临时 csv 表格文件
+scripts/                        ' Agent 编写的 R/Rsharp 脚本
 ```
 
-## 分析流程
+## 分析模块说明
 
-Agent 按以下顺序执行 8 个分析模块，每个模块创建独立的 LLM 客户端实例：
+### 模块 1：表达矩阵数据预处理
 
-1. **数据预处理**：缺失值处理、归一化、对数转换、质量控制
-2. **多元统计分析**：PCA、PLS-DA、OPLS-DA（VIP 评分）
-3. **差异分析**：LIMMA 差异分子分析（含比较组设计）
-4. **KEGG 富集分析**：ORA 富集 + GSVA 通路活性评分
-5. **WGCNA**：加权基因共表达网络分析
-6. **CMeans 软聚类**：时间序列表达模式聚类
-7. **bnlearn 动态贝叶斯网络**：时间序列调控网络（仅时间序列数据）
-8. **PLS-PM 因果路径分析**：通路间因果关系建模
+预处理流程：
+1. 按行做分子表达数据最小阳性值的一半做缺失值填充
+2. 按列总和归一化转化为相对表达量
+3. 如有必要，针对归一化后的值做 log 转换
+4. 按行做中位数缩放
 
-每个模块完成后：
-- 生成 R 脚本到 `scripts/` 目录
-- 执行 R 脚本，输出表格到 `tables/`，图到 `figures/`
-- LLM 基于结果生成 `conclusion.txt`
+### 模块 2：总体样本 PCA/PLSDA/OPLSDA 分析
 
-所有模块完成后，Agent 汇总各模块结论，生成中文研究报告（HTML + PDF）。
+- PCA 主成分分析
+- PLSDA 偏最小二乘判别分析
+- OPLSDA 正交偏最小二乘判别分析
+- 表达矩阵总体 F 检验
+- 表达矩阵总体多因素 ANOVA 检验
+- 基于 PCA 结果的样本重复性质量评估
 
-## LLM 函数调用工具
+### 模块 3：差异分析比对组别设计
 
-Agent 向 LLM 注册以下函数工具，使其具备本地操作能力：
+根据用户研究主题设计差异分析的比对组别，参考 kb.json 中的生物学知识生成阶段性研究总结文件。
 
-| 工具 | 说明 |
-|------|------|
-| `read_file` | 读取本地文件内容 |
-| `write_file` | 写入文本到文件 |
-| `list_files` | 列出目录文件 |
-| `run_shell` | 执行 Shell 命令 |
-| `run_rscript` | 执行 R 脚本文件 |
-| `write_rscript` | 保存 R 脚本到文件 |
-| `list_rscript_tools` | 列出可用 R 工具脚本 |
-| `search_papers` | 检索 PubMed（本地 MySQL） |
-| `get_full_text` | 获取文献全文（本地 MySQL） |
+### 模块 4：LIMMA 差异比较分析
 
-## 配置说明
+- 多因素 ANOVA 检验
+- limma 总体 F 检验
+- limma 两两比较差异分析
+- 时间序列数据：将时间因素作为协变量
+- 火山图（显示 top5 差异分子名称）
+- 文氏图（不同比较间的差异内容）
+- 差异分子热图（列按样本分组排序，行做层次聚类，颜色块标记分子分类）
 
-复制 `bin/config.ini.example` 为 `config.ini`，根据实际环境修改：
+### 模块 5：KEGG 生物学功能分析
 
-- `[tools]`：Rscript、wkhtmltopdf、Rsharp、Python 路径
-- `[llm]`：Ollama 服务地址和模型名称
-- `[mysql]`：PubMed 本地镜像 MySQL 配置
-- `[literature]`：文献检索模式（none / local_mysql / ncbi_online）
-- `[workspace]`：工具脚本目录
-- `[analysis]`：分析参数阈值
+- KEGG 通路富集分析
+- GSVA 分析
+- 富集结果条形图（按 KEGG 大分类分组）
+- GSVA 总体热图（列=样本按分组排序，行=KEGG 通路按大分类分组+层次聚类+聚类树）
+- GSVA 差异分析火山图、得分图
+
+### 模块 6：生物学性状关联分析（WGCNA）
+
+- 按 MAD 值降序排序取 top 20000 个分子
+- WGCNA 共表达网络构建
+- 模块与生物学性状关联分析
+- 共表达模块与生物学性状值的线性回归分析
+- 共表达模块分子的 KEGG 功能富集分析
+- 多组学数据：下游组学 GSVA 结果作为表型数据
+
+### 模块 7：进阶分析
+
+- CMeans 模糊聚类
+- 聚类簇 KEGG 富集分析
+- 聚类簇与 WGCNA 模块关联分析
+- 时间序列数据：bnlearn 动态贝叶斯网络
+- 多组学数据：PLS-PM 因果路径分析
+
+### 模块 8：结果表格整理
+
+将中间结果 csv 表格按分析主题写入 xlsx 文件，样式要求：
+- 全局 Cambria Math 11 号字体，缩放 90%
+- 第一列（id 列）：浅灰色背景，斜体，黑色字体
+- 第一行（注释说明）：草绿色字体
+- 第二行（列标题）：深蓝色背景，白色加粗字体
+- 第一列 + 第二行 freeze panes 冻结
+
+### 模块 9：论文初稿撰写
+
+- 以中文撰写分析结果报告
+- 每章插图和表格编写图注（先中文后英文翻译）
+- A3 大小 HTML 文件
+- 使用 wkhtmltopdf 转换为 PDF
 
 ## 注意事项
 
-1. **LLM 模型选择**：推荐使用支持 function calling 的模型，如 `llama3.1`、`qwen2.5`、`mistral` 等。
-2. **R 包安装**：首次运行前请确保所需 R 包已安装，可参考 `rscript/omics_tools.R` 中的 `safe_load` 函数自动安装。
-3. **PubMedQueryTool 依赖**：该工具依赖 GCModeller 框架的 `Microsoft.VisualBasic.CommandLine.Reflection`、`Oracle.LinuxCompatibility.MySQL.Scripting` 等程序集，请确保 GCModeller 环境已正确配置。
-4. **超时设置**：R 脚本执行默认超时 15 分钟，可在 `RScriptRunner.vb` 和 `RScriptTool.vb` 中调整。
-5. **中文支持**：R 图表中文标签使用 `showtext` 包，HTML 报告使用 UTF-8 编码。
-6. **PDF 生成**：使用 wkhtmltopdf 将 HTML 转为 A3 大小 PDF，确保 wkhtmltopdf 已安装并配置路径。
+1. **每个分析模块都会创建一个新的 LLMClient 实例**，以防止 token 累积。
+
+2. **生物学知识优先级**：阶段性生物学机制结论解读优先采用用户提供的参考文献内容（kb.json），当参考文献不存在或不足时，再使用 LLM 自身训练知识，严禁杜撰生物学知识。
+
+3. **图表文本语言**：所有图表的图注文本内容都应该是英文的。
+
+4. **结果文件语言**：xlsx 表格的文件名、注释文本、表格标题、列标题等所有文本信息均为英文。
+
+5. **报告语言**：最终 PDF 报告以中文撰写，图注文本先中文后英文翻译。
 
 ## 许可证
 

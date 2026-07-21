@@ -1,0 +1,75 @@
+; ============================================================================
+; Omics Data Analysis LLM Agent - INI 配置文件模板
+; ============================================================================
+; 将此文件复制为 config.ini 并根据实际环境填写配置信息。
+; agent 启动时会读取此文件，若任一关键配置缺失或工具路径不存在，
+; 将向用户输出明确的配置指引并终止程序。
+; ============================================================================
+
+[tools]
+; Rscript 解释器路径（必需）
+; Windows 默认安装路径示例：C:\Program Files\R\R-4.4.0\bin\Rscript.exe
+RscriptPath = C:\Program Files\R\R-4.4.0\bin\Rscript.exe
+
+; wkhtmltopdf 程序路径，用于将 HTML 报告转换为 PDF（必需）
+; Windows 默认安装路径示例：C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe
+WkHtmlToPdfPath = C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe
+
+; R# 解释器路径（必需）
+; R# 是 GCModeller 项目提供的 R 语言变体解释器
+RsharpPath = C:\GCModeller\Rsharp.exe
+
+; Python 解释器路径（必需）
+; 建议使用 Python 3.10+ 并安装 biopython 包
+PythonPath = C:\Python310\python.exe
+
+[llm]
+; Ollama 服务 URL（必需）
+; 默认本地 Ollama 服务地址
+ServiceUrl = http://localhost:11434
+
+; 所使用的大语言模型名称（必需）
+; 推荐使用具备代码生成能力的模型，例如：
+;   - qwen2.5:14b
+;   - qwen2.5-coder:14b
+;   - deepseek-coder-v2:16b
+;   - llama3.1:8b
+ModelName = qwen2.5:14b
+
+; 访问 LLM 服务的 API Key（可选，仅当服务需要鉴权时填写）
+ApiKey =
+
+[mysql]
+; PubMed 本地镜像 MySQL 数据库连接参数
+; 仅当 [literature] strategy = mysql 时需要配置
+host = localhost
+port = 3306
+database = pubmed
+user = root
+password =
+
+[literature]
+; 文献检索策略（可选值：mysql / ncbi / none）
+;   mysql - 从本地 MySQL PubMed 镜像检索
+;   ncbi  - 通过 Python 脚本从 NCBI 在线检索
+;   none  - 不进行文献检索
+strategy = mysql
+
+; 自动检索文献的最大数量
+max_count = 20
+
+; 当用户未提供参考文献时是否自动检索
+auto_search = true
+
+[analysis]
+; 差异分析 pvalue 阈值
+diff_pvalue = 0.05
+
+; 代谢组 VIP 阈值
+metabolite_vip = 1.0
+
+; WGCNA 按 MAD 排序取 top 分子数量
+wgcna_top_mad = 20000
+
+; 差异分析结果按 |logFC| 降序取 top 分子数量
+diff_top_count = 200

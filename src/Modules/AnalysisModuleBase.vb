@@ -1,0 +1,204 @@
+' ============================================================================
+' 分析模块基类 - 所有具体分析模块的抽象基类
+' ============================================================================
+Imports System.IO
+Imports System.Text
+Imports System.Threading
+Imports System.Threading.Tasks
+
+''' <summary>
+''' 所有分析模块的抽象基类。每个分析模块负责一个具体的分析步骤，
+''' 例如预处理、PCA、LIMMA 差异分析、KEGG 富集等。
+''' 
+''' 每个模块都会创建一个新的 LLMClient 实例，以避免 token 累积。
+''' 模块的工作流程：
+''' 1. 调用 LLM 生成分析计划（ModulePlan）
+''' 2. 调用 LLM 编写 R/Python 脚本
+''' 3. 执行脚本
+''' 4. 调用 LLM 生成阶段性总结文本
+''' 5. 将结果保存到对应的 analysis_modules_N/ 目录
+''' </summary>
+Public MustInherit Class AnalysisModuleBase
+
+    Protected ReadOnly _config As AgentConfig
+    Protected ReadOnly _context As AnalysisContext
+    Protected ReadOnly _logger As Action(Of String)
+    Protected ReadOnly _llmFactory As Func(Of LLMClient)
+
+    ''' <summary>模块名称，用于创建输出目录</summary>
+    Public MustOverride ReadOnly Property ModuleName As String
+
+    ''' <summary>模块序号，用于创建 analysis_modules_N 目录</summary>
+    Public MustOverride ReadOnly Property ModuleIndex As Integer
+
+    Public Sub New(config As AgentConfig, context As AnalysisContext, llmFactory As Func(Of LLMClient), Optional logger As Action(Of String) = Nothing)
+        _config = config
+        _context = context
+        _llmFactory = llmFactory
+        _logger = If(logger, AddressOf Console.WriteLine)
+    End Sub
+
+    ''' <summary>模块输出目录</summary>
+    Public ReadOnly Property OutputDir As String
+        Get
+            Return Path.Combine(_context.AnalysisDir, $"analysis_modules_{ModuleIndex}")
+        End Get
+    End Property
+
+    ''' <summary>模块表格输出目录</summary>
+    Public ReadOnly Property TablesDir As String
+        Get
+            Return Path.Combine(OutputDir, "tables")
+        End Get
+    End Property
+
+    ''' <summary>模块图像输出目录</summary>
+    Public ReadOnly Property FiguresDir As String
+        Get
+            Return Path.Combine(OutputDir, "figures")
+        End Get
+    End Property
+
+    ''' <summary>模块总结文件路径</summary>
+    Public ReadOnly Property ConclusionFile As String
+        Get
+            Return Path.Combine(OutputDir, "conclusion.txt")
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' 执行模块分析流程
+    ''' </summary>
+    Public Async Function RunAsync(cancellationToken As CancellationToken) As Task
+        LogInfo($"========== 模块 {ModuleIndex}: {ModuleName} ==========")
+
+        ' 创建输出目录
+        PathUtils.EnsureDirectory(OutputDir)
+        PathUtils.EnsureDirectory(TablesDir)
+        PathUtils.EnsureDirectory(FiguresDir)
+
+        Try
+            ' 1. 生成分析计划
+            Dim plan = Await GeneratePlanAsync(cancellationToken)
+            LogInfo($"分析计划已生成：{plan.Goal}")
+
+            ' 2. 编写并执行脚本
+            Await GenerateAndRunScriptAsync(plan, cancellationToken)
+
+            ' 3. 生成阶段性总结
+            Dim conclusion = Await GenerateConclusionAsync(plan, cancellationToken)
+            PathUtils.WriteAllText(ConclusionFile, conclusion)
+            LogInfo($"阶段性总结已保存：{ConclusionFile}")
+
+            ' 4. 记录到上下文
+            _context.ModuleResults.Add(New ModuleResult() With {
+                .ModuleName = ModuleName,
+                .ModuleIndex = ModuleIndex,
+                .Conclusion = conclusion,
+                .OutputDir = OutputDir
+            })
+
+        Catch ex As Exception
+            LogInfo($"[错误] 模块 {ModuleName} 执行失败：{ex.Message}")
+            LogInfo(ex.StackTrace)
+            PathUtils.WriteAllText(ConclusionFile, $"Module {ModuleName} failed with error: {ex.Message}{vbCrLf}{vbCrLf}Stack trace:{vbCrLf}{ex.StackTrace}")
+        End Try
+    End Function
+
+    ''' <summary>调用 LLM 生成分析计划</summary>
+    Protected MustOverride Function GeneratePlanAsync(cancellationToken As CancellationToken) As Task(Of ModulePlan)
+
+    ''' <summary>调用 LLM 编写并执行脚本</summary>
+    Protected MustOverride Function GenerateAndRunScriptAsync(plan As ModulePlan, cancellationToken As CancellationToken) As Task
+
+    ''' <summary>调用 LLM 生成阶段性总结</summary>
+    Protected MustOverride Function GenerateConclusionAsync(plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)
+
+    ''' <summary>构建模块上下文信息字符串，提供给 LLM</summary>
+    Protected Function BuildContextInfo() As String
+        Dim sb As New StringBuilder()
+        sb.AppendLine($"# Workspace Information")
+        sb.AppendLine($"- Workspace root: {_context.WorkspaceDir}")
+        sb.AppendLine($"- Tmp directory: {_context.TmpDir}")
+        sb.AppendLine($"- Scripts directory: {_context.ScriptsDir}")
+        sb.AppendLine($"- R scripts tools directory: {_context.RscriptsDir}")
+        sb.AppendLine($"- Rsharp scripts tools directory: {_context.GCModellerDir}")
+        sb.AppendLine($"- Python scripts tools directory: {_context.PythonDir}")
+        sb.AppendLine($"- KEGG background data directory: {_context.DataDir}")
+        sb.AppendLine()
+        sb.AppendLine($"# Research Topic")
+        sb.AppendLine(_context.ResearchTopic)
+        sb.AppendLine()
+        sb.AppendLine($"# Omics Datasets ({_context.Datasets.Count})")
+        For i = 0 To _context.Datasets.Count - 1
+            Dim d = _context.Datasets(i)
+            sb.AppendLine($"## Dataset {i + 1}: {d.OmicsType}")
+            sb.AppendLine($"- Expression file: {d.ExpressionFile}")
+            sb.AppendLine($"- Annotation file: {d.AnnotationFile}")
+            sb.AppendLine($"- Sample info file: {d.SampleInfoFile}")
+            sb.AppendLine($"- Sample count: {d.SampleIDs.Count}")
+            sb.AppendLine($"- Molecule count: {d.MoleculeIDs.Count}")
+            sb.AppendLine($"- Sample IDs: {String.Join(", ", d.SampleIDs.Take(10))}{If(d.SampleIDs.Count > 10, "...", "")}")
+        Next
+        sb.AppendLine()
+        sb.AppendLine($"# Knowledge Base")
+        If File.Exists(_context.KnowledgeBaseFile) Then
+            Dim kbContent = File.ReadAllText(_context.KnowledgeBaseFile, Encoding.UTF8)
+            If kbContent.Length > 5000 Then
+                sb.AppendLine(kbContent.Substring(0, 5000) & "...[truncated]")
+            Else
+                sb.AppendLine(kbContent)
+            End If
+        Else
+            sb.AppendLine("(No knowledge base file available)")
+        End If
+        sb.AppendLine()
+        sb.AppendLine($"# Previous Module Conclusions")
+        For Each r In _context.ModuleResults
+            sb.AppendLine($"## Module {r.ModuleIndex}: {r.ModuleName}")
+            Dim c = r.Conclusion
+            If c.Length > 2000 Then c = c.Substring(0, 2000) & "...[truncated]"
+            sb.AppendLine(c)
+            sb.AppendLine()
+        Next
+        Return sb.ToString()
+    End Function
+
+    ''' <summary>注册 Function Calling 工具到 LLM 客户端</summary>
+    Protected Sub RegisterTools(llm As LLMClient)
+        Dim fileTool As New FileTool(_context.WorkspaceDir, _logger)
+        Dim shellTool As New ShellTool(_config, _context.WorkspaceDir, _logger)
+
+        ' 注册文件操作工具
+        llm.AddFunction(fileTool, "write_file")
+        llm.AddFunction(fileTool, "read_file")
+        llm.AddFunction(fileTool, "file_exists")
+        llm.AddFunction(fileTool, "list_files")
+        llm.AddFunction(fileTool, "create_directory")
+
+        ' 注册命令行执行工具
+        llm.AddFunction(shellTool, "run_rscript")
+        llm.AddFunction(shellTool, "run_python")
+        llm.AddFunction(shellTool, "run_rsharp")
+    End Sub
+
+    ''' <summary>从 LLM 响应中提取代码块</summary>
+    Protected Function ExtractCodeBlock(text As String, language As String) As String
+        If String.IsNullOrEmpty(text) Then Return ""
+
+        ' 尝试提取 ```language ... ``` 代码块
+        Dim pattern = $"```(?:{language})?\s*([\s\S]*?)```"
+        Dim match = System.Text.RegularExpressions.Regex.Match(text, pattern, System.Text.RegularExpressions.RegexOptions.IgnoreCase)
+        If match.Success Then
+            Return match.Groups(1).Value.Trim()
+        End If
+
+        ' 如果没有代码块标记，返回整个文本
+        Return text.Trim()
+    End Function
+
+    Protected Sub LogInfo(msg As String)
+        _logger?.Invoke(msg)
+    End Sub
+
+End Class
