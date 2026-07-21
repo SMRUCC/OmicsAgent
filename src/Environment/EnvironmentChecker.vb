@@ -1,11 +1,7 @@
 ' ============================================================================
 ' 运行环境检查模块 - 检查外部工具路径与 LLM 服务可用性
 ' ============================================================================
-Imports System.Diagnostics
-Imports System.IO
 Imports System.Net.Http
-Imports System.Threading.Tasks
-Imports Newtonsoft.Json.Linq
 
 ''' <summary>
 ''' 运行环境检查器，负责在 agent 启动时检查所有外部依赖工具的可用性，

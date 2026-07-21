@@ -1,16 +1,40 @@
 <Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+  </Configurations>
   <Folder Name="/framework/">
-    <Project Path="../GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj" />
-    <Project Path="../GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Math.NET5.vbproj" />
-    <Project Path="../GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj" />
-    <Project Path="../GCModeller/src/runtime/sciBASIC#/mime/application%json/JSON-netcore5.vbproj" />
-    <Project Path="../GCModeller/src/runtime/sciBASIC#/mime/text%markdown/markdown.NET5.vbproj" />
-    <Project Path="../GCModeller/src/runtime/sciBASIC#/mime/text%yaml/text.yaml.vbproj" />
+    <Project Path="../GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Math.NET5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../GCModeller/src/runtime/sciBASIC#/mime/application%json/JSON-netcore5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../GCModeller/src/runtime/sciBASIC#/mime/text%markdown/markdown.NET5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../GCModeller/src/runtime/sciBASIC#/mime/text%yaml/text.yaml.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
   </Folder>
   <Folder Name="/llms/">
-    <Project Path="../graphQL/src/mysqli/LibMySQL/libmysql.vbproj" />
-    <Project Path="../LLMs/src/Ollama/Ollama.vbproj" />
-    <Project Path="../pubchem_kb/src/Researcher/Researcher.vbproj" />
+    <Project Path="../graphQL/src/mysqli/LibMySQL/libmysql.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../LLMs/src/Ollama/Ollama.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../pubchem_kb/src/Researcher/Researcher.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
   </Folder>
-  <Project Path="src/OmicsAgent.vbproj" />
+  <Project Path="src/OmicsAgent.vbproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
 </Solution>

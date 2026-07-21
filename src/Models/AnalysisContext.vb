@@ -87,6 +87,7 @@ Public Class AnalysisContext
     Public Property ReferenceDir As String = ""
 
     Public Property AnnotationFile As String
+    Public Property AnnotationContent As String
     Public Property SampleInfoInput As String
 
     Public Property RscriptsDir As String

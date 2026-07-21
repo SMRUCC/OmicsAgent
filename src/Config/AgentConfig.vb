@@ -1,9 +1,8 @@
 ' ============================================================================
 ' 配置管理模块 - INI 文件读写与运行环境配置
 ' ============================================================================
-Imports System.IO
-Imports System.Text
-Imports Newtonsoft.Json
+
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
 ''' 表示整个 agent 运行所需的全部配置信息，从 INI 文件中加载得到。
@@ -279,7 +278,7 @@ Public Class AgentConfig
 
     ''' <summary>将配置对象序列化为 JSON 字符串，便于日志输出</summary>
     Public Function ToJson() As String
-        Return JsonConvert.SerializeObject(Me, Formatting.Indented)
+        Return Me.GetJson
     End Function
 
 End Class

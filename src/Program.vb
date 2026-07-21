@@ -232,9 +232,6 @@ Omics Data Analysis LLM Agent
         ' 检测是否为时间序列数据
         DetectTimeSeries(context)
 
-        ' 检测是否为多组学数据
-        context.IsMultiOmics = context.Datasets.Count > 1
-
         Return context
     End Function
 
@@ -278,7 +275,7 @@ Omics Data Analysis LLM Agent
 
         ' 验证注释表格式
         Dim annoErr As String = ""
-        If Not CsvUtils.ValidateAnnotationTable(_context.AnnotationFile, annoErr) Then
+        If Not CsvUtils.ValidateAnnotation(_context.AnnotationFile, annoErr) Then
             _logger($"  [X] Annotation table validation failed: {_context.AnnotationFile}")
             _logger($"      {annoErr}")
             Return False
@@ -289,7 +286,7 @@ Omics Data Analysis LLM Agent
         For Each ds In _context.Datasets
             If File.Exists(ds.SampleInfoFile) Then
                 Dim sampleErr As String = ""
-                If Not CsvUtils.ValidateSampleInfoTable(ds.SampleInfoFile, sampleErr) Then
+                If Not CsvUtils.ValidateSampleInfo(ds.SampleInfoFile, sampleErr) Then
                     _logger($"  [X] Sample info validation failed: {ds.SampleInfoFile}")
                     _logger($"      {sampleErr}")
                     Return False
