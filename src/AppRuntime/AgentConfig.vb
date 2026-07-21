@@ -1,8 +1,8 @@
+Imports Microsoft.VisualBasic.Serialization.JSON
+
 ' ============================================================================
 ' 配置管理模块 - INI 文件读写与运行环境配置
 ' ============================================================================
-
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
 ''' 表示整个 agent 运行所需的全部配置信息，从 INI 文件中加载得到。
