@@ -13,26 +13,26 @@ Omics Data Analysis LLM Agent
 基于 Ollama 大语言模型的组学数据分析 Agent
 
 用法:
-  research.exe [options]
+  research [options]
 
 必需参数:
-  --research=<path>       研究主题描述文件路径（txt 纯文本）
-  --expression=<path>     表达矩阵 CSV 文件路径，或包含多组学矩阵的文件夹路径
-  --annotation=<path>     分子注释信息 CSV 文件路径
-  --sampleinfo=<path>     样本元数据 CSV 文件路径，或包含多组学元数据的文件夹路径
+  --research,-r=<path>    研究主题描述文件路径（txt 纯文本）
+  --expression,-e=<path>  表达矩阵 CSV 文件路径，或包含多组学矩阵的文件夹路径
+  --annotation,-a=<path>  分子注释信息 CSV 文件路径
+  --sampleinfo,-s=<path>  样本元数据 CSV 文件路径，或包含多组学元数据的文件夹路径
 
 可选参数:
-  --reference=<path>      参考文献文件夹路径（文件夹内为 txt 文件）
-  --workspace=<path>      工作区文件夹路径（默认在表达矩阵所在位置创建 analysis 文件夹）
-  --config=<path>          INI 配置文件路径（默认为 ./config.ini）
+  --reference,-k=<path>   参考文献文件夹路径（文件夹内为 txt 文件）
+  --workspace,-w=<path>   工作区文件夹路径（默认在表达矩阵所在位置创建 analysis 文件夹）
+  --config,-c=<path>      INI 配置文件路径（默认为 ./config.ini）
   --skip-literature       跳过文献检索步骤
   --skip-kb               跳过知识库构建步骤
   --module=<n>            仅执行指定模块（1-9），多个模块用逗号分隔
   --help                  显示帮助信息
 
 示例:
-  research.exe --research=research.txt --expression=data.csv --annotation=anno.csv --sampleinfo=sample.csv
-  research.exe --research=research.txt --expression=omics_folder/ --annotation=anno.csv --sampleinfo=sample_folder/ --reference=refs/
+  research --research=research.txt --expression=data.csv --annotation=anno.csv --sampleinfo=sample.csv
+  research --research=research.txt --expression=omics_folder/ --annotation=anno.csv --sampleinfo=sample_folder/ --reference=refs/
 "
 
     Private _logger As Action(Of String) = AddressOf ConsoleLog
@@ -99,7 +99,6 @@ Omics Data Analysis LLM Agent
                                                cts.Cancel()
                                                Console.WriteLine("Cancellation requested...")
                                            End Sub
-
 
         ' 1. 环境检查
         Dim checker As New EnvironmentChecker(_config, _logger)
