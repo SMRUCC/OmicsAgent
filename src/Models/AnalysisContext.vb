@@ -5,69 +5,6 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 ' ============================================================================
 
 ''' <summary>
-''' 表示单个组学数据集的描述信息，包括表达矩阵、注释表、样本元数据等。
-''' 对于多组学分析，会存在多个 OmicsDataset 实例。
-''' </summary>
-Public Class OmicsDataset
-
-    ''' <summary>组学类型，例如 rna / protein / metabolite / lipid</summary>
-    Public Property OmicsType As String = ""
-
-    ''' <summary>表达矩阵 CSV 文件路径（行为分子，列为样本）</summary>
-    Public Property ExpressionFile As String = ""
-
-    ''' <summary>分子注释表 CSV 文件路径</summary>
-    Public Property AnnotationFile As String = ""
-
-    ''' <summary>样本元数据 CSV 文件路径</summary>
-    Public Property SampleInfoFile As String = ""
-
-    ''' <summary>表达矩阵文件名（不含扩展名），用于多组学场景下匹配样本元数据</summary>
-    Public ReadOnly Property MatrixName As String
-        Get
-            If String.IsNullOrEmpty(ExpressionFile) Then Return ""
-            Return Path.GetFileNameWithoutExtension(ExpressionFile)
-        End Get
-    End Property
-
-    ''' <summary>样本 ID 列表（从表达矩阵第一行读取）</summary>
-    Public Property SampleIDs As List(Of String) = New List(Of String)()
-
-    ''' <summary>分子 ID 列表（从表达矩阵第一列读取）</summary>
-    Public Property MoleculeIDs As List(Of String) = New List(Of String)()
-
-    Public Function ToJson() As String
-        Return Me.GetJson
-    End Function
-
-End Class
-
-''' <summary>
-''' 表示一个差异比较组别的设计，例如 "disease vs control"。
-''' </summary>
-Public Class ComparisonGroup
-
-    ''' <summary>比较组名称，例如 "Disease_vs_Control"</summary>
-    Public Property Name As String = ""
-
-    ''' <summary>对照组样本 ID 列表</summary>
-    Public Property ControlSamples As List(Of String) = New List(Of String)()
-
-    ''' <summary>处理组样本 ID 列表</summary>
-    Public Property TreatmentSamples As List(Of String) = New List(Of String)()
-
-    ''' <summary>对照组样本分组标签</summary>
-    Public Property ControlLabel As String = ""
-
-    ''' <summary>处理组样本分组标签</summary>
-    Public Property TreatmentLabel As String = ""
-
-    ''' <summary>该比较的生物学目的描述</summary>
-    Public Property BiologicalPurpose As String = ""
-
-End Class
-
-''' <summary>
 ''' 表示整个分析流程的上下文，包含用户研究主题、所有组学数据集、
 ''' 工作区路径、知识库路径、阶段性总结文本路径等。
 ''' 该对象在分析过程中持续累积状态，供各分析模块共享使用。
@@ -228,45 +165,5 @@ Public Class AnalysisContext
     Public Sub AddTable(tablePath As String)
         ModuleTables.Add(tablePath)
     End Sub
-
-End Class
-
-''' <summary>
-''' 表示 LLM 为单个分析模块生成的分析计划。
-''' 该计划描述了模块的分析目标、所需输入文件、预期输出文件、
-''' 以及 LLM 编写的 R/Python 脚本内容。
-''' </summary>
-Public Class ModulePlan
-
-    ''' <summary>模块名称</summary>
-    Public Property ModuleName As String = ""
-
-    ''' <summary>分析目标描述</summary>
-    Public Property Goal As String = ""
-
-    ''' <summary>所需输入文件路径列表</summary>
-    Public Property InputFiles As List(Of String) = New List(Of String)()
-
-    ''' <summary>预期输出文件路径列表</summary>
-    Public Property OutputFiles As List(Of String) = New List(Of String)()
-
-    ''' <summary>LLM 生成的 R 脚本内容</summary>
-    Public Property RScriptContent As String = ""
-
-    ''' <summary>LLM 生成的 R 脚本文件路径</summary>
-    Public Property RScriptFile As String = ""
-
-    ''' <summary>LLM 生成的 Python 脚本内容（可选）</summary>
-    Public Property PythonScriptContent As String = ""
-
-    ''' <summary>LLM 生成的 Python 脚本文件路径（可选）</summary>
-    Public Property PythonScriptFile As String = ""
-
-    ''' <summary>阶段性总结文本</summary>
-    Public Property Conclusion As String = ""
-
-    Public Function ToJson() As String
-        Return Me.GetJson
-    End Function
 
 End Class
