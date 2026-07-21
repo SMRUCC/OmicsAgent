@@ -147,7 +147,7 @@ Omics Data Analysis LLM Agent
 
     ''' <summary>创建 LLM 客户端实例</summary>
     Private Function CreateLLMClient() As LLMClient
-        Return New LLMClient(LLMUrl.Create(_config.LLMServiceUrl, _config.LLMApiKey), _config.LLMModelName)
+        Return New LLMClient(LLMUrl.Create(_config.LLM.LLMServiceUrl, _config.LLM.LLMApiKey), _config.LLM.LLMModelName)
     End Function
 
     ''' <summary>初始化分析上下文</summary>
