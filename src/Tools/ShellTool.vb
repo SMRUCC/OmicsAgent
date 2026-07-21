@@ -1,11 +1,8 @@
+Imports Microsoft.VisualBasic.CommandLine.Reflection
+
 ' ============================================================================
 ' 命令行执行 Function Calling 工具集 - 执行 Rscript / Rsharp / Python 脚本
 ' ============================================================================
-Imports System.ComponentModel
-Imports System.Diagnostics
-Imports System.IO
-Imports System.Text
-Imports Microsoft.VisualBasic.CommandLine.Reflection
 
 ''' <summary>
 ''' 命令行执行工具集，提供 Rscript、R#、Python 脚本的执行能力。
@@ -97,7 +94,7 @@ Public Class ShellTool
                 Directory.CreateDirectory(dir)
             End If
 
-            Dim args = $"--page-size A3 --orientation Landscape {extra_args} ""{absHtmlPath}"" ""{absPdfPath}"""
+            Dim args = $"--page-size A3 --orientation Portrait {extra_args} ""{absHtmlPath}"" ""{absPdfPath}"""
             Return RunProcess(_config.WkHtmlToPdfPath, args, timeout_seconds)
         Catch ex As Exception
             Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"

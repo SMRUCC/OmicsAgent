@@ -85,12 +85,14 @@ Omics Data Analysis LLM Agent
     ''' <summary>异步主流程</summary>
     Private Async Function MainAsync(parsed As Dictionary(Of String, String)) As Task
         Dim cts As New CancellationTokenSource()
-        Console.CancelKeyPress.Add(Sub(s, e)
-                                       e.Cancel = True
-                                       cts.Cancel()
-                                       Console.WriteLine("Cancellation requested...")
-                                   End Sub)
         Dim cancellationToken = cts.Token
+
+        AddHandler Console.CancelKeyPress, Sub(s, e)
+                                               e.Cancel = True
+                                               cts.Cancel()
+                                               Console.WriteLine("Cancellation requested...")
+                                           End Sub
+
 
         ' 1. 环境检查
         Dim checker As New EnvironmentChecker(_config, _logger)
@@ -117,10 +119,10 @@ Omics Data Analysis LLM Agent
             If cancellationToken.IsCancellationRequested Then Exit For
 
             Try
-                Dim [module] = CreateModule(moduleIdx)
+                Dim [module] As AnalysisModuleBase = CreateModule(moduleIdx)
                 If [module] IsNot Nothing Then
                     Console.WriteLine($"========== Module {moduleIdx}: {[module].ModuleName} ==========")
-                    Await [module].ExecuteAsync(cancellationToken)
+                    Await [module].RunAsync(cancellationToken)
                     Console.WriteLine()
                 End If
             Catch ex As Exception
@@ -138,7 +140,7 @@ Omics Data Analysis LLM Agent
 
     ''' <summary>创建 LLM 客户端实例</summary>
     Private Function CreateLLMClient() As LLMClient
-        Return New LLMClient(_config.LLMServiceUrl, _config.LLMModelName, _config.LLMApiKey)
+        Return New LLMClient(LLMUrl.Create(_config.LLMServiceUrl, _config.LLMApiKey), _config.LLMModelName)
     End Function
 
     ''' <summary>初始化分析上下文</summary>

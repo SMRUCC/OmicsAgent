@@ -1,8 +1,8 @@
+Imports Microsoft.VisualBasic.Serialization.JSON
+
 ' ============================================================================
 ' 数据模型 - 分析上下文、模块计划、组学数据描述等
 ' ============================================================================
-Imports System.IO
-Imports Newtonsoft.Json
 
 ''' <summary>
 ''' 表示单个组学数据集的描述信息，包括表达矩阵、注释表、样本元数据等。
@@ -23,7 +23,7 @@ Public Class OmicsDataset
     Public Property SampleInfoFile As String = ""
 
     ''' <summary>表达矩阵文件名（不含扩展名），用于多组学场景下匹配样本元数据</summary>
-    Public Property MatrixName As String
+    Public ReadOnly Property MatrixName As String
         Get
             If String.IsNullOrEmpty(ExpressionFile) Then Return ""
             Return Path.GetFileNameWithoutExtension(ExpressionFile)
@@ -37,7 +37,7 @@ Public Class OmicsDataset
     Public Property MoleculeIDs As List(Of String) = New List(Of String)()
 
     Public Function ToJson() As String
-        Return JsonConvert.SerializeObject(Me, Formatting.Indented)
+        Return Me.GetJson
     End Function
 
 End Class
@@ -85,6 +85,14 @@ Public Class AnalysisContext
 
     ''' <summary>参考文献文件夹路径（可选）</summary>
     Public Property ReferenceDir As String = ""
+
+    Public Property AnnotationFile As String
+    Public Property SampleInfoInput As String
+
+    Public Property RscriptsDir As String
+    Public Property GCModellerDir As String
+    Public Property PythonDir As String
+    Public Property DataDir As String
 
     ' ------------------------------------------------------------------
     ' 数据集
@@ -257,7 +265,7 @@ Public Class ModulePlan
     Public Property Conclusion As String = ""
 
     Public Function ToJson() As String
-        Return JsonConvert.SerializeObject(Me, Formatting.Indented)
+        Return Me.GetJson
     End Function
 
 End Class

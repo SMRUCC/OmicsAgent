@@ -1,8 +1,6 @@
 ' ============================================================================
 ' 路径与文件工具类
 ' ============================================================================
-Imports System.IO
-Imports System.Text
 
 ''' <summary>
 ''' 提供路径处理、文件读写、目录创建等通用工具方法。
@@ -17,7 +15,7 @@ Public Module PathUtils
 
     ''' <summary>获取相对于基准目录的相对路径</summary>
     Public Function GetRelativePath(relativeTo As String, path As String) As String
-        Return Path.GetRelativePath(relativeTo, path).Replace("\"c, "/"c)
+        Return PathExtensions.RelativePath(relativeTo, path).Replace("\"c, "/"c)
     End Function
 
     ''' <summary>将路径中的反斜杠转换为正斜杠（用于 R 脚本）</summary>

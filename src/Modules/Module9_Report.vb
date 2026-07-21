@@ -1,3 +1,4 @@
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Ollama
 
 ' ============================================================================
@@ -65,7 +66,7 @@ Return your plan as JSON:
             Dim json = ExtractJsonFromResponse(resp.output)
             Dim plan As ModulePlan
             If Not String.IsNullOrEmpty(json) Then
-                plan = Newtonsoft.Json.JsonConvert.DeserializeObject(Of ModulePlan)(json)
+                plan = json.LoadJSON(Of ModulePlan)
             Else
                 plan = New ModulePlan() With {.ModuleName = ModuleName, .Goal = resp.output}
             End If
@@ -99,9 +100,9 @@ Return your plan as JSON:
         ' 调用 wkhtmltopdf 转换为 PDF
         Dim pdfPath = Path.Combine(_context.WorkspaceDir, "analysis", "report.pdf")
         Dim shell As New ShellTool(_config, _context.WorkspaceDir, _logger)
-        Dim result = shell.run_command(
-            _config.WkHtmlToPdfPath,
-            $"--page-size A3 --orientation Portrait --margin-top 15mm --margin-bottom 15mm --margin-left 15mm --margin-right 15mm --enable-local-file-access ""{PathUtils.NormalizePath(htmlPath)}"" ""{PathUtils.NormalizePath(pdfPath)}""",
+        Dim result = shell.run_wkhtmltopdf(
+            htmlPath, pdfPath,
+            extra_args:=$"--margin-top 15mm --margin-bottom 15mm --margin-left 15mm --margin-right 15mm --enable-local-file-access",
             timeout_seconds:=300
         )
         LogInfo($"PDF conversion result: {result.Substring(0, Math.Min(300, result.Length))}")
@@ -231,7 +232,7 @@ Return as JSON:
             Dim json = ExtractJsonFromResponse(resp.output)
             If Not String.IsNullOrEmpty(json) Then
                 Try
-                    Return Newtonsoft.Json.JsonConvert.DeserializeObject(Of ReportContent)(json)
+                    Return json.LoadJSON(Of ReportContent)
                 Catch ex As Exception
                     LogInfo($"Failed to parse report JSON: {ex.Message}")
                 End Try
