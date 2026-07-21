@@ -1,3 +1,5 @@
+Imports Microsoft.VisualBasic.MIME.application.json
+Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Ollama
 Imports Researcher
 
@@ -170,8 +172,6 @@ Public Class KnowledgeBaseBuilder
     Private Async Function ExtractKnowledgeAsync(referenceFiles As List(Of String), cancellationToken As CancellationToken) As Task
         LogInfo("正在从文献中提取生物学知识...")
 
-        Dim knowledgeEntries As New List(Of JObject)()
-
         ' 合并所有文献内容（截断以避免超出 token 限制）
         Dim allContent As New StringBuilder()
         For Each f In referenceFiles
@@ -324,15 +324,11 @@ Public Class KnowledgeBaseBuilder
     Private Function ParseSearchResults(json As String) As List(Of Dictionary(Of String, String))
         Dim result As New List(Of Dictionary(Of String, String))()
         Try
-            Dim jobj = JObject.Parse(json)
-            Dim papers = jobj("papers")
+            Dim jobj As JsonObject = JsonObject.ParseJSON(json)
+            Dim papers As JsonArray = jobj("papers")
             If papers IsNot Nothing Then
                 For Each p In papers
-                    Dim dict As New Dictionary(Of String, String)()
-                    For Each prop In p.Children(Of JProperty)()
-                        dict(prop.Name) = prop.Value?.ToString()
-                    Next
-                    result.Add(dict)
+                    result.Add(p.CreateObject(Of Dictionary(Of String, String))(decodeMetachar:=True))
                 Next
             End If
         Catch
