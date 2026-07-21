@@ -1,3 +1,4 @@
+Imports Microsoft.VisualBasic.CommandLine
 Imports Ollama
 
 ' ============================================================================
@@ -7,7 +8,7 @@ Imports Ollama
 Module Program
 
     ''' <summary>命令行参数帮助文本</summary>
-    Private Const HelpText As String = "
+    Friend Const HelpText As String = "
 Omics Data Analysis LLM Agent
 ============================
 基于 Ollama 大语言模型的组学数据分析 Agent
@@ -28,7 +29,7 @@ Omics Data Analysis LLM Agent
   --skip-literature       跳过文献检索步骤
   --skip-kb               跳过知识库构建步骤
   --module=<n>            仅执行指定模块（1-9），多个模块用逗号分隔
-  --help                  显示帮助信息
+  --help,-h               显示帮助信息
 
 示例:
   research --research=research.txt --expression=data.csv --annotation=anno.csv --sampleinfo=sample.csv
@@ -48,20 +49,20 @@ Omics Data Analysis LLM Agent
             Console.WriteLine()
 
             ' 解析命令行参数
-            Dim parsed = ParseArgs(args)
+            Dim parsed As Opts = CommandLine.BuildFromArguments(args, NoSubCommand:=True).CreateOpts(Of Opts)
 
-            If parsed.ContainsKey("help") Then
+            If parsed.help Then
                 Console.WriteLine(HelpText)
                 Return 0
             End If
 
             ' 验证必需参数
-            If Not ValidateRequiredArgs(parsed) Then
+            If Not parsed.ValidateRequiredArgs() Then
                 Return 1
             End If
 
             ' 加载配置
-            Dim configPath = parsed.GetValueOrDefault("config", "config.ini")
+            Dim configPath = If(parsed.config, "config.ini")
             _config = AgentConfig.Load(configPath)
 
             ' 配置文件缺失或无法解析时，AgentConfig.Load 会生成模板并返回 Nothing。
@@ -90,7 +91,7 @@ Omics Data Analysis LLM Agent
     End Function
 
     ''' <summary>异步主流程</summary>
-    Private Async Function MainAsync(parsed As Dictionary(Of String, String)) As Task
+    Private Async Function MainAsync(parsed As Opts) As Task
         Dim cts As New CancellationTokenSource()
         Dim cancellationToken = cts.Token
 
@@ -113,14 +114,14 @@ Omics Data Analysis LLM Agent
         Console.WriteLine()
 
         ' 3. 知识库构建（可选）
-        If Not parsed.ContainsKey("skip-kb") Then
+        If Not parsed.skip_kb Then
             Dim kbBuilder As New KnowledgeBaseBuilder(_config, _context, Function() CreateLLMClient(), _logger)
             Await kbBuilder.BuildAsync(cancellationToken)
             Console.WriteLine()
         End If
 
         ' 4. 执行分析模块
-        Dim modulesToRun = ParseModulesToRun(parsed)
+        Dim modulesToRun = parsed.ParseModulesToRun
         For Each moduleIdx In modulesToRun
             If cancellationToken.IsCancellationRequested Then Exit For
 
@@ -150,14 +151,14 @@ Omics Data Analysis LLM Agent
     End Function
 
     ''' <summary>初始化分析上下文</summary>
-    Private Function InitializeContext(parsed As Dictionary(Of String, String)) As AnalysisContext
+    Private Function InitializeContext(parsed As Opts) As AnalysisContext
         Dim context As New AnalysisContext()
 
         ' 研究主题文件
-        context.ResearchFile = parsed("research")
+        context.ResearchFile = parsed.research
 
         ' 表达矩阵文件/文件夹
-        Dim exprPath = parsed("expression")
+        Dim exprPath = parsed.expression
         If Directory.Exists(exprPath) Then
             ' 多组学：文件夹
             For Each csv In Directory.GetFiles(exprPath, "*.csv")
@@ -177,10 +178,10 @@ Omics Data Analysis LLM Agent
         End If
 
         ' 分子注释表
-        context.AnnotationFile = parsed("annotation")
+        context.AnnotationFile = parsed.annotation
 
         ' 样本元数据文件/文件夹
-        context.SampleInfoInput = parsed("sampleinfo")
+        context.SampleInfoInput = parsed.sampleinfo
         If File.Exists(context.SampleInfoInput) Then
             ' 单个文件：所有组学共用
             For Each ds In context.Datasets
@@ -197,13 +198,13 @@ Omics Data Analysis LLM Agent
         End If
 
         ' 参考文献文件夹
-        If parsed.ContainsKey("reference") Then
-            context.ReferenceDir = parsed("reference")
+        If Not parsed.reference.StringEmpty(, True) Then
+            context.ReferenceDir = parsed.reference
         End If
 
         ' 工作区
-        If parsed.ContainsKey("workspace") Then
-            context.WorkspaceDir = parsed("workspace")
+        If Not parsed.workspace.StringEmpty(, True) Then
+            context.WorkspaceDir = parsed.workspace
         Else
             ' 默认在表达矩阵所在位置创建 analysis 文件夹
             Dim firstExpr = context.Datasets.FirstOrDefault()?.ExpressionFile
@@ -305,48 +306,6 @@ Omics Data Analysis LLM Agent
         Next
 
         Return True
-    End Function
-
-    ''' <summary>解析命令行参数</summary>
-    Private Function ParseArgs(args As String()) As Dictionary(Of String, String)
-        Dim result As New Dictionary(Of String, String)(StringComparer.OrdinalIgnoreCase)
-        For Each arg In args
-            If arg.StartsWith("--") Then
-                Dim cleanArg = arg.Substring(2)
-                Dim eqIdx = cleanArg.IndexOf("="c)
-                If eqIdx > 0 Then
-                    Dim key = cleanArg.Substring(0, eqIdx)
-                    Dim value = cleanArg.Substring(eqIdx + 1).Trim(""""c, "'"c)
-                    result(key) = value
-                Else
-                    result(cleanArg) = "true"
-                End If
-            End If
-        Next
-        Return result
-    End Function
-
-    ''' <summary>验证必需参数</summary>
-    Private Function ValidateRequiredArgs(parsed As Dictionary(Of String, String)) As Boolean
-        Dim required = {"research", "expression", "annotation", "sampleinfo"}
-        Dim missing = required.Where(Function(k) Not parsed.ContainsKey(k) OrElse String.IsNullOrEmpty(parsed(k))).ToList()
-        If missing.Count > 0 Then
-            Console.Error.WriteLine("Missing required arguments: " & String.Join(", ", missing.Select(Function(k) "--" & k)))
-            Console.Error.WriteLine()
-            Console.Error.WriteLine(HelpText)
-            Return False
-        End If
-        Return True
-    End Function
-
-    ''' <summary>解析要执行的模块</summary>
-    Private Function ParseModulesToRun(parsed As Dictionary(Of String, String)) As List(Of Integer)
-        If parsed.ContainsKey("module") Then
-            Dim modulesStr = parsed("module")
-            Return modulesStr.Split(","c).Select(Function(s) Integer.Parse(s.Trim())).ToList()
-        End If
-        ' 默认执行所有模块
-        Return {1, 2, 3, 4, 5, 6, 7, 8, 9}.ToList()
     End Function
 
     ''' <summary>根据索引创建分析模块</summary>
