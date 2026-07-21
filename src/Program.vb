@@ -64,6 +64,13 @@ Omics Data Analysis LLM Agent
             Dim configPath = parsed.GetValueOrDefault("config", "config.ini")
             _config = AgentConfig.Load(configPath)
 
+            ' 配置文件缺失或无法解析时，AgentConfig.Load 会生成模板并返回 Nothing。
+            ' 此时应提示用户按模板填写后重新运行并终止，避免后续空引用崩溃。
+            If _config Is Nothing Then
+                Console.Error.WriteLine("配置文件缺失或无法解析。已生成配置模板，请按提示填写 config.ini 后重新运行程序。")
+                Return 1
+            End If
+
             ' 初始化分析上下文
             _context = InitializeContext(parsed)
 
