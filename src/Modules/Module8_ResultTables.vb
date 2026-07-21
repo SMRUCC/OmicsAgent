@@ -216,7 +216,7 @@ Return your plan as JSON:
         End Select
     End Function
 
-    ''' <summary>清洗工作表名称，符合 Excel 限制（<=31 字符，无非法字符）</summary>
+    ''' <summary>清洗工作表名称，符合 Excel 限制（&lt;=31 字符，无非法字符）</summary>
     Private Function SanitizeSheetName(name As String) As String
         Dim s = Path.GetFileNameWithoutExtension(name)
         If s.Length > 31 Then s = s.Substring(0, 31)

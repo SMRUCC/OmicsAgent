@@ -102,7 +102,7 @@ Omics Data Analysis LLM Agent
                                            End Sub
 
         ' 1. 环境检查
-        Dim checker As New EnvironmentChecker(_config, _logger)
+        Dim checker As New EnvironmentChecker(_config, _logger, Function() CreateLLMClient())
         If Not Await checker.CheckAllAsync() Then
             Console.Error.WriteLine("Environment check failed. Please fix the issues above and try again.")
             Return

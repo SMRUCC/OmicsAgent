@@ -1,5 +1,4 @@
-Imports System.Net.Http
-Imports Microsoft.VisualBasic.MIME.application.json.Javascript
+Imports Ollama
 
 ' ============================================================================
 ' 运行环境检查模块 - 检查外部工具路径与 LLM 服务可用性
@@ -14,10 +13,12 @@ Public Class EnvironmentChecker
 
     Private ReadOnly _config As AgentConfig
     Private ReadOnly _logger As Action(Of String)
+    Private ReadOnly _llmClientFactory As Func(Of LLMClient)
 
-    Public Sub New(config As AgentConfig, Optional logger As Action(Of String) = Nothing)
+    Public Sub New(config As AgentConfig, Optional logger As Action(Of String) = Nothing, Optional llmClientFactory As Func(Of LLMClient) = Nothing)
         _config = config
         _logger = If(logger, AddressOf Console.WriteLine)
+        _llmClientFactory = llmClientFactory
     End Sub
 
     ''' <summary>
@@ -143,53 +144,37 @@ Public Class EnvironmentChecker
         Return ok
     End Function
 
-    ''' <summary>检查 LLM 服务是否可用（调用 /api/tags 接口）</summary>
+    ''' <summary>检查 LLM 服务是否可用（调用 LLMClient.GetModelInformation，兼容 Ollama / OpenAI 后端）</summary>
     Private Async Function CheckLLMServiceAsync() As Task(Of Boolean)
         LogInfo("")
         LogInfo("----- 检查大语言模型服务可用性 -----")
 
+        ' 取得 LLMClient：优先使用注入的工厂，未注入时基于配置直接构造
+        Dim client As LLMClient
+        If _llmClientFactory IsNot Nothing Then
+            client = _llmClientFactory()
+        Else
+            client = New LLMClient(LLMUrl.Create(_config.LLM.LLMServiceUrl, _config.LLM.LLMApiKey), _config.LLM.LLMModelName)
+        End If
+
         Try
-            Using client As New HttpClient()
-                client.Timeout = TimeSpan.FromSeconds(15)
-                Dim tagsUrl = _config.LLM.LLMServiceUrl.TrimEnd("/"c) & "/api/tags"
-                LogInfo($"  正在连接：{tagsUrl}")
-                Dim resp = Await client.GetAsync(tagsUrl)
-                If resp.IsSuccessStatusCode Then
-                    Dim json = Await resp.Content.ReadAsStringAsync()
-                    Dim jobj As JsonObject = Await JsonObject.Parse(json)
-                    Dim models As JsonArray = jobj("models")
-                    If models IsNot Nothing AndAlso models.Count > 0 Then
-                        LogInfo($"  [OK] LLM 服务可用，已加载 {models.Count} 个模型")
-                        Dim modelExists As Boolean = False
-                        For Each m As JsonObject In models
-                            Dim name = m("name")?.ToString()
-                            If name = _config.LLM.LLMModelName Then
-                                modelExists = True
-                                Exit For
-                            End If
-                        Next
-                        If Not modelExists Then
-                            LogInfo($"  [!] 指定的模型 {_config.LLM.LLMModelName} 未在服务中找到，请确认模型名称是否正确")
-                            LogInfo("  当前可用模型列表：")
-                            For Each m As JsonObject In models
-                                LogInfo($"      - {m("name")?.ToString()}")
-                            Next
-                            Return False
-                        End If
-                        Return True
-                    Else
-                        LogInfo("  [X] LLM 服务可用但未加载任何模型")
-                        Return False
-                    End If
-                Else
-                    LogInfo($"  [X] LLM 服务返回错误状态码：{CInt(resp.StatusCode)} {resp.ReasonPhrase}")
-                    Return False
-                End If
-            End Using
+            LogInfo($"  正在连接：{_config.LLM.LLMServiceUrl}")
+            LogInfo($"  目标模型：{_config.LLM.LLMModelName}")
+            Dim info As ModelInfo = Await client.GetModelInformation(timeout:=15, verbose:=True)
+
+            If info Is Nothing OrElse String.IsNullOrEmpty(info.Id) Then
+                LogInfo("  [X] LLM 服务返回了空的模型信息（ModelInfo 为空）")
+                Return False
+            End If
+
+            LogInfo($"  [OK] LLM 服务可用，模型：{info.Id}（后端：{info.Provider}）")
+            Return True
         Catch ex As Exception
-            LogInfo($"  [X] 无法连接到 LLM 服务：{ex.Message}")
-            LogInfo("  请确认 Ollama 服务已启动，并检查 INI 配置文件中的 url 字段。")
+            LogInfo($"  [X] 无法连接到 LLM 服务或获取模型信息失败：{ex.Message}")
+            LogInfo("  请确认 LLM 服务已启动，并检查 INI 配置文件中的 url / apikey / model 字段。")
             Return False
+        Finally
+            If client IsNot Nothing Then client.Dispose()
         End Try
     End Function
 
