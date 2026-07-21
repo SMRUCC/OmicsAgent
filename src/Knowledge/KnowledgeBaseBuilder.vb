@@ -1,4 +1,5 @@
 Imports Ollama
+Imports Researcher
 
 ' ============================================================================
 ' 知识库构建模块 - 文献检索与生物学知识提取
@@ -166,7 +167,7 @@ Public Class KnowledgeBaseBuilder
     End Function
 
     ''' <summary>调用 LLM 从文献中提取生物学知识，生成 kb.json</summary>
-    Private Async Function ExtractKnowledgeAsync(referenceFiles As List(Of String), cancellationToken As CancellationToken)
+    Private Async Function ExtractKnowledgeAsync(referenceFiles As List(Of String), cancellationToken As CancellationToken) As Task
         LogInfo("正在从文献中提取生物学知识...")
 
         Dim knowledgeEntries As New List(Of JObject)()
@@ -206,7 +207,7 @@ Public Class KnowledgeBaseBuilder
     End Function
 
     ''' <summary>无参考文献时，使用 LLM 自身训练知识生成 kb.json</summary>
-    Private Async Function GenerateKnowledgeFromLLMAsync(cancellationToken As CancellationToken)
+    Private Async Function GenerateKnowledgeFromLLMAsync(cancellationToken As CancellationToken) As Task
         LogInfo("使用 LLM 自身训练知识生成知识库...")
         Try
             Using llm = _llmFactory()
