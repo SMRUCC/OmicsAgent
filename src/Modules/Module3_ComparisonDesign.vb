@@ -1,10 +1,8 @@
+Imports Ollama
+
 ' ============================================================================
 ' 模块 3: 设计差异分析的比对组别
 ' ============================================================================
-Imports System.IO
-Imports System.Text
-Imports System.Threading
-Imports System.Threading.Tasks
 
 ''' <summary>
 ''' 差异分析比对组别设计模块。

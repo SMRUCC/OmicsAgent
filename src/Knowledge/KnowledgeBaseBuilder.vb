@@ -1,15 +1,8 @@
+Imports Ollama
+
 ' ============================================================================
 ' 知识库构建模块 - 文献检索与生物学知识提取
 ' ============================================================================
-Imports System.ComponentModel
-Imports System.IO
-Imports System.Text
-Imports System.Threading
-Imports System.Threading.Tasks
-Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports MySql.Data.MySqlClient
-Imports Newtonsoft.Json
-Imports Newtonsoft.Json.Linq
 
 ''' <summary>
 ''' 知识库构建器，负责根据用户研究主题检索相关文献，

@@ -22,7 +22,7 @@ Public Class ShellTool
         _config = config
         _workspaceRoot = workspaceRoot
         _logger = If(logger, AddressOf Console.WriteLine)
-    End Function
+    End Sub
 
     <Description("Execute an R script file using Rscript interpreter. Returns the stdout, stderr, and exit code. The script file path should be relative to workspace root or absolute.")>
     Public Function run_rscript(

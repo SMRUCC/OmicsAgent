@@ -1,10 +1,8 @@
+Imports Ollama
+
 ' ============================================================================
 ' 模块 7: 进阶分析（CMeans 模糊聚类 + bnlearn 动态贝叶斯网络 + PLS-PM 因果路径）
 ' ============================================================================
-Imports System.IO
-Imports System.Text
-Imports System.Threading
-Imports System.Threading.Tasks
 
 ''' <summary>
 ''' 进阶分析模块。

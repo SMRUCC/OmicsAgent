@@ -1,10 +1,8 @@
+Imports Ollama
+
 ' ============================================================================
 ' 模块 5: KEGG 生物学功能分析（富集 + GSVA）
 ' ============================================================================
-Imports System.IO
-Imports System.Text
-Imports System.Threading
-Imports System.Threading.Tasks
 
 ''' <summary>
 ''' KEGG 生物学功能分析模块。

@@ -1,10 +1,8 @@
+Imports Ollama
+
 ' ============================================================================
 ' 模块 2: 总体样本 PCA/PLSDA/OPLSDA 分析
 ' ============================================================================
-Imports System.IO
-Imports System.Text
-Imports System.Threading
-Imports System.Threading.Tasks
 
 ''' <summary>
 ''' 总体样本 PCA/PLSDA/OPLSDA 分析模块。

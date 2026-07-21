@@ -1,10 +1,8 @@
+Imports Ollama
+
 ' ============================================================================
 ' 模块 9: 撰写论文初稿（生成 HTML 报告并转换为 PDF）
 ' ============================================================================
-Imports System.IO
-Imports System.Text
-Imports System.Threading
-Imports System.Threading.Tasks
 
 ''' <summary>
 ''' 论文初稿撰写模块。
@@ -119,7 +117,7 @@ Return your plan as JSON:
         Dim analysisDir = Path.Combine(_context.WorkspaceDir, "analysis")
         If Not Directory.Exists(analysisDir) Then Return result
 
-        For Each dir In Directory.GetDirectories(analysisDir, "analysis_modules_*")
+        For Each dir As String In Directory.GetDirectories(analysisDir, "analysis_modules_*")
             Dim conclusionFile = Path.Combine(dir, "conclusion.txt")
             If File.Exists(conclusionFile) Then
                 Dim moduleName = Path.GetFileName(dir)
@@ -139,7 +137,7 @@ Return your plan as JSON:
         Dim analysisDir = Path.Combine(_context.WorkspaceDir, "analysis")
         If Not Directory.Exists(analysisDir) Then Return result
 
-        For Each dir In Directory.GetDirectories(analysisDir, "analysis_modules_*")
+        For Each dir As String In Directory.GetDirectories(analysisDir, "analysis_modules_*")
             Dim figuresDir = Path.Combine(dir, "figures")
             If Directory.Exists(figuresDir) Then
                 Dim moduleName = Path.GetFileName(dir)
@@ -162,7 +160,7 @@ Return your plan as JSON:
         Dim analysisDir = Path.Combine(_context.WorkspaceDir, "analysis")
         If Not Directory.Exists(analysisDir) Then Return result
 
-        For Each dir In Directory.GetDirectories(analysisDir, "analysis_modules_*")
+        For Each dir As String In Directory.GetDirectories(analysisDir, "analysis_modules_*")
             Dim tablesDir = Path.Combine(dir, "tables")
             If Directory.Exists(tablesDir) Then
                 Dim moduleName = Path.GetFileName(dir)

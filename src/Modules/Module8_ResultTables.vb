@@ -1,13 +1,8 @@
+Imports Ollama
+
 ' ============================================================================
 ' 模块 8: 整理结果文件（生成 xlsx 表格）
 ' ============================================================================
-Imports System.IO
-Imports System.Text
-Imports System.Threading
-Imports System.Threading.Tasks
-Imports DocumentFormat.OpenXml
-Imports DocumentFormat.OpenXml.Packaging
-Imports DocumentFormat.OpenXml.Spreadsheet
 
 ''' <summary>
 ''' 结果表格整理模块。
@@ -155,7 +150,7 @@ Return as JSON:
         End If
 
         ' 收集各模块 tables/ 目录下的 CSV 文件
-        For Each dir In Directory.GetDirectories(analysisDir, "analysis_modules_*")
+        For Each dir As String In Directory.GetDirectories(analysisDir, "analysis_modules_*")
             Dim tablesDir = Path.Combine(dir, "tables")
             If Directory.Exists(tablesDir) Then
                 result.AddRange(Directory.GetFiles(tablesDir, "*.csv"))
@@ -208,58 +203,58 @@ Return as JSON:
     ''' <summary>创建 XLSX 文件</summary>
     Private Async Function CreateXlsxAsync(xlsxPath As String, csvFiles As List(Of String), themeName As String, cancellationToken As CancellationToken) As Task
         Await Task.Run(Sub()
-            PathUtils.EnsureDirectory(Path.GetDirectoryName(xlsxPath))
-            Using doc As SpreadsheetDocument = SpreadsheetDocument.Create(xlsxPath, SpreadsheetDocumentType.Workbook)
-                Dim wbPart = doc.AddWorkbookPart()
-                wbPart.Workbook = New Workbook()
+                           PathUtils.EnsureDirectory(Path.GetDirectoryName(xlsxPath))
+                           Using doc As SpreadsheetDocument = SpreadsheetDocument.Create(xlsxPath, SpreadsheetDocumentType.Workbook)
+                               Dim wbPart = doc.AddWorkbookPart()
+                               wbPart.Workbook = New Workbook()
 
-                ' 添加共享字符串表
-                Dim sharedStrPart = wbPart.AddNewPart(Of SharedStringTablePart)()
-                sharedStrPart.SharedStringTable = New SharedStringTable()
+                               ' 添加共享字符串表
+                               Dim sharedStrPart = wbPart.AddNewPart(Of SharedStringTablePart)()
+                               sharedStrPart.SharedStringTable = New SharedStringTable()
 
-                ' 添加样式表
-                Dim stylesPart = wbPart.AddNewPart(Of WorkbookStylesPart)()
-                stylesPart.Stylesheet = CreateStylesheet()
+                               ' 添加样式表
+                               Dim stylesPart = wbPart.AddNewPart(Of WorkbookStylesPart)()
+                               stylesPart.Stylesheet = CreateStylesheet()
 
-                Dim sheets = New Sheets()
-                wbPart.Workbook.Append(sheets)
+                               Dim sheets = New Sheets()
+                               wbPart.Workbook.Append(sheets)
 
-                Dim sheetIndex = 1
-                For Each csv In csvFiles
-                    Dim sheetName = Path.GetFileNameWithoutExtension(csv)
-                    If sheetName.Length > 31 Then sheetName = sheetName.Substring(0, 31)
-                    ' 移除非法字符
-                    sheetName = sheetName.Replace(":"c, "_"c).Replace("\"c, "_"c).Replace("/"c, "_"c).Replace("?"c, "_"c).Replace("*"c, "_"c).Replace("["c, "_"c).Replace("]"c, "_"c)
+                               Dim sheetIndex = 1
+                               For Each csv In csvFiles
+                                   Dim sheetName = Path.GetFileNameWithoutExtension(csv)
+                                   If sheetName.Length > 31 Then sheetName = sheetName.Substring(0, 31)
+                                   ' 移除非法字符
+                                   sheetName = sheetName.Replace(":"c, "_"c).Replace("\"c, "_"c).Replace("/"c, "_"c).Replace("?"c, "_"c).Replace("*"c, "_"c).Replace("["c, "_"c).Replace("]"c, "_"c)
 
-                    Dim wsPart = wbPart.AddNewPart(Of WorksheetPart)()
-                    wsPart.Worksheet = New Worksheet()
+                                   Dim wsPart = wbPart.AddNewPart(Of WorksheetPart)()
+                                   wsPart.Worksheet = New Worksheet()
 
-                    Dim sd = New Sheet() With {
-                        .Id = wbPart.GetIdOfPart(wsPart),
-                        .SheetId = CType(sheetIndex, UInt32Value),
-                        .Name = sheetName
-                    }
-                    sheets.Append(sd)
+                                   Dim sd = New Sheet() With {
+                                       .Id = wbPart.GetIdOfPart(wsPart),
+                                       .SheetId = CType(sheetIndex, UInt32Value),
+                                       .Name = sheetName
+                                   }
+                                   sheets.Append(sd)
 
-                    Dim sheetData = CreateSheetData(csv, themeName)
-                    wsPart.Worksheet.Append(sheetData)
+                                   Dim sheetData = CreateSheetData(csv, themeName)
+                                   wsPart.Worksheet.Append(sheetData)
 
-                    ' 添加冻结窗格
-                    Dim pane As New Pane() With {
-                        .VerticalSplit = New VerticalSplit(1),
-                        .HorizontalSplit = New HorizontalSplit(1),
-                        .TopLeftCell = New TopLeftCell("B3"),
-                        .ActivePane = PaneValues.BottomRight,
-                        .State = PaneStateValues.Frozen
-                    }
-                    wsPart.Worksheet.Append(pane)
+                                   ' 添加冻结窗格
+                                   Dim pane As New Pane() With {
+                                       .VerticalSplit = New VerticalSplit(1),
+                                       .HorizontalSplit = New HorizontalSplit(1),
+                                       .TopLeftCell = New TopLeftCell("B3"),
+                                       .ActivePane = PaneValues.BottomRight,
+                                       .State = PaneStateValues.Frozen
+                                   }
+                                   wsPart.Worksheet.Append(pane)
 
-                    sheetIndex += 1
-                Next
+                                   sheetIndex += 1
+                               Next
 
-                wbPart.Workbook.Save()
-            End Using
-        End Sub)
+                               wbPart.Workbook.Save()
+                           End Using
+                       End Sub)
     End Function
 
     ''' <summary>创建样式表</summary>
@@ -269,13 +264,13 @@ Return as JSON:
         ' 字体
         Dim fonts As New Fonts()
         ' 默认字体
-        fonts.Append(New Font(New FontSize(New FontSize() With {.Val = 11}), New Color(New Color() With {.Rgb = "FF000000"}), New FontName(New FontName() With {.Val = "Cambria Math"})))
+        fonts.Append(New Font(New FontSize(New FontSize() With {.Val = 11}), New Color(New Color() With {.RGB = "FF000000"}), New FontName(New FontName() With {.Val = "Cambria Math"})))
         ' 标题字体（加粗白色）
-        fonts.Append(New Font(New FontSize(New FontSize() With {.Val = 11}), New Color(New Color() With {.Rgb = "FFFFFFFF"}), New FontName(New FontName() With {.Val = "Cambria Math"}), New Bold()))
+        fonts.Append(New Font(New FontSize(New FontSize() With {.Val = 11}), New Color(New Color() With {.RGB = "FFFFFFFF"}), New FontName(New FontName() With {.Val = "Cambria Math"}), New Bold()))
         ' 注释字体（草绿色）
-        fonts.Append(New Font(New FontSize(New FontSize() With {.Val = 11}), New Color(New Color() With {.Rgb = "FF228B22"}), New FontName(New FontName() With {.Val = "Cambria Math"})))
+        fonts.Append(New Font(New FontSize(New FontSize() With {.Val = 11}), New Color(New Color() With {.RGB = "FF228B22"}), New FontName(New FontName() With {.Val = "Cambria Math"})))
         ' ID 列字体（斜体黑色）
-        fonts.Append(New Font(New FontSize(New FontSize() With {.Val = 11}), New Color(New Color() With {.Rgb = "FF000000"}), New FontName(New FontName() With {.Val = "Cambria Math"}), New Italic()))
+        fonts.Append(New Font(New FontSize(New FontSize() With {.Val = 11}), New Color(New Color() With {.RGB = "FF000000"}), New FontName(New FontName() With {.Val = "Cambria Math"}), New Italic()))
         fonts.Count = CType(4, UInt32Value)
 
         ' 填充
@@ -283,9 +278,9 @@ Return as JSON:
         fills.Append(New Fill(New PatternFill() With {.PatternType = PatternValues.None}))
         fills.Append(New Fill(New PatternFill() With {.PatternType = PatternValues.Gray125}))
         ' 深蓝色背景
-        fills.Append(New Fill(New PatternFill(New ForegroundColor(New ForegroundColor() With {.Rgb = "FF1F4E79"}) With {.Auto = True}) With {.PatternType = PatternValues.Solid}))
+        fills.Append(New Fill(New PatternFill(New ForegroundColor(New ForegroundColor() With {.RGB = "FF1F4E79"}) With {.Auto = True}) With {.PatternType = PatternValues.Solid}))
         ' 浅灰色背景
-        fills.Append(New Fill(New PatternFill(New ForegroundColor(New ForegroundColor() With {.Rgb = "FFD9D9D9"}) With {.Auto = True}) With {.PatternType = PatternValues.Solid}))
+        fills.Append(New Fill(New PatternFill(New ForegroundColor(New ForegroundColor() With {.RGB = "FFD9D9D9"}) With {.Auto = True}) With {.PatternType = PatternValues.Solid}))
         fills.Count = CType(4, UInt32Value)
 
         ' 边框
@@ -369,7 +364,7 @@ Return as JSON:
         Return New Cell() With {
             .CellReference = GetCellRef(col, If(isHeader, 2, 0)),
             .DataType = CellValues.String,
-            .StyleIndex = CType(styleIndex, UInt32Value),
+            .styleIndex = CType(styleIndex, UInt32Value),
             .CellValue = New CellValue(value)
         }
     End Function
@@ -378,7 +373,7 @@ Return as JSON:
         Return New Cell() With {
             .CellReference = GetCellRef(col, row),
             .DataType = CellValues.String,
-            .StyleIndex = CType(styleIndex, UInt32Value),
+            .styleIndex = CType(styleIndex, UInt32Value),
             .CellValue = New CellValue(value)
         }
     End Function

@@ -1,10 +1,8 @@
+Imports Ollama
+
 ' ============================================================================
 ' 分析模块基类 - 所有具体分析模块的抽象基类
 ' ============================================================================
-Imports System.IO
-Imports System.Text
-Imports System.Threading
-Imports System.Threading.Tasks
 
 ''' <summary>
 ''' 所有分析模块的抽象基类。每个分析模块负责一个具体的分析步骤，
@@ -94,7 +92,7 @@ Public MustInherit Class AnalysisModuleBase
             _context.ModuleResults.Add(New ModuleResult() With {
                 .ModuleName = ModuleName,
                 .ModuleIndex = ModuleIndex,
-                .Conclusion = conclusion,
+                .conclusion = conclusion,
                 .OutputDir = OutputDir
             })
 
