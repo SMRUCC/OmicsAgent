@@ -84,13 +84,17 @@ Public Class KnowledgeBaseBuilder
     ''' <summary>根据检索策略搜索文献</summary>
     Private Async Function SearchLiteratureAsync(researchTopic As String, cancellationToken As CancellationToken) As Task(Of List(Of String))
         Select Case _config.LiteratureSearchStrategy.ToLower()
+            Case "none"
+                ' 显式不自动检索文献：直接使用用户提供的参考文献（若有）或 LLM 自身知识
+                LogInfo("文献检索策略为 none，跳过自动检索")
+                Return New List(Of String)()
             Case "mysql"
                 Return SearchFromMySql(researchTopic)
             Case "ncbi"
                 Return Await SearchFromNcbiAsync(researchTopic, cancellationToken)
             Case Else
-                LogInfo($"未知的文献检索策略：{_config.LiteratureSearchStrategy}，跳过自动检索")
-                Return New List(Of String)()
+                ' 未知策略属于配置错误，应报错终止而非静默回退到 none
+                Throw New InvalidOperationException($"未知的文献检索策略：{_config.LiteratureSearchStrategy}。合法值为 mysql / ncbi / none，请检查 config.ini 的 [literature] strategy 配置。")
         End Select
     End Function
 
@@ -140,10 +144,102 @@ Public Class KnowledgeBaseBuilder
             For Each f In Directory.GetFiles(_context.KnowledgeDir, "ref_*.txt")
                 result.Add(f)
             Next
+
+            ' 补充获取存在 PMC 全文记录的文献全文（agent_glm.txt 第 34 行要求检索 PMC 全文）
+            Await FetchPmcFullTextAsync()
         Catch ex As Exception
             LogInfo($"[警告] NCBI 在线文献检索失败：{ex.Message}")
         End Try
         Return result
+    End Function
+
+    ''' <summary>
+    ''' 在 NCBI 摘要检索之后，补充获取存在 PubMed Central 全文记录的文献全文内容。
+    ''' 需求（agent_glm.txt 第 34 行）：NCBI 检索应获取标题、引用、摘要以及 PMC 全文（若可用）。
+    ''' </summary>
+    Private Async Function FetchPmcFullTextAsync() As Task
+        Try
+            Dim scriptPath = Path.Combine(_context.ScriptsDir, "fetch_pmc.py")
+            File.WriteAllText(scriptPath, GeneratePmcFetchScript(_context.KnowledgeDir), Encoding.UTF8)
+
+            Dim shell As New ShellTool(_config, _context.WorkspaceDir, _logger)
+            Dim runResult = shell.run_python("scripts/fetch_pmc.py", timeout_seconds:=300)
+            LogInfo($"PMC 全文获取脚本执行结果：{runResult.Substring(0, Math.Min(200, runResult.Length))}...")
+        Catch ex As Exception
+            ' PMC 全文获取失败不应中断已检索到的摘要的使用
+            LogInfo($"[警告] PMC 全文获取失败（不影响已检索到的摘要）：{ex.Message}")
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' 生成 PMC 全文获取 Python 脚本。基于 Bio.Entrez 将 pubmed PMID 关联至 pmc，
+    ''' 若存在 PMC 全文记录则 efetch 全文并追加到对应的 ref_*.txt 文件末尾。
+    ''' </summary>
+    Private Function GeneratePmcFetchScript(outputDir As String) As String
+        Dim sb As New StringBuilder()
+        sb.AppendLine("import os, re, sys")
+        sb.AppendLine("try:")
+        sb.AppendLine("    from Bio import Entrez")
+        sb.AppendLine("except ImportError:")
+        sb.AppendLine("    print('Biopython not installed; skipping PMC full text fetch.')")
+        sb.AppendLine("    sys.exit(0)")
+        sb.AppendLine()
+        sb.AppendLine("Entrez.email = 'omics-agent@example.com'")
+        sb.AppendLine("KNOWLEDGE_DIR = r'{KNOWLEDGE_DIR}'")
+        sb.AppendLine()
+        sb.AppendLine("def get_pmc_id(pmid):")
+        sb.AppendLine("    try:")
+        sb.AppendLine("        handle = Entrez.elink(dbfrom='pubmed', db='pmc', id=pmid)")
+        sb.AppendLine("        rec = Entrez.read(handle)")
+        sb.AppendLine("        handle.close()")
+        sb.AppendLine("        for linkset in rec:")
+        sb.AppendLine("            for linksetdb in linkset.get('LinkSetDb', []):")
+        sb.AppendLine("                if linksetdb.get('DbTo', '').lower() == 'pmc':")
+        sb.AppendLine("                    for item in linksetdb.get('IdList', []):")
+        sb.AppendLine("                        return 'PMC' + str(item)")
+        sb.AppendLine("    except Exception as e:")
+        sb.AppendLine("        print('elink failed for %s: %s' % (pmid, e))")
+        sb.AppendLine("    return None")
+        sb.AppendLine()
+        sb.AppendLine("def fetch_pmc_fulltext(pmc_id):")
+        sb.AppendLine("    try:")
+        sb.AppendLine("        handle = Entrez.efetch(db='pmc', id=pmc_id, rettype='text', retmode='text')")
+        sb.AppendLine("        text = handle.read()")
+        sb.AppendLine("        handle.close()")
+        sb.AppendLine("        return text")
+        sb.AppendLine("    except Exception as e:")
+        sb.AppendLine("        print('efetch failed for %s: %s' % (pmc_id, e))")
+        sb.AppendLine("        return None")
+        sb.AppendLine()
+        sb.AppendLine("def main():")
+        sb.AppendLine("    for fn in os.listdir(KNOWLEDGE_DIR):")
+        sb.AppendLine("        if not fn.startswith('ref_') or not fn.endswith('.txt'):")
+        sb.AppendLine("            continue")
+        sb.AppendLine("        path = os.path.join(KNOWLEDGE_DIR, fn)")
+        sb.AppendLine("        with open(path, 'r', encoding='utf-8') as f:")
+        sb.AppendLine("            content = f.read()")
+        sb.AppendLine("        m = re.search(r'PMID:\\s*(\\d+)', content)")
+        sb.AppendLine("        if not m:")
+        sb.AppendLine("            continue")
+        sb.AppendLine("        pmid = m.group(1)")
+        sb.AppendLine("        pmc_id = get_pmc_id(pmid)")
+        sb.AppendLine("        if not pmc_id:")
+        sb.AppendLine("            print('No PMC full text for PMID %s' % pmid)")
+        sb.AppendLine("            continue")
+        sb.AppendLine("        fulltext = fetch_pmc_fulltext(pmc_id)")
+        sb.AppendLine("        if not fulltext:")
+        sb.AppendLine("            continue")
+        sb.AppendLine("        if 'PMC Full Text' in content:")
+        sb.AppendLine("            print('PMC already appended for PMID %s' % pmid)")
+        sb.AppendLine("            continue")
+        sb.AppendLine("        with open(path, 'a', encoding='utf-8') as f:")
+        sb.AppendLine("            f.write('\\n\\n=== PMC Full Text (PMCID: %s) ===\\n' % pmc_id)")
+        sb.AppendLine("            f.write(fulltext[:50000])")
+        sb.AppendLine("        print('Appended PMC full text for PMID %s (%s)' % (pmid, pmc_id))")
+        sb.AppendLine()
+        sb.AppendLine("if __name__ == '__main__':")
+        sb.AppendLine("    main()")
+        Return sb.ToString().Replace("{KNOWLEDGE_DIR}", outputDir)
     End Function
 
     ''' <summary>调用 LLM 提取搜索关键词</summary>
