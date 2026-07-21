@@ -87,7 +87,7 @@ Public Class AgentConfig
     ''' agent 程序所在目录的上级目录（即包含 bin/、rscript/、python/、gcmodeller/、data/ 的根目录）。
     ''' 该路径在程序启动时自动推断得到。
     ''' </summary>
-    Public Property ApplicationRoot As String = ""
+    Public Shared ReadOnly Property ApplicationRoot As String = App.HOME.ParentPath
 
     ''' <summary>R 工具脚本目录路径（rscript/）</summary>
     Public ReadOnly Property RScriptsDir As String
@@ -157,7 +157,6 @@ Public Class AgentConfig
             ApplyValue(cfg, currentSection, key, value)
         Next
 
-        cfg.ApplicationRoot = InferApplicationRoot()
         Return cfg
     End Function
 
@@ -201,21 +200,6 @@ Public Class AgentConfig
                 End Select
         End Select
     End Sub
-
-    ''' <summary>推断 agent 程序根目录（bin/ 的上一级目录）</summary>
-    Private Shared Function InferApplicationRoot() As String
-        Dim exeDir = AppDomain.CurrentDomain.BaseDirectory
-        ' bin/Release/net10.0/ 或 bin/Debug/net10.0/ -> 上溯到 bin/ 的父目录
-        Dim parent = Directory.GetParent(exeDir)
-        If parent?.Name.Equals("bin", StringComparison.OrdinalIgnoreCase) Then
-            Return parent.Parent.FullName
-        ElseIf parent?.Parent?.Name.Equals("bin", StringComparison.OrdinalIgnoreCase) Then
-            Return parent.Parent.Parent.FullName
-        Else
-            ' 开发模式下直接使用 exe 目录
-            Return exeDir
-        End If
-    End Function
 
     ''' <summary>创建 INI 配置文件模板</summary>
     Public Shared Sub CreateTemplate(iniPath As String)
