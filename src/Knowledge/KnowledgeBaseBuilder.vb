@@ -3,8 +3,8 @@
 ' ============================================================================
 Imports System.IO
 Imports System.Text
+Imports Ollama
 Imports OmicsAgent.Config
-Imports OmicsAgent.Utils
 
 Namespace Knowledge
 

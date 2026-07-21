@@ -5,6 +5,7 @@ Imports System.ComponentModel
 Imports System.Diagnostics
 Imports System.IO
 Imports System.Text
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 
 Namespace Tools
 
@@ -53,7 +54,7 @@ Namespace Tools
                 For i = 0 To files.Length - 1
                     If i > 0 Then sb.Append(",")
                     Dim fi As New FileInfo(files(i))
-                    sb.Append($"{{""name"": ""{Path.GetFileName(files(i))}"", ""size"": {fi.Length}}}")
+                    sb.Append($"{{""name"": ""{path.GetFileName(files(i))}"", ""size"": {fi.Length}}}")
                 Next
                 sb.Append("]")
                 Return $"{{""path"": ""{path}"", ""count"": {files.Length}, ""files"": {sb.ToString()}}}"
@@ -68,7 +69,7 @@ Namespace Tools
             <Argument("content", Description:="Text content to write to the file")> content As String
         ) As String
             Try
-                Dim parent = Path.GetDirectoryName(path)
+                Dim parent = path.GetDirectoryName(path)
                 If Not String.IsNullOrEmpty(parent) AndAlso Not Directory.Exists(parent) Then
                     Directory.CreateDirectory(parent)
                 End If

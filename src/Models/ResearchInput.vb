@@ -36,7 +36,7 @@ Namespace Models
         Public Overrides Function ToString() As String
             Return $"{Name} ({OmicsType}, {MoleculeCount} molecules x {SampleCount} samples)"
         End Function
-    End Function
+    End Class
 
     ''' <summary>
     ''' 整体输入参数

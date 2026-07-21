@@ -5,6 +5,7 @@ Imports System.ComponentModel
 Imports System.Diagnostics
 Imports System.IO
 Imports System.Text
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 
 Namespace Tools
 
@@ -83,7 +84,7 @@ Namespace Tools
                 If Not filename.EndsWith(".R") AndAlso Not filename.EndsWith(".r") Then
                     filename &= ".R"
                 End If
-                Dim path = Path.Combine(_scriptsDir, filename)
+                Dim path = path.Combine(_scriptsDir, filename)
                 If Not Directory.Exists(_scriptsDir) Then Directory.CreateDirectory(_scriptsDir)
                 File.WriteAllText(path, content, Encoding.UTF8)
                 Return $"{{""success"": true, ""path"": ""{path.Replace("\", "/")}""}}"
