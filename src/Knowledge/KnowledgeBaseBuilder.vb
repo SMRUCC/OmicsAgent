@@ -44,7 +44,7 @@ Public Class KnowledgeBaseBuilder
 
         ' 2. 处理参考文献
         Dim referenceFiles = CollectReferenceFiles()
-        If referenceFiles.Count = 0 AndAlso _config.AutoSearchLiterature Then
+        If referenceFiles.Count = 0 AndAlso _config.Literature.AutoSearchLiterature Then
             LogInfo("未提供参考文献，根据 INI 配置自动检索文献...")
             referenceFiles = Await SearchLiteratureAsync(_context.ResearchTopic, cancellationToken)
         End If
@@ -83,7 +83,7 @@ Public Class KnowledgeBaseBuilder
 
     ''' <summary>根据检索策略搜索文献</summary>
     Private Async Function SearchLiteratureAsync(researchTopic As String, cancellationToken As CancellationToken) As Task(Of List(Of String))
-        Select Case _config.LiteratureSearchStrategy.ToLower()
+        Select Case _config.Literature.LiteratureSearchStrategy.ToLower()
             Case "none"
                 ' 显式不自动检索文献：直接使用用户提供的参考文献（若有）或 LLM 自身知识
                 LogInfo("文献检索策略为 none，跳过自动检索")
@@ -94,7 +94,7 @@ Public Class KnowledgeBaseBuilder
                 Return Await SearchFromNcbiAsync(researchTopic, cancellationToken)
             Case Else
                 ' 未知策略属于配置错误，应报错终止而非静默回退到 none
-                Throw New InvalidOperationException($"未知的文献检索策略：{_config.LiteratureSearchStrategy}。合法值为 mysql / ncbi / none，请检查 config.ini 的 [literature] strategy 配置。")
+                Throw New InvalidOperationException($"未知的文献检索策略：{_config.Literature.LiteratureSearchStrategy}。合法值为 mysql / ncbi / none，请检查 config.ini 的 [literature] strategy 配置。")
         End Select
     End Function
 
@@ -102,13 +102,13 @@ Public Class KnowledgeBaseBuilder
     Private Function SearchFromMySql(researchTopic As String) As List(Of String)
         Dim result As New List(Of String)()
         Try
-            Dim pubmedTool As New PubMedQueryTool(_config.MySqlConnectionString)
+            Dim pubmedTool As New PubMedQueryTool(_config.GetMySqlConnectionString())
             ' 调用 LLM 提取搜索关键词
             Dim keywords = ExtractSearchKeywords(researchTopic).Result
             LogInfo($"提取的搜索关键词：{String.Join(", ", keywords)}")
 
             For Each kw In keywords
-                Dim json = pubmedTool.search_papers(kw, max_results:=_config.MaxLiteratureCount \ keywords.Count)
+                Dim json = pubmedTool.search_papers(kw, max_results:=_config.Literature.MaxLiteratureCount \ keywords.Count)
                 Dim papers = ParseSearchResults(json)
                 For Each paper In papers
                     Dim fileName = $"ref_{result.Count + 1}_{SafeFileName(paper("title"))}.txt"
@@ -116,7 +116,7 @@ Public Class KnowledgeBaseBuilder
                     File.WriteAllText(filePath, FormatPaperText(paper), Encoding.UTF8)
                     result.Add(filePath)
                 Next
-                If result.Count >= _config.MaxLiteratureCount Then Exit For
+                If result.Count >= _config.Literature.MaxLiteratureCount Then Exit For
             Next
         Catch ex As Exception
             LogInfo($"[警告] MySQL 文献检索失败：{ex.Message}")
@@ -133,7 +133,7 @@ Public Class KnowledgeBaseBuilder
 
             ' 生成 Python 检索脚本
             Dim pyScript = Path.Combine(_context.ScriptsDir, "search_pubmed.py")
-            File.WriteAllText(pyScript, GenerateNcbiSearchScript(keywords, _config.MaxLiteratureCount, _context.KnowledgeDir), Encoding.UTF8)
+            File.WriteAllText(pyScript, GenerateNcbiSearchScript(keywords, _config.Literature.MaxLiteratureCount, _context.KnowledgeDir), Encoding.UTF8)
 
             ' 执行 Python 脚本
             Dim shell As New ShellTool(_config, _context.WorkspaceDir, _logger)

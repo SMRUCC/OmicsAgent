@@ -9,24 +9,24 @@
 [tools]
 ; Rscript 解释器路径（必需）
 ; Windows 默认安装路径示例：C:\Program Files\R\R-4.4.0\bin\Rscript.exe
-RscriptPath = C:\Program Files\R\R-4.4.0\bin\Rscript.exe
+rscript = C:\Program Files\R\R-4.4.0\bin\Rscript.exe
 
 ; wkhtmltopdf 程序路径，用于将 HTML 报告转换为 PDF（必需）
 ; Windows 默认安装路径示例：C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe
-WkHtmlToPdfPath = C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe
+wkhtmltopdf = C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe
 
 ; R# 解释器路径（必需）
 ; R# 是 GCModeller 项目提供的 R 语言变体解释器
-RsharpPath = C:\GCModeller\Rsharp.exe
+rsharp = C:\GCModeller\Rsharp.exe
 
 ; Python 解释器路径（必需）
 ; 建议使用 Python 3.10+ 并安装 biopython 包
-PythonPath = C:\Python310\python.exe
+python = C:\Python310\python.exe
 
 [llm]
 ; Ollama 服务 URL（必需）
 ; 默认本地 Ollama 服务地址
-ServiceUrl = http://localhost:11434
+url = http://localhost:11434
 
 ; 所使用的大语言模型名称（必需）
 ; 推荐使用具备代码生成能力的模型，例如：
@@ -34,10 +34,10 @@ ServiceUrl = http://localhost:11434
 ;   - qwen2.5-coder:14b
 ;   - deepseek-coder-v2:16b
 ;   - llama3.1:8b
-ModelName = qwen2.5:14b
+model = qwen2.5:14b
 
 ; 访问 LLM 服务的 API Key（可选，仅当服务需要鉴权时填写）
-ApiKey =
+apikey =
 
 [mysql]
 ; PubMed 本地镜像 MySQL 数据库连接参数

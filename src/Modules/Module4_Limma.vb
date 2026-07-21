@@ -46,8 +46,8 @@ Design a plan for LIMMA differential analysis including:
 2. Overall F-test using limma
 3. Pairwise comparisons using limma (based on comparison design from module 3)
 4. For time-series data: include time as covariate, perform differential analysis with time effect removed
-5. For metabolomics data: include VIP value calculation (VIP > {_config.MetaboliteVipCutoff} threshold)
-6. Default thresholds: pvalue < 0.05, no logFC cutoff, take top {_config.DiffTopCount} molecules by |logFC| descending
+5. For metabolomics data: include VIP value calculation (VIP > {_config.Analysis.MetaboliteVipCutoff} threshold)
+6. Default thresholds: pvalue < 0.05, no logFC cutoff, take top {_config.Analysis.DiffTopCount} molecules by |logFC| descending
 
 Return your plan as JSON:
 {{
@@ -91,9 +91,9 @@ Write a complete R script that:
 4. Performs overall F-test using limma
 5. Performs pairwise limma comparisons for each comparison in the design
 6. For time-series data: include time as covariate in the design matrix
-7. For metabolomics data: calculate VIP values using mixOmics (must apply VIP > {_config.MetaboliteVipCutoff} filter)
-8. Applies thresholds: pvalue < 0.05, VIP > {_config.MetaboliteVipCutoff} (for metabolomics), no logFC cutoff
-9. Takes top {_config.DiffTopCount} molecules by |logFC| descending after pvalue/VIP filtering
+7. For metabolomics data: calculate VIP values using mixOmics (must apply VIP > {_config.Analysis.MetaboliteVipCutoff} filter)
+8. Applies thresholds: pvalue < 0.05, VIP > {_config.Analysis.MetaboliteVipCutoff} (for metabolomics), no logFC cutoff
+9. Takes top {_config.Analysis.DiffTopCount} molecules by |logFC| descending after pvalue/VIP filtering
 10. Generates the following plots (PNG + PDF, 300 dpi, English labels):
     - Volcano plots for each comparison (show top 5 differential molecule names)
     - Venn diagrams showing overlap of differential molecules across comparisons
