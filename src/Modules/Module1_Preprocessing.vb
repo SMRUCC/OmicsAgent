@@ -31,7 +31,7 @@ Public Class PreprocessingModule
         Using llm = _llmFactory()
             RegisterTools(llm)
 
-            Dim prompt = $@"
+            Dim prompt = $"
 You are a bioinformatics analysis expert. Your task is to design a preprocessing plan for omics expression matrix data.
 
 {BuildContextInfo()}
@@ -75,7 +75,7 @@ Return your plan as JSON:
         Using llm = _llmFactory()
             RegisterTools(llm)
 
-            Dim prompt = $@"
+            Dim prompt = $"
 You are a bioinformatics R script expert. Write an R script to preprocess the omics expression matrix data according to the following plan.
 
 {BuildContextInfo()}
@@ -122,7 +122,7 @@ Write the complete R script. Use ```r ... ``` code block.
 
     Protected Overrides Async Function GenerateConclusionAsync(plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)
         Using llm = _llmFactory()
-            Dim prompt = $@"
+            Dim prompt = $"
 You are a biomedical research expert. Based on the preprocessing analysis results, write a stage conclusion in Chinese.
 
 {BuildContextInfo()}

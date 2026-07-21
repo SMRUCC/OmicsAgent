@@ -39,7 +39,7 @@ Public Class ResultTablesModule
         Using llm = _llmFactory()
             RegisterTools(llm)
 
-            Dim prompt = $@"
+            Dim prompt = $"
 You are a bioinformatics data analyst. Design a plan to compile result tables.
 
 {BuildContextInfo()}
@@ -103,7 +103,7 @@ Return your plan as JSON:
 
         ' 同时让 LLM 生成英文的表格注释说明
         Using llm = _llmFactory()
-            Dim prompt = $@"
+            Dim prompt = $"
 You are a bioinformatics data analyst. Generate English descriptions for result tables.
 
 {BuildContextInfo()}

@@ -365,7 +365,7 @@ Public Class KnowledgeBaseBuilder
     ''' <summary>生成 NCBI 在线检索的 Python 脚本</summary>
     Private Function GenerateNcbiSearchScript(keywords As List(Of String), maxCount As Integer, outputDir As String) As String
         Dim kwList = String.Join(", ", keywords.Select(Function(k) $"""{k}"""))
-        Return $@"
+        Return $"
 import os
 import sys
 import time

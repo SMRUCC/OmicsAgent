@@ -30,7 +30,7 @@ Public Class KeggFunctionModule
         Using llm = _llmFactory()
             RegisterTools(llm)
 
-            Dim prompt = $@"
+            Dim prompt = $"
 You are a bioinformatics analysis expert. Design a KEGG functional analysis plan.
 
 {BuildContextInfo()}
@@ -74,7 +74,7 @@ Return your plan as JSON:
         Using llm = _llmFactory()
             RegisterTools(llm)
 
-            Dim prompt = $@"
+            Dim prompt = $"
 You are a bioinformatics R script expert. Write an R script to perform KEGG functional analysis.
 
 {BuildContextInfo()}
@@ -134,7 +134,7 @@ Write the complete R script. Use ```r ... ``` code block.
 
     Protected Overrides Async Function GenerateConclusionAsync(plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)
         Using llm = _llmFactory()
-            Dim prompt = $@"
+            Dim prompt = $"
 You are a biomedical research expert. Based on the KEGG functional analysis results, write a stage conclusion in Chinese.
 
 {BuildContextInfo()}

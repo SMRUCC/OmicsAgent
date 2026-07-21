@@ -28,7 +28,7 @@ Public Class ComparisonDesignModule
         Using llm = _llmFactory()
             RegisterTools(llm)
 
-            Dim prompt = $@"
+            Dim prompt = $"
 You are a biomedical research expert. Design differential analysis comparison groups based on the user's research topic.
 
 {BuildContextInfo()}
@@ -79,7 +79,7 @@ Return your plan as JSON:
         Using llm = _llmFactory()
             RegisterTools(llm)
 
-            Dim prompt = $@"
+            Dim prompt = $"
 You are a bioinformatics R script expert. Write an R script to save the comparison design as a structured CSV file.
 
 {BuildContextInfo()}
@@ -112,7 +112,7 @@ Write the complete R script. Use ```r ... ``` code block.
 
     Protected Overrides Async Function GenerateConclusionAsync(plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)
         Using llm = _llmFactory()
-            Dim prompt = $@"
+            Dim prompt = $"
 You are a biomedical research expert. Based on the comparison group design, write a stage conclusion in Chinese.
 
 {BuildContextInfo()}
