@@ -179,6 +179,7 @@ Public MustInherit Class AnalysisModuleBase
         llm.AddFunction(fileTool, "file_exists")
         llm.AddFunction(fileTool, "list_files")
         llm.AddFunction(fileTool, "create_directory")
+        llm.AddFunction(fileTool, "peek_csv")
 
         ' 注册命令行执行工具
         llm.AddFunction(shellTool, "run_rscript")

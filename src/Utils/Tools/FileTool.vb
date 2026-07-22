@@ -1,4 +1,6 @@
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.Framework
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 ' ============================================================================
 ' 文件操作 Function Calling 工具集 - 注册到 LLM 供其读写工作区文件
@@ -67,6 +69,18 @@ Public Class FileTool
 
             _logger?.Invoke($"[FileTool] Wrote {content.Length} chars to {absPath}")
             Return $"{{""success"": true, ""path"": ""{EscapeJson(absPath)}"", ""bytes"": {Encoding.UTF8.GetByteCount(content)}}}"
+        Catch ex As Exception
+            Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
+        End Try
+    End Function
+
+    <Description("Get previews summary of the csv table file, returns the dimension size and column headers")>
+    Public Function peek_csv(<Argument("path", Description:="File path relative to workspace root, or absolute path")> path As String) As String
+        Try
+            Dim dims = DataFrame.GetDimension(path)
+            Dim content As String = $"Csv Table[{dims.rows} Rows x {dims.cols} Cols]; column_headers:{dims.header.GetJson}"
+
+            Return content
         Catch ex As Exception
             Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
         End Try
