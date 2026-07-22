@@ -30,6 +30,12 @@ Public MustInherit Class AnalysisModuleBase
     ''' <summary>模块序号，用于创建 analysis_modules_N 目录</summary>
     Public MustOverride ReadOnly Property ModuleIndex As Integer
 
+    Public ReadOnly Property FolderBaseName As String
+        Get
+            Return $"{ModuleIndex}_{ModuleName.NormalizePathString(alphabetOnly:=True).Replace(" ", "_")}"
+        End Get
+    End Property
+
     Public Sub New(config As AgentConfig, context As AnalysisContext, Optional logger As Action(Of String) = Nothing)
         _config = config
         _context = context
@@ -39,7 +45,7 @@ Public MustInherit Class AnalysisModuleBase
     ''' <summary>模块输出目录</summary>
     Public ReadOnly Property OutputDir As String
         Get
-            Return Path.Combine(_context.AnalysisDir, $"analysis_modules_{ModuleIndex}")
+            Return Path.Combine(_context.AnalysisDir, FolderBaseName)
         End Get
     End Property
 
