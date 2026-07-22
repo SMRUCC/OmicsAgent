@@ -1,5 +1,6 @@
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Ollama
+Imports OmicsAgent.AppRuntime
 
 ' ============================================================================
 ' 模块 6: 生物学性状关联分析（WGCNA）

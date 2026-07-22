@@ -1,5 +1,6 @@
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Ollama
+Imports OmicsAgent.AppRuntime
 
 ' ============================================================================
 ' 模块 7: 进阶分析（CMeans 模糊聚类 + bnlearn 动态贝叶斯网络 + PLS-PM 因果路径）

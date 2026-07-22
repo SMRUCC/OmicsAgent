@@ -1,5 +1,6 @@
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Ollama
+Imports OmicsAgent.AppRuntime
 
 ' ============================================================================
 ' 模块 1: 表达矩阵数据预处理

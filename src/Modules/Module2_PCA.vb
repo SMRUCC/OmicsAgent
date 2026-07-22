@@ -1,5 +1,6 @@
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Ollama
+Imports OmicsAgent.AppRuntime
 
 ' ============================================================================
 ' 模块 2: 总体样本 PCA/PLSDA/OPLSDA 分析

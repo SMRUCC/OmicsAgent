@@ -1,5 +1,6 @@
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Ollama
+Imports OmicsAgent.AppRuntime
 
 ' ============================================================================
 ' 模块 5: KEGG 生物学功能分析（富集 + GSVA）

@@ -1,4 +1,5 @@
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports OmicsAgent.AppRuntime
 
 ' ============================================================================
 ' 命令行执行 Function Calling 工具集 - 执行 Rscript / Rsharp / Python 脚本

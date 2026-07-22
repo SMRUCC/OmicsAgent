@@ -1,6 +1,7 @@
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.Data.Framework.IO.CSVFile
 Imports Ollama
+Imports OmicsAgent.AppRuntime
 
 ' ============================================================================
 ' 主程序入口 - 命令行参数解析与主流程编排

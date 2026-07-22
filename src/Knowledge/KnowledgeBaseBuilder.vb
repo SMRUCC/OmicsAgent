@@ -1,6 +1,7 @@
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Ollama
+Imports OmicsAgent.AppRuntime
 Imports Researcher
 
 ' ============================================================================

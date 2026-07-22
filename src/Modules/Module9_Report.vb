@@ -1,6 +1,7 @@
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Ollama
+Imports OmicsAgent.AppRuntime
 Imports OmicsAgent.ReportData
 
 ' ============================================================================

@@ -1,5 +1,6 @@
 Imports Microsoft.VisualBasic.Data.Trinity
 Imports Ollama
+Imports OmicsAgent.AppRuntime
 
 ' ============================================================================
 ' 分析模块基类 - 所有具体分析模块的抽象基类
