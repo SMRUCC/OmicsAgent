@@ -1,6 +1,7 @@
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.ComponentModel.Settings.Inf
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Ollama
 
 ' ============================================================================
 ' 配置管理模块
@@ -98,6 +99,11 @@ Namespace AppRuntime
         ''' </summary>
         Public Function GetMySqlConnectionString() As String
             Return MySql.GetConnectionString()
+        End Function
+
+        ''' <summary>创建 LLM 客户端实例</summary>
+        Public Function CreateLLMClient() As LLMClient
+            Return New LLMClient(LLMUrl.Create(LLM.LLMServiceUrl, LLM.LLMApiKey), LLM.LLMModelName)
         End Function
 
         ' ------------------------------------------------------------------

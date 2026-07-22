@@ -13,14 +13,12 @@ Namespace AppRuntime
     ''' </summary>
     Public Class EnvironmentChecker
 
-        Private ReadOnly _config As AgentConfig
-        Private ReadOnly _logger As Action(Of String)
-        Private ReadOnly _llmClientFactory As Func(Of LLMClient)
+        ReadOnly _config As AgentConfig
+        ReadOnly _logger As Action(Of String)
 
-        Public Sub New(config As AgentConfig, Optional logger As Action(Of String) = Nothing, Optional llmClientFactory As Func(Of LLMClient) = Nothing)
+        Public Sub New(config As AgentConfig, Optional logger As Action(Of String) = Nothing)
             _config = config
             _logger = If(logger, AddressOf Console.WriteLine)
-            _llmClientFactory = llmClientFactory
         End Sub
 
         ''' <summary>
@@ -152,12 +150,7 @@ Namespace AppRuntime
             LogInfo("----- 检查大语言模型服务可用性 -----")
 
             ' 取得 LLMClient：优先使用注入的工厂，未注入时基于配置直接构造
-            Dim client As LLMClient
-            If _llmClientFactory IsNot Nothing Then
-                client = _llmClientFactory()
-            Else
-                client = New LLMClient(LLMUrl.Create(_config.LLM.LLMServiceUrl, _config.LLM.LLMApiKey), _config.LLM.LLMModelName)
-            End If
+            Dim client As LLMClient = New LLMClient(LLMUrl.Create(_config.LLM.LLMServiceUrl, _config.LLM.LLMApiKey), _config.LLM.LLMModelName)
 
             Try
                 LogInfo($"  正在连接：{_config.LLM.LLMServiceUrl}")
