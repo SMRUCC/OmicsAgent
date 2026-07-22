@@ -1,3 +1,4 @@
+Imports Microsoft.VisualBasic.Data.Trinity
 Imports Ollama
 
 ' ============================================================================
@@ -131,19 +132,21 @@ Public MustInherit Class AnalysisModuleBase
         For i = 0 To _context.Datasets.Count - 1
             Dim d = _context.Datasets(i)
             sb.AppendLine($"## Dataset {i + 1}: {d.OmicsType}")
-            sb.AppendLine($"- Expression file: {d.ExpressionFile}")
-            sb.AppendLine($"- Annotation file: {d.AnnotationFile}")
-            sb.AppendLine($"- Sample info file: {d.SampleInfoFile}")
+            sb.AppendLine($"- Expression file: {d.ExpressionFile.GetFullPath}")
+            sb.AppendLine($"- Annotation file: {d.AnnotationFile.GetFullPath}")
+            sb.AppendLine($"- Sample info file: {d.SampleInfoFile.GetFullPath}")
             sb.AppendLine($"- Sample count: {d.SampleIDs.Count}")
             sb.AppendLine($"- Molecule count: {d.MoleculeIDs.Count}")
-            sb.AppendLine($"- Sample IDs: {String.Join(", ", d.SampleIDs.Take(10))}{If(d.SampleIDs.Count > 10, "...", "")}")
+            sb.AppendLine($"- Sample IDs: { d.SampleIDs.Concatenate(", ")}")
         Next
         sb.AppendLine()
         sb.AppendLine($"# Knowledge Base")
         If File.Exists(_context.KnowledgeBaseFile) Then
             Dim kbContent = File.ReadAllText(_context.KnowledgeBaseFile, Encoding.UTF8)
-            If kbContent.Length > 5000 Then
-                sb.AppendLine(kbContent.Substring(0, 5000) & "...[truncated]")
+            Dim stripLen As Integer = 30000
+
+            If kbContent.Length > stripLen Then
+                sb.AppendLine(kbContent.Substring(0, stripLen) & "...[truncated]")
             Else
                 sb.AppendLine(kbContent)
             End If
@@ -155,7 +158,9 @@ Public MustInherit Class AnalysisModuleBase
         For Each r In _context.ModuleResults
             sb.AppendLine($"## Module {r.ModuleIndex}: {r.ModuleName}")
             Dim c = r.Conclusion
-            If c.Length > 2000 Then c = c.Substring(0, 2000) & "...[truncated]"
+            Dim stripLen As Integer = 5000
+
+            If c.Length > stripLen Then c = c.Substring(0, stripLen) & "...[truncated]"
             sb.AppendLine(c)
             sb.AppendLine()
         Next
