@@ -67,6 +67,9 @@ Public Class AgentConfig
     End Property
 
     ''' <summary>Python 工具脚本目录路径（python/）</summary>
+    ''' <remarks>
+    ''' Python 脚本工具目录（用于读取 NCBI 检索等模板脚本）
+    ''' </remarks>
     Public Shared ReadOnly Property PythonScriptsDir As String
         Get
             Return Path.Combine(ApplicationRoot, "python")

@@ -28,11 +28,6 @@ Public Class AnalysisContext
     Public Property AnnotationContent As String
     Public Property SampleInfoInput As String
 
-    Public Property RscriptsDir As String
-    Public Property GCModellerDir As String
-    Public Property PythonDir As String
-    Public Property DataDir As String
-
     ' ------------------------------------------------------------------
     ' 数据集
     ' ------------------------------------------------------------------

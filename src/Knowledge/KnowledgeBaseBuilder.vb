@@ -177,7 +177,7 @@ Public Class KnowledgeBaseBuilder
     ''' 若存在 PMC 全文记录则 efetch 全文并追加到对应的 ref_*.txt 文件末尾。
     ''' </summary>
     Private Function GeneratePmcFetchScript(outputDir As String) As String
-        Dim templatePath = Path.Combine(_context.PythonDir, "pmc_fetch_template.py")
+        Dim templatePath = Path.Combine(AgentConfig.PythonScriptsDir, "pmc_fetch_template.py")
         If Not File.Exists(templatePath) Then
             Throw New FileNotFoundException($"未找到 PMC 全文获取 Python 模板脚本：{templatePath}。请确认 agent/python 目录下存在 pmc_fetch_template.py。")
         End If
@@ -394,7 +394,7 @@ Public Class KnowledgeBaseBuilder
     ''' <summary>生成 NCBI 在线检索的 Python 脚本</summary>
     Private Function GenerateNcbiSearchScript(keywords As List(Of String), maxCount As Integer, outputDir As String) As String
         Dim kwList = String.Join(", ", keywords.Select(Function(k) $"""{k}"""))
-        Dim templatePath = Path.Combine(_context.PythonDir, "ncbi_search_template.py")
+        Dim templatePath = Path.Combine(AgentConfig.PythonScriptsDir, "ncbi_search_template.py")
         If Not File.Exists(templatePath) Then
             Throw New FileNotFoundException($"未找到 NCBI 检索 Python 模板脚本：{templatePath}。请确认 agent/python 目录下存在 ncbi_search_template.py。")
         End If

@@ -239,9 +239,6 @@ Omics Data Analysis LLM Agent
         ' 检测是否为时间序列数据
         DetectTimeSeries(context)
 
-        ' Python 脚本工具目录（用于读取 NCBI 检索等模板脚本）
-        context.PythonDir = _config.PythonScriptsDir
-
         Return context
     End Function
 
