@@ -54,7 +54,7 @@ Module Workflow
     Private Async Function MainAsync(parsed As Opts) As Task
         Dim cancellationToken = GetCancelToken()
         ' 1. 环境检查
-        Dim checker As New EnvironmentChecker(_config, _logger, Function() CreateLLMClient())
+        Dim checker As New EnvironmentChecker(_config, _logger)
 
         If Not Await checker.CheckAllAsync() Then
             Console.Error.WriteLine("Environment check failed. Please fix the issues above and try again.")
@@ -72,7 +72,7 @@ Module Workflow
 
         ' 3. 知识库构建（可选）
         If Not parsed.skip_kb Then
-            Dim kbBuilder As New KnowledgeBaseBuilder(_config, _context, Function() CreateLLMClient(), _logger)
+            Dim kbBuilder As New KnowledgeBaseBuilder(_config, _context, _logger)
             Await kbBuilder.BuildAsync(cancellationToken)
             Console.WriteLine()
         End If
@@ -259,15 +259,15 @@ Module Workflow
     ''' <summary>根据索引创建分析模块</summary>
     Private Function CreateModule(index As Integer) As AnalysisModuleBase
         Select Case index
-            Case 1 : Return New PreprocessingModule(_config, _context, Function() CreateLLMClient(), _logger)
-            Case 2 : Return New PCAAnalysisModule(_config, _context, Function() CreateLLMClient(), _logger)
-            Case 3 : Return New ComparisonDesignModule(_config, _context, Function() CreateLLMClient(), _logger)
-            Case 4 : Return New LimmaDiffModule(_config, _context, Function() CreateLLMClient(), _logger)
-            Case 5 : Return New KeggFunctionModule(_config, _context, Function() CreateLLMClient(), _logger)
-            Case 6 : Return New WGCNAModule(_config, _context, Function() CreateLLMClient(), _logger)
-            Case 7 : Return New AdvancedAnalysisModule(_config, _context, Function() CreateLLMClient(), _logger)
-            Case 8 : Return New ResultTablesModule(_config, _context, Function() CreateLLMClient(), _logger)
-            Case 9 : Return New ReportModule(_config, _context, Function() CreateLLMClient(), _logger)
+            Case 1 : Return New PreprocessingModule(_config, _context, _logger)
+            Case 2 : Return New PCAAnalysisModule(_config, _context, _logger)
+            Case 3 : Return New ComparisonDesignModule(_config, _context, _logger)
+            Case 4 : Return New LimmaDiffModule(_config, _context, _logger)
+            Case 5 : Return New KeggFunctionModule(_config, _context, _logger)
+            Case 6 : Return New WGCNAModule(_config, _context, _logger)
+            Case 7 : Return New AdvancedAnalysisModule(_config, _context, _logger)
+            Case 8 : Return New ResultTablesModule(_config, _context, _logger)
+            Case 9 : Return New ReportModule(_config, _context, _logger)
             Case Else
                 _logger($"Unknown module index: {index}")
                 Return Nothing

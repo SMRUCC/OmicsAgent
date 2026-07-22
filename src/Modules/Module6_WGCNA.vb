@@ -22,12 +22,12 @@ Public Class WGCNAModule : Inherits AnalysisModuleBase
     Public Overrides ReadOnly Property ModuleName As String = "WGCNA Trait Association Analysis"
     Public Overrides ReadOnly Property ModuleIndex As Integer = 6
 
-    Public Sub New(config As AgentConfig, context As AnalysisContext, llmFactory As Func(Of LLMClient), Optional logger As Action(Of String) = Nothing)
-        MyBase.New(config, context, llmFactory, logger)
+    Public Sub New(config As AgentConfig, context As AnalysisContext, Optional logger As Action(Of String) = Nothing)
+        MyBase.New(config, context, logger)
     End Sub
 
     Protected Overrides Async Function GeneratePlanAsync(cancellationToken As CancellationToken) As Task(Of ModulePlan)
-        Using llm = _llmFactory()
+        Using llm As LLMClient = _config.CreateLLMClient
             RegisterTools(llm)
 
             Dim prompt = $"
@@ -72,7 +72,7 @@ Return your plan as JSON:
     End Function
 
     Protected Overrides Async Function GenerateAndRunScriptAsync(plan As ModulePlan, cancellationToken As CancellationToken) As Task
-        Using llm = _llmFactory()
+        Using llm As LLMClient = _config.CreateLLMClient
             RegisterTools(llm)
 
             Dim prompt = $"
@@ -137,7 +137,7 @@ Write the complete R script. Use ```r ... ``` code block.
     End Function
 
     Protected Overrides Async Function GenerateConclusionAsync(plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)
-        Using llm = _llmFactory()
+        Using llm As LLMClient = _config.CreateLLMClient
             Dim prompt = $"
 You are a biomedical research expert. Based on the WGCNA analysis results, write a stage conclusion in Chinese.
 

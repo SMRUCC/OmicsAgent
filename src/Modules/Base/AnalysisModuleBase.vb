@@ -23,7 +23,6 @@ Public MustInherit Class AnalysisModuleBase
     Protected ReadOnly _config As AgentConfig
     Protected ReadOnly _context As AnalysisContext
     Protected ReadOnly _logger As Action(Of String)
-    Protected ReadOnly _llmFactory As Func(Of LLMClient)
 
     ''' <summary>模块名称，用于创建输出目录</summary>
     Public MustOverride ReadOnly Property ModuleName As String
@@ -31,10 +30,9 @@ Public MustInherit Class AnalysisModuleBase
     ''' <summary>模块序号，用于创建 analysis_modules_N 目录</summary>
     Public MustOverride ReadOnly Property ModuleIndex As Integer
 
-    Public Sub New(config As AgentConfig, context As AnalysisContext, llmFactory As Func(Of LLMClient), Optional logger As Action(Of String) = Nothing)
+    Public Sub New(config As AgentConfig, context As AnalysisContext, Optional logger As Action(Of String) = Nothing)
         _config = config
         _context = context
-        _llmFactory = llmFactory
         _logger = If(logger, AddressOf Console.WriteLine)
     End Sub
 

@@ -26,12 +26,12 @@ Public Class ReportModule : Inherits AnalysisModuleBase
     Public Overrides ReadOnly Property ModuleName As String = "Paper Draft Report"
     Public Overrides ReadOnly Property ModuleIndex As Integer = 9
 
-    Public Sub New(config As AgentConfig, context As AnalysisContext, llmFactory As Func(Of LLMClient), Optional logger As Action(Of String) = Nothing)
-        MyBase.New(config, context, llmFactory, logger)
+    Public Sub New(config As AgentConfig, context As AnalysisContext, Optional logger As Action(Of String) = Nothing)
+        MyBase.New(config, context, logger)
     End Sub
 
     Protected Overrides Async Function GeneratePlanAsync(cancellationToken As CancellationToken) As Task(Of ModulePlan)
-        Using llm = _llmFactory()
+        Using llm As LLMClient = _config.CreateLLMClient
             Dim prompt = $"
 You are a biomedical research paper writer. Design a plan to write a research report.
 
@@ -182,7 +182,7 @@ Return your plan as JSON:
 
     ''' <summary>调用 LLM 生成报告内容</summary>
     Private Async Function GenerateReportContentAsync(conclusions As Dictionary(Of Integer, String), figures As List(Of Tuple(Of Integer, String)), tables As List(Of Tuple(Of Integer, String)), cancellationToken As CancellationToken) As Task(Of ReportContent)
-        Using llm = _llmFactory()
+        Using llm As LLMClient = _config.CreateLLMClient
             Dim prompt = $"
 You are a biomedical research paper writer. Write a comprehensive research report in Chinese based on the analysis results.
 

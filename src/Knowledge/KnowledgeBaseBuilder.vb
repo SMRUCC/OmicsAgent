@@ -27,10 +27,9 @@ Public Class KnowledgeBaseBuilder
     Private ReadOnly _logger As Action(Of String)
     Private ReadOnly _llmFactory As Func(Of LLMClient)
 
-    Public Sub New(config As AgentConfig, context As AnalysisContext, llmFactory As Func(Of LLMClient), Optional logger As Action(Of String) = Nothing)
+    Public Sub New(config As AgentConfig, context As AnalysisContext, Optional logger As Action(Of String) = Nothing)
         _config = config
         _context = context
-        _llmFactory = llmFactory
         _logger = If(logger, AddressOf Console.WriteLine)
     End Sub
 
