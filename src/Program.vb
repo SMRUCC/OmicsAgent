@@ -1,4 +1,5 @@
 Imports Microsoft.VisualBasic.CommandLine
+Imports Microsoft.VisualBasic.Data.Framework.IO.CSVFile
 Imports Ollama
 
 ' ============================================================================
@@ -263,7 +264,7 @@ Omics Data Analysis LLM Agent
     Private Sub DetectTimeSeries(context As AnalysisContext)
         For Each ds In context.Datasets
             If File.Exists(ds.SampleInfoFile) Then
-                Dim header = CsvUtils.ReadHeader(ds.SampleInfoFile)
+                Dim header = Tokenizer.CharsParser(ds.SampleInfoFile.ReadFirstLine)
                 If header.Any(Function(h) h.ToLower().Contains("time")) Then
                     context.IsTimeSeries = True
                     Return
