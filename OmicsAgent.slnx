@@ -4,13 +4,23 @@
     <Platform Name="x64" />
   </Configurations>
   <Folder Name="/framework/">
-    <Project Path="../GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj">
+    <Project Path="../GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/framework/math/">
+    <Project Path="../GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFittings/linear-netcore5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math.Statistics/stats-netcore5.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
     <Project Path="../GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Math.NET5.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
-    <Project Path="../GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj">
+  </Folder>
+  <Folder Name="/framework/mime/">
+    <Project Path="../GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
     <Project Path="../GCModeller/src/runtime/sciBASIC#/mime/application%json/JSON-netcore5.vbproj">
@@ -20,6 +30,14 @@
       <Platform Solution="*|x64" Project="x64" />
     </Project>
     <Project Path="../GCModeller/src/runtime/sciBASIC#/mime/text%yaml/text.yaml.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/gcmodeller/">
+    <Project Path="../GCModeller/src/GCModeller/analysis/HTS_matrix/HTS_matrix-netcore5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../GCModeller/src/workbench/modules/ExperimentDesigner/designer-netcore5.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
   </Folder>
