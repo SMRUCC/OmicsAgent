@@ -207,27 +207,65 @@ Public Class KnowledgeBaseBuilder
         Return keywords
     End Function
 
-    ''' <summary>调用 LLM 从文献中提取生物学知识，生成 kb.json</summary>
+    ''' <summary>
+    ''' 调用 LLM 从文献中提取生物学知识，生成 kb.json。
+    ''' 采用两阶段流水线：
+    '''   阶段一 - 逐篇提取：每篇文献单独调用 LLM 提取知识点，保存为 per_doc_N.json
+    '''   阶段二 - 全局汇总：读取所有单篇提取结果，交由 LLM 整合为最终 kb.json
+    ''' </summary>
     Private Async Function ExtractKnowledgeAsync(referenceFiles As List(Of String), cancellationToken As CancellationToken) As Task
-        LogInfo("正在从文献中提取生物学知识...")
+        LogInfo("正在从文献中提取生物学知识（逐篇处理）...")
 
-        ' 合并所有文献内容（截断以避免超出 token 限制）
-        Dim allContent As New StringBuilder()
-        For Each f In referenceFiles
-            Dim content = File.ReadAllText(f, Encoding.UTF8)
-            allContent.AppendLine($"=== {Path.GetFileName(f)} ===")
-            allContent.AppendLine(content)
-            allContent.AppendLine()
+        ' ========== 第一阶段：逐篇提取知识 ==========
+        Dim perDocFiles As New List(Of String)()
+        For i As Integer = 0 To referenceFiles.Count - 1
+            Dim f = referenceFiles(i)
+            Dim fileName = Path.GetFileName(f)
+            LogInfo($"  [{i + 1}/{referenceFiles.Count}] 正在分析文献：{fileName}")
+
+            Try
+                Dim content = File.ReadAllText(f, Encoding.UTF8)
+                Using llm = _llmFactory()
+                    Dim prompt = BuildPerDocumentExtractionPrompt(_context.ResearchTopic, content, fileName)
+                    Dim resp = Await llm.Chat(prompt, cancellationToken)
+                    Dim perDocJson = ExtractJsonFromResponse(resp.output)
+                    If String.IsNullOrEmpty(perDocJson) Then
+                        ' 如果提取不到结构化的 JSON，将原始输出包装为 JSON
+                        perDocJson = $"{{""source_file"": ""{EscapeJson(fileName)}"", ""raw_output"": ""{EscapeJson(resp.output)}""}}"
+                    End If
+                    ' 保存单篇提取结果
+                    Dim perDocPath = Path.Combine(_context.KnowledgeDir, $"per_doc_{i + 1}.json")
+                    File.WriteAllText(perDocPath, perDocJson, Encoding.UTF8)
+                    perDocFiles.Add(perDocPath)
+                    LogInfo($"    已保存单篇提取结果：{perDocPath}")
+                End Using
+            Catch ex As Exception
+                LogInfo($"[警告] 文献 {fileName} 知识提取失败：{ex.Message}")
+                ' 继续处理下一篇文献
+            End Try
         Next
 
-        Dim combinedText = allContent.ToString()
-        If combinedText.Length > 30000 Then
-            combinedText = combinedText.Substring(0, 30000) & "...[truncated]"
+        If perDocFiles.Count = 0 Then
+            LogInfo("[警告] 所有文献逐篇提取均失败，回退到 LLM 自身训练知识生成 kb.json")
+            Await GenerateKnowledgeFromLLMAsync(cancellationToken)
+            Return
         End If
+
+        ' ========== 第二阶段：全局汇总 ==========
+        LogInfo($"逐篇提取完成，共 {perDocFiles.Count} 篇有效结果，正在汇总...")
+
+        ' 读取所有单篇提取结果
+        Dim allExtractions As New StringBuilder()
+        For Each f In perDocFiles
+            Dim extractionContent = File.ReadAllText(f, Encoding.UTF8)
+            allExtractions.AppendLine(extractionContent)
+            allExtractions.AppendLine()
+        Next
+        Dim combinedExtractions = allExtractions.ToString()
 
         Try
             Using llm = _llmFactory()
-                Dim prompt = BuildKnowledgeExtractionPrompt(_context.ResearchTopic, combinedText)
+                Dim prompt = BuildSummaryPrompt(_context.ResearchTopic, combinedExtractions)
                 Dim resp = Await llm.Chat(prompt, cancellationToken)
                 Dim kbJson = ExtractJsonFromResponse(resp.output)
                 If Not String.IsNullOrEmpty(kbJson) Then
@@ -239,8 +277,9 @@ Public Class KnowledgeBaseBuilder
                 End If
             End Using
         Catch ex As Exception
-            LogInfo($"[警告] LLM 知识提取失败：{ex.Message}")
-            Dim fallback = $"{{""research_topic"": ""{EscapeJson(_context.ResearchTopic)}"", ""error"": ""{EscapeJson(ex.Message)}"", ""references"": []}}"
+            LogInfo($"[警告] 知识汇总失败：{ex.Message}")
+            ' 回退：已逐篇提取了知识点，汇总失败不影响中间文件
+            Dim fallback = $"{{""research_topic"": ""{EscapeJson(_context.ResearchTopic)}"", ""summary"": ""Error during summarization: {EscapeJson(ex.Message)}. Individual extraction files are available in research_kb/per_doc_*.json."", ""references"": []}}"
             File.WriteAllText(_context.KnowledgeBaseFile, fallback, Encoding.UTF8)
         End Try
     End Function
@@ -336,6 +375,84 @@ Public Class KnowledgeBaseBuilder
         sb.AppendLine("}")
         sb.AppendLine()
         sb.AppendLine("Return ONLY the JSON object, no other text.")
+        Return sb.ToString()
+    End Function
+
+    ''' <summary>构建单篇文献知识点提取提示词</summary>
+    Private Function BuildPerDocumentExtractionPrompt(researchTopic As String, docContent As String, fileName As String) As String
+        Dim sb As New StringBuilder()
+        sb.AppendLine("You are a biomedical research assistant. Based on the following research topic and a single reference paper, extract all relevant biological knowledge from this paper. Return it as a JSON object.")
+        sb.AppendLine()
+        sb.AppendLine("Research topic:")
+        sb.AppendLine(researchTopic)
+        sb.AppendLine()
+        sb.AppendLine($"Paper file: {fileName}")
+        sb.AppendLine()
+        sb.AppendLine("Paper content:")
+        sb.AppendLine(docContent)
+        sb.AppendLine()
+        sb.AppendLine("Please extract the following biological knowledge specifically from this paper:")
+        sb.AppendLine("{")
+        sb.AppendLine("  ""source_file"": ""<the file name of this paper>"",")
+        sb.AppendLine("  ""key_genes_proteins"": [""<gene/protein mentioned in this paper>"", ...],")
+        sb.AppendLine("  ""key_pathways"": [""<pathway mentioned in this paper>"", ...],")
+        sb.AppendLine("  ""key_metabolites"": [""<metabolite mentioned in this paper>"", ...],")
+        sb.AppendLine("  ""biological_mechanisms"": [")
+        sb.AppendLine("    {""mechanism"": ""<description>"", ""evidence"": ""<supporting evidence from this paper>""},")
+        sb.AppendLine("    ...")
+        sb.AppendLine("  ],")
+        sb.AppendLine("  ""key_findings"": [""<key finding 1 from this paper>"", ...],")
+        sb.AppendLine("  ""relevance_to_research_topic"": ""<how this paper relates to the research topic>""")
+        sb.AppendLine("}")
+        sb.AppendLine()
+        sb.AppendLine("IMPORTANT:")
+        sb.AppendLine("- Only include information that actually appears in this paper. Do NOT fabricate.")
+        sb.AppendLine("- If a field has no relevant information in this paper, use an empty array [] or empty string.")
+        sb.AppendLine("- Be specific and thorough - extract as much relevant biological detail as possible.")
+        sb.AppendLine("- Return ONLY the JSON object, no other text.")
+        Return sb.ToString()
+    End Function
+
+    ''' <summary>构建所有单篇提取结果的全局汇总提示词</summary>
+    Private Function BuildSummaryPrompt(researchTopic As String, allExtractions As String) As String
+        Dim sb As New StringBuilder()
+        sb.AppendLine("You are a biomedical research assistant. Below are knowledge extraction results from multiple reference papers on the same research topic. Please synthesize, deduplicate, and consolidate ALL this information into a single comprehensive knowledge base JSON.")
+        sb.AppendLine()
+        sb.AppendLine("Research topic:")
+        sb.AppendLine(researchTopic)
+        sb.AppendLine()
+        sb.AppendLine("Knowledge extracted from individual papers:")
+        sb.AppendLine(allExtractions)
+        sb.AppendLine()
+        sb.AppendLine("Please consolidate all the above into the following JSON structure:")
+        sb.AppendLine("{")
+        sb.AppendLine("  ""research_topic"": ""<brief summary of the research topic>"",")
+        sb.AppendLine("  ""disease_or_phenotype"": ""<disease or biological phenotype being studied>"",")
+        sb.AppendLine("  ""organism"": ""<organism/species information>"",")
+        sb.AppendLine("  ""tissue"": ""<tissue or sample source>"",")
+        sb.AppendLine("  ""key_genes_proteins"": [""<gene/protein 1>"", ""<gene/protein 2>"", ...],")
+        sb.AppendLine("  ""key_pathways"": [""<pathway 1>"", ""<pathway 2>"", ...],")
+        sb.AppendLine("  ""key_metabolites"": [""<metabolite 1>"", ""<metabolite 2>"", ...],")
+        sb.AppendLine("  ""biological_mechanisms"": [")
+        sb.AppendLine("    {""mechanism"": ""<description>"", ""evidence"": ""<supporting evidence>""},")
+        sb.AppendLine("    ...")
+        sb.AppendLine("  ],")
+        sb.AppendLine("  ""comparison_design_suggestions"": [")
+        sb.AppendLine("    {""comparison"": ""<group A vs group B>"", ""purpose"": ""<biological purpose>""},")
+        sb.AppendLine("    ...")
+        sb.AppendLine("  ],")
+        sb.AppendLine("  ""expected_findings"": [""<expected finding 1>"", ...],")
+        sb.AppendLine("  ""references"": [")
+        sb.AppendLine("    {""title"": ""<paper title>"", ""key_finding"": ""<key finding from this paper>""},")
+        sb.AppendLine("    ...")
+        sb.AppendLine("  ]")
+        sb.AppendLine("}")
+        sb.AppendLine()
+        sb.AppendLine("GUIDELINES:")
+        sb.AppendLine("- Merge and deduplicate genes, pathways, metabolites, and mechanisms from all papers.")
+        sb.AppendLine("- Prioritize information supported by multiple papers.")
+        sb.AppendLine("- If there are conflicting findings, note the conflict and include both perspectives.")
+        sb.AppendLine("- Return ONLY the JSON object, no other text.")
         Return sb.ToString()
     End Function
 
