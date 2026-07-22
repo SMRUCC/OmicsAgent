@@ -21,8 +21,7 @@ Imports Ollama
 ''' 默认不考虑 logFC 阈值过滤，按 pvalue 和 VIP 筛选后，对剩余分子按 |logFC| 降序排序，
 ''' 取一定数量的 top 分子做差异分析结果。
 ''' </summary>
-Public Class LimmaDiffModule
-    Inherits AnalysisModuleBase
+Public Class LimmaDiffModule : Inherits AnalysisModuleBase
 
     Public Overrides ReadOnly Property ModuleName As String = "LIMMA Differential Analysis"
     Public Overrides ReadOnly Property ModuleIndex As Integer = 4

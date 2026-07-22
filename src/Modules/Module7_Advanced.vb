@@ -15,8 +15,7 @@ Imports Ollama
 ''' 4. 时间序列数据：进行 bnlearn 动态贝叶斯网络的构建以及后续分析
 ''' 5. 多组学数据且样本量足够：按不同的组学层次构建潜变量，进行 PLS-PM 因果路径分析
 ''' </summary>
-Public Class AdvancedAnalysisModule
-    Inherits AnalysisModuleBase
+Public Class AdvancedAnalysisModule : Inherits AnalysisModuleBase
 
     Public Overrides ReadOnly Property ModuleName As String = "Advanced Analysis (CMeans + Bayesian + PLS-PM)"
     Public Overrides ReadOnly Property ModuleIndex As Integer = 7
@@ -157,15 +156,4 @@ Reference the kb.json knowledge base when explaining biological mechanisms.
             Return resp.output
         End Using
     End Function
-
-    Private Function ExtractJsonFromResponse(text As String) As String
-        If String.IsNullOrEmpty(text) Then Return ""
-        Dim match = System.Text.RegularExpressions.Regex.Match(text, "```(?:json)?\s*([\s\S]*?)```")
-        If match.Success Then Return match.Groups(1).Value.Trim()
-        Dim startIdx = text.IndexOf("{"c)
-        Dim endIdx = text.LastIndexOf("}"c)
-        If startIdx >= 0 AndAlso endIdx > startIdx Then Return text.Substring(startIdx, endIdx - startIdx + 1)
-        Return ""
-    End Function
-
 End Class

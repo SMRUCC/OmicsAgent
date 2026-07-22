@@ -18,8 +18,7 @@ Imports Ollama
 ''' 基于 PCA 结果计算各样本到组别质心的加权欧氏距离作为组内离散度，
 ''' 采用置换检验判断组内距离是否显著小于组间距离，评估数据重复性质量。
 ''' </summary>
-Public Class PCAAnalysisModule
-    Inherits AnalysisModuleBase
+Public Class PCAAnalysisModule : Inherits AnalysisModuleBase
 
     Public Overrides ReadOnly Property ModuleName As String = "PCA/PLSDA/OPLSDA Analysis"
     Public Overrides ReadOnly Property ModuleIndex As Integer = 2

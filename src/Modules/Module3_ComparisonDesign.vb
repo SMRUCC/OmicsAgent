@@ -13,8 +13,7 @@ Imports Ollama
 ''' 生成阶段性研究总结文件，阐述差异比对设计的生物学依据、分析目的、
 ''' 与用户研究主题的生物学机制相关性等。
 ''' </summary>
-Public Class ComparisonDesignModule
-    Inherits AnalysisModuleBase
+Public Class ComparisonDesignModule : Inherits AnalysisModuleBase
 
     Public Overrides ReadOnly Property ModuleName As String = "Comparison Group Design"
     Public Overrides ReadOnly Property ModuleIndex As Integer = 3

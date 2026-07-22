@@ -16,8 +16,7 @@ Imports Ollama
 ''' 
 ''' 除非用户在 research 文件中明确标注某个表达矩阵不需要预处理，否则默认执行。
 ''' </summary>
-Public Class PreprocessingModule
-    Inherits AnalysisModuleBase
+Public Class PreprocessingModule : Inherits AnalysisModuleBase
 
     Public Overrides ReadOnly Property ModuleName As String = "Expression Matrix Preprocessing"
     Public Overrides ReadOnly Property ModuleIndex As Integer = 1

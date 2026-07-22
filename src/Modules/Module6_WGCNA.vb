@@ -16,8 +16,7 @@ Imports Ollama
 ''' 4. 共表达模块与生物学性状值的线性回归分析
 ''' 5. 共表达模块分子的 KEGG 功能富集分析
 ''' </summary>
-Public Class WGCNAModule
-    Inherits AnalysisModuleBase
+Public Class WGCNAModule : Inherits AnalysisModuleBase
 
     Public Overrides ReadOnly Property ModuleName As String = "WGCNA Trait Association Analysis"
     Public Overrides ReadOnly Property ModuleIndex As Integer = 6

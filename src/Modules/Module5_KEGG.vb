@@ -15,8 +15,7 @@ Imports Ollama
 ''' 4. GSVA 总体热图（列=样本按分组排序，行=KEGG 通路按大分类分组+层次聚类+聚类树）
 ''' 5. GSVA 差异分析火山图、得分图
 ''' </summary>
-Public Class KeggFunctionModule
-    Inherits AnalysisModuleBase
+Public Class KeggFunctionModule : Inherits AnalysisModuleBase
 
     Public Overrides ReadOnly Property ModuleName As String = "KEGG Functional Analysis"
     Public Overrides ReadOnly Property ModuleIndex As Integer = 5

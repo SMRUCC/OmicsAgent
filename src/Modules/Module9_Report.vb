@@ -1,5 +1,6 @@
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Ollama
+Imports OmicsAgent.ReportData
 
 ' ============================================================================
 ' 模块 9: 撰写论文初稿（生成 HTML 报告并转换为 PDF）
@@ -18,8 +19,7 @@ Imports Ollama
 ''' - 以 A3 大小编写 HTML 文件
 ''' - 使用 wkhtmltopdf 工具转换为 PDF 文件
 ''' </summary>
-Public Class ReportModule
-    Inherits AnalysisModuleBase
+Public Class ReportModule : Inherits AnalysisModuleBase
 
     Public Overrides ReadOnly Property ModuleName As String = "Paper Draft Report"
     Public Overrides ReadOnly Property ModuleIndex As Integer = 9
@@ -351,34 +351,3 @@ Return as JSON:
 
 End Class
 
-''' <summary>报告内容数据模型</summary>
-Public Class ReportContent
-    Public Property Title As String = ""
-    Public Property Abstract As String = ""
-    Public Property Keywords As List(Of String) = New List(Of String)()
-    Public Property Introduction As String = ""
-    Public Property MaterialsMethods As String = ""
-    Public Property ResultsSections As List(Of ResultSection) = New List(Of ResultSection)()
-    Public Property Discussion As String = ""
-    Public Property Conclusion As String = ""
-End Class
-
-Public Class ResultSection
-    Public Property ModuleIndex As Integer
-    Public Property Title As String = ""
-    Public Property Content As String = ""
-    Public Property FigureCaptions As List(Of FigureCaption) = New List(Of FigureCaption)()
-    Public Property TableCaptions As List(Of TableCaption) = New List(Of TableCaption)()
-End Class
-
-Public Class FigureCaption
-    Public Property File As String = ""
-    Public Property CaptionCn As String = ""
-    Public Property CaptionEn As String = ""
-End Class
-
-Public Class TableCaption
-    Public Property File As String = ""
-    Public Property CaptionCn As String = ""
-    Public Property CaptionEn As String = ""
-End Class
