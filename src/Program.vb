@@ -187,7 +187,7 @@ Omics Data Analysis LLM Agent
         End If
 
         ' 分子注释表
-        context.AnnotationFile = parsed.annotation
+        context.AnnotationFile = parsed.annotation.GetFullPath
 
         ' 样本元数据文件/文件夹
         context.SampleInfoInput = parsed.sampleinfo
@@ -213,14 +213,14 @@ Omics Data Analysis LLM Agent
 
         ' 工作区
         If Not parsed.workspace.StringEmpty(, True) Then
-            context.WorkspaceDir = parsed.workspace
+            context.WorkspaceDir = parsed.workspace.GetDirectoryFullPath
         Else
             ' 默认在表达矩阵所在位置创建 analysis 文件夹
             Dim firstExpr = context.Datasets.FirstOrDefault()?.ExpressionFile
             If Not String.IsNullOrEmpty(firstExpr) Then
-                context.WorkspaceDir = Path.Combine(Path.GetDirectoryName(firstExpr), "analysis")
+                context.WorkspaceDir = Path.Combine(Path.GetDirectoryName(firstExpr), "analysis").GetDirectoryFullPath
             Else
-                context.WorkspaceDir = Path.Combine(Directory.GetCurrentDirectory(), "analysis")
+                context.WorkspaceDir = Path.Combine(Directory.GetCurrentDirectory(), "analysis").GetDirectoryFullPath
             End If
         End If
 

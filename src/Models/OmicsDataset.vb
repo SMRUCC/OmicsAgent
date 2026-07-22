@@ -12,9 +12,6 @@ Public Class OmicsDataset
     ''' <summary>表达矩阵 CSV 文件路径（行为分子，列为样本）</summary>
     Public Property ExpressionFile As String = ""
 
-    ''' <summary>分子注释表 CSV 文件路径</summary>
-    Public Property AnnotationFile As String = ""
-
     ''' <summary>样本元数据 CSV 文件路径</summary>
     Public Property SampleInfoFile As String = ""
 

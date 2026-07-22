@@ -55,14 +55,14 @@ Public Class AgentConfig
     ''' <summary>R 工具脚本目录路径（rscript/）</summary>
     Public Shared ReadOnly Property RScriptsDir As String
         Get
-            Return Path.Combine(ApplicationRoot, "rscript")
+            Return Path.Combine(ApplicationRoot, "rscript").GetDirectoryFullPath
         End Get
     End Property
 
     ''' <summary>R# 工具脚本目录路径（gcmodeller/）</summary>
     Public Shared ReadOnly Property RsharpScriptsDir As String
         Get
-            Return Path.Combine(ApplicationRoot, "gcmodeller")
+            Return Path.Combine(ApplicationRoot, "gcmodeller").GetDirectoryFullPath
         End Get
     End Property
 
@@ -72,14 +72,14 @@ Public Class AgentConfig
     ''' </remarks>
     Public Shared ReadOnly Property PythonScriptsDir As String
         Get
-            Return Path.Combine(ApplicationRoot, "python")
+            Return Path.Combine(ApplicationRoot, "python").GetDirectoryFullPath
         End Get
     End Property
 
     ''' <summary>KEGG 背景模型数据目录路径（data/）</summary>
     Public Shared ReadOnly Property KeggDataDir As String
         Get
-            Return Path.Combine(ApplicationRoot, "data")
+            Return Path.Combine(ApplicationRoot, "data").GetDirectoryFullPath
         End Get
     End Property
 

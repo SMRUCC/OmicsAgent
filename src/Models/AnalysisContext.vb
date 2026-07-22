@@ -49,49 +49,49 @@ Public Class AnalysisContext
 
     Public ReadOnly Property AnalysisDir As String
         Get
-            Return Path.Combine(WorkspaceDir, "analysis")
+            Return Path.Combine(WorkspaceDir, "analysis").GetDirectoryFullPath
         End Get
     End Property
 
     ''' <summary>临时文件目录路径</summary>
     Public ReadOnly Property TmpDir As String
         Get
-            Return Path.Combine(WorkspaceDir, "tmp")
+            Return Path.Combine(WorkspaceDir, "tmp").GetDirectoryFullPath
         End Get
     End Property
 
     ''' <summary>agent 生成的脚本目录路径</summary>
     Public ReadOnly Property ScriptsDir As String
         Get
-            Return Path.Combine(WorkspaceDir, "scripts")
+            Return Path.Combine(WorkspaceDir, "scripts").GetDirectoryFullPath
         End Get
     End Property
 
     ''' <summary>知识库目录路径</summary>
     Public ReadOnly Property KnowledgeDir As String
         Get
-            Return Path.Combine(WorkspaceDir, "research_kb")
+            Return Path.Combine(WorkspaceDir, "research_kb").GetDirectoryFullPath
         End Get
     End Property
 
     ''' <summary>知识库 JSON 文件路径</summary>
     Public ReadOnly Property KnowledgeBaseFile As String
         Get
-            Return Path.Combine(KnowledgeDir, "kb.json")
+            Return Path.Combine(KnowledgeDir, "kb.json").GetFullPath
         End Get
     End Property
 
     ''' <summary>最终报告 PDF 文件路径</summary>
     Public ReadOnly Property ReportPdf As String
         Get
-            Return Path.Combine(WorkspaceDir, "report.pdf")
+            Return Path.Combine(WorkspaceDir, "report.pdf").GetFullPath
         End Get
     End Property
 
     ''' <summary>最终报告 HTML 文件路径</summary>
     Public ReadOnly Property ReportHtml As String
         Get
-            Return Path.Combine(WorkspaceDir, "report.html")
+            Return Path.Combine(WorkspaceDir, "report.html").GetFullPath
         End Get
     End Property
 
