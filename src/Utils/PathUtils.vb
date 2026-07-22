@@ -18,12 +18,6 @@ Public Module PathUtils
         Return PathExtensions.RelativePath(relativeTo, path).Replace("\"c, "/"c)
     End Function
 
-    ''' <summary>将路径中的反斜杠转换为正斜杠（用于 R 脚本）</summary>
-    Public Function NormalizePath(path As String) As String
-        If String.IsNullOrEmpty(path) Then Return ""
-        Return path.Replace("\"c, "/"c)
-    End Function
-
     ''' <summary>将路径转换为 R 脚本中可用的字符串字面量（双反斜杠）</summary>
     Public Function ToRPath(path As String) As String
         If String.IsNullOrEmpty(path) Then Return ""

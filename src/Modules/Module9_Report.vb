@@ -1,3 +1,4 @@
+Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Ollama
 Imports OmicsAgent.ReportData
@@ -312,7 +313,7 @@ Return as JSON:
                         Dim figPath = figures.FirstOrDefault(Function(f) Path.GetFileName(f.Item2) = cap.File)
                         If figPath IsNot Nothing Then
                             sb.AppendLine("<figure>")
-                            sb.AppendLine($"<img src='file:///{PathUtils.NormalizePath(figPath.Item2)}' alt='{EscapeHtml(cap.CaptionEn)}'>")
+                            sb.AppendLine($"<img src='{New DataURI(figPath.Item2).ToString}' alt='{EscapeHtml(cap.CaptionEn)}'>")
                             sb.AppendLine($"<figcaption><strong>图注：</strong>{EscapeHtml(cap.CaptionCn)}<br><strong>Figure Caption:</strong> {EscapeHtml(cap.CaptionEn)}</figcaption>")
                             sb.AppendLine("</figure>")
                         End If
