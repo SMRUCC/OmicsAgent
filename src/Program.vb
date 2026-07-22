@@ -34,6 +34,13 @@ Omics Data Analysis LLM Agent
 示例:
   research --research=research.txt --expression=data.csv --annotation=anno.csv --sampleinfo=sample.csv
   research --research=research.txt --expression=omics_folder/ --annotation=anno.csv --sampleinfo=sample_folder/ --reference=refs/
+
+表格格式：
+  
+  表达矩阵 - 行为基因表达数据，列为样本数据
+  分子注释 - ['id', 'type', 'name', 'kegg']
+  样本信息 - ['id', 'sample_name', 'sample_info']
+
 "
 
     Private _logger As Action(Of String) = AddressOf ConsoleLog
