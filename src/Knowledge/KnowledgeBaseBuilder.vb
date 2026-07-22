@@ -190,7 +190,10 @@ Public Class KnowledgeBaseBuilder
         Dim keywords As New List(Of String)()
         Try
             Using llm = _llmFactory()
-                Dim prompt = $"You are a biomedical research assistant. Based on the following research topic description, extract 3-5 English search keywords that would be most effective for finding relevant scientific literature in PubMed. Return ONLY the keywords, one per line, without numbering or other text." & vbCrLf & vbCrLf & $"Research topic:{vbCrLf}{researchTopic}"
+                Dim prompt = $"You are a biomedical research assistant. Based on the following research topic description, extract 3-5 English search keywords that would be most effective for finding relevant scientific literature in PubMed. 
+Return ONLY the keywords, one per line, without numbering or other text." & vbCrLf & vbCrLf &
+$"Research topic:{vbCrLf}{researchTopic}"
+
                 Dim resp = Await llm.Chat(prompt)
                 For Each line In resp.output.Split({vbCrLf, vbLf}, StringSplitOptions.RemoveEmptyEntries)
                     Dim kw = line.Trim().Trim("-"c, "*"c, " "c)
@@ -454,26 +457,6 @@ Public Class KnowledgeBaseBuilder
         sb.AppendLine("- If there are conflicting findings, note the conflict and include both perspectives.")
         sb.AppendLine("- Return ONLY the JSON object, no other text.")
         Return sb.ToString()
-    End Function
-
-    ''' <summary>从 LLM 响应中提取 JSON 内容</summary>
-    Private Function ExtractJsonFromResponse(text As String) As String
-        If String.IsNullOrEmpty(text) Then Return ""
-
-        ' 尝试提取 ```json ... ``` 代码块
-        Dim codeBlockMatch = System.Text.RegularExpressions.Regex.Match(text, "```(?:json)?\s*([\s\S]*?)```")
-        If codeBlockMatch.Success Then
-            Return codeBlockMatch.Groups(1).Value.Trim()
-        End If
-
-        ' 尝试直接查找 { ... } 块
-        Dim startIdx = text.IndexOf("{"c)
-        Dim endIdx = text.LastIndexOf("}"c)
-        If startIdx >= 0 AndAlso endIdx > startIdx Then
-            Return text.Substring(startIdx, endIdx - startIdx + 1)
-        End If
-
-        Return ""
     End Function
 
     ''' <summary>解析 PubMed 搜索结果 JSON</summary>
