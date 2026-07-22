@@ -26,11 +26,8 @@ Public Class WGCNAModule : Inherits AnalysisModuleBase
         MyBase.New(config, context, logger)
     End Sub
 
-    Protected Overrides Async Function GeneratePlanAsync(cancellationToken As CancellationToken) As Task(Of ModulePlan)
-        Using llm As LLMClient = _config.CreateLLMClient(_context.TmpDir)
-            RegisterTools(llm)
-
-            Dim prompt = $"
+    Protected Overrides Async Function GeneratePlanAsync(llm As LLMClient, cancellationToken As CancellationToken) As Task(Of ModulePlan)
+        Dim prompt = $"
 You are a bioinformatics analysis expert. Design a WGCNA trait association analysis plan.
 
 {BuildContextInfo()}
@@ -58,24 +55,20 @@ Return your plan as JSON:
   ""notes"": ""<special considerations>""
 }}
 "
-            Dim resp = Await llm.Chat(prompt, cancellationToken)
-            Dim json = resp.ExtractJsonFromResponse
-            Dim plan As ModulePlan
-            If Not String.IsNullOrEmpty(json) Then
-                plan = json.LoadJSON(Of ModulePlan)
-            Else
-                plan = New ModulePlan() With {.ModuleName = ModuleName, .Goal = resp.output}
-            End If
-            plan.ModuleName = ModuleName
-            Return plan
-        End Using
+        Dim resp = Await llm.Chat(prompt, cancellationToken)
+        Dim json = resp.ExtractJsonFromResponse
+        Dim plan As ModulePlan
+        If Not String.IsNullOrEmpty(json) Then
+            plan = json.LoadJSON(Of ModulePlan)
+        Else
+            plan = New ModulePlan() With {.ModuleName = ModuleName, .Goal = resp.output}
+        End If
+        plan.ModuleName = ModuleName
+        Return plan
     End Function
 
-    Protected Overrides Async Function GenerateAndRunScriptAsync(plan As ModulePlan, cancellationToken As CancellationToken) As Task
-        Using llm As LLMClient = _config.CreateLLMClient(_context.TmpDir)
-            RegisterTools(llm)
-
-            Dim prompt = $"
+    Protected Overrides Async Function GenerateAndRunScriptAsync(llm As LLMClient, plan As ModulePlan, cancellationToken As CancellationToken) As Task
+        Dim prompt = $"
 You are a bioinformatics R script expert. Write an R script to perform WGCNA analysis.
 
 {BuildContextInfo()}
@@ -122,23 +115,21 @@ Write a complete R script that:
 
 Write the complete R script. Use ```r ... ``` code block.
 "
-            Dim resp = Await llm.Chat(prompt, cancellationToken)
-            Dim rCode = resp.ExtractCodeBlock("r")
+        Dim resp = Await llm.Chat(prompt, cancellationToken)
+        Dim rCode = resp.ExtractCodeBlock("r")
 
-            Dim scriptFile = Path.Combine(_context.ScriptsDir, $"module_{ModuleIndex}_wgcna.R")
-            rCode.SaveTo(scriptFile)
-            plan.RScriptContent = rCode
-            plan.RScriptFile = scriptFile
+        Dim scriptFile = Path.Combine(_context.ScriptsDir, $"module_{ModuleIndex}_wgcna.R")
+        rCode.SaveTo(scriptFile)
+        plan.RScriptContent = rCode
+        plan.RScriptFile = scriptFile
 
-            Dim shell As New ShellTool(_config, _context.WorkspaceDir, _logger)
-            Dim result = shell.run_rscript($"scripts/module_{ModuleIndex}_wgcna.R", timeout_seconds:=2400)
-            LogInfo($"R script execution result: {result.Substring(0, Math.Min(300, result.Length))}")
-        End Using
+        Dim shell As New ShellTool(_config, _context.WorkspaceDir, _logger)
+        Dim result = shell.run_rscript($"scripts/module_{ModuleIndex}_wgcna.R", timeout_seconds:=2400)
+        LogInfo($"R script execution result: {result.Substring(0, Math.Min(300, result.Length))}")
     End Function
 
-    Protected Overrides Async Function GenerateConclusionAsync(plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)
-        Using llm As LLMClient = _config.CreateLLMClient(_context.TmpDir)
-            Dim prompt = $"
+    Protected Overrides Async Function GenerateConclusionAsync(llm As LLMClient, plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)
+        Dim prompt = $"
 You are a biomedical research expert. Based on the WGCNA analysis results, write a stage conclusion in Chinese.
 
 {BuildContextInfo()}
@@ -160,8 +151,7 @@ Write a conclusion in Chinese that describes:
 The conclusion should be 500-800 words in Chinese. Be specific and rigorous. Do NOT fabricate biological knowledge.
 Reference the kb.json knowledge base when explaining biological mechanisms.
 "
-            Dim resp = Await llm.Chat(prompt, cancellationToken)
-            Return resp.output
-        End Using
+        Dim resp = Await llm.Chat(prompt, cancellationToken)
+        Return resp.output
     End Function
 End Class
