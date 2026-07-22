@@ -134,8 +134,8 @@ Public MustInherit Class AnalysisModuleBase
         For i = 0 To _context.Datasets.Count - 1
             Dim d = _context.Datasets(i)
             sb.AppendLine($"## Dataset {i + 1}: {d.OmicsType}")
-            sb.AppendLine($"- Expression file: {d.ExpressionFile.GetFullPath} ({StringFormats.Lanudry(d.ExpressionFile)})")
-            sb.AppendLine($"- Sample info file: {d.SampleInfoFile.GetFullPath} ({StringFormats.Lanudry(d.SampleInfoFile)})")
+            sb.AppendLine($"- Expression file: {d.ExpressionFile.GetFullPath} ({StringFormats.Lanudry(d.ExpressionFile.FileLength)})")
+            sb.AppendLine($"- Sample info file: {d.SampleInfoFile.GetFullPath} ({StringFormats.Lanudry(d.SampleInfoFile.FileLength)})")
             sb.AppendLine($"- Sample count: {d.SampleIDs.Count}")
             sb.AppendLine($"- Molecule count: {d.MoleculeIDs.Count}")
             sb.AppendLine($"- Sample IDs: { d.SampleIDs.Concatenate(", ")}")
