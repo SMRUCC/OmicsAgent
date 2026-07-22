@@ -12,9 +12,10 @@ Imports OmicsAgent.AppRuntime
 ''' </summary>
 Public Class ShellTool
 
-    Private ReadOnly _config As AgentConfig
-    Private ReadOnly _workspaceRoot As String
-    Private ReadOnly _logger As Action(Of String)
+    ReadOnly _config As AgentConfig
+    ReadOnly _workspaceRoot As String
+    ReadOnly _logger As Action(Of String)
+    ReadOnly timeout_seconds As Integer = 3600
 
     Public Sub New(config As AgentConfig, workspaceRoot As String, Optional logger As Action(Of String) = Nothing)
         _config = config
@@ -25,8 +26,7 @@ Public Class ShellTool
     <Description("Execute an R script file using Rscript interpreter. Returns the stdout, stderr, and exit code. The script file path should be relative to workspace root or absolute.")>
     Public Function run_rscript(
         <Argument("script_path", Description:="Path to the .R script file to execute")> script_path As String,
-        <Argument("args", Description:="Optional command-line arguments to pass to the R script")> Optional args As String = "",
-        <Argument("timeout_seconds", Description:="Maximum execution time in seconds (default 600 = 10 minutes)")> Optional timeout_seconds As Integer = 600
+        <Argument("args", Description:="Optional command-line arguments to pass to the R script")> Optional args As String = ""
     ) As String
         Try
             Dim absScriptPath = ResolvePath(script_path)
@@ -34,7 +34,7 @@ Public Class ShellTool
                 Return $"{{""error"": ""R script file not found: {EscapeJson(absScriptPath)}""}}"
             End If
 
-            Return RunProcess(_config.Tools.RscriptPath, $"--vanilla ""{absScriptPath}"" {args}".Trim(), timeout_seconds)
+            Return RunProcess(_config.Tools.RscriptPath, $"--vanilla ""{absScriptPath}"" {args}".Trim())
         Catch ex As Exception
             Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
         End Try
@@ -43,8 +43,7 @@ Public Class ShellTool
     <Description("Execute a Python script file using the configured Python interpreter. Returns stdout, stderr, and exit code.")>
     Public Function run_python(
         <Argument("script_path", Description:="Path to the .py script file to execute")> script_path As String,
-        <Argument("args", Description:="Optional command-line arguments to pass to the Python script")> Optional args As String = "",
-        <Argument("timeout_seconds", Description:="Maximum execution time in seconds (default 600 = 10 minutes)")> Optional timeout_seconds As Integer = 600
+        <Argument("args", Description:="Optional command-line arguments to pass to the Python script")> Optional args As String = ""
     ) As String
         Try
             Dim absScriptPath = ResolvePath(script_path)
@@ -52,7 +51,7 @@ Public Class ShellTool
                 Return $"{{""error"": ""Python script file not found: {EscapeJson(absScriptPath)}""}}"
             End If
 
-            Return RunProcess(_config.Tools.PythonPath, $"""{absScriptPath}"" {args}".Trim(), timeout_seconds)
+            Return RunProcess(_config.Tools.PythonPath, $"""{absScriptPath}"" {args}".Trim())
         Catch ex As Exception
             Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
         End Try
@@ -61,8 +60,7 @@ Public Class ShellTool
     <Description("Execute an R# (Rsharp) script file using the configured Rsharp interpreter. Returns stdout, stderr, and exit code.")>
     Public Function run_rsharp(
         <Argument("script_path", Description:="Path to the .R Rsharp script file to execute")> script_path As String,
-        <Argument("args", Description:="Optional command-line arguments to pass to the Rsharp script")> Optional args As String = "",
-        <Argument("timeout_seconds", Description:="Maximum execution time in seconds (default 600 = 10 minutes)")> Optional timeout_seconds As Integer = 600
+        <Argument("args", Description:="Optional command-line arguments to pass to the Rsharp script")> Optional args As String = ""
     ) As String
         Try
             Dim absScriptPath = ResolvePath(script_path)
@@ -70,7 +68,7 @@ Public Class ShellTool
                 Return $"{{""error"": ""Rsharp script file not found: {EscapeJson(absScriptPath)}""}}"
             End If
 
-            Return RunProcess(_config.Tools.RsharpPath, $"""{absScriptPath}"" {args}".Trim(), timeout_seconds)
+            Return RunProcess(_config.Tools.RsharpPath, $"""{absScriptPath}"" {args}".Trim())
         Catch ex As Exception
             Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
         End Try
@@ -80,8 +78,7 @@ Public Class ShellTool
     Public Function run_wkhtmltopdf(
         <Argument("html_path", Description:="Path to the input HTML file")> html_path As String,
         <Argument("pdf_path", Description:="Path to the output PDF file")> pdf_path As String,
-        <Argument("extra_args", Description:="Optional extra command-line arguments for wkhtmltopdf")> Optional extra_args As String = "",
-        <Argument("timeout_seconds", Description:="Maximum execution time in seconds (default 300 = 5 minutes)")> Optional timeout_seconds As Integer = 300
+        <Argument("extra_args", Description:="Optional extra command-line arguments for wkhtmltopdf")> Optional extra_args As String = ""
     ) As String
         Try
             Dim absHtmlPath = ResolvePath(html_path)
@@ -96,14 +93,14 @@ Public Class ShellTool
             End If
 
             Dim args = $"--page-size A3 --orientation Portrait {extra_args} ""{absHtmlPath}"" ""{absPdfPath}"""
-            Return RunProcess(_config.Tools.WkHtmlToPdfPath, args, timeout_seconds)
+            Return RunProcess(_config.Tools.WkHtmlToPdfPath, args)
         Catch ex As Exception
             Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
         End Try
     End Function
 
     ''' <summary>执行外部进程并捕获输出</summary>
-    Private Function RunProcess(executable As String, args As String, timeoutSeconds As Integer) As String
+    Private Function RunProcess(executable As String, args As String) As String
         If String.IsNullOrEmpty(executable) OrElse Not File.Exists(executable) Then
             Return $"{{""error"": ""Executable not found: {EscapeJson(executable)}""}}"
         End If
@@ -134,13 +131,13 @@ Public Class ShellTool
             p.BeginOutputReadLine()
             p.BeginErrorReadLine()
 
-            Dim exited = p.WaitForExit(timeoutSeconds * 1000)
+            Dim exited = p.WaitForExit(timeout_seconds * 1000)
             If Not exited Then
                 Try
                     p.Kill(True)
                 Catch
                 End Try
-                Return $"{{""error"": ""Process timed out after {timeoutSeconds} seconds"", ""stdout"": ""{EscapeJson(stdoutSb.ToString())}"", ""stderr"": ""{EscapeJson(stderrSb.ToString())}""}}"
+                Return $"{{""error"": ""Process timed out after {timeout_seconds} seconds"", ""stdout"": ""{EscapeJson(stdoutSb.ToString())}"", ""stderr"": ""{EscapeJson(stderrSb.ToString())}""}}"
             End If
 
             ' 确保异步读取完成
