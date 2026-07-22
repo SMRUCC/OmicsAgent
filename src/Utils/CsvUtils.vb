@@ -140,13 +140,15 @@ Public Module CsvUtils
         Dim result As New List(Of String)()
 
         If filePath.FileExists Then
-            Dim rows As IEnumerable(Of RowObject) = RowIterator.RowSolver(filePath)
+            Using s As Stream = filePath.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                Dim rows As IEnumerable(Of RowObject) = RowIterator.RowSolver(s, simple:=True)
 
-            For Each row As RowObject In rows.Skip(1)
-                If Not row.IsNullOrEmpty Then
-                    Call result.Add(row.DirectGet(0))
-                End If
-            Next
+                For Each row As RowObject In rows.Skip(1)
+                    If Not row.IsNullOrEmpty Then
+                        Call result.Add(row.DirectGet(0))
+                    End If
+                Next
+            End Using
         End If
 
         Return result

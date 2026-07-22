@@ -232,9 +232,8 @@ Omics Data Analysis LLM Agent
 
         ' 读取研究主题文本
         context.ResearchTopic = PathUtils.ReadAllText(context.ResearchFile)
-
         ' 读取分子注释表
-        context.AnnotationContent = PathUtils.ReadAllText(context.AnnotationFile)
+        context.AnnotationContent = Molecule.ReadCsv(context.AnnotationFile).ToArray
 
         ' 读取样本元数据
         For Each ds In context.Datasets
