@@ -308,7 +308,7 @@ $"Research topic:{vbCrLf}{researchTopic}"
     End Function
 
     ''' <summary>构建知识提取提示词</summary>
-    Private Function BuildKnowledgeExtractionPrompt(researchTopic As String, literatureContent As String) As String
+    Public Shared Function BuildKnowledgeExtractionPrompt(researchTopic As String, literatureContent As String) As String
         Dim sb As New StringBuilder()
         sb.AppendLine("You are a biomedical research assistant. Based on the following research topic and reference literature, extract structured biological knowledge and return it as a JSON object.")
         sb.AppendLine()
@@ -347,7 +347,7 @@ $"Research topic:{vbCrLf}{researchTopic}"
     End Function
 
     ''' <summary>构建无参考文献时的知识生成提示词</summary>
-    Private Function BuildKnowledgeFromLLMPrompt(researchTopic As String) As String
+    Private Shared Function BuildKnowledgeFromLLMPrompt(researchTopic As String) As String
         Dim sb As New StringBuilder()
         sb.AppendLine("You are a biomedical research assistant. Based on the following research topic, use your training knowledge to generate a structured biological knowledge base. Return it as a JSON object.")
         sb.AppendLine()
