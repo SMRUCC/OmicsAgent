@@ -32,7 +32,7 @@ Public MustInherit Class AnalysisModuleBase
 
     Public ReadOnly Property FolderBaseName As String
         Get
-            Return $"{ModuleIndex}_{ModuleName.NormalizePathString(alphabetOnly:=True).Replace(" ", "_")}"
+            Return $"{ModuleIndex}_{ModuleName.NormalizePathString(alphabetOnly:=True).Replace(" ", "_").ToLower}"
         End Get
     End Property
 
