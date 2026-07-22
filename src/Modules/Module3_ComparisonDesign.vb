@@ -98,7 +98,7 @@ Write the complete R script. Use ```r ... ``` code block.
             Dim rCode = resp.ExtractCodeBlock("r")
 
             Dim scriptFile = Path.Combine(_context.ScriptsDir, $"module_{ModuleIndex}_comparison_design.R")
-            PathUtils.WriteAllText(scriptFile, rCode)
+            rCode.SaveTo(scriptFile)
             plan.RScriptContent = rCode
             plan.RScriptFile = scriptFile
 

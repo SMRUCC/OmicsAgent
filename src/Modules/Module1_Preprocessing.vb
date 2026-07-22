@@ -107,7 +107,7 @@ Write the complete R script. Use ```r ... ``` code block.
 
             ' 保存脚本
             Dim scriptFile = Path.Combine(_context.ScriptsDir, $"module_{ModuleIndex}_preprocessing.R")
-            PathUtils.WriteAllText(scriptFile, rCode)
+            rCode.SaveTo(scriptFile)
             plan.RScriptContent = rCode
             plan.RScriptFile = scriptFile
 

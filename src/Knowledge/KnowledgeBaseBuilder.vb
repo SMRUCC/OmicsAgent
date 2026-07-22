@@ -40,7 +40,7 @@ Public Class KnowledgeBaseBuilder
         LogInfo("========== 知识库构建 ==========")
 
         ' 1. 确保知识库目录存在
-        PathUtils.EnsureDirectory(_context.KnowledgeDir)
+        _context.KnowledgeDir.MakeDir
 
         ' 2. 处理参考文献
         Dim referenceFiles = CollectReferenceFiles()
@@ -181,7 +181,7 @@ Public Class KnowledgeBaseBuilder
         If Not File.Exists(templatePath) Then
             Throw New FileNotFoundException($"未找到 PMC 全文获取 Python 模板脚本：{templatePath}。请确认 agent/python 目录下存在 pmc_fetch_template.py。")
         End If
-        Dim template = PathUtils.ReadAllText(templatePath)
+        Dim template = templatePath.ReadAllText
         Return template.Replace("{KNOWLEDGE_DIR}", outputDir)
     End Function
 
@@ -498,7 +498,7 @@ $"Research topic:{vbCrLf}{researchTopic}"
         If Not File.Exists(templatePath) Then
             Throw New FileNotFoundException($"未找到 NCBI 检索 Python 模板脚本：{templatePath}。请确认 agent/python 目录下存在 ncbi_search_template.py。")
         End If
-        Dim template = PathUtils.ReadAllText(templatePath)
+        Dim template = templatePath.ReadAllText
         Return template _
             .Replace("{KEYWORDS}", kwList) _
             .Replace("{MAX_RESULTS}", maxCount.ToString()) _

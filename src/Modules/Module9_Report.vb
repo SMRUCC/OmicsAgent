@@ -95,7 +95,7 @@ Return your plan as JSON:
         ' 生成 HTML 文件
         Dim htmlPath = Path.Combine(_context.WorkspaceDir, "analysis", "report.html")
         Dim html = BuildHtmlReport(reportContent, figures, tables)
-        PathUtils.WriteAllText(htmlPath, html)
+        html.SaveTo(htmlPath)
         LogInfo($"HTML report generated: {htmlPath}")
 
         ' 调用 wkhtmltopdf 转换为 PDF

@@ -225,14 +225,14 @@ Omics Data Analysis LLM Agent
         End If
 
         ' 创建工作区目录结构
-        PathUtils.EnsureDirectory(context.WorkspaceDir)
-        PathUtils.EnsureDirectory(Path.Combine(context.WorkspaceDir, "research_kb"))
-        PathUtils.EnsureDirectory(Path.Combine(context.WorkspaceDir, "tmp"))
-        PathUtils.EnsureDirectory(Path.Combine(context.WorkspaceDir, "scripts"))
-        PathUtils.EnsureDirectory(Path.Combine(context.WorkspaceDir, "analysis"))
+        Call context.WorkspaceDir.MakeDir
+        Call Path.Combine(context.WorkspaceDir, "research_kb").MakeDir
+        Call Path.Combine(context.WorkspaceDir, "tmp").MakeDir
+        Call Path.Combine(context.WorkspaceDir, "scripts").MakeDir
+        Call Path.Combine(context.WorkspaceDir, "analysis").MakeDir
 
         ' 读取研究主题文本
-        context.ResearchTopic = PathUtils.ReadAllText(context.ResearchFile)
+        context.ResearchTopic = context.ResearchFile.ReadAllText
         ' 读取分子注释表
         context.AnnotationContent = Molecule.ReadCsv(context.AnnotationFile).ToArray
 

@@ -72,9 +72,9 @@ Public MustInherit Class AnalysisModuleBase
         LogInfo($"========== 模块 {ModuleIndex}: {ModuleName} ==========")
 
         ' 创建输出目录
-        PathUtils.EnsureDirectory(OutputDir)
-        PathUtils.EnsureDirectory(TablesDir)
-        PathUtils.EnsureDirectory(FiguresDir)
+        Call OutputDir.MakeDir
+        Call TablesDir.MakeDir
+        Call FiguresDir.MakeDir
 
         Try
             ' 1. 生成分析计划
@@ -86,7 +86,7 @@ Public MustInherit Class AnalysisModuleBase
 
             ' 3. 生成阶段性总结
             Dim conclusion = Await GenerateConclusionAsync(plan, cancellationToken)
-            PathUtils.WriteAllText(ConclusionFile, conclusion)
+            conclusion.SaveTo(ConclusionFile)
             LogInfo($"阶段性总结已保存：{ConclusionFile}")
 
             ' 4. 记录到上下文
@@ -100,7 +100,9 @@ Public MustInherit Class AnalysisModuleBase
         Catch ex As Exception
             LogInfo($"[错误] 模块 {ModuleName} 执行失败：{ex.Message}")
             LogInfo(ex.StackTrace)
-            PathUtils.WriteAllText(ConclusionFile, $"Module {ModuleName} failed with error: {ex.Message}{vbCrLf}{vbCrLf}Stack trace:{vbCrLf}{ex.StackTrace}")
+
+            Call $"Module {ModuleName} failed with error: {ex.Message}{vbCrLf}{vbCrLf}Stack trace:{vbCrLf}{ex.StackTrace}".SaveTo(ConclusionFile)
+            Call App.LogException(ex)
         End Try
     End Function
 

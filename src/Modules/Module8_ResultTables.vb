@@ -101,7 +101,7 @@ Return your plan as JSON:
         ' 2. 第一次 LLM 调用：生成每个 sheet 第一行的英文注释说明，保存为 JSON
         Dim descJson = Await GenerateAnnotationsAsync(groupedFiles, cancellationToken)
         Dim descPath = Path.Combine(_context.WorkspaceDir, "analysis", "table_descriptions.json")
-        PathUtils.WriteAllText(descPath, descJson)
+        descJson.SaveTo(descPath)
         LogInfo($"Table descriptions saved: {descPath}")
 
         ' 3. 第二次 LLM 调用：编写生成 xlsx 的 R 脚本并执行
@@ -115,7 +115,7 @@ Return your plan as JSON:
             Dim rCode = resp.ExtractCodeBlock("r")
 
             Dim scriptFile = Path.Combine(_context.ScriptsDir, $"module_{ModuleIndex}_result_tables.R")
-            PathUtils.WriteAllText(scriptFile, rCode)
+            rCode.SaveTo(scriptFile)
 
             Dim shell As New ShellTool(_config, _context.WorkspaceDir, _logger)
             Dim result = shell.run_rscript($"scripts/module_{ModuleIndex}_result_tables.R", timeout_seconds:=600)
