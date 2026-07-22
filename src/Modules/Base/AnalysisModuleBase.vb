@@ -199,7 +199,7 @@ Public MustInherit Class AnalysisModuleBase
     End Function
 
     ''' <summary>注册 Function Calling 工具到 LLM 客户端</summary>
-    Private Sub RegisterTools(llm As LLMClient)
+    Protected Sub RegisterTools(llm As LLMClient)
         Dim fileTool As New FileTool(_context.WorkspaceDir, _logger)
         Dim shellTool As New ShellTool(_config, _context.WorkspaceDir, _logger)
 

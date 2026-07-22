@@ -37,11 +37,8 @@ Public Class ResultTablesModule : Inherits AnalysisModuleBase
         MyBase.New(config, context, logger)
     End Sub
 
-    Protected Overrides Async Function GeneratePlanAsync(cancellationToken As CancellationToken) As Task(Of ModulePlan)
-        Using llm As LLMClient = _config.CreateLLMClient(_context.TmpDir)
-            RegisterTools(llm)
-
-            Dim prompt = $"
+    Protected Overrides Async Function GeneratePlanAsync(llm As LLMClient, cancellationToken As CancellationToken) As Task(Of ModulePlan)
+        Dim prompt = $"
 You are a bioinformatics data analyst. Design a plan to compile result tables.
 
 {BuildContextInfo()}
@@ -74,20 +71,19 @@ Return your plan as JSON:
   ""notes"": ""<special considerations>""
 }}
 "
-            Dim resp = Await llm.Chat(prompt, cancellationToken)
-            Dim json = resp.ExtractJsonFromResponse
-            Dim plan As ModulePlan
-            If Not String.IsNullOrEmpty(json) Then
-                plan = json.LoadJSON(Of ModulePlan)
-            Else
-                plan = New ModulePlan() With {.ModuleName = ModuleName, .Goal = resp.output}
-            End If
-            plan.ModuleName = ModuleName
-            Return plan
-        End Using
+        Dim resp = Await llm.Chat(prompt, cancellationToken)
+        Dim json = resp.ExtractJsonFromResponse
+        Dim plan As ModulePlan
+        If Not String.IsNullOrEmpty(json) Then
+            plan = json.LoadJSON(Of ModulePlan)
+        Else
+            plan = New ModulePlan() With {.ModuleName = ModuleName, .Goal = resp.output}
+        End If
+        plan.ModuleName = ModuleName
+        Return plan
     End Function
 
-    Protected Overrides Async Function GenerateAndRunScriptAsync(plan As ModulePlan, cancellationToken As CancellationToken) As Task
+    Protected Overrides Async Function GenerateAndRunScriptAsync(llm As LLMClient, plan As ModulePlan, cancellationToken As CancellationToken) As Task
         LogInfo("Compiling result tables into XLSX files via LLM-generated R script...")
 
         ' 1. 收集所有 CSV 结果文件并按分析主题分组
@@ -106,25 +102,21 @@ Return your plan as JSON:
         LogInfo($"Table descriptions saved: {descPath}")
 
         ' 3. 第二次 LLM 调用：编写生成 xlsx 的 R 脚本并执行
-        Using llm As LLMClient = _config.CreateLLMClient(_context.TmpDir)
-            RegisterTools(llm)
+        Dim analysisDir = Path.Combine(_context.WorkspaceDir, "analysis")
+        Dim prompt = BuildRScriptPrompt(descPath, analysisDir)
 
-            Dim analysisDir = Path.Combine(_context.WorkspaceDir, "analysis")
-            Dim prompt = BuildRScriptPrompt(descPath, analysisDir)
+        Dim resp = Await llm.Chat(prompt, cancellationToken)
+        Dim rCode = resp.ExtractCodeBlock("r")
 
-            Dim resp = Await llm.Chat(prompt, cancellationToken)
-            Dim rCode = resp.ExtractCodeBlock("r")
+        Dim scriptFile = Path.Combine(_context.ScriptsDir, $"module_{ModuleIndex}_result_tables.R")
+        rCode.SaveTo(scriptFile)
 
-            Dim scriptFile = Path.Combine(_context.ScriptsDir, $"module_{ModuleIndex}_result_tables.R")
-            rCode.SaveTo(scriptFile)
-
-            Dim shell As New ShellTool(_config, _context.WorkspaceDir, _logger)
-            Dim result = shell.run_rscript($"scripts/module_{ModuleIndex}_result_tables.R", timeout_seconds:=600)
-            LogInfo($"R script execution result: {result.Substring(0, Math.Min(500, result.Length))}")
-        End Using
+        Dim shell As New ShellTool(_config, _context.WorkspaceDir, _logger)
+        Dim result = shell.run_rscript($"scripts/module_{ModuleIndex}_result_tables.R", timeout_seconds:=600)
+        LogInfo($"R script execution result: {result.Substring(0, Math.Min(500, result.Length))}")
     End Function
 
-    Protected Overrides Async Function GenerateConclusionAsync(plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)
+    Protected Overrides Async Function GenerateConclusionAsync(llm As LLMClient, plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)
         Return Await Task.FromResult("结果表格已整理完成：VB.NET 收集了所有中间结果 CSV 文件及其表头并按分析主题分组，先由 LLM 编写了每个工作表第一行的英文注释说明，再由 LLM 编写 openxlsx R 脚本生成了对应的 XLSX 文件。每个 XLSX 文件包含多个工作表，每个工作表的第一行为表格注释说明（草绿色字体），第二行为列标题（深蓝色背景白色加粗字体），第一列为分子 ID（浅灰色背景斜体），并已冻结窗格，全局采用 Cambria Math 11 号字体、缩放 90%。")
     End Function
 
@@ -260,8 +252,8 @@ Return your plan as JSON:
 
         Dim skeleton = sk.ToString()
 
-        Using llm As LLMClient = _config.CreateLLMClient(_context.TmpDir)
-            RegisterTools(llm)
+        Using llm As LLMClient = _config.CreateLLMClient(FolderBaseName & "-sheet_comment", _context.TmpDir)
+            Call RegisterTools(llm)
 
             ' 构建每个 sheet 的表头信息，供 LLM 编写注释
             Dim headersInfo As New StringBuilder()

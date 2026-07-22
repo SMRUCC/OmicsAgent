@@ -30,9 +30,8 @@ Public Class ReportModule : Inherits AnalysisModuleBase
         MyBase.New(config, context, logger)
     End Sub
 
-    Protected Overrides Async Function GeneratePlanAsync(cancellationToken As CancellationToken) As Task(Of ModulePlan)
-        Using llm As LLMClient = _config.CreateLLMClient(_context.TmpDir)
-            Dim prompt = $"
+    Protected Overrides Async Function GeneratePlanAsync(llm As LLMClient, cancellationToken As CancellationToken) As Task(Of ModulePlan)
+        Dim prompt = $"
 You are a biomedical research paper writer. Design a plan to write a research report.
 
 {BuildContextInfo()}
@@ -64,20 +63,19 @@ Return your plan as JSON:
   ""notes"": ""<special considerations>""
 }}
 "
-            Dim resp = Await llm.Chat(prompt, cancellationToken)
-            Dim json = resp.ExtractJsonFromResponse
-            Dim plan As ModulePlan
-            If Not String.IsNullOrEmpty(json) Then
-                plan = json.LoadJSON(Of ModulePlan)
-            Else
-                plan = New ModulePlan() With {.ModuleName = ModuleName, .Goal = resp.output}
-            End If
-            plan.ModuleName = ModuleName
-            Return plan
-        End Using
+        Dim resp = Await llm.Chat(prompt, cancellationToken)
+        Dim json = resp.ExtractJsonFromResponse
+        Dim plan As ModulePlan
+        If Not String.IsNullOrEmpty(json) Then
+            plan = json.LoadJSON(Of ModulePlan)
+        Else
+            plan = New ModulePlan() With {.ModuleName = ModuleName, .Goal = resp.output}
+        End If
+        plan.ModuleName = ModuleName
+        Return plan
     End Function
 
-    Protected Overrides Async Function GenerateAndRunScriptAsync(plan As ModulePlan, cancellationToken As CancellationToken) As Task
+    Protected Overrides Async Function GenerateAndRunScriptAsync(llm As LLMClient, plan As ModulePlan, cancellationToken As CancellationToken) As Task
         ' 这个模块直接由 VB.NET 代码生成 HTML 报告，并调用 wkhtmltopdf 转换为 PDF
         LogInfo("Generating research report...")
 
@@ -110,7 +108,7 @@ Return your plan as JSON:
         LogInfo($"PDF conversion result: {result.Substring(0, Math.Min(300, result.Length))}")
     End Function
 
-    Protected Overrides Async Function GenerateConclusionAsync(plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)
+    Protected Overrides Async Function GenerateConclusionAsync(llm As LLMClient, plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)
         Return Await Task.FromResult("研究报告已生成完成。报告以中文撰写，包含完整的引言、材料与方法、结果、讨论和结论章节。所有图表均配有中英文双语图注。报告以 A3 大小 HTML 文件形式生成，并已通过 wkhtmltopdf 工具转换为 PDF 文件。")
     End Function
 
@@ -182,7 +180,7 @@ Return your plan as JSON:
 
     ''' <summary>调用 LLM 生成报告内容</summary>
     Private Async Function GenerateReportContentAsync(conclusions As Dictionary(Of Integer, String), figures As List(Of Tuple(Of Integer, String)), tables As List(Of Tuple(Of Integer, String)), cancellationToken As CancellationToken) As Task(Of ReportContent)
-        Using llm As LLMClient = _config.CreateLLMClient(_context.TmpDir)
+        Using llm As LLMClient = _config.CreateLLMClient(FolderBaseName & "-create_report", _context.TmpDir)
             Dim prompt = $"
 You are a biomedical research paper writer. Write a comprehensive research report in Chinese based on the analysis results.
 
