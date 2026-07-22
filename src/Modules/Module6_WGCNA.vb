@@ -59,7 +59,7 @@ Return your plan as JSON:
 }}
 "
             Dim resp = Await llm.Chat(prompt, cancellationToken)
-            Dim json = ExtractJsonFromResponse(resp.output)
+            Dim json = resp.ExtractJsonFromResponse
             Dim plan As ModulePlan
             If Not String.IsNullOrEmpty(json) Then
                 plan = json.LoadJSON(Of ModulePlan)
@@ -123,7 +123,7 @@ Write a complete R script that:
 Write the complete R script. Use ```r ... ``` code block.
 "
             Dim resp = Await llm.Chat(prompt, cancellationToken)
-            Dim rCode = ExtractCodeBlock(resp.output, "r")
+            Dim rCode = resp.ExtractCodeBlock("r")
 
             Dim scriptFile = Path.Combine(_context.ScriptsDir, $"module_{ModuleIndex}_wgcna.R")
             PathUtils.WriteAllText(scriptFile, rCode)
@@ -164,15 +164,4 @@ Reference the kb.json knowledge base when explaining biological mechanisms.
             Return resp.output
         End Using
     End Function
-
-    Private Function ExtractJsonFromResponse(text As String) As String
-        If String.IsNullOrEmpty(text) Then Return ""
-        Dim match = System.Text.RegularExpressions.Regex.Match(text, "```(?:json)?\s*([\s\S]*?)```")
-        If match.Success Then Return match.Groups(1).Value.Trim()
-        Dim startIdx = text.IndexOf("{"c)
-        Dim endIdx = text.LastIndexOf("}"c)
-        If startIdx >= 0 AndAlso endIdx > startIdx Then Return text.Substring(startIdx, endIdx - startIdx + 1)
-        Return ""
-    End Function
-
 End Class

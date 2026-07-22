@@ -231,7 +231,7 @@ $"Research topic:{vbCrLf}{researchTopic}"
                 Using llm = _llmFactory()
                     Dim prompt = BuildPerDocumentExtractionPrompt(_context.ResearchTopic, content, fileName)
                     Dim resp = Await llm.Chat(prompt, cancellationToken)
-                    Dim perDocJson = ExtractJsonFromResponse(resp.output)
+                    Dim perDocJson = resp.ExtractJsonFromResponse
                     If String.IsNullOrEmpty(perDocJson) Then
                         ' 如果提取不到结构化的 JSON，将原始输出包装为 JSON
                         perDocJson = $"{{""source_file"": ""{EscapeJson(fileName)}"", ""raw_output"": ""{EscapeJson(resp.output)}""}}"
@@ -270,7 +270,7 @@ $"Research topic:{vbCrLf}{researchTopic}"
             Using llm = _llmFactory()
                 Dim prompt = BuildSummaryPrompt(_context.ResearchTopic, combinedExtractions)
                 Dim resp = Await llm.Chat(prompt, cancellationToken)
-                Dim kbJson = ExtractJsonFromResponse(resp.output)
+                Dim kbJson = resp.ExtractJsonFromResponse
                 If Not String.IsNullOrEmpty(kbJson) Then
                     File.WriteAllText(_context.KnowledgeBaseFile, kbJson, Encoding.UTF8)
                 Else
@@ -294,7 +294,7 @@ $"Research topic:{vbCrLf}{researchTopic}"
             Using llm = _llmFactory()
                 Dim prompt = BuildKnowledgeFromLLMPrompt(_context.ResearchTopic)
                 Dim resp = Await llm.Chat(prompt, cancellationToken)
-                Dim kbJson = ExtractJsonFromResponse(resp.output)
+                Dim kbJson = resp.ExtractJsonFromResponse
                 If String.IsNullOrEmpty(kbJson) Then
                     kbJson = $"{{""research_topic"": ""{EscapeJson(_context.ResearchTopic)}"", ""summary"": ""{EscapeJson(resp.output)}"", ""references"": []}}"
                 End If

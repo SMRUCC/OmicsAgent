@@ -74,7 +74,7 @@ Return your plan as JSON:
 }}
 "
             Dim resp = Await llm.Chat(prompt, cancellationToken)
-            Dim json = ExtractJsonFromResponse(resp.output)
+            Dim json = resp.ExtractJsonFromResponse
             Dim plan As ModulePlan
             If Not String.IsNullOrEmpty(json) Then
                 plan = json.LoadJSON(Of ModulePlan)
@@ -112,7 +112,7 @@ Return your plan as JSON:
             Dim prompt = BuildRScriptPrompt(descPath, analysisDir)
 
             Dim resp = Await llm.Chat(prompt, cancellationToken)
-            Dim rCode = ExtractCodeBlock(resp.output, "r")
+            Dim rCode = resp.ExtractCodeBlock("r")
 
             Dim scriptFile = Path.Combine(_context.ScriptsDir, $"module_{ModuleIndex}_result_tables.R")
             PathUtils.WriteAllText(scriptFile, rCode)
@@ -303,7 +303,7 @@ Return ONLY the completed JSON (no extra explanation, no markdown code fences).
                            .Replace("{SKELETON}", skeleton)
 
             Dim resp = Await llm.Chat(prompt, cancellationToken)
-            Dim json = ExtractJsonFromResponse(resp.output)
+            Dim json = resp.ExtractJsonFromResponse
             If Not String.IsNullOrEmpty(json) Then
                 Return json
             End If
@@ -414,15 +414,4 @@ Write the complete R script inside a ```r ... ``` code block.
         prompt = prompt.Replace("{DESC_PATH}", descPath).Replace("{OUT_DIR}", analysisDir)
         Return prompt
     End Function
-
-    Private Function ExtractJsonFromResponse(text As String) As String
-        If String.IsNullOrEmpty(text) Then Return ""
-        Dim match = System.Text.RegularExpressions.Regex.Match(text, "```(?:json)?\s*([\s\S]*?)```")
-        If match.Success Then Return match.Groups(1).Value.Trim()
-        Dim startIdx = text.IndexOf("{"c)
-        Dim endIdx = text.LastIndexOf("}"c)
-        If startIdx >= 0 AndAlso endIdx > startIdx Then Return text.Substring(startIdx, endIdx - startIdx + 1)
-        Return ""
-    End Function
-
 End Class

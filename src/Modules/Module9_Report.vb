@@ -63,7 +63,7 @@ Return your plan as JSON:
 }}
 "
             Dim resp = Await llm.Chat(prompt, cancellationToken)
-            Dim json = ExtractJsonFromResponse(resp.output)
+            Dim json = resp.ExtractJsonFromResponse
             Dim plan As ModulePlan
             If Not String.IsNullOrEmpty(json) Then
                 plan = json.LoadJSON(Of ModulePlan)
@@ -229,7 +229,7 @@ Return as JSON:
 }}
 "
             Dim resp = Await llm.Chat(prompt, cancellationToken)
-            Dim json = ExtractJsonFromResponse(resp.output)
+            Dim json = resp.ExtractJsonFromResponse
             If Not String.IsNullOrEmpty(json) Then
                 Try
                     Return json.LoadJSON(Of ReportContent)
@@ -347,16 +347,6 @@ Return as JSON:
     Private Function EscapeHtml(text As String) As String
         If String.IsNullOrEmpty(text) Then Return ""
         Return text.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;").Replace("""", "&quot;").Replace(vbCrLf, "<br>").Replace(vbLf, "<br>")
-    End Function
-
-    Private Function ExtractJsonFromResponse(text As String) As String
-        If String.IsNullOrEmpty(text) Then Return ""
-        Dim match = System.Text.RegularExpressions.Regex.Match(text, "```(?:json)?\s*([\s\S]*?)```")
-        If match.Success Then Return match.Groups(1).Value.Trim()
-        Dim startIdx = text.IndexOf("{"c)
-        Dim endIdx = text.LastIndexOf("}"c)
-        If startIdx >= 0 AndAlso endIdx > startIdx Then Return text.Substring(startIdx, endIdx - startIdx + 1)
-        Return ""
     End Function
 
 End Class

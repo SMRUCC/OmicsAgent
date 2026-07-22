@@ -58,7 +58,7 @@ Return your plan as JSON:
 }}
 "
             Dim resp = Await llm.Chat(prompt, cancellationToken)
-            Dim json = ExtractJsonFromResponse(resp.output)
+            Dim json = resp.ExtractJsonFromResponse
             Dim plan As ModulePlan
             If Not String.IsNullOrEmpty(json) Then
                 plan = json.LoadJSON(Of ModulePlan)
@@ -117,7 +117,7 @@ Write a complete R script that:
 Write the complete R script. Use ```r ... ``` code block.
 "
             Dim resp = Await llm.Chat(prompt, cancellationToken)
-            Dim rCode = ExtractCodeBlock(resp.output, "r")
+            Dim rCode = resp.ExtractCodeBlock("r")
 
             Dim scriptFile = Path.Combine(_context.ScriptsDir, $"module_{ModuleIndex}_advanced.R")
             PathUtils.WriteAllText(scriptFile, rCode)

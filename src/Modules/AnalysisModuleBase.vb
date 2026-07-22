@@ -187,21 +187,6 @@ Public MustInherit Class AnalysisModuleBase
         llm.AddFunction(shellTool, "run_rsharp")
     End Sub
 
-    ''' <summary>从 LLM 响应中提取代码块</summary>
-    Protected Function ExtractCodeBlock(text As String, language As String) As String
-        If String.IsNullOrEmpty(text) Then Return ""
-
-        ' 尝试提取 ```language ... ``` 代码块
-        Dim pattern = $"```(?:{language})?\s*([\s\S]*?)```"
-        Dim match = System.Text.RegularExpressions.Regex.Match(text, pattern, System.Text.RegularExpressions.RegexOptions.IgnoreCase)
-        If match.Success Then
-            Return match.Groups(1).Value.Trim()
-        End If
-
-        ' 如果没有代码块标记，返回整个文本
-        Return text.Trim()
-    End Function
-
     Protected Sub LogInfo(msg As String)
         _logger?.Invoke(msg)
     End Sub
