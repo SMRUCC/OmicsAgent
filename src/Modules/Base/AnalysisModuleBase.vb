@@ -125,7 +125,7 @@ Public MustInherit Class AnalysisModuleBase
         sb.AppendLine($"- R-sharp scripts tools directory: {AgentConfig.RsharpScriptsDir}")
         sb.AppendLine($"- Python scripts tools directory: {AgentConfig.PythonScriptsDir}")
         sb.AppendLine($"- KEGG background data directory: {AgentConfig.KeggDataDir}")
-        sb.AppendLine($"- molecule biological annotation table: {_context.AnnotationFile}")
+        sb.AppendLine($"- molecule biological annotation table: {_context.AnnotationFile} ({StringFormats.Lanudry(_context.AnnotationFile.FileLength)})")
         sb.AppendLine()
         sb.AppendLine($"# Research Topic")
         sb.AppendLine(_context.ResearchTopic)
@@ -134,8 +134,8 @@ Public MustInherit Class AnalysisModuleBase
         For i = 0 To _context.Datasets.Count - 1
             Dim d = _context.Datasets(i)
             sb.AppendLine($"## Dataset {i + 1}: {d.OmicsType}")
-            sb.AppendLine($"- Expression file: {d.ExpressionFile.GetFullPath}")
-            sb.AppendLine($"- Sample info file: {d.SampleInfoFile.GetFullPath}")
+            sb.AppendLine($"- Expression file: {d.ExpressionFile.GetFullPath} ({StringFormats.Lanudry(d.ExpressionFile)})")
+            sb.AppendLine($"- Sample info file: {d.SampleInfoFile.GetFullPath} ({StringFormats.Lanudry(d.SampleInfoFile)})")
             sb.AppendLine($"- Sample count: {d.SampleIDs.Count}")
             sb.AppendLine($"- Molecule count: {d.MoleculeIDs.Count}")
             sb.AppendLine($"- Sample IDs: { d.SampleIDs.Concatenate(", ")}")
@@ -180,6 +180,7 @@ Public MustInherit Class AnalysisModuleBase
         llm.AddFunction(fileTool, "list_files")
         llm.AddFunction(fileTool, "create_directory")
         llm.AddFunction(fileTool, "peek_csv")
+        llm.AddFunction(fileTool, "peek_file")
 
         ' 注册命令行执行工具
         llm.AddFunction(shellTool, "run_rscript")

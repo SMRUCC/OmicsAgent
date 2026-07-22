@@ -86,7 +86,7 @@ Public Class FileTool
         End Try
     End Function
 
-    <Description("Read text content from a file in the workspace. Returns the file content as a string.")>
+    <Description("Read all text content from a file in the workspace. Returns the file content as a string. do not use this function for read all large text/csv file")>
     Public Function read_file(
         <Argument("path", Description:="File path relative to workspace root, or absolute path")> path As String
     ) As String
@@ -102,6 +102,11 @@ Public Class FileTool
         Catch ex As Exception
             Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
         End Try
+    End Function
+
+    <Description("peek the top 15 lines of the text(or csv) file, returns the file peeks contents as a string")>
+    Public Function peek_file(<Argument("path", Description:="File path relative to workspace root, or absolute path")> path As String) As String
+        Return path.IterateAllLines.Take(15).JoinBy(vbCrLf)
     End Function
 
     <Description("Check if a file exists in the workspace.")>
