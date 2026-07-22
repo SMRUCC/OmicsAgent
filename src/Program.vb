@@ -30,6 +30,7 @@ Omics Data Analysis LLM Agent
   --skip-literature       跳过文献检索步骤
   --skip-kb               跳过知识库构建步骤
   --module=<n>            仅执行指定模块（1-9），多个模块用逗号分隔
+ 
   --help,-h               显示帮助信息
 
 示例:

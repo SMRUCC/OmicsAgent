@@ -41,12 +41,12 @@ Public Module CsvUtils
             ' 检查数据行：第一列为分子 ID，其他列应为数值
             Dim sampleCount = header.Length - 1
             For i As Integer = 0 To Math.Min(rows.Nrows - 1, 5)
-                Dim row = rows(i)
-                If row.Length <> header.Length Then
-                    errorMsg = $"Row {i + 1} has {row.Length} fields, expected {header.Length}."
+                Dim row = rows.GetRow(i)
+                If row.Count <> header.Length Then
+                    errorMsg = $"Row {i + 1} has {row.Count} fields, expected {header.Length}."
                     Return False
                 End If
-                For j = 1 To row.Length - 1
+                For j = 1 To row.Count - 1
                     Dim v As Double
                     If Not Double.TryParse(row(j), NumberStyles.Any, CultureInfo.InvariantCulture, v) Then
                         errorMsg = $"Cell at row {i + 1}, column {j + 1} is not a valid number: '{row(j)}'"
@@ -122,11 +122,6 @@ Public Module CsvUtils
                     Return False
                 End If
             Next
-
-            ' 检查是否包含 time 列（用于判断时间序列数据）
-            If header.Contains("time") Then
-                ' 标记为时间序列数据
-            End If
 
             Return True
         Catch ex As Exception
