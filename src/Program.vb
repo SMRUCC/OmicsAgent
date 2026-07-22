@@ -30,6 +30,8 @@ Omics Data Analysis LLM Agent
   --skip-kb               跳过知识库构建步骤
   --module=<n>            仅执行指定模块（1-9），多个模块用逗号分隔
  
+  --check_r               用于测试R脚本调用
+
   --help,-h               显示帮助信息
 
 示例:
@@ -51,6 +53,15 @@ Omics Data Analysis LLM Agent
 
         If parsed.help Then
             Console.WriteLine(HelpText)
+            Return 0
+        ElseIf parsed.check_interop Then
+            Dim interop As New ShellTool(parsed.LoadConfig, workspaceRoot:=App.SysTemp)
+            Dim test As String = $"{AgentConfig.RScriptsDir}/__agent_check.R"
+            Dim stdout As String = interop.run_rscript(test)
+
+            Call Console.WriteLine("Rscript output:")
+            Call Console.WriteLine(stdout)
+
             Return 0
         End If
 

@@ -16,6 +16,12 @@ Namespace AppRuntime
         <Opt("--skip-kb")> Public Property skip_kb As Boolean = False
         <Opt("--module")> Public Property modules As String
 
+        ''' <summary>
+        ''' make check for run Rscript
+        ''' </summary>
+        ''' <returns></returns>
+        <Opt("--check_r")> Public Property check_interop As Boolean
+
         <Opt("--help", "-h")> Public Property help As Boolean = False
 
         ''' <summary>验证必需参数</summary>
@@ -37,6 +43,10 @@ Namespace AppRuntime
             End If
 
             Return True
+        End Function
+
+        Public Function LoadConfig() As AgentConfig
+            Return AgentConfig.Load(If(config, "config.ini"))
         End Function
 
         ''' <summary>解析要执行的模块</summary>

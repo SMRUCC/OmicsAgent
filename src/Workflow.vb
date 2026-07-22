@@ -1,5 +1,4 @@
 ﻿Imports Microsoft.VisualBasic.Data.Framework.IO.CSVFile
-Imports Ollama
 Imports OmicsAgent.AppRuntime
 
 Module Workflow
@@ -15,7 +14,7 @@ Module Workflow
         Console.WriteLine()
 
         ' 加载配置
-        _config = AgentConfig.Load(If(parsed.config, "config.ini"))
+        _config = parsed.LoadConfig
 
         ' 配置文件缺失或无法解析时，AgentConfig.Load 会生成模板并返回 Nothing。
         ' 此时应提示用户按模板填写后重新运行并终止，避免后续空引用崩溃。
