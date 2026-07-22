@@ -23,6 +23,7 @@ Namespace AppRuntime
         <DataFrameColumn("url")> Public Property LLMServiceUrl As String = "http://localhost:11434"
         <DataFrameColumn("model")> Public Property LLMModelName As String = ""
         <DataFrameColumn("apikey")> Public Property LLMApiKey As String = ""
+        <DataFrameColumn("max_rounds")> Public Property LLMMaxRounds As Integer = 100
     End Class
 
     ''' <summary>MySQL 数据库连接参数段 [mysql]</summary>

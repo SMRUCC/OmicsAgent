@@ -150,7 +150,7 @@ Namespace AppRuntime
             LogInfo("----- 检查大语言模型服务可用性 -----")
 
             ' 取得 LLMClient：优先使用注入的工厂，未注入时基于配置直接构造
-            Dim client As LLMClient = New LLMClient(LLMUrl.Create(_config.LLM.LLMServiceUrl, _config.LLM.LLMApiKey), _config.LLM.LLMModelName)
+            Dim client As LLMClient = _config.CreateLLMClient(App.AppSystemTemp)
 
             Try
                 LogInfo($"  正在连接：{_config.LLM.LLMServiceUrl}")
