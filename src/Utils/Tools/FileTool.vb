@@ -1,6 +1,7 @@
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 
 ' ============================================================================
 ' 文件操作 Function Calling 工具集 - 注册到 LLM 供其读写工作区文件
@@ -61,10 +62,21 @@ Public Class FileTool
                 Directory.CreateDirectory(dir)
             End If
 
+            ' 20260723 the writed R script file must be save in utf8 (not utf8-bom)
+            ' or run rscript will error happends:
+            '
+            ' "C:\Program Files\R\R-4.5.0\bin\Rscript.exe" --vanilla "F:/datapool/2026.7.6-energy/agent_test/analysis/scripts/check_data.R"
+            ' Error: unexpected Input in ""
+            ' Execution halted
+            '
+            ' due to the reason of utf8-bom header
+
+            Static utf8 As Encoding = Encodings.UTF8WithoutBOM.CodePage
+
             If append Then
-                File.AppendAllText(absPath, content, Encoding.UTF8)
+                File.AppendAllText(absPath, content, utf8)
             Else
-                File.WriteAllText(absPath, content, Encoding.UTF8)
+                File.WriteAllText(absPath, content, utf8)
             End If
 
             _logger?.Invoke($"[FileTool] Wrote {content.Length} chars to {absPath}")
