@@ -26,11 +26,8 @@ Public Class PreprocessingModule : Inherits AnalysisModuleBase
         MyBase.New(config, context, logger)
     End Sub
 
-    Protected Overrides Async Function GeneratePlanAsync(cancellationToken As CancellationToken) As Task(Of ModulePlan)
-        Using llm As LLMClient = _config.CreateLLMClient(_context.TmpDir)
-            RegisterTools(llm)
-
-            Dim prompt = $"
+    Protected Overrides Async Function GeneratePlanAsync(llm As LLMClient, cancellationToken As CancellationToken) As Task(Of ModulePlan)
+        Dim prompt = $"
 You are a bioinformatics analysis expert. Your task is to design a preprocessing plan for omics expression matrix data.
 
 {BuildContextInfo()}
@@ -57,24 +54,20 @@ Return your plan as JSON:
   ""notes"": ""<any special considerations>""
 }}
 "
-            Dim resp = Await llm.Chat(prompt, cancellationToken)
-            Dim json = resp.ExtractJsonFromResponse
-            Dim plan As ModulePlan
-            If Not String.IsNullOrEmpty(json) Then
-                plan = json.LoadJSON(Of ModulePlan)
-            Else
-                plan = New ModulePlan() With {.ModuleName = ModuleName, .Goal = resp.output}
-            End If
-            plan.ModuleName = ModuleName
-            Return plan
-        End Using
+        Dim resp = Await llm.Chat(prompt, cancellationToken)
+        Dim json = resp.ExtractJsonFromResponse
+        Dim plan As ModulePlan
+        If Not String.IsNullOrEmpty(json) Then
+            plan = json.LoadJSON(Of ModulePlan)
+        Else
+            plan = New ModulePlan() With {.ModuleName = ModuleName, .Goal = resp.output}
+        End If
+        plan.ModuleName = ModuleName
+        Return plan
     End Function
 
-    Protected Overrides Async Function GenerateAndRunScriptAsync(plan As ModulePlan, cancellationToken As CancellationToken) As Task
-        Using llm As LLMClient = _config.CreateLLMClient(_context.TmpDir)
-            RegisterTools(llm)
-
-            Dim prompt = $"
+    Protected Overrides Async Function GenerateAndRunScriptAsync(llm As LLMClient, plan As ModulePlan, cancellationToken As CancellationToken) As Task
+        Dim prompt = $"
 You are a bioinformatics R script expert. Write an R script to preprocess the omics expression matrix data according to the following plan.
 
 {BuildContextInfo()}
@@ -103,25 +96,23 @@ Write a complete R script that:
 
 Write the complete R script. Use ```r ... ``` code block.
 "
-            Dim resp = Await llm.Chat(prompt, cancellationToken)
-            Dim rCode = resp.ExtractCodeBlock("r")
+        Dim resp = Await llm.Chat(prompt, cancellationToken)
+        Dim rCode = resp.ExtractCodeBlock("r")
 
-            ' 保存脚本
-            Dim scriptFile = Path.Combine(_context.ScriptsDir, $"module_{ModuleIndex}_preprocessing.R")
-            rCode.SaveTo(scriptFile)
-            plan.RScriptContent = rCode
-            plan.RScriptFile = scriptFile
+        ' 保存脚本
+        Dim scriptFile = Path.Combine(_context.ScriptsDir, $"module_{ModuleIndex}_preprocessing.R")
+        rCode.SaveTo(scriptFile)
+        plan.RScriptContent = rCode
+        plan.RScriptFile = scriptFile
 
-            ' 执行脚本
-            Dim shell As New ShellTool(_config, _context.WorkspaceDir, _logger)
-            Dim result = shell.run_rscript($"scripts/module_{ModuleIndex}_preprocessing.R", timeout_seconds:=600)
-            LogInfo($"R script execution result: {result.Substring(0, Math.Min(300, result.Length))}")
-        End Using
+        ' 执行脚本
+        Dim shell As New ShellTool(_config, _context.WorkspaceDir, _logger)
+        Dim result = shell.run_rscript($"scripts/module_{ModuleIndex}_preprocessing.R", timeout_seconds:=600)
+        LogInfo($"R script execution result: {result.Substring(0, Math.Min(300, result.Length))}")
     End Function
 
-    Protected Overrides Async Function GenerateConclusionAsync(plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)
-        Using llm As LLMClient = _config.CreateLLMClient(_context.TmpDir)
-            Dim prompt = $"
+    Protected Overrides Async Function GenerateConclusionAsync(llm As LLMClient, plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)
+        Dim prompt = $"
 You are a biomedical research expert. Based on the preprocessing analysis results, write a stage conclusion in Chinese.
 
 {BuildContextInfo()}
@@ -140,9 +131,8 @@ Write a conclusion in Chinese that describes:
 
 The conclusion should be 300-500 words in Chinese. Be specific and rigorous. Do NOT fabricate data.
 "
-            Dim resp = Await llm.Chat(prompt, cancellationToken)
-            Return resp.output
-        End Using
+        Dim resp = Await llm.Chat(prompt, cancellationToken)
+        Return resp.output
     End Function
 
 End Class

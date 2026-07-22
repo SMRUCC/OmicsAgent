@@ -102,8 +102,8 @@ Namespace AppRuntime
         End Function
 
         ''' <summary>创建 LLM 客户端实例</summary>
-        Public Function CreateLLMClient(tmpDir As String) As LLMClient
-            Dim logfile As String = $"{tmpDir}/.llm_agent_logs/{App.GetNextUniqueName("llm_")}.jsonl"
+        Public Function CreateLLMClient(id As String, tmpDir As String) As LLMClient
+            Dim logfile As String = $"{tmpDir}/.llm_agent_logs/{App.GetNextUniqueName("llm_")}_{id}.jsonl"
             Dim backend As ILLMProvider = LLMUrl.Create(LLM.LLMServiceUrl, LLM.LLMApiKey)
 
             Return New LLMClient(backend, LLM.LLMModelName,

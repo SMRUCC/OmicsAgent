@@ -112,13 +112,37 @@ Public MustInherit Class AnalysisModuleBase
     End Function
 
     ''' <summary>调用 LLM 生成分析计划</summary>
-    Protected MustOverride Function GeneratePlanAsync(cancellationToken As CancellationToken) As Task(Of ModulePlan)
+    Protected Async Function GeneratePlanAsync(cancellationToken As CancellationToken) As Task(Of ModulePlan)
+        Using llm As LLMClient = _config.CreateLLMClient(FolderBaseName & "-plan", _context.TmpDir)
+            RegisterTools(llm)
+            Return Await GeneratePlanAsync(llm, cancellationToken)
+        End Using
+    End Function
 
     ''' <summary>调用 LLM 编写并执行脚本</summary>
-    Protected MustOverride Function GenerateAndRunScriptAsync(plan As ModulePlan, cancellationToken As CancellationToken) As Task
+    Protected Async Function GenerateAndRunScriptAsync(plan As ModulePlan, cancellationToken As CancellationToken) As Task
+        Using llm As LLMClient = _config.CreateLLMClient(FolderBaseName & "-analysis", _context.TmpDir)
+            RegisterTools(llm)
+            Await GenerateAndRunScriptAsync(llm, plan, cancellationToken)
+        End Using
+    End Function
 
     ''' <summary>调用 LLM 生成阶段性总结</summary>
-    Protected MustOverride Function GenerateConclusionAsync(plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)
+    Protected Async Function GenerateConclusionAsync(plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)
+        Using llm As LLMClient = _config.CreateLLMClient(FolderBaseName & "-conclusion", _context.TmpDir)
+            RegisterTools(llm)
+            Return Await GenerateConclusionAsync(llm, plan, cancellationToken)
+        End Using
+    End Function
+
+    ''' <summary>调用 LLM 生成分析计划</summary>
+    Protected MustOverride Function GeneratePlanAsync(llm As LLMClient, cancellationToken As CancellationToken) As Task(Of ModulePlan)
+
+    ''' <summary>调用 LLM 编写并执行脚本</summary>
+    Protected MustOverride Function GenerateAndRunScriptAsync(llm As LLMClient, plan As ModulePlan, cancellationToken As CancellationToken) As Task
+
+    ''' <summary>调用 LLM 生成阶段性总结</summary>
+    Protected MustOverride Function GenerateConclusionAsync(llm As LLMClient, plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)
 
     ''' <summary>构建模块上下文信息字符串，提供给 LLM</summary>
     Protected Function BuildContextInfo() As String
@@ -175,7 +199,7 @@ Public MustInherit Class AnalysisModuleBase
     End Function
 
     ''' <summary>注册 Function Calling 工具到 LLM 客户端</summary>
-    Protected Sub RegisterTools(llm As LLMClient)
+    Private Sub RegisterTools(llm As LLMClient)
         Dim fileTool As New FileTool(_context.WorkspaceDir, _logger)
         Dim shellTool As New ShellTool(_config, _context.WorkspaceDir, _logger)
 
