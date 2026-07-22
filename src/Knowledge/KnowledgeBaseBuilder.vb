@@ -137,7 +137,7 @@ Public Class KnowledgeBaseBuilder
 
             ' 执行 Python 脚本
             Dim shell As New ShellTool(_config, _context.WorkspaceDir, _logger)
-            Dim runResult = shell.run_python("scripts/search_pubmed.py", timeout_seconds:=300)
+            Dim runResult = shell.run_python("scripts/search_pubmed.py")
             LogInfo($"Python 检索脚本执行结果：{runResult.Substring(0, Math.Min(200, runResult.Length))}...")
 
             ' 读取生成的 txt 文件
@@ -163,7 +163,7 @@ Public Class KnowledgeBaseBuilder
             File.WriteAllText(scriptPath, GeneratePmcFetchScript(_context.KnowledgeDir), Encoding.UTF8)
 
             Dim shell As New ShellTool(_config, _context.WorkspaceDir, _logger)
-            Dim runResult = shell.run_python("scripts/fetch_pmc.py", timeout_seconds:=300)
+            Dim runResult = shell.run_python("scripts/fetch_pmc.py")
             LogInfo($"PMC 全文获取脚本执行结果：{runResult.Substring(0, Math.Min(200, runResult.Length))}...")
         Catch ex As Exception
             ' PMC 全文获取失败不应中断已检索到的摘要的使用

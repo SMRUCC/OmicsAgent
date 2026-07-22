@@ -112,7 +112,7 @@ Return your plan as JSON:
         rCode.SaveTo(scriptFile)
 
         Dim shell As New ShellTool(_config, _context.WorkspaceDir, _logger)
-        Dim result = shell.run_rscript($"scripts/module_{ModuleIndex}_result_tables.R", timeout_seconds:=600)
+        Dim result = shell.run_rscript($"scripts/module_{ModuleIndex}_result_tables.R")
         LogInfo($"R script execution result: {result.Substring(0, Math.Min(500, result.Length))}")
     End Function
 

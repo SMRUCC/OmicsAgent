@@ -107,7 +107,7 @@ Write the complete R script. Use ```r ... ``` code block.
 
         ' 执行脚本
         Dim shell As New ShellTool(_config, _context.WorkspaceDir, _logger)
-        Dim result = shell.run_rscript($"scripts/module_{ModuleIndex}_preprocessing.R", timeout_seconds:=600)
+        Dim result = shell.run_rscript($"scripts/module_{ModuleIndex}_preprocessing.R")
         LogInfo($"R script execution result: {result.Substring(0, Math.Min(300, result.Length))}")
     End Function
 

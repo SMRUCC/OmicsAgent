@@ -102,8 +102,7 @@ Return your plan as JSON:
         Dim shell As New ShellTool(_config, _context.WorkspaceDir, _logger)
         Dim result = shell.run_wkhtmltopdf(
             htmlPath, pdfPath,
-            extra_args:=$"--margin-top 15mm --margin-bottom 15mm --margin-left 15mm --margin-right 15mm --enable-local-file-access",
-            timeout_seconds:=300
+            extra_args:=$"--margin-top 15mm --margin-bottom 15mm --margin-left 15mm --margin-right 15mm --enable-local-file-access"
         )
         LogInfo($"PDF conversion result: {result.Substring(0, Math.Min(300, result.Length))}")
     End Function

@@ -118,7 +118,7 @@ Write the complete R script. Use ```r ... ``` code block.
         plan.RScriptFile = scriptFile
 
         Dim shell As New ShellTool(_config, _context.WorkspaceDir, _logger)
-        Dim result = shell.run_rscript($"scripts/module_{ModuleIndex}_advanced.R", timeout_seconds:=2400)
+        Dim result = shell.run_rscript($"scripts/module_{ModuleIndex}_advanced.R")
         LogInfo($"R script execution result: {result.Substring(0, Math.Min(300, result.Length))}")
     End Function
 

@@ -15,12 +15,16 @@ Public Class ShellTool
     ReadOnly _config As AgentConfig
     ReadOnly _workspaceRoot As String
     ReadOnly _logger As Action(Of String)
-    ReadOnly timeout_seconds As Integer = 3600
+    ReadOnly _timeout_seconds As Integer = 3600
 
-    Public Sub New(config As AgentConfig, workspaceRoot As String, Optional logger As Action(Of String) = Nothing)
+    Public Sub New(config As AgentConfig, workspaceRoot As String,
+                   Optional logger As Action(Of String) = Nothing,
+                   Optional timeout_seconds As Integer = 3600)
+
         _config = config
         _workspaceRoot = workspaceRoot
         _logger = If(logger, AddressOf Console.WriteLine)
+        _timeout_seconds = timeout_seconds
     End Sub
 
     <Description("Execute an R script file using Rscript interpreter. Returns the stdout, stderr, and exit code. The script file path should be relative to workspace root or absolute.")>
@@ -131,13 +135,13 @@ Public Class ShellTool
             p.BeginOutputReadLine()
             p.BeginErrorReadLine()
 
-            Dim exited = p.WaitForExit(timeout_seconds * 1000)
+            Dim exited = p.WaitForExit(_timeout_seconds * 1000)
             If Not exited Then
                 Try
                     p.Kill(True)
                 Catch
                 End Try
-                Return $"{{""error"": ""Process timed out after {timeout_seconds} seconds"", ""stdout"": ""{EscapeJson(stdoutSb.ToString())}"", ""stderr"": ""{EscapeJson(stderrSb.ToString())}""}}"
+                Return $"{{""error"": ""Process timed out after {_timeout_seconds} seconds"", ""stdout"": ""{EscapeJson(stdoutSb.ToString())}"", ""stderr"": ""{EscapeJson(stderrSb.ToString())}""}}"
             End If
 
             ' 确保异步读取完成
