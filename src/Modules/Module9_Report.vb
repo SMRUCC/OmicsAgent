@@ -31,7 +31,7 @@ Public Class ReportModule : Inherits AnalysisModuleBase
     End Sub
 
     Protected Overrides Async Function GeneratePlanAsync(cancellationToken As CancellationToken) As Task(Of ModulePlan)
-        Using llm As LLMClient = _config.CreateLLMClient
+        Using llm As LLMClient = _config.CreateLLMClient(_context.TmpDir)
             Dim prompt = $"
 You are a biomedical research paper writer. Design a plan to write a research report.
 
@@ -182,7 +182,7 @@ Return your plan as JSON:
 
     ''' <summary>调用 LLM 生成报告内容</summary>
     Private Async Function GenerateReportContentAsync(conclusions As Dictionary(Of Integer, String), figures As List(Of Tuple(Of Integer, String)), tables As List(Of Tuple(Of Integer, String)), cancellationToken As CancellationToken) As Task(Of ReportContent)
-        Using llm As LLMClient = _config.CreateLLMClient
+        Using llm As LLMClient = _config.CreateLLMClient(_context.TmpDir)
             Dim prompt = $"
 You are a biomedical research paper writer. Write a comprehensive research report in Chinese based on the analysis results.
 

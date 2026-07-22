@@ -38,7 +38,7 @@ Public Class ResultTablesModule : Inherits AnalysisModuleBase
     End Sub
 
     Protected Overrides Async Function GeneratePlanAsync(cancellationToken As CancellationToken) As Task(Of ModulePlan)
-        Using llm As LLMClient = _config.CreateLLMClient
+        Using llm As LLMClient = _config.CreateLLMClient(_context.TmpDir)
             RegisterTools(llm)
 
             Dim prompt = $"
@@ -106,7 +106,7 @@ Return your plan as JSON:
         LogInfo($"Table descriptions saved: {descPath}")
 
         ' 3. 第二次 LLM 调用：编写生成 xlsx 的 R 脚本并执行
-        Using llm As LLMClient = _config.CreateLLMClient
+        Using llm As LLMClient = _config.CreateLLMClient(_context.TmpDir)
             RegisterTools(llm)
 
             Dim analysisDir = Path.Combine(_context.WorkspaceDir, "analysis")
@@ -260,7 +260,7 @@ Return your plan as JSON:
 
         Dim skeleton = sk.ToString()
 
-        Using llm As LLMClient = _config.CreateLLMClient
+        Using llm As LLMClient = _config.CreateLLMClient(_context.TmpDir)
             RegisterTools(llm)
 
             ' 构建每个 sheet 的表头信息，供 LLM 编写注释

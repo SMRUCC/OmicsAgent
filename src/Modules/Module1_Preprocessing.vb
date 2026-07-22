@@ -27,7 +27,7 @@ Public Class PreprocessingModule : Inherits AnalysisModuleBase
     End Sub
 
     Protected Overrides Async Function GeneratePlanAsync(cancellationToken As CancellationToken) As Task(Of ModulePlan)
-        Using llm As LLMClient = _config.CreateLLMClient
+        Using llm As LLMClient = _config.CreateLLMClient(_context.TmpDir)
             RegisterTools(llm)
 
             Dim prompt = $"
@@ -71,7 +71,7 @@ Return your plan as JSON:
     End Function
 
     Protected Overrides Async Function GenerateAndRunScriptAsync(plan As ModulePlan, cancellationToken As CancellationToken) As Task
-        Using llm As LLMClient = _config.CreateLLMClient
+        Using llm As LLMClient = _config.CreateLLMClient(_context.TmpDir)
             RegisterTools(llm)
 
             Dim prompt = $"
@@ -120,7 +120,7 @@ Write the complete R script. Use ```r ... ``` code block.
     End Function
 
     Protected Overrides Async Function GenerateConclusionAsync(plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)
-        Using llm As LLMClient = _config.CreateLLMClient
+        Using llm As LLMClient = _config.CreateLLMClient(_context.TmpDir)
             Dim prompt = $"
 You are a biomedical research expert. Based on the preprocessing analysis results, write a stage conclusion in Chinese.
 
