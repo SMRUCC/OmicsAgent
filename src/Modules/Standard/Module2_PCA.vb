@@ -40,6 +40,14 @@ Public Class PCAAnalysisModule : Inherits AnalysisModuleBase
 4. Overall F-test on expression matrix
 5. Multi-factor ANOVA test
 
+For each analysis:
+- Calculate sample scores on principal components
+- Compute weighted Euclidean distance from each sample to its group centroid (weighted by variance explained)
+- Use permutation test to assess if intra-group distance is significantly smaller than inter-group distance
+- Generate scatter plots with confidence ellipses, colored by sample group, with different shapes for metadata
+- Save score tables as CSV
+- Generate stage conclusion text
+
 # Implementation Requirements
 - Read the preprocessed expression matrix from tmp/ (files starting with 'preprocessed_')
 - Read the sample info table to get group labels

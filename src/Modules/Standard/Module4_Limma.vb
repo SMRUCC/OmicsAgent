@@ -46,7 +46,7 @@ Public Class LimmaDiffModule : Inherits AnalysisModuleBase
 
 # Implementation Requirements
 - Read preprocessed expression matrix from tmp/ (files starting with 'preprocessed_')
-- Read sample info table and comparison design from tables/comparison_design.csv
+- Read sample info table and comparison design from tables/comparison_design.csv or from {$"{_context.AnalysisDir}/design.json"} file if tables/comparison_design.csv is missing
 - Perform multi-factor ANOVA test
 - Perform overall F-test using limma
 - Perform pairwise limma comparisons for each comparison in the design

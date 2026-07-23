@@ -56,6 +56,6 @@
     <Platform Solution="*|x64" Project="x64" />
   </Project>
   <Project Path="src/test/test.vbproj" Id="b670c13a-6115-46c1-9ba9-ea9aaa7fe5f2">
-    <Platform Solution="Debug|x64" Project="x64" />
+    <Platform Solution="*|x64" Project="x64" />
   </Project>
 </Solution>

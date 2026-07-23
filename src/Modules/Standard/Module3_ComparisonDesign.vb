@@ -23,9 +23,35 @@ Public Class ComparisonDesignModule : Inherits AnalysisModuleBase
         End Get
     End Property
 
+    Protected Overrides ReadOnly Property NeedsPlantSteps As Boolean
+        Get
+            Return False
+        End Get
+    End Property
+
     Public Sub New(config As AgentConfig, context As AnalysisContext, Optional logger As Action(Of String) = Nothing)
         MyBase.New(config, context, logger)
     End Sub
+
+    Protected Overrides Function GetPlantJSONTemplate() As String
+        Return $". And 'comparisons' field MUST BE defined in your plan json: {{
+  ""module_name"": ""Comparison Group Design"",
+  ""goal"": ""<brief description of comparison design rationale>"",
+  ""input_files"": [""<input file paths>""],
+  ""output_files"": [""<expected output file paths>""],
+  ""execution_steps"": [{{""action"": ""<description of current step action>"", ""goal"": ""<goal of current step...>""}}, ...],
+  ""comparisons"": [
+    {{
+      ""name"": ""<comparison name, e.g., 'disease_vs_control'>"",
+      ""treatment"": ""<treatment group name>"",
+      ""control"": ""<control group name>"",
+      ""biological_rationale"": ""<why this comparison is biologically meaningful>"",
+      ""expected_findings"": ""<what biological insights are expected>""
+    }}
+  ],
+  ""notes"": ""<special considerations>""
+}}"
+    End Function
 
     Protected Overrides Function GeneratePlanPromptText() As String
         Return "Based on the user's research topic and the available sample groups (from sample_info column in sample metadata), design differential analysis comparison groups:

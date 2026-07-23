@@ -46,6 +46,12 @@ Public MustInherit Class AnalysisModuleBase
         End Get
     End Property
 
+    Protected Overridable ReadOnly Property NeedsPlantSteps As Boolean
+        Get
+            Return True
+        End Get
+    End Property
+
     Public Sub New(config As AgentConfig, context As AnalysisContext, Optional logger As Action(Of String) = Nothing)
         _config = config
         _context = context
@@ -110,6 +116,10 @@ Public MustInherit Class AnalysisModuleBase
             plan.conclusion = conclusion
             plan.GetJson(comment:=True).SaveTo($"{Workspace}/plan.json")
 
+            If ModuleName = "Comparison Group Design" Then
+                plan.comparisons.GetJson(comment:=False).SaveTo($"{_context.AnalysisDir}/design.json")
+            End If
+
             _context.ModuleResults.Add(New ModuleResult() With {
                 .ModuleName = ModuleName,
                 .ModuleIndex = ModuleIndex,
@@ -134,6 +144,14 @@ Public MustInherit Class AnalysisModuleBase
         End Using
     End Function
 
+    Private Function CheckPlanSteps(actions As [Step]()) As Boolean
+        If NeedsPlantSteps Then
+            Return Not actions.IsNullOrEmpty
+        Else
+            Return True
+        End If
+    End Function
+
     Protected Async Function GeneratePlanAsync(llm As LLMClient, resp As LLMsResponse, cancellationToken As CancellationToken) As Task(Of ModulePlan)
         Dim json = resp.ExtractJsonFromResponse
         Dim plan As New ModulePlan With {.module_name = ModuleName}
@@ -146,7 +164,7 @@ Public MustInherit Class AnalysisModuleBase
                 plan = If(LenientJsonParser.ParseJSON(json).CreateObject(Of ModulePlan), New ModulePlan)
                 plan.module_name = ModuleName
 
-                If Not (plan.goal.StringEmpty(, True) OrElse plan.execution_steps.IsNullOrEmpty) Then
+                If (Not plan.goal.StringEmpty(, True)) AndAlso CheckPlanSteps(plan.execution_steps) Then
                     Exit For
                 End If
 
@@ -160,7 +178,7 @@ Public MustInherit Class AnalysisModuleBase
                     note = plan.notes
                 End If
 
-                If Not (goal.StringEmpty(, True) OrElse actions.IsNullOrEmpty) Then
+                If (Not goal.StringEmpty(, True)) AndAlso CheckPlanSteps(actions) Then
                     plan = New ModulePlan With {
                         .module_name = ModuleName,
                         .execution_steps = actions,
@@ -172,28 +190,52 @@ Public MustInherit Class AnalysisModuleBase
                 End If
             End If
 
-            resp = Await llm.Chat("You are not generates a valid json or your generated execution plan JSON string is missing the following required fields:
+            resp = Await llm.Chat($"You are not generates a valid json or your generated execution plan JSON string is missing the following required fields:
 
 ""goal"": Explains the expected outcome that the current analysis module can achieve in the context of the user’s research background.
 ""notes"": Highlights any issues that require special attention in this execution plan.
 ""execution_steps"" (array): Break down the current execution plan into multiple steps and fill them into the ""execution_steps"" array following the specified JSON format.
 
 Simply generate the specific execution plan here. Do not execute the actual analysis pipeline code. Return your plan as JSON in your response output, at least one execution step for your plan must be generated but no more than three decomposed execution steps:
-{
-  ""module_name"": ""name of the analysis"",
-  ""goal"": ""<brief description of the analysis goal>"",
-  ""input_files"": [""<input file paths>""],
-  ""output_files"": [""<expected output file paths>""],
-  ""execution_steps"": [{""action"": ""<description of current step action>"", ""goal"": ""<goal of current step...>""}, ...],
-  ""notes"": ""<any special considerations>""
-}
+{GetPlantJSONTemplate()}
 ", cancellationToken)
             json = resp.ExtractJsonFromResponse
         Next
 
         plan.llm_response = If(resp, New LLMsResponse).output
 
+        If Not NeedsPlantSteps Then
+            plan.execution_steps = {}
+        End If
+
         Return plan
+    End Function
+
+    ''' <summary>调用 LLM 生成分析计划</summary>
+    Protected Overridable Async Function GeneratePlanAsync(llm As LLMClient, cancellationToken As CancellationToken) As Task(Of ModulePlan)
+        Dim prompt = $"
+You are a bioinformatics analysis expert. Your task is to design a analysis plan for omics expression matrix data.
+
+{BuildContextInfo()}
+
+# Your Task
+{GeneratePlanPromptText()}
+
+Simply generate the specific execution plan here. Do not execute the actual analysis pipeline code. Return your plan as JSON in your response output, at least one execution step for your plan must be generated but no more than three decomposed execution steps:
+{GetPlantJSONTemplate()}
+"
+        Return Await GeneratePlanAsync(llm, Await llm.Chat(prompt, cancellationToken), cancellationToken)
+    End Function
+
+    Protected Overridable Function GetPlantJSONTemplate() As String
+        Return "{
+  ""module_name"": ""name of the analysis"",
+  ""goal"": ""<brief description of the analysis goal>"",
+  ""input_files"": [""<input file paths>""],
+  ""output_files"": [""<expected output file paths>""],
+  ""execution_steps"": [{""action"": ""<description of current step action>"", ""goal"": ""<goal of current step...>""}, ...],
+  ""notes"": ""<any special considerations>""
+}"
     End Function
 
     ''' <summary>调用 LLM 编写并执行脚本</summary>
@@ -215,29 +257,6 @@ Simply generate the specific execution plan here. Do not execute the actual anal
     End Function
 
     Protected MustOverride Function GeneratePlanPromptText() As String
-
-    ''' <summary>调用 LLM 生成分析计划</summary>
-    Protected Overridable Async Function GeneratePlanAsync(llm As LLMClient, cancellationToken As CancellationToken) As Task(Of ModulePlan)
-        Dim prompt = $"
-You are a bioinformatics analysis expert. Your task is to design a analysis plan for omics expression matrix data.
-
-{BuildContextInfo()}
-
-# Your Task
-{GeneratePlanPromptText()}
-
-Simply generate the specific execution plan here. Do not execute the actual analysis pipeline code. Return your plan as JSON in your response output, at least one execution step for your plan must be generated but no more than three decomposed execution steps:
-{{
-  ""module_name"": ""analysis name"",
-  ""goal"": ""<brief description of the analysis processing goal>"",
-  ""input_files"": [""<input file paths>""],
-  ""output_files"": [""<expected output file paths>""],
-  ""execution_steps"": [{{""action"": ""<description of current step action>"", ""goal"": ""<goal of current step...>""}}, ...],
-  ""notes"": ""<any special considerations>""
-}}
-"
-        Return Await GeneratePlanAsync(llm, Await llm.Chat(prompt, cancellationToken), cancellationToken)
-    End Function
 
     ''' <summary>调用 LLM 编写并执行脚本</summary>
     Protected Overridable Async Function GenerateAndRunScriptAsync(llm As LLMClient, plan As ModulePlan, [step] As [Step], cancellationToken As CancellationToken) As Task
