@@ -32,6 +32,8 @@ Public MustInherit Class AnalysisModuleBase
     ''' <summary>模块序号，用于创建 analysis_modules_N 目录</summary>
     Public MustOverride ReadOnly Property ModuleIndex As Integer
 
+    Public MustOverride ReadOnly Property CsvFileNamePrefix As String
+
     Public ReadOnly Property FolderBaseName As String
         Get
             Return $"{ModuleIndex}_{ModuleName.NormalizePathString(alphabetOnly:=True).Replace(" ", "_").ToLower}"
@@ -127,7 +129,7 @@ Public MustInherit Class AnalysisModuleBase
     ''' <summary>调用 LLM 生成分析计划</summary>
     Protected Async Function GeneratePlanAsync(cancellationToken As CancellationToken) As Task(Of ModulePlan)
         Using llm As LLMClient = _config.CreateLLMClient(FolderBaseName & "-plan", _context.TmpDir)
-            RegisterTools(llm)
+            RegisterTools(llm, True)
             Return Await GeneratePlanAsync(llm, cancellationToken)
         End Using
     End Function
@@ -178,8 +180,8 @@ Public MustInherit Class AnalysisModuleBase
 
 Simply generate the specific execution plan here. Do not execute the actual analysis pipeline code. Return your plan as JSON in your response output, at least one execution step for your plan must be generated but no more than three decomposed execution steps:
 {
-  ""module_name"": ""Expression Matrix Preprocessing"",
-  ""goal"": ""<brief description of the preprocessing goal>"",
+  ""module_name"": ""name of the analysis"",
+  ""goal"": ""<brief description of the analysis goal>"",
   ""input_files"": [""<input file paths>""],
   ""output_files"": [""<expected output file paths>""],
   ""execution_steps"": [{""action"": ""<description of current step action>"", ""goal"": ""<goal of current step...>""}, ...],
@@ -198,7 +200,7 @@ Simply generate the specific execution plan here. Do not execute the actual anal
     Protected Async Function GenerateAndRunScriptAsync(plan As ModulePlan, cancellationToken As CancellationToken) As Task
         For Each [step] As [Step] In plan.execution_steps
             Using llm As LLMClient = _config.CreateLLMClient(FolderBaseName & "-analysis", _context.TmpDir)
-                RegisterTools(llm)
+                RegisterTools(llm, True)
                 Await GenerateAndRunScriptAsync(llm, plan, [step], cancellationToken)
             End Using
         Next
@@ -207,19 +209,94 @@ Simply generate the specific execution plan here. Do not execute the actual anal
     ''' <summary>调用 LLM 生成阶段性总结</summary>
     Protected Async Function GenerateConclusionAsync(plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)
         Using llm As LLMClient = _config.CreateLLMClient(FolderBaseName & "-conclusion", _context.TmpDir)
-            RegisterTools(llm)
+            RegisterTools(llm, False)
             Return Await GenerateConclusionAsync(llm, plan, cancellationToken)
         End Using
     End Function
 
+    Protected MustOverride Function GeneratePlanPromptText() As String
+
     ''' <summary>调用 LLM 生成分析计划</summary>
-    Protected MustOverride Function GeneratePlanAsync(llm As LLMClient, cancellationToken As CancellationToken) As Task(Of ModulePlan)
+    Protected Overridable Async Function GeneratePlanAsync(llm As LLMClient, cancellationToken As CancellationToken) As Task(Of ModulePlan)
+        Dim prompt = $"
+You are a bioinformatics analysis expert. Your task is to design a analysis plan for omics expression matrix data.
+
+{BuildContextInfo()}
+
+# Your Task
+{GeneratePlanPromptText()}
+
+Simply generate the specific execution plan here. Do not execute the actual analysis pipeline code. Return your plan as JSON in your response output, at least one execution step for your plan must be generated but no more than three decomposed execution steps:
+{{
+  ""module_name"": ""analysis name"",
+  ""goal"": ""<brief description of the analysis processing goal>"",
+  ""input_files"": [""<input file paths>""],
+  ""output_files"": [""<expected output file paths>""],
+  ""execution_steps"": [{{""action"": ""<description of current step action>"", ""goal"": ""<goal of current step...>""}}, ...],
+  ""notes"": ""<any special considerations>""
+}}
+"
+        Return Await GeneratePlanAsync(llm, Await llm.Chat(prompt, cancellationToken), cancellationToken)
+    End Function
 
     ''' <summary>调用 LLM 编写并执行脚本</summary>
-    Protected MustOverride Function GenerateAndRunScriptAsync(llm As LLMClient, plan As ModulePlan, [step] As [Step], cancellationToken As CancellationToken) As Task
+    Protected Overridable Async Function GenerateAndRunScriptAsync(llm As LLMClient, plan As ModulePlan, [step] As [Step], cancellationToken As CancellationToken) As Task
+        Dim prompt = $"
+
+{BuildContextInfo()}
+
+You are a bioinformatics R script expert. Write and execute R script to process the omics expression matrix data according to the following plan.
+
+# Analysis Plan
+{plan.module_name}
+
+plan goal: {plan.goal}
+plan notes: {plan.notes}
+
+# Your Task
+Write a complete R script that:
+
+{[step].action}
+{[step].goal}
+
+All scripts and the generated CSV files are placed in this designated temporary workspace folder: {Workspace.GetDirectoryFullPath}
+All pdf/png figure image files should save to workspace folder: {FiguresDir.GetDirectoryFullPath}
+All generated CSV file filename starting with prefix '{CsvFileNamePrefix}' 
+
+# Important Notes
+- Use the source() function to load helper scripts from the rscript/ folder when applicable
+- Use ggplot2 for any visualization
+- Save all output files using absolute paths
+- The script should be self-contained and runnable via Rscript
+- Handle both single-omics and multi-omics cases
+- Print progress messages to stdout
+"
+        Await llm.Chat(prompt, cancellationToken)
+    End Function
 
     ''' <summary>调用 LLM 生成阶段性总结</summary>
-    Protected MustOverride Function GenerateConclusionAsync(llm As LLMClient, plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)
+    Private Async Function GenerateConclusionAsync(llm As LLMClient, plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)
+        Dim prompt = $"
+You are a biomedical research expert. Based on the {FolderBaseName} analysis results, write a stage conclusion in Chinese.
+
+{BuildContextInfo()}
+
+# Current Analysis Plan
+{plan.ToJson()}
+
+# Your Task
+Read the analysis output files in the tmp/ directory (files starting with '{CsvFileNamePrefix}') or the result files in folder '{Workspace}' and the tables/ directory which located at {TablesDir}.
+Write a conclusion in Chinese that describes:
+
+{GetConclusionItems()}
+
+Do not write any file, just generates the conclusion text and return it back to me. The conclusion should be 300-500 words in Chinese. Be specific and rigorous. Do NOT fabricate data.
+"
+        Dim resp = Await llm.Chat(prompt, cancellationToken)
+        Return resp.output
+    End Function
+
+    Protected MustOverride Function GetConclusionItems() As String
 
     ''' <summary>构建模块上下文信息字符串，提供给 LLM</summary>
     Protected Function BuildContextInfo() As String
@@ -280,13 +357,21 @@ Simply generate the specific execution plan here. Do not execute the actual anal
         Return sb.ToString()
     End Function
 
-    ''' <summary>注册 Function Calling 工具到 LLM 客户端</summary>
-    Protected Sub RegisterTools(llm As LLMClient)
+    ''' <summary>
+    ''' 注册 Function Calling 工具到 LLM 客户端
+    ''' </summary>
+    ''' <param name="allowWriteFile">
+    ''' 是否允许LLM agent写文件
+    ''' </param>
+    Protected Sub RegisterTools(llm As LLMClient, allowWriteFile As Boolean)
         Dim fileTool As New FileTool(_context.WorkspaceDir, _logger)
         Dim shellTool As New ShellTool(_config, _context.WorkspaceDir, _logger)
 
         ' 注册文件操作工具
-        llm.AddFunction(fileTool, "write_file")
+        If allowWriteFile Then
+            llm.AddFunction(fileTool, "write_file")
+        End If
+
         llm.AddFunction(fileTool, "read_file")
         llm.AddFunction(fileTool, "file_exists")
         llm.AddFunction(fileTool, "list_files")
