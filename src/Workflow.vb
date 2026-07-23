@@ -185,8 +185,8 @@ Module Workflow
     ''' <summary>从文件名推断组学类型</summary>
     Private Function InferOmicsType(fileName As String) As String
         Dim name = fileName.ToLower()
-        If name.Contains("rna") Or name.Contains("transcript") Or name.Contains("gene") Then Return "rna"
-        If name.Contains("protein") Or name.Contains("proteom") Then Return "protein"
+        If name.Contains("rna") OrElse name.Contains("transcript") OrElse name.Contains("gene") Then Return "rna"
+        If name.Contains("protein") OrElse name.Contains("proteom") Then Return "protein"
         If name.Contains("metabol") Then Return "metabolite"
         If name.Contains("lipid") Then Return "lipid"
         Return "unknown"
