@@ -124,7 +124,7 @@ Verify the PDF file is generated successfully.
         If Not Directory.Exists(analysisDir) Then Return result
 
         For Each dir As String In Directory.GetDirectories(analysisDir, "analysis_modules_*")
-            Dim conclusionFile = Path.Combine(dir, "conclusion.txt")
+            Dim conclusionFile = Path.Combine(dir, "conclusion.md")
             If File.Exists(conclusionFile) Then
                 Dim moduleName = Path.GetFileName(dir)
                 Dim idxStr = System.Text.RegularExpressions.Regex.Match(moduleName, "analysis_modules_(\d+)").Groups(1).Value
