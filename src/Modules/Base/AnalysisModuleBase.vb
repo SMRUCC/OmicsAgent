@@ -102,6 +102,8 @@ Public MustInherit Class AnalysisModuleBase
 
             _result.Goal = If(plan, New ModulePlan).goal
             _context.ModuleResults.Add(_result)
+
+            Call _result.GetJson.SaveTo($"{Workspace}/result.json")
         Catch ex As Exception
             LogInfo($"[错误] 模块 {ModuleName} 执行失败：{ex.Message}")
             LogInfo(ex.StackTrace)

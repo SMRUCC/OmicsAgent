@@ -1,4 +1,5 @@
 ﻿Public Class ModuleResult
+
     Public Property ModuleName As String
     Public Property ModuleIndex As Integer
     Public Property Goal As String
@@ -13,4 +14,5 @@
     ''' </summary>
     ''' <returns></returns>
     Public Property Workdir As String
+
 End Class
