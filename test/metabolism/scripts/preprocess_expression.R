@@ -1,125 +1,107 @@
-###############################################################################
+# ============================================================
 # Expression Matrix Preprocessing Script
-# Data: Metabolomics expression data for CDI study
+# Dataset: Metabolomics expression data
 # Steps:
 #1. Load expression matrix and sample metadata
-#2. Fill missing values with half-minimum positive value per row
+#2. Fill missing values with half of min positive per row
 #3. Normalize by column sum (relative abundance, ppm)
-#4. Apply log2 transformation (since max >100)
+#4. Log2 transformation (since max value >100)
 #5. Median scaling per row (molecule)
-#6. Save preprocessed matrix to tmp/
-###############################################################################
+#6. Save preprocessed matrix
+# ============================================================
 
-# Source the R scripts
+# Source R scripts from tools directory
 source("G:/OmicsWorks/agent/rscript/data_io.R")
 source("G:/OmicsWorks/agent/rscript/missing_value.R")
 source("G:/OmicsWorks/agent/rscript/normalization.R")
 
-# ============================================================
-#1. Load Data
-# ============================================================
-cat("\n========================================\n")
-cat("Step1: Loading expression matrix...\n")
-expr_raw <- load_expression_matrix("G:/OmicsWorks/test/metabolism/expression.csv")
-cat(" Dimensions:", nrow(expr_raw), "x", ncol(expr_raw), "\n")
+# ------------------------------
+# Step0: Set paths
+# ------------------------------
+input_expr <- "G:/OmicsWorks/test/metabolism/expression.csv"
+input_meta <- "G:/OmicsWorks/test/metabolism/sampleinfo.csv"
+output_dir <- "G:/OmicsWorks/test/metabolism/tmp"
+output_file <- file.path(output_dir, "preprocessed_expression.csv")
 
-meta_raw <- load_sample_metadata("G:/OmicsWorks/test/metabolism/sampleinfo.csv")
-cat(" Sample metadata:", nrow(meta_raw), "samples\n")
+dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
 
-# Subset metadata to only include samples present in expression matrix
-meta <- meta_raw[meta_raw$ID %in% colnames(expr_raw), ]
-cat(" Subset metadata to", nrow(meta), "samples matching expression matrix\n")
+# ------------------------------
+# Step1: Load data
+# ------------------------------
+cat("=== Step1: Loading expression matrix ===\n")
+expr <- load_expression_matrix(input_expr)
+meta <- load_sample_metadata(input_meta)
 
-cat("\nSample groups:\n")
-print(table(meta$sample_info))
+cat("Expression matrix:", nrow(expr), "features x", ncol(expr), "samples\n")
+cat("Sample groups:", paste(levels(meta$sample_info), collapse = ", "), "\n")
 
-# ============================================================
-#2. Fill Missing Values
-# ============================================================
-cat("\n========================================\n")
-cat("Step2: Imputing missing values...\n")
-cat(" NA count before imputation:", sum(is.na(expr_raw)), "\n")
-expr_imputed <- impute_half_min(expr_raw)
-cat(" NA count after imputation:", sum(is.na(expr_imputed)), "\n")
+# ------------------------------
+# Step2: Fill missing values (half min positive per row)
+# ------------------------------
+cat("\n=== Step2: Missing value imputation ===\n")
+cat("Current NA count:", sum(is.na(expr)), "\n")
 
-# ============================================================
-#3. Normalize by Column Sum (Relative Abundance)
-# ============================================================
-cat("\n========================================\n")
-cat("Step3: Normalizing by column sum (relative abundance in ppm)...\n")
+# Even if0 NAs, we still call the function for consistent pipeline
+expr_imputed <- impute_half_min(expr)
+cat("After imputation NA count:", sum(is.na(expr_imputed)), "\n")
 
-cat(" Column sums before normalization:\n")
+# ------------------------------
+# Step3: Normalize by column sum (relative abundance, ppm)
+# ------------------------------
+cat("\n=== Step3: Column-sum normalization (relative abundance) ===\n")
+cat("Column sums before normalization:\n")
 print(round(colSums(expr_imputed),2))
 
-# Column sum normalization to relative abundance (ppm units)
+# Convert to relative abundance (ppm scale)
 expr_norm <- normalize_sample_sum(expr_imputed, scale_factor =1e6, pseudo_count =1)
 
-cat(" Column sums after normalization (should be ~1e6):\n")
+cat("Column sums after normalization (should all be ~1e6):\n")
 print(round(colSums(expr_norm),2))
 
-cat(" Data range after normalization:", 
- round(min(expr_norm),4), "to", round(max(expr_norm),4), "\n")
-
-# ============================================================
-#4. Log Transformation (since max >100)
-# ============================================================
-cat("\n========================================\n")
-cat("Step4: Applying log transformation...\n")
-
+# ------------------------------
+# Step4: Log transformation
+# ------------------------------
+cat("\n=== Step4: Log transformation ===\n")
 max_val <- max(expr_norm, na.rm = TRUE)
-cat(" Max value in normalized data:", round(max_val,4), "\n")
+cat("Max value after normalization:", max_val, "\n")
 
 if (max_val >100) {
- cat(" Max >100, applying log2(x+1) transformation.\n")
+ cat("Max value >100, applying log2 transformation.\n")
  expr_log <- transform_log(expr_norm, base =2, pseudo_count =1)
 } else {
- cat(" Max <=100, data appears already log-transformed. Skipping log transformation.\n")
+ cat("Max value <=100, no log transformation needed.\n")
  expr_log <- expr_norm
 }
 
-cat(" Data range after log2:", round(min(expr_log),4), "to", round(max(expr_log),4), "\n")
+cat("After log2 transform - range: [", min(expr_log), ", ", max(expr_log), "]\n", sep="")
 
-# ============================================================
-#5. Median Scaling per Row
-# ============================================================
-cat("\n========================================\n")
-cat("Step5: Median scaling per row (molecule)...\n")
-
+# ------------------------------
+# Step5: Median scaling per row (molecule)
+# ------------------------------
+cat("\n=== Step5: Median scaling per molecule ===\n")
 expr_scaled <- scale_feature_median(expr_log, log_transform = FALSE)
 
-cat(" Data range after median scaling:", 
- round(min(expr_scaled),4), "to", round(max(expr_scaled),4), "\n")
+cat("After median scaling - range: [", min(expr_scaled), ", ", max(expr_scaled), "]\n", sep="")
 
-# Check that each row's median is now1
-row_medians <- apply(expr_scaled,1, median, na.rm = TRUE)
-cat(" Row median range:", round(min(row_medians),4), "to", round(max(row_medians),4), "\n")
+# Check for any Inf/NaN values
+if (any(is.infinite(as.matrix(expr_scaled))) || any(is.nan(as.matrix(expr_scaled)))) {
+ cat("WARNING: Inf/NaN values detected after scaling!\n")
+ # Replace Inf/NaN with NA and then impute
+ expr_scaled[is.infinite(as.matrix(expr_scaled)) | is.nan(as.matrix(expr_scaled))] <- NA
+ expr_scaled <- impute_half_min(expr_scaled)
+}
 
-# ============================================================
-#6. Save Preprocessed Matrix
-# ============================================================
-cat("\n========================================\n")
-cat("Step6: Saving preprocessed matrix...\n")
+# ------------------------------
+# Step6: Save preprocessed matrix
+# ------------------------------
+cat("\n=== Step6: Saving preprocessed matrix ===\n")
+save_result_table(expr_scaled, output_file, row_name_col = "")
 
-output_file <- "G:/OmicsWorks/test/metabolism/tmp/preprocessed_expression.csv"
-
-# Save with row names as first column
-save_result_table(expr_scaled, output_file, row_name_col = "Metabolite")
-
-cat(" Preprocessed matrix saved to:", output_file, "\n")
-cat(" Final dimensions:", nrow(expr_scaled), "x", ncol(expr_scaled), "\n")
-
-# Also save the sample metadata for downstream use
-meta_output <- "G:/OmicsWorks/test/metabolism/tmp/preprocessed_sampleinfo.csv"
-write.csv(meta, meta_output, row.names = FALSE)
-cat(" Sample metadata saved to:", meta_output, "\n")
-
-cat("\n========================================\n")
-cat("Preprocessing completed successfully!\n")
-cat("========================================\n")
-
-# Print summary statistics
-cat("\nFinal data summary:\n")
-cat(" Molecules:", nrow(expr_scaled), "\n")
-cat(" Samples:", ncol(expr_scaled), "\n")
-cat(" Groups: ", paste(levels(meta$sample_info), collapse = ", "), "\n")
-cat(" Value range: [", round(min(expr_scaled),4), ", ", round(max(expr_scaled),4), "]\n")
+cat("\n=== Preprocessing complete! ===\n")
+cat("Output saved to:", output_file, "\n")
+cat("Final matrix:", nrow(expr_scaled), "features x", ncol(expr_scaled), "samples\n")
+cat("Summary statistics:\n")
+cat(" Min:", round(min(expr_scaled),4), "\n")
+cat(" Max:", round(max(expr_scaled),4), "\n")
+cat(" Mean:", round(mean(as.vector(expr_scaled)),4), "\n")
+cat(" Median:", round(median(as.vector(expr_scaled)),4), "\n")

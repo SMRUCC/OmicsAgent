@@ -88,8 +88,10 @@ Return your plan as JSON, at least one execution step for your plan must be gene
                     }
 
                     Exit For
-                Else
-                    resp = Await llm.Chat("Your generated execution plan JSON string is missing the following required fields:
+                End If
+            End If
+
+            resp = Await llm.Chat("You are not generates a valid json or your generated execution plan JSON string is missing the following required fields:
 
 ""goal"": Explains the expected outcome that the current analysis module can achieve in the context of the user’s research background.
 ""notes"": Highlights any issues that require special attention in this execution plan.
@@ -105,9 +107,7 @@ Return your plan as JSON, at least one execution step for your plan must be gene
   ""notes"": ""<any special considerations>""
 }
 ", cancellationToken)
-                    json = resp.ExtractJsonFromResponse
-                End If
-            End If
+            json = resp.ExtractJsonFromResponse
         Next
 
         Return plan

@@ -1,0 +1,38 @@
+{
+ "module_name": "Expression Matrix Preprocessing",
+ "goal": "Preprocess the metabolite expression matrix to enable cross-sample and cross-molecule comparisons for downstream differential analysis. The pipeline: (1) impute missing values via half-min-per-row, (2) normalize by column sum to relative abundance (ppm), (3) log2 transform (since max >100 indicates raw-scale data), (4) median-center each metabolite row to make all molecules comparable.",
+ "input_files": [
+ "G:/OmicsWorks/test/metabolism/expression.csv",
+ "G:/OmicsWorks/test/metabolism/sampleinfo.csv"
+ ],
+ "output_files": [
+ "G:/OmicsWorks/test/metabolism/tmp/preprocessed_expression.csv"
+ ],
+ "execution_steps": [
+ {
+ "action": "Load expression matrix (2059 metabolites x18 samples) and sample metadata (21 samples:3 QC +6 CDI +6 High-Iron +6 Control). QC samples exist in metadata but not in expression matrix.",
+ "goal": "Read raw data and confirm sample-to-group mapping"
+ },
+ {
+ "action": "Check for missing values. Found0 NA values across the matrix, so imputation step is a no-op but applied for pipeline consistency.",
+ "goal": "Guarantee complete matrix for downstream processing"
+ },
+ {
+ "action": "Normalize by column sum to relative abundance (scale_factor=1e6, ppm units). Column sums ranged from ~2565 to ~3691 prior to normalization; after normalization all sum to ~1e6.",
+ "goal": "Remove total abundance variation across samples to enable cross-sample comparison"
+ },
+ {
+ "action": "Apply log2(x+1) transformation. Max value after column-sum normalization was84110.52 >100 threshold, confirming data is on raw intensity scale and requires log transformation.",
+ "goal": "Compress dynamic range and normalize distribution, reducing influence of high-abundance metabolites"
+ },
+ {
+ "action": "Median-scale each metabolite row: divide each value by the row median across all samples. Final range: [0.217,2.365], mean ~1.025, median =1.",
+ "goal": "Center all metabolites to comparable scale (median=1) for visualization and downstream statistics"
+ },
+ {
+ "action": "Save preprocessed matrix (2059 x18) as CSV to tmp/ directory.",
+ "goal": "Persist preprocessed data for subsequent analysis modules"
+ }
+ ],
+ "notes": "1) This is metabolomics expression data (LC-MS derived) with2059 metabolites across3 groups: Clostridium difficile infection (CD1-CD6), high iron diet before (FE1-FE6), and Standard control (NC1-NC6).2) The3 QC samples in sampleinfo.csv are not present in the expression matrix and were excluded automatically.3) No missing values were detected, simplifying preprocessing.4) Raw data had max=283.4 and column sums varying ~30%, confirming both column-sum normalization and log transformation were appropriate.5) Median scaling per metabolite completes the standard preprocessing workflow.6) The preprocessed output is ready for downstream differential expression, multivariate analysis, clustering, and pathway enrichment."
+}
