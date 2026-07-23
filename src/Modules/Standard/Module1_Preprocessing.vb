@@ -31,16 +31,20 @@ Public Class PreprocessingModule : Inherits AnalysisModuleBase
     End Sub
 
     Protected Overrides Function GeneratePlanPromptText() As String
-        Return "Design a preprocessing plan for the expression matrix data. The standard preprocessing workflow is:
-1. Fill missing values with half of the minimum positive value per molecule (row)
-2. Normalize by column sum to convert to relative expression
-3. Apply log transformation if necessary (when max value > 100, indicating non-log scale)
-4. Median scaling per row (molecule)
+        Return "为表达矩阵数据设计预处理计划。标准预处理流程如下：
+1. 按行（分子）用该分子最小阳性值的一半填充缺失值
+2. 按列总和归一化，转化为相对表达量
+3. 如有必要进行 log 转换（当最大值 > 100 时，表明数据未经过 log 转换）
+4. 按行（分子）做中位数缩放
 
-# Important Notes
-- Check the research topic for any user-specified preprocessing exceptions
-- For multi-omics data, each omics dataset should be preprocessed separately
-- The preprocessed matrix should be saved as CSV in the tmp/ directory"
+# 上下游衔接说明
+- 本模块是整个分析流程的第一个模块，处理原始表达矩阵
+- 预处理后的表达矩阵（CSV 文件，前缀 'preprocessed_'）将作为下游模块 2(PCA)、4(LIMMA)、6(WGCNA)、7(CMeans) 的输入
+
+# 重要注意事项
+- 检查研究主题中是否有用户指定的预处理例外情况
+- 对于多组学数据，每个组学数据集应独立预处理
+- 预处理后的矩阵须保存为 CSV 文件到 tmp/ 目录，文件名以 'preprocessed_' 为前缀"
     End Function
 
     Protected Overrides Function GetConclusionItems() As String

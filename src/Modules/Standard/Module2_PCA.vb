@@ -33,45 +33,50 @@ Public Class PCAAnalysisModule : Inherits AnalysisModuleBase
     End Sub
 
     Protected Overrides Function GeneratePlanPromptText() As String
-        Return "Design a plan for overall sample analysis including:
-1. PCA (Principal Component Analysis) - extract PC1, PC2, PC3 scores
-2. PLSDA (Partial Least Squares Discriminant Analysis)
-3. OPLSDA (Orthogonal PLS-DA)
-4. Overall F-test on expression matrix
-5. Multi-factor ANOVA test
+        Return "为总体样本分析设计计划，包括以下内容：
+1. PCA（主成分分析）- 提取 PC1、PC2、PC3 得分
+2. PLSDA（偏最小二乘判别分析）
+3. OPLSDA（正交偏最小二乘判别分析）
+4. 表达矩阵总体 F 检验
+5. 多因素 ANOVA 检验
 
-For each analysis:
-- Calculate sample scores on principal components
-- Compute weighted Euclidean distance from each sample to its group centroid (weighted by variance explained)
-- Use permutation test to assess if intra-group distance is significantly smaller than inter-group distance
-- Generate scatter plots with confidence ellipses, colored by sample group, with different shapes for metadata
-- Save score tables as CSV
-- Generate stage conclusion text
+每项分析均需：
+- 计算样本在各主成分上的得分
+- 计算各样本到其组别质心的加权欧氏距离（按方差解释率加权）
+- 采用置换检验评估组内距离是否显著小于组间距离
+- 生成散点图，按样本分组着色，按元数据使用不同形状标记，并叠加置信椭圆
+- 将得分表保存为 CSV
+- 生成阶段性总结文本
 
-# Implementation Requirements
-- Read the preprocessed expression matrix from tmp/ (files starting with 'preprocessed_')
-- Read the sample info table to get group labels
-- Perform PCA using prcomp or FactoMineR
-- Perform PLSDA using mixOmics
-- Perform OPLSDA using ropls
-- Compute weighted Euclidean distance from each sample to group centroid (weighted by variance explained)
-- Perform permutation test (n=1000) for intra-group vs inter-group distance
-- Perform overall F-test and multi-factor ANOVA
-- Calculate sample scores on principal components
-- Generate scatter plots with confidence ellipses, colored by sample group, with different shapes for metadata
-- Save score tables as CSV
-- Generate a quality assessment text file
+# 上下游衔接说明
+- 上游输入：读取模块 1 预处理后的表达矩阵（tmp/ 目录下，文件名以 'preprocessed_' 开头）
+- 读取样本信息表获取分组标签
+- 下游输出：分析结果供模块 4(LIMMA) 参考数据质量，供模块 11(报告) 引用
 
-# Plot Requirements
-- Use ggplot2 with publication-quality theme
-- Use distinct colors for groups (e.g., RColorBrewer or viridis)
-- Add confidence ellipses (stat_ellipse)
-- Add sample labels
-- Save both PNG (300 dpi) and PDF versions
-- All text labels in English
+# 实现要求
+- 读取 tmp/ 目录中预处理后的表达矩阵（文件名以 'preprocessed_' 开头）
+- 读取样本信息表获取分组标签
+- 使用 prcomp 或 FactoMineR 执行 PCA
+- 使用 mixOmics 执行 PLSDA
+- 使用 ropls 执行 OPLSDA
+- 计算各样本到组别质心的加权欧氏距离（按方差解释率加权）
+- 执行置换检验（n=1000）比较组内距离与组间距离
+- 执行总体 F 检验和多因素 ANOVA
+- 计算样本在各主成分上的得分
+- 生成散点图，按样本分组着色，按元数据使用不同形状标记，并叠加置信椭圆
+- 将得分表保存为 CSV
+- 生成数据质量评估文本文件
 
-# Important Notes
-- Handle missing packages gracefully (install if missing)"
+# 绘图要求
+- 使用 ggplot2 绘制出版级质量图形
+- 各组别使用区分色（如 RColorBrewer 或 viridis 配色）
+- 添加置信椭圆（stat_ellipse）
+- 添加样本标签
+- 同时保存 PNG（300 dpi）和 PDF 两种格式
+- 所有文字标签使用英文
+
+# 重要注意事项
+- 优雅处理缺失的 R 包（如缺失则自动安装）"
     End Function
 
     Protected Overrides Function GetConclusionItems() As String

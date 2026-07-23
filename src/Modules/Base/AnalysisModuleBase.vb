@@ -198,13 +198,13 @@ Public MustInherit Class AnalysisModuleBase
                 End If
             End If
 
-            resp = Await llm.Chat($"You are not generates a valid json or your generated execution plan JSON string is missing the following required fields:
+            resp = Await llm.Chat($"你生成的 JSON 无效，或生成的执行计划 JSON 缺少以下必填字段：
 
-""goal"": Explains the expected outcome that the current analysis module can achieve in the context of the user’s research background.
-""notes"": Highlights any issues that require special attention in this execution plan.
-""execution_steps"" (array): Break down the current execution plan into multiple steps and fill them into the ""execution_steps"" array following the specified JSON format.
+""goal"": 说明当前分析模块在用户研究背景下可达到的预期成果。
+""notes"": 指出本执行计划中需要特别注意的事项。
+""execution_steps""（数组）：将当前执行计划拆分为多个步骤，按指定 JSON 格式填入 ""execution_steps"" 数组。
 
-Simply generate the specific execution plan here. Do not execute the actual analysis pipeline code. Return your plan as JSON in your response output, at least one execution step for your plan must be generated but no more than three decomposed execution steps:
+请仅生成本次执行计划，不要执行实际分析代码。以 JSON 格式返回计划，至少生成 1 个执行步骤，最多不超过 3 个步骤：
 {GetPlantJSONTemplate()}
 ", cancellationToken)
             json = resp.ExtractJsonFromResponse
@@ -222,14 +222,14 @@ Simply generate the specific execution plan here. Do not execute the actual anal
     ''' <summary>调用 LLM 生成分析计划</summary>
     Protected Overridable Async Function GeneratePlanAsync(llm As LLMClient, cancellationToken As CancellationToken) As Task(Of ModulePlan)
         Dim prompt = $"
-You are a bioinformatics analysis expert. Your task is to design a analysis plan for omics expression matrix data.
+你是一位生物信息学分析专家。你的任务是为组学表达矩阵数据设计分析计划。
 
 {BuildContextInfo()}
 
-# Your Task
+# 你的任务
 {GeneratePlanPromptText()}
 
-Simply generate the specific execution plan here. Do not execute the actual analysis pipeline code. Return your plan as JSON in your response output, at least one execution step for your plan must be generated but no more than three decomposed execution steps:
+请仅生成本次执行计划，不要执行实际分析代码。以 JSON 格式返回计划，至少生成 1 个执行步骤，最多不超过 3 个步骤：
 {GetPlantJSONTemplate()}
 "
         Return Await GeneratePlanAsync(llm, Await llm.Chat(prompt, cancellationToken), cancellationToken)
@@ -237,12 +237,12 @@ Simply generate the specific execution plan here. Do not execute the actual anal
 
     Protected Overridable Function GetPlantJSONTemplate() As String
         Return "{
-  ""module_name"": ""name of the analysis"",
-  ""goal"": ""<brief description of the analysis goal>"",
-  ""input_files"": [""<input file paths>""],
-  ""output_files"": [""<expected output file paths>""],
-  ""execution_steps"": [{""action"": ""<description of current step action>"", ""goal"": ""<goal of current step...>""}, ...],
-  ""notes"": ""<any special considerations>""
+  ""module_name"": ""分析模块名称"",
+  ""goal"": ""<简要描述本分析模块的目标>"",
+  ""input_files"": [""<输入文件路径>"",
+  ""output_files"": [""<预期输出文件路径>""],
+  ""execution_steps"": [{""action"": ""<当前步骤操作的描述>"", ""goal"": ""<当前步骤的目标...>""}, ...],
+  ""notes"": ""<需要特别注意的事项>""
 }"
     End Function
 
@@ -280,29 +280,29 @@ Simply generate the specific execution plan here. Do not execute the actual anal
 
 {BuildContextInfo()}
 
-You are a bioinformatics R script expert. Write and execute R script to process the omics expression matrix data according to the following plan.
+你是一位生物信息学 R 脚本专家。请根据以下计划编写并执行 R 脚本，处理组学表达矩阵数据。
 
-# Analysis: {plan.module_name}
+# 分析模块：{plan.module_name}
 
 {plan.notes}
 
-# Your Current Task
-Write a complete R script that:
+# 当前任务
+编写一个完整的 R 脚本，完成以下内容：
 
 {[step].action}
 {[step].goal}
 
-All scripts and the generated CSV files are placed in this designated temporary workspace folder: {Workspace.GetDirectoryFullPath}
-All pdf/png figure image files should save to workspace folder: {FiguresDir.GetDirectoryFullPath}
-All generated CSV file filename starting with prefix '{CsvFileNamePrefix}' 
+所有脚本和生成的 CSV 文件放置在指定临时工作区目录：{Workspace.GetDirectoryFullPath}
+所有 PDF/PNG 图片文件保存到图片目录：{FiguresDir.GetDirectoryFullPath}
+所有生成的 CSV 文件名以 '{CsvFileNamePrefix}' 为前缀
 
-# Important Notes
-- Use the source() function to load helper scripts from the rscript/ folder when applicable
-- Use ggplot2 for any visualization
-- Save all output files using absolute paths
-- The script should be self-contained and runnable via Rscript
-- Handle both single-omics and multi-omics cases
-- Print progress messages to stdout
+# 重要注意事项
+- 需要时使用 source() 函数从 rscript/ 目录加载辅助脚本
+- 所有可视化均使用 ggplot2
+- 所有输出文件使用绝对路径保存
+- 脚本须自包含，可通过 Rscript 直接运行
+- 同时兼容单组学和多组学数据
+- 将进度信息输出到 stdout
 "
         Await llm.Chat(prompt, cancellationToken)
     End Function
@@ -310,20 +310,20 @@ All generated CSV file filename starting with prefix '{CsvFileNamePrefix}'
     ''' <summary>调用 LLM 生成阶段性总结</summary>
     Private Async Function GenerateConclusionAsync(llm As LLMClient, plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)
         Dim prompt = $"
-You are a biomedical research expert. Based on the {FolderBaseName} analysis results, write a stage conclusion in Chinese.
+你是一位生物医学研究专家。请基于 {FolderBaseName} 的分析结果，撰写中文阶段性总结。
 
 {BuildContextInfo()}
 
-# Current Analysis Plan
+# 当前分析计划
 {plan.ToJson()}
 
-# Your Task
-Read the analysis output files in the tmp/ directory (files starting with '{CsvFileNamePrefix}') or the result files in folder '{Workspace}'.
-Write a conclusion in Chinese that describes:
+# 你的任务
+读取 tmp/ 目录中的分析输出文件（文件名以 '{CsvFileNamePrefix}' 开头）或 '{Workspace}' 目录中的结果文件。
+撰写中文总结，涵盖以下内容：
 
 {GetConclusionItems()}
 
-Do not write any file, just generates the conclusion text in markdown format and return it back to me. The conclusion should be 800-1200 words in Chinese. Be specific and rigorous. Do NOT fabricate data.
+不要写入任何文件，仅以 Markdown 格式生成总结文本并返回。总结应为 800-1200 字中文。内容须具体严谨，不得编造数据。
 "
         Dim resp = Await llm.Chat(prompt, cancellationToken)
         Return resp.output
@@ -335,31 +335,31 @@ Do not write any file, just generates the conclusion text in markdown format and
     Protected Function BuildContextInfo() As String
         Dim sb As New StringBuilder()
 
-        sb.AppendLine($"# Workspace Information")
-        sb.AppendLine($"- Workspace root: {_context.WorkspaceDir}")
-        sb.AppendLine($"- Tmp directory: {_context.TmpDir}")
-        sb.AppendLine($"- Scripts directory: {Workspace}/scripts/")
-        sb.AppendLine($"- R scripts tools directory(readonly): {AgentConfig.RScriptsDir}")
-        sb.AppendLine($"- R-sharp scripts tools directory(readonly): {AgentConfig.RsharpScriptsDir}")
-        sb.AppendLine($"- Python scripts tools directory(readonly): {AgentConfig.PythonScriptsDir}")
-        sb.AppendLine($"- KEGG background data directory(readonly): {AgentConfig.KeggDataDir}")
-        sb.AppendLine($"- molecule biological annotation table(readonly): {_context.AnnotationFile} ({StringFormats.Lanudry(_context.AnnotationFile.FileLength)})")
+        sb.AppendLine($"# 工作区信息")
+        sb.AppendLine($"- 工作区根目录: {_context.WorkspaceDir}")
+        sb.AppendLine($"- 临时目录: {_context.TmpDir}")
+        sb.AppendLine($"- 脚本目录: {Workspace}/scripts/")
+        sb.AppendLine($"- R 脚本工具目录(只读): {AgentConfig.RScriptsDir}")
+        sb.AppendLine($"- R-sharp 脚本工具目录(只读): {AgentConfig.RsharpScriptsDir}")
+        sb.AppendLine($"- Python 脚本工具目录(只读): {AgentConfig.PythonScriptsDir}")
+        sb.AppendLine($"- KEGG 背景数据目录(只读): {AgentConfig.KeggDataDir}")
+        sb.AppendLine($"- 分子生物学注释表(只读): {_context.AnnotationFile} ({StringFormats.Lanudry(_context.AnnotationFile.FileLength)})")
         sb.AppendLine()
-        sb.AppendLine($"# Research Topic")
+        sb.AppendLine($"# 研究主题")
         sb.AppendLine(_context.ResearchTopic)
         sb.AppendLine()
-        sb.AppendLine($"# Omics Datasets ({_context.Datasets.Count})")
+        sb.AppendLine($"# 组学数据集 ({_context.Datasets.Count})")
         For i = 0 To _context.Datasets.Count - 1
             Dim d = _context.Datasets(i)
-            sb.AppendLine($"## Dataset {i + 1}: {d.OmicsType}")
-            sb.AppendLine($"- Expression file: {d.ExpressionFile.GetFullPath} ({StringFormats.Lanudry(d.ExpressionFile.FileLength)})")
-            sb.AppendLine($"- Sample info file: {d.SampleInfoFile.GetFullPath} ({StringFormats.Lanudry(d.SampleInfoFile.FileLength)})")
-            sb.AppendLine($"- Sample count: {d.SampleIDs.Count}")
-            sb.AppendLine($"- Molecule count: {d.MoleculeIDs.Count}")
-            sb.AppendLine($"- Sample IDs: { d.SampleIDs.Concatenate(", ")}")
+            sb.AppendLine($"## 数据集 {i + 1}: {d.OmicsType}")
+            sb.AppendLine($"- 表达矩阵文件: {d.ExpressionFile.GetFullPath} ({StringFormats.Lanudry(d.ExpressionFile.FileLength)})")
+            sb.AppendLine($"- 样本信息表文件: {d.SampleInfoFile.GetFullPath} ({StringFormats.Lanudry(d.SampleInfoFile.FileLength)})")
+            sb.AppendLine($"- 样本数量: {d.SampleIDs.Count}")
+            sb.AppendLine($"- 分子数量: {d.MoleculeIDs.Count}")
+            sb.AppendLine($"- 样本ID: { d.SampleIDs.Concatenate(", ")}")
         Next
         sb.AppendLine()
-        sb.AppendLine($"# Knowledge Base")
+        sb.AppendLine($"# 知识库")
         If File.Exists(_context.KnowledgeBaseFile) Then
             Dim kbContent = File.ReadAllText(_context.KnowledgeBaseFile, Encoding.UTF8)
             Dim stripLen As Integer = 30000
@@ -370,15 +370,15 @@ Do not write any file, just generates the conclusion text in markdown format and
                 sb.AppendLine(kbContent)
             End If
         Else
-            sb.AppendLine("(No knowledge base file available)")
+            sb.AppendLine("(无知识库文件)")
         End If
         sb.AppendLine()
-        sb.AppendLine($"# Previous Module Conclusions")
+        sb.AppendLine($"# 上游模块总结")
         For Each r As ModuleResult In _context.ModuleResults
             Dim c As String = r.Conclusion
             Dim stripLen As Integer = 5000
 
-            sb.AppendLine($"## Module {r.ModuleIndex}: {r.ModuleName}")
+            sb.AppendLine($"## 模块 {r.ModuleIndex}: {r.ModuleName}")
 
             If c.Length > stripLen Then
                 c = c.Substring(0, stripLen) & "...[truncated]"

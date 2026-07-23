@@ -34,41 +34,45 @@ Public Class ComparisonDesignModule : Inherits AnalysisModuleBase
     End Sub
 
     Protected Overrides Function GetPlantJSONTemplate() As String
-        Return $". And 'comparisons' field MUST BE defined in your plan json: {{
+        Return $"。且计划 JSON 中必须定义 'comparisons' 字段：{{
   ""module_name"": ""Comparison Group Design"",
-  ""goal"": ""<brief description of comparison design rationale>"",
-  ""input_files"": [""<input file paths>""],
-  ""output_files"": [""<expected output file paths>""],
-  ""execution_steps"": [{{""action"": ""<description of current step action>"", ""goal"": ""<goal of current step...>""}}, ...],
+  ""goal"": ""<简要描述比对设计的依据>"",
+  ""input_files"": [""<输入文件路径>""],
+  ""output_files"": [""<预期输出文件路径>""],
+  ""execution_steps"": [{{""action"": ""<当前步骤操作的描述>"", ""goal"": ""<当前步骤的目标...>""}}, ...],
   ""comparisons"": [
     {{
-      ""name"": ""<comparison name, e.g., 'disease_vs_control'>"",
-      ""treatment"": ""<treatment group name>"",
-      ""control"": ""<control group name>"",
-      ""biological_rationale"": ""<why this comparison is biologically meaningful>"",
-      ""expected_findings"": ""<what biological insights are expected>""
+      ""name"": ""<比对名称，如 'disease_vs_control'>"",
+      ""treatment"": ""<处理组名称>"",
+      ""control"": ""<对照组名称>"",
+      ""biological_rationale"": ""<此比对具有生物学意义的原因>"",
+      ""expected_findings"": ""<预期可获得的生物学发现>""
     }}
   ],
-  ""notes"": ""<special considerations>""
+  ""notes"": ""<需要特别注意的事项>""
 }}"
     End Function
 
     Protected Overrides Function GeneratePlanPromptText() As String
-        Return "Based on the user's research topic and the available sample groups (from sample_info column in sample metadata), design differential analysis comparison groups:
-1. Identify all available sample groups
-2. Design biologically meaningful comparison pairs that align with the research topic
-3. For time-series data, design comparisons across time points within each group
-4. Consider both pairwise comparisons and multi-group comparisons
-5. For multi-omics data, design consistent comparisons across omics layers
+        Return "根据用户研究主题和可用样本分组（来自样本信息表中的 sample_info 列），设计差异分析比对组别：
+1. 识别所有可用的样本分组
+2. 设计与研究主题契合的、具有生物学意义的比对组对
+3. 对于时间序列数据，设计各组内不同时间点之间的比对
+4. 兼顾两两比对和多组比对
+5. 对于多组学数据，在各组学层面设计一致的比对方案
 
-The comparison design should be deeply aligned with the known biological mechanisms related to the user's research topic.
-Reference the kb.json knowledge base for biological insights.
+比对设计应与用户研究主题相关的已知生物学机制深度契合。
+参考 kb.json 知识库获取生物学见解。
 
-# Implementation Requirements
-- Create a data frame containing the comparison design
-- Columns: comparison_name, treatment_group, control_group, biological_rationale, expected_findings
-- Save the design as CSV to tables/comparison_design.csv
-- Generate a summary visualization showing the comparison structure"
+# 上下游衔接说明
+- 上游输入：读取样本信息表中的分组信息，参考模块 1 预处理后的数据
+- 下游输出：比对设计结果（design.json + tables/comparison_design.csv）将作为模块 4(LIMMA) 和模块 5(KEGG GSVA 差异分析) 的比对方案依据
+
+# 实现要求
+- 创建包含比对设计的数据框
+- 列名：comparison_name, treatment_group, control_group, biological_rationale, expected_findings
+- 将比对设计保存为 CSV 到 tables/comparison_design.csv
+- 生成展示比对结构的可视化图"
     End Function
 
     Protected Overrides Function GetConclusionItems() As String
