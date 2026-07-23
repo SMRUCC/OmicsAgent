@@ -176,7 +176,7 @@ Public MustInherit Class AnalysisModuleBase
 ""notes"": Highlights any issues that require special attention in this execution plan.
 ""execution_steps"" (array): Break down the current execution plan into multiple steps and fill them into the ""execution_steps"" array following the specified JSON format.
 
-Return your plan as JSON, at least one execution step for your plan must be generated:
+Simply generate the specific execution plan here. Do not execute the actual analysis pipeline code. Return your plan as JSON in your response output, at least one execution step for your plan must be generated but no more than three decomposed execution steps:
 {
   ""module_name"": ""Expression Matrix Preprocessing"",
   ""goal"": ""<brief description of the preprocessing goal>"",
@@ -228,12 +228,12 @@ Return your plan as JSON, at least one execution step for your plan must be gene
         sb.AppendLine($"# Workspace Information")
         sb.AppendLine($"- Workspace root: {_context.WorkspaceDir}")
         sb.AppendLine($"- Tmp directory: {_context.TmpDir}")
-        sb.AppendLine($"- Scripts directory: {_context.ScriptsDir}")
-        sb.AppendLine($"- R scripts tools directory: {AgentConfig.RScriptsDir}")
-        sb.AppendLine($"- R-sharp scripts tools directory: {AgentConfig.RsharpScriptsDir}")
-        sb.AppendLine($"- Python scripts tools directory: {AgentConfig.PythonScriptsDir}")
-        sb.AppendLine($"- KEGG background data directory: {AgentConfig.KeggDataDir}")
-        sb.AppendLine($"- molecule biological annotation table: {_context.AnnotationFile} ({StringFormats.Lanudry(_context.AnnotationFile.FileLength)})")
+        sb.AppendLine($"- Scripts directory: {Workspace}/scripts/")
+        sb.AppendLine($"- R scripts tools directory(readonly): {AgentConfig.RScriptsDir}")
+        sb.AppendLine($"- R-sharp scripts tools directory(readonly): {AgentConfig.RsharpScriptsDir}")
+        sb.AppendLine($"- Python scripts tools directory(readonly): {AgentConfig.PythonScriptsDir}")
+        sb.AppendLine($"- KEGG background data directory(readonly): {AgentConfig.KeggDataDir}")
+        sb.AppendLine($"- molecule biological annotation table(readonly): {_context.AnnotationFile} ({StringFormats.Lanudry(_context.AnnotationFile.FileLength)})")
         sb.AppendLine()
         sb.AppendLine($"# Research Topic")
         sb.AppendLine(_context.ResearchTopic)

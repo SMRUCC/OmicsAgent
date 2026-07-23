@@ -50,7 +50,7 @@ For each analysis:
 - Save score tables as CSV
 - Generate stage conclusion text
 
-Return your plan as JSON, at least one execution step for your plan must be generated:
+Simply generate the specific execution plan here. Do not execute the actual analysis pipeline code. Return your plan as JSON in your response output, at least one execution step for your plan must be generated but no more than three decomposed execution steps:
 {{
   ""module_name"": ""PCA/PLSDA/OPLSDA Analysis"",
   ""goal"": ""<brief description>"",

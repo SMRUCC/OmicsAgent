@@ -46,7 +46,7 @@ Design a plan for LIMMA differential analysis including:
 5. For metabolomics data: include VIP value calculation (VIP > {_config.Analysis.MetaboliteVipCutoff} threshold)
 6. Default thresholds: pvalue < 0.05, no logFC cutoff, take top {_config.Analysis.DiffTopCount} molecules by |logFC| descending
 
-Return your plan as JSON, at least one execution step for your plan must be generated:
+Simply generate the specific execution plan here. Do not execute the actual analysis pipeline code. Return your plan as JSON in your response output, at least one execution step for your plan must be generated but no more than three decomposed execution steps:
 {{
   ""module_name"": ""LIMMA Differential Analysis"",
   ""goal"": ""<brief description>"",

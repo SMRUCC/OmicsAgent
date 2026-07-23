@@ -44,7 +44,7 @@ Design a plan for KEGG functional analysis including:
    - GSVA heatmap (columns = samples sorted by group, rows = KEGG pathways grouped by category with hierarchical clustering and dendrogram)
    - GSVA differential analysis volcano plot and score plot
 
-Return your plan as JSON, at least one execution step for your plan must be generated:
+Simply generate the specific execution plan here. Do not execute the actual analysis pipeline code. Return your plan as JSON in your response output, at least one execution step for your plan must be generated but no more than three decomposed execution steps:
 {{
   ""module_name"": ""KEGG Functional Analysis"",
   ""goal"": ""<brief description>"",

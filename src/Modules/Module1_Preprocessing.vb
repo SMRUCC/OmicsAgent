@@ -1,5 +1,3 @@
-Imports Microsoft.VisualBasic.MIME.application.json
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Ollama
 Imports OmicsAgent.AppRuntime
 
@@ -45,7 +43,7 @@ Design a preprocessing plan for the expression matrix data. The standard preproc
 - For multi-omics data, each omics dataset should be preprocessed separately
 - The preprocessed matrix should be saved as CSV in the tmp/ directory
 
-Simply generate the specific execution plan here. Do not execute the actual analysis pipeline code. Return your plan as JSON in your response output, at least one execution step for your plan must be generated:
+Simply generate the specific execution plan here. Do not execute the actual analysis pipeline code. Return your plan as JSON in your response output, at least one execution step for your plan must be generated but no more than three decomposed execution steps:
 {{
   ""module_name"": ""Expression Matrix Preprocessing"",
   ""goal"": ""<brief description of the preprocessing goal>"",
@@ -60,9 +58,10 @@ Simply generate the specific execution plan here. Do not execute the actual anal
 
     Protected Overrides Async Function GenerateAndRunScriptAsync(llm As LLMClient, plan As ModulePlan, [step] As [Step], cancellationToken As CancellationToken) As Task
         Dim prompt = $"
-You are a bioinformatics R script expert. Write and execute R script to preprocess the omics expression matrix data according to the following plan.
 
 {BuildContextInfo()}
+
+You are a bioinformatics R script expert. Write and execute R script to preprocess the omics expression matrix data according to the following plan.
 
 # Preprocessing Plan
 {plan.module_name}

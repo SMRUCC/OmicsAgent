@@ -40,7 +40,7 @@ Based on the user's research topic and the available sample groups (from sample_
 The comparison design should be deeply aligned with the known biological mechanisms related to the user's research topic.
 Reference the kb.json knowledge base for biological insights.
 
-Return your plan as JSON, at least one execution step for your plan must be generated:
+Simply generate the specific execution plan here. Do not execute the actual analysis pipeline code. Return your plan as JSON in your response output, at least one execution step for your plan must be generated but no more than three decomposed execution steps:
 {{
   ""module_name"": ""Comparison Group Design"",
   ""goal"": ""<brief description of comparison design rationale>"",
