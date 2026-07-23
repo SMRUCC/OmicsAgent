@@ -1,4 +1,13 @@
-{
+## Preprocessing Plan for Metabolomics Expression MatrixHere is the detailed preprocessing plan based on data inspection:
+
+**Data Inspection Results:**
+- Shape:2059 metabolites ×18 samples (no QC columns present)
+- Groups: CD infection (6), High-iron diet before infection (6), Standard control (6)
+- Missing values: **0** (no imputation needed, but step retained as safety)
+- Data range: min = **0.0095**, max = **283.38** (>100 → **log transformation required**)
+- Column sums vary (2566–3692), so column-sum normalization is needed---
+
+```json{
  "module_name": "Expression Matrix Preprocessing",
  "goal": "Preprocess the metabolomics expression matrix (2059 metabolites ×18 samples) by filling missing values, normalizing to relative abundance, applying log transformation, and median-scaling per metabolite, to prepare for downstream differential expression and pathway analysis comparing high-iron diet + CDI vs CDI alone vs healthy control groups.",
  "input_files": [
@@ -23,7 +32,7 @@
  "goal": "Normalize for technical variation in total signal intensity between samples, making expression values comparable across samples as relative abundances."
  },
  {
- "action": "Log transformation: Check the maximum value in the entire normalized matrix. Current data has max =283.4 (>100), indicating raw data is on the original (non-log) intensity scale. Apply natural log (or log2) transformation to all values: log(value +1) or log(value) with a small offset to handle zeros. Since no zeros exist, log(value) is appropriate. Log transformation stabilizes variance and makes data more normally distributed.",
+ "action": "Log transformation: Check the maximum value in the entire normalized matrix. Current data has max =283.4 (>100), indicating raw data is on the original (non-log) intensity scale. Apply natural log (or log2) transformation to all values: log(value) (since no zeros exist). Log transformation stabilizes variance and makes data more normally distributed.",
  "goal": "Transform skewed intensity data to a scale where statistical methods (t-tests, ANOVA) perform optimally, and multiplicative differences become additive."
  },
  {
@@ -35,5 +44,6 @@
  "goal": "Store the cleaned, normalized, and scaled expression matrix for downstream analysis (differential expression, PCA, heatmaps, pathway enrichment)."
  }
  ],
- "notes": "Special considerations: (1) The expression data is LC-MS/MS metabolomics data from a CDI mouse study. No user-specified preprocessing exceptions were identified from the research topic. (2) QC samples are listed in sampleinfo.csv but NOT present in the expression matrix - they have been excluded prior to this analysis. (3) Current data inspection shows0 missing values,0 zeros, and0 negative values, so imputation may be a no-op but is retained as a safeguard. (4) Max value is283.4 (>100), confirming data is NOT already log-transformed, so log transformation will be applied. (5) The metabolite annotation file (metabolites.csv) contains KEGG IDs and pathway classifications that will be useful for downstream pathway enrichment analysis."
+ "notes": "Special considerations: (1) The expression data is LC-MS/MS metabolomics data from a CDI mouse study. No user-specified preprocessing exceptions were identified from the research topic. (2) QC samples are listed in sampleinfo.csv but NOT present in the expression matrix — they have been excluded prior to this analysis. (3) Current data inspection shows0 missing values,0 zeros, and0 negative values, so imputation may be a no-op but is retained as a safeguard. (4) Max value is283.4 (>100), confirming data is NOT already log-transformed, so log transformation will be applied. (5) The metabolite annotation file (metabolites.csv) contains KEGG IDs and pathway classifications that will be useful for downstream pathway enrichment analysis."
 }
+```

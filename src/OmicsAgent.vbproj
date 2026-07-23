@@ -207,6 +207,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="test\**" />
+    <EmbeddedResource Remove="test\**" />
+    <None Remove="test\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Import Include="System.ComponentModel" />
     <Import Include="System.IO" />
     <Import Include="System.Text" />

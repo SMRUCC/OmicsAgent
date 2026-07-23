@@ -45,9 +45,8 @@ Design a preprocessing plan for the expression matrix data. The standard preproc
 - Check the research topic for any user-specified preprocessing exceptions
 - For multi-omics data, each omics dataset should be preprocessed separately
 - The preprocessed matrix should be saved as CSV in the tmp/ directory
-- Use the R scripts in the rscript/ folder as reference; source them when applicable
 
-Return your plan as JSON, at least one execution step for your plan must be generated:
+Simply generate the specific execution plan here. Do not execute the actual analysis pipeline code. Return your plan as JSON, at least one execution step for your plan must be generated:
 {{
   ""module_name"": ""Expression Matrix Preprocessing"",
   ""goal"": ""<brief description of the preprocessing goal>"",

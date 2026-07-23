@@ -1,0 +1,21 @@
+=== Expression Matrix Info ===
+Dimensions: 2059 features x 18 samples
+Sample IDs: Fc16YH_CD1 Fc16YH_CD2 Fc16YH_CD3 Fc16YH_CD4 Fc16YH_CD5 Fc16YH_CD6 Fc16YH_FE1 Fc16YH_FE2 Fc16YH_FE3 Fc16YH_FE4 Fc16YH_FE5 Fc16YH_FE6 Fc16YH_NC1 Fc16YH_NC2 Fc16YH_NC3 Fc16YH_NC4 Fc16YH_NC5 Fc16YH_NC6 
+
+=== Sample Info ===
+
+Clostridium difficile infection           high iron diet before 
+                              6                               6 
+                             QC              Standard (control) 
+                              3                               6 
+
+=== Data Statistics ===
+Min: 0.009519501 
+Max: 283.3757 
+Mean: 1.500778 
+Median: 0.9716549 
+NA count: 0 
+NA ratio: 0 %
+Values >100: 7 
+Values ==0: 0 
+Column sums range: 2565.743 - 3691.793 
