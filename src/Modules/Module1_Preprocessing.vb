@@ -65,8 +65,12 @@ Simply generate the specific execution plan here. Do not execute the actual anal
 
         For retry_round As Integer = 0 To 9
             If Not json.StringEmpty(, True) Then
-                plan = LenientJsonParser.ParseJSON(json).CreateObject(Of ModulePlan)
+                plan = If(LenientJsonParser.ParseJSON(json).CreateObject(Of ModulePlan), New ModulePlan)
                 plan.module_name = ModuleName
+
+                If Not (plan.goal.StringEmpty(, True) OrElse plan.execution_steps.IsNullOrEmpty) Then
+                    Exit For
+                End If
 
                 If Not plan.goal.StringEmpty(, True) Then
                     goal = plan.goal

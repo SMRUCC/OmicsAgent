@@ -1,6 +1,6 @@
 {
  "module_name": "Expression Matrix Preprocessing",
- "goal": "Preprocess the metabolomics expression matrix (2059 metabolites ×18 samples) by filling missing values, normalizing to relative abundance, applying log transformation, and median-scaling per metabolite, to prepare for downstream differential expression and pathway analysis comparing high-iron diet + CDI vs CDI alone vs healthy control groups.",
+ "goal": "Preprocess the metabolomics expression matrix (2059 metabolites ×18 samples) by filling missing values, normalizing to relative abundance, applying log transformation (since max value283.38 >100 indicates non-log scale), and median-scaling per metabolite row, to prepare for downstream differential abundance and pathway enrichment analyses.",
  "input_files": [
  "G:/OmicsWorks/test/metabolism/expression.csv",
  "G:/OmicsWorks/test/metabolism/sampleinfo.csv",
@@ -11,29 +11,29 @@
  ],
  "execution_steps": [
  {
- "action": "Validate input data: Read expression.csv (2059 metabolites ×18 samples) and sampleinfo.csv. Confirm first column contains metabolite names (index column). Verify the18 sample columns match sample info (6 CDI,6 high-iron diet before infection,6 standard control). Check that QC samples from sampleinfo are not present in expression matrix (expected).",
- "goal": "Ensure data integrity and correct mapping between expression matrix and sample metadata before preprocessing."
+ "action": "Load the expression matrix (2059 metabolites ×18 samples) from expression.csv, set the first column (metabolite names) as row index. Also load sampleinfo.csv to validate sample-to-group mapping (3 groups: Clostridium difficile infection [CD1-CD6], high iron diet before [FE1-FE6], Standard control [NC1-NC6]). Load metabolites.csv annotation table for reference during downstream analysis.",
+ "goal": "Import and validate all input data; confirm sample-to-group alignment."
  },
  {
- "action": "Fill missing values: For each metabolite row, identify any NA/NaN values. For any missing entries, compute the minimum positive value in that row and fill NAs with half of that minimum. If no missing values exist (current check shows0 NAs), this step serves as a safety guard and will have no effect.",
- "goal": "Eliminate missing values which could cause errors in subsequent normalization steps, using a conservative imputation method (half-min-per-row) that minimally impacts the data distribution."
+ "action": "Identify and handle missing values (NA/NaN/zero) per row. For each metabolite row, compute the minimum positive value, then replace any missing/zero values with half of that minimum. Additionally check for any zero-value entries that may represent technical missing values.",
+ "goal": "Impute missing or zero values using half-minimum-positive per molecule, avoiding artificial inflation of expression signals."
  },
  {
- "action": "Column-sum normalization (relative expression): For each sample column, sum all metabolite expression values, then divide each value by the column sum to convert raw intensities to relative proportions (fractions summing to1 per sample). This accounts for global differences in total ion count or sample loading across the18 samples.",
- "goal": "Normalize for technical variation in total signal intensity between samples, making expression values comparable across samples as relative abundances."
+ "action": "Perform column-sum normalization: for each sample column, divide each metabolite expression value by the total sum of that column, converting absolute intensities to relative abundances (proportions). Multiply by10^6 (scale to ppm-like values) if desired to avoid very small decimals.",
+ "goal": "Normalize across samples to correct for total ion count / library size differences, making samples comparable."
  },
  {
- "action": "Log transformation: Check the maximum value in the entire normalized matrix. Current data has max =283.4 (>100), indicating raw data is on the original (non-log) intensity scale. Apply natural log (or log2) transformation to all values: log(value +1) or log(value) with a small offset to handle zeros. Since no zeros exist, log(value) is appropriate. Log transformation stabilizes variance and makes data more normally distributed.",
- "goal": "Transform skewed intensity data to a scale where statistical methods (t-tests, ANOVA) perform optimally, and multiplicative differences become additive."
+ "action": "Apply log2 transformation to the normalized relative abundance matrix. Since the maximum value in the raw data is283.38 (>100), this indicates the data is on an absolute intensity scale (not log-transformed). Log2 transformation will stabilize variance and reduce the influence of highly abundant metabolites.",
+ "goal": "Log-transform the data to achieve approximate normal distribution, stabilize variance, and reduce skewness from high-abundance metabolites."
  },
  {
- "action": "Median scaling per molecule (row): For each metabolite row, compute the row median of the log-transformed values. Subtract this row median from each value in that row (centering). This converts each metabolite's expression to deviations from its own median, effectively removing systematic differences in baseline abundance between different metabolites.",
- "goal": "Remove between-metabolite abundance differences so that all metabolites are on a comparable scale centered at zero, highlighting relative expression changes across conditions."
+ "action": "Perform median scaling per metabolite row: for each metabolite, subtract the row median from each value (centering), then optionally divide by the row median absolute deviation (MAD) for scaling. This standardizes each metabolite's expression profile across samples.",
+ "goal": "Median-centre each metabolite to remove systemic row-wise biases and make metabolite profiles comparable across different abundance ranges."
  },
  {
- "action": "Save preprocessed matrix: Write the final preprocessed matrix (2059 metabolites ×18 samples) to CSV file at G:/OmicsWorks/test/metabolism/tmp/expression_preprocessed.csv, preserving metabolite names as the index column and sample IDs as column headers.",
- "goal": "Store the cleaned, normalized, and scaled expression matrix for downstream analysis (differential expression, PCA, heatmaps, pathway enrichment)."
+ "action": "Save the fully preprocessed matrix (log2-transformed, column-sum normalized, median-scaled) as CSV to the tmp/ directory with metabolite names as row index and sample IDs as column headers. Also save a short preprocessing report summarizing key parameters.",
+ "goal": "Export the cleaned and normalized expression matrix for downstream statistical analysis (PCA, differential expression, pathway enrichment)."
  }
  ],
- "notes": "Special considerations: (1) The expression data is LC-MS/MS metabolomics data from a CDI mouse study. No user-specified preprocessing exceptions were identified from the research topic. (2) QC samples are listed in sampleinfo.csv but NOT present in the expression matrix - they have been excluded prior to this analysis. (3) Current data inspection shows0 missing values,0 zeros, and0 negative values, so imputation may be a no-op but is retained as a safeguard. (4) Max value is283.4 (>100), confirming data is NOT already log-transformed, so log transformation will be applied. (5) The metabolite annotation file (metabolites.csv) contains KEGG IDs and pathway classifications that will be useful for downstream pathway enrichment analysis."
+ "notes": "1) This is single-omics (metabolomics) data with2059 metabolites measured across18 biological samples in3 groups (n=6/group).2) QC samples (Fc16YH_QC01-03) are listed in sampleinfo.csv but absent from the expression matrix — they have presumably been removed pre-delivery.3) The expression data has NO missing values (NA=0, zeros=0), so the imputation step is a safeguard only.4) Max value is283.38 (>100), confirming raw data is on an absolute intensity scale and log transformation is required.5) The metabolites.csv annotation table contains KEGG IDs, HMDB IDs, PubChem IDs, and class information (super_class, class, sub_class, kegg_class, kegg_category) which can be used for pathway enrichment and metabolite set analysis downstream.6) No user-specified preprocessing exceptions were found in the research topic.7) The three experimental groups correspond to: 'Clostridium difficile infection' (CDI alone), 'high iron diet before' (high-iron diet prior to CDI), and 'Standard (control)' (healthy uninfected control)."
 }
