@@ -105,6 +105,7 @@ Return your plan as JSON, at least one execution step for your plan must be gene
   ""notes"": ""<any special considerations>""
 }
 ", cancellationToken)
+                    json = resp.ExtractJsonFromResponse
                 End If
             End If
         Next
