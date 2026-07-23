@@ -1,0 +1,18 @@
+A Spore-Forming Probiotic Supplement Improves the Intestinal Immune Response and Protects the Intestinal Health During Recurrent Clostridioides difficile Colonization in Mice
+
+JPEN J Parenter Enteral Nutr. 2020 Nov;44(8):1428-1438. doi: 10.1002/jpen.1851. Epub 2020 Jun 4.
+
+PMID: 32495964 DOI: 10.1002/jpen.1851
+
+Abstract
+Background: Around 15%-30% of patients develop recurrent Clostridioides difficile infection (CDI) as conventional therapies disrupt protective gut microbiota. We tested if supplementation with a spore-forming probiotic would protect intestinal health in a mouse model of recurrent CD colonization.
+
+Methods: Methods: Female CF-1 mice were exposed to CD spores (4-log10 colony-forming units/10 μL) and then randomly assigned to receive either saline (CD-S) or probiotic (CD-PRO). Control mice received only saline (control). Following confirmation of initial CD colonization, mice were treated with vancomycin (10 days). After 5 days, mice recolonized with CD were treated again with vancomycin (10 days) and euthanized 5 days later. Fecal samples were collected at select time points for bacterial analysis. Following euthanasia, blood samples, cecum contents, and the intestine were collected for analysis.
+
+Results: Probiotic supplementation mitigated the antibiotic-induced changes in cecum weight (P < .001). Probiotic-supplemented mice had increased messenger RNA expression of several immune parameters, accompanied by lower serum iron levels compared with CD-S mice (P < .05). Lower expressions of TNF α and calprotectin (P ≤ .05) were observed in CD-PRO mice compared with CD-S. The probiotics also supported the expression of intestinal tight junction proteins, which were diminished in the proximal colon of CD-S mice (P < .05).
+
+Conclusion: Mice supplemented with targeted spore-forming probiotics exhibited improved immune responses and nutrition immunity properties, which were linked with less inflammation and enhanced intestinal barrier proteins during recurrent CD colonization.
+
+Keywords: immune; intestinal barrier; intestine; nutrition immunity; probiotic supplement; recurrent Clostridium difficile infection.
+
+© 2020 American Society for Parenteral and Enteral Nutrition.
