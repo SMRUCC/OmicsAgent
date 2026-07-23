@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Data.Framework.IO.CSVFile
+﻿Imports Microsoft.VisualBasic.ApplicationServices.Terminal.Utility
+Imports Microsoft.VisualBasic.Data.Framework.IO.CSVFile
 Imports OmicsAgent.AppRuntime
 
 Module Workflow
@@ -36,22 +37,9 @@ Module Workflow
         Return 0
     End Function
 
-    Private Function GetCancelToken() As CancellationToken
-        Dim cts As New CancellationTokenSource()
-
-        AddHandler Console.CancelKeyPress,
-            Sub(s, e)
-                e.Cancel = True
-                cts.Cancel()
-                Console.WriteLine("Cancellation requested...")
-            End Sub
-
-        Return cts.Token
-    End Function
-
     ''' <summary>异步主流程</summary>
     Private Async Function MainAsync(parsed As Opts) As Task
-        Dim cancellationToken = GetCancelToken()
+        Dim cancellationToken = UserTaskCancelAction.GetConsoleCancellationToken(prompt:="Cancellation requested...")
         ' 1. 环境检查
         Dim checker As New EnvironmentChecker(_config, _logger)
 
@@ -79,7 +67,9 @@ Module Workflow
         ' 4. 执行分析模块
         Dim modulesToRun = parsed.ParseModulesToRun
         For Each moduleIdx In modulesToRun
-            If cancellationToken.IsCancellationRequested Then Exit For
+            If cancellationToken.IsCancellationRequested Then
+                Exit For
+            End If
 
             Try
                 Dim [module] As AnalysisModuleBase = CreateModule(moduleIdx)
