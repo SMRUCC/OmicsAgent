@@ -222,6 +222,7 @@ Return your plan as JSON, at least one execution step for your plan must be gene
     ''' <summary>构建模块上下文信息字符串，提供给 LLM</summary>
     Protected Function BuildContextInfo() As String
         Dim sb As New StringBuilder()
+
         sb.AppendLine($"# Workspace Information")
         sb.AppendLine($"- Workspace root: {_context.WorkspaceDir}")
         sb.AppendLine($"- Tmp directory: {_context.TmpDir}")
@@ -261,12 +262,16 @@ Return your plan as JSON, at least one execution step for your plan must be gene
         End If
         sb.AppendLine()
         sb.AppendLine($"# Previous Module Conclusions")
-        For Each r In _context.ModuleResults
-            sb.AppendLine($"## Module {r.ModuleIndex}: {r.ModuleName}")
-            Dim c = r.Conclusion
+        For Each r As ModuleResult In _context.ModuleResults
+            Dim c As String = r.Conclusion
             Dim stripLen As Integer = 5000
 
-            If c.Length > stripLen Then c = c.Substring(0, stripLen) & "...[truncated]"
+            sb.AppendLine($"## Module {r.ModuleIndex}: {r.ModuleName}")
+
+            If c.Length > stripLen Then
+                c = c.Substring(0, stripLen) & "...[truncated]"
+            End If
+
             sb.AppendLine(c)
             sb.AppendLine()
         Next
