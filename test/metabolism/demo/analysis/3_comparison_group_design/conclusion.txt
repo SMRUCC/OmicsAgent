@@ -1,0 +1,16 @@
+﻿Let me first read the existing outputs to understand the full context of what was produced.Let me also check the previous conclusions for style reference.Now let me check the workspace structure more carefully.Now I have all the context. Let me write the comprehensive conclusion.Now let me verify the file was saved correctly.阶段结论已成功生成并保存至 `G:/OmicsWorks/test/metabolism/demo/conclusions/module_3_comparison_design_conclusion.md`。
+
+以下是结论的核心要点概览：
+
+---
+
+###设计核心：三角对比框架本阶段基于知识库中的生物学机制证据，围绕 **NC（健康对照）↔ CD（感染对照）↔ FE（高铁干预+感染）**三组构建了三个核心比较对：
+
+|比较对 |优先级 |科学问题 |核心生物学依据 |
+|--------|:------:|----------|---------------|
+| **FE vs CD** | ★★★ |高铁饮食如何重塑CDI的代谢响应？ | L-脯氨酸↓（限制Stickland发酵）、TUDCA↑（抑制孢子萌发）、炎症代谢物↓ |
+| **CD vs NC** | ★★☆ | CDI本身的代谢特征是什么？ |胆汁酸失调（初级↑/次级↓）、炎症介质↑、SCFAs↓ |
+| **FE vs NC** | ★★☆ |高铁干预能否恢复代谢稳态？ |部分恢复 vs持续失调模式、保护性代谢特征识别 |
+
+###关键生物学机制整合设计深度整合了知识库中记载的 **四条关键通路**：
+1. **Stickland发酵**——L-脯氨酸作为艰难梭菌电子受体，高铁饮食降低其水平2. **胆汁酸代谢**——TUDCA直接抑制孢子萌发和营养体生长3. **铁稳态与营养免疫**——钙卫蛋白/脂质运载蛋白-2的过渡金属螯合4. **炎症与中性粒细胞募集**——CXCL1、IL-1β等趋化因子下调###合理性论证亮点- **因果逻辑闭环**：三比较从"病因-干预-结局"全链条解析- **假设驱动**：每组预期发现均基于文献具体实验证据- **数据基础扎实**：818个VIP>1 & FDR<0.05的候选代谢物- **可检验性强**：每个预期发现均为可定量验证的代谢物变化###局限性说明- ❗缺少"高铁饮食单独（无感染）"对照组- ❗无法区分高铁的直接代谢效应 vs菌群介导的间接效应- ❗单一时间点，缺少感染进程的动态信息

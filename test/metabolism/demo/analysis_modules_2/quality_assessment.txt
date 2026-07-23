@@ -1,0 +1,48 @@
+================================================================
+ PCA / PLSDA / OPLSDA Quality Assessment Report
+================================================================
+Generated: 2026-07-23 16:07:07.752554
+
+--- Dataset ---
+ Molecules: 2059
+ Samples: 18
+ Groups: 3
+ Per group: Clostridium difficile infection=6, high iron diet before=6, Standard (control)=6
+
+--- PCA ---
+ PC1: 36.17 %
+ PC2: 18.28 %
+ PC3: 12.52 %
+ Top3 cumulative: 66.97 %
+ Within dist (mean): 6.3813
+ Global dist (mean): 22.2803
+ Permutation p: 0
+
+--- PLSDA ---
+ Comp1: 56.99 %
+ Comp2: 24.6 %
+ VIP>1: 828
+ Within dist (mean): 4.6275
+ Permutation p: 0
+ CV BER: 0.6667
+
+--- OPLSDA ---
+ Predictive: 0 %
+ VIP>1: 828
+ Within dist (mean): NaN
+ Permutation p: NA
+
+--- F-test ---
+ Significant (FDR<0.05): 1305 / 2059 (63.4%)
+
+--- ANOVA ---
+ Significant (FDR<0.05): 1149 / 2059 (55.8%)
+
+--- Key Candidates ---
+ VIP>1 & FDR<0.05: 818
+
+--- Output ---
+ Tables: G:/OmicsWorks/test/metabolism/demo/analysis_modules_2/tables
+ Figures: G:/OmicsWorks/test/metabolism/demo/analysis_modules_2/figures
+
+================================================================

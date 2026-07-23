@@ -1,0 +1,70 @@
+﻿{
+ "source_file": "41467_2022_Article_31334.txt",
+ "key_genes_proteins": [
+ "Cbh (bile salt hydrolase from Clostridium perfringens)",
+ "NanR (transcriptional regulator)",
+ "pNanA (promoter responsive to sialic acid)",
+ "CadC (transcriptional activator)",
+ "pCadBA (promoter activated by CadC)",
+ "TcdA (C. difficile toxin A)",
+ "TcdB (C. difficile toxin B)",
+ "GFP (green fluorescent protein, reporter)",
+ "E. coli Nissle1917 (probiotic host strain)",
+ "Auxotrophic E. coli Nissle1917 (requires D-alanine for survival)"
+ ],
+ "key_pathways": [
+ "Bile salt metabolism (synthesis, conjugation, deconjugation,7α-dehydroxylation)",
+ "C. difficile germination and sporulation",
+ "Sialic acid catabolism and sensing",
+ "Microbiome dysbiosis and antibiotic-induced changes",
+ "Toxin secretion and host cell damage"
+ ],
+ "key_metabolites": [
+ "Taurocholate (conjugated primary bile salt, germinant)",
+ "Glycocholate (conjugated primary bile salt, germinant)",
+ "Cholate (unconjugated primary bile salt, inhibits germination and growth)",
+ "Deoxycholate (secondary bile salt, derivative of cholate)",
+ "Chenodeoxycholate (primary bile salt)",
+ "Lithocholate (secondary bile salt, derivative of chenodeoxycholate)",
+ "Sialic acid (proxy signal for dysbiosis)",
+ "Glucose (catabolite repressor of pNanA)",
+ "D-alanine (auxotrophic supplement)"
+ ],
+ "biological_mechanisms": [
+ {
+ "mechanism": "Bile salt deconjugation inhibits C. difficile germination and growth: The enzyme Cbh deconjugates taurocholate (a germinant) into cholate, which reduces endospore germination and vegetative cell growth.",
+ "evidence": "Figure2A-B show cholate decreases germination by up to81% and viable vegetative cells by up to82%. Figure2C-D show Cbh converts99.2% of taurocholate to cholate and reduces conjugated bile salts by >99%. Figure2E-F show96% lower germination and89% fewer viable cells with Cbh."
+ },
+ {
+ "mechanism": "Sialic acid as a proxy signal for dysbiosis: Antibiotic treatment increases sialic acid levels in the gut, which can be detected by a genetically encoded sensor (pNanA-NanR) to dynamically control gene expression.",
+ "evidence": "Figure7B shows faecal sialic acid increased6-fold upon antibiotic treatment. The sensor responded to sialic acid and dynamically regulated GFP expression (Supplementary Fig.2C-D)."
+ },
+ {
+ "mechanism": "Sensor-amplifier-actuator circuit for controlled bile salt hydrolase expression: The circuit includes sialic acid sensor (pNanA-NanR), amplifier (CadC activating pCadBA), and actuator (Cbh). This enables amplified, dynamic expression of Cbh in response to dysbiosis.",
+ "evidence": "Figure3E-G: The sensor-amplifier-actuator construct increased Cbh expression to levels comparable to purified Cbh, leading to significant germination and growth inhibition."
+ },
+ {
+ "mechanism": "Cholate inhibits vegetative C. difficile growth: The deconjugation product cholate directly reduces viable vegetative cells.",
+ "evidence": "Supplementary Fig.3B-C indicate growth inhibition was due to cholate. Figure4C shows EcN-Cbh strongly reduces viable vegetative cells after preincubation with taurocholate."
+ },
+ {
+ "mechanism": "Reduction of C. difficile toxin (TcdA) production by engineered probiotics: Inhibition of germination and growth leads to decreased toxin levels and improved host cell viability.",
+ "evidence": "Figure4D shows EcN-Cbh significantly decreased TcdA levels in culture. Figure4E shows improved viability of Caco-2 cells exposed to supernatants from EcN-Cbh-treated C. difficile cultures."
+ },
+ {
+ "mechanism": "Restoration of bile salt metabolism improves clinical outcomes in CDI murine model: EcN-Cbh increased cholate and decreased taurocholate levels, leading to100% survival, reduced weight loss, lower clinical symptom scores, and decreased C. difficile abundance.",
+ "evidence": "Figure5D-F:100% survival vs14-60% in controls; lowest CSS (4.42 vs7.73-10.00). Figure6A: decrease in C. difficile abundance. Figure7C-D: increased cholate, decreased taurocholate in faeces."
+ }
+ ],
+ "key_findings": [
+ "The bile salt hydrolase Cbh from Clostridium perfringens deconjugates taurocholate and glycocholate into cholate, inhibiting C. difficile endospore germination and vegetative growth in vitro.",
+ "A genetically encoded sensor (pNanA-NanR) responsive to sialic acid can detect antibiotic-induced dysbiosis.",
+ "A complete sensor-amplifier-actuator genetic circuit (pNanA, NanR, CadC, pCadBA, Cbh) in engineered E. coli Nissle1917 (EcN-Cbh) dynamically expresses Cbh in response to sialic acid.",
+ "EcN-Cbh fully converts taurocholate to cholate in vitro, reducing endospore germination by98% and vegetative growth substantially.",
+ "In a murine CDI model, EcN-Cbh treatment achieved100% survival, improved clinical symptoms, reduced C. difficile abundance, and ameliorated histopathological injury.",
+ "Only the complete circuit (sensor+amplifier+actuator) provided full protection; the sensor was critical for efficacy and microbiome diversity recovery.",
+ "EcN-Cbh modulated faecal bile salt composition by increasing cholate and decreasing taurocholate levels in vivo.",
+ "Antibiotic treatment elevated sialic acid levels in the gut, supporting its use as a dysbiosis signal."
+ ],
+ "relevance_to_research_topic": "This paper does not directly study high iron diet but provides fundamental knowledge on the role of intestinal bile salt metabolism in Clostridioides difficile infection (CDI). It demonstrates that modulating the gut metabolite profile (specifically bile salts) via engineered probiotics can reduce CDI severity. The research topic focuses on high iron diet effects on CDI and gut microbiota. While iron is not addressed, the paper's insights into diet-microbiota-host interactions (e.g., how microbial metabolism of bile salts influences C. difficile germination and host immunity) are relevant. The engineered probiotics approach highlights that targeted metabolic interventions can alter CDI outcomes, which may parallel effects of dietary iron. However, no direct link to iron is mentioned."
+}

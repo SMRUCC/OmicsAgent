@@ -1,0 +1,63 @@
+﻿{
+ "source_file": "fmicb-16-1555220.txt",
+ "key_genes_proteins": [
+ "TcdA",
+ "TcdB",
+ "Rho",
+ "Rac",
+ "Cdc42",
+ "IL-6",
+ "TNF-α",
+ "IL-1β",
+ "sCD14",
+ "LBP"
+ ],
+ "key_pathways": [
+ "Rho/Rac/Cdc42 glucosylation pathway",
+ "short-chain fatty acid metabolism",
+ "bile acid metabolism",
+ "butyrate metabolism"
+ ],
+ "key_metabolites": [
+ "butyrate",
+ "acetate",
+ "propionate",
+ "2-hydroxyisobutyrate",
+ "glutamate",
+ "Sn-glycero-3-phosphocholine",
+ "leucine",
+ "valine",
+ "formate",
+ "secondary bile acids"
+ ],
+ "biological_mechanisms": [
+ {
+ "mechanism": "Probiotics produce organic acids and bacteriocins that directly inhibit C. difficile growth.",
+ "evidence": "Figure1A shows inhibition zones around probiotic colonies on double-layer agar; co-culture experiments (Figure1B) show9 of11 probiotic strains significantly inhibit C. difficile growth; CFS reduces biofilm formation (Figure1C). The discussion mentions that metabolites such as organic acids and bacteriocins likely contribute to inhibition."
+ },
+ {
+ "mechanism": "Probiotic cocktail reduces C. difficile burden and toxin production in vivo, leading to lower clinical scores and higher survival.",
+ "evidence": "Figure2: Pro11-fed mice had significantly lower clinical scores (A), higher survival (B), lower fecal C. difficile burden (33.7% of control) (C), and lower fecal toxin concentration (30.9% of control) (D)."
+ },
+ {
+ "mechanism": "Probiotic cocktail strengthens gut barrier integrity and reduces gut permeability and inflammation.",
+ "evidence": "Histology (Figure3A) shows intact mucus layer and villi in Pro11-fed mice vs. disrupted villi and neutrophil infiltration in control; serum sCD14 (leakage marker) significantly lower (Figure3B); colonic IL-1β expression significantly reduced (Figure3C)."
+ },
+ {
+ "mechanism": "Probiotic cocktail increases gut microbiome diversity and enriches beneficial bacteria (Lactobacillus, Bifidobacterium, Bacillus) while reducing potential pathogens (Enterococcus).",
+ "evidence": "Figure4A shows higher alpha diversity in Pro11 group; LEfSe analysis (Figure4C) shows enrichment of beneficial families (Bifidobacteriaceae, Lactobacillaceae, Bacillaceae) and species; genus-level analysis (Figure4B) shows increased Lactobacillus, Bifidobacterium, Bacillus and decreased Enterococcus."
+ },
+ {
+ "mechanism": "Probiotic cocktail modulates gut metabolites, particularly increasing butyrate and other beneficial metabolites, which contribute to protection against CDI.",
+ "evidence": "PCA (Figure5A) shows distinct metabolite clusters; volcano plot (Figure5B) shows significantly increased butyrate,2-hydroxyisobutyrate, glutamate, Sn-glycero-3-phosphocholine, leucine, valine, and decreased formate and acetate. Discussion highlights butyrate's roles in strengthening gut barrier and anti-inflammatory effects."
+ }
+ ],
+ "key_findings": [
+ "A human-origin probiotic cocktail (Pro11) containing11 strains from Lactobacillus, Bifidobacterium, and Streptococcus effectively inhibits C. difficile growth and biofilm formation in vitro.",
+ "Pro11 protects mice against CDI, evidenced by lower clinical scores, higher survival rates (80% vs.40%), reduced fecal C. difficile burden, and lower toxin levels.",
+ "Pro11 strengthens gut barrier integrity, reduces gut permeability (lower serum sCD14), and reduces colonic inflammation (lower IL-1β).",
+ "Pro11 increases gut microbiome diversity and enriches beneficial bacteria (Lactobacillus, Bifidobacterium, Bacillus) while decreasing Enterococcus.",
+ "Pro11 modulates gut metabolites, significantly increasing butyrate,2-hydroxyisobutyrate, glutamate, and branched-chain amino acids, and decreasing acetate and formate."
+ ],
+ "relevance_to_research_topic": "This paper provides mechanistic insights into how gut microbiota and metabolites modulate host susceptibility and severity of CDI, which is central to the research topic 'diet-gut microbiota-host' interactions. Although the paper studies probiotics (not high-iron diet), the underlying mechanisms—such as modulation of microbiome composition, enhancement of beneficial metabolites like butyrate, strengthening of gut barrier, and reduction of inflammation—are directly applicable to understanding how dietary interventions (e.g., high iron) might similarly influence CDI outcomes via the gut ecosystem. The paper also identifies key metabolites and bacterial taxa that could be targeted in future studies on iron-diet effects."
+}

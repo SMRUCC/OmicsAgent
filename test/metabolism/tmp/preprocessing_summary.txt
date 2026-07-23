@@ -1,0 +1,44 @@
+============================================================
+Expression Matrix Preprocessing Summary
+============================================================
+
+Script run at: 2026-07-23 15:49:06.42881
+
+--- Input ---
+Expression file: G:/OmicsWorks/test/metabolism/expression.csv
+Sample info file: G:/OmicsWorks/test/metabolism/sampleinfo.csv
+
+--- Dataset dimensions ---
+Molecules: 2059
+Samples: 18
+
+--- Sample groups ---
+Clostridium difficile infection = 6, high iron diet before = 6, Standard (control) = 6
+
+--- Preprocessing steps applied ---
+1. Fill NA/0 values with half-min-positive per row (safety no-op)
+2. Column-sum normalization to relative abundance (×1e6)
+3. Log2 transformation: YES
+4. Row median scaling (subtract row median): YES
+
+--- Statistics BEFORE preprocessing ---
+ NA count: 0
+ Zero count: 0
+ Negative count: 0
+ Value range: [0.009519501, 283.3756827]
+ Median: 0.9717
+ Mean ± SD: 1.5008 ± 3.6624
+
+--- Statistics AFTER preprocessing ---
+ NA count: 0
+ Zero count: 0
+ Value range: [-7.12694910294866, 9.37699710518678]
+ Median: 0
+ Mean ± SD: 0.203 ± 1.0286
+ Max |row median| after scaling: 0
+
+--- Output ---
+Preprocessed matrix: G:/OmicsWorks/test/metabolism/tmp/preprocessed_expression.csv
+Summary report: G:/OmicsWorks/test/metabolism/tmp/preprocessing_summary.txt
+
+============================================================

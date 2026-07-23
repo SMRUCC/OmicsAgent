@@ -1,0 +1,44 @@
+﻿{
+ "source_file": "1-s2.0-S1931312823005036-main.txt",
+ "key_genes_proteins": [
+ "fezA",
+ "fezB",
+ "Fur",
+ "calprotectin",
+ "ferritin",
+ "P1B6-ATPase transporter"
+ ],
+ "key_pathways": [
+ "nutritional immunity",
+ "iron homeostasis"
+ ],
+ "key_metabolites": [
+ "iron",
+ "iron sulfate",
+ "phosphorous",
+ "oxygen"
+ ],
+ "biological_mechanisms": [
+ {
+ "mechanism": "The fez operon (fezA, fezB) in C. difficile is induced by iron deprivation and by knockout of the transcription factor fur. It mediates formation of membrane-bound iron-containing organelles called ferrosomes, which protect iron-deprived cells from a sudden influx of toxic iron.",
+ "evidence": "Pi et al. showed that the fez operon was strongly induced by iron deprivation and fur knockout; fezB deletion caused a growth lag when iron-deprived cells were exposed to iron sulfate. Scanning transmission electron microscopy and other methods confirmed that the fez operon is necessary and sufficient for ferrosome formation."
+ },
+ {
+ "mechanism": "In murine infection models, ferrosomes (via fezB) help C. difficile counteract host nutritional immunity mediated by calprotectin, an iron-sequestering protein induced by inflammation. Deletion of fezB reduced bacterial burden, weight loss, and intestinal inflammation compared to wild-type C. difficile.",
+ "evidence": "Mice infected with fezB-deficient C. difficile had decreased bacterial burden and less weight loss. In a colitis model, fezB-deficient strains showed lower colonization and less intestinal inflammation. Calprotectin upregulated the fez operon in vitro and in vivo; in calprotectin-deficient mice, colonization and weight loss were unaffected by loss of the ferrosome system."
+ },
+ {
+ "mechanism": "High colonic iron concentrations from iron supplements can increase abundances of Clostridioides (including C. difficile and C. perfringens) and may modify antibiotic efficacy against enteropathogens.",
+ "evidence": "The paper references a controlled intervention study in Kenyan children where iron supplements significantly increased abundances of Clostridioides, including both C. difficile and C. perfringens (Jaeggi et al.,2015). It also mentions that antibiotic efficacy against C. difficile may be modified by high colonic iron concentrations (Paganini et al.,2019)."
+ }
+ ],
+ "key_findings": [
+ "C. difficile possesses membrane-bound iron storage organelles called ferrosomes, encoded by the fez operon (fezA, fezB).",
+ "The fez operon is induced by iron deprivation and inactivation of the Fur repressor; ferrosomes protect iron-deprived cells from excess iron toxicity.",
+ "In mice, fezB-deficient C. difficile causes less severe infection (lower bacterial burden, less weight loss, less intestinal inflammation) compared to wild-type.",
+ "Calprotectin (an iron-sequestering host protein) induces the fez operon, and ferrosomes help C. difficile survive calprotectin-mediated nutritional immunity.",
+ "Oral iron supplements in human infants increase colonic abundance of Clostridioides species, including C. difficile.",
+ "Ferrosomes may facilitate C. difficile adaptation to rapid shifts in colonic iron availability (e.g., during IBD flares or iron supplementation)."
+ ],
+ "relevance_to_research_topic": "This paper provides foundational knowledge on how iron availability modulates C. difficile pathogenesis through a newly discovered iron storage organelle (ferrosome). It directly links dietary iron (including high iron supplementation) to increased C. difficile abundance in the gut, and describes mechanisms by which iron fluctuations affect bacterial fitness and host immune defense (nutritional immunity via calprotectin). These insights are highly relevant to the research topic of high-iron diet effects on CDI, gut microbiota, and immune responses, offering a molecular basis for how 'diet-gut microbiota-host' interactions influence susceptibility and disease severity."
+}

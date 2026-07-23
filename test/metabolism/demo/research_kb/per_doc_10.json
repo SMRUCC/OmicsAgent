@@ -1,0 +1,58 @@
+﻿{
+ "source_file": "Metagenomic analysis reveals distinct patterns of gut microbiota features with diversified functions in C. difficile infection (CDI), asymptomatic carriage and non-CDI diarrhea.txt",
+ "key_genes_proteins": ["Clostridioides difficile toxin TcdB"],
+ "key_pathways": [
+ "iron complex transport system (M00240)",
+ "ABC-2 type transport system (M00254)",
+ "aminoacyl-tRNA biosynthesis (M00359)",
+ "aminoacyl-tRNA biosynthesis (M00360)",
+ "histidine biosynthesis (M00026)",
+ "inosine monophosphate biosynthesis (M00048)",
+ "ribosome (M00178)",
+ "ribosome (M00179)",
+ "fluoroquinolone resistance (M00729)",
+ "glycolysis (M00001)",
+ "gluconeogenesis (M00003)",
+ "membrane transport (M00258)",
+ "reductive pentose phosphate cycle (Calvin cycle) (M00165, M00167)",
+ "multidrug resistance, efflux pump AcrEF-TolC (M00696)",
+ "Macrolide resistance, MacAB-TolC transporter (M00709)"
+ ],
+ "key_metabolites": ["iron"],
+ "biological_mechanisms": [
+ {
+ "mechanism": "Iron complex transport system (M00240) is enriched in CDI gut microbiota, potentially facilitating C. difficile growth by improving iron acquisition.",
+ "evidence": "LEfSe analysis showed module M00240 (iron complex transport system) was enriched in CDI cohort (LDA >2.5, adjusted p <0.05). The phylum Proteobacteria contributed to this module with increased abundance in CDI."
+ },
+ {
+ "mechanism": "CDI disrupts microbial correlation networks, shifting from cooperative to competitive interactions (more negative correlations, fewer edges, lower clustering coefficient), which may reduce colonization resistance.",
+ "evidence": "Network analysis revealed CDI network had more negative correlations, fewer edges, lower average degree, and higher nodes compared to Carrier, Diarrhea, and Control groups. This indicates breakdown of microbial alliances and increased competition."
+ },
+ {
+ "mechanism": "Opportunistic pathogens such as Escherichia coli, Klebsiella pneumoniae, and Enterobacteriaceae bloom in CDI due to reduced ecological niche competition.",
+ "evidence": "LEfSe and ANCOM identified enrichment of unclassified_f_Enterobacteriaceae, Klebsiella_pneumoniae, Escherichia_coli, etc. in CDI (LDA >3, adjusted p <0.05). The paper states this may reflect a 'blooming' phenomenon."
+ },
+ {
+ "mechanism": "Novosphingobium_fuchskuhlense may play a protective role against CDI.",
+ "evidence": "Novosphingobium_fuchskuhlense showed higher abundance in Carrier/Diarrhea/Control compared to CDI, and random forest analysis demonstrated high AUC for distinguishing CDI from Carrier (AUC=0.978) and Carrier from Diarrhea (AUC=0.879)."
+ },
+ {
+ "mechanism": "Antibiotic resistance functions (acriflavine, glycylcycline) enriched in CDI are primarily contributed by Proteobacteria, especially Klebsiella pneumoniae.",
+ "evidence": "LEfSe analysis (LDA >3, adjusted p <0.05) showed acriflavine and glycylcycline resistance enriched in CDI; phylum Proteobacteria contributed >99% to these resistance functions, and Klebsiella_pneumoniae abundance was higher in CDI than Carrier."
+ },
+ {
+ "mechanism": "Bacitracin resistance is enriched in Carrier group and may be linked to Lactobacillus rhamnosus and Firmicutes, potentially inhibiting C. difficile.",
+ "evidence": "Bacitracin resistance was enriched in Carrier (LDA >3, adjusted p <0.05); phylum Firmicutes contributed to this resistance, and Lactobacillus_rhamnosus abundance was higher in Carrier than CDI."
+ }
+ ],
+ "key_findings": [
+ "Alpha diversity (Chao1 index) at species level was significantly higher in Control than in CDI, Carrier, and Diarrhea groups (p <0.05), while Shannon index at module level was higher in CDI than in Carrier and Control (p <0.05).",
+ "Beta diversity at species level significantly differed between CDI vs Carrier, CDI vs Diarrhea, and CDI vs Control (PERMANOVA, p <0.05).",
+ "Eight species (e.g., unclassified_f_Enterobacteriaceae, Veillonella_parvula, Klebsiella) were enriched in CDI; Collinsella species enriched in Control; Enterobacter_aerogenes enriched in Diarrhea (LEfSe and ANCOM).",
+ "Iron complex transport system (M00240) was enriched in CDI; ABC-2 type transport system, histidine biosynthesis, inosine monophosphate biosynthesis enriched in Carrier; ribosome enriched in Diarrhea; fluoroquinolone resistance and aminoacyl-tRNA biosynthesis enriched in Control (LDA >2.5, adjusted p <0.05).",
+ "Resistance functions acriflavine and glycylcycline enriched in CDI; bacitracin resistance enriched in Carrier; multiple cephalosporin and aminoglycoside resistances enriched in Control (LDA >3, adjusted p <0.05).",
+ "Random forest classifier combining microbial features achieved AUC >0.91 for distinguishing all four groups, with Novosphingobium_fuchskuhlense being a top classifier.",
+ "CDI microbial correlation network showed more negative correlations, fewer edges, lower clustering coefficient, and higher nodes compared to other groups, indicating disrupted microbial interactions."
+ ],
+ "relevance_to_research_topic": "This paper provides metagenomic evidence linking gut microbiota composition and functional potential (especially iron complex transport system) to CDI in humans. While the research topic focuses on high-iron diet in mice, the finding that iron complex transport modules are enriched in CDI microbiota supports the relevance of iron availability in CDI pathogenesis. The paper also identifies specific bacterial species (e.g., Enterobacteriaceae, Klebsiella) and microbial network disruptions that may underlie changes in host susceptibility and immune responses, which could be modulated by dietary iron. However, this study does not directly test dietary iron intervention or host immune response, so it serves as background evidence for the role of iron-related microbial mechanisms in CDI."
+}

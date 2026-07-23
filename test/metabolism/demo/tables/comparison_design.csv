@@ -1,0 +1,28 @@
+"comparison_name","treatment_group","control_group","treatment_samples","control_samples","n_treatment","n_control","priority","biological_rationale","expected_findings"
+"FE_vs_CD","FE","CD","Fc16YH_FE1, Fc16YH_FE2, Fc16YH_FE3, Fc16YH_FE4, Fc16YH_FE5, Fc16YH_FE6","Fc16YH_CD1, Fc16YH_CD2, Fc16YH_CD3, Fc16YH_CD4, Fc16YH_CD5, Fc16YH_CD6",6,6,"primary","Core comparison to assess how high-iron diet pre-intervention alters the gut metabolome response to C. difficile infection. Both groups are infected with CDI, differing only in dietary iron pre-treatment. Expected iron-driven metabolic changes include: (1) reduced L-proline (limiting Stickland fermentation substrate for C. difficile), (2) increased TUDCA (inhibiting spore germination), (3) enrichment of Enterobacteriaceae (e.g., E. coli AVS0501), (4) reduced inflammation-associated metabolites (IL-1beta, TNF-alpha pathway intermediates), (5) altered iron homeostasis metabolites.","1. L-proline significantly DOWN in FE (limiting Stickland fermentation)
+ 2. TUDCA significantly UP in FE (inhibiting spore germination)
+ 3. Inflammation-related lipids and mediators DOWN in FE
+  (IL-1beta, TNF-alpha, CXCL1, S100a8/S100a9 pathway metabolites)
+ 4. Iron-related metabolites (heme, Fe-complexes) altered
+ 5. Bile acid profile shifted: increased secondary/primary ratio
+ 6. SCFAs (butyrate) may be higher in FE
+ 7. Metabolites associated with Enterobacteriaceae enrichment"
+"CD_vs_NC","CD","NC","Fc16YH_CD1, Fc16YH_CD2, Fc16YH_CD3, Fc16YH_CD4, Fc16YH_CD5, Fc16YH_CD6","Fc16YH_NC1, Fc16YH_NC2, Fc16YH_NC3, Fc16YH_NC4, Fc16YH_NC5, Fc16YH_NC6",6,6,"secondary","Baseline comparison to characterize the CDI-specific metabolic signature in the absence of dietary iron intervention. Expected to reveal: (1) increased primary bile acids (taurocholate), decreased secondary bile acids, (2) elevated pro-inflammatory mediators, (3) altered amino acid profiles (proline, glutamate), (4) reduced SCFAs (butyrate, acetate), (5) disrupted metal ion homeostasis (calprotectin, lipocalin-2 responses), (6) increased oxidative stress markers.","1. Primary bile acids (taurocholate, cholate) UP in CD
+ 2. Secondary bile acids (deoxycholate, lithocholate) DOWN in CD
+ 3. Pro-inflammatory metabolites (eicosanoids, ceramides) UP in CD
+ 4. SCFAs (acetate, butyrate, propionate) DOWN in CD
+ 5. Proline and other Stickland fermentation substrates altered
+ 6. Metal ion chelators (calprotectin, lipocalin-2) UP in CD
+ 7. Oxidative stress markers elevated in CD"
+"FE_vs_NC","FE","NC","Fc16YH_FE1, Fc16YH_FE2, Fc16YH_FE3, Fc16YH_FE4, Fc16YH_FE5, Fc16YH_FE6","Fc16YH_NC1, Fc16YH_NC2, Fc16YH_NC3, Fc16YH_NC4, Fc16YH_NC5, Fc16YH_NC6",6,6,"secondary","Comprehensive comparison to evaluate whether high-iron diet plus CDI can restore or shift the metabolic landscape toward healthy baseline. Expected: (1) partial recovery of some metabolites toward NC levels, (2) persistent iron-specific metabolic reprogramming, (3) unique metabolites that are neither NC-like nor CD-like, (4) overall pattern may show 'protective reprogramming' rather than simple restoration. This comparison captures the net effect of iron + infection vs healthy state.","1. Some metabolites restored to NC-like levels (partial protection)
+ 2. Iron-specific metabolites persistently different from NC
+  (reflecting iron-mediated metabolic reprogramming)
+ 3. Inflammatory markers may be intermediate between CD and NC
+ 4. TUDCA and other protective metabolites remain elevated
+ 5. Overall: 'protective reprogramming' pattern rather than full restoration"
+"FE_vs_NC_CD","FE","NC_CD","Fc16YH_FE1, Fc16YH_FE2, Fc16YH_FE3, Fc16YH_FE4, Fc16YH_FE5, Fc16YH_FE6","Fc16YH_NC1..NC6, Fc16YH_CD1..CD6",6,12,"tertiary","Contrast designed to isolate the iron-specific effect by comparing the iron-pre-treated infected group against all standard-diet groups (both healthy and infected). This identifies metabolites that are uniquely altered by iron treatment regardless of infection context. Useful for discovering iron-responsive metabolites that may mediate protection independent of CDI status.","1. Iron-responsive metabolites consistently different from both NC and CD
+ 2. Potential novel iron-dependent protective metabolite candidates
+ 3. Metabolites in iron transport and storage pathways highlighted"
+"CD_vs_NC_FE","CD","NC_FE","Fc16YH_CD1, Fc16YH_CD2, Fc16YH_CD3, Fc16YH_CD4, Fc16YH_CD5, Fc16YH_CD6","Fc16YH_NC1..NC6, Fc16YH_FE1..FE6",6,12,"tertiary","Contrast designed to isolate the infection-specific effect by comparing CDI-only group against all non-infected groups (NC and FE, where FE samples were collected after infection but FE mice had iron pre-treatment). Note: FE mice are infected, so this comparison has limitations; it is best interpreted as 'CDI signature on standard diet vs all other conditions'. Helps identify metabolites that are universally altered by CDI.","1. CDI-specific metabolic signature on standard diet
+ 2. Metabolites that differentiate infection regardless of iron status
+ 3. Note: FE mice are infected, so interpretation requires caution"

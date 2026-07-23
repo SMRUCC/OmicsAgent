@@ -1,0 +1,99 @@
+﻿{
+ "source_file": "1-s2.0-S1369527421001648-main.txt",
+ "key_genes_proteins": [
+ "Fur (ferric uptake regulator)",
+ "ZupT (zinc transporter)",
+ "FeoB (ferrous iron importer)",
+ "FeoA (ferrous iron importer accessory protein)",
+ "Fhu operon (putative siderophore uptake)",
+ "HatR (heme-responsive transcriptional regulator)",
+ "HatT (heme efflux pump)",
+ "HsmR (heme stress regulator)",
+ "HsmA (membrane-bound heme-binding protein)",
+ "OppA (putative nickel transporter)",
+ "CotD (Mn-dependent catalase)",
+ "CotG (Mn-dependent catalase)",
+ "SodA (Mn-dependent superoxide dismutase)",
+ "Fbp68 (fibronectin-binding protein)",
+ "Calprotectin (S100A8/S100A9 heterodimer)",
+ "Lipocalin-2 (neutrophil gelatinase-associated lipocalin, NGAL)",
+ "TcdA (toxin A)",
+ "TcdB (toxin B)",
+ "Selenoprotein proline reductase",
+ "IscS2 (cysteine desulfurase)"
+ ],
+ "key_pathways": [
+ "Metallostasis (metal homeostasis)",
+ "Stickland fermentation (amino acid fermentation)",
+ "Glycolysis / central carbon catabolism",
+ "Ferrous iron import through FeoAB",
+ "Zinc import through ZupT",
+ "Siderophore piracy (putative)",
+ "Heme detoxification via HatRT and HsmRA systems",
+ "Oxidative stress defense (Mn-dependent catalases and superoxide dismutase)",
+ "Proline reduction pathway",
+ "Mannitol catabolism",
+ "Spore maturation and protection (Mn-dependent enzymes)",
+ "Nutritional immunity (calprotectin and lipocalin-2 mediated metal sequestration)"
+ ],
+ "key_metabolites": [
+ "Iron (Fe2+, Fe3+)",
+ "Zinc (Zn2+)",
+ "Manganese (Mn2+)",
+ "Nickel (Ni2+)",
+ "Copper (Cu2+)",
+ "Heme",
+ "Siderophores (catecholate)",
+ "Proline",
+ "Hydroxyproline",
+ "Mannitol",
+ "Oxygen (O2)"
+ ],
+ "biological_mechanisms": [
+ {
+ "mechanism": "Calprotectin-mediated nutritional immunity restricts transition metals during CDI",
+ "evidence": "Neutrophils release calprotectin (S100A8/S100A9) which sequesters Zn, Fe, Ni, Mn, and Cu at the dimer interface, limiting bioavailable metal pools for bacteria (paper cites Ref.27,28)."
+ },
+ {
+ "mechanism": "Lipocalin-2 sequesters catecholate siderophores to inhibit bacterial iron uptake",
+ "evidence": "Lipocalin-2 binds to catecholate siderophores, interfering with bacterial iron acquisition (paper cites Ref.33). Fecal lipocalin-2 is a biomarker of inflammation (paper cites Ref.35)."
+ },
+ {
+ "mechanism": "C. difficile adapts to iron limitation via Fur de-repression and upregulation of metal transporters and metabolic shifts",
+ "evidence": "Under iron-deplete conditions, Fur dimer dissociates from DNA, leading to transcription of zupT (zinc transporter), fhu operon (predicted siderophore uptake), feo genes (ferrous iron importers), and proline reductase genes, shifting metabolism toward Stickland fermentation (paper cites Ref.44)."
+ },
+ {
+ "mechanism": "Zinc limitation via calprotectin induces expression of ZupT and proline reductase, enabling resistance to host nutritional immunity",
+ "evidence": "C. difficile upregulates zupT in response to calprotectin, overcoming Zn sequestration in a mouse CDI model (paper cites Ref.45). Proline reductase transcription also increases under calprotectin exposure (paper cites Ref.46)."
+ },
+ {
+ "mechanism": "Heme detoxification systems HatRT and HsmRA protect C. difficile from heme toxicity and influence antibiotic sensitivity",
+ "evidence": "HatR senses heme, de-repressing hatT efflux pump that limits intracellular heme. HsmR activates HsmA, which incorporates heme into the cytoplasmic membrane, decreasing sensitivity to oxidative stress and vancomycin (paper cites Ref.57). Mutations in hsmA can confer metronidazole resistance (paper cites Ref.58)."
+ },
+ {
+ "mechanism": "Iron availability modulates microbiota composition and colonization resistance against C. difficile",
+ "evidence": "Iron deficiency leads to Enterobacteriaceae blooms (paper cites Ref.17). Iron supplementation with inflammation increases Proteobacteria and decreases butyrate-producing Clostridia (paper cites Ref.18,19). Enterobacteriaceae blooms are associated with CDI susceptibility (paper cites Ref.21)."
+ },
+ {
+ "mechanism": "Excess dietary zinc synergizes with antibiotics to lower the threshold for C. difficile colonization",
+ "evidence": "Dietary zinc supplementation combined with antibiotics increased Enterococcus and Clostridia XI while decreasing Turicibacter, reducing the antibiotic dose needed to break colonization resistance (paper cites Ref.24)."
+ },
+ {
+ "mechanism": "Intestinal inflammation alters metal oxidation states and releases heme through hemorrhage",
+ "evidence": "Antibiotic treatment and CDI increase colonic tissue oxygenation, oxidizing Fe2+ to less soluble Fe3+. Epithelial damage and edema cause hemoglobin degradation, releasing heme into the lumen (paper cites Ref.36-40)."
+ }
+ ],
+ "key_findings": [
+ "Transition metals (Fe, Zn, Mn, Ni, Cu) are critical for C. difficile colonization and survival.",
+ "Dietary iron and zinc fluctuations can alter gut microbiota composition, affecting colonization resistance against C. difficile.",
+ "Host inflammatory response during CDI includes release of calprotectin and lipocalin-2 to sequester transition metals (nutritional immunity).",
+ "C. difficile senses iron limitation via Fur and upregulates multiple metal transporters (ZupT, Feo, Fhu) and shifts metabolism toward Stickland fermentation.",
+ "C. difficile possesses two heme-responsive systems (HatRT and HsmRA) that detoxify heme and influence susceptibility to antibiotics (metronidazole, vancomycin).",
+ "Zinc limitation via calprotectin induces a combined Zn/Fe starvation response in C. difficile, including ZupT upregulation and metabolic reprogramming.",
+ "Enterobacteriaceae blooms are a microbial biomarker for CDI susceptibility and are linked to altered iron availability.",
+ "C. difficile may engage in siderophore piracy by importing siderophores produced by other bacteria.",
+ "Manganese-dependent enzymes (CotD, CotG, SodA) are associated with C. difficile spore coat and may protect against ROS.",
+ "Nickel uptake via OppA is predicted to support Ni-dependent enzymes like urease, but contribution to CDI remains unclear."
+ ],
+ "relevance_to_research_topic": "This review directly examines how dietary transition metals (particularly iron and zinc) influence Clostridioides difficile infection (CDI) by modulating the gut microbiota, host immune responses, and C. difficile adaptation mechanisms. It provides mechanistic insights into how high iron diets could alter colonization resistance, change microbiota composition (e.g., Enterobacteriaceae blooms), and affect the release of host defense proteins (calprotectin, lipocalin-2) that sequester metals. Additionally, it details C. difficile's metal-sensing and detoxification systems (Fur, Feo, ZupT, HatRT, HsmRA) that may explain altered pathogenicity and immune cell recruitment under high iron conditions. The findings are directly relevant to interpreting the observed reduction in CDI severity with high iron diet and to understanding the 'diet-gut microbiota-host' interactions in the research model."
+}

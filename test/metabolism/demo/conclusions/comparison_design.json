@@ -1,0 +1,40 @@
+{
+ "module_name": "Comparison Group Design",
+ "goal": "Design biologically meaningful comparison pairs across the three experimental groups (NC=healthy control, CD=C. difficile infection alone, FE=high iron diet pretreatment + CDI) to dissect the metabolic mechanisms by which high dietary iron attenuates Clostridioides difficile infection. The comparisons are designed to isolate: (1) the effect of CDI itself (CD vs NC), (2) the effect of high iron diet on CDI outcomes (FE vs CD, the key comparison), and (3) the overall metabolic state of the protected phenotype (FE vs NC).",
+ "input_files": [
+ "G:/OmicsWorks/test/metabolism/expression.csv",
+ "G:/OmicsWorks/test/metabolism/sampleinfo.csv",
+ "G:/OmicsWorks/test/metabolism/metabolites.csv",
+ "G:/OmicsWorks/test/metabolism/demo/conclusions/module_1_preprocessing_conclusion.md",
+ "G:/OmicsWorks/test/metabolism/demo/conclusions/module_2_pca_plsda_conclusion.md"
+ ],
+ "output_files": [
+ "G:/OmicsWorks/test/metabolism/demo/results/differential_analysis_results.csv",
+ "G:/OmicsWorks/test/metabolism/demo/results/diff_volcano_plots.pdf",
+ "G:/OmicsWorks/test/metabolism/demo/results/diff_heatmaps.pdf"
+ ],
+ "comparisons": [
+ {
+ "name": "FE_vs_CD",
+ "treatment": "high iron diet before",
+ "control": "Clostridium difficile infection",
+ "biological_rationale": "This is the primary comparison addressing the core research question: how does pre-existing high iron diet (400 mg/kg ferrous sulfate) alter the intestinal metabolome during C. difficile infection? Both groups are infected with C. difficile (CDI), so the only difference is whether mice received high-iron diet prior to infection. According to the knowledge base, high iron diet attenuates CDI by: (1) reducing intestinal L-proline levels, which starves C. difficile of a substrate for Stickland fermentation, limiting growth and toxin production; (2) increasing intestinal TUDCA levels, which directly inhibit C. difficile spore germination and vegetative growth; (3) enriching protective Enterobacteriaceae (e.g., E. coli AVS0501); and (4) reducing neutrophil recruitment and pro-inflammatory cytokine secretion (IL-1β, IL-6, TNF-α, IL-36G, CXCL1, S100a8/9). Differential metabolites between FE and CD groups should capture these protective metabolic shifts.",
+ "expected_findings": "Expect: (1) L-proline and other Stickland fermentation substrates (hydroxyproline, glutamate) significantly lower in FE group; (2) TUDCA and related conjugated bile acids significantly higher in FE group; (3) Iron-related metabolites (heme, siderophores, ferrosome-associated molecules) differentially expressed; (4) Inflammation-associated lipid mediators (eicosanoids, prostaglandins) lower in FE group reflecting reduced neutrophil infiltration; (5) SCFA metabolites (butyrate, acetate, propionate) potentially altered reflecting microbiota shifts; (6) S100A8/S100A9 pathway-related metabolites reduced in FE group."
+ },
+ {
+ "name": "CD_vs_NC",
+ "treatment": "Clostridium difficile infection",
+ "control": "Standard (control)",
+ "biological_rationale": "This comparison establishes the baseline metabolic signature of C. difficile infection (CDI) by comparing infected mice (standard diet) to healthy uninfected controls. CDI is known to cause: disruption of gut microbiota, altered bile acid metabolism (decreased secondary bile acids due to loss of deconjugating/dehydroxylating bacteria), increased intestinal inflammation (neutrophil infiltration, elevated cytokines), and changes in amino acid metabolism. Establishing this baseline is essential for interpreting the FE vs CD comparison — it allows identification of metabolites that are 'normalized' by high-iron diet pretreatment (i.e., metabolites that are altered in CD vs NC but restored in FE toward NC levels).",
+ "expected_findings": "Expect: (1) Primary bile acids (taurocholate, cholate) elevated and secondary bile acids (deoxycholate, lithocholate) reduced in CD group due to microbiota disruption; (2) Inflammatory metabolites (e.g., prostaglandins, leukotrienes, ceramides) elevated in CD; (3) Amino acid profiles altered — potential increase in proline and other Stickland fermentation substrates; (4) SCFAs (butyrate, propionate, acetate) reduced indicating loss of beneficial fermentative bacteria; (5) S100A8/S100A9 and calprotectin-related metabolic signatures elevated; (6) Iron homeostasis metabolites (heme, ferritin-related) may change reflecting host nutritional immune response."
+ },
+ {
+ "name": "FE_vs_NC",
+ "treatment": "high iron diet before",
+ "control": "Standard (control)",
+ "biological_rationale": "This comparison evaluates the overall metabolic profile of the high-iron-diet-pretreated CDI mice relative to healthy controls. It addresses the question: does high iron diet restore the CDI-perturbed metabolome toward homeostasis? The knowledge base indicates that while high iron diet attenuates CDI (reduced weight loss, lower DAI, less inflammation), it does not fully normalize the gut ecosystem — it enriches Enterobacteriaceae (E. coli) and reduces microbial diversity. This comparison will reveal which metabolic features are 'rescued' by high iron treatment and which remain dysregulated, providing insights into the protective vs non-protective aspects of the iron-modulated metabolome.",
+ "expected_findings": "Expect: (1) Some CDI-associated inflammatory metabolites may be reduced in FE toward NC levels (partial rescue); (2) Bile acid profiles in FE may show an intermediate state between CD and NC, with increased TUDCA as a protective feature; (3) Metabolites reflecting the bloom of Enterobacteriaceae (e.g., bacterial siderophores, enterobactin-related metabolites) may be elevated in FE compared to NC; (4) L-proline and Stickland fermentation products may be lower in FE than both CD and NC (a unique signature of high-iron protection); (5) Overall, FE metabolic profile is expected to be more similar to NC than to CD, but with distinct iron-related metabolic features."
+ }
+ ],
+ "notes": "1) There is no 'high iron diet alone without infection' group, so the independent effect of high iron diet on the metabolome cannot be directly assessed. FE group represents the combined effect of high iron pretreatment + infection.2) The QC samples (n=3) are excluded from all biological comparisons as they serve only for technical quality assessment.3) Multi-group ANOVA across all three groups (NC, CD, FE) is recommended as a complementary global test to identify metabolites with any significant between-group variation, and has already been performed in Module2 (1,149 metabolites with FDR<0.05 by ANOVA).4) For each pairwise comparison, both univariate (Welch's t-test or limma with BH FDR correction) and multivariate (PLS-DA VIP scoring) approaches should be combined.5) The metabolites.csv annotation file (with KEGG, HMDB, LIPID MAPS, super_class, class, sub_class) will be essential for mapping differential metabolites to pathways including: bile acid metabolism (map00120), proline metabolism (map00330), iron homeostasis (map04217), SCFA metabolism, and inflammatory lipid mediator pathways."
+}

@@ -1,1 +1,264 @@
-﻿{"research_topic": "我正在探讨高铁饮食对感染艰难梭菌小鼠的肠道免疫反应、肠道菌群及代谢的影响，并揭示特定的肠道菌群及其代谢物在艰难梭菌感染（CDI）中的具体作用机制。研究希望阐明“饮食-肠道菌群-宿主”之间的相互作用是如何调节宿主对CDI的易感性及疾病严重程度的。研究主要通过以下几个步骤和实验方法展开：\r\n\r\n构建动物模型与表型分析：\r\n构建了小鼠艰难梭菌感染（CDI）模型，并将其分为接受高铁饮食（含400 mg/kg硫酸亚铁）处理组和对照组。\r\n观察发现高铁饮食能够减轻CDI，其机制与降低艰难梭菌的致病性以及改变宿主肠道中性粒细胞的招募有关。\r\n\r\n在我的样本分组中，high iron diet before为在感染前进行了高铁饮食干预的病原菌感染实验组，Standard (control)则是什么也没有感染的健康小鼠对照样本，Clostridium difficile infection则是什么也没做处理的感染病原菌的处理组。QC组的样本是用于评估实验数据采集稳定性的QC组样本", "error": "Object reference not set to an instance of an object.", "references": []}
+﻿{
+ "research_topic": "Investigation of the effects of a high-iron diet on intestinal immune response, gut microbiota, and metabolites in mice infected with Clostridioides difficile (CDI), aiming to elucidate the 'diet-gut microbiota-host' interactions that regulate CDI susceptibility and severity.",
+ "disease_or_phenotype": "Clostridioides difficile infection (CDI) in mice, including primary and recurrent infection, with assessment of disease severity, intestinal inflammation, and colonization resistance.",
+ "organism": "Mus musculus (mouse; C57BL/6 or other strains used in the studies); Clostridioides difficile (bacterial pathogen, various ribotypes including027,106,078, and strain R20291).",
+ "tissue": "Intestinal tissues (cecum, colon, small intestine), colonic lamina propria, cecal contents, feces, serum.",
+ "key_genes_proteins": [
+ "TcdA (toxin A)",
+ "TcdB (toxin B)",
+ "Fur (ferric uptake regulator)",
+ "Calprotectin (S100A8/S100A9 heterodimer)",
+ "Lipocalin-2 (LCN2, NGAL)",
+ "FeoB (ferrous iron importer)",
+ "FeoA (ferrous iron importer accessory protein)",
+ "ZupT (zinc transporter)",
+ "Fhu operon (putative siderophore uptake)",
+ "HatR (heme-responsive transcriptional regulator)",
+ "HatT (heme efflux pump)",
+ "HsmR (heme stress regulator)",
+ "HsmA (membrane-bound heme-binding protein)",
+ "fezA, fezB (ferrosome formation)",
+ "CotD, CotG (Mn-dependent catalases)",
+ "SodA (Mn-dependent superoxide dismutase)",
+ "OppA (putative nickel transporter)",
+ "IL-1β",
+ "IL-6",
+ "TNF-α",
+ "IL-36G",
+ "CXCL1",
+ "S100a8",
+ "S100a9",
+ "MUC2",
+ "CD45",
+ "Ly6G",
+ "CD11b",
+ "Claudin-1",
+ "NF-κB",
+ "NanR",
+ "CadC",
+ "Cbh (bile salt hydrolase from Clostridium perfringens)",
+ "SPo0A (sporulation pathway)",
+ "β-glucuronidases",
+ "Azoreductases",
+ "Bile salt hydrolases (BSH)",
+ "AMPK",
+ "FXR (farnesoid X receptor)",
+ "GPR41, GPR43",
+ "TLR2",
+ "Amuc_1100",
+ "OCT1",
+ "Enterobactin, aerobactin, yersiniabactin"
+ ],
+ "key_pathways": [
+ "Nutritional immunity (metal sequestration by calprotectin and lipocalin-2)",
+ "Iron homeostasis and metabolism",
+ "Stickland fermentation (amino acid fermentation, especially proline reduction)",
+ "Glycolysis / central carbon catabolism",
+ "Bile acid metabolism (synthesis, conjugation, deconjugation,7α-dehydroxylation)",
+ "Short-chain fatty acid (SCFA) production (butyrate, acetate, propionate)",
+ "Spore germination and sporulation",
+ "Quorum sensing",
+ "Oxidative stress defense (Mn-dependent catalases, superoxide dismutase)",
+ "Heme detoxification (HatRT and HsmRA systems)",
+ "NF-κB signaling pathway",
+ "Intestinal barrier function (tight junction proteins)",
+ "Ferrosome formation and iron storage (fez operon)",
+ "Siderophore production and piracy",
+ "Metronidazole resistance (iron-mediated)",
+ "Macrolide resistance, fluoroquinolone resistance",
+ "Fenton reaction (iron-mediated ROS production)",
+ "Membrane transport (ABC transporters, iron complex transport system M00240)"
+ ],
+ "key_metabolites": [
+ "Iron (Fe2+, Fe3+, ferrous sulfate)",
+ "Zinc (Zn2+)",
+ "Manganese (Mn2+)",
+ "Nickel (Ni2+)",
+ "Copper (Cu2+)",
+ "Heme",
+ "Siderophores (catecholate, enterobactin, aerobactin, yersiniabactin)",
+ "L-proline",
+ "Hydroxyproline",
+ "Tauroursodeoxycholic acid (TUDCA)",
+ "Taurocholate",
+ "Glycocholate",
+ "Cholate",
+ "Deoxycholate",
+ "Chenodeoxycholate",
+ "Lithocholate",
+ "Short-chain fatty acids (butyrate, acetate, propionate)",
+ "2-hydroxyisobutyrate",
+ "Glutamate",
+ "Sn-glycero-3-phosphocholine",
+ "Leucine, valine",
+ "Formate",
+ "Serum iron",
+ "Calprotectin",
+ "Lipocalin-2",
+ "Dipicolinic acid (calcium chelate)",
+ "Sialic acid",
+ "Glucose",
+ "D-alanine",
+ "Oxygen (O2)",
+ "Reactive oxygen species (ROS)"
+ ],
+ "biological_mechanisms": [
+ {
+ "mechanism": "High dietary iron (400 mg/kg ferrous sulfate) attenuates CDI in mice by reducing C. difficile colonization and toxin production, and by reducing intestinal neutrophil recruitment and pro-inflammatory cytokine secretion (IL-1β, IL-6, TNF-α, IL-36G, CXCL1, S100a8, S100a9).",
+ "evidence": "Mice fed high iron diet showed lower C. difficile loads and TcdB titers, reduced neutrophil percentage in colonic lamina propria, and decreased mRNA/protein levels of inflammatory mediators (source: 'Dietary iron attenuates...' paper, Figures1-2). In vitro, ferrous sulfate inhibited C. difficile-induced IL-1β secretion from bone marrow neutrophils."
+ },
+ {
+ "mechanism": "High dietary iron alters gut microbiota composition, enriching Enterobacteriaceae (especially Escherichia-Shigella) and reducing diversity. Fecal microbiota transplantation (FMT) from high-iron-fed donors protects recipient mice against CDI.",
+ "evidence": "16S rRNA sequencing showed dominance of Enterobacteriaceae and lower Shannon/Ace indices in CDI+Iron diet group. FMT from high-iron donors reduced DAI, intestinal damage, C. difficile loads, and IL-1β/TNF-α in recipients (source: 'Dietary iron attenuates...' paper, Figure3)."
+ },
+ {
+ "mechanism": "E. coli AVS0501, enriched in high-iron-fed CDI mice, protects against CDI by inhibiting C. difficile colonization and toxin production, reducing neutrophil recruitment and IL-1β secretion.",
+ "evidence": "Mice treated with E. coli AVS0501 showed reduced weight loss, DAI, C. difficile loads, TcdB, intestinal damage, neutrophil infiltration, and IL-1β. In vitro co-culture inhibited C. difficile growth (source: 'Dietary iron attenuates...' paper, Figure4)."
+ },
+ {
+ "mechanism": "High dietary iron decreases intestinal L-proline levels, which reduces C. difficile growth and toxin production via Stickland fermentation. Proline supplementation reverses this effect.",
+ "evidence": "L-proline abundance decreased in CDI+Iron diet group. Proline supplementation in vitro increased C. difficile growth and TcdB. Proline-free diet in vivo reduced C. difficile loads, TcdB, neutrophil infiltration, and inflammatory cytokines (source: 'Dietary iron attenuates...' paper, Figures5-6)."
+ },
+ {
+ "mechanism": "High dietary iron increases intestinal TUDCA levels, which inhibit C. difficile colonization and toxin production. TUDCA gavage reduces CDI severity.",
+ "evidence": "TUDCA abundance higher in CDI+Iron diet group. In vitro, TUDCA reduced C. difficile growth and TcdB. In vivo, TUDCA gavage reduced body weight loss, DAI, C. difficile loads, TcdB, intestinal damage, neutrophil infiltration, and CXCL1/IL-1β (source: 'Dietary iron attenuates...' paper, Figure7)."
+ },
+ {
+ "mechanism": "C. difficile possesses the Feo system (FeoA, FeoB) for ferrous iron import, and the Fur regulator controls expression of metal transporters and metabolic shifts under iron limitation. Iron deficiency upregulates ZupT, FeoAB, Fhu operon, and proline reductase genes.",
+ "evidence": "Under iron-deplete conditions, Fur de-repression leads to transcription of zupT, fhu, feo genes, and proline reductase genes, shifting metabolism toward Stickland fermentation (source: '1-s2.0-S1369527421001648-main.txt' paper, citing Ref.44)."
+ },
+ {
+ "mechanism": "C. difficile forms membrane-bound iron storage organelles (ferrosomes) encoded by the fez operon (fezA, fezB). Ferrosomes protect iron-deprived cells from sudden iron influx and help counteract host nutritional immunity via calprotectin.",
+ "evidence": "fez operon induced by iron deprivation and fur knockout; fezB deletion causes growth lag upon iron re-exposure. In mice, fezB-deficient C. difficile causes less severe infection (lower bacterial burden, less weight loss, less inflammation). Calprotectin upregulates fez operon; in calprotectin-deficient mice, loss of ferrosomes does not affect colonization (source: '1-s2.0-S1931312823005036-main.txt' paper)."
+ },
+ {
+ "mechanism": "In vitro, excess iron (Fe3+) stimulates C. difficile growth and toxin production in a dose-dependent manner and increases MIC of metronidazole and fidaxomicin, but not vancomycin. Iron chelator deferoxamine reverses these effects.",
+ "evidence": "Fe3+ at10–100 µM increased CFU up to13.8-fold, increased tcdA/tcdB mRNA and toxin A protein. DFO co-treatment reduced growth, toxin, and restored metronidazole susceptibility (source: 'antibiotics-11-00537.txt' paper, Figures1-3)."
+ },
+ {
+ "mechanism": "Host nutritional immunity: Neutrophils release calprotectin (S100A8/S100A9) which sequesters Zn, Fe, Ni, Mn, Cu; lipocalin-2 sequesters catecholate siderophores. These host defenses limit metal availability to C. difficile during CDI.",
+ "evidence": "Calprotectin sequesters transition metals at dimer interface (paper cites Ref.27,28). Lipocalin-2 binds catecholate siderophores (Ref.33). Fecal lipocalin-2 is biomarker of inflammation (Ref.35). (source: '1-s2.0-S1369527421001648-main.txt' paper)."
+ },
+ {
+ "mechanism": "C. difficile heme detoxification systems (HatRT, HsmRA) protect against heme toxicity and influence antibiotic sensitivity. HatR senses heme, de-represses HatT efflux pump; HsmR activates HsmA which incorporates heme into membrane, decreasing sensitivity to oxidative stress and vancomycin.",
+ "evidence": "Mutations in hsmA can confer metronidazole resistance (Ref.58). The HatRT and HsmRA systems are characterized (source: '1-s2.0-S1369527421001648-main.txt' paper, citing Ref.57-58)."
+ },
+ {
+ "mechanism": "Disruption of gut microbiota (e.g., by antibiotics) reduces colonization resistance against C. difficile. Spores germinate in response to primary bile acids (taurocholate), while secondary bile acids (chenodeoxycholate) inhibit germination.",
+ "evidence": "Taurocholate promotes germination; chenodeoxycholate competitively inhibits germination and suppresses vegetative growth (source: '1-s2.0-S1684118221001328-main.txt' paper)."
+ },
+ {
+ "mechanism": "Probiotics and prebiotics (including polyphenols) can inhibit C. difficile through competitive exclusion, antimicrobial production (SCFAs, bacteriocins), immune stimulation, and modulation of gut microenvironment.",
+ "evidence": "Multiple papers: 'fmicb-16-1555220.txt' shows probiotic cocktail reduces C. difficile burden, toxin, increases butyrate, strengthens barrier, reduces inflammation. 'A Spore-Forming Probiotic...' shows probiotics reduce serum iron, lower TNFα/calprotectin, support tight junctions. '1-s2.0-S2590097825000023-main.txt' reviews mechanisms including polyphenols as prebiotics."
+ },
+ {
+ "mechanism": "Engineered E. coli Nissle1917 expressing bile salt hydrolase (Cbh) deconjugates taurocholate to cholate, inhibiting C. difficile germination and growth. A sialic acid sensor-amplifier-actuator circuit enables dysbiosis-triggered expression.",
+ "evidence": "Cbh converts >99% taurocholate to cholate, reduces germination by96% and viable cells by89% in vitro. In murine CDI model, EcN-Cbh achieved100% survival, reduced C. difficile abundance, modulated bile acids (source: '41467_2022_Article_31334.txt' paper)."
+ },
+ {
+ "mechanism": "Iron complex transport system (M00240) is enriched in CDI gut microbiota, potentially facilitating C. difficile growth by improving iron acquisition. This module is primarily contributed by Proteobacteria (Enterobacteriaceae).",
+ "evidence": "Metagenomic analysis (LEfSe) showed M00240 enriched in CDI cohort (LDA>2.5). Network analysis revealed disrupted microbial correlations in CDI (more negative edges) (source: 'Metagenomic analysis reveals distinct patterns...' txt paper)."
+ },
+ {
+ "mechanism": "Oral iron supplementation enriches siderophilic Enterobacteriaceae and Clostridium spp., depletes beneficial commensals (Lactobacillus, Bifidobacterium), and increases intestinal inflammation (elevated calprotectin).",
+ "evidence": "Human RCT: Jaeggi et al. (2015) in Kenyan infants; Paganini et al. (2017) showed GOS partially mitigates effects (source: 'pharmaceutics-18-00651.txt' paper, Section3.8.2)."
+ }
+ ],
+ "comparison_design_suggestions": [
+ {
+ "comparison": "High iron diet before infection (HI+CDI) vs Standard diet no infection control (Control)",
+ "purpose": "Assess the effect of high iron diet alone on baseline gut microbiota, immune status, and metabolites in healthy mice."
+ },
+ {
+ "comparison": "High iron diet before infection (HI+CDI) vs Clostridium difficile infection alone (CDI)",
+ "purpose": "Determine how pre-existing high iron diet alters CDI outcomes: colonization, toxin production, inflammation, neutrophil recruitment, and disease severity."
+ },
+ {
+ "comparison": "High iron diet before infection (HI+CDI) vs Standard diet no infection (Control) and vs CDI alone",
+ "purpose": "Identify iron-induced changes in gut microbiota composition (e.g., Enterobacteriaceae bloom) and metabolites (e.g., L-proline, TUDCA) that correlate with protection."
+ },
+ {
+ "comparison": "Fecal microbiota transplantation (FMT) from HI+CDI donors vs FMT from CDI donors or from Control donors into CDI recipient mice",
+ "purpose": "Demonstrate causality of iron-modulated microbiota in mediating protection, independent of direct iron effects."
+ },
+ {
+ "comparison": "High iron diet vs normal iron diet in CDI mice at different time points (e.g.,24,48,72 hpi)",
+ "purpose": "Track temporal dynamics of immune response, microbial shifts, and metabolite changes during infection."
+ },
+ {
+ "comparison": "E. coli AVS0501 treatment vs vehicle in CDI mice (on normal diet)",
+ "purpose": "Validate the protective role of a specific bacterial strain enriched by high iron diet, independent of dietary iron."
+ },
+ {
+ "comparison": "Proline supplementation vs proline-free diet in CDI mice (on high iron or normal diet)",
+ "purpose": "Test the mechanistic role of proline (via Stickland fermentation) in C. difficile growth and toxin production under iron-modulated conditions."
+ },
+ {
+ "comparison": "TUDCA treatment vs vehicle in CDI mice (on normal diet)",
+ "purpose": "Confirm the inhibitory effect of TUDCA on C. difficile and assess its contribution to iron-mediated protection."
+ },
+ {
+ "comparison": "High iron diet vs iron chelation (e.g., deferoxamine) in CDI mice",
+ "purpose": "Directly test whether iron availability is causative for observed changes; iron chelation would be expected to exacerbate CDI if iron is protective, or alleviate if iron is harmful."
+ }
+ ],
+ "expected_findings": [
+ "High dietary iron (400 mg/kg ferrous sulfate) protects mice against primary and recurrent CDI, reducing body weight loss, disease activity index, intestinal damage, and inflammatory cell infiltration.",
+ "High iron diet reduces C. difficile colonization and production of toxin TcdB in the cecum and feces.",
+ "High iron diet decreases intestinal neutrophil recruitment and reduces pro-inflammatory cytokine/chemokine levels (IL-1β, IL-6, TNF-α, IL-36G, CXCL1, S100a8/9).",
+ "High iron diet alters gut microbiota composition: increases Enterobacteriaceae (especially Escherichia-Shigella) and reduces microbial diversity; FMT from iron-fed donors alleviates CDI.",
+ "The E. coli strain AVS0501, enriched by high iron diet, possesses prophylactic and therapeutic anti-CDI properties, inhibiting C. difficile growth and toxin production.",
+ "High iron diet reduces intestinal L-proline abundance, which starves C. difficile of a key substrate for Stickland fermentation, thereby limiting growth and toxin production.",
+ "High iron diet increases intestinal TUDCA levels, which directly inhibit C. difficile germination and vegetative growth.",
+ "Correlation between enriched E. coli and increased TUDCA, as well as decreased L-proline, suggests a metabolic network linking iron, microbiota, and protection.",
+ "Conflict: In vitro studies indicate that excess iron directly stimulates C. difficile growth and toxin production and can increase metronidazole resistance. The in vivo protective effect of high iron diet may be mediated indirectly through microbiota and metabolite changes (e.g., TUDCA, proline depletion) that override direct pathogen stimulation, or through anti-inflammatory effects on host neutrophils.",
+ "Calprotectin and lipocalin-2 are expected to be modulated by iron status; calprotectin levels may be reduced in high iron diet due to less inflammation, despite iron being a component of nutritional immunity.",
+ "Ferrosome (fez operon) expression in C. difficile may be altered in response to high iron diet; fezB deletion mutants may show altered colonization under iron-rich vs iron-poor conditions."
+ ],
+ "references": [
+ {
+ "title": "1-s2.0-S1369527421001648-main.txt (Review on transition metals in C. difficile infection)",
+ "key_finding": "Transition metals (Fe, Zn, Mn, Ni, Cu) are critical for C. difficile colonization; host nutritional immunity (calprotectin, lipocalin-2) sequesters metals; C. difficile adapts via Fur, ZupT, Feo, Fhu, HatRT, HsmRA systems; dietary iron alters microbiota and CDI susceptibility."
+ },
+ {
+ "title": "1-s2.0-S1684118221001328-main.txt (Spore biology and recurrence)",
+ "key_finding": "Spore germination induced by taurocholate, inhibited by chenodeoxycholate; fidaxomicin inhibits sporulation/outgrowth; microbiota disruption is key for recurrence; iron oxide nanoparticles can target spores."
+ },
+ {
+ "title": "1-s2.0-S1931312823005036-main.txt (Ferrosomes in C. difficile)",
+ "key_finding": "C. difficile forms ferrosomes (fez operon) for iron storage; fezB deletion reduces virulence in mice; ferrosomes help survive calprotectin-mediated nutritional immunity; high colonic iron from supplements increases Clostridioides."
+ },
+ {
+ "title": "1-s2.0-S2590097825000023-main.txt (Gut microbiota, diet, and CDI review)",
+ "key_finding": "Dietary components (prebiotics, polyphenols) modulate microbiota to inhibit C. difficile; probiotics act via competitive exclusion, antimicrobial production, immune stimulation; FMT >90% effective for recurrent CDI."
+ },
+ {
+ "title": "41467_2022_Article_31334.txt (Engineered probiotic for bile salt deconjugation)",
+ "key_finding": "Engineered E. coli Nissle1917 expressing Cbh deconjugates taurocholate to cholate, inhibiting C. difficile germination and growth; sialic acid sensor enables dysbiosis-triggered expression;100% survival in murine CDI model."
+ },
+ {
+ "title": "A Spore-Forming Probiotic Supplement Improves the Intestinal Immune Response... (Probiotics and iron)",
+ "key_finding": "Probiotic supplementation increased immune parameters, reduced serum iron, reduced TNFα and calprotectin, and supported intestinal tight junction protein expression during recurrent CD colonization."
+ },
+ {
+ "title": "antibiotics-11-00537.txt (Iron effects on C. difficile in vitro)",
+ "key_finding": "Excess Fe3+ stimulates C. difficile growth and toxin production in dose-dependent manner; increases MIC of metronidazole and fidaxomicin but not vancomycin; iron chelator deferoxamine reverses effects."
+ },
+ {
+ "title": "Dietary iron attenuates Clostridioides difficile infection via modulation of intestinal immune response and gut microbiota (Main study)",
+ "key_finding": "High dietary iron (400 mg/kg) attenuates CDI in mice by reducing C. difficile colonization/toxin, reducing neutrophil recruitment and pro-inflammatory cytokines, enriching E. coli AVS0501, decreasing L-proline, and increasing TUDCA."
+ },
+ {
+ "title": "fmicb-16-1555220.txt (Probiotic cocktail against CDI)",
+ "key_finding": "Human-origin probiotic cocktail inhibits C. difficile growth in vitro, protects mice (80% survival), reduces toxin, strengthens gut barrier, enriches beneficial bacteria, and increases butyrate and other protective metabolites."
+ },
+ {
+ "title": "Metagenomic analysis reveals distinct patterns of gut microbiota... (Iron transport in CDI microbiome)",
+ "key_finding": "Iron complex transport system (M00240) enriched in CDI gut microbiota, contributed by Proteobacteria; CDI network shows disrupted microbial interactions; specific species (e.g., Novosphingobium fuchskuhlense) identified as protective."
+ },
+ {
+ "title": "pharmaceutics-18-00651.txt (Non-antibiotic drugs and gut microbiota)",
+ "key_finding": "Oral iron supplementation enriches Enterobacteriaceae and Clostridium, depletes Bifidobacterium, increases calprotectin; PPIs increase CDI risk via 'oralisation' of gut; metformin enriches Akkermansia muciniphila and modulates bile acid-FXR axis."
+ }
+ ]
+}

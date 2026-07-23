@@ -1,0 +1,190 @@
+{
+ "module_name": "PCA/PLSDA/OPLSDA Analysis",
+ "goal": "对预处理后的代谢组学表达矩阵（2059分子 ×18样本）进行多变量统计分析，包括主成分分析（PCA）、偏最小二乘判别分析（PLSDA）、正交偏最小二乘判别分析（OPLSDA），以及总体F检验和多因素ANOVA方差分析。通过降维可视化评估三组样本（CD感染组、高铁饮食干预组FE、健康对照组NC）之间的聚类分离趋势与组内变异程度，验证高铁饮食对CDI小鼠肠道代谢物谱的系统性重塑效应，并鉴定对分组分离贡献最大的关键代谢物标记（VIP/loading）。",
+ "input_files": [
+ "G:/OmicsWorks/test/metabolism/expression.csv",
+ "G:/OmicsWorks/test/metabolism/sampleinfo.csv",
+ "G:/OmicsWorks/test/metabolism/metabolites.csv",
+ "G:/OmicsWorks/test/metabolism/demo/conclusions/module_1_preprocessing_conclusion.md"
+ ],
+ "output_files": [
+ "G:/OmicsWorks/test/metabolism/demo/analysis_modules_2/tables/pca_scores.csv",
+ "G:/OmicsWorks/test/metabolism/demo/analysis_modules_2/tables/plsda_scores.csv",
+ "G:/OmicsWorks/test/metabolism/demo/analysis_modules_2/tables/oplsda_scores.csv",
+ "G:/OmicsWorks/test/metabolism/demo/analysis_modules_2/tables/f_test_result.csv",
+ "G:/OmicsWorks/test/metabolism/demo/analysis_modules_2/tables/anova_result.csv",
+ "G:/OmicsWorks/test/metabolism/demo/analysis_modules_2/tables/pca_loading_top50.csv",
+ "G:/OmicsWorks/test/metabolism/demo/analysis_modules_2/tables/plsda_vip_scores.csv",
+ "G:/OmicsWorks/test/metabolism/demo/analysis_modules_2/tables/oplsda_vip_scores.csv",
+ "G:/OmicsWorks/test/metabolism/demo/analysis_modules_2/tables/group_distance_permutation.csv",
+ "G:/OmicsWorks/test/metabolism/demo/analysis_modules_2/figures/pca_score_plot.png",
+ "G:/OmicsWorks/test/metabolism/demo/analysis_modules_2/figures/pca_score_plot.pdf",
+ "G:/OmicsWorks/test/metabolism/demo/analysis_modules_2/figures/plsda_score_plot.png",
+ "G:/OmicsWorks/test/metabolism/demo/analysis_modules_2/figures/plsda_score_plot.pdf",
+ "G:/OmicsWorks/test/metabolism/demo/analysis_modules_2/figures/oplsda_score_plot.png",
+ "G:/OmicsWorks/test/metabolism/demo/analysis_modules_2/figures/oplsda_score_plot.pdf",
+ "G:/OmicsWorks/test/metabolism/demo/analysis_modules_2/figures/pca_scree_plot.png",
+ "G:/OmicsWorks/test/metabolism/demo/analysis_modules_2/figures/pca_3d_scores.png",
+ "G:/OmicsWorks/test/metabolism/demo/analysis_modules_2/figures/plsda_vip_plot.png",
+ "G:/OmicsWorks/test/metabolism/demo/analysis_modules_2/figures/oplsda_splot.png",
+ "G:/OmicsWorks/test/metabolism/demo/analysis_modules_2/figures/f_test_volcano.png",
+ "G:/OmicsWorks/test/metabolism/demo/analysis_modules_2/figures/anova_heatmap.png",
+ "G:/OmicsWorks/test/metabolism/demo/analysis_modules_2/figures/pca_loading_plot.png",
+ "G:/OmicsWorks/test/metabolism/demo/conclusions/module_2_pca_plsda_conclusion.md"
+ ],
+ "analysis_steps": [
+ {
+ "step":1,
+ "name": "数据准备与样本映射",
+ "description": "读取预处理后的表达矩阵（2059分子×18样本）和样本信息表。过滤QC样本（Fc16YH_QC01~03，仅存在于sampleinfo中，不在表达矩阵中），确保18个生物学样本与三组分组信息正确匹配。确认样本顺序一致：CD组（Fc16YH_CD1~CD6）、FE组（Fc16YH_FE1~FE6）、NC组（Fc16YH_NC1~NC6）。",
+ "tool": "base R / read.csv",
+ "input": ["expression.csv", "sampleinfo.csv"],
+ "output": ["R内存中的expr_matrix (2059×18)和 group_factor (3 levels)"]
+ },
+ {
+ "step":2,
+ "name": "PCA分析（主成分分析）",
+ "description": "对表达式矩阵进行无监督PCA分析：\n1.对转置矩阵（18样本×2059特征）执行prcomp(scale.=TRUE, center=TRUE)\n2.提取PC1、PC2、PC3的样本得分（scores）\n3.计算每个主成分的方差解释率（% variance explained）\n4.计算加权欧氏距离：对每个样本，计算其到所属组质心的加权欧氏距离，权重为各PC的方差解释率占总解释方差的比例\n5.置换检验（n_perm=1000）：随机打乱分组标签，重新计算组内距离与组间距离的比值，评估观测到的组内聚集是否显著小于随机期望（H0:组内距离≥组间距离）\n6.保存PC1-PC3得分表（含样本ID、分组、PC1/PC2/PC3得分）\n7.输出PCA loading矩阵，提取对PC1和PC2贡献最大的top50代谢物\n8.碎石图绘制：所有PC的方差解释率",
+ "tool": "stats::prcomp",
+ "input": ["expr_matrix"],
+ "output": [
+ "pca_scores.csv（18×6：样本ID、分组、PC1、PC2、PC3）",
+ "pca_loading_top50.csv（top50贡献代谢物）",
+ "pca_score_plot.png/pdf（PC1 vs PC2，带95%置信椭圆，颜色分组）",
+ "pca_scree_plot.png（方差解释率碎石图）",
+ "pca_3d_scores.png（PC1/PC2/PC3三维散点图）"
+ ]
+ },
+ {
+ "step":3,
+ "name": "PLSDA分析（偏最小二乘判别分析）",
+ "description": "使用有监督的PLSDA方法最大化组间分离：\n1.使用mixOmics::plsda()，以分组标签作为响应变量Y，ncomp=3\n2.提取前3个成分的样本得分（comp1, comp2, comp3）\n3.计算各成分的解释方差比例\n4.计算VIP（Variable Importance in Projection）得分，评估每个代谢物对分组辨别的贡献\n5.对每个样本计算到组质心的加权欧氏距离，并进行置换检验\n6.保存得分表和VIP得分表\n7.绘制得分散点图（comp1 vs comp2），带95%置信椭圆，颜色按组别，形状按元数据\n8.绘制VIP得分top30代谢物条形图",
+ "tool": "mixOmics::plsda",
+ "input": ["expr_matrix", "group_factor"],
+ "output": [
+ "plsda_scores.csv（18×6：样本ID、分组、comp1、comp2、comp3）",
+ "plsda_vip_scores.csv（2059×2：代谢物、VIP得分）",
+ "plsda_score_plot.png/pdf",
+ "plsda_vip_plot.png（top30 VIP代谢物）"
+ ]
+ },
+ {
+ "step":4,
+ "name": "OPLSDA分析（正交偏最小二乘判别分析）",
+ "description": "使用OPLSDA分离预测成分与正交成分，去除与分组无关的变异：\n1.使用mixOmics::splsda()或ropls::opls()进行OPLSDA，ncomp=3\n2.提取预测成分（predictive component）和正交成分（orthogonal component）得分\n3.计算VIP得分\n4.加权欧氏距离计算与置换检验\n5.保存得分表\n6.绘制S-plot（p(corr) vs loading），标识对分组分离贡献最大的代谢物（|p(corr)|>0.5且VIP>1）\n7.散点图：预测成分 vs第1正交成分",
+ "tool": "mixOmics::splsda / ropls::opls",
+ "input": ["expr_matrix", "group_factor"],
+ "output": [
+ "oplsda_scores.csv（18×6：样本ID、分组、预测成分、正交成分1、正交成分2）",
+ "oplsda_vip_scores.csv（2059×2：代谢物、VIP得分）",
+ "oplsda_score_plot.png/pdf",
+ "oplsda_splot.png（S-plot标记关键代谢物）"
+ ]
+ },
+ {
+ "step":5,
+ "name": "组内/组间离散度分析及置换检验汇总",
+ "description": "对PCA、PLSDA、OPLSDA三种方法分别汇总：\n1.计算每个样本在PC/成分空间中的加权欧氏距离到其组质心\n2.计算所有样本到全局质心的距离\n3.执行置换检验（n=1000）：随机重排分组标签，重新计算组内距离均值与组间距离均值的比值\n4.计算真实观测到的比值在零分布中的百分位（即经验p值）\n5.若p<0.05，说明组内聚集显著大于随机期望，数据具有良好的分组结构\n6.保存汇总表",
+ "tool": "自定义R函数 + base R",
+ "input": ["pca_scores", "plsda_scores", "oplsda_scores"],
+ "output": ["group_distance_permutation.csv（汇总表，含三种方法的观测比值、p值、结论）"]
+ },
+ {
+ "step":6,
+ "name": "总体F检验（limma框架）",
+ "description": "使用limma包的eBayes框架对每个代谢物进行总体F检验：\n1.构建设计矩阵：~0 + group\n2.使用lmFit + eBayes进行经验贝叶斯拟合\n3.提取每个代谢物的F统计量和F检验p值（H0:三组均值相等）\n4.多重检验校正：BH（Benjamini-Hochberg）校正\n5.保存结果表\n6.绘制火山图展示F检验结果（-log10(pvalue) vs F统计量），标记显著代谢物（FDR<0.05）",
+ "tool": "limma::lmFit + limma::eBayes",
+ "input": ["expr_matrix", "design_matrix"],
+ "output": [
+ "f_test_result.csv（2059×5：代谢物、F统计量、原始p值、BH校正p值、显著性标记）",
+ "f_test_volcano.png"
+ ]
+ },
+ {
+ "step":7,
+ "name": "多因素ANOVA检验",
+ "description": "对每个代谢物进行单因素ANOVA检验：\n1.模型：value ~ group\n2.提取F统计量和p值\n3. BH多重检验校正\n4.保存结果表\n5.对ANOVA显著（FDR<0.05）的代谢物绘制表达热图，按分组均值排序聚类，展示三组表达模式差异\n6.对照F检验结果评估一致性",
+ "tool": "stats::aov + p.adjust",
+ "input": ["expr_matrix", "group_factor"],
+ "output": [
+ "anova_result.csv（2059×4：代谢物、F统计量、原始p值、BH校正p值）",
+ "anova_heatmap.png（显著代谢物表达热图 +分组注释条）"
+ ]
+ },
+ {
+ "step":8,
+ "name": "结果整合与结论生成",
+ "description": "整合所有分析结果：\n1.评估PCA/PLSDA/OPLSDA三种降维方法的组分离效果对比\n2.提取VIP>1且FDR<0.05的代谢物作为关键候选标记\n3.使用metabolites.csv注释表对top候选代谢物进行功能注释（KEGG通路、HMDB、super_class等）\n4.生成阶段结论Markdown文档，包含：\n -三组样本在降维空间的分离格局\n -各模型性能指标（R2X, R2Y, Q2等置换检验结果）\n -关键标记代谢物列表及其生物学注释\n -与研究主题的关联解读（铁代谢、胆汁酸代谢、脯氨酸代谢等）",
+ "tool": "自定义R脚本 + rmarkdown",
+ "input": ["所有结果表、图、metabolites.csv"],
+ "output": ["module_2_pca_plsda_conclusion.md"]
+ }
+ ],
+ "statistical_methods": {
+ "pca": {
+ "algorithm": "prcomp (SVD)",
+ "scaling": "unit variance scaling (scale.=TRUE)",
+ "centering": "mean centering (center=TRUE)",
+ "components":3
+ },
+ "plsda": {
+ "algorithm": "mixOmics::plsda (PLS1)",
+ "ncomp":3,
+ "validation": "10-fold cross-validation (Q2, R2Y)"
+ },
+ "oplsda": {
+ "algorithm": "mixOmics::splsda (sparse PLS-DA, mode='regression')",
+ "ncomp":3,
+ "keepX": "auto-tuned via cross-validation"
+ },
+ "distance_metric": {
+ "type": "weighted Euclidean distance to group centroid",
+ "weights": "variance explained per component / total explained variance",
+ "permutation":1000
+ },
+ "f_test": {
+ "method": "limma eBayes",
+ "contrast": "overall F-test across3 groups",
+ "correction": "BH (Benjamini-Hochberg)"
+ },
+ "anova": {
+ "method": "one-way ANOVA",
+ "model": "value ~ group",
+ "correction": "BH (Benjamini-Hochberg)"
+ }
+ },
+ "visualization_plan": {
+ "pca_score_plot": "PC1 vs PC2散点图，点颜色按分组（CD=红色，FE=蓝色，NC=绿色），形状按组别区分，添加95%置信椭圆（stat_ellipse, type='norm'），轴标签标注方差解释率",
+ "pca_3d_scores": "使用plotly或scatter3D绘制PC1/PC2/PC3三维散点图，颜色按分组",
+ "pca_scree_plot": "条形图+折线图展示前10个PC的方差解释率和累积解释率",
+ "pca_loading_plot": "PC1 vs PC2 loading散点图，标记top10贡献代谢物",
+ "plsda_score_plot": "comp1 vs comp2散点图，颜色分组+置信椭圆",
+ "plsda_vip_plot": "水平条形图展示VIP>1的top30代谢物，颜色按类别",
+ "oplsda_score_plot": "预测成分（predictive） vs正交成分（orthogonal）散点图，颜色分组+置信椭圆",
+ "oplsda_splot": "S-plot：p(corr) vs loading，标记显著代谢物名称",
+ "f_test_volcano": "火山图：-log10(F p-value) vs F统计量，水平线标记FDR=0.05阈值，标注top10代谢物",
+ "anova_heatmap": "热图：行=ANOVA显著代谢物（FDR<0.05），列=样本，分组注释条，按表达模式分层聚类"
+ },
+ "expected_conclusions": [
+ "PCA无监督分析应显示三组（CD、FE、NC）在PC空间中的分离趋势，FE组应介于CD组和NC组之间或明显偏离，反映高铁饮食干预对代谢物谱的系统性改变",
+ "PLSDA/OPLSDA有监督分析应能更好地区分三组，模型参数（R2Y、Q2）预期>0.5，置换检验显著",
+ "VIP分析将识别对分组分离贡献最大的代谢物，预期包括：L-脯氨酸（与Stickland发酵相关）、TUDCA（胆汁酸代谢）、铁载体类代谢物、短链脂肪酸等与高铁饮食-CDI保护机制相关的代谢物",
+ "F检验和ANOVA将鉴定出数百个在三组间显著差异的代谢物（FDR<0.05），为后续差异分析模块提供候选列表",
+ "FE组（高铁饮食+CDI）与CD组（单纯CDI）的分离将揭示高铁饮食如何重塑感染状态下的代谢物谱"
+ ],
+ "notes": "该分析模块基于mixOmics、limma和stats包。PLSDA和OPLSDA是有监督方法，需注意过拟合风险，通过交叉验证（Q2）和置换检验进行模型验证。由于仅18个样本（每组6个），PLSDA的Q2可能受限但R2Y应良好。OPLSDA的sPLSDA稀疏版本有助于特征选择。所有得分散点图同时输出PNG（300dpi）和PDF矢量格式。F检验使用limma的经验贝叶斯方法，在小样本情况下比传统ANOVA更稳健，两种方法同时使用可相互验证。",
+ "dependencies": [
+ "R >=4.0",
+ "mixOmics (https://bioconductor.org/packages/mixOmics)",
+ "limma (https://bioconductor.org/packages/limma)",
+ "ggplot2",
+ "plotly (for3D PCA)",
+ "pheatmap (for ANOVA heatmap)",
+ "dplyr, tidyr"
+ ],
+ "execution": {
+ "script": "G:/OmicsWorks/agent/rscript/pca_plsda_analysis.R",
+ "command": "Rscript G:/OmicsWorks/agent/rscript/pca_plsda_analysis.R G:/OmicsWorks/test/metabolism/expression.csv G:/OmicsWorks/test/metabolism/sampleinfo.csv G:/OmicsWorks/test/metabolism/demo/analysis_modules_2",
+ "supplementary_script": "G:/OmicsWorks/test/metabolism/demo/scripts/module_2_enhanced_analysis.R"
+ }
+}

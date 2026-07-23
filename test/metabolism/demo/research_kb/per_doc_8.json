@@ -1,0 +1,104 @@
+﻿{
+ "source_file": "Dietary iron attenuates Clostridioides difficile infection via modulation of intestinal immune response and gut microbiota.txt",
+ "key_genes_proteins": [
+ "IL-1β",
+ "IL-6",
+ "TNF-α",
+ "IL-36G",
+ "CXCL1",
+ "S100a8",
+ "S100a9",
+ "LCN2 (Lipocalin-2)",
+ "MUC2",
+ "CD45",
+ "Ly6G",
+ "CD11b",
+ "β-actin",
+ "TcdB (C. difficile toxin B)",
+ "C. difficile toxin TcdA (implied but not explicitly measured)",
+ "E. coli AVS0501 (bacterial strain)",
+ "E. fergusonii PW6 (bacterial strain)",
+ "E. coli IRQBAS57 (bacterial strain)",
+ "Akkermansia muciniphila",
+ "Oscillospiraceae (family)",
+ "Enterobacteriaceae (family)",
+ "Escherichia-Shigella (genus)",
+ "Bacteroides (genus)",
+ "Lachnospiraceae (family)",
+ "Muribaculaceae (family)",
+ "Lactobacillus (genus)",
+ "Desulfovibrio (genus)",
+ "Alistipes (genus)",
+ "Parabacteroides (genus)",
+ "Colidextribacter (genus)",
+ "Mucispirillum (genus)",
+ "Clostridioides difficile (pathogen)"
+ ],
+ "key_pathways": [
+ "Stickland fermentation (proline metabolism)",
+ "Arginine biosynthesis",
+ "Arginine and proline metabolism",
+ "Lipid metabolism",
+ "Amino acid metabolism",
+ "Bile acid metabolism",
+ "Short-chain fatty acid production",
+ "Secondary bile acid production"
+ ],
+ "key_metabolites": [
+ "L-proline",
+ "Tauroursodeoxycholic acid (TUDCA)",
+ "Taurocholate",
+ "Glycine",
+ "Short-chain fatty acids",
+ "Secondary bile acids",
+ "Iron (ferrous sulfate)",
+ "L-cysteine",
+ "Sodium taurocholate",
+ "Reactive oxygen species (ROS)"
+ ],
+ "biological_mechanisms": [
+ {
+ "mechanism": "High dietary iron reduces C. difficile colonization and toxin production",
+ "evidence": "Mice fed high iron diet (400 mg/kg ferrous sulfate) had significantly lower C. difficile loads in cecal contents and cecum, and lower TcdB titers in cecal contents and feces at48 hpi (Figure1m,n)."
+ },
+ {
+ "mechanism": "High dietary iron attenuates intestinal inflammation by reducing neutrophil recruitment and pro-inflammatory cytokine secretion",
+ "evidence": "Flow cytometry showed reduced percentage of neutrophils in colonic lamina propria of CDI+Iron diet mice (Figure2a). qPCR and ELISA showed decreased mRNA and protein levels of IL-6, TNF-α, IL-36G, CXCL1, IL-1β, S100a8, S100a9 in colon/cecum (Figure2c-h). In vitro, ferrous sulfate inhibited C. difficile-induced IL-1β secretion from bone marrow neutrophils (Figure2i)."
+ },
+ {
+ "mechanism": "High dietary iron alters gut microbiota composition, enriching Enterobacteriaceae (especially Escherichia-Shigella) and decreasing diversity",
+ "evidence": "16S rRNA sequencing showed that gut microbiota in CDI+Iron diet group was dominated by Enterobacteriaceae and Escherichia-Shigella genus, with lower Shannon and Ace indices compared to NC and CDI groups (Figure3j-o)."
+ },
+ {
+ "mechanism": "Fecal microbiota transplantation (FMT) from high-iron-fed donor mice alleviates CDI in recipient mice",
+ "evidence": "Recipient mice receiving FMT from high-iron diet donors showed lower DAI, less intestinal damage, lower C. difficile loads, and reduced IL-1β and TNF-α compared to CDI mice (Figure3b-i)."
+ },
+ {
+ "mechanism": "E. coli AVS0501 (isolated from high-iron-fed mice) protects against CDI by inhibiting C. difficile colonization and toxin production, reducing neutrophil recruitment and IL-1β secretion",
+ "evidence": "Mice treated with E. coli AVS0501 showed reduced body weight loss, DAI, C. difficile loads, TcdB levels, intestinal damage, neutrophil infiltration, and IL-1β (Figure4b,c,e,f,j,k). In vitro co-culture inhibited C. difficile growth (Figure4d)."
+ },
+ {
+ "mechanism": "High dietary iron decreases intestinal L-proline levels, which reduces C. difficile growth and toxin production via Stickland fermentation",
+ "evidence": "L-proline abundance was decreased in CDI+Iron diet group compared to CDI group (Figure5d). Proline supplementation increased C. difficile growth and TcdB in vitro (Figure6b,c). Proline-free diet in vivo reduced C. difficile loads, TcdB, neutrophil infiltration, and inflammatory cytokines (Figure6e-n). E. coli AVS0501 colonization also reduced proline levels (Figure6a)."
+ },
+ {
+ "mechanism": "High dietary iron increases intestinal TUDCA levels, which inhibit C. difficile colonization and toxin production",
+ "evidence": "TUDCA abundance was higher in CDI+Iron diet group (Figure5e). In vitro, TUDCA reduced C. difficile growth and TcdB production (Figure7a,b). TUDCA gavage in mice reduced body weight loss, DAI, C. difficile loads, TcdB, intestinal damage, neutrophil infiltration, and CXCL1/IL-1β (Figure7c-l)."
+ },
+ {
+ "mechanism": "Correlation between gut microbiota and metabolites: E. coli positively correlated with TUDCA and negatively correlated with L-proline",
+ "evidence": "Spearman correlation analysis showed significant positive correlation between TUDCA and Escherichia coli at species level, and negative correlation between L-proline and Escherichia coli (Figure5h)."
+ }
+ ],
+ "key_findings": [
+ "High dietary iron (400 mg/kg ferrous sulfate) protects mice against primary and recurrent CDI, reducing body weight loss, disease activity, intestinal epithelial damage, and inflammatory cell infiltration.",
+ "High iron diet decreases C. difficile colonization and TcdB toxin production.",
+ "High iron diet reduces intestinal neutrophil recruitment and secretion of pro-inflammatory cytokines (IL-1β, IL-6, TNF-α, IL-36G, CXCL1, S100a8, S100a9).",
+ "High iron diet alters gut microbiota, increasing Enterobacteriaceae (especially Escherichia-Shigella) and reducing diversity; FMT from iron-fed mice alleviates CDI.",
+ "E. coli AVS0501, enriched in iron-treated CDI mice, has prophylactic and therapeutic effects against CDI, reducing C. difficile colonization, toxin production, and inflammation.",
+ "High iron diet decreases intestinal L-proline levels, and a proline-free diet reduces CDI severity by limiting C. difficile growth and toxin production.",
+ "High iron diet increases intestinal TUDCA levels, and TUDCA treatment reduces CDI severity by inhibiting C. difficile colonization and toxin production.",
+ "E. coli AVS0501 is associated with decreased proline and increased TUDCA levels, suggesting a mechanistic link between iron-modulated microbiota and metabolite changes."
+ ],
+ "relevance_to_research_topic": "This paper directly addresses the research topic by investigating the effects of a high-iron diet on intestinal immune response, gut microbiota, and metabolites in a mouse model of C. difficile infection (CDI). It demonstrates that high dietary iron attenuates CDI by reducing C. difficile pathogenicity, altering host neutrophil recruitment, reshaping gut microbiota (enriching E. coli AVS0501), and modulating metabolites (decreasing L-proline and increasing TUDCA). The study elucidates the 'diet-gut microbiota-host' interplay in regulating CDI susceptibility and severity, providing mechanistic insights into how dietary iron influences infection outcomes through specific bacterial strains and metabolic pathways."
+}
