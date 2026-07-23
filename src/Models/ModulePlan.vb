@@ -9,34 +9,34 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Public Class ModulePlan
 
     ''' <summary>模块名称</summary>
-    Public Property ModuleName As String = ""
+    Public Property module_name As String = ""
 
     ''' <summary>分析目标描述</summary>
-    Public Property Goal As String = ""
+    Public Property goal As String = ""
 
     ''' <summary>所需输入文件路径列表</summary>
-    Public Property InputFiles As List(Of String) = New List(Of String)()
+    Public Property input_files As String()
 
     ''' <summary>预期输出文件路径列表</summary>
-    Public Property OutputFiles As List(Of String) = New List(Of String)()
+    Public Property output_files As String()
 
-    ''' <summary>LLM 生成的 R 脚本内容</summary>
-    Public Property RScriptContent As String = ""
+    Public Property execution_steps As [Step]()
 
-    ''' <summary>LLM 生成的 R 脚本文件路径</summary>
-    Public Property RScriptFile As String = ""
-
-    ''' <summary>LLM 生成的 Python 脚本内容（可选）</summary>
-    Public Property PythonScriptContent As String = ""
-
-    ''' <summary>LLM 生成的 Python 脚本文件路径（可选）</summary>
-    Public Property PythonScriptFile As String = ""
+    Public Property notes As String
 
     ''' <summary>阶段性总结文本</summary>
-    Public Property Conclusion As String = ""
+    Public Property conclusion As String = ""
 
     Public Function ToJson() As String
         Return Me.GetJson
     End Function
+
+End Class
+
+Public Class [Step]
+
+    Public Property action As String
+    Public Property goal As String
+    Public Property rscript_path As String
 
 End Class

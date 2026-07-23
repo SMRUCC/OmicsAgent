@@ -75,7 +75,7 @@ Return your plan as JSON:
         Return plan
     End Function
 
-    Protected Overrides Async Function GenerateAndRunScriptAsync(llm As LLMClient, plan As ModulePlan, cancellationToken As CancellationToken) As Task
+    Protected Overrides Async Function GenerateAndRunScriptAsync(llm As LLMClient, plan As ModulePlan, [step] As [Step], cancellationToken As CancellationToken) As Task
         ' 这个模块直接由 VB.NET 代码生成 HTML 报告，并调用 wkhtmltopdf 转换为 PDF
         LogInfo("Generating research report...")
 

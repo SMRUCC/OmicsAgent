@@ -63,14 +63,15 @@ Return your plan as JSON:
         Dim plan As ModulePlan
         If Not String.IsNullOrEmpty(json) Then
             plan = json.LoadJSON(Of ModulePlan)
+            plan.module_name = ModuleName
         Else
-            plan = New ModulePlan() With {.ModuleName = ModuleName, .Goal = resp.output}
+            plan = New ModulePlan() With {.module_name = ModuleName, .goal = resp.output}
         End If
-        plan.ModuleName = ModuleName
+
         Return plan
     End Function
 
-    Protected Overrides Async Function GenerateAndRunScriptAsync(llm As LLMClient, plan As ModulePlan, cancellationToken As CancellationToken) As Task
+    Protected Overrides Async Function GenerateAndRunScriptAsync(llm As LLMClient, plan As ModulePlan, [step] As [Step], cancellationToken As CancellationToken) As Task
         Dim prompt = $"
 You are a bioinformatics R script expert. Write an R script to save the comparison design as a structured CSV file.
 

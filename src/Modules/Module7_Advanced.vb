@@ -66,7 +66,7 @@ Return your plan as JSON:
         Return plan
     End Function
 
-    Protected Overrides Async Function GenerateAndRunScriptAsync(llm As LLMClient, plan As ModulePlan, cancellationToken As CancellationToken) As Task
+    Protected Overrides Async Function GenerateAndRunScriptAsync(llm As LLMClient, plan As ModulePlan, [step] As [Step], cancellationToken As CancellationToken) As Task
         Dim prompt = $"
 You are a bioinformatics R script expert. Write an R script to perform advanced analysis.
 

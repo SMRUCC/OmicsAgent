@@ -51,6 +51,7 @@ Return your plan as JSON:
   ""goal"": ""<brief description of the preprocessing goal>"",
   ""input_files"": [""<input file paths>""],
   ""output_files"": [""<expected output file paths>""],
+  ""execution_steps"": [{{""action"": ""<description of current step action>"", ""goal"": ""<goal of current step...>""}}, ...],
   ""notes"": ""<any special considerations>""
 }}
 "
@@ -59,21 +60,29 @@ Return your plan as JSON:
         Dim plan As ModulePlan
         If Not String.IsNullOrEmpty(json) Then
             plan = json.LoadJSON(Of ModulePlan)
+            plan.module_name = ModuleName
         Else
-            plan = New ModulePlan() With {.ModuleName = ModuleName, .Goal = resp.output}
+            plan = New ModulePlan() With {.module_name = ModuleName, .goal = resp.output}
         End If
-        plan.ModuleName = ModuleName
+
         Return plan
     End Function
 
-    Protected Overrides Async Function GenerateAndRunScriptAsync(llm As LLMClient, plan As ModulePlan, cancellationToken As CancellationToken) As Task
+    Protected Overrides Async Function GenerateAndRunScriptAsync(llm As LLMClient, plan As ModulePlan, [step] As [Step], cancellationToken As CancellationToken) As Task
         Dim prompt = $"
-You are a bioinformatics R script expert. Write an R script to preprocess the omics expression matrix data according to the following plan.
+You are a bioinformatics R script expert. Write and execute R script to preprocess the omics expression matrix data according to the following plan.
 
 {BuildContextInfo()}
 
 # Preprocessing Plan
-{plan.ToJson()}
+{plan.module_name}
+
+plan goal: {plan.goal}
+plan notes: {plan.notes}
+current plan execution step: {[step].GetJson}
+
+All scripts and the generated CSV files are placed in this designated temporary workspace folder: {Workspace.GetDirectoryFullPath}
+All pdf/png figure image files should save to workspace folder: {FiguresDir.GetDirectoryFullPath}
 
 # Your Task
 Write a complete R script that:
@@ -93,22 +102,8 @@ Write a complete R script that:
 - The script should be self-contained and runnable via Rscript
 - Handle both single-omics and multi-omics cases
 - Print progress messages to stdout
-
-Write the complete R script. Use ```r ... ``` code block.
 "
-        Dim resp = Await llm.Chat(prompt, cancellationToken)
-        Dim rCode = resp.ExtractCodeBlock("r")
-
-        ' 保存脚本
-        Dim scriptFile = Path.Combine(_context.ScriptsDir, $"module_{ModuleIndex}_preprocessing.R")
-        rCode.SaveTo(scriptFile)
-        plan.RScriptContent = rCode
-        plan.RScriptFile = scriptFile
-
-        ' 执行脚本
-        Dim shell As New ShellTool(_config, _context.WorkspaceDir, _logger)
-        Dim result = shell.run_rscript($"scripts/module_{ModuleIndex}_preprocessing.R")
-        LogInfo($"R script execution result: {result.Substring(0, Math.Min(300, result.Length))}")
+        Await llm.Chat(prompt, cancellationToken)
     End Function
 
     Protected Overrides Async Function GenerateConclusionAsync(llm As LLMClient, plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)

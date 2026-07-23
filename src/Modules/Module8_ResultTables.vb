@@ -83,7 +83,7 @@ Return your plan as JSON:
         Return plan
     End Function
 
-    Protected Overrides Async Function GenerateAndRunScriptAsync(llm As LLMClient, plan As ModulePlan, cancellationToken As CancellationToken) As Task
+    Protected Overrides Async Function GenerateAndRunScriptAsync(llm As LLMClient, plan As ModulePlan, [step] As [Step], cancellationToken As CancellationToken) As Task
         LogInfo("Compiling result tables into XLSX files via LLM-generated R script...")
 
         ' 1. 收集所有 CSV 结果文件并按分析主题分组

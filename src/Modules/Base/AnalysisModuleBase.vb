@@ -36,6 +36,12 @@ Public MustInherit Class AnalysisModuleBase
         End Get
     End Property
 
+    Public ReadOnly Property Workspace As String
+        Get
+            Return _context.TmpDir & "/" & FolderBaseName
+        End Get
+    End Property
+
     Public Sub New(config As AgentConfig, context As AnalysisContext, Optional logger As Action(Of String) = Nothing)
         _config = config
         _context = context
@@ -121,10 +127,12 @@ Public MustInherit Class AnalysisModuleBase
 
     ''' <summary>调用 LLM 编写并执行脚本</summary>
     Protected Async Function GenerateAndRunScriptAsync(plan As ModulePlan, cancellationToken As CancellationToken) As Task
-        Using llm As LLMClient = _config.CreateLLMClient(FolderBaseName & "-analysis", _context.TmpDir)
-            RegisterTools(llm)
-            Await GenerateAndRunScriptAsync(llm, plan, cancellationToken)
-        End Using
+        For Each [step] As [Step] In plan.execution_steps
+            Using llm As LLMClient = _config.CreateLLMClient(FolderBaseName & "-analysis", _context.TmpDir)
+                RegisterTools(llm)
+                Await GenerateAndRunScriptAsync(llm, plan, [step], cancellationToken)
+            End Using
+        Next
     End Function
 
     ''' <summary>调用 LLM 生成阶段性总结</summary>
@@ -139,7 +147,7 @@ Public MustInherit Class AnalysisModuleBase
     Protected MustOverride Function GeneratePlanAsync(llm As LLMClient, cancellationToken As CancellationToken) As Task(Of ModulePlan)
 
     ''' <summary>调用 LLM 编写并执行脚本</summary>
-    Protected MustOverride Function GenerateAndRunScriptAsync(llm As LLMClient, plan As ModulePlan, cancellationToken As CancellationToken) As Task
+    Protected MustOverride Function GenerateAndRunScriptAsync(llm As LLMClient, plan As ModulePlan, [step] As [Step], cancellationToken As CancellationToken) As Task
 
     ''' <summary>调用 LLM 生成阶段性总结</summary>
     Protected MustOverride Function GenerateConclusionAsync(llm As LLMClient, plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)
