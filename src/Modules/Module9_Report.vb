@@ -26,18 +26,18 @@ Public Class ReportModule : Inherits AnalysisModuleBase
     Public Overrides ReadOnly Property ModuleName As String = "Paper Draft Report"
     Public Overrides ReadOnly Property ModuleIndex As Integer = 9
 
+    Public Overrides ReadOnly Property CsvFileNamePrefix As String
+        Get
+            Return "report_"
+        End Get
+    End Property
+
     Public Sub New(config As AgentConfig, context As AnalysisContext, Optional logger As Action(Of String) = Nothing)
         MyBase.New(config, context, logger)
     End Sub
 
-    Protected Overrides Async Function GeneratePlanAsync(llm As LLMClient, cancellationToken As CancellationToken) As Task(Of ModulePlan)
-        Dim prompt = $"
-You are a biomedical research paper writer. Design a plan to write a research report.
-
-{BuildContextInfo()}
-
-# Your Task
-Design a plan to write a comprehensive research paper draft based on the analysis results.
+    Protected Overrides Function GeneratePlanPromptText() As String
+        Return "Design a plan to write a comprehensive research paper draft based on the analysis results.
 The report should include:
 1. Title and Abstract (Chinese)
 2. Introduction (research background, objectives)
@@ -52,31 +52,18 @@ The report should include:
    - 4.7 Advanced Analysis
 5. Discussion (biological mechanism interpretation)
 6. Conclusion
-7. Figures and Tables (with captions in both Chinese and English)
-
-Simply generate the specific execution plan here. Do not execute the actual analysis pipeline code. Return your plan as JSON in your response output, at least one execution step for your plan must be generated but no more than three decomposed execution steps:
-{{
-  ""module_name"": ""Paper Draft Report"",
-  ""goal"": ""<brief description>"",
-  ""input_files"": [""<input file paths>""],
-  ""output_files"": [""<expected output file paths>""],
-  ""execution_steps"": [{{""action"": ""<description of current step action>"", ""goal"": ""<goal of current step...>""}}, ...],
-  ""notes"": ""<special considerations>""
-}}
-"
-        Dim resp = Await llm.Chat(prompt, cancellationToken)
-        Dim json = resp.ExtractJsonFromResponse
-        Dim plan As ModulePlan
-        If Not String.IsNullOrEmpty(json) Then
-            plan = json.LoadJSON(Of ModulePlan)
-            plan.module_name = ModuleName
-        Else
-            plan = New ModulePlan() With {.module_name = ModuleName, .goal = resp.output}
-        End If
-
-        Return plan
+7. Figures and Tables (with captions in both Chinese and English)"
     End Function
 
+    Protected Overrides Function GetConclusionItems() As String
+        Return "1. 研究报告的整体结构完整性
+2. 各章节内容的覆盖情况
+3. 图表及其图注的完整性
+4. 讨论部分对生物学机制的解读深度
+5. 报告与用户研究主题的契合度"
+    End Function
+
+    ''' <summary>调用 LLM 编写并执行脚本</summary>
     Protected Overrides Async Function GenerateAndRunScriptAsync(llm As LLMClient, plan As ModulePlan, [step] As [Step], cancellationToken As CancellationToken) As Task
         ' 这个模块直接由 VB.NET 代码生成 HTML 报告，并通过 LLM 函数调用 wkhtmltopdf 转换为 PDF
         LogInfo("Generating research report...")
@@ -126,10 +113,6 @@ Use the run_wkhtmltopdf tool with the following arguments:
 Verify the PDF file is generated successfully.
 "
         Await llm.Chat(prompt, cancellationToken)
-    End Function
-
-    Protected Overrides Async Function GenerateConclusionAsync(llm As LLMClient, plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)
-        Return Await Task.FromResult("研究报告已生成完成。报告以中文撰写，包含完整的引言、材料与方法、结果、讨论和结论章节。所有图表均配有中英文双语图注。报告以 A3 大小 HTML 文件形式生成，并已通过 wkhtmltopdf 工具转换为 PDF 文件。")
     End Function
 
     ''' <summary>收集所有模块的结论文本</summary>
@@ -370,4 +353,3 @@ Return as JSON:
     End Function
 
 End Class
-
