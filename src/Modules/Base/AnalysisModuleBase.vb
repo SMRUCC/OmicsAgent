@@ -94,7 +94,8 @@ Public MustInherit Class AnalysisModuleBase
                 .ModuleName = ModuleName,
                 .ModuleIndex = ModuleIndex,
                 .Conclusion = Await RunAgent(cancellationToken),
-                .OutputDir = OutputDir
+                .OutputDir = OutputDir,
+                .Workdir = Workspace
             })
         Catch ex As Exception
             LogInfo($"[错误] 模块 {ModuleName} 执行失败：{ex.Message}")
