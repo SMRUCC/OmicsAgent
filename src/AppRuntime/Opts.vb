@@ -16,6 +16,8 @@ Namespace AppRuntime
         <Opt("--skip-kb")> Public Property skip_kb As Boolean = False
         <Opt("--module")> Public Property modules As String
 
+        <Opt("--custom-modules")> Public Property custom_modules As String
+
         ''' <summary>
         ''' make check for run Rscript
         ''' </summary>
