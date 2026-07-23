@@ -1,6 +1,6 @@
 ﻿Imports System.Text.RegularExpressions
 
-Friend Module RScriptFixer
+Public Module RScriptFixer
 
     ' 用于存储提取和修正结果的类
     Public Class RForLoopFix

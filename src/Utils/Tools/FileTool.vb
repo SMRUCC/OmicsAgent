@@ -14,8 +14,8 @@ Imports Microsoft.VisualBasic.Text
 ''' </summary>
 Public Class FileTool
 
-    Private ReadOnly _workspaceRoot As String
-    Private ReadOnly _logger As Action(Of String)
+    ReadOnly _workspaceRoot As String
+    ReadOnly _logger As Action(Of String)
 
     Public Sub New(workspaceRoot As String, Optional logger As Action(Of String) = Nothing)
         _workspaceRoot = workspaceRoot
@@ -60,6 +60,10 @@ Public Class FileTool
             Dim dir = System.IO.Path.GetDirectoryName(absPath)
             If Not String.IsNullOrEmpty(dir) AndAlso Not Directory.Exists(dir) Then
                 Directory.CreateDirectory(dir)
+            End If
+
+            If path.ExtensionSuffix("r") Then
+                content = RScriptFixer.FixEntireRScript(rScript:=content)
             End If
 
             ' 20260723 the writed R script file must be save in utf8 (not utf8-bom)
