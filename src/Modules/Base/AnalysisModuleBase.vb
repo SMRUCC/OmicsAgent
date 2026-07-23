@@ -266,11 +266,9 @@ Simply generate the specific execution plan here. Do not execute the actual anal
 
 You are a bioinformatics R script expert. Write and execute R script to process the omics expression matrix data according to the following plan.
 
-# Analysis Plan
-{plan.module_name}
+# Analysis: {plan.module_name}
 
-plan goal: {plan.goal}
-plan notes: {plan.notes}
+{plan.notes}
 
 # Your Task
 Write a complete R script that:
