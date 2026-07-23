@@ -65,13 +65,6 @@ Public MustInherit Class AnalysisModuleBase
         End Get
     End Property
 
-    ''' <summary>模块表格输出目录</summary>
-    Public ReadOnly Property TablesDir As String
-        Get
-            Return Path.Combine(OutputDir, "tables")
-        End Get
-    End Property
-
     ''' <summary>模块图像输出目录</summary>
     Public ReadOnly Property FiguresDir As String
         Get
@@ -82,7 +75,7 @@ Public MustInherit Class AnalysisModuleBase
     ''' <summary>模块总结文件路径</summary>
     Public ReadOnly Property ConclusionFile As String
         Get
-            Return Path.Combine(OutputDir, "conclusion.txt")
+            Return Path.Combine(OutputDir, "conclusion.md")
         End Get
     End Property
 
@@ -94,7 +87,6 @@ Public MustInherit Class AnalysisModuleBase
 
         ' 创建输出目录
         Call OutputDir.MakeDir
-        Call TablesDir.MakeDir
         Call FiguresDir.MakeDir
 
         Try
@@ -321,7 +313,7 @@ You are a biomedical research expert. Based on the {FolderBaseName} analysis res
 {plan.ToJson()}
 
 # Your Task
-Read the analysis output files in the tmp/ directory (files starting with '{CsvFileNamePrefix}') or the result files in folder '{Workspace}' and the tables/ directory which located at {TablesDir}.
+Read the analysis output files in the tmp/ directory (files starting with '{CsvFileNamePrefix}') or the result files in folder '{Workspace}'.
 Write a conclusion in Chinese that describes:
 
 {GetConclusionItems()}
