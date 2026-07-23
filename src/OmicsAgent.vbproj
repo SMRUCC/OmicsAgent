@@ -239,6 +239,9 @@
     <None Update="config.ini.template">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="custom_module_template.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="rscript\*.R">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
