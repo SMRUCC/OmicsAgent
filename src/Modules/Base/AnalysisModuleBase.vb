@@ -239,7 +239,7 @@ Public MustInherit Class AnalysisModuleBase
         Return "{
   ""module_name"": ""分析模块名称"",
   ""goal"": ""<简要描述本分析模块的目标>"",
-  ""input_files"": [""<输入文件路径>"",
+  ""input_files"": [""<输入文件路径>""],
   ""output_files"": [""<预期输出文件路径>""],
   ""execution_steps"": [{""action"": ""<当前步骤操作的描述>"", ""goal"": ""<当前步骤的目标...>""}, ...],
   ""notes"": ""<需要特别注意的事项>""

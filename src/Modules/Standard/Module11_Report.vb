@@ -37,24 +37,24 @@ Public Class ReportModule : Inherits AnalysisModuleBase
     End Sub
 
     Protected Overrides Function GeneratePlanPromptText() As String
-        Return "Design a plan to write a comprehensive research paper draft based on the analysis results.
-The report should include:
-1. Title and Abstract (Chinese)
-2. Introduction (research background, objectives)
-3. Materials and Methods (data sources, analysis methods)
-4. Results (organized by analysis modules):
-   - 4.1 Data Preprocessing
-   - 4.2 PCA/PLSDA/OPLSDA Analysis
-   - 4.3 Comparison Group Design
-   - 4.4 LIMMA Differential Analysis
-   - 4.5 KEGG Functional Analysis
-   - 4.6 WGCNA Trait Association Analysis
-   - 4.7 CMeans Fuzzy Clustering Analysis
-   - 4.8 Dynamic Bayesian Network Analysis
-   - 4.9 PLS-PM Causal Path Analysis
-5. Discussion (biological mechanism interpretation)
-6. Conclusion
-7. Figures and Tables (with captions in both Chinese and English)"
+        Return "为撰写综合性研究论文初稿设计计划，基于分析结果撰写报告。
+报告应包含：
+1. 标题和摘要（中文）
+2. 引言（研究背景、目标）
+3. 材料与方法（数据来源、分析方法）
+4. 结果（按分析模块组织）：
+   - 4.1 数据预处理
+   - 4.2 PCA/PLSDA/OPLSDA 分析
+   - 4.3 比对组别设计
+   - 4.4 LIMMA 差异分析
+   - 4.5 KEGG 功能分析
+   - 4.6 WGCNA 性状关联分析
+   - 4.7 CMeans 模糊聚类分析
+   - 4.8 动态贝叶斯网络分析
+   - 4.9 PLS-PM 因果路径分析
+5. 讨论（生物学机制解读）
+6. 结论
+7. 图表（图注同时提供中英文）"
     End Function
 
     Protected Overrides Function GetConclusionItems() As String
@@ -91,28 +91,28 @@ The report should include:
         ' 通过 LLM 函数调用工具执行 wkhtmltopdf 转换为 PDF
         Dim pdfPath = Path.Combine(_context.WorkspaceDir, "analysis", "report.pdf")
         Dim prompt = $"
-You are a report generation assistant. Convert the generated HTML report to PDF using the run_wkhtmltopdf tool.
+你是一位报告生成助手。请使用 run_wkhtmltopdf 工具将已生成的 HTML 报告转换为 PDF。
 
 {BuildContextInfo()}
 
-# Analysis Plan
+# 分析计划
 {plan.module_name}
 
-plan goal: {plan.goal}
-plan notes: {plan.notes}
-current plan execution step: {[step].GetJson}
+计划目标: {plan.goal}
+计划备注: {plan.notes}
+当前执行步骤: {[step].GetJson}
 
-All scripts and the generated files are placed in this designated temporary workspace folder: {Workspace.GetDirectoryFullPath}
+所有脚本和生成的文件放置在指定临时工作区目录: {Workspace.GetDirectoryFullPath}
 
-# Your Task
-The HTML report has been generated at: {htmlPath}
-Convert it to PDF at: {pdfPath}
-Use the run_wkhtmltopdf tool with the following arguments:
+# 你的任务
+HTML 报告已生成于: {htmlPath}
+请将其转换为 PDF: {pdfPath}
+使用 run_wkhtmltopdf 工具，参数如下：
 - html_path: {htmlPath}
 - pdf_path: {pdfPath}
 - extra_args: --margin-top 15mm --margin-bottom 15mm --margin-left 15mm --margin-right 15mm --enable-local-file-access
 
-Verify the PDF file is generated successfully.
+请验证 PDF 文件是否成功生成。
 "
         Await llm.Chat(prompt, cancellationToken)
     End Function
@@ -167,21 +167,21 @@ Verify the PDF file is generated successfully.
     Private Async Function GenerateReportContentAsync(conclusions As Dictionary(Of Integer, String), figures As List(Of Tuple(Of Integer, String)), tables As List(Of Tuple(Of Integer, String)), cancellationToken As CancellationToken) As Task(Of ReportContent)
         Using llm As LLMClient = _config.CreateLLMClient(FolderBaseName & "-create_report", _context.TmpDir)
             Dim prompt = $"
-You are a biomedical research paper writer. Write a comprehensive research report in Chinese based on the analysis results.
+你是一位生物医学研究论文撰写专家。请基于分析结果撰写一份完整的中文研究报告。
 
 {BuildContextInfo()}
 
-# Module Conclusions
-{String.Join(vbCrLf + vbCrLf, conclusions.Select(Function(c) $"## Module {c.Key}:{vbCrLf}{c.Value}"))}
+# 各模块总结
+{String.Join(vbCrLf + vbCrLf, conclusions.Select(Function(c) $"## 模块 {c.Key}:{vbCrLf}{c.Value}"))}
 
-# Available Figures
-{String.Join(vbCrLf, figures.Select(Function(f) $"- Module {f.Item1}: {Path.GetFileName(f.Item2)}"))}
+# 可用图片
+{String.Join(vbCrLf, figures.Select(Function(f) $"- 模块 {f.Item1}: {Path.GetFileName(f.Item2)}"))}
 
-# Available Tables
-{String.Join(vbCrLf, tables.Select(Function(t) $"- Module {t.Item1}: {Path.GetFileName(t.Item2)}"))}
+# 可用表格
+{String.Join(vbCrLf, tables.Select(Function(t) $"- 模块 {t.Item1}: {Path.GetFileName(t.Item2)}"))}
 
-# Your Task
-Write a complete research paper draft in Chinese with the following structure:
+# 你的任务
+撰写一份完整的中文研究论文初稿，结构如下：
 1. 标题（Title）- 基于用户研究主题
 2. 摘要（Abstract）- 200-300 字
 3. 关键词（Keywords）- 5-8 个
@@ -191,26 +191,26 @@ Write a complete research paper draft in Chinese with the following structure:
 7. 讨论（Discussion）- 生物学机制解读，与文献对比
 8. 结论（Conclusion）- 主要发现总结
 
-For each figure and table mentioned, write a caption in BOTH Chinese and English.
+对于涉及的每个图表，撰写中英文双语图注。
 
-Return as JSON:
+以 JSON 格式返回：
 {{
-  ""title"": ""<title in Chinese>"",
-  ""abstract"": ""<abstract in Chinese>"",
-  ""keywords"": [""<keyword1>"", ""<keyword2>""],
-  ""introduction"": ""<introduction in Chinese>"",
-  ""materials_methods"": ""<materials and methods in Chinese>"",
+  ""title"": ""<中文标题>"",
+  ""abstract"": ""<中文摘要>"",
+  ""keywords"": [""<关键词1>"", ""<关键词2>""],
+  ""introduction"": ""<中文引言>"",
+  ""materials_methods"": ""<中文材料与方法>"",
   ""results_sections"": [
     {{
       ""module_index"": 1,
-      ""title"": ""<section title>"",
-      ""content"": ""<section content>"",
-      ""figure_captions"": [{{""file"": ""<filename>"", ""caption_cn"": ""<Chinese caption>"", ""caption_en"": ""<English caption>""}}],
-      ""table_captions"": [{{""file"": ""<filename>"", ""caption_cn"": ""<Chinese caption>"", ""caption_en"": ""<English caption>""}}]
+      ""title"": ""<章节标题>"",
+      ""content"": ""<章节内容>"",
+      ""figure_captions"": [{{""file"": ""<文件名>"", ""caption_cn"": ""<中文图注>"", ""caption_en"": ""<英文图注>""}}],
+      ""table_captions"": [{{""file"": ""<文件名>"", ""caption_cn"": ""<中文表注>"", ""caption_en"": ""<英文表注>""}}]
     }}
   ],
-  ""discussion"": ""<discussion in Chinese>"",
-  ""conclusion"": ""<conclusion in Chinese>""
+  ""discussion"": ""<中文讨论>"",
+  ""conclusion"": ""<中文结论>""
 }}
 "
             Dim resp = Await llm.Chat(prompt, cancellationToken)
