@@ -511,19 +511,19 @@ Public Class FileTool
 
             ' 使用 ZipArchive 手动创建，遍历所有文件添加到压缩包中
             Using fs As New FileStream(absZip, FileMode.Create)
-            Using archive As New ZipArchive(fs, ZipArchiveMode.Create)
-                For Each filePath In Directory.GetFiles(absSrc, "*", SearchOption.AllDirectories)
-                    Dim relativePath = filePath.Substring(absSrc.Length) _
-                        .TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar) _
-                        .Replace(Path.DirectorySeparatorChar, "/"c)
-                    Dim entry = archive.CreateEntry(relativePath, CompressionLevel.Optimal)
-                    Using entryStream = entry.Open()
-                    Using fileStream As New FileStream(filePath, FileMode.Open, FileAccess.Read)
-                        fileStream.CopyTo(entryStream)
-                    End Using
-                    End Using
-                Next
-            End Using
+                Using archive As New ZipArchive(fs, ZipArchiveMode.Create)
+                    For Each filePath In Directory.GetFiles(absSrc, "*", SearchOption.AllDirectories)
+                        Dim relativePath = filePath.Substring(absSrc.Length) _
+                            .TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar) _
+                            .Replace(Path.DirectorySeparatorChar, "/"c)
+                        Dim entry = archive.CreateEntry(relativePath, CompressionLevel.Optimal)
+                        Using entryStream = entry.Open()
+                            Using fileStream As New FileStream(filePath, FileMode.Open, FileAccess.Read)
+                                fileStream.CopyTo(entryStream)
+                            End Using
+                        End Using
+                    Next
+                End Using
             End Using
 
             Dim zipInfo As New FileInfo(absZip)
@@ -552,33 +552,33 @@ Public Class FileTool
 
             Dim entryCount As Integer = 0
             Using fs As New FileStream(absZip, FileMode.Open, FileAccess.Read)
-            Using archive As New ZipArchive(fs, ZipArchiveMode.Read)
-                For Each entry As ZipArchiveEntry In archive.Entries
-                    Dim destPath = Path.GetFullPath(Path.Combine(absDest, entry.FullName))
+                Using archive As New ZipArchive(fs, ZipArchiveMode.Read)
+                    For Each entry As ZipArchiveEntry In archive.Entries
+                        Dim destPath = Path.GetFullPath(Path.Combine(absDest, entry.FullName))
 
-                    ' 安全检查：防止 zip slip 路径遍历攻击
-                    If Not destPath.StartsWith(absDest, StringComparison.OrdinalIgnoreCase) Then
-                        Return $"{{""error"": ""Zip entry path traversal detected: {EscapeJson(entry.FullName)}""}}"
-                    End If
+                        ' 安全检查：防止 zip slip 路径遍历攻击
+                        If Not destPath.StartsWith(absDest, StringComparison.OrdinalIgnoreCase) Then
+                            Return $"{{""error"": ""Zip entry path traversal detected: {EscapeJson(entry.FullName)}""}}"
+                        End If
 
-                    ' 跳过目录条目
-                    If entry.FullName.EndsWith("/") OrElse entry.FullName.EndsWith("\") Then
-                        Continue For
-                    End If
+                        ' 跳过目录条目
+                        If entry.FullName.EndsWith("/") OrElse entry.FullName.EndsWith("\") Then
+                            Continue For
+                        End If
 
-                    Dim dir = Path.GetDirectoryName(destPath)
-                    If Not String.IsNullOrEmpty(dir) AndAlso Not Directory.Exists(dir) Then
-                        Directory.CreateDirectory(dir)
-                    End If
+                        Dim dir = Path.GetDirectoryName(destPath)
+                        If Not String.IsNullOrEmpty(dir) AndAlso Not Directory.Exists(dir) Then
+                            Directory.CreateDirectory(dir)
+                        End If
 
-                    Using entryStream = entry.Open()
-                    Using fileStream As New FileStream(destPath, FileMode.Create, FileAccess.Write)
-                        entryStream.CopyTo(fileStream)
-                    End Using
-                    End Using
-                    entryCount += 1
-                Next
-            End Using
+                        Using entryStream = entry.Open()
+                            Using fileStream As New FileStream(destPath, FileMode.Create, FileAccess.Write)
+                                entryStream.CopyTo(fileStream)
+                            End Using
+                        End Using
+                        entryCount += 1
+                    Next
+                End Using
             End Using
 
             _logger?.Invoke($"[FileTool] Extracted {entryCount} entries from {absZip} -> {absDest}")
@@ -600,11 +600,11 @@ Public Class FileTool
 
             Dim entries As New List(Of String)()
             Using fs As New FileStream(absZip, FileMode.Open, FileAccess.Read)
-            Using archive As New ZipArchive(fs, ZipArchiveMode.Read)
-                For Each entry As ZipArchiveEntry In archive.Entries
-                    entries.Add($"{{""name"": ""{EscapeJson(entry.FullName)}"", ""size"": {entry.Length}, ""compressed_size"": {entry.CompressedLength}}}")
-                Next
-            End Using
+                Using archive As New ZipArchive(fs, ZipArchiveMode.Read)
+                    For Each entry As ZipArchiveEntry In archive.Entries
+                        entries.Add($"{{""name"": ""{EscapeJson(entry.FullName)}"", ""size"": {entry.Length}, ""compressed_size"": {entry.CompressedLength}}}")
+                    Next
+                End Using
             End Using
 
             Return $"{{""count"": {entries.Count}, ""zip_path"": ""{EscapeJson(absZip)}"", ""entries"": [{String.Join(", ", entries)}]}}"
@@ -624,19 +624,18 @@ Public Class FileTool
                 Return $"{{""error"": ""ZIP file not found: {EscapeJson(absZip)}""}}"
             End If
 
-            Using fs As New FileStream(absZip, FileMode.Open, FileAccess.Read)
-            Using archive As New ZipArchive(fs, ZipArchiveMode.Read)
+            Using fs As New FileStream(absZip, FileMode.Open, FileAccess.Read), archive As New ZipArchive(fs, ZipArchiveMode.Read)
                 Dim entry = archive.GetEntry(entry_name)
                 If entry Is Nothing Then
                     Return $"{{""error"": ""Entry not found in ZIP: {EscapeJson(entry_name)}""}}"
                 End If
 
                 Using entryStream = entry.Open()
-                Using reader As New StreamReader(entryStream, Encoding.UTF8)
-                    Dim content = reader.ReadToEnd()
-                    _logger?.Invoke($"[FileTool] Read zip entry '{entry_name}' ({content.Length} chars) from {absZip}")
-                    Return content
-                End Using
+                    Using reader As New StreamReader(entryStream, Encoding.UTF8)
+                        Dim content = reader.ReadToEnd()
+                        _logger?.Invoke($"[FileTool] Read zip entry '{entry_name}' ({content.Length} chars) from {absZip}")
+                        Return content
+                    End Using
                 End Using
             End Using
         Catch ex As Exception
