@@ -27,26 +27,31 @@ Public Class PLSPMAnalysisModule : Inherits AnalysisModuleBase
     End Sub
 
     Protected Overrides Function GeneratePlanPromptText() As String
-        Return "Design a plan for PLS-PM (Partial Least Squares Path Modeling) causal path analysis.
-This analysis applies to multi-omics data with sufficient samples.
+        Return "为 PLS-PM（偏最小二乘路径建模）因果路径分析设计计划。
+本分析适用于具有充足样本量的多组学数据。
 
-# Implementation Requirements
-- PLS-PM (if multi-omics with sufficient samples):
-  - Construct latent variables for each omics layer
-  - Build path model
-  - Estimate path coefficients
-  - Plot path diagram
+# 上下游衔接说明
+- 上游输入：读取模块 1 预处理后的各组学表达矩阵（tmp/ 目录下，文件名以 'preprocessed_' 开头）
+- 上游输入（可选）：读取模块 5(KEGG GSVA) 或模块 6(WGCNA 模块特征基因) 的结果作为潜变量
+- 下游输出：因果路径分析结果供模块 10(表格) 和模块 11(报告) 引用
 
-# Plot Requirements
-- Use plspm, igraph, ggplot2
-- Publication-quality theme
-- All text labels in English
-- Save both PNG (300 dpi) and PDF versions
+# 实现要求
+- PLS-PM（仅多组学且样本量充足时）：
+  - 为每个组学层次构建潜变量
+  - 构建路径模型
+  - 估计路径系数
+  - 绘制路径图
 
-# Important Notes
-- Handle missing packages gracefully
-- Skip this analysis if the data is single-omics or sample size is insufficient
-- Focus on causal relationships between omics layers"
+# 绘图要求
+- 使用 plspm、igraph、ggplot2
+- 出版级质量主题
+- 所有文字标签使用英文
+- 同时保存 PNG（300 dpi）和 PDF 两种格式
+
+# 重要注意事项
+- 优雅处理缺失的 R 包（如缺失则自动安装）
+- 若数据为单组学或样本量不足则跳过本分析
+- 重点分析各组学层次之间的因果关系"
     End Function
 
     Protected Overrides Function GetConclusionItems() As String

@@ -36,42 +36,47 @@ Public Class LimmaDiffModule : Inherits AnalysisModuleBase
     End Sub
 
     Protected Overrides Function GeneratePlanPromptText() As String
-        Return $"Design a plan for LIMMA differential analysis including:
-1. Multi-factor ANOVA test on expression matrix
-2. Overall F-test using limma
-3. Pairwise comparisons using limma (based on comparison design from module 3)
-4. For time-series data: include time as covariate, perform differential analysis with time effect removed
-5. For metabolomics data: include VIP value calculation (VIP > {_config.Analysis.MetaboliteVipCutoff} threshold)
-6. Default thresholds: pvalue < 0.05, no logFC cutoff, take top {_config.Analysis.DiffTopCount} molecules by |logFC| descending
+        Return $"为 LIMMA 差异分析设计计划，包括以下内容：
+1. 表达矩阵多因素 ANOVA 检验
+2. 使用 limma 进行总体 F 检验
+3. 使用 limma 进行两两比对差异分析（基于模块 3 的比对设计）
+4. 时间序列数据：将时间作为协变量纳入，消除时间效应后进行差异分析
+5. 代谢组数据：计算 VIP 值（VIP > {_config.Analysis.MetaboliteVipCutoff} 阈值）
+6. 默认阈值：pvalue < 0.05，不设 logFC 阈值，按 |logFC| 降序取 top {_config.Analysis.DiffTopCount} 个分子
 
-# Implementation Requirements
-- Read preprocessed expression matrix from tmp/ (files starting with 'preprocessed_')
-- Read sample info table and comparison design from tables/comparison_design.csv or from {$"{_context.AnalysisDir}/design.json"} file if tables/comparison_design.csv is missing
-- Perform multi-factor ANOVA test
-- Perform overall F-test using limma
-- Perform pairwise limma comparisons for each comparison in the design
-- For time-series data: include time as covariate in the design matrix
-- For metabolomics data: calculate VIP values using mixOmics (must apply VIP > {_config.Analysis.MetaboliteVipCutoff} filter)
-- Apply thresholds: pvalue < 0.05, VIP > {_config.Analysis.MetaboliteVipCutoff} (for metabolomics), no logFC cutoff
-- Take top {_config.Analysis.DiffTopCount} molecules by |logFC| descending after pvalue/VIP filtering
-- Generate the following plots (PNG + PDF, 300 dpi, English labels):
-  - Volcano plots for each comparison (show top 5 differential molecule names)
-  - Venn diagrams showing overlap of differential molecules across comparisons
-  - Heatmaps of differential molecules:
-    * Columns = samples, sorted by sample group
-    * Rows = molecules, hierarchical clustering
-    * Color blocks annotating molecule categories (from annotation table 'class' or 'category' column)
-    * Display molecule names and sample names
-- Save differential result tables as CSV in tables/ directory
+# 上下游衔接说明
+- 上游输入：读取模块 1 预处理后的表达矩阵（tmp/ 目录下，文件名以 'preprocessed_' 开头）
+- 上游输入：读取模块 3 的比对设计（tables/comparison_design.csv，若缺失则读取 {$"{_context.AnalysisDir}/design.json"} 文件）
+- 下游输出：差异分析结果表（前缀 'limma_'）将作为模块 5(KEGG 富集分析) 的输入分子列表，供模块 10(表格) 和模块 11(报告) 引用
 
-# Plot Requirements
-- Use ggplot2, ggvenn, pheatmap/ComplexHeatmap
-- Publication-quality theme
-- All text labels in English
-- Save both PNG (300 dpi) and PDF versions
+# 实现要求
+- 读取 tmp/ 目录中预处理后的表达矩阵（文件名以 'preprocessed_' 开头）
+- 读取样本信息表和比对设计（tables/comparison_design.csv，若缺失则从 {$"{_context.AnalysisDir}/design.json"} 文件读取）
+- 执行多因素 ANOVA 检验
+- 使用 limma 执行总体 F 检验
+- 对比对设计中的每个比对执行 limma 两两比较
+- 时间序列数据：在设计矩阵中将时间作为协变量
+- 代谢组数据：使用 mixOmics 计算 VIP 值（必须应用 VIP > {_config.Analysis.MetaboliteVipCutoff} 过滤）
+- 应用阈值：pvalue < 0.05，VIP > {_config.Analysis.MetaboliteVipCutoff}（代谢组），不设 logFC 阈值
+- pvalue/VIP 过滤后，按 |logFC| 降序取 top {_config.Analysis.DiffTopCount} 个分子
+- 生成以下图形（PNG + PDF，300 dpi，英文标签）：
+  - 各比对的火山图（标注 top 5 差异分子名称）
+  - 文氏图（展示各比对间差异分子的重叠情况）
+  - 差异分子热图：
+    * 列 = 样本，按样本分组排序
+    * 行 = 分子，层次聚类
+    * 颜色块标注分子分类（来自注释表的 'class' 或 'category' 列）
+    * 显示分子名称和样本名称
+- 将差异分析结果表保存为 CSV 到 tables/ 目录
 
-# Important Notes
-- Handle missing packages gracefully"
+# 绘图要求
+- 使用 ggplot2、ggvenn、pheatmap/ComplexHeatmap
+- 出版级质量主题
+- 所有文字标签使用英文
+- 同时保存 PNG（300 dpi）和 PDF 两种格式
+
+# 重要注意事项
+- 优雅处理缺失的 R 包（如缺失则自动安装）"
     End Function
 
     Protected Overrides Function GetConclusionItems() As String

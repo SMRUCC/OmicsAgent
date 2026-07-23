@@ -30,47 +30,53 @@ Public Class KeggFunctionModule : Inherits AnalysisModuleBase
     End Sub
 
     Protected Overrides Function GeneratePlanPromptText() As String
-        Return "Design a plan for KEGG functional analysis including:
-1. KEGG pathway enrichment analysis using differential molecules (from module 4)
-   - Use KEGG background XML/JSON files in the data/ directory
-   - Use clusterProfiler or similar packages
-2. GSVA (Gene Set Variation Analysis) on the expression matrix
-   - Use KEGG pathways as gene sets
-   - Apply the same comparison design as differential analysis
-3. Visualization:
-   - Enrichment bar plot grouped by KEGG category
-   - GSVA heatmap (columns = samples sorted by group, rows = KEGG pathways grouped by category with hierarchical clustering and dendrogram)
-   - GSVA differential analysis volcano plot and score plot
+        Return "为 KEGG 生物学功能分析设计计划，包括以下内容：
+1. 基于差异分子（来自模块 4）进行 KEGG 通路富集分析
+   - 使用 data/ 目录中的 KEGG 背景 XML/JSON 文件
+   - 使用 clusterProfiler 或类似 R 包
+2. 对表达矩阵进行 GSVA（基因集变异分析）
+   - 以 KEGG 通路作为基因集
+   - 应用与差异分析相同的比对设计
+3. 可视化：
+   - 富集结果条形图（按 KEGG 大分类分组）
+   - GSVA 热图（列=样本按分组排序，行=KEGG 通路按大分类分组+层次聚类+聚类树）
+   - GSVA 差异分析火山图和得分图
 
-# Implementation Requirements
-- Read differential analysis results from module 4 (tables/ directory)
-- Read KEGG background data from data/ directory (XML or JSON files)
-- Perform KEGG pathway enrichment analysis using clusterProfiler
-- Perform GSVA analysis using GSVA package
-- Perform differential analysis on GSVA scores using limma (same comparison design)
-- Generate the following plots (PNG + PDF, 300 dpi, English labels):
-  - Enrichment bar plot:
-    * Bar plot of enriched pathways
-    * Grouped by KEGG large category (Metabolism, Genetic Information Processing, etc.)
-    * Color by category, size by gene count
-  - GSVA heatmap:
-    * Columns = samples, sorted by sample group
-    * Rows = KEGG pathways
-    * Group rows by KEGG large category
-    * Hierarchical clustering within each category
-    * Draw dendrogram on the left side for each category
-  - GSVA differential volcano plot
-  - GSVA score plot for top differential pathways
-- Save enrichment and GSVA result tables as CSV
+# 上下游衔接说明
+- 上游输入：读取模块 4 的差异分析结果（tables/ 目录，前缀 'limma_'）
+- 上游输入：读取 data/ 目录中的 KEGG 背景数据
+- 上游输入：读取模块 3 的比对设计（用于 GSVA 差异分析）
+- 下游输出：GSVA 分析结果将作为模块 6(WGCNA 多组学关联分析) 的表型数据（多组学场景下），结果表供模块 10(表格) 和模块 11(报告) 引用
 
-# Plot Requirements
-- Use ggplot2, ComplexHeatmap, clusterProfiler, GSVA
-- Publication-quality theme
-- All text labels in English
-- Save both PNG (300 dpi) and PDF versions
+# 实现要求
+- 读取模块 4 的差异分析结果（tables/ 目录）
+- 读取 data/ 目录中的 KEGG 背景数据（XML 或 JSON 文件）
+- 使用 clusterProfiler 执行 KEGG 通路富集分析
+- 使用 GSVA 包执行 GSVA 分析
+- 使用 limma 对 GSVA 得分执行差异分析（比对设计与模块 4 一致）
+- 生成以下图形（PNG + PDF，300 dpi，英文标签）：
+  - 富集条形图：
+    * 富集通路的条形图
+    * 按 KEGG 大分类分组（Metabolism、Genetic Information Processing 等）
+    * 按分类着色，按基因数量调整点大小
+  - GSVA 热图：
+    * 列 = 样本，按样本分组排序
+    * 行 = KEGG 通路
+    * 按 KEGG 大分类对行分组
+    * 每个分类内做层次聚类
+    * 在左侧为每个分类绘制聚类树
+  - GSVA 差异分析火山图
+  - 显著差异通路的 GSVA 得分图
+- 将富集和 GSVA 结果表保存为 CSV
 
-# Important Notes
-- Handle missing packages gracefully"
+# 绘图要求
+- 使用 ggplot2、ComplexHeatmap、clusterProfiler、GSVA
+- 出版级质量主题
+- 所有文字标签使用英文
+- 同时保存 PNG（300 dpi）和 PDF 两种格式
+
+# 重要注意事项
+- 优雅处理缺失的 R 包（如缺失则自动安装）"
     End Function
 
     Protected Overrides Function GetConclusionItems() As String

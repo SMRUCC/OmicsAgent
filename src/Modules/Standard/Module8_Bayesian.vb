@@ -27,26 +27,32 @@ Public Class BayesianNetworkModule : Inherits AnalysisModuleBase
     End Sub
 
     Protected Overrides Function GeneratePlanPromptText() As String
-        Return "Design a plan for dynamic Bayesian network analysis using bnlearn.
-This analysis applies to time-series data with sufficient samples.
+        Return "为动态贝叶斯网络分析设计计划，使用 bnlearn R 包。
+本分析适用于具有充足样本量的时间序列数据。
 
-# Implementation Requirements
-- Dynamic Bayesian Network (if time-series data):
-  - Read expression matrix and time information
-  - Build dynamic Bayesian network using bnlearn
-  - Identify regulatory edges
-  - Plot network graph
+# 上下游衔接说明
+- 上游输入：读取模块 1 预处理后的表达矩阵（tmp/ 目录下，文件名以 'preprocessed_' 开头）
+- 上游输入：读取样本信息表中的时间信息
+- 上游输入（可选）：读取模块 6(WGCNA) 或模块 7(CMeans) 的模块/聚类结果
+- 下游输出：调控网络结果供模块 10(表格) 和模块 11(报告) 引用
 
-# Plot Requirements
-- Use bnlearn, igraph, ggplot2
-- Publication-quality theme
-- All text labels in English
-- Save both PNG (300 dpi) and PDF versions
+# 实现要求
+- 动态贝叶斯网络（仅时间序列数据）：
+  - 读取表达矩阵和时间信息
+  - 使用 bnlearn 构建动态贝叶斯网络
+  - 识别调控边
+  - 绘制网络图
 
-# Important Notes
-- Handle missing packages gracefully
-- Skip this analysis if the data is not time-series
-- Identify key regulatory relationships between molecules/modules"
+# 绘图要求
+- 使用 bnlearn、igraph、ggplot2
+- 出版级质量主题
+- 所有文字标签使用英文
+- 同时保存 PNG（300 dpi）和 PDF 两种格式
+
+# 重要注意事项
+- 优雅处理缺失的 R 包（如缺失则自动安装）
+- 若数据非时间序列则跳过本分析
+- 重点识别分子/模块之间的关键调控关系"
     End Function
 
     Protected Overrides Function GetConclusionItems() As String
