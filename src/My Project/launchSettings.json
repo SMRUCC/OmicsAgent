@@ -2,8 +2,8 @@
   "profiles": {
     "OmicsAgent": {
       "commandName": "Project",
-      "commandLineArgs": "\"G:\\OmicsWorks\\agent\\bin\\research.exe\" -r F:\\datapool\\2026.7.6-energy\\FWMS20256511-human_cell_pellet\\agent_test\\research.txt -e F:\\datapool\\2026.7.6-energy\\FWMS20256511-human_cell_pellet\\agent_test\\expression.csv -a F:\\datapool\\2026.7.6-energy\\FWMS20256511-human_cell_pellet\\agent_test\\metabolites.csv -s F:\\datapool\\2026.7.6-energy\\FWMS20256511-human_cell_pellet\\agent_test\\sampleinfo.csv -k F:\\datapool\\2026.7.6-energy\\FWMS20256511-human_cell_pellet\\agent_test\\kb  --skip-literature  --skip-kb ",
-      "workingDirectory": "F:\\datapool\\2026.7.6-energy\\FWMS20256511-human_cell_pellet\\agent_test"
+      "commandLineArgs": "-r=research.txt -e=expression.csv -a=metabolites.csv -s=sampleinfo.csv -k=./pubmed/ -w=./demo/ -c=config.ini --skip-literature",
+      "workingDirectory": "G:\\OmicsWorks\\test\\metabolism"
     }
   }
 }

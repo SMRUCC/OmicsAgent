@@ -25,7 +25,6 @@ Public Class KnowledgeBaseBuilder
     Private ReadOnly _config As AgentConfig
     Private ReadOnly _context As AnalysisContext
     Private ReadOnly _logger As Action(Of String)
-    Private ReadOnly _llmFactory As Func(Of LLMClient)
 
     Public Sub New(config As AgentConfig, context As AnalysisContext, Optional logger As Action(Of String) = Nothing)
         _config = config
@@ -189,7 +188,7 @@ Public Class KnowledgeBaseBuilder
     Private Async Function ExtractSearchKeywords(researchTopic As String) As Task(Of List(Of String))
         Dim keywords As New List(Of String)()
         Try
-            Using llm = _llmFactory()
+            Using llm As LLMClient = _config.CreateLLMClient("extract_topics", _context.TmpDir)
                 Dim prompt = $"You are a biomedical research assistant. Based on the following research topic description, extract 3-5 English search keywords that would be most effective for finding relevant scientific literature in PubMed. 
 Return ONLY the keywords, one per line, without numbering or other text." & vbCrLf & vbCrLf &
 $"Research topic:{vbCrLf}{researchTopic}"
@@ -228,7 +227,7 @@ $"Research topic:{vbCrLf}{researchTopic}"
 
             Try
                 Dim content = File.ReadAllText(f, Encoding.UTF8)
-                Using llm = _llmFactory()
+                Using llm As LLMClient = _config.CreateLLMClient("extract_knowledge", _context.TmpDir)
                     Dim prompt = BuildPerDocumentExtractionPrompt(_context.ResearchTopic, content, fileName)
                     Dim resp = Await llm.Chat(prompt, cancellationToken)
                     Dim perDocJson = resp.ExtractJsonFromResponse
@@ -267,7 +266,7 @@ $"Research topic:{vbCrLf}{researchTopic}"
         Dim combinedExtractions = allExtractions.ToString()
 
         Try
-            Using llm = _llmFactory()
+            Using llm As LLMClient = _config.CreateLLMClient("create_kbfile", _context.TmpDir)
                 Dim prompt = BuildSummaryPrompt(_context.ResearchTopic, combinedExtractions)
                 Dim resp = Await llm.Chat(prompt, cancellationToken)
                 Dim kbJson = resp.ExtractJsonFromResponse
@@ -291,7 +290,7 @@ $"Research topic:{vbCrLf}{researchTopic}"
     Private Async Function GenerateKnowledgeFromLLMAsync(cancellationToken As CancellationToken) As Task
         LogInfo("使用 LLM 自身训练知识生成知识库...")
         Try
-            Using llm = _llmFactory()
+            Using llm As LLMClient = _config.CreateLLMClient("extract_llms_kb", _context.TmpDir)
                 Dim prompt = BuildKnowledgeFromLLMPrompt(_context.ResearchTopic)
                 Dim resp = Await llm.Chat(prompt, cancellationToken)
                 Dim kbJson = resp.ExtractJsonFromResponse
