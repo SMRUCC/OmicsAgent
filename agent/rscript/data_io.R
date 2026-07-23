@@ -1,3 +1,8 @@
+# ============================================================
+# Required packages
+# ============================================================
+library(utils)
+
 #' @title Load Expression Matrix from CSV File
 #'
 #' @description

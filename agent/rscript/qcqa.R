@@ -1,3 +1,10 @@
+# ============================================================
+# Required packages
+# ============================================================
+library(stats)
+library(ggplot2)
+library(grDevices)
+
 #' @title Compute QC Group Variability
 #'
 #' @description

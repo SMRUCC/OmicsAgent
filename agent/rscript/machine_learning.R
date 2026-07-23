@@ -1,3 +1,14 @@
+# ============================================================
+# Required packages
+# ============================================================
+library(randomForest)
+library(dplyr)
+library(ggplot2)
+library(grDevices)
+library(stats)
+library(glmnet)
+library(reshape2)
+
 #' @title Build Random Forest Classification Model with SHAP Values
 #'
 #' @description

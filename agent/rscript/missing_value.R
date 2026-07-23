@@ -1,3 +1,8 @@
+# ============================================================
+# Required packages
+# ============================================================
+library(impute)
+
 #' @title Filter Features by Missing Value Proportion
 #'
 #' @description

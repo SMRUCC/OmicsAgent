@@ -1,3 +1,14 @@
+# ============================================================
+# Required packages
+# ============================================================
+library(bnlearn)
+library(igraph)
+library(ggplot2)
+library(grDevices)
+library(grid)
+library(ggrepel)
+library(plspm)
+
 #' @title Build Dynamic Bayesian Network with bnlearn
 #'
 #' @description

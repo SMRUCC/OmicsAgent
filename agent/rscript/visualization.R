@@ -1,3 +1,16 @@
+# ============================================================
+# Required packages
+# ============================================================
+library(ggplot2)
+library(grDevices)
+library(ggrepel)
+library(ggVennDiagram)
+library(VennDiagram)
+library(RColorBrewer)
+library(grid)
+library(UpSetR)
+library(pheatmap)
+
 #' @title Plot Volcano Plot with Top 5 Feature Labels
 #'
 #' @description

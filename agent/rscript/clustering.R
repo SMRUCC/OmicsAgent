@@ -1,3 +1,11 @@
+# ============================================================
+# Required packages
+# ============================================================
+library(e1071)
+library(reshape2)
+library(ggplot2)
+library(grDevices)
+
 #' @title Perform CMeans Fuzzy Clustering
 #'
 #' @description

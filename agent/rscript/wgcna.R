@@ -1,3 +1,12 @@
+# ============================================================
+# Required packages
+# ============================================================
+library(WGCNA)
+library(stats)
+library(ggplot2)
+library(grDevices)
+library(reshape2)
+
 #' @title Build WGCNA Co-expression Modules
 #'
 #' @description

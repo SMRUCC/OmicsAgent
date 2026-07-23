@@ -1,3 +1,11 @@
+# ============================================================
+# Required packages
+# ============================================================
+library(stats)
+library(ggplot2)
+library(grDevices)
+library(GSVA)
+
 #' @title Fisher's Exact Enrichment Test
 #'
 #' @description

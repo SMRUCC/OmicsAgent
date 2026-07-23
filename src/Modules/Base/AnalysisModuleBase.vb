@@ -290,7 +290,7 @@ Write a conclusion in Chinese that describes:
 
 {GetConclusionItems()}
 
-Do not write any file, just generates the conclusion text and return it back to me. The conclusion should be 300-500 words in Chinese. Be specific and rigorous. Do NOT fabricate data.
+Do not write any file, just generates the conclusion text in markdown format and return it back to me. The conclusion should be 500-800 words in Chinese. Be specific and rigorous. Do NOT fabricate data.
 "
         Dim resp = Await llm.Chat(prompt, cancellationToken)
         Return resp.output

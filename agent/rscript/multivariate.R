@@ -1,3 +1,13 @@
+# ============================================================
+# Required packages
+# ============================================================
+library(stats)
+library(ggplot2)
+library(grDevices)
+library(ggrepel)
+library(mixOmics)
+library(ropls)
+
 #' @title Perform PCA Analysis
 #'
 #' @description

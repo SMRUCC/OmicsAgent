@@ -1,3 +1,9 @@
+# ============================================================
+# Required packages
+# ============================================================
+library(stats)
+library(limma)
+
 #' @title F-test for Overall Differential Analysis
 #'
 #' @description
