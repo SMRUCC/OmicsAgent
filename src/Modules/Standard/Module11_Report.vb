@@ -119,68 +119,48 @@ Verify the PDF file is generated successfully.
 
     ''' <summary>收集所有模块的结论文本</summary>
     Private Function CollectModuleConclusions() As Dictionary(Of Integer, String)
-        Dim result As New Dictionary(Of Integer, String)()
-        Dim analysisDir = Path.Combine(_context.WorkspaceDir, "analysis")
-        If Not Directory.Exists(analysisDir) Then Return result
+        Dim results As New Dictionary(Of Integer, String)()
 
-        For Each dir As String In Directory.GetDirectories(analysisDir, "analysis_modules_*")
-            Dim conclusionFile = Path.Combine(dir, "conclusion.md")
-            If File.Exists(conclusionFile) Then
-                Dim moduleName = Path.GetFileName(dir)
-                Dim idxStr = System.Text.RegularExpressions.Regex.Match(moduleName, "analysis_modules_(\d+)").Groups(1).Value
-                If Integer.TryParse(idxStr, Nothing) Then
-                    result(Integer.Parse(idxStr)) = File.ReadAllText(conclusionFile, Encoding.UTF8)
-                End If
-            End If
+        For Each result As ModuleResult In _context.ModuleResults
+            Dim conclusionFile = Path.Combine(result.OutputDir, "conclusion.md")
+            Dim idx As Integer = result.ModuleIndex
+
+            results(idx) = File.ReadAllText(conclusionFile, Encoding.UTF8)
         Next
 
-        Return result
+        Return results
     End Function
 
     ''' <summary>收集所有图表</summary>
     Private Function CollectAllFigures() As List(Of Tuple(Of Integer, String))
-        Dim result As New List(Of Tuple(Of Integer, String))()
-        Dim analysisDir = Path.Combine(_context.WorkspaceDir, "analysis")
-        If Not Directory.Exists(analysisDir) Then Return result
+        Dim figures As New List(Of Tuple(Of Integer, String))()
 
-        For Each dir As String In Directory.GetDirectories(analysisDir, "analysis_modules_*")
-            Dim figuresDir = Path.Combine(dir, "figures")
-            If Directory.Exists(figuresDir) Then
-                Dim moduleName = Path.GetFileName(dir)
-                Dim idxStr = System.Text.RegularExpressions.Regex.Match(moduleName, "analysis_modules_(\d+)").Groups(1).Value
-                Dim idx As Integer
-                If Integer.TryParse(idxStr, idx) Then
-                    For Each f In Directory.GetFiles(figuresDir, "*.png")
-                        result.Add(Tuple.Create(idx, f))
-                    Next
-                End If
-            End If
+        For Each result As ModuleResult In _context.ModuleResults
+            Dim figuresDir As String = Path.Combine(result.OutputDir, "figures")
+            Dim idx As Integer = result.ModuleIndex
+
+            For Each f In Directory.GetFiles(FiguresDir, "*.png")
+                figures.Add(Tuple.Create(idx, f))
+            Next
         Next
 
-        Return result
+        Return figures
     End Function
 
     ''' <summary>收集所有表格</summary>
     Private Function CollectAllTables() As List(Of Tuple(Of Integer, String))
-        Dim result As New List(Of Tuple(Of Integer, String))()
-        Dim analysisDir = Path.Combine(_context.WorkspaceDir, "analysis")
-        If Not Directory.Exists(analysisDir) Then Return result
+        Dim tables As New List(Of Tuple(Of Integer, String))()
 
-        For Each dir As String In Directory.GetDirectories(analysisDir, "analysis_modules_*")
-            Dim tablesDir = Path.Combine(dir, "tables")
-            If Directory.Exists(tablesDir) Then
-                Dim moduleName = Path.GetFileName(dir)
-                Dim idxStr = System.Text.RegularExpressions.Regex.Match(moduleName, "analysis_modules_(\d+)").Groups(1).Value
-                Dim idx As Integer
-                If Integer.TryParse(idxStr, idx) Then
-                    For Each f In Directory.GetFiles(tablesDir, "*.csv")
-                        result.Add(Tuple.Create(idx, f))
-                    Next
-                End If
-            End If
+        For Each result As ModuleResult In _context.ModuleResults
+            Dim tablesDir = result.Workdir
+            Dim idx As Integer = result.ModuleIndex
+
+            For Each f In Directory.GetFiles(tablesDir, "*.csv")
+                tables.Add(Tuple.Create(idx, f))
+            Next
         Next
 
-        Return result
+        Return tables
     End Function
 
     ''' <summary>调用 LLM 生成报告内容</summary>
