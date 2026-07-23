@@ -7,6 +7,7 @@ Module Workflow
     Private _logger As Action(Of String) = AddressOf ConsoleLog
     Private _config As AgentConfig
     Private _context As AnalysisContext
+    Private _customModules As New List(Of CustomModuleDefinition)
 
     Public Async Function Run(parsed As Opts) As Task(Of Integer)
         Console.OutputEncoding = Encoding.UTF8
@@ -66,6 +67,28 @@ Module Workflow
 
         ' 4. 执行分析模块
         Dim modulesToRun = parsed.ParseModulesToRun
+
+        ' 加载自定义分析模块（从 JSON 配置文件）
+        Dim customModuleDir = GetCustomModulesDir(parsed)
+        _customModules = LoadCustomModules(customModuleDir)
+
+        ' 若执行列表包含报告模块(8/9)，则在第一个报告模块之前插入自定义模块索引
+        ' 确保自定义模块在 ResultTablesModule 和 ReportModule 之前执行
+        If _customModules.Count > 0 Then
+            Dim firstReportIdx = -1
+            For i = 0 To modulesToRun.Count - 1
+                If modulesToRun(i) = 8 OrElse modulesToRun(i) = 9 Then
+                    firstReportIdx = i
+                    Exit For
+                End If
+            Next
+
+            If firstReportIdx >= 0 Then
+                Dim customIndices = Enumerable.Range(0, _customModules.Count).Select(Function(i) 10 + i).ToList()
+                modulesToRun.InsertRange(firstReportIdx, customIndices)
+            End If
+        End If
+
         For Each moduleIdx In modulesToRun
             If cancellationToken.IsCancellationRequested Then
                 Exit For
