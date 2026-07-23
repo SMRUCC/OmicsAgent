@@ -68,6 +68,7 @@ Return your plan as JSON:
   ""goal"": ""<brief description>"",
   ""input_files"": [""<input file paths>""],
   ""output_files"": [""<expected output file paths>""],
+  ""execution_steps"": [{{""action"": ""<description of current step action>"", ""goal"": ""<goal of current step...>""}}, ...],
   ""notes"": ""<special considerations>""
 }}
 "
@@ -76,10 +77,11 @@ Return your plan as JSON:
         Dim plan As ModulePlan
         If Not String.IsNullOrEmpty(json) Then
             plan = json.LoadJSON(Of ModulePlan)
+            plan.module_name = ModuleName
         Else
-            plan = New ModulePlan() With {.ModuleName = ModuleName, .Goal = resp.output}
+            plan = New ModulePlan() With {.module_name = ModuleName, .goal = resp.output}
         End If
-        plan.ModuleName = ModuleName
+
         Return plan
     End Function
 
@@ -101,19 +103,11 @@ Return your plan as JSON:
         descJson.SaveTo(descPath)
         LogInfo($"Table descriptions saved: {descPath}")
 
-        ' 3. 第二次 LLM 调用：编写生成 xlsx 的 R 脚本并执行
+        ' 3. 第二次 LLM 调用：通过函数调用工具编写并执行生成 xlsx 的 R 脚本
         Dim analysisDir = Path.Combine(_context.WorkspaceDir, "analysis")
-        Dim prompt = BuildRScriptPrompt(descPath, analysisDir)
+        Dim prompt = BuildRScriptPrompt(descPath, analysisDir, plan, [step])
 
-        Dim resp = Await llm.Chat(prompt, cancellationToken)
-        Dim rCode = resp.ExtractCodeBlock("r")
-
-        Dim scriptFile = Path.Combine(_context.ScriptsDir, $"module_{ModuleIndex}_result_tables.R")
-        rCode.SaveTo(scriptFile)
-
-        Dim shell As New ShellTool(_config, _context.WorkspaceDir, _logger)
-        Dim result = shell.run_rscript($"scripts/module_{ModuleIndex}_result_tables.R")
-        LogInfo($"R script execution result: {result.Substring(0, Math.Min(500, result.Length))}")
+        Await llm.Chat(prompt, cancellationToken)
     End Function
 
     Protected Overrides Async Function GenerateConclusionAsync(llm As LLMClient, plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)
@@ -310,7 +304,7 @@ Return ONLY the completed JSON (no extra explanation, no markdown code fences).
     ''' 构建第二次 LLM 调用的提示词：要求 LLM 编写基于 openxlsx 的 R 脚本，
     ''' 按规定的样式读取 CSV 与注释 JSON，生成 xlsx 结果文件。
     ''' </summary>
-    Private Function BuildRScriptPrompt(descPath As String, analysisDir As String) As String
+    Private Function BuildRScriptPrompt(descPath As String, analysisDir As String, plan As ModulePlan, [step] As [Step]) As String
         Dim prompt As String = <root><![CDATA[
 You are a bioinformatics R scripting expert. Write a complete R script that compiles multiple intermediate CSV result tables into organized, styled XLSX files using the openxlsx package.
 
@@ -318,6 +312,12 @@ You are a bioinformatics R scripting expert. Write a complete R script that comp
 - A JSON file at: {DESC_PATH}
   describes which XLSX files to create, which CSV files (sheets) each contains, and an English annotation text for the first row of each sheet.
 - Output directory for XLSX files: {OUT_DIR}
+
+# Plan Execution Context
+- Module: Result Tables Compilation
+- Plan goal: {PLAN_GOAL}
+- Current execution step: {STEP}
+- All scripts and the generated files are placed in this designated temporary workspace folder: {WORKSPACE}
 
 # JSON structure (table_descriptions.json)
 {
@@ -401,10 +401,17 @@ for (i in seq_along(desc$xlsx_files)) {
 - Make sure numeric columns remain numeric (do not wrap them as text).
 - The script must run end-to-end without further input.
 
-Write the complete R script inside a ```r ... ``` code block.
+# Execution Instructions
+- Write the R script to a file in the workspace using the write_file tool (e.g., 'module_8_result_tables.R')
+- Execute the R script using the run_rscript tool
+- Verify the XLSX files are generated successfully in the output directory
 ]]></root>.Value
 
-        prompt = prompt.Replace("{DESC_PATH}", descPath).Replace("{OUT_DIR}", analysisDir)
+        prompt = prompt.Replace("{DESC_PATH}", descPath) _
+                       .Replace("{OUT_DIR}", analysisDir) _
+                       .Replace("{PLAN_GOAL}", plan.goal) _
+                       .Replace("{STEP}", [step].GetJson) _
+                       .Replace("{WORKSPACE}", Workspace.GetDirectoryFullPath)
         Return prompt
     End Function
 End Class

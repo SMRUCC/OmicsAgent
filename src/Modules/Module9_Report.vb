@@ -60,6 +60,7 @@ Return your plan as JSON:
   ""goal"": ""<brief description>"",
   ""input_files"": [""<input file paths>""],
   ""output_files"": [""<expected output file paths>""],
+  ""execution_steps"": [{{""action"": ""<description of current step action>"", ""goal"": ""<goal of current step...>""}}, ...],
   ""notes"": ""<special considerations>""
 }}
 "
@@ -68,15 +69,16 @@ Return your plan as JSON:
         Dim plan As ModulePlan
         If Not String.IsNullOrEmpty(json) Then
             plan = json.LoadJSON(Of ModulePlan)
+            plan.module_name = ModuleName
         Else
-            plan = New ModulePlan() With {.ModuleName = ModuleName, .Goal = resp.output}
+            plan = New ModulePlan() With {.module_name = ModuleName, .goal = resp.output}
         End If
-        plan.ModuleName = ModuleName
+
         Return plan
     End Function
 
     Protected Overrides Async Function GenerateAndRunScriptAsync(llm As LLMClient, plan As ModulePlan, [step] As [Step], cancellationToken As CancellationToken) As Task
-        ' 这个模块直接由 VB.NET 代码生成 HTML 报告，并调用 wkhtmltopdf 转换为 PDF
+        ' 这个模块直接由 VB.NET 代码生成 HTML 报告，并通过 LLM 函数调用 wkhtmltopdf 转换为 PDF
         LogInfo("Generating research report...")
 
         ' 收集所有模块的结论文本
@@ -97,14 +99,33 @@ Return your plan as JSON:
         html.SaveTo(htmlPath)
         LogInfo($"HTML report generated: {htmlPath}")
 
-        ' 调用 wkhtmltopdf 转换为 PDF
+        ' 通过 LLM 函数调用工具执行 wkhtmltopdf 转换为 PDF
         Dim pdfPath = Path.Combine(_context.WorkspaceDir, "analysis", "report.pdf")
-        Dim shell As New ShellTool(_config, _context.WorkspaceDir, _logger)
-        Dim result = shell.run_wkhtmltopdf(
-            htmlPath, pdfPath,
-            extra_args:=$"--margin-top 15mm --margin-bottom 15mm --margin-left 15mm --margin-right 15mm --enable-local-file-access"
-        )
-        LogInfo($"PDF conversion result: {result.Substring(0, Math.Min(300, result.Length))}")
+        Dim prompt = $"
+You are a report generation assistant. Convert the generated HTML report to PDF using the run_wkhtmltopdf tool.
+
+{BuildContextInfo()}
+
+# Analysis Plan
+{plan.module_name}
+
+plan goal: {plan.goal}
+plan notes: {plan.notes}
+current plan execution step: {[step].GetJson}
+
+All scripts and the generated files are placed in this designated temporary workspace folder: {Workspace.GetDirectoryFullPath}
+
+# Your Task
+The HTML report has been generated at: {htmlPath}
+Convert it to PDF at: {pdfPath}
+Use the run_wkhtmltopdf tool with the following arguments:
+- html_path: {htmlPath}
+- pdf_path: {pdfPath}
+- extra_args: --margin-top 15mm --margin-bottom 15mm --margin-left 15mm --margin-right 15mm --enable-local-file-access
+
+Verify the PDF file is generated successfully.
+"
+        Await llm.Chat(prompt, cancellationToken)
     End Function
 
     Protected Overrides Async Function GenerateConclusionAsync(llm As LLMClient, plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)
