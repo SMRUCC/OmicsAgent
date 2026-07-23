@@ -403,17 +403,33 @@ Do not write any file, just generates the conclusion text in markdown format and
         Dim fileTool As New FileTool(_context.WorkspaceDir, _logger)
         Dim shellTool As New ShellTool(_config, _context.WorkspaceDir, _logger)
 
-        ' 注册文件操作工具
+        ' 注册写入类文件操作工具（受 allowWriteFile 控制）
         If allowWriteFile Then
             llm.AddFunction(fileTool, "write_file")
+            llm.AddFunction(fileTool, "delete_file")
+            llm.AddFunction(fileTool, "copy_file")
+            llm.AddFunction(fileTool, "move_file")
+            llm.AddFunction(fileTool, "delete_directory")
+            llm.AddFunction(fileTool, "create_zip")
+            llm.AddFunction(fileTool, "extract_zip")
         End If
 
+        ' 注册只读类文件操作工具（始终可用）
         llm.AddFunction(fileTool, "read_file")
         llm.AddFunction(fileTool, "file_exists")
         llm.AddFunction(fileTool, "list_files")
         llm.AddFunction(fileTool, "create_directory")
         llm.AddFunction(fileTool, "peek_csv")
         llm.AddFunction(fileTool, "peek_file")
+        llm.AddFunction(fileTool, "get_file_info")
+        llm.AddFunction(fileTool, "read_file_lines")
+        llm.AddFunction(fileTool, "tail_file")
+        llm.AddFunction(fileTool, "search_in_file")
+        llm.AddFunction(fileTool, "list_directories")
+        llm.AddFunction(fileTool, "directory_exists")
+        llm.AddFunction(fileTool, "list_tree")
+        llm.AddFunction(fileTool, "list_zip_contents")
+        llm.AddFunction(fileTool, "read_zip_entry")
 
         ' 注册命令行执行工具
         llm.AddFunction(shellTool, "run_rscript")
