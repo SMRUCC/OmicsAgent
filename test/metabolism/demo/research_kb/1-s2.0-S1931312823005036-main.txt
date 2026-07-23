@@ -1,0 +1,341 @@
+======================================================================
+论文信息提取结果
+======================================================================
+
+【源文件】1-s2.0-S1931312823005036-main.pdf
+
+----------------------------------------------------------------------
+【标题 / Title】
+----------------------------------------------------------------------
+Another iron in C. difﬁcile’s ﬁre
+
+----------------------------------------------------------------------
+【DOI】
+----------------------------------------------------------------------
+10.1016/j.chom.2023.12.008
+
+----------------------------------------------------------------------
+【摘要 / Abstract】
+----------------------------------------------------------------------
+[未识别到摘要]
+
+----------------------------------------------------------------------
+【全文 / Full Text】
+----------------------------------------------------------------------
+Previews
+Another iron in C. difﬁcile’s ﬁre
+Hal Drakesmith1,* and Michael B. Zimmermann1
+1MRC Translational Immune Discovery Unit, MRC Weatherall Institute of Molecular Medicine, Radcliffe Department of Medicine, University
+of Oxford, Oxford OX3 0EU, UK
+*Correspondence: alexander.drakesmith@imm.ox.ac.uk
+https://doi.org/10.1016/j.chom.2023.12.008
+Iron is arguably the most important nutrient in the ongoing battle between hosts and bacteria. Recently in
+Nature, a unique iron storage organelle, the ferrosome, was discovered in the human pathogen Clostridioides
+difﬁcile.1 But what is the role of ferrosomes and how do they affect bacterial behavior and infection?
+In 1925, Otto Warburg asserted, ‘‘Every
+living cell contains iron and that life
+without iron is impossible.’’2 Iron holds
+a
+distinctive
+position
+in
+biochemistry
+because of its ability to shuttle electrons
+and form bonds with a diverse range of
+protein partners. Consequently, iron is a
+key co-factor for many enzyme systems
+conserved across kingdoms of life. Iron
+is a crucial metal resource scavenged by
+invading bacteria from infected mammalian hosts. The concept of ‘‘nutritional immunity,’’ where hosts protect their iron resources, but pathogen adaptation can
+overcome such defenses, is a well-established theme in evolutionary genetics with
+some beautiful examples.3,4 A further
+consideration is that because of its chemical reactivity, too much iron is perilous for
+a cell. Therefore, microbes must be able
+to both efﬁciently acquire iron from a usually ungenerous host and yet defend
+themselves against toxic overabundance.
+Adding to this complexity, signiﬁcant
+changes in iron concentration may occur
+in the intestinal lumen. This can happen,
+for instance, when iron from food remains
+unabsorbed or in cases of gastrointestinal
+inﬂammation and/or bleeding.
+Clostridioides difﬁcile is a gram-positive
+anaerobic bacillus ﬁrst described in 1935
+in
+the
+stool
+of
+healthy
+newborns.
+C. difﬁcile infection (CDI) was thought to
+be nonpathogenic until it was identiﬁed
+as the source of exotoxins in stools of patients with pseudomembranous colitis.
+There has been a sharp increase in CDI
+incidence and mortality across industrialized countries and it is now the most
+frequently reported nosocomial pathogen
+in the United States.5 CDI may complicate
+the course of inﬂammatory bowel disease
+(IBD) and cause serious exacerbations of
+their disease with high recurrence rates.6
+Prevention
+and
+treatment
+options
+of
+CDI are limited and new strategies for
+treating this major public health threat
+are needed. Thus, the report by Pi et al.1
+is of importance because a better basic
+understanding of CDI could lead to new
+therapeutic options. Because replication
+of C. difﬁcile is facilitated by iron acquisition, an iron-oriented study of Clostridioides biology was warranted.
+In
+the
+search
+to
+understand
+how
+C. difﬁcile maintains iron homeostasis, Pi
+et al. revealed the presence of ferrosomes
+in these bacteria. Ferrosomes are membrane-bound organelles containing iron,
+phosphorous, and oxygen originally identiﬁed in Desulfovibrio magneticus RS-1.
+The term was coined when their presence
+was also noted in Rhodopseudomonas
+palustris
+and
+Shewanella
+putrefaciens
+and shown to be encoded by the rather
+broadly phylogenetically distributed fez
+operon.7 In S. putrefaciens, ferrosomes
+likely enable anaerobic adaptation to
+iron starvation.7 However, their function
+in C. difﬁcile appears to be more nuanced.
+The fez operon in C. difﬁcile contains
+two transcription start sites and proteincoding genes fezA and fezB, the latter of
+which shares >30% sequence identity
+with P1B6-ATPase transporter that mediates ferrosome formation in gram-negative anaerobes. Pi et al. investigated the
+regulation and function of fezB. The fez
+operon was strongly induced by both
+iron deprivation and knockout of the transcription factor fur, which is active when
+cells are iron replete. However, fezB deletion did not confer a growth defect under
+conditions of iron deprivation or iron
+excess. Instead, a lag in growth was
+observed
+when
+fezB-deﬁcient,
+irondeprived cells were exposed to a strong
+dose of iron sulfate. Pi et al. suggest the
+fez system may be induced in order to
+protect an iron deﬁcient cell from a sudden inﬂux of potentially toxic iron.
+Using a combination of scanning transmission
+electron
+microscopy,
+energy
+dispersive X-ray spectroscopy, electron
+tomography, LC-MS-MS, and cryo-electron tomography, C. difﬁcile were then
+rigorously analyzed for ferrosome-type
+structures. The authors showed that the
+fez operon is necessary and sufﬁcient for
+formation of Fe, O, and P-containing
+membrane-bound amorphous granules
+that are associated with FezA and FezB
+proteins and are often near the cell
+membrane.
+Next, the authors tested whether lack of
+ferrosomes in fezB-deﬁcient C. difﬁcile
+altered aspects of infection in murine
+models. After four days of infection,
+mice
+infected
+with
+fezB-deﬁcient
+C.
+difﬁcile
+had
+decreased
+bacterial
+burden and exhibited less weight loss
+compared with mice infected with wildtype C. difﬁcile. In a mouse model of colitis, although weight loss was comparable
+between bacterial strains, fezB-deﬁcient
+C. difﬁcile demonstrated lower colonization
+and
+less
+intestinal
+inﬂammation
+compared to WT. Lastly, in the gut, the
+iron-sequestering
+protein
+calprotectin
+was induced by inﬂammation, calprotectin upregulated the fez operon in vitro
+and in vivo, and in mice lacking calprotectin, colonization and weight loss was
+unaffected by loss of the ferrosome system. These results indicate that ferrosomes may be needed in mice to counteract a situation of low iron availability
+due to nutritional immunity mediated by
+calprotectin.
+Low iron availability modiﬁes many
+aspects of C. difﬁcile behavior.8 Pi et al.
+suggest ferrosomes facilitate C. difﬁcile
+ll
+Cell Host & Microbe 32, January 10, 2024 ª 2023 Elsevier Inc.
+1
+
+transition from low iron availability to
+excess, for example, perhaps in ﬂareups of IBD that may involve blood loss.
+Besides IBD, another setting in which
+pathogens like C. difﬁcile must adapt to
+rapid shifts in colonic iron availability is
+in iron-deﬁcient young children in low-income countries who are given iron supplements. These supplements produce
+large increases in colonic iron because
+the absorption of their high iron dose is
+low. In controlled intervention studies,
+iron supplements given to Kenyan children signiﬁcantly increased abundances
+of
+Clostridioides,
+including
+both
+C. difﬁcile and C. perfringens.9 In addition,
+antibiotic efﬁcacy against enteropathogens, such as C. difﬁcile, may also
+be modiﬁed by high colonic iron concentrations.10 Other enteropathogens can
+thrive in conditions of widely varying iron
+supply, and it is possible they also adapt
+via ferrosome-like mechanisms. Therefore, whether ferrosomes contribute to intestinal pathology associated with high
+doses
+of
+oral
+iron
+is
+an
+intriguing
+possibility.
+The study by Pi et al. raises further unanswered
+questions.
+Are
+ferrosomes
+more important for detoxifying excess
+iron as the in vitro analysis suggests, or
+for protecting against calprotectin-mediated iron deprivation, as the mouse data
+indicates, or is it a bit of both? Do ferrosomes store iron derived from more physiological sources such as heme and dietary iron? Does the ferrosome system
+only detoxify excess iron or is it also
+used to cope with other environmental
+toxic
+metals?
+Do
+different
+stressors
+modulate ferrosome synthesis, so that
+some
+ferrosomes
+are
+different
+from
+others? How important are ferrosomes in
+human
+C.
+difﬁcile
+infection?
+Lastly,
+C. difﬁcile, like many bacteria, express
+the
+‘‘classical’’
+iron
+storage
+protein,
+ferritin. Ferritin, unlike fez operon transcription, is decreased during iron deprivation. How do ferritin and ferrosome synthesis interrelate, and how do cells decide
+which iron-storage facility to use?
+Overall, the discovery of ferrosomes in
+C. difﬁcile is an exciting ﬁnding that opens
+up several lines of investigation in basic
+science and antibacterial therapeutics
+while providing new insights into how
+iron ﬂuxes may modulate the intestinal microbiota in health and disease.
+ACKNOWLEDGMENTS
+H.D. is supported by the Medical Research Council
+UK. We thank Simon C. Andrews for helpful
+discussions.
+DECLARATION OF INTERESTS
+The authors declare no competing interests.
+REFERENCES
+1. Pi, H., Sun, R., McBride, J.R., Kruse, A.R.S.,
+Gibson-Corley,
+K.N.,
+Krystoﬁak,
+E.S.,
+Nicholson, M.R., Spraggins, J.M., Zhou, Q.,
+and Skaar, E.P. (2023). Clostridioides difﬁcile
+ferrosome organelles combat nutritional immunity. Nature 623, 1009–1016.
+2. Warburg, O. (1925). Iron, the Oxygen-Carrier of
+Respiration-Ferment. Science 61, 575–582.
+3. Barber, M.F., and Elde, N.C. (2014). Escape
+from bacterial iron piracy through rapid evolution of transferrin. Science 346, 1362–1366.
+4. Fischbach, M.A., Lin, H., Zhou, L., Yu, Y.,
+Abergel,
+R.J.,
+Liu,
+D.R.,
+Raymond,
+K.N.,
+Wanner, B.L., Strong, R.K., Walsh, C.T., et al.
+(2006).Thepathogen-associatediroAgenecluster mediates bacterial evasion of lipocalin 2.
+Proc. Natl. Acad. Sci. USA 103, 16502–16507.
+5. Lefﬂer,
+D.A.,
+and
+Lamont,
+J.T.
+(2015).
+Clostridium difﬁcile infection. N. Engl. J. Med.
+372, 1539–1548.
+6. Dalal,
+R.S.,
+and
+Allegretti,
+J.R.
+(2021).
+Diagnosis and management of Clostridioides
+difﬁcile infection in patients with inﬂammatory
+bowel disease. Curr. Opin. Gastroenterol. 37,
+336–343.
+7. Grant,
+C.R.,
+Amor,
+M.,
+Trujillo,
+H.A.,
+Krishnapura, S., Iavarone, A.T., and Komeili,
+A. (2022). Distinct gene clusters drive formation
+of
+ferrosome
+organelles
+in
+bacteria.
+Nature 606, 160–164.
+8. Hastie, J.L., Hanna, P.C., and Carlson, P.E.
+(2018). Transcriptional response of Clostridium
+difﬁcile to low iron conditions. Pathog. Dis. 76,
+fty009.
+9. Jaeggi, T., Kortman, G.A.M., Moretti, D.,
+Chassard,
+C.,
+Holding,
+P.,
+Dostal,
+A.,
+Boekhorst, J., Timmerman, H.M., Swinkels,
+D.W., Tjalsma, H., et al. (2015). Iron fortiﬁcation
+adversely affects the gut microbiome, increases pathogen abundance and induces intestinal inﬂammation in Kenyan infants. Gut 64,
+731–742.
+10. Paganini, D., Uyoga, M.A., Kortman, G.A.M.,
+Cercamondi, C.I., Winkler, H.C., Boekhorst,
+J., Moretti, D., Lacroix, C., Karanja, S., and
+Zimmermann, M.B. (2019). Iron-containing micronutrient powders modify the effect of oral
+antibiotics on the infant gut microbiome and
+increase
+post-antibiotic
+diarrhoea
+risk:
+a
+controlled study in Kenya. Gut 68, 645–653.
+Previews
+2
+Cell Host & Microbe 32, January 10, 2024
+ll

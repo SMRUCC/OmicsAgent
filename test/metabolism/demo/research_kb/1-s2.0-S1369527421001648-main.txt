@@ -1,0 +1,706 @@
+======================================================================
+论文信息提取结果
+======================================================================
+
+【源文件】1-s2.0-S1369527421001648-main.pdf
+
+----------------------------------------------------------------------
+【标题 / Title】
+----------------------------------------------------------------------
+What’s metal got to do with it? Transition metals in Clostridioides difﬁcile infection ScienceDirect
+
+----------------------------------------------------------------------
+【DOI】
+----------------------------------------------------------------------
+10.1016/j.mib.2021.11.004
+
+----------------------------------------------------------------------
+【摘要 / Abstract】
+----------------------------------------------------------------------
+[未识别到摘要]
+
+----------------------------------------------------------------------
+【全文 / Full Text】
+----------------------------------------------------------------------
+What’s metal got to do with it? Transition metals in
+Clostridioides difﬁcile infection
+Suzanna Y Gomez1, Jay Patel1 and Christopher A Lopez
+The enteric pathogen Clostridioides difﬁcile overcomes barriers
+to colonization imposed by the microbiota and host immune
+response to induce disease. To navigate the dynamic gut
+environment, C. difﬁcile must respond to dietary and hostmediated ﬂuctuations in transition metal availability. Transition
+metals are required trace nutrients that foster inter-microbial
+competition when limited, inhibit bacterial growth through host
+sequestration, or induce toxicity in excess. This review
+highlights recent evidence that transition metals inﬂuence
+multiple stages of C. difﬁcile colonization and that C. difﬁcile
+initiates a coordinated response to maintain metal-dependent
+homeostasis. Further exploration of the mechanisms of C.
+difﬁcile metal sensing and nutrient competition with the
+microbiota will be necessary for the therapeutic manipulation of
+the gut environment during C. difﬁcile infection.
+Address
+Department of Biological Sciences, California State University Sacramento, Sacramento, CA, United States
+Corresponding author:
+1 Authors contributed equally to this work.
+Current Opinion in Microbiology 2022, 65:116–122
+This review comes from a themed issue on Cell regulation
+Edited by A` imee Shen and Rita Tamayo
+For complete overview of the section, please refer to the article collection, “Cell Regulation 2022”
+Available online 25th November 2021
+https://doi.org/10.1016/j.mib.2021.11.004
+1369-5274/Published by Elsevier Ltd. This is an open access article
+under the CC BY license (http://creativecommons.org/licenses/by/4.0/
+).
+Introduction
+Nutrients are key drivers in shaping the ecology of
+organisms within an environment [1]. In the mammalian
+gastrointestinal tract, nutrient availability is one factor
+controlling the diversity of the commensal bacteria, which
+in turn inﬂuences host immune responses, metabolism,
+and other critical processes [2,3]. Transition metals that
+include iron (Fe), zinc (Zn), manganese (Mn), and nickel
+(Ni) are trace elements necessary for all bacteria by
+serving as structural components in proteins and as enzymatic cofactors [4]. Limited metal availability initiates
+stress responses that reprogram metabolic pathways,
+increase production of proteins involved in metal uptake,
+and alter virulence factor expression [5]. Yet, maintaining
+intracellular metal pools must be balanced with avoiding
+toxic high metal concentrations. The coordinated control
+of metal availability is referred to as metallostasis [5].
+Clostridioides difﬁcile is a spore-forming bacterium that
+typically colonizes the intestines following dysbiosis, or
+disruption of the commensal microbiota [6]. Spores entering the intestines subsequent to dysbiosis germinate into
+vegetative C. difﬁcile, which produce toxins that trigger a
+robust inﬂammatory response that further destabilizes the
+resident microbiota [7]. Throughout the cycle of C. difﬁcile
+colonization, infection, and transmission, metal availability is controlled through the actions of the microbiota that
+may compete for those metals and by the immune
+response that limits metal concentrations in a process
+termed nutritional immunity. Here, we provide a brief
+overview of recent advancements in understanding the
+factors that control metal availability during C. difﬁcile
+infection (CDI) and how C. difﬁcile responds to those
+shifting metal concentrations to successfully colonize the
+intestines.
+Transition metal availability and the
+microbiota
+Approximately 90% of the gut bacteria in adult humans
+are from the phyla Firmicutes and Bacteroidetes, with
+Actinobacteria, Verrucumicrobia, and Proteobacteria collectively making up less than 10% of the remaining
+microbiota [8]. This diverse microbiota protects against
+overgrowth of pathogenic bacteria through a process
+called colonization resistance [9]. Disruption of colonization resistance is a primary risk factor that increases
+susceptibility to CDI and can be caused by antibiotic
+use or underlying inﬂammatory disorders [10,11]. Large
+ﬂuctuations in nutrient metal availability, either through
+supplementation or deﬁciency, can similarly alter the
+microbiota composition to decrease colonization resistance (Figure 1) [12,13].
+Nearly all bacteria require Fe, thus changes in dietary Fe
+availability can impact the abundances of bacteria in the
+intestines [13,14]. Limited Fe can force competition,
+allowing bacteria such as members of the Enterobacteriaceae to outcompete other bacteria through multiple
+mechanisms including the production of high Fe-afﬁnity
+siderophores that capture ferric iron (Fe3+) [12,15,16].
+Consistent with this notion, an increase in the proportion
+of Escherichia coli was observed in mice fed low Fe diets
+and was associated with increased transcription of siderophore import genes [17]. Alternatively, Fe supplementation in conjunction with inﬂammation also leads to
+Available online at www.sciencedirect.com
+ScienceDirect
+Current Opinion in Microbiology 2022, 65:116–122
+www.sciencedirect.com
+
+changes in the microbiota characterized by an increase in
+Proteobacteria [18] and a decrease in beneﬁcial butyrateproducing Clostridia including Faecalibacterium prausnitzii and Ruminococcus bromii [19]. While there is variation in
+the speciﬁc populations affected by Fe deﬁciency and
+supplementation, multiple studies support Enterobacteriaceae blooms as a biomarker of microbiota destabilization [20]. Indeed, in a mouse CDI model, Enterobacteriaceae blooms following low-dose antibiotic treatments
+predicts susceptibility to C. difﬁcile colonization [21]. In
+humans, adults symptomatically and asymptomatically
+colonized with C. difﬁcile have higher abundances of
+Enterobacteriaceae compared to non-colonized individuals [22]. A similar trend is observed in elderly patients
+with CDI, where C. difﬁcile is associated with increased E.
+coli and decreased F. prausnitzii abundances [23]. Despite
+similar
+patterns
+of
+dysbiosis
+between
+microbiota
+experiencing changes in Fe availability and microbiota
+during CDI, there is limited evidence that directly links
+dietary Fe to CDI susceptibility. A possible explanation
+could be that changes in Fe availability only affect CDI
+susceptibility in conjunction with other CDI risk factors.
+In accordance with this idea, supplementation of another
+dietary metal, Zn, only allowed C. difﬁcile to colonize
+when combined with antibiotics. In this study, excess
+dietary Zn increased the proportion of Enterococcus and
+Clostridia XI while decreasing Turicibacter populations
+[24]. The excess Zn-induced dysbiosis then lowered
+the dose of antibiotics necessary to reduce colonization
+resistance against C. difﬁcile [24,25]. Overall, as necessary
+nutrients, extreme changes in Fe and Zn concentrations
+can drastically inﬂuence the microbiota and synergize
+with other risk factors to alter susceptibility to CDI.
+Inﬂammation and nutritional immunity: a
+changing landscape
+During CDI, toxin-mediated intestinal inﬂammation
+induces host immune responses that change metal availability (Figure 2). C. difﬁcile produces two primary toxins,
+TcdA and TcdB, involved in intestinal inﬂammation and
+epithelial damage [26]. The host immune response to
+these toxins is in part characterized by an inﬂux of
+neutrophils that release cytosolic calprotectin (CP) [7].
+CP is a heterodimeric protein of S100A8 and S100A9 that
+sequesters divalent ﬁrst row transition metals at two sites
+at the dimer interface [27] to limit bioavailable Zn, Fe, Ni,
+Mn, and copper (Cu) [28,29–32]. Neutrophils and epithelial cells also release lipocalin-2, or neutrophil gelatinase-associated lipocalin (NGAL), during inﬂammation
+[33]. Lipocalin-2 interferes with bacterial Fe uptake by
+binding to catecholate siderophores [33]. Fecal CP and
+lipocalin-2 concentrations are clinically used as biomarkers of inﬂammation severity [34,35] and shape the gut
+environment by altering metal availability.
+While CP and lipocalin-2 limit metal acquisition, toxinmediated epithelial damage and edema cause intestinal
+hemorrhaging and the release of Fe-containing heme
+through hemoglobin degradation [36–38]. Excessive
+heme accumulation is toxic to C. difﬁcile [36], requiring
+the bacterium to adapt to high levels of luminal heme for
+survival.
+Changes in metal oxidation states also likely occur during
+CDI. Antibiotic treatment and CDI in murine models
+increase tissue oxygenation in colonic epithelial cells
+[39,40]. Oxygen diffusing into the lumen can then oxidize
+soluble ferrous Fe (Fe2+) to form less soluble Fe3+ (Figure 2). Changes in metal accessibility due to oxidation,
+along with sequestration by host immune proteins and the
+risk of heme toxicity during CDI, contribute to a dynamic
+intestinal environment in which C. difﬁcile must adapt to
+continue thriving.
+Adaptation to nutrient metal availability
+Iron regulation
+Fe is limited in the inﬂamed intestines due to chelation
+by host Fe-binding proteins [41] and environmental
+conditions that oxidize Fe2+ to Fe3+, as discussed in
+the previous section (Figure 2). In C. difﬁcile, the relative
+abundance of Fe is detected primarily by the ferricTransition metals in Clostridioides difficile infection Gomez, Patel and Lopez
+117
+Figure 1
+uninfected
+CDI
+Clostridia
+Enterobacteriaceae
+Clostridioides
+difficile
+inflammation
+Current Opinion in Microbiology
+Association of iron and zinc with susceptibility towards Clostridioides
+difficile infection.
+Under homeostatic conditions, commensal microbes in the gut
+provide colonization resistance against pathogenic bacteria. Limited
+iron availability can destabilize the microbiota, increasing the relative
+abundance of Enterobacteriaceae. Iron excess and inflammation
+similarly alter the microbiota through promoting a bloom of
+Enterobacteriaceae while decreasing abundance of beneficial
+Clostridia. Excess zinc synergizes with antibiotic use to lower the
+antibiotic threshold for C. difficile colonization through changes in the
+microbiota, increasing the risk of infection. CDI — Clostridioides
+difficile infection.
+www.sciencedirect.com
+Current Opinion in Microbiology 2022, 65:116–122
+
+uptake regulator (Fur), which dimerizes under Fe-replete
+conditions and binds DNA [42]. As in other bacteria [42],
+Fur typically represses gene transcription when bound to
+Fe [43]. Fur de-repression in an Fe-deplete environment
+results in the transcription of multiple genes with roles in
+metallostasis and metabolism [44]. Amongst the genes
+involved in metallostasis are zupT (zinc transporter), a
+putative fhu operon (predicted siderophore uptake), and
+feo genes (ferrous iron importers) (Figure 3) [44]. ZupT is
+highly expressed under Fe-limited and Zn-limited conditions [43,45–47] and imports Zn in response to CP [45].
+The expression of a Zn-importer under Fe-starvation may
+be due to CP-mediated chelation of both metals under
+physiological conditions [28]. Thus, during infection the
+presence of CP may indicate both Zn and Fe limitation,
+prompting C. difﬁcile to respond to reduced availability of
+these metals. Alternatively, C. difﬁcile may have evolved
+cross-regulation of Fe and Zn starvation responses similar
+to those described in Staphylococcus aureus where both Fur
+and a Zn-uptake regulator (Zur) coordinate transcription
+of the metallophore staphylopine [48]. Though no functional Zur is described in C. difﬁcile, other regulatory
+mechanisms may mediate cross-regulation with multiple
+stress responses. This type of non-Fur family regulation
+was observed in Clostridium beijernckii, where Fe2+ bound
+to AdhR de-repressed metabolic adhA1 and adhA2 expression [49].
+Genes in the fhu operon are homologous to genes encoding siderophore uptake machinery [50]. However, no
+siderophore biosynthesis pathways are described for C.
+difﬁcile, leaving the intriguing possibility that C. difﬁcile
+may engage in siderophore piracy and transport microbiota-produced siderophores similar to Bacteroides thetaiotaomicron [51]. Ferrous Fe transporters encoded by feoB
+and feoA are widespread amongst Bacteria [52]. FeoB is an
+integrated membrane protein with a G-protein domain
+and provides the route of entry for Fe2+ [52]. The function of cytosolic FeoA is unknown, though recent reports
+propose a model where FeoA interacts with FeoB to
+modulate GTPase activity and Fe import [53]. While
+most bacteria encode a single feoAB operon [52], C. difﬁcile
+encodes multiple feoAB systems [40]. For instance, the
+common laboratory strain 630 encodes 3 feoB and 5 feoA
+118
+Cell regulation
+Figure 2
+intestinal lumen
+C. difficile
+intestinal epithelium
+siderophore
+lipocalin-2
+Mn/Cu/Ni
+CP
+Zn
+(a)
+(b)
+(c)
+(d)
+Current Opinion in Microbiology
+Changes in metal availability during Clostridioides difficile-induced inflammation.
+(a) O2 levels in the intestinal lumen increase following antibiotic treatment and during C. difficile infection. Increased luminal O2 can oxidize Fe2+
+into less soluble Fe3+, changing its accessibility to C. difficile. (b) Intestinal hemorrhaging due to epithelial damage and edema, followed by
+hemoglobin degradation, leads to the release of heme in the lumen. (c) Infiltrating host neutrophils release CP and lipocalin-2 to sequester
+transition metals (Zn, Fe, Ni, Mn, and Cu) and microbiota-derived catecholate siderophores respectively. (d) C. difficile encodes genes predicted
+to be involved in siderophore uptake, implicating the possibility that C. difficile engages in siderophore piracy. CP — calprotectin; Zn — zinc; Fe
+— iron; Ni — nickel; Mn — manganese; Cu — copper.
+Current Opinion in Microbiology 2022, 65:116–122
+www.sciencedirect.com
+
+genes, with only some of these regulated by Fur [43,44].
+Fe2+ import via FeoAB can inﬂuence not only metallostasis, but can alter clinically relevant aspects of C. difﬁcile
+physiology. Mutation of feoB1 induces an Fe starvation
+response that shifts C. difﬁcile metabolism towards pathways that decrease sensitivity to the antibiotic metronidazole [54], which served as a frontline antibiotic in the
+treatment of CDI [55]. The factors that regulate the
+production of C. difﬁcile feoA and feoB and how multiple
+copies of these genes enable C. difﬁcile to survive in the
+intestines warrant further investigation.
+Fe limitation also alters transcription of metabolic genes
+(for a full view, see Ref. [44]). For example, proline
+reduction via a proline reductase supports energy production and the maintenance of redox balance. Increased
+availability of proline or hydroxyproline, a component of
+collagen, opens a niche from which C. difﬁcile can compete
+with
+the
+microbiota
+[46,56].
+Under
+Fe-limited
+conditions, C. difﬁcile increases transcription of proline
+reductase genes, shifting energy production from glycolysis to amino acid fermentation via Stickland reactions
+[44]. Decreased ﬂux through central carbon catabolic
+pathways, largely owing to reliance of those pathways
+on Fe-containing ferredoxins and Fe-sulfur clusters, is a
+key metabolic signature for C. difﬁcile in a Fe-deplete
+environment.
+Heme stress
+The inﬂux of heme during CDI could potentiate detrimental reactive oxygen species generation [41]. To limit
+the toxic effects of heme overabundance, C. difﬁcile
+encodes two systems that are speciﬁcally responsive to
+heme. Heme binding to the transcriptional regulator
+HatR will de-repress transcription of hatT, an efﬂux pump
+that limits intracellular heme concentrations [36]. Under
+high heme stress, the regulator HsmR activates transcription of HsmA to incorporate heme into the cytoplasmic
+Transition metals in Clostridioides difficile infection Gomez, Patel and Lopez
+119
+Figure 3
+siderophore
+carbon
+fermentation
+Stickland
+fermentation
+cytosol
+extracellular
+Current Opinion in Microbiology
+A simplified overview of C. difficile adaptation to changes in transition metal concentrations.
+In a low Fe environment, Fur repression is relieved and genes encoding metal transporters zupT and feoB are transcribed. ZupT imports Zn to
+overcome CP-mediated metal sequestration while FeoB imports Fe2+. An annotated fhu operon is also under Fur control and is predicted to
+import Fe3+ bound to siderophore molecules. During CDI, high heme results in upregulation of hsmA and hatT, which encode for a heme efflux
+pump and a membrane-bound protein that sequesters heme, respectively. Limited availability of Fe and Zn also induce metabolic shifts, including
+a reduced reliance on carbon fermentation in favor of amino acid fermentation via Stickland reactions. Ni acquisition is predicted to be
+accomplished through an import protein OppA. Fur — ferric uptake regulator; CP — calprotectin; Fe — iron; Zn — zinc; Mn — manganese; Ni —
+nickel; Cu — copper; large dashed line — predicted pathway; small dashed line — indicates transcription and translation; gray arrows —
+transcriptional regulation.
+www.sciencedirect.com
+Current Opinion in Microbiology 2022, 65:116–122
+
+membrane [57]. Heme-bound HsmA decreases sensitivity to oxidative stress and to the antibiotic vancomycin
+[57], a current ﬁrst-line treatment for primary CDI [55].
+Additionally, mutations in hsmA can confer resistance to
+metronidazole [58]. Combined, the HatRT and HsmRA
+systems protect C. difﬁcile from toxic concentrations of
+heme released during inﬂammation.
+Zinc regulation
+In response to CP-mediated Zn sequestration, C. difﬁcile
+upregulates transcription of many of the same genes that
+increase under Fe limitation [44,46], similar to that
+observed in Acinetobacter baumannii where CP elicited a
+dual Zn/Fe response [28]. As part of the response to CP,
+C. difﬁcile upregulates zupT, which enables C. difﬁcile to
+overcome CP Zn sequestration in a mouse model of CDI
+[45]. The selenoprotein proline reductase is also more
+highly transcribed in C. difﬁcile grown with CP [46].
+Furthermore, deletion of selenoprotein synthesis inhibits
+function of the proline reductase with concomitant
+increases in the expression of genes involved in mannitol
+catabolism, possibly shifting C. difﬁcile metabolism away
+from Stickland fermentation and towards mannitol fermentation [59]. Combined, these studies suggest an
+interplay between Zn and selenoprotein synthesis that
+inﬂuence metabolic pathways relevant to C. difﬁcile
+colonization.
+Other nutrient metals
+Aside from Fe and Zn, there is limited data on the roles
+other nutrient metals play in C. difﬁcile physiology and
+virulence. C. difﬁcile encodes two Mn-dependent catalases
+(cotD, cotG) and a Mn-dependent superoxide dismutase
+(sodA) that are associated with the spore coat [60]. As
+these genes are not upregulated in the presence of oxygen
+[40,61], it is likely they perform a function associated with
+spore maturation or protection rather than ROS detoxiﬁcation in vegetative C. difﬁcile. Mn is also required for
+ﬁbronectin-binding in Fbp68, which may enable C. difﬁcile attachment to host cell surfaces during infection [62].
+Recently, a putative Ni-uptake system was identiﬁed
+through comparison of a peptide transporter in C. difﬁcile,
+OppA, with the Ni-binding protein NikZ in Campylobacter
+jejuni [63]. This led to the hypothesis that OppA functions
+as a Ni-transporter for Ni-dependent enzymes like urease
+[63]. However, the full contribution of Mn and Ni availability on CDI remain an open area of exploration.
+Conclusion
+From the initial changes to the microbiota that increase
+colonization susceptibility to the subsequent immune
+response, changes in nutrient metal accessibility inﬂuence C. difﬁcile colonization and survival. While there are
+many unknown details in how C. difﬁcile controls its
+responses to environmental ﬂuctuations in metal concentrations, there are two areas in particular that may be
+fruitful topics for future exploration. First, how does C.
+difﬁcile sense and respond to limitation of non-Fe metals
+like Zn and Mn and what are the effects on C. difﬁcile
+colonization? Second, how does metal availability impact
+C. difﬁcile interactions with the microbiota? Illuminating
+these avenues of the host-microbe-C. difﬁcile interplay
+will ultimately broaden our understanding of the adaptation strategies inherent in this pathogen.
+Funding
+This research did not receive any speciﬁc grant from
+funding agencies in the public, commercial, or not-forproﬁt sectors.
+Conﬂict of interest statement
+Nothing declared.
+References and recommended reading
+Papers of particular interest, published within the period of review,
+have been highlighted as:
+
+of special interest
+ of outstanding interest
+1.
+Pereira FC, Berry D: Microbial nutrient niches in the gut. Environ
+Microbiol 2017, 19:1366-1378.
+2.
+Rooks MG, Garrett WS: Gut microbiota, metabolites and host
+immunity. Nat Rev Immunol 2016, 16:341-352.
+3.
+Tuganbaev T, Honda K: Non-zero-sum microbiome immune
+system interactions. Eur J Immunol 2021, 9:2120-2136.
+4.
+Andreini C, Bertini I, Cavallaro G, Holliday GL, Thornton JM: Metal
+ions in biological catalysis: from enzyme databases to general
+principles. J Biol Inorg Chem 2008, 13:1205-1218.
+5.
+Jordan MR, Wang J, Capdevila DA, Giedroc DP: Multi-metal
+nutrient restriction and crosstalk in metallostasis systems in
+microbial pathogens. Curr Opin Microbiol 2020, 55:17-25.
+6.
+Theriot CM, Koenigsknecht MJ, Carlson PE Jr, Hatton GE,
+Nelson AM, Li B, Huffnagle GB, Li JZ, Young VB: Antibioticinduced shifts in the mouse gut microbiome and metabolome
+increase susceptibility to Clostridium difﬁcile infection. Nat
+Commun 2014, 5:3114.
+7.
+Abt MC, McKenney PT, Pamer EG: Clostridium difﬁcile colitis:
+pathogenesis and host defence. Nat Rev Microbiol 2016,
+14:609-620.
+8.
+Arumugam M, Raes J, Pelletier E, Le Paslier D, Yamada T,
+Mende DR, Fernandes GR, Tap J, Bruls T, Batto JM et al.:
+Enterotypes of the human gut microbiome. Nature 2011,
+473:174-180.
+9.
+Ducarmon QR, Zwittink RD, Hornung BVH, van Schaik W,
+Young VB, Kuijper EJ: Gut microbiota and colonization
+resistance against bacterial enteric infection. Microbiol Mol
+Biol Rev 2019, 83.
+10.
+
+Abernathy-Close L, Barron MR, George JM, Dieterle MG,
+Vendrov KC, Bergin IL, Young VB: Intestinal inﬂammation and
+altered gut microbiota associated with inﬂammatory bowel
+disease render mice susceptible to Clostridioides difﬁcile
+colonization and infection. mBio 2021, 12:e0273320
+The authors developed a novel murine model of irritable bowel disease to
+analyze the link between non-antibiotic changes in the microbiota and
+susceptibility to C. difﬁcile infection. In this model chronic inﬂammation
+caused by Helicobacter hepaticus modulated the microbiota to allow C.
+difﬁcile to colonize.
+11.
+
+Bushman FD, Conrad M, Ren Y, Zhao C, Gu C, Petucci C, Kim MS,
+Abbas A, Downes KJ, Devas N et al.: Multi-omic analysis of the
+Interaction between Clostridioides difﬁcile infection and
+pediatric inﬂammatory bowel disease. Cell Host Microbe 2020,
+28:422-433 e7
+120
+Cell regulation
+Current Opinion in Microbiology 2022, 65:116–122
+www.sciencedirect.com
+
+In this study, the authors investigated differential metabolic markers of
+disease that distinguish between pediatric patients with irritable bowel
+disease (IBD) and those with IBD that are simultaneously infected with C.
+difﬁcile (CDI). The most highly associated metabolite in patients with IBD
+and CDI was isocaproyltaurine, a product of C. difﬁcile taurine
+metabolism.
+12. Lopez CA, Skaar EP: The impact of dietary transition metals on
+host-bacterial interactions. Cell Host Microbe 2018, 23:737-748.
+13. Li CY, Li XY, Shen L, Ji HF: Regulatory effects of transition
+metals supplementation/deﬁciency on the gut microbiota.
+Appl Microbiol Biotechnol 2021, 105:1007-1015.
+14. Parmanand BA, Kellingray L, Le Gall G, Basit AW, FairweatherTait S, Narbad A: A decrease in iron availability to human gut
+microbiome reduces the growth of potentially pathogenic gut
+bacteria; an in vitro colonic fermentation study. J Nutr Biochem
+2019, 67:20-27.
+15. Deriu E, Liu JZ, Pezeshki M, Edwards RA, Ochoa RJ, Contreras H,
+Libby SJ, Fang FC, Raffatellu M: Probiotic bacteria reduce
+Salmonella Typhimurium intestinal colonization by competing
+for iron. Cell Host Microbe 2013, 14:26-37.
+16. Sousa Geros A, Simmons A, Drakesmith H, Aulicino A, Frost JN:
+The battle for iron in enteric infections. Immunology 2020,
+161:186-199.
+17. Ellermann M, Gharaibeh RZ, Maharshak N, Perez-Chanona E,
+Jobin C, Carroll IM, Arthur JC, Plevy SE, Fodor AA, Brouwer CR
+et al.: Dietary iron variably modulates assembly of the
+intestinal microbiota in colitis-resistant and colitissusceptible mice. Gut Microbes 2020, 11:32-50.
+18. Botta A, Barra NG, Lam NH, Chow S, Pantopoulos K,
+Schertzer JD, Sweeney G: Iron reshapes the gut microbiome
+and host metabolism. J Lipid Atheroscler 2021, 10:160-183.
+19. Lee T, Clavel T, Smirnov K, Schmidt A, Lagkouvardos I, Walker A,
+Lucio M, Michalke B, Schmitt-Kopplin P, Fedorak R et al.: Oral
+versus intravenous iron replacement therapy distinctly alters
+the gut microbiota and metabolome in patients with IBD. Gut
+2017, 66:863-871.
+20. Litvak Y, Baumler AJ: Microbiota-nourishing immunity: a guide
+to understanding our microbial self. Immunity 2019, 51:214224.
+21.
+
+Lesniak NA, Schubert AM, Sinani H, Schloss PD: Clearance of
+Clostridioides difﬁcile colonization is associated with
+antibiotic-speciﬁc bacterial changes. mSphere 2021, 6
+This study describes how different microbial communities, shaped by
+exposure to antibiotics, inﬂuence C. difﬁcile colonization and clearance.
+While blooms of Enterobacteriaceae were associated with C. difﬁcile
+colonization, clearance was associated with variable microbiota members depending on the antibiotic provided.
+22. Han SH, Yi J, Kim JH, Moon AH: Investigation of intestinal
+microbiota and fecal calprotectin in non-toxigenic and
+toxigenic Clostridioides difﬁcile colonization and infection.
+Microorganisms 2020, 8.
+23. Vakili B, Fateh A, Asadzadeh Aghdaei H,
+Sotoodehnejadnematalahi F, Siadat SD: Intestinal microbiota in
+elderly inpatients with Clostridioides difﬁcile infection. Infect
+Drug Resist 2020, 13:2723-2731.
+24. Zackular JP, Moore JL, Jordan AT, Juttukonda LJ, Noto MJ,
+Nicholson MR, Crews JD, Semler MW, Zhang Y, Ware LB et al.:
+Dietary zinc alters the microbiota and decreases resistance to
+Clostridium difﬁcile infection. Nat Med 2016, 22:1330-1334.
+25. Zackular JP, Skaar EP: The role of zinc and nutritional immunity
+in Clostridium difﬁcile infection. Gut Microbes 2018, 9:469-476.
+26. Aktories K, Schwan C, Jank T: Clostridium difﬁcile toxin biology.
+Annu Rev Microbiol 2017, 71:281-307.
+27. Zygiel EM, Nolan EM: Transition metal sequestration by the
+host-defense protein calprotectin. Annu Rev Biochem 2018,
+87:621-643.
+28.
+
+Wang J, Lonergan ZR, Gonzalez-Gutierrez G, Nairn BL,
+Maxwell CN, Zhang Y, Andreini C, Karty JA, Chazin WJ,
+Trinidad JC et al.: Multi-metal restriction by calprotectin
+impacts de novo ﬂavin biosynthesis in Acinetobacter
+baumannii. Cell Chem Biol 2019, 26:745-755.e7
+The authors demonstrate that calprotectin limits availability of multiple
+transition metals that include iron, zinc, and copper. This initiates a multimetal starvation response involving multiple transcriptional regulators
+that inﬂuence critical metabolic processes such as de novo riboﬂavin
+synthesis.
+29. Nakashige TG, Zhang B, Krebs C, Nolan EM: Human calprotectin
+is an iron-sequestering host-defense protein. Nat Chem Biol
+2015, 11:765-771.
+30. Besold AN, Gilston BA, Radin JN, Ramsoomair C, Culbertson EM,
+Li CX, Cormack BP, Chazin WJ, Kehl-Fie TE, Culotta VC: Role of
+calprotectin in withholding zinc and copper from Candida
+albicans. Infect Immun 2018, 86.
+31. Nakashige TG, Zygiel EM, Drennan CL, Nolan EM: Nickel
+sequestration by the host-defense protein human
+calprotectin. J Am Chem Soc 2017, 139:8828-8836.
+32. Damo SM, Kehl-Fie TE, Sugitani N, Holt ME, Rathi S, Murphy WJ,
+Zhang Y, Betz C, Hench L, Fritz G et al.: Molecular basis for
+manganese sequestration by calprotectin and roles in the
+innate immune response to invading bacterial pathogens. Proc
+Natl Acad Sci U S A 2013, 110:3841-3846.
+33. Xiao X, Yeoh BS, Vijay-Kumar M: Lipocalin 2: an emerging player
+in iron homeostasis and inﬂammation. Annu Rev Nutr 2017,
+37:103-130.
+34. Barbut F, Gouot C, Lapidus N, Suzon L, Syed-Zaidi R, Lalande V,
+Eckert C: Faecal lactoferrin and calprotectin in patients with
+Clostridium difﬁcile infection: a case-control study. Eur J Clin
+Microbiol Infect Dis 2017, 36:2423-2430.
+35. Thorsvik S, Damas JK, Granlund AV, Flo TH, Bergh K, Ostvik AE,
+Sandvik AK: Fecal neutrophil gelatinase-associated lipocalin
+as a biomarker for inﬂammatory bowel disease. J Gastroenterol
+Hepatol 2017, 32:128-135.
+36. Knippel RJ, Zackular JP, Moore JL, Celis AI, Weiss A,
+Washington MK, DuBois JL, Caprioli RM, Skaar EP: Heme
+sensing and detoxiﬁcation by HatRT contributes to
+pathogenesis during Clostridium difﬁcile infection. PLoS
+Pathog 2018, 14:e1007486.
+37. Carter GP, Chakravorty A, Pham Nguyen TA, Mileto S, Schreiber F,
+Li L, Howarth P, Clare S, Cunningham B, Sambol SP et al.:
+Deﬁning the roles of TcdA and TcdB in localized
+gastrointestinal disease, systemic organ damage, and the
+host response during Clostridium difﬁcile infections. mBio
+2015, 6:e00551.
+38. Mocny JC, Olson JS, Connell TD: Passively released heme from
+hemoglobin and myoglobin is a potential source of nutrient
+iron for Bordetella bronchiseptica. Infect Immun 2007, 75:48574866.
+39. Giordano N, Hastie JL, Smith AD, Foss ED, Gutierrez-Munoz DF,
+Carlson PE Jr: Cysteine desulfurase IscS2 plays a role in
+oxygen resistance in Clostridium difﬁcile. Infect Immun 2018,
+86.
+40. Weiss A, Lopez CA, Beavers WN, Rodriguez J, Skaar EP:
+Clostridioides difﬁcile strain-dependent and strainindependent adaptations to a microaerobic environment.
+Microb Genom 2021, 7 http://dx.doi.org/10.1099/mgen.0.000738.
+41. Nairz M, Weiss G: Iron in infection and immunity. Mol Aspects
+Med 2020, 75:100864.
+42. Troxell B, Hassan HM: Transcriptional regulation by Ferric
+Uptake Regulator (Fur) in pathogenic bacteria. Front Cell Infect
+Microbiol 2013, 3:59.
+43. Ho TD, Ellermeier CD: Ferric uptake regulator fur control of
+putative iron acquisition systems in Clostridium difﬁcile. J
+Bacteriol 2015, 197:2930-2940.
+44. Berges M, Michel AM, Lassek C, Nuss AM, Beckstette M,
+Dersch P, Riedel K, Sievers S, Becher D, Otto A et al.: Iron
+regulation in Clostridioides difﬁcile. Front Microbiol 2018,
+9:3183.
+Transition metals in Clostridioides difficile infection Gomez, Patel and Lopez
+121
+www.sciencedirect.com
+Current Opinion in Microbiology 2022, 65:116–122
+
+45. Zackular JP, Knippel RJ, Lopez CA, Beavers WN, Maxwell CN,
+Chazin WJ, Skaar EP: ZupT facilitates Clostridioides difﬁcile
+resistance to host-mediated nutritional immunity. mSphere
+2020, 5.
+46. Lopez CA, Beavers WN, Weiss A, Knippel RJ, Zackular JP,
+Chazin W, Skaar EP: The immune protein calprotectin impacts
+Clostridioides difﬁcile metabolism through zinc limitation.
+mBio 2019, 10.
+47. Hastie JL, Hanna PC, Carlson PE: Transcriptional response of
+Clostridium difﬁcile to low iron conditions. Pathog Dis 2018, 76.
+48. Fojcik C, Arnoux P, Ouerdane L, Aigle M, Alfonsi L, BorezeeDurant E: Independent and cooperative regulation of
+staphylopine biosynthesis and trafﬁcking by Fur and Zur. Mol
+Microbiol 2018, 108:159-177.
+49.
+
+Yang B, Nie X, Xiao Y, Gu Y, Jiang W, Yang C: Ferrous-ironactivated transcriptional factor AdhR regulates redox
+homeostasis in Clostridium beijerinckii. Appl Environ Microbiol
+2020, 86
+This study describes ferrous iron-dependent transcriptional regulation of
+alcohol dehydrogenase genes in an anaerobic Clostridial species. The
+proposed mechanism links iron availability and redox status to regulation
+of metabolic pathways.
+50. Jin B, Newton SM, Shao Y, Jiang X, Charbit A, Klebba PE: Iron
+acquisition systems for ferric hydroxamates, haemin and
+haemoglobin in Listeria monocytogenes. Mol Microbiol 2006,
+59:1185-1198.
+51.
+
+Zhu W, Winter MG, Spiga L, Hughes ER, Chanin R, Mulgaonkar A,
+Pennington J, Maas M, Behrendt CL, Kim J et al.:
+Xenosiderophore utilization promotes Bacteroides
+thetaiotaomicron resilience during colitis. Cell Host Microbe
+2020, 27:376-388.e8
+The authors describe how a member of the commensal gut microbiota
+scavenges iron in the iron-limited inﬂamed gut. The bacterium Bacteroides thetaiotaomicron engages in siderophore piracy by takings up
+siderophores
+produced
+by
+distantly
+related
+bacteria
+to
+sustain
+colonization.
+52. Cartron ML, Maddocks S, Gillingham P, Craven CJ, Andrews SC:
+Feo—transport of ferrous iron into bacteria. Biometals 2006,
+19:143-157.
+53. Linkous RO, Sestok AE, Smith AT: The crystal structure of
+Klebsiella pneumoniae FeoA reveals a site for protein-protein
+interactions. Proteins 2019, 87:897-903.
+54.
+
+Deshpande A, Wu X, Huo W, Palmer KL, Hurdle JG:
+Chromosomal resistance to metronidazole in Clostridioides
+difﬁcile can be mediated by epistasis between iron
+homeostasis and oxidoreductases. Antimicrob Agents
+Chemother 2020, 64
+The study describes pathways that are important in determining resistance to an antibiotic commonly used to treat C. difﬁcile infection.
+Mutations in the iron transporter feoB1 increased resistance to
+metronidazole and synergized with subsequent mutations in other genes
+that encode proteins involved in electron-transfer reactions.
+55. Kelly CR, Fischer M, Allegretti JR, LaPlante K, Stewart DB,
+Limketkai BN, Stollman NH: ACG clinical guidelines: prevention,
+diagnosis, and treatment of Clostridioides difﬁcile infections.
+Am J Gastroenterol 2021, 116:1124-1147.
+56.
+
+Fletcher JR, Pike CM, Parsons RJ, Rivera AJ, Foley MH,
+McLaren MR, Montgomery SA, Theriot CM: Clostridioides
+difﬁcile exploits toxin-mediated inﬂammation to alter the host
+nutritional landscape and exclude competitors from the gut
+microbiota. Nat Commun 2021, 12:462
+By comparing wild type and a toxin regulator-deﬁcient C. difﬁcile strain,
+the authors describe how the nutrient landscape in the gut changes
+through toxin-mediated inﬂammation. C. difﬁcile catabolism of amino
+acids and carbohydrates from the host extracellular matrix during CDI
+provides a ﬁtness advantage over the commensal microbiota.
+57.
+
+Knippel RJ, Wexler AG, Miller JM, Beavers WN, Weiss A, de CrecyLagard V, Edmonds KA, Giedroc DP, Skaar EP: Clostridioides
+difﬁcile senses and hijacks host heme for incorporation into
+an oxidative stress defense system. Cell Host Microbe 2020,
+28:411-421.e6
+The authors demonstrate how C. difﬁcile transcriptionally regulates its
+response to heme. This newly described mechanism introduces heme
+into the cellular membrane bound to the protein HsmA to relieve heme
+toxicity, protect against oxidative stress, and reduce sensitivity to the
+antibiotic metronidazole.
+58. Boekhoud IM, Sidorov I, Nooij S, Harmanus C, Bos-Sanders I,
+Viprey V, Spittal W, Clark E, Davies K, Freeman J et al.: Haem is
+crucial for medium-dependent metronidazole resistance in
+clinical isolates of Clostridioides difﬁcile. J Antimicrob
+Chemother 2021, 76:1731-1740.
+59. McAllister KN, Martinez Aguirre A, Sorg JA: The selenophosphate
+synthetase, selD, is important for Clostridioides difﬁcile
+physiology. J Bacteriol 2021, 12.
+60. Permpoonpattana P, Phetcharaburanin J, Mikelsone A,
+Dembek M, Tan S, Brisson MC, La Ragione R, Brisson AR,
+Fairweather N, Hong HA et al.: Functional characterization of
+Clostridium difﬁcile spore coat proteins. J Bacteriol 2013,
+195:1492-1503.
+61. Neumann-Schaal M, Metzendorf NG, Troitzsch D, Nuss AM,
+Hofmann JD, Beckstette M, Dersch P, Otto A, Sievers S: Tracking
+gene expression and oxidative damage of O2-stressed
+Clostridioides difﬁcile by a multi-omics approach. Anaerobe
+2018, 53:94-107.
+62. Lin YP, Kuo CJ, Koleci X, McDonough SP, Chang YF: Manganese
+binds to Clostridium difﬁcile Fbp68 and is essential for
+ﬁbronectin binding. J Biol Chem 2011, 286:3957-3969.
+63. Hughes A, Wilson S, Dodson EJ, Turkenburg JP, Wilkinson AJ:
+Crystal structure of the putative peptide-binding protein AppA
+from Clostridium difﬁcile. Acta Crystallogr F Struct Biol Commun
+2019, 75:246-253.
+122
+Cell regulation
+Current Opinion in Microbiology 2022, 65:116–122
+www.sciencedirect.com

@@ -1,0 +1,7 @@
+﻿Module Expression Matrix Preprocessing failed with error: Exceeded max tool call rounds
+
+Stack trace:
+   at Ollama.LLMClient.Chat(String prompt_text, CancellationToken cancellationToken) in G:\LLMs\src\Ollama\LLMClient.vb:line 170
+   at OmicsAgent.PreprocessingModule.GeneratePlanAsync(LLMClient llm, CancellationToken cancellationToken) in G:\OmicsWorks\src\Modules\Module1_Preprocessing.vb:line 57
+   at OmicsAgent.AnalysisModuleBase.GeneratePlanAsync(CancellationToken cancellationToken) in G:\OmicsWorks\src\Modules\Base\AnalysisModuleBase.vb:line 118
+   at OmicsAgent.AnalysisModuleBase.RunAsync(CancellationToken cancellationToken) in G:\OmicsWorks\src\Modules\Base\AnalysisModuleBase.vb:line 86

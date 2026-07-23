@@ -1,0 +1,1618 @@
+======================================================================
+论文信息提取结果
+======================================================================
+
+【源文件】1-s2.0-S2590097825000023-main.pdf
+
+----------------------------------------------------------------------
+【标题 / Title】
+----------------------------------------------------------------------
+Potential therapeutic solution for Clostridioides difficile infection: Current scenario and future prospects Medicine in Microecology
+
+----------------------------------------------------------------------
+【DOI】
+----------------------------------------------------------------------
+10.1016/j.medmic.2025.100121
+
+----------------------------------------------------------------------
+【摘要 / Abstract】
+----------------------------------------------------------------------
+[未识别到摘要]
+
+----------------------------------------------------------------------
+【全文 / Full Text】
+----------------------------------------------------------------------
+Potential therapeutic solution for Clostridioides difficile infection: Current
+scenario and future prospects
+Chandrashekhar Singh a, Anjali Singh b, Deepjyoti Singh c, Richa Upadhyay d,*
+a Maharishi School of Science and Humanities, Maharishi University of Information Technology, Lucknow, 226013, Uttar Pradesh, India
+b Laboratory of Cell Cycles of Algae, Centre Algatech, Institute of Microbiology of Czech Academy of Sciences, Novaradaska, 23737981, Trebon, Czech Republic
+c Department of Entomology and Plant Pathology, North Carolina State University, USA
+d Department of Botany, Mihir Bhoj PG College, Dadri, GB Nagar, 203207, Uttar Pradesh, India
+A R T I C L E I N F O
+Keywords:
+Gut microbiota
+Polyphenols
+Fecal microbiota transplant
+Antibiotics
+C. difficile
+A B S T R A C T
+Clostridioides difficile previously known as Clostridium difficile is one of the three most potent human pathogens
+associated with antibiotic-associated diarrhoea and damage to the colon. Although advanced healthcare facilities
+with the development of new antibiotics are now available, these are associated with either treatment failure or
+disease recurrence. Any reason that disturbs the microbiome such as antibiotic treatment, unbalanced diet, stress
+and chronic disease may allow C. difficile, to adhere, colonize, grow and reproduce and eventually cause disease
+recurrence. With increasing knowledge about the natural defence mechanism of microbiome against gut path­
+ogens, interest in non-antibiotic alternatives like prebiotics, synbiotics, probiotics, and postbiotics is quickly
+evolving. The gut microenvironment can be suitably modified by using prebiotics and probiotics either alone or
+by using their mixture as synbiotics. The gut microbiome prevents pathogen adhesion either by physical
+competition or by the proliferation of anti-inflammatory and antimicrobial products. Besides, there are other
+possible methods such as faecal matter transplantation (FMT) and microbiome replacement therapies (MRT) for
+the repopulation of the gastrointestinal tract. In this article, we review current treatment strategies for C. difficile
+infection (CDI) using prebiotics, probiotics, synbiotics, postbiotic FMT, and MRT. The article will give useful
+insight into the current therapies of CDI and their future developments.
+1. Introduction
+Clostridioides difficile is an anaerobic and gram-positive bacterium
+which linked with array of diseases like diarrhoea to fulminant colitis
+[1]. C. difficile infection (CDI) reduces the biodiversity of the gut biome
+and causes intestinal dysbiosis. CDI is a major health issue across the
+globe
+associated
+with
+increased
+morbidity,
+mortality,
+and
+healthcare-associated infection (HAI). C. difficile primarily elicit the
+disease by the production of two types of toxins such as TcdA and TcdB
+that upon endocytosis into the colon, inactivate host GTPases, and
+disrupt the cytoskeleton and neutrophilic influx, which eventually
+causes cell apoptosis and necrosis [2]. The rigorous healthcare facilities
+and appropriate antibiotic treatment are the best treatment options for
+CDI [3,4]. Despite antibiotics being the preliminary treatment strategies
+for CDI, they are associated with several side effects. Antibiotics like
+vancomycin or fidaxomicin are significantly used for the treatment of
+CDI, however, several case relapses have been found after treatment [5,
+6]. The indigenous gut microbiome provides resistance against
+C. difficile colonization; but antibiotic treatment disrupts the micro­
+biome and increases susceptibility to CDI [7,8]. The symbiotic in­
+teractions between resident microbes and the gastrointestinal tract (GIT)
+play a very significant role in gut homeostasis. However, antibiotic
+abuse, nutritional choices, and other variables are thought to contribute
+to gut dysbiosis. Therefore, it is prudent to identify alternatives (non-­
+antibiotics) for the treatment of CDI. In a recent study by
+V´azquez-Cuesta et al., the researchers aimed to investigate the role of
+the microbiome as a predictive biomarker for CDI. A total of 753 samples
+from 657 patients were analyzed, including 247 from patients with CDI,
+43 from patients colonized with C. difficile, 63 from healthy individuals,
+324 from patients without CDI (NOCDI), and 76 from patients with
+recurrent CDI (R-CDI). The study revealed significant differences in both
+alpha and beta diversity, as well as in taxonomic abundance across these
+groups. Several genera were identified as key biomarkers for CDI (Bac­
+teroides, Proteus, Paraprevotella, Robinsoniella), R-CDI (Veillonella,
+* Corresponding author.
+E-mail address: ru4004@gmail.com (R. Upadhyay).
+Contents lists available at ScienceDirect
+Medicine in Microecology
+journal homepage: www.journals.elsevier.com/medicine-in-microecology
+https://doi.org/10.1016/j.medmic.2025.100121
+Received 27 February 2024; Received in revised form 15 October 2024; Accepted 4 February 2025
+Medicine in Microecology 24 (2025) 100121
+Available online 6 February 2025
+2590-0978/© 2025 The Authors. Published by Elsevier B.V. This is an open access article under the CC BY-NC-ND license ( http://creativecommons.org/licenses/by-
+nc-nd/4.0/ ).
+
+Fusobacterium, Lactobacillus, Clostridium sensu stricto I), and C. difficile
+colonization (Parabacteroides, Faecalicoccus, Flavonifractor, Clostridium
+XVIII) [9].
+Dietary therapies such as prebiotics and synbiotics have become
+desirable for ensuring intestinal health and an ideal gut flora composi­
+tion. Prebiotics are particularly utilized by the host for their health-
+giving, while probiotics comprise live bacterium that can be beneficial
+for their health when given in correct doses. Whereas synbiotics are a
+mixture of probiotics and prebiotics which are good for human health.
+Through microbial population shifts in the gut, synbiotics start making
+short-chain fatty acids, which can promote defence against infections,
+reduce inflammation, increase satiety, and improve bowel function [10,
+11]. In this article, different strategies of protection against CDI used in
+present scenarios such as prebiotics, synbiotics, probiotics, FMT, and
+MBT and their prospects will be discussed in detail.
+2. Gut microbiome and their role in human health
+The gut microbiome plays crucial role to manage the body’s in­
+flammatory response, metabolic processes, immunological activity, and
+even neurological functions [12,13]. It produces vitamins, hormones,
+and neurotransmitters and causes the breakdown of the dietary com­
+ponents. The gut microbiome can also influence the host’s metabolic
+pathways such as absorption and metabolism of nutrients, and synthesis
+of metabolites. The gut of human beings compasses diverse group of
+microorganisms such as archaea, bacteria, fungi, and viruses are pre­
+sent. These microorganisms are responsible for maintaining gut health,
+by regulating digestion, metabolism, and protection against infections
+(Fig. 1). The composition of the microbiome is influenced by numerous
+aspects such as diet, age, and health status. Bacteroidetes and Firmicutes
+are the prevalent bacterial group present in the gut, whereas Actino­
+bacteria, Verrucomicrobia, and Proteobacteria are also frequent [14,
+15]. The most common species of microbiota reported in the gut are
+Bifidobacterium spp., Bacteroides spp., Clostridium spp., Enterobacter spp.,
+Enterococcus spp., Gemella spp., Megasphaera spp., Porphyromonas spp.,
+Pseudomonas spp., Prevotella spp., Rothia spp., Ruminococcus spp.,
+Streptococcus spp., Veillonella spp [16]. These microorganisms are usu­
+ally commensal or mutualists and they primarily aid in regulating
+metabolism, such as glucose fermentation which produces butyrate, as a
+bioproduct that works as an essential form of energy for colonocytes.
+Intestinal microbes also beneficially influence lipid metabolism. They
+improve protein metabolism by using microbial proteinases and pepti­
+dases. They are also necessary to produce different vitamins such as
+vitamin B12, vitamin K, biotin, conjugated linoleic acids etc. They are
+involved in the degradation of different polyphenols and convert bile
+acids [17].
+Many bacteria that are associated with the daily aspects of life can be
+found in the digestive tract of a healthy individual [18]. The ecology and
+function of gut bacteria are dynamic in infancy, but they stabilize
+throughout childhood [19]. These acquired new gut microbiota influ­
+ence the digestion and the immunologic responses of the host [20,21].
+The gut microbiota changes gradually with age in response to devel­
+oping immune systems [22]. Different environmental factors can also
+disturb the gut microbiota and are a key indicator of long-term health.
+The intestinal microbiome not only affects the gut rather it influences
+every organ of the body via a variety of mechanisms [23]. The external
+variables can modify the intestinal biome, which offers novel treatment
+options for some ailments [24]. A healthy gut is necessary for energy
+harvesting and proper body functions. Besides gut microbiome also af­
+fects metabolic health, such as blood glucose level, blood pressure, and
+atherosclerosis, neurological problems, behavioural and inflammatory
+responses [25]. Recently, the gut microbiome has been considered for its
+promising characteristic in epilepsy [26].
+3. Imbalance in human GIT microbiota caused by C. difficile
+C. difficile causes an infection in the colon and is associated with
+several symptoms ranging from diarrhoea to potentially life-threatening
+Fig. 1. Role of gut microbiota in human health.
+C. Singh et al.
+Medicine in Microecology 24 (2025) 100121
+2
+
+colon injury. C. difficile infection usually occurs after taking antibiotics,
+which are extremely common medications whose nonspecific killing
+action can reduce beneficial gut flora. Dysbiosis, a disruption of the
+normal microbiome, is caused by several factors such as antibiotics use,
+poor hygiene practices, and immunocompromised and immunosup­
+pressed patients. Newborns and elderly people are more prone to CDI
+due to their weaker immune systems [27]. Lastly, a diet having
+high-sugar and fat can contribute to C. difficile growth in the gut. The
+microbiome of the GIT is influenced by various factors like age,
+dietary-intake, stress, chronic illness and antibiotic use [28].
+3.1. Age
+Human microbiome differs between cultures and geographical re­
+gions. It also varies with age rather than remaining constant throughout
+life. Age-related alterations in diet, lifestyle, and medications have key
+impact on gut composition. The elderly people are at greater risk of
+developing CDI infection due to decreased immunity and changes in
+their gut microbiome composition [29,30].
+3.2. Diet
+The quality and quantity of food consumed are mainly responsible
+for determining the composition of the gut microbiome [28]. Diet affects
+the types of bacteria that colonize the GIT, their numbers, and the
+overall microbial balance. A diet with highly processed foods, refined
+carbohydrates, and saturated fats can minimize the microbial diversity
+of the gut, while a diet rich with fiber, prebiotic foods, and probiotics
+can increase the diversity and health of the microbial diversity of the
+microbiota [31]. Since diet is a key factor for regulating gut composi­
+tion, vegans, vegetarians, and omnivores have different microbiomes
+[32,33].
+3.3. Antibiotic use
+Antibiotics, antacids, and other medications can change the gut
+microbiome composition. Antibiotics can kill the good bacteria present
+in the gut, while antacids can lower the amount of stomach acid, which
+can affect the growth of certain bacteria [34,35].
+3.4. Stress
+Stress also affects the balance of the gut microenvironment [36,37].
+Stress can lead to changes in eating habits, which further changes
+microbiome composition. Stress can also affect the production of hor­
+mones, which can affect the growth of microorganisms in the gut [38].
+3.5. Chronic illness
+People with chronic illnesses, such as cancer or human immunode­
+ficiency virus (HIV), may be more susceptible to CDI due to changes in
+their gut environment [39]. The composition of gut microbiota of
+HIV-infected people has been extensively studied, and the study
+revealed the significant changes in the composition. These findings
+suggest that the gut microbiome may be responsible in the progression
+of HIV, warranting further research into the biology of this relationship
+[39].
+A case study carried out in North Portugal hospital for five years
+(2013–2018), individuals above 18 years and non-pregnant ladies were
+included. Among all patients, 43.9 % had non-severe symptoms, 29.8 %
+were with severe symptoms and 21.0 % possessed fulminant symptoms.
+People having renal disease, high neutrophil-lymphocyte ratio, and fe­
+males were at high risk for developing severe disease. 30-day all-cause
+death was discovered in 15.8 % of the cases, whereas 90-day mortal­
+ity was detected in 28.1 % of the cases [40].
+4. Resistance mechanism of gut microbiome against C. difficile
+The human gut microbiome resists pathogenic bacteria invasion
+through different colonization resistance mechanisms [41,42].
+Currently, increased attention is paid to understanding the mechanism
+used by gut microorganisms to resist colonization of C. difficile (Fig. 2).
+These microbiomes affect CDI either directly through competitive
+exclusion or indirectly through the production of certain antimicrobial
+substances bile acids or short-chain fatty acids (SCFA).
+4.1. Competitive exclusion
+Some beneficial bacteria (Lactobacillus, Bifidobacterium, Enterococcus,
+and Saccharomyces species) be a competitor to pathogens for crucial
+resources like nutrients and attachment sites [43]. This competition
+makes it more difficult to colonize and survive in the gut for the path­
+ogen. These beneficial microbes inhibit the adhesion of C. difficile either
+by co-aggregation with the latter or simply competing with them for
+adhesion sites [44,45].
+4.2. Production of antimicrobial compounds
+Microbes present in the gut produce antimicrobial substances like
+SCFA, that hinder the growth and colonization of pathogens [46,47]. A
+study showed that the TcdA and TcdB toxins of C. difficile got inhibited
+by metabolites produced by certain fungal and bacterial strains.
+4.3. Stimulation of the immune system
+The gut microbiome is closely intertwined with the immunity of host;
+gut bacteria not only help educate immune cells, but their products can
+both activate and suppress our immune response. The microbes reside in
+the gut stimulate the immune system to recognize and attack invading
+pathogens [48].
+4.4. Modulation of the gut microenvironment
+The gut microorganisms can alter the microbiome to make it less
+hospitable to pathogenic bacteria. This includes changes to the pH, os­
+molarity, and nutrient availability. Gut microbiota can use different
+pathways to provide resistance against C. difficile colonization.
+Biotransformation of primary bile acids and production of organic acids
+decreases pH, which eventually inhibits C. difficile growth or spore
+germination [49].
+5. Treatment strategies for CDI
+The imbalance of gut microflora caused by CDI can typically be
+treated using antibiotics. Antibiotics that are usually prescribed include
+metronidazole and vancomycin [50]. Antibiotic treatments are effective
+in treating CDI, but antibiotic therapy can result in resistance develop­
+ment. To address the issue of dysbiosis and its associated illnesses,
+probiotics, synbiotics and prebiotics have been proposed as potential
+therapeutic strategies. Probiotics are living microbes that are consumed
+as supplements to restore gut health, while prebiotics promote the
+development of beneficial microbes in the gut. Synbiotics a combined
+source of probiotics and prebiotics can be used to treat CDI. The use of
+the above three (pre, pro, and synbiotics) to replace or supplement
+antibiotic therapy can be beneficial in managing CDIs. Alternative
+treatments, such as FMT, MRT, and dietary changes, may also be useful
+in the treatment of CDIs [51].
+5.1. CDI treatment employing probiotic approaches
+Because of its potential to modify gut microbiota, probiotic supple­
+mentation is important for maintaining intestinal homeostasis.
+C. Singh et al.
+Medicine in Microecology 24 (2025) 100121
+3
+
+Supplementing with probiotics e.g., Lactobacillus and Bifidobacterium
+may assist to maintain the balance of microbes in the gut and decrease
+the chances of the recurrence of CDIs [52,53]. Probiotics can also boost
+immunity, and thereby guide the body to block the pathogens. Pro­
+biotics reduce oxidative stress associated with inflammatory diseases.
+Several findings support probiotics inhibiting pathogen growth and
+toxicity (Table 1). The use of probiotics to stop the growth of C. difficile
+has been assessed using various techniques [54,55]. Several studies
+show that a few species of Lactobacillus and Bifidobacterium can reduce
+C. difficile’s adherence to the epithelial cell line and mucus of the in­
+testine [56,57]. Although there is little evidence on the potential
+effectiveness of probiotics in CDI treatment, most clinical investigations
+to date have concentrated on prevention. There are some cases where
+probiotic combination together with any antibiotic prescriptions under
+C. difficile outbreak, decreased the number of C. difficile cases [58]
+(Table 1). According to meta-analysis studies, probiotics have continu­
+ously
+demonstrated
+a
+positive
+function,
+in
+preventing
+antibiotic-associated diarrhoea (AAD) in children [59,60]. Recently,
+Lukasik et al. found a multispecies probiotic’s effectiveness in prevent­
+ing AAD in children [61]. Therefore, using appropriate probiotic
+composition in children receiving antibiotic treatment could be a pos­
+sibility to reduce diarrhoea.
+Meta-analysis has revealed the prospective of two bacterium
+L. rhamnosus. and S. boulardii in the CDI treatment. Bifidobacteria su­
+pernatants isolated from the gut of physically fit infants inhibited the
+growth and adhesion of C. difficile to enterocytes [62]. Whereas the
+consumption of B. bifidum modulated the gut environment in healthy
+adults [63]. The mixture of different Lactobacillus species has been found
+effective in many clinical trials. A probiotic capsule containing
+four-strain of Lactobacillus improved diarrhoea in CDI patients [64]. The
+intake of L. acidophilus, L. casei, and L. rhamnosus combination dimin­
+ished the CDI up to 2.3 cases per ten thousand patients [65]. Similarly,
+the CDI incidence among immunocompromised patients has been
+reduced from 1.21 % to 0.11 % using L. plantarum [66]. Adjunct pro­
+biotics containing L. bulgaricus, L. casei, and S. thermophiles prevented
+the CDI risk by up to 17 % in patients receiving antibiotic treatment
+[67]. These clinical trial findings emphasize the role of Lactobacillus
+species as a nontoxic and effective probiotic in CDI prevention and their
+recurrence. S. boulardii can also significantly help in restoring the
+antibiotic-disrupted microbiome [68]. S. boulardii CNCM I-745 pro­
+hibited the consequences and recurrence of CDIs in the hamster model
+[69–71] (Table 1).
+Besides the above species, some species of Bacteroides and Clostridium
+are also used as prebiotic agents for the CDI treatment. B. fragilis strain
+ZY-312 increased the beneficial microbe of the gut Akkermansia muci­
+niphila, which prevents C. difficile colonization in the gut [72]. Similarly,
+B. thetaiotaomicron increased the population of useful bacteria Bacter­
+oidetes, Proteobacteria and Verruco microbiota and suppressed the
+C. difficile in the gut [73]. Nonetheless, more clinical trials are essential
+to confirm the effectiveness of Bacteroides as some of their genera have
+been found invading the gut microbiome [72,73]. The probiotic mixture
+containing Bacillus mesentericus, C. butyricum, and S. faecalis, prevented
+CDIs in elderly patients undergoing femoral fracture surgery (Nagamine,
+Matsumoto et al., 2019). However, there is no therapeutic usefulness of
+C. butyricum in adjuvant therapy. In recent times, the probiotic combi­
+nation containing S. boulardii, or C. butyricum and Lactobacillus species
+has been widely used for CDI prophylaxis (Nagamine, Matsumoto et al.,
+2019).
+Sometimes antibiotics have toxic effects on probiotics while sup­
+plementation. An appealing solution to the antibiotics’ lethal activity on
+probiotics may be the physical encapsulation of the latter in a protective
+shell (Fig. 3). Currently, various polymeric particles have been devel­
+oped to promote the colonization and presence of probiotics in the GIT,
+but an efficient, safe, and quick coating with broad-spectrum antibiotic
+resistance is yet to be developed [74]. The use of natural polyphenols to
+create a nano armour coating for bacteria in the GIT is a novel approach
+to protect bacteria from antibiotics [74]. This coating could act as a
+barrier, allowing bacteria to survive the presence of antibiotics in the
+GIT. Natural polyphenols, such as those derived from fruits, vegetables,
+and nuts, have antimicrobial properties that may help to protect bacteria
+from antibiotics. Additionally, the polyphenol coating could help to
+reduce the number of antibiotics that are taken up by the bacteria, thus
+Fig. 2. The gut microbiome plays a critical role in resisting pathogens and maintaining health, and it employs both direct and indirect mechanisms of resistance.
+C. Singh et al.
+Medicine in Microecology 24 (2025) 100121
+4
+
+preventing the development of antibiotic resistance. This coating could
+also potentially improve the effectiveness of antibiotics by reducing the
+doses of antibiotics required to achieve the desired therapeutic effect.
+Pan et al. (2022) recently demonstrated that bacterial cells can be
+coated in tannic acids and ferric ions ("probiotic nano armour") con­
+taining a biocompatible coat, without compromising the cells’ activity.
+This nano armour provides enhanced protection to the probiotic cells in
+hostile environments, such as high temperatures and acidic conditions,
+and allows them to remain viable and active in the gut. Moreover, the
+probiotic cells with the nano armour were found to be more effective
+than uncoated cells in providing protection against pathogens and
+improving host health [74].
+5.2. Engineered probiotics
+To address the imbalance induced by C. difficile in the
+Table 1
+Probiotic treatment approaches against CDI.
+Applied probiotic
+Type of Study
+CDI/Disease Symptoms
+Outcome
+References
+Lactobacillus preparation (L. casei,
+L. bulgaricus, and S. thermophilus)
+A randomized double-
+blind placebo-controlled
+study
+Antibiotic-associated diarrhoea
+The rate of antibiotic-associated diarrhoea reduced
+[130]
+Saccharomyces boulardii
+Controlled clinical trial
+Chronic idiopathic diarrhoea
+Enhanced the faecal biostructure of patients
+[68]
+Lactobacillus acidophilus CL1285,
+Lactobacillus casei LBC80R, and
+Lactobacillus rhamnosus CLR2 (Bio-
+K+)
+Case study
+CDI outbreak due to Clostridium
+difficile NAP1/027/BI strain
+Marked reduction in CDI cases
+[130]
+Lactobacillus plantarum 299v
+Case study
+Organ transplant recipients
+suffering from CDI
+Routine use of LP299v while treatment of organ transplant
+patients may prevent CDI
+[66]
+Saccharomyces boulardii CNCM I-745
+In vivo
+C. difficile-associated cecal
+inflammation
+Inhibited the cytotoxic effects of C. difficile toxins, and
+reduced the NF-κB phosphorylation, cecal tissue damage,
+and TNFα protein expression
+[71]
+Saccharomyces boulardii plus
+vancomycin
+Clinical trial
+Recurrent C. difficile disease
+(CDD)
+Saccharomyces boulardii plus vancomycin minimized
+recurrent CDI cases
+[131]
+Saccharomyces boulardii plus standard
+antibiotics (vancomycin
+hydrochloride or metronidazole)
+Double-blind,
+randomised, placebo-
+controlled intervention
+study
+Recurrent CDD
+Significant effect in recurrent CDD cases
+[69]
+Bacteroides thetaiotaomicron
+In vivo
+C. difficile strain BI/NAP1/027
+Reduced the C. difficile copies and colon inflammation,
+increased the richness of Bacteroidetes and reduced the
+level of Proteobacteria, increased the concentration of
+metabolites that inhibits the growth of C. difficile
+[73]
+B. fragilis strain ZY-312
+In vivo
+C. difficile strain VPI 10463 spores
+were used to develop the CDI mice
+model (fatal diarrhoea)
+Significant improvement in gut barrier impairment, and
+microbiota disturbance, inhibited the C. difficile adherence
+and attenuated the increase in CDI-induced symptoms
+[72]
+E. coli Nissle 1917
+In vivo
+Inflammatory bowel disease
+Prevented gut inflammation
+[132]
+E. coli NGF-1
+In vivo
+Inflammatory bowel disease
+Protected CDI
+[133]
+E. coli Nissle 1917
+In vitro
+Inflammatory bowel disease
+Protected CDI
+[134]
+E. coli Nissle 1917
+In vivo
+Inflammatory bowel disease
+Protected against dextran sodium sulfate-induced colitis in
+mice, immunomodulation and healing of the mucosa
+[135]
+E. coli Nissle 1917
+In vivo
+Inflammatory bowel disease
+Attenuated the clinical symptoms in mice
+[136]
+B. fragilis strain ZY-312
+In vivo
+CDI (lethal diarrhoea, microbiota
+disruption and serious gut barrier
+disruption
+Increased survival rates (low dosage group-100 % and
+high dosage group-87.5 %)
+[72]
+Lactiplantibacillus plantarum E51
+In vitro
+Clostridioides difficile-induced
+damages on Caco-2 intestinal
+barrier functions
+Inhibited C. difficile growth, ameliorated C. difficile-caused
+reduction in transepithelial/trans-endothelial electrical
+resistance, attenuated the C. difficile-induced IL8
+secretion, and upregulated claudin-1 protein expression
+[137]
+Bacillus amyloliquifacienns
+In vitro and in vivo
+C. difficile infections
+Showed anti-anti- CD effect under both in vitro and in vivo
+[138]
+Clostridium butyricum MIYAIRI 588
+A review
+gastrointestinal infections
+Effective against gastrointestinal infections caused by
+C. difficile
+[139]
+Bacteriocin derived from Clostridium
+butyricum
+In vivo
+CDI
+Inhibited C. difficile infection
+[140]
+Lactobacillus plantarum 299v
+Case study
+CDI cases in organ transplant
+recipients
+Prevent CDI
+[141]
+Fig. 3. Single-cell coating (nano armour) made of natural polyphenols to protect bacteria against antibiotics in the GIT.
+C. Singh et al.
+Medicine in Microecology 24 (2025) 100121
+5
+
+gastrointestinal microbiome, engineered probiotics could be used to
+retain the balance [75]. These probiotics are specifically designed to
+target C. difficile and reduce its presence in the intestines [76]. They can
+also promote the re-establishment of good bacteria like Bifidobacteria
+and Lactobacillus species in the gut, which can further improve digestive
+health and decrease the risk of infection. Besides restoring the gut
+microbiome balance, engineered probiotics can also help to lessen the
+inflammatory reaction and improve the overall health of the digestive
+system [77].
+Advancements in gene editing technology have opened new oppor­
+tunities for probiotic application in CDI treatment. Researchers have
+been able to use gene editing techniques such as CRISPR/Cas9 to modify
+the genes of certain probiotic strains to improve their efficacy and safety
+[78]. CRISPR/Cas9 technique can modify the genes of certain probiotic
+strains to increase their resistance to antibiotics and other drugs,
+improve their digestive health benefits, and enhance their ability to
+produce beneficial substances [79]. Additionally, gene editing tech­
+niques have been used to add new genes to probiotic strains, allowing
+them to produce compounds with therapeutic benefits, such as
+anti-inflammatory or anti-cancer agents. Finally, gene editing tech­
+niques have been used to delete genes from probiotic strains, allowing
+them to produce fewer harmful substances. Overall, gene editing tech­
+nology provides a powerful tool to engineer probiotic strains that are
+more effective and safer for human consumption. By now, several
+modified probiotics have progressed to the clinical trial stage. The latest
+advancement in the field of gene editing is CRISPR-Cas9 technology.
+This technology enables precise editing of any gene sequence by
+combining DNA-cutting enzymes and RNA-guided proteins. By altering
+gene sequences, researchers can develop new probiotics with desirable
+traits [80].
+Another advancement in the field is the development of gene-editing
+tools that target specific cells within the probiotic [81]. These tools are
+used to modify the genetic makeup of the probiotic, which improves the
+performance of the probiotic or to create new strains with improved
+stability in the GIT, and increased tolerance to antibiotics. Additionally,
+gene-editing tools have been used to engineer probiotic bacteria with
+the ability to produce therapeutic proteins that can help reduce
+inflammation, improve insulin sensitivity, and fight off infections [78].
+Gene editing technology is advancing rapidly and is likely to revo­
+lutionize the world of probiotics. This technology has the potential to
+revolutionize the way people can improve their health, with potential
+applications ranging from targeted treatments for diseases to improving
+the performance of probiotic supplements. With gene editing, scientists
+can modify the genetic code of microorganisms, allowing for the crea­
+tion of new probiotic strains with tailored benefits to individual needs.
+The possibilities for gene editing in the field of probiotics are virtually
+limitless and could ultimately result in improved health outcomes for
+people around the world. For example, gene editing could be used to
+engineer probiotics that are better able to survive in the gut, thereby
+boosting their effectiveness. It could also be used to create probiotics
+that are designed to target specific diseases or conditions, allowing for a
+more personalized approach to health [82]. Additionally, gene editing
+techniques could allow the development of probiotics that are person­
+alized to individual dietary requirements, having greater precision and
+effectiveness. As technology continues to evolve, it is believable to have
+substantial impact on probiotics research, revolutionizing how they are
+used for health benefits. Engineered microbes with inflammatory bowel
+disease applications have also been developed by scientists [83].
+5.3. Prebiotic approaches
+Earlier the prebiotics definition was limited to the non-digestible
+food item which significantly benefited the host but later, it was
+broadened
+to
+encompass
+both
+carbohydrates
+(e.g.,
+Fructo-
+oligosaccharides (FOS), inulin, lactulose, galacto-oligosaccharides
+(GOS)) and dietary prebiotics. Dietary prebiotics are described as “the
+ingredients that positively affect the composition and/or activity of the
+gut microbiome for the health profit of the host” [84]. However, the
+most important aspect of prebiotics is their association with human
+well-being, as their beneficial effects are further enhanced through
+cross-feeding [85].
+Prebiotics can help to renew the overall healthy balance of microbes
+in the gut as well as reduce the risk of recurrence of C. difficile infections
+[86]. They must meet criteria such as resistance to acidic pH,
+non-hydrolysable by host enzymes, non-absorbable in the GIT, and
+fermentable
+by
+intestinal
+microorganisms
+[87].
+For
+carbohydrate-derived prebiotics the degree of polymerization must be
+≥3 [88].
+There are several types of prebiotics such as glucose-derived oligo­
+saccharides, galacto-oligosaccharides, pectic oligosaccharides, fructans,
+starch, and other oligosaccharides carbohydrates (OSCs) which are very
+useful in mitigating CDIs (Table 2). Naturally different dietary food
+products like pulses and vegetables are rich sources of prebiotics but
+recently, prebiotics have been obtained from seaweed and microalgae as
+well [89]. However, due to its lower concentration in foods, nowadays
+industries are producing it at large scales.
+Over the past few years there has been an increased role of poly­
+phenols as prebiotic agents. Polyphenols are compounds found in plants
+that have significant health benefits because of their anti-inflammatory
+Table 2
+Prebiotic approaches against CDI.
+SN
+Compound
+CDI activity
+Reference
+1
+Human milk oligosaccharides
+3′- and 6′-sialyl lactose
+In vitro inhibition of bacterial
+adhesion
+[142]
+2
+S. boulardii cell wall
+polysaccharides (mannan)
+Proliferated Bacteroides
+thetaiotaomicron
+[143]
+3
+Galactosyl-β1,4-l-rhamnose
+(Gal-β1,4-Rha)
+The growth of
+Bifidobacterium was
+selectively promoted
+[143]
+4
+Potato starch
+Supported innate immune
+responses and reduced the
+bacterial burden and adverse
+effects during antibiotic and
+C. difficile exposure
+[144]
+5
+Inulin, mannose and raffinose
+Decreased the formation of
+Bacteroides sp. biofilm and
+adhesion
+[145]
+6
+Lactulose (synthetic
+disaccharide composed of
+fructose and galactose)
+Decreased the frequency of
+C. difficile-related diarrhoea
+[146]
+7
+Witch hazel extract containing
+hamamelitannin
+Showed anti-toxin,
+antimicrobial, and anti-
+biofilm activities against
+pathogenic microorganisms
+[147]
+8
+Polyphenols in pomegranate
+juice having ellagitannins
+In vitro anti-CD activity
+[148]
+9
+Tea polyphenols
+Selective growth inhibitor of
+CD
+[149]
+101
+Pomegranate and blueberries
+polyphenol extracts
+Decreased the colonization
+resistance against
+Clostridioides difficile
+[150]
+11
+Grape Seed extracts rich in
+Proanthocyanins
+Improved gut microflora
+[151]
+12
+Polyphenolic extract of
+Avocado peel high in
+proanthocyanins
+Showed a protective effect
+on the alterations of high-
+protein diet-induced colonic
+homeostasis
+[152]
+13
+d wine phenolic composition
+(Flavan-3-ols, anthocyanins,
+flavanols, hydroxycinnamic
+and hydroxybenzoic acids,
+stilbenes, and phenolic
+alcohols)
+Microbiota-modulating
+effects
+[153]
+14
+Tea phenolics, including
+epicatechin, 3-O-methyl gallic
+acid, catechin, gallic acid and
+caffeic acid
+Reduced the growth of
+certain pathogenic bacteria
+like Clostridium difficile,
+Clostridium perfringens, and
+Bacteroides spp.
+[154]
+C. Singh et al.
+Medicine in Microecology 24 (2025) 100121
+6
+
+and antioxidant activities [90]. Polyphenols improve the growth of good
+bacteria like Bifidobacterium and Lactobacillus in the gut and significantly
+change immune system function [91]. Along with this, polyphenols can
+decrease inflammation in the gut, which further reduces the symptoms
+related to certain gastrointestinal disorders [92]. As we learn more
+about the complex interaction with dietary polyphenols and the gut
+microbiome, a functional synergy emerges. Plant polyphenols have
+already been used as prebiotic agents to stop C. difficile spore develop­
+ment and infection [93].
+Polyphenols have been found as xenobiotics in the human body with
+their moderate bioavailability [94]. Polyphenols change the gut
+microenvironment through different strategies such as interfering with
+quorum sensing, making bacteria susceptible to xenobiotics and
+improving the permeability of the membrane [95]. Phenolics and fla­
+vonoids modulate gut health by promoting the establishment of a
+beneficial microbiome and inhibiting the spread of pathogenic bacteria
+[96]. Due to structural complexity, polyphenols having higher molecu­
+lar weight are not able to immerse in the small intestine. It has been
+discovered that only 5–10 % of the overall polyphenols consumed are
+absorbed. Therefore, it is imperative to study how polyphenols’
+health-promoting effects develop when they are insufficiently consumed
+and often detected in trace quantities in the systemic circulation. Poly­
+phenols control the gut microbiota’s way of behaviors and composition
+by secreting bioactive metabolites. The colonic microbiome breaks
+down the complex polyphenols into low atomic weight polyphenols that
+can be absorbed in the gut easily and provide health benefits. The
+bioavailability and effectiveness of polyphenols and their metabolites in
+the gut depend on the variation in polyphenol daily intake by in­
+dividuals and differences in the gut flora. Polyphenols are commonly
+kept in the gut for longer duration due to limited absorption, thereby
+showing health-promoting effects, particularly via affecting the in­
+testine’s ecology. The effect of polyphenols on gut ecology and their
+mechanism of action against intestinal and extraintestinal illnesses have
+been explored recently (Table 2). In recent studies, Wu et al. exhibited
+that purified polyphenols extracted from Arctium lappa L. showed an
+increased number of useful bacteria belongs to the family Mur­
+ibaculaceae, Lactobacillaceae, and Ruminococcaceae and reduced abun­
+dance of Escherichia, and Shigella, Proteobacteria, Enterobacteria. This
+suggests that A. lappa L polyphenols have a positive influence on the gut
+microbiota. A. lappa L.-derived polyphenols could improve inflamma­
+tory responses in the gut. This finding indicates that A. lappa L poly­
+phenols could be utilized as a potential probiotic to improve gut
+microbiota homeostasis [97].
+5.4. Synbiotic approaches
+Synbiotics could be the best remedy for preventing the colonization
+and infection caused by C. difficile. The promising effects shown by
+synbiotics are either because of prebiotics or probiotics individually or
+by combined effect shown by both. Synbiotics protect the CDI by mul­
+tiple mechanisms such as nutritional support provided by prebiotics to
+probiotics, secretion of antimicrobial byproducts by probiotics, compe­
+tition exclusion, stimulating host immunity, inhibition of potential
+pathogens, and occupation of the receptors of gastric epithelium by
+either prebiotics or probiotics. However, the efficacy of synbiotics relies
+on several predispositions of the host such as the disturbed gut micro­
+biome and inability in nutrient metabolism. Therefore, it is imperative
+to surge the efficacy of synbiotics by providing more functional pre­
+biotics and other natural antimicrobial substances. Synbiotics increase
+the number of good bacterial strains like Bifidobacterium spp. and
+Lactobacillus spp. and the production of bioactive substances [98].
+Synbiotics improve the gastric environment of the host by establishment
+and survival of probiotics in the hostile environment of GIT and by
+improving the composition of GIT. Supplementation of insulin and
+bifidobacterium spp. in physically fit volunteers increased the counts of
+bifidobacteria in faecal samples [99]. However, when Bifidobacterium
+was supplemented alone there was no improvement in their population.
+Similarly, the synbiotic mixture containing Bifidobacterium and gal­
+actooligosaccharide improved colon health and concentrations of Bifi­
+dobacterium [100]. A combination of probiotic and prebiotic treatments
+has been found effective in reducing C. difficile growth in vivo [101].
+Probiotics and prebiotics perform better together to support growth
+and engraftment in the gut of the host. Several in vitro, in vivo and
+clinical trials have been done to emphasize the impact of synbiotics on
+gut health (Table 3). Ratsep et al. found that combining xylitol with
+L. plantarum Induce inhibited the growth of C. difficile toxin-producing
+cells and prevented the pathogen from colonizing the gut. The appli­
+cation of synbiotics to prevent CDI and their recurrences are examples of
+putative therapeutical approaches. In a random clinical trial, synbiotics
+treatment changed the population of bacteria in the faeces, prevented
+the release of organic acids after surgery and inhibited the abundance of
+C. difficile [102]. Kondepudi et al. found that synbiotic formulations
+containing probiotics like Bifidobacterium breve, B. lactis, L. plantarum,
+L.
+paracasei,
+and
+prebiotics
+e.g.,
+galactooligosaccharides,
+isomalto-oligosaccharides, and starch or containing only multi-strain
+probiotic formulation prevented against C. difficile infected mice
+[103]. So, these formulations could be further subjected to clinical trials.
+Although synbiotics could be the effective solution for the treatment of
+CDI still there is a need to investigate the interaction between probiotics
+and prebiotics, their effect on the host, the optimal dose and ideal time
+duration of the synbiotics, and the outcomes of the long-term use. There
+are some reports on the adverse effect of synbiotic use as well.
+A synbiotic capsule containing Saccharomyces boulardii, Bacillus
+coagulans, and fructooligosaccharide was given to 120 patients going
+through antibiotic therapy for the treatment of AAD. The above treat­
+ment cured the AAD in 95 % of residents and 97 % became free from
+recurrent CDI [104]. There was no adverse effect of the synbiotics,
+however, slight side effects like gastrointestinal upset and nausea have
+been recorded in lower than 6 % of the cases. In a separate study, syn­
+biotics containing quercetin, galactooligosaccharide, and Lactobacillus
+acidophilus reduced oxidative status in intestinal epithelial cells [105].
+These findings indicate that synbiotics probably work by reducing
+oxidative stress and inflammation.
+5.5. Microbiome replacement therapies (MRT)
+It is well understood that antibiotics disrupt the gut microenviron­
+ment which facilitates the proliferation of C. difficile, which in turn
+produces toxins that increase the risk of CDI and their recurrence. Due to
+the alteration of the microbiome, the pathogenesis of C. difficile
+persuaded the development of MRT. Microbiome replacement therapies
+are an emerging area of research. MRT involves using healthy bacteria to
+replace the unhealthy bacteria that cause CDI. This is done by intro­
+ducing healthy bacteria into the GIT of the patient. Healthy bacteria can
+be obtained from different sources, such as transplants, probiotics, and
+dietary supplements. The goal of MRT is to regain the proper balance of
+good bacteria in the gut, which reduces CDI symptoms. Several strate­
+gies such as nasogastric, nasoduodenal tube, colonoscopy, enema-based
+microbial replacement, and capsule-based therapies are used for MRT.
+In a systemic review, capsule-based therapies proved to be beneficial in
+92 % of the patients treated with MRT in 7 randomized controlled trials
+and 30 case studies [106]. A study done in the Netherlands showed
+clinically significant results in 81 % of patients treated with MRT
+(duodenal faecal infusion) as compared to antibiotic treatment (31 %
+recovery). However, there is no significant role of MRT in the treatment
+of refractory severe CDI. Although, several clinical trials have been
+performed to assess the role of MRT in the treatment of primary, mod­
+erate, and severe CDI or its use before antibiotic application. In a clinical
+trial using enema-based microbial replacement (RBX2660), data from
+the phase two trial showed that RBX2660 was better than the placebo
+without any adverse events [107–109]. Though the use of antibiotics
+reduces CDI colonization, antibiotic treatment changes the microbiome,
+C. Singh et al.
+Medicine in Microecology 24 (2025) 100121
+7
+
+leading to recurrent infections [2]. During CDI, C. difficile has metabolic
+flexibility, allowing it to exploit a variety of food sources. To combat
+this, microbiome therapeutics are being developed to target the
+C. difficile germination ability and growth rate of vegetative cells, restore
+bile homeostasis, and lower the bioavailability of preferred nutrients.
+Several biotech companies have already initiated clinical studies of their
+microbiome treatments for CDI. The antibiotics are used to promote the
+growth of C. difficile and thereby increase the risk of infection and dis­
+ease recurrence. Therefore, to combat this, MRT could be a suitable
+alternative.
+5.6. Faecal microbiota transplant (FMT)
+Faecal microbiota transplant (FMT) is a new emergent therapy that
+Table 3
+Synbiotic approaches for the treatment of CDI.
+Synbiotic approach
+Type of Study
+Duration
+Outcome
+References
+Inulin, 15 g Lactobacillus rhamnosus (LGG®)
+Lactobacillus paracasei (L. casei 431®)
+Lactobacillus acidophilus (LA-5®)
+Bifidobacterium lactis (BB-12®)
+Clinical Trials
+1 Year
+The recurrence of C. difficile-associated
+diarrhoea (CDAD) reduced after 8 weeks
+ClinicalTrials.gov
+Identifier:
+NCT04012788
+Xylitol plus L. plantarum Inducia,
+In-vivo
+48 h
+Reduced germination of C. difficile spores,
+their colonization and their outgrowth
+into toxin-producing cells
+[155]
+Inulin plus Bifidobacterium lactis B94 plus
+Randomized, double-
+blind, placebo-
+controlled trial
+One dose daily for 5 days
+The duration of rotavirus-induced
+diarrhoea was significantly decreased in
+the synbiotic group compared to the
+placebo group
+[156]
+Lactobacillus and Bifidobacterium strains plus FOS
+Randomized, double-
+blind, placebo-
+controlled trial
+2 daily doses of each for 30 days
+Patients receiving antibiotics had higher
+chances of evacuation, along with stool
+consistency compared to placebo group
+[157]
+Bacillus coagulans and FOS
+Randomized, double-
+blind, placebo-
+controlled trial
+Thrice a day for 12 weeks.
+The frequency of abdominal pain was
+reduced with synbiotic treatment as
+compared to the placebo
+[158]
+Inulin/oligofructose and Bifidobacterium
+longum
+Double-blind,
+randomized, placebo-
+controlled trial
+Twice a day for 6 months.
+Clinical outcomes significantly improved,
+reduction in Crohn’s disease indices and
+histological scores and TNF-α expression
+[159]
+Psyllium and Bifidobacterium longum
+Randomized
+controlled trial
+4 weeks
+Showed significant improvement in
+synbiotic group patients (ulcerative
+colitis)
+[160]
+Yakult, GOS and Bifidobacterium breve strain
+Randomized
+controlled trial
+Yakult containing B. breve strain
+(109 CFU/g) 3 times a day, and
+5.5 g of GOS per day for 1 year
+Noticeable improvement of endoscopic
+parameters in patients with ulcerative
+colitis
+[161]
+Fig. 4. Faecal matter transfer (FMT).
+C. Singh et al.
+Medicine in Microecology 24 (2025) 100121
+8
+
+encompasses the transfer of faecal matter from a physically fit person’s
+stool to a recipient that helps to repair the gut microbiome and treat
+conditions like inflammatory bowel and antibiotic-associated diarrhoea
+(Fig. 4). FMT is the utmost effective form of MRT for recurrent CDI cases,
+with a recovery rate of over 90 %. FMT has been used for over 1700
+years in traditional systems of medicine to treat a variety of illnesses
+[110]. Recent research has revealed that healthy commensal bacteria in
+the gut can collaborate to produce beneficial metabolites with
+anti-inflammatory, antibacterial, and even antifungal properties. These
+metabolites might be accountable for the health-promoting effects of
+FMT. In addition, FMT also modulates the immune response, reduces
+inflammation,
+and
+restores
+a
+balanced
+gut
+microbiota.
+Kamierczak-Siedlecka et al. studied the molecular mechanisms of FMT
+and found that several bacterial species are important for the successful
+outcome of FMT, including Bacteroides fragilis, Roseburia intestinalis, and
+Faecalibacterium prausnitzii [111].
+FMT is a rapidly developing therapeutic approach that has become a
+focus of biomedical and clinical studies. It is used as a last resort when
+other therapies for C. difficile have failed. FMT is specifically composed
+of well-known probiotic microbes that have been selected for their
+ability to provide health benefits through one or more mechanisms. In
+clinical studies, fecal matter transfer is generally safe and effective in
+treating CDI with a success rate of over 90 % and few adverse effects
+reported [112]. As research continues, the potential benefits of faecal
+matter transfer may become clearer. However, further clinical trials are
+essential to establish the efficacy of FMT in CDI [111].
+Before samples can be accepted, donors must be meticulously tested
+and vetted. To preserve the bacteria, the stool samples are diluted in
+saline and filtered, and then glycerol is added. This sample is then stored
+at −80 ◦C. The sample is administered in liquid form to the transplant
+recipient. It can be transported either through the anus into the large
+intestine using a colonoscopy, or via the nose and into the small intestine
+using a nasoduodenal tube (NGT). Additionally, the donor’s stool sam­
+ple is tested for any dangerous bacteria, viruses, and parasites. FMT
+helps to restore a healthy bacterial balance in the colon. FMT is usually
+performed with a colonoscopy, however, it can also be performed with a
+less common approach, such as an NGT. During a colonoscopy, the co­
+lonoscope is inserted into the colon and moved through the total length
+of the colon. As the colonoscope is removed, the stool is delivered into
+the colon. The stool contains healthy bacteria and other microbial or­
+ganisms that help to restore a healthy bacterial balance in the colon.
+Additionally, FMT can help to reduce symptoms related to the bowels,
+Crohn’s, ulcerative colitis, and CDI.
+Faecal transplantation via colonoscopy was found very suitable in
+the treatment of recurrent CDI, which can recur in up to 50 % of patients
+receiving antibiotics [113]. The potential role of FMT to treat CDI has
+created a new area of research into microbiome-based restorative
+therapies.
+A pooled analysis of recurrent CDI cases by FMT via colonoscopy or
+nasogastric tube (NGT) has been conducted by Postigo and Kim, to
+determine the efficacy of the procedure. The results indicated that FMT
+by colonoscopy or NGT could be an effective solution for the recurrent
+CDI, regardless of procedure alterations. However, further studies are
+required to explore the optimal delivery route for FMT [114,115].
+The latest report of the treatment of a 78-year-old man suffering from
+Pseudomembranous Colitis due to C. difficile persistence in the stool
+sample from New Delhi, India. FMT by a healthy person’s stool helped to
+cure these severe cases (Link 20.01.22).
+There are some unsuccessful cases of FMT as well. For example, In
+Italy while treating CDI with FMT (colonoscopy) only 69 % of patients
+recovered by a single faecal dose, whereas the remaining 31 % required
+repeat infusions [116]. The recovery rate of patients suffering from CDI
+varied from 14 % to 59 % in the United States due to application of
+non-specific antibiotics, severe and fulminant CDI, and pseudomem­
+branous colitis. Moreover, FMT was associated with numerous side ef­
+fects such as abdominal cramping, bloating, diarrhoea, and nausea
+[117]. Besides two patients receiving FMT from the same donor suffered
+from bacteriemia caused by E. coli, and one patient died [118]. Thus, the
+selection of suitable donors and recipients is very crucial for performing
+FMT.
+5.7. Treatment of C. difficile by targeting toxins A (TcdA) and B (TcdB)
+There are various antibiotics such as metronidazole or vancomycin
+available for CDI treatment. These antibiotics mainly inhibit the toxins
+(TcdA and TcdB) secreted by C. difficile, thus preventing further colon
+damage. Additionally, probiotics may be utilized to reinstate the balance
+of microbes in the gut. Treatment of C. difficile typically involves the use
+of antibiotics to decrease the bacterial counts. However, in some cases,
+antibiotics may not be enough to eradicate the infection. In these cases,
+targeting the toxins produced by C. difficile may reduce the severity of
+the infection. TcdA and TcdB are two of the most potent toxins produced
+by C. difficile. To target these toxins, several medications have been
+developed. These medications can include antibody-based therapies or
+small molecule inhibitors that prevent toxin production or neutralize its
+activity. In some cases, a combination of antibiotics and other treat­
+ments may be necessary to successfully treat C. difficile.
+Scientists have recently proposed that serine proteases from two
+probiotic strains, Saccharomyces boulardii and Bacillus clausii, could be
+used to prevent CDI. A serine protease from S. boulardii has been shown
+to disrupt the quorum sensing mechanism of C. difficile, an important
+regulatory mechanism. Moreover, this protease was also shown to
+effectively suppress the toxin TcdA. Similarly, a protease from B. clausii
+was found to be effective against TcdB. Both proteases have demon­
+strated efficacy in vivo and in vitro, suggesting that they may be prom­
+ising targets for further research regarding the prevention of CDI [119].
+The toxins TcdA and TcdB required for C. difficile-caused diarrhoea are
+produced by pathogenic strains. An alternate treatment fare CDI that has
+revealed encouraging outcomes in preclinical and clinical investigations
+is the administration of anti-toxin antibodies [120].
+In a recent study, Hunag and McCreary reported that Clostridium
+butyricum is useful in treating a variety of gastrointestinal conditions.
+C. difficile was reported to be significantly inhibited by supernatants of
+the C. butyricum MIYAIRI 588 strain (CBM588). A proteinaceous
+component may be important in preventing C. difficile growth in vitro,
+according to features of the supernatant from CBM 588 that are heat-
+and pH-labile [121]. It has been established that recombinant CBM 588
+bacteriocin (CBM-B) has an inhibitory effect against C. difficile, however,
+spore germination and outgrowth were unaffected. By lowering the
+expression of a toxin regulator when used at sub-lethal concentrations,
+CBM-B could partially suppress the expression of toxins (tcdA and tcdB).
+A mice infected with CDI, intra-rectal injection of CBM-B in combination
+with vancomycin lead to in less body weight loss and a lower C. difficile
+bacterial count in faeces than did CBM-B or vancomycin administration
+alone. As a result, CBM-B from CBM 588 has the potential to be an in­
+hibitor of C. difficile and a possible therapeutic therapy for CDI.
+The effectiveness of human monoclonal antibodies (HuMab) and
+polyclonal antibodies against C. difficile toxins TcdA and TcdB were
+examined in a genotobiotic piglet model of CDI by Steele et al. [122,123]
+The results showed that TcdB was a major virulence factor contributing
+to both systemic and gastrointestinal (GI) tract diseases. Administration
+of anti-TcdB antibodies alone or in combination with anti-TcdA
+completely prevented systemic CDI in piglets and significantly
+reduced GI lesions. In contrast, pigs who received only anti-TcdA
+experienced severe GI and systemic illnesses with a 67–83 % death
+rate, performing worse than the control animals which had been given a
+placebo [123].
+5.8. Postbiotic approach against CDI
+The concept of postbiotics, which emerged in 2021, is currently
+being widely studied [124]. Postbiotics are a form of metabolic
+C. Singh et al.
+Medicine in Microecology 24 (2025) 100121
+9
+
+byproducts or non-viable bacterial products produced by probiotic mi­
+croorganisms, which exert a biological effect on the host. Postbiotics are
+composed of functional bioactive compounds created in an anaerobic
+matrix, resulting from the fermentation of prebiotics and other organic
+nutrients which generate energy in the form of adenosine triphosphate.
+These byproducts, often of low molecular weight, include short-chain
+fatty acids, microbial cell fragments, extracellular polysaccharides, cell
+lysates, teichoic acid, vitamins, and more [125]. While prebiotics and
+probiotics are currently the most popular products on the market,
+postbiotics are gaining an increasing amount of attention due to their
+numerous health benefits (Fig. 5). Probiotics are increasingly recognized
+as a valuable tool for restoring balance to the intestinal microbiota
+disrupted by factors such as antibiotic therapy. This disruption can
+create an environment conducive to the overgrowth of C. difficile,
+leading to a rise in C. difficile-associated infections. Although many
+probiotics have demonstrated in vitro efficacy in inhibiting the growth or
+toxicity of C. difficile, their use in treating or preventing CDI remains
+limited due to a lack of robust clinical evidence. Only a few strains,
+notably Lactobacillus rhamnosus GG and Saccharomyces boulardii, have
+been extensively studied. The growing understanding of how probiotics
+combat C. difficile through various mechanisms reviewed here suggests
+that these live biotherapeutic agents hold promise for CDI management.
+However, there is a need for more rigorous and standardized clinical
+studies to evaluate probiotic products in conjunction with antibiotics, to
+identify the most effective candidates for preventing or treating
+C. difficile infections [55]. Given these insights, it is likely that the de­
+mand for postbiotic supplements will rise in the future. Postbiotics,
+known for their antimicrobial, anti-inflammatory, and immunomodu­
+latory properties, are emerging as a promising option for treating or
+preventing CDI. Research has demonstrated that postbiotics can inhibit
+the growth of Clostridium difficile in both in vitro studies and animal
+models, as well as reduce toxin production. Furthermore, postbiotic
+therapy appears beneficial for premature infants, who frequently lack
+beneficial bacteria. This therapy has been shown to mitigate inflam­
+mation, improve digestion, and enhance overall health in these
+vulnerable patients [121,126].
+Postbiotics can be administered via food, supplements, or enemas.
+These beneficial compounds are believed to offer a range of protective
+effects, such as producing substances that reduce inflammation, bolster
+the body’s natural defenses, and support healthy intestinal tissue. Evi­
+dence suggests that postbiotic therapy is both safe and effective in
+managing various intestinal disorders in premature infants [127].
+In a recent study, Luenglusontigit et al. first used a high-throughput
+screening approach to isolate and identify E. faecalis strains that pro­
+duced bacteriocin-like compounds [128]. Screening of bacteriocin pro­
+duction of E. faecalis PK1201 was achieved through proteolytic enzyme
+treatment, followed by whole genome sequencing to characterize
+bacteriocin-encoding genes. A postbiotic of E. faecalis PK1201 was then
+prepared using neutralized cell-free supernatant or bacterial cell lysate,
+which was screened for antimicrobial activity using agar well diffusion.
+The lyophilized cell-free supernatant (LCFS) was subsequently tested for
+its minimum inhibitory concentration (MIC) against C. difficile 630.
+Morphological changes of C. difficile were observed under scanning
+electron microscopes. The LCFS at both sub-MIC and MIC concentrations
+were used to evaluate anti-spore germination activity. Finally, the safety
+of the postbiotic was evaluated using the Galleria mellonella model. The
+efficacy and safety of LCFS has illuminated the role of postbiotics in
+pharmaceutical products for the control of CDI [128].
+Postbiotics have demonstrated the ability to support gut microbiota
+health and reduce inflammation, which may help lower the risk of CDI.
+They may also be effective in treating recurrent CDI by restoring gut
+microbiota balance. In addition, postbiotics show great promise as an
+adjunctive treatment for CDI due to their capacity to inhibit bacterial
+growth, disrupt biofilms, and reduce toxin production, offering a po­
+tential solution to antibiotic-resistant pathogens [129]. However,
+further research is needed to confirm the efficacy and safety of these
+compounds in treating CDI.
+6. Conclusions and prospects for the future
+In conclusion, probiotics, prebiotics, and synbiotics show significant
+promise in addressing antibiotic-resistant gut dysbiosis and restoring
+microbial balance, particularly in cases of Clostridioides difficile-induced
+diarrhoea. Probiotics have demonstrated their ability to reduce inflam­
+mation and lower the risk of antibiotic-associated diarrhoea, while
+prebiotics promote the growth of beneficial gut bacteria. Synbiotics,
+combining the benefits of both, offer a synergistic approach to
+improving gut health. Although treatments like FMT and MRT exist,
+they remain costly and less accessible. Probiotics face challenges with
+premature degradation in the upper GI tract, and their use may be
+limited in certain patient populations. Prebiotics, on the other hand, are
+widely available and easily integrated into the diet, though further
+clinical trials are required to fully validate their benefits. Overall, these
+approaches provide a promising alternative for restoring gut health and
+Fig. 5. Postbiotic approach for the treatment of CDI.
+C. Singh et al.
+Medicine in Microecology 24 (2025) 100121
+10
+
+managing CDI, but more research is needed to expand their application
+and ensure their efficacy across diverse patient populations.
+CRediT authorship contribution statement
+Chandrashekhar Singh: Writing – original draft. Anjali Singh:
+Visualization, Formal analysis. Deepjyoti Singh: Formal analysis, Data
+curation.
+Richa
+Upadhyay:
+Writing
+–
+review
+&
+editing,
+Conceptualization.
+Declaration of competing interest
+The authors declare that they have no known competing financial
+interests or personal relationships that could have appeared to influence
+the work reported in this paper.
+Acknowledgement
+There is no funding for this work.
+References
+[1] Di Bella S, et al. Clostridioides difficile infection: history, epidemiology, risk
+factors, prevention, clinical manifestations, treatment, and future options. 2024,
+e00135. 23.
+[2] Gonzales-Luna AJ, Carlson TJ, Garey KW. Gut microbiota changes associated
+with Clostridioides difficile infection and its various treatment strategies. Gut
+Microbes 2023;15(1):2223345.
+[3] Bass`eres E, et al. Antibacterial activity of ibezapolstat against antimicrobial-
+resistant clinical strains of Clostridioides difficile 2024;68(3):e01621–3.
+[4] Olaitan AO, et al. Decoding a cryptic mechanism of metronidazole resistance
+among globally disseminated fluoroquinolone-resistant Clostridioides difficile
+2023;14(1):4130.
+[5] Lee P, et al. Risk factors for recurrent Clostridioides difficile infection in children
+2023;13(11):1010–7.
+[6] Alsoubani M, et al. Comparative effectiveness of fidaxomicin vs vancomycin in
+populations with immunocompromising conditions for the treatment of
+Clostridioides difficile infection: a single-center study. In: Open forum infectious
+diseases. Oxford University Press US; 2024.
+[7] Pike CM, Theriot CM. Mechanisms of colonization resistance against
+Clostridioides difficile. J Infect Dis 2021;223(12 Suppl 2):S194–s200.
+[8] Dahiya D, Nigam PS. Antibiotic-therapy-induced gut dysbiosis affecting gut
+microbiota—brain axis and cognition: restoration by intake of probiotics and
+synbiotics 2023;24(4):3074.
+[9] V´azquez-Cuesta S, et al. Characterization of the gut microbiome of patients with
+Clostridioides difficile infection, patients with non–C. difficile diarrhea, and C.
+difficile–colonized patients 2023;13:1130701.
+[10] Pandey KR, Naik SR, Vakil BV. Probiotics, prebiotics and synbiotics- a review.
+J Food Sci Technol 2015;52(12):7577–87.
+[11] Bisht D, Pal D, Shrestha R. Introduction to probiotics, prebiotics, and synbiotics: a
+holistic approach. In: Probiotics. CRC Press; 2024. p. 1–28.
+[12] Chu J, et al. Immunological mechanisms of inflammatory diseases caused by gut
+microbiota dysbiosis: A review 2023;164:114985.
+[13] Wang W, et al. Inflammatory response: a crucial way for gut microbes to regulate
+cardiovascular diseases 2023;15(3):607.
+[14] Ruigrok RA, Weersma RK, Vich Vila AJGm. The emerging role of the small
+intestinal microbiota in human health and disease 2023;15(1):2201155.
+[15] Jaswal K, Todd OA, Behnsen JJGM. Neglected gut microbiome: interactions of the
+non-bacterial gut microbiota with enteric pathogens 2023;15(1):2226916.
+[16] Rinninella E, et al. What is the healthy gut microbiota composition? A changing
+ecosystem across age, environment, diet, and diseases 2019;7(1):14.
+[17] Amiri P, et al. Role of butyrate, a gut microbiota derived metabolite.
+Cardiovascular diseases: a comprehensive narrative review, vol. 12; 2022,
+837509.
+[18] Zhang Y-J, et al. Impacts of gut bacteria on human health and diseases 2015;16
+(4):7493–519.
+[19] Tanaka M, Nakayama JJAI. Development of the gut microbiota in infancy and its
+impact on health in later life 2017;66(4):515–22.
+[20] Round JL, Mazmanian SK. The gut microbiota shapes intestinal immune
+responses during health and disease 2009;9(5):313–23.
+[21] Montalto M, et al. Intestinal microbiota and its functions 2009;3(2):30–4.
+[22] Derrien M, Alvarez A-S, de Vos WM. The gut microbiota in the first decade of life
+2019;27(12):997–1010.
+[23] Murros KEJC. Hydrogen sulfide produced by gut bacteria may induce Parkinson’s
+disease 2022;11(6):978.
+[24] Hasan N, Yang HJP. Factors affecting the composition of the gut microbiota, and
+its modulation 2019;7:e7502.
+[25] Tang WH, Kitai T, Hazen SL. Gut microbiota in cardiovascular health and disease.
+Circ Res 2017;120(7):1183–96.
+[26] Fusco F, et al. The microbiota-gut-brain axis and epilepsy from a multidisciplinary
+perspective: clinical evidence and technological solutions for improvement of in
+vitro preclinical models. Bioeng Transl Med 2022;7(2):e10296.
+[27] Shin JH, High KP, Warren CA. Older is not wiser, immunologically speaking:
+effect of aging on host response to Clostridium difficile infections. J Gerontol A
+Biol Sci Med Sci 2016;71(7):916–22.
+[28] Zhang P. Influence of foods and nutrition on the gut microbiome and implications
+for intestinal health. Int J Mol Sci 2022;23(17).
+[29] Bosco N, Noti MJG, Immunity. The aging gut microbiome and its impact on host
+immunity 2021;22(5):289–303.
+[30] Adhikary S, et al. Impacts of gut microbiota alteration on age-related chronic liver
+diseases 2024;56(1):112–22.
+[31] Ross FC, et al. The interplay between diet and the gut microbiome: implications
+for health and disease. 2024. p. 1–16.
+[32] Tomova A, et al. The effects of vegetarian and vegan diets on gut microbiota.
+Front Nutr 2019;6:47.
+[33] Sidhu SRK, et al. Effect of plant-based diets on gut microbiota: a systematic
+review of interventional studies. Nutrients 2023;15(6).
+[34] Lin YT, et al. Anti-acid drug treatment induces changes in the gut microbiome
+composition of hemodialysis patients. Microorganisms 2021;9(2).
+[35] Patangia DV, et al. Impact of antibiotics on the human microbiome and
+consequences for host health. Microbiologyopen 2022;11(1):e1260.
+[36] Balasubramanian R, et al. Fermented foods: harnessing their potential to
+modulate the microbiota-gut-brain axis for mental health. 2024, 105562.
+[37] Clapp M, et al. Gut microbiota’s effect on mental health: the gut-brain axis 2017;7
+(4):987.
+[38] Martin SE, et al. The role of diet on the gut microbiome, mood and happiness.
+medRxiv 2023.
+[39] Vujkovic-Cvijin I, Somsouk M. HIV and the gut microbiota: composition,
+consequences, and avenues for amelioration. Curr HIV AIDS Rep 2019;16(3):
+204–13.
+[40] Van der Waaij D, et al. Colonization resistance of the digestive tract in
+conventional and antibiotic-treated mice 1971;69(3):405–11.
+[41] Khan I, et al. Mechanism of the gut microbiota colonization resistance and enteric
+pathogen infection. Front Cell Infect Microbiol 2021;11:716299.
+[42] Pickard JM, Nú˜nez G. Pathogen colonization resistance in the gut and its
+manipulation for improved health 2019;189(7):1300–10.
+[43] Van Zyl WF, Deane SM, Dicks LMJGm. Molecular insights into probiotic
+mechanisms of action employed against intestinal pathogenic bacteria 2020;12
+(1):1831339.
+[44] Lesniak NA, et al. The gut bacterial community potentiates Clostridioides difficile
+infection severity. mBio 2022;13(4):e0118322.
+[45] Singh TP, et al. Antagonistic activity of Lactobacillus reuteri strains on the
+adhesion characteristics of selected pathogens, vol. 8; 2017. p. 486.
+[46] Garcia-Gutierrez E, et al. Gut microbiota as a source of novel antimicrobials. Gut
+Microbes 2019;10(1):1–21.
+[47] Pickard JM, et al. Gut microbiota: role in pathogen colonization, immune
+responses, and inflammatory disease. Immunol Rev 2017;279(1):70–89.
+[48] Wu HJ, Wu E. The role of gut microbiota in immune homeostasis and
+autoimmunity. Gut Microbes 2012;3(1):4–14.
+[49] Jukes CA, et al. Bile salt metabolism is not the only factor contributing to
+Clostridioides (Clostridium) difficile disease severity in the murine model of
+disease. Gut Microbes 2020;11(3):481–96.
+[50] Mullish BH, Williams HR. Clostridium difficile infection and antibiotic-associated
+diarrhoea. Clin Med 2018;18(3):237–41.
+[51] Yang S, et al. Prevention and treatment of antibiotics-associated adverse effects
+through the use of probiotics: a review. 2024.
+[52] Hill C, et al. Expert consensus document: the International Scientific Association
+for Probiotics and Prebiotics consensus statement on the scope and appropriate
+use of the term probiotic. 2014.
+[53] Wang X, Zhang P, Zhang X. Probiotics regulate gut microbiota: an effective
+method to improve immunity. Molecules 2021;26(19).
+[54] Pal R, et al. Probiotics: insights and new opportunities for Clostridioides difficile
+intervention. Crit Rev Microbiol 2023;49(3):414–34.
+[55] Vald´es-Varela L, Gueimonde M, Ruas-Madiedo P. Probiotics for prevention and
+treatment of Clostridium difficile infection. in Updates on Clostridioides difficile
+in Europe: Advances in Microbiology, Infectious Diseases and Public Health 2024;
+18:101–16. Springer.
+[56] Dempsey E, Corr SC. Lactobacillus spp. for gastrointestinal health: current and
+future perspectives. Front Immunol 2022;13:840245.
+[57] Li´evin-Le Moal V, Servin AL. Anti-infective activities of lactobacillus strains in the
+human intestinal microbiota: from probiotics to gastrointestinal anti-infectious
+biotherapeutic agents. Clin Microbiol Rev 2014;27(2):167–99.
+[58] McFarland L, et al. Primary prevention of Clostridium difficile infections with a
+specific probiotic combining Lactobacillus acidophilus. L. ´acasei, and L.
+´arhamnosus strains: assessing the evidence 2018;99(4):443–52.
+[59] Johnston BC, et al. Probiotics for the prevention of pediatric antibiotic-associated
+diarrhea, vol. 11; 2011.
+[60] Goodman C, et al. Probiotics for the prevention of antibiotic-associated diarrhoea:
+a systematic review and meta-analysis 2021;11(8):e043054.
+[61] Lukasik J, et al. Multispecies probiotic for the prevention of antibiotic-associated
+diarrhea in children: a randomized clinical trial. Jun 2022;176(9):948. https://
+doi.org/10.1001/jamapediatrics.2022.1973.
+[62] Trejo FM, DeAntoni GL, P´erez PF. Protective effect of bifidobacteria in an
+experimental model of Clostridium difficile associated colitis 2013;80(3):263–9.
+C. Singh et al.
+Medicine in Microecology 24 (2025) 100121
+11
+
+[63] Gargari G, et al. Consumption of a Bifidobacterium bifidum strain for 4 weeks
+modulates dominant intestinal bacterial taxa and fecal butyrate in healthy adults
+2016;82(19):5850–9.
+[64] Gavzy SJ, et al. Bifidobacterium mechanisms of immune modulation and
+tolerance 2023;15(2):2291164.
+[65] Leal J, et al. Effectiveness of Bio-K+ for the prevention of Clostridioides difficile
+infection: stepped-wedge cluster-randomized controlled trial 2024;45(4):443–51.
+[66] Kujawa-Szewieczek A, et al. The effect of Lactobacillus plantarum 299v on the
+incidence of Clostridium difficile infection in high risk patients treated with
+antibiotics 2015;7(12):10179–88.
+[67] Na X, Kelly C. Probiotics in clostridium difficile infection. J Clin Gastroenterol
+2011;45:S154–8. Suppl(Suppl).
+[68] Swidsinski A, et al. Biostructure of fecal microbiota in healthy subjects and
+patients with chronic idiopathic diarrhea 2008;135(2):568–79.
+[69] McFarland LV, et al. A randomized placebo-controlled trial of Saccharomyces
+boulardii in combination with standard antibiotics for Clostridium difficile
+disease 1994;271(24):1913–8.
+[70] Salazar-Parra MA, et al. Effectiveness of Saccharomyces Boulardii CNCM I-745
+probiotic in acute inflammatory viral diarrhoea in adults: results from a single-
+centre randomized trial 2023;23(1):229.
+[71] Koon HW, et al. Probiotic Saccharomyces boulardii CNCM I-745 prevents
+outbreak-associated Clostridium difficile-associated cecal inflammation in
+hamsters 2016;311(4):G610–23.
+[72] Deng H, et al. Bacteroides fragilis prevents Clostridium difficile infection in a
+mouse model by restoring gut barrier and microbiome regulation 2018;9:2976.
+[73] Li X, et al. A strain of Bacteroides thetaiotaomicron attenuates colonization of
+Clostridioides difficile and affects intestinal microbiota and bile acids profile in a
+mouse model 2021;137:111290.
+[74] Pan J, et al. A single-cell nanocoating of probiotics for enhanced amelioration of
+antibiotic-associated diarrhea 2022;13(1):2117.
+[75] Koh E, et al. Engineering probiotics to inhibit Clostridioides difficile infection by
+dynamic regulation of intestinal metabolism 2022;13(1):3834.
+[76] Goldenberg JZ, et al. Probiotics for the prevention of Clostridium difficile-
+associated diarrhea in adults and children. Cochrane Database Syst Rev 2017;12
+(12):Cd006095.
+[77] Zhou Z, et al. Engineering probiotics as living diagnostics and therapeutics for
+improving human health, vol. 19; 2020. p. 1–12.
+[78] Vaid S, et al. A concise review on development of probiotics from Lactobacillus
+using CRISPR-Cas Technology of Gene Editing, vol. 1; 2022, 100099.
+[79] Neil K, et al. High-efficiency delivery of CRISPR-Cas9 by engineered probiotics
+enables precise microbiome editing 2021;17(10):e10335.
+[80] Kirsch I. Biological sciences. Philosophical Transactions of the Royal Society of
+London. Series B, Biological Sciences. Preface. 2011;366(1572):1781–2.
+[81] Mu Y, et al. Development and applications of CRISPR/Cas9-based genome editing
+in Lactobacillus 2022;23(21):12852.
+[82] Ma J, et al. Engineered probiotics 2022;21(1):72.
+[83] Parvin T, Sadras SR. Advanced probiotics: bioengineering and their therapeutic
+application 2024;51(1):361.
+[84] Bevilacqua A, et al. An update on prebiotics and on their health effects 2024;13
+(3):446.
+[85] Ballini A, et al. About functional foods: the probiotics and prebiotics state of art
+2023;12(4):635.
+[86] Gurung B, Stricklin M, Wang S. Gut microbiota–gut metabolites and
+Clostridioides difficile infection: approaching sustainable solutions for therapy
+2024;14(1):74.
+[87] Ji J, et al. Probiotics, prebiotics, and postbiotics in health and disease 2023;4(6):
+e420.
+[88] Bamigbade GB, et al. An updated review on prebiotics: insights on potentials of
+food seeds waste as source of potential prebiotics 2022;27(18):5947.
+[89] Davani-Davari D, et al. Prebiotics: definition, types, sources, mechanisms, and
+clinical applications. Foods 2019;8(3).
+[90] Singh C, et al. Green synthesis of silver nanoparticles using aqueous leaf extract of
+Premna integrifolia (L.) rich in polyphenols and evaluation of their antioxidant,
+antibacterial and cytotoxic activity 2019;33(1):359–71.
+[91] Filosa S, Di Meo F, Crispi SJNrr. Polyphenols-gut microbiota interplay and brain
+neuromodulation 2018;13(12):2055–9.
+[92] Zhao Y, Jiang QJAiN. Roles of the polyphenol–gut microbiota interaction in
+alleviating colitis and preventing colitis-associated colorectal cancer 2021;12(2):
+546–65.
+[93] Babayevska N, et al. ZnO size and shape effect on antibacterial activity and
+cytotoxicity profile 2022;12(1):8148.
+[94] Di Lorenzo C, et al. Polyphenols and human health: the role of bioavailability
+2021;13(1):273.
+[95] Makarewicz M, et al. The Interactions between Polyphenols and Microorganisms,
+Especially Gut Microbiota 2021;10(2):188.
+[96] Rodríguez-Daza MC, et al. Polyphenol-mediated gut microbiota modulation:
+toward prebiotics and further, vol. 8; 2021, 689456.
+[97] Wu H-J, Wu EJGm. The role of gut microbiota in immune homeostasis and
+autoimmunity 2012;3(1):4–14.
+[98] Yan A, et al. Transformation of the anticancer drug doxorubicin in the human gut
+microbiome 2018;4(1):68–76.
+[99] Markowiak P, ´Sli˙zewska K. Effects of probiotics, prebiotics, and synbiotics on
+human health. Nutrients 2017;9(9).
+[100] Kim S, et al. Bifidobacterium longum and galactooligosaccharide improve skin
+barrier dysfunction and atopic dermatitis-like skin. Allergy Asthma Immunol Res
+2022;14(5):549–64.
+[101] Pereira FC, et al. Rational design of a microbial consortium of mucosal sugar
+utilizers reduces Clostridiodes difficile colonization 2020;11(1):5104.
+[102] R¨atsep M, et al. A combination of the probiotic and prebiotic product can prevent
+the germination of Clostridium difficile spores and infection. Anaerobe 2017;47:
+94–103.
+[103] Kondepudi KK, et al. A novel multi-strain probiotic and synbiotic supplement for
+prevention of Clostridium difficile infection in a murine model 2014;58(10):
+552–8.
+[104] Saneian H, et al. Synbiotic containing Bacillus coagulans and fructo-
+oligosaccharides for functional abdominal pain in children. Gastroenterol Hepatol
+Bed Bench 2015;8(1):56–65.
+[105] Li X, et al. Effect of synbiotic supplementation on immune parameters and gut
+microbiota in healthy adults: a double-blind randomized controlled trial. Gut
+Microbes 2023;15(2):2247025.
+[106] Johanesen PA, et al. Disruption of the gut microbiome: Clostridium difficile
+infection and the threat of antibiotic resistance. Genes 2015;6(4):1347–60.
+[107] D’Archivio M, et al. Bioavailability of the polyphenols: status and controversies.
+Int J Mol Sci 2010;11(4):1321–42.
+[108] Chaar A, Feuerstadt P. Evolution of clinical guidelines for antimicrobial
+management of Clostridioides difficile infection. Therap Adv Gastroenterol 2021;
+14:17562848211011953.
+[109] Khanna S, et al. Efficacy and safety of RBX2660 in PUNCH CD3, a phase III,
+randomized, double-blind, placebo-controlled trial with a bayesian primary
+analysis for the prevention of recurrent Clostridioides difficile infection. Drugs
+2022;82(15):1527–38.
+[110] Lin Z, et al. Fecal microbiota transplantation in recurrent Clostridium difficile
+infection: is it superior to other conventional methods? Cureus 2020;12(8):e9653.
+[111] Gupta S, Allen-Vercoe E, Petrof EO. Fecal microbiota transplantation: in
+perspective. Therap Adv Gastroenterol 2016;9(2):229–39.
+[112] Wardill HR, et al. Adjunctive fecal microbiota transplantation in supportive
+oncology: emerging indications and considerations in immunocompromised
+patients. EBioMedicine 2019;44:730–40.
+[113] Mattila E, et al. Fecal transplantation, through colonoscopy, is effective therapy
+for recurrent Clostridium difficile infection 2012;142(3):490–6.
+[114] Postigo R, Kim JJI. Colonoscopic versus nasogastric fecal transplantation for the
+treatment of Clostridium difficile infection: a review and pooled analysis 2012;40:
+643–8.
+[115] Ramai D, et al. Fecal microbiota transplantation: donor relation, fresh or frozen,
+delivery methods, cost-effectiveness. Ann Gastroenterol 2019;32(1):30–8.
+[116] Normington C, Chilton CH, Buckley AM. Clostridioides difficile infections; new
+treatments and future perspectives 2024;40(1):7–13.
+[117] Chen J, et al. Antibiotics-associated pseudomembranous colitis: a
+disproportionality analysis of the US food and drug administration adverse event
+reporting system (FAERS) database. 2024. p. 1–7.
+[118] DeFilipp Z, , et alDrug-resistant E. Coli bacteremia transmitted by fecal
+microbiota transplant 2019;381(21):2043–50.
+[119] Ripert G, et al. Secreted compounds of the probiotic Bacillus clausii strain O/C
+inhibit the cytotoxic effects induced by Clostridium difficile and Bacillus cereus
+toxins. Antimicrob Agents Chemother 2016;60(6):3445–54.
+[120] Qiu H, et al. Novel Clostridium difficile anti-toxin (TcdA and TcdB) humanized
+monoclonal antibodies demonstrate in vitro neutralization across a broad
+spectrum of clinical strains and in vivo potency in a hamster spore challenge
+model. PLoS One 2016;11(6):e0157970.
+[121] McCreary J, et al. Development of an orally administered nanoparticle vaccine to
+combat Clostridioides difficile infections. In: Oklahoma state university center for
+health sciences research week; 2023. 2023.
+[122] Bratkoviˇc T, et al. New treatment approaches for Clostridioides difficile
+infections: alternatives to antibiotics and fecal microbiota transplantation. Gut
+Microbes 2024;16(1):2337312.
+[123] Steele J, et al. Antibody against TcdB, but not TcdA, prevents development of
+gastrointestinal and systemic Clostridium difficile disease. J Infect Dis 2013;207
+(2):323–30.
+[124] Vinderola G, Sanders ME, Salminen S. The concept of postbiotics. Foods 2022;11
+(8).
+[125] Thorakkattu P, et al. Postbiotics: current trends in food and pharmaceutical
+industry. Foods 2022;11(19).
+[126] Mantziari A, et al. Postbiotics against pathogens commonly involved in pediatric
+infectious diseases. Microorganisms 2020;8(10).
+[127] Hijov´a E. Postbiotics as metabolites and their biotherapeutic potential. Int J Mol
+Sci 2024;25(10).
+[128] Luenglusontigit P, et al. Effects of postbiotic from bacteriocin-like inhibitory
+substance producing Enterococcus faecalis on toxigenic Clostridioides difficile
+2023;41(4):2023918.
+[129] Ozma MA, et al. Evaluating the antibacterial, antibiofilm, and anti-toxigenic
+effects of postbiotics from lactic acid bacteria on Clostridium difficile 2024;16(4):
+497–508.
+[130] Hickson MJBMJ. Use of probiotic Lactobacillus preparation to prevent diarrhoea
+associated with antibiotics: randomised double blind placebo controlled trial.
+335, pg 80, 2007) 2007;335(7623):754.
+[131] Surawicz CM, et al. The search for a better treatment for recurrent Clostridium
+difficile disease: use of high-dose vancomycin combined with Saccharomyces
+boulardii 2000;31(4):1012–7.
+[132] Daeffler KNM, et al. Engineering bacterial thiosulfate and tetrathionate sensors
+for detecting gut inflammation 2017;13(4):923.
+[133] Riglar DT, et al. Engineered bacteria can function in the mammalian gut long-
+term as live diagnostics of inflammation 2017;35(7):653–8.
+C. Singh et al.
+Medicine in Microecology 24 (2025) 100121
+12
+
+[134] McKay R, et al. A platform of genetically engineered bacteria as vehicles for
+localized delivery of therapeutics: toward applications for Crohn’s disease 2018;3
+(3):209–21.
+[135] Praveschotinunt P, , et alEngineered E. Coli Nissle 1917 for the delivery of matrix-
+tethered therapeutic domains to the gut 2019;10(1):5580.
+[136] Wang L, et al. An engineered probiotic secreting Sj16 ameliorates colitis via
+Ruminococcaceae/butyrate/retinoic acid axis 2021;6(3):e10219.
+[137] Jeng H-S, Yan T-R. Lactiplantibacillus plantarum E51 protects against
+Clostridioides difficile-induced damages on Caco-2 intestinal barrier functions
+2022;204(6):290.
+[138] Islam MI, et al. In vitro and in vivo anti-Clostridioides difficile effect of a probiotic
+Bacillus amyloliquefaciens strain 2022;32(1):46.
+[139] Ariyoshi T, et al. Effect of Clostridium butyricum on gastrointestinal infections
+2022;10(2):483.
+[140] McCreary J, Huang I-H. Characterization of a bacteriocin that targets
+Clostridioidies difficile. In: Oklahoma state university center for health sciences
+research week 2022: poster presentation; 2022.
+[141] Dudzicz S. Profilaktyka zaka˙ze´n Clostridium difficile przy u˙zyciu szczepu
+Lactobacillus plantarum 299v w oddziale nefrologii i transplantologii. Katedra i
+klinika nefrologii, transplantologii i chor´ob wewnętrznych. 2022.
+[142] Piotrowski M, et al. The prebiotic effect of human milk oligosaccharides 3′-and 6′-
+sialyllactose on adhesion and biofilm formation by Clostridioides difficile–pilot
+study 2022;24(3):104929.
+[143] Kwak S, et al. Dissection and enhancement of prebiotic properties of yeast cell
+wall oligosaccharides through metabolic engineering, vol. 282; 2022, 121379.
+[144] Roychowdhury S, et al. Faecalibacterium prausnitzii and a prebiotic protect
+intestinal health in a mouse model of antibiotic and Clostridium difficile exposure
+2018;42(7):1156–67.
+[145] Piotrowski M, Wulta´nska D, Pituch HJFm. Effect of prebiotics on Bacteroides sp.
+adhesion and biofilm formation and synbiotic effect on Clostridioides difficile
+2022;17(5):363–75.
+[146] Maltz C, Miskovitz PF, Hajifathalian KJJO. Lactulose may reduce Clostridium
+difficile-related diarrhea among patients receiving antibiotics 2020;4(6):
+1088–90.
+[147] Failla M, et al. Evaluation of a witch hazel extract for the potential prebiotic and
+protective effect on select lactiplantibacillus plantarum. Prev. Lactobacillus
+plantarum) Strains 2022;9:874666.
+[148] Finegold SM, et al. Pomegranate extract exhibits in vitro activity against
+Clostridium difficile 2014;30(10):1210–2.
+[149] Ahn Y-J, et al. Tea polyphenols: selective growth inhibitors of Clostridium spp
+1991;55(5):1425–6.
+[150] Mahnic A, et al. Microbiota in vitro modulated with polyphenols shows decreased
+colonization resistance against Clostridioides difficile but can neutralize
+cytotoxicity 2020;10(1):8358.
+[151] Yamakoshi J, et al. Effect of proanthocyanidin-rich extract from grape seeds on
+human fecal flora and fecal odor 2001;13(1):25–31.
+[152] Cires MJ, et al. Protective effect of an avocado peel polyphenolic extract rich in
+proanthocyanidins on the alterations of colonic homeostasis induced by a high-
+protein diet 2019;67(42):11616–26.
+[153] Requena T, et al. Perspectives of the potential implications of wine polyphenols
+on human oral and gut microbiota 2010;21(7):332–44.
+[154] Lee HC, et al. Effect of tea phenolics and their aromatic fecal bacterial metabolites
+on intestinal microbiota 2006;157(9):876–84.
+[155] R¨atsep M, et al. A combination of the probiotic and prebiotic product can prevent
+the germination of Clostridium difficile spores and infection 2017;47:94–103.
+[156] Islek A, et al. The role of Bifidobacterium lactis B94 plus inulin in the treatment of
+acute infectious diarrhea in children 2014;25(6):628–33.
+[157] Waitzberg DL, et al. Effect of synbiotic in constipated adult women–a randomized,
+double-blind, placebo-controlled study of clinical response 2013;32(1):27–33.
+[158] Rogha M, et al. The efficacy of a synbiotic containing Bacillus Coagulans in
+treatment of irritable bowel syndrome: a randomized placebo-controlled trial
+2014;7(3):156.
+[159] Steed H, et al. Clinical trial: the microbiological and immunological effects of
+synbiotic consumption–a randomized double-blind placebo-controlled study in
+active Crohn’s disease 2010;32(7):872–83.
+[160] Fujimori S, et al. A randomized controlled trial on the efficacy of synbiotic versus
+probiotic or prebiotic treatment to improve the quality of life in patients with
+ulcerative colitis 2009;25(5):520–5.
+[161] Ishikawa H, Matsumoto S, Ohashi YJAMR. Digestion: beneficial effects of
+probiotic Bifidobacterium and galacto-oligosaccharide in patients with ulcerative
+colitis: a randomized Controlled Study 2011;16(2):201–2.
+C. Singh et al.
+Medicine in Microecology 24 (2025) 100121
+13

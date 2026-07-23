@@ -1,0 +1,791 @@
+======================================================================
+论文信息提取结果
+======================================================================
+
+【源文件】1-s2.0-S1684118221001328-main.pdf
+
+----------------------------------------------------------------------
+【标题 / Title】
+----------------------------------------------------------------------
+Inhibition of spores to prevent the recurrence of Clostridioides difﬁcile infection - A possibility or an improbability?
+
+----------------------------------------------------------------------
+【DOI】
+----------------------------------------------------------------------
+10.1016/j.jmii.2021.06.002
+
+----------------------------------------------------------------------
+【摘要 / Abstract】
+----------------------------------------------------------------------
+Clostridioides difﬁcile is one of the most common nosocomial gastrointestinal
+pathogens, and recurrence is a problematic issue because approximately 20e30% of patients
+experience at least one episode of recurrence, even after treatment with a therapeutic drug
+of choice for C. difﬁcile infection (CDI), such as vancomycin. CDI recurrence has a multifactorial complex mechanism, in which gut microbiota disruption coincident with viable C. difﬁcile
+spores, is considered the most important factor. The effectiveness of an anti-C. difﬁcile antimicrobial agent against CDI cannot guarantee its inhibitory effect on C. difﬁcile spores and
+vice versa. However, an antimicrobial agent, such as ﬁdaxomicin, which has a good inhibitory
+effect on both C. difﬁcile vegetative cells and spores is assumed to not only treat CDI but also
+prevent its recurrence. Prolonged adherence to the exosporium has been proposed as a
+possible mechanism of inhibiting spores, and as a result, redesigning anti-C. difﬁcile antimicrobial agents with the ability to adhere to the exosporium may provide another pathway for the
+development of anti-C. difﬁcile spore agents. For example, vancomycin lacks an inhibitory effect against C. difﬁcile spores, but a vancomycin-loaded spore-targeting iron oxide nanoparticle that selectively binds to C. difﬁcile spores has been developed to successfully delay
+spore germination. Some new antimicrobial agents in phase II clinical trials, including cadazolid and ridinilazole, have shown exceptional anti-C. difﬁcile and spore-inhibiting effects that
+can be expected to not only treat CDI but also prevent its recurrence in the future.
+* Corresponding author. Department of Medicine, College of Medicine, National Cheng Kung University, Tainan, Taiwan.
+** Corresponding author. Department of Internal Medicine, Tainan Hospital, Ministry of Health and Welfare, Tainan, Taiwan.
+E-mail addresses: winston3415@gmail.com (W.-C. Ko), yuebin16@yahoo.com.tw (Y.-P. Hung).
+https://doi.org/10.1016/j.jmii.2021.06.002
+1684-1182/Copyright ª 2021, Taiwan Society of Microbiology. Published by Elsevier Taiwan LLC. This is an open access article under the CC
+BY-NC-ND license (http://creativecommons.org/licenses/by-nc-nd/4.0/).
+Available online at www.sciencedirect.com
+ScienceDirect
+journal homepage: www.e-jmii.com
+Journal of Microbiology, Immunology and Infection 54 (2021) 1011e1017
+
+Copyright ª 2021, Taiwan Society of Microbiology. Published by Elsevier Taiwan LLC. This is an
+open access article under the CC BY-NC-ND license (http://creativecommons.org/licenses/bync-nd/4.0/).
+
+----------------------------------------------------------------------
+【全文 / Full Text】
+----------------------------------------------------------------------
+Review Article
+Inhibition of spores to prevent the
+recurrence of Clostridioides difﬁcile
+infection - A possibility or an improbability?
+Chun-Wei Chiu a, Pei-Jane Tsai b, Ching-Chi Lee c,
+Wen-Chien Ko c,d,*, Yuan-Pin Hung a,c,**
+a Department of Internal Medicine, Tainan Hospital, Ministry of Health and Welfare, Tainan, Taiwan
+b Department of Medical Laboratory Science and Biotechnology, National Cheng Kung University,
+Medical College, Tainan, Taiwan
+c Department of Internal Medicine, National Cheng Kung University Hospital, College of Medicine,
+National Cheng Kung Univeristy, Tainan, Taiwan
+d Department of Medicine, College of Medicine, National Cheng Kung University, Tainan, Taiwan
+Received 7 January 2021; received in revised form 8 June 2021; accepted 19 June 2021
+Available online 26 June 2021
+KEYWORDS
+Clostridioides
+difﬁcile;
+Clostridioides
+difﬁcile infection;
+Spore;
+Fidaxomicin;
+Vancomycin;
+Recurrence
+Abstract
+Clostridioides difﬁcile is one of the most common nosocomial gastrointestinal
+pathogens, and recurrence is a problematic issue because approximately 20e30% of patients
+experience at least one episode of recurrence, even after treatment with a therapeutic drug
+of choice for C. difﬁcile infection (CDI), such as vancomycin. CDI recurrence has a multifactorial complex mechanism, in which gut microbiota disruption coincident with viable C. difﬁcile
+spores, is considered the most important factor. The effectiveness of an anti-C. difﬁcile antimicrobial agent against CDI cannot guarantee its inhibitory effect on C. difﬁcile spores and
+vice versa. However, an antimicrobial agent, such as ﬁdaxomicin, which has a good inhibitory
+effect on both C. difﬁcile vegetative cells and spores is assumed to not only treat CDI but also
+prevent its recurrence. Prolonged adherence to the exosporium has been proposed as a
+possible mechanism of inhibiting spores, and as a result, redesigning anti-C. difﬁcile antimicrobial agents with the ability to adhere to the exosporium may provide another pathway for the
+development of anti-C. difﬁcile spore agents. For example, vancomycin lacks an inhibitory effect against C. difﬁcile spores, but a vancomycin-loaded spore-targeting iron oxide nanoparticle that selectively binds to C. difﬁcile spores has been developed to successfully delay
+spore germination. Some new antimicrobial agents in phase II clinical trials, including cadazolid and ridinilazole, have shown exceptional anti-C. difﬁcile and spore-inhibiting effects that
+can be expected to not only treat CDI but also prevent its recurrence in the future.
+* Corresponding author. Department of Medicine, College of Medicine, National Cheng Kung University, Tainan, Taiwan.
+** Corresponding author. Department of Internal Medicine, Tainan Hospital, Ministry of Health and Welfare, Tainan, Taiwan.
+E-mail addresses: winston3415@gmail.com (W.-C. Ko), yuebin16@yahoo.com.tw (Y.-P. Hung).
+https://doi.org/10.1016/j.jmii.2021.06.002
+1684-1182/Copyright ª 2021, Taiwan Society of Microbiology. Published by Elsevier Taiwan LLC. This is an open access article under the CC
+BY-NC-ND license (http://creativecommons.org/licenses/by-nc-nd/4.0/).
+Available online at www.sciencedirect.com
+ScienceDirect
+journal homepage: www.e-jmii.com
+Journal of Microbiology, Immunology and Infection 54 (2021) 1011e1017
+
+Copyright ª 2021, Taiwan Society of Microbiology. Published by Elsevier Taiwan LLC. This is an
+open access article under the CC BY-NC-ND license (http://creativecommons.org/licenses/bync-nd/4.0/).
+Introduction
+Clostridioides difﬁcile is one of the most common nosocomial gastrointestinal pathogens, with clinical presentations
+ranging from mild diarrhea and pseudomembranous colitis
+to toxic megacolon, with a mortality of up to 25e40%.1e9
+Severe colitis develops in approximately 3% of patients
+with C. difﬁcile infection (CDI) who may have paradoxical
+decrease in the amount of diarrhea after ileus or toxic
+megacolon developed.3,10 Diagnosis of CDI relies on the
+detection of toxigenic C. difﬁcile, its toxins or toxin genes
+in stool.9,11
+Metronidazole was suggested for mild CDI and vancomycin was recommended for severe CDI.8 Nevertheless,
+oral vancomycin and ﬁdaxomicin have been suggested to
+replace metronidazole as the therapeutic choice for either
+mild-moderate or severe CDI in the Clinical Practice
+Guidelines for C. difﬁcile Infection in Adults and Children:
+2017 Update by the Infectious Diseases Society of America
+(IDSA) and Society for Healthcare Epidemiology of America
+(SHEA).12 For patients with severe and fulminant forms of
+CDI presenting as ileus, oral intake of vancomycin or
+ﬁdaxomicin is disrupted because of the obstruction of the
+gut because ﬁdaxomicin can only be administered orally;
+and
+vancomycin, either administered orally or
+intrarectally. This leads to marked disruption of the microbiota,
+leading to prolonged loss of colonization resistance to C.
+difﬁcile and dense colonization by vancomycin-resistant
+Enterococcus, K. pneumoniae, and E. coli.13
+Although antimicrobial resistance is not clinically problematic, treating CDI with metronidazole and vancomycin is
+associated with a high treatment failure rate and high
+relapse rate.14 According to the Clinical Practice Guidelines
+by IDSA/SHEA, oral vancomycin was still the drug of choice
+for recurrent C. difﬁcile associated diarrhea, but the rate
+of second recurrence rate is as high as 22.6e41.8%, despite
+successful treatment with vancomycin.15 The high recurrence rate of CDI after treatment might be due to the
+generation of spores that lead to persistence of CDI.16,17
+The biology of spores in the pathogenesis of C.
+difﬁcile
+Owing to its strict anaerobic requirements, the infectious
+and transmissible morphotype of C. difﬁcile is a dormant
+spore, which is characterized by resistance to heat, oxygen, and common disinfectants, such as ethanol-based
+hand sanitizers.16,18,19 The sporeeresistance properties
+are attributed to a low water content (25e60% of wet
+weight), elevated levels of dipicolonic acid (25% of core dry
+weight) chelated with calcium, and the saturation of DNA
+with a/b-type small acid soluble proteins.16,20
+The spores of C. difﬁcile has the innermost spore
+compartment known as the spore core, which contains the
+spore DNA, RNA and most enzymes.16 The spore core is
+encased in three protective layers: the ﬁrst is the compressed inner membrane protein surrounded by the germ
+cell wall, which has a very low permeability to small molecules, including water, and protects the core from DNAdamaging molecules, the second is the peptidoglycan cortex, a coat that predominantly consists of proteins, and the
+third is the exosporium (the outermost layer), which predominantly consists of glycoproteins.16
+During CDI, C. difﬁcile initiates a sporulation pathway
+that produces dormant spores that lead to persistence and
+dissemination of CDI within hospitalized patients, and the
+pathway is triggered by environmental stimuli such as
+nutrient starvation, quorum sensing and other unidentiﬁed
+stress factors.16,17 When C. difﬁcile spores are ingested,
+the spores are capable of enduring the acidic conditions of
+the stomach and then transition to a metabolically active
+state (germinate) in the small intestine.21 Germination of
+C. difﬁcile spores and the growth of vegetative forms take
+place only in the lower gastrointestinal tract where the
+oxygen concentration is very low.22,23 Some contents of the
+intestine, such as bile acids, induce germination of the
+spores into an actively replicating vegetative cell.23,24
+Taurocholate, a conjugated primary bile acid in the small
+intestine, has the ability to promote germination and to
+inﬂuence vegetative growth of C. difﬁcile; in contrast,
+chenodeoxycholate, another primary bile acid, inhibits
+spore germination in C. difﬁcile and acts both as a
+competitive inhibitor of taurocholate and a suppressor of
+vegetative growth.24,25 The efﬁciency of germination varies
+between clinical strains of C. difﬁcile and whether it is
+associated with ribotype, disease severity or therapeutic
+failure needs further investigation.23,26
+Rationale of the implication of spore inhibition
+for the prevention of recurrence of C. difﬁcile
+infection: is it the absolute and only solution?
+Recurrence is a problematic issue in CDI, with 20e30% of
+patients facing at least one episode of recurrence even
+when treated with a therapeutic drug of choice for CDI.21,27
+In a simulated CDI gut model, although vancomycin successfully treated the initial episode of CDI, recurrence
+occurred approximately 18 days after therapy cessation, in
+which the germination of spores of C. difﬁcile in the environment of a bioﬁlm was noted.28 The recurrence rates of
+clinical patients with CDI receiving metronidazole and
+vancomycin therapy, two of the most commonly used antiC. difﬁcile antibiotics, were 27.1% and 24.0%, respectively.27 The recurrence could be due to either reinfection
+C.-W. Chiu, P.-J. Tsai, C.-C. Lee et al.
+1012
+
+of a susceptible individual or reactivation of latent spores
+within the individual’s gastrointestinal tract.27
+CDI recurrence has a multi-factorial complex mechanism, but gut microbiota disruption coincident with viable
+C. difﬁcile spores is considered as the most important
+factor.28,29 Of course, targeting spores of C. difﬁcile is not
+the only way to resolve the troublesome CDI recurrence
+problem; multiple factors, including gut microbiota status
+and the ribotype of the C. difﬁcile (with different spore
+germination efﬁciency) also inﬂuences the recurrence rate
+of CDI.26 For example, rifaximin, though lacking sporeinhibiting effects, can prevent the recurrence of CDI
+when given immediately after completing standard anti-CDI
+antibiotics through its relative sparing of enteric microbiota.30e32 The ribotype of C. difﬁcile with different spore
+germination efﬁciencies will inﬂuence the recurrent rate of
+CDI; for example, ribotype 027 isolates exhibit signiﬁcantly
+higher germination efﬁciencies in the presence of sodium
+taurocholate than ribotype 106 and ribotype 078.26
+Even with the inﬂuence of the gut microbiota condition
+and the ribotype of CDI, developing antimicrobial agents
+with both anti-C. difﬁcile and spore-inhibiting effects
+have been proven to provide a way to not only treat CDI
+but also prevent its recurrence, including ﬁdaxomicin, one
+of the drugs of choice for CDI, and cadazolid and ridinilazole, two antimicrobial agents still in phase II clinical
+trials (Table 1).33e37
+The application of the spore-inhibiting effect
+of current anti-C. difﬁcile antimicrobial agents
+in the therapy of C. difﬁcile infection and its
+recurrence
+The effectiveness of an anti-C. difﬁcile antimicrobial agent
+toward CDI cannot guarantee its inhibitory effect on spores
+of C. difﬁcile and vice versa.38e40 Though many antimicrobial agents are regarded as drugs of choice for CDI, such
+as ﬁdaxomicin and vancomycin, their inhibitory effects on
+C. difﬁcile spores are diverse, which might be due to their
+different adherent and inhibitory effects toward spores of
+C. difﬁcile38,39; in contrast, tigecycline and piperacillin/
+tazobactam, two commonly used antimicrobial agents in
+the clinic, both have a dose-dependent inhibitory effect on
+spore production at subminimum inhibitory concentrations
+(sub-MICs) in-vitro, but their clinical application is limited
+because
+of
+their
+inadequate
+therapeutic
+effect
+on
+CDI.16,40,41 If an antimicrobial agent, such as ﬁdaxomicin,
+has both anti-vegetative cell and anti-spore effects toward
+C. difﬁcile, it is assumed to be able to not only achieve a
+therapeutic effect but also lower the recurrence rate.33 In
+contrast, if an antimicrobial agent, such as vancomycin, has
+only anti-vegetative cell effects but lacks anti-spore effects
+toward C. difﬁcile, it will be hypothetically only achieving a
+therapeutic effect but with a possible high recurrence rate
+after therapy unless there is some modiﬁcation of the
+antimicrobial agents to strengthen its effect on spores.38,39
+Fidaxomicin, a drug used for CDI therapy, can inhibit both
+the sporulation and the outgrowth of a vegetative cell from
+the germinating spore, but its effect on the germination of
+C. difﬁcile spores is limited (Table 1).30,42e45 Fidaxomicin
+has a persistent inhibitory effect on sporulation when added
+to
+early-stationary-phase
+cells
+in
+C.
+difﬁcile
+strains,
+including the epidemic NAP1/BI/027 strain at sub-MICs, and
+thus prevents subsequent growth and toxin production invitro; in contrast, vancomycin and metronidazole do not
+inhibit sporulation at similar sub-MICs.30,43,44 In contrast to
+its inhibitory effect on sporulation, ﬁdaxomicin was found to
+have no inhibitory effect on the initiation of C. difﬁcile
+spore germination by analyzing the kinetics of the initiation
+of spore germination.42
+The spore-inhibiting effect of ﬁdaxomicin has been
+illustrated in clinical trials, although the clinical cure rates
+with ﬁdaxomicin were similar to those with vancomycin in
+both the modiﬁed intention-to-treat analysis (88.2% with
+ﬁdaxomicin and 85.8% with vancomycin) and per-protocol
+analysis (92.1% and 89.8%, respectively), signiﬁcantly fewer
+patients in the ﬁdaxomicin group than in the vancomycin
+group had a recurrence of the infection, in both the modiﬁed intention-to-treat analysis (15.4% vs. 25.3%, P Z 0.005)
+and per-protocol analysis (13.3% vs. 24.0%, P Z 0.004).46
+The lower recurrence rate following ﬁdaxomicin therapy
+compared to vancomycin was also due to its lower effect on
+the microbiota.15,47e50 In the mice model, ﬁdaxomicin
+reduced the proportion of Clostridial growth to a lesser
+extent, but increased that of Bacteroidia, resulting in less
+disturbance in microbiota diversity.47 The lesser inﬂuence
+on the microbiota composition of ﬁdaxomicin, compared to
+vancomycin, promoted faster microbial recovery in the gut,
+and had more colonization resistance to C. difﬁcile.48e50
+Prolonged adherence to the exosporium has been proposed as a possible way of inhibiting spores; as a result,
+redesigning anti-C. difﬁcile antimicrobial agents with the
+ability to adhere to the exosporium may provide another
+pathway for the development of anti-C. difﬁcile spore
+agents.38,39 Vancomycin, although considered as one of the
+drugs of choice for CDI, was found to have no inhibitory
+effect on the initiation of C. difﬁcile spore germination by
+analyzing the kinetics of the initiation of spore germination.42 Thus, the recurrence rate after vancomycin therapy
+was as high as 24.0%.27 although vancomycin itself has no
+effect on C. difﬁcile spores, a vancomycin-loaded sporetargeting iron oxide nanoparticle (van-IONP) that selectively binds to C. difﬁcile spores has been developed to
+successfully delay spore germination.38
+Potential future armament for inhibiting C.
+difﬁcile spores and preventing recurrence of
+C. difﬁcile infection
+Some antimicrobial agents undergoing clinical trials have
+shown excellent anti-C. difﬁcile and spore-inhibiting effects,
+which can not only treat CDI but also prevent its recurrence
+(Table
+1).33e37
+Cadazolid,
+a
+novel
+ﬂuoroquinoloneoxazolidinone antibiotic in phase II and III trials currently,
+exhibits potent in-vitro activity against C. difﬁcile and its
+spores,33,34 and has limited effect on the gut microﬂora,
+including the B. fragilis group and Lactobacillus spp.51,52 The
+cure rates of patients with CDI that received 250, 500, or
+1000 mg cadazolid twice daily were 76.5%, 80.0%, 68.4%,
+respectively, compared to 68.2% in the group treated with
+125 mg vancomycin four times daily; in addition, each
+dosage of cadazolid resulted in a lower recurrence rate than
+Journal of Microbiology, Immunology and Infection 54 (2021) 1011e1017
+1013
+
+vancomycin (18.2e25.0% vs. 50%, respectively).33 It is a pity
+in phase III study cadazolid did not achieve its primary
+endpoint of non-inferiority to vancomycin for clinical cure in
+one of two phase III C difﬁcile infection trials.51 Nevertheless
+pooling the data from two studies with three randomized
+controlled trials, cadazolid revealed no signiﬁcantly difference in sustained clinical response at clinical follow-up
+(pooled odds ratio (OR) Z 1.14; P Z 0.27) but lower recurrence rate (pooled OR Z 0.71; P Z 0.04) compared to
+vancomycin.53
+Ridinilazole, a novel class of heterocyclic antibacterial
+drugs, can inhibit DNA bacterial synthesis and thus inhibit
+the growth of C. difﬁcile.36,53 Treatment with supra-MIC
+concentrations (4  and 40  MIC) of ridinilazole resulted
+in a signiﬁcant reduction in vegetative cells over 72 h (4 log
+difference, P < 0.01) compared with controls without
+inducing spore formation.36,54 Ridinilazole, compared to
+vancomycin, had almost no effect on the gut microbiota,
+including several Bacteroidaceae and Clostridiaceae families, and maintained the intestinal bile acid proﬁle.35,55 In
+phase II trials, the sustained clinical response in patients in
+the ridinilazole group was 66.7%, which was superior to that
+of 42.4% in the vancomycin group.35 Of note, the recurrence
+rate of CDI among patients receiving ridinilazole was 14.3%,
+which was lower than that of 34.8% for vancomycin.35
+Ramoplanin, a glycolipodepsipeptide antibiotic that is
+active against C. difﬁcile, results in spore counts consistently below the level of detection for 28 days after even a
+brief (30-min) exposure in-vitro.39 In the same study investigating exposure to ramoplanin, an increase in spore counts
+was noted after removal of the C. difﬁcile exosporium,
+which suggests that rather than being directly sporicidal,
+ramoplanin adheres to the exosporium for a prolonged
+period, and during this time it is available to attack the
+Table 1
+Antimicrobial agents with both an inhibitory effect on Clostridioides difﬁcile spores in vitro and the recurrence of C.
+difﬁcile infection in clinical trials.
+Agent
+Chemical
+structure
+Phase of
+the latest
+clinical
+trials
+Minimum
+inhibitory
+concentration
+(MIC), mg/L
+Clinical
+efﬁcacy
+toward CDI
+Recurrence
+rate of CDI
+after
+therapy
+Inhibits
+spore
+ability
+Effect on
+microbiota
+References
+Fidaxomicin Macrocyclic
+drug
+On the
+market
+MIC50: 0.125
+MIC90: 0.25
+MIC range: 
+0.007 to 1
+Clinical cure
+rate: 88.2%
+vs. 85.8%
+with
+vancomycin
+15.4% vs.
+25.3% in
+vancomycin
+group
+Inhibits
+spore
+formation
+Reduced the
+proportion of
+Clostridial
+growth to a
+lesser extent,
+increased
+Bacteroidia,
+less
+disturbance of
+microbiota
+diversity
+30, 43e46,
+60
+Cadazolid
+Oxazolidinone Phase III
+MIC50: 0.125
+MIC90: 0.25
+MIC ranges:
+0.06e0.25
+Clinical cure
+rate: 68.4%
+(1000 mg
+BID)-80.0%
+(500 mg BID)
+vs. 68.2% in
+vancomycin
+group
+(125 mg
+QID)
+18.2e25.0%
+vs. 50% in
+vancomycin
+group
+Inhibits
+spore
+formation
+Limited
+inhibition of
+the gut
+microﬂora,
+including the B.
+fragilis group
+and
+Lactobacillus
+spp.
+33, 34, 50,
+51
+Ridinilazole
+Heterocyclic
+antibacterial
+Phase II
+MIC90: 0.125
+Sustained
+clinical
+response
+rate: 66.7%
+vs. 42.4% in
+the
+vancomycin
+group
+14.3% vs.
+34.8% in
+vancomycin
+group
+Inhibits
+spore
+formation
+Almost no
+disturbance of
+the gut
+microbiota,
+including
+several
+Bacteroidaceae
+and
+Clostridiaceae
+families, and
+maintained the
+intestinal bile
+acid proﬁle
+35, 36, 53,
+54
+C.-W. Chiu, P.-J. Tsai, C.-C. Lee et al.
+1014
+
+germinating cells.39 In hamster models of CDI, C. difﬁcile
+spores were recovered signiﬁcantly more often from the
+cecal contents of vancomycin-treated hamsters (n Z 19/23)
+compared with ramoplanin-treated (n Z 6/23) hamsters
+(P < 0.05).37 It is unfortunate that though ramoplanin
+revealed inhibitory effects on C. difﬁcile and its spores invitro, its clinical efﬁcacy toward CDI and its recurrence is
+still lacking.32
+CRS3123, a fully synthetic diaryldiamine antimicrobial
+drug, prevents both C. difﬁcile growth and spore production by inhibiting bacterial protein synthesis, with a >10fold reduction in the sporulation rate in-vitro.56 To date,
+only data from a phase I study assessing the safety and
+tolerability of CRS3123 are available, and evidence of its
+clinical effect on CDI and its recurrence is deﬁcient.32
+Nisin, a bacteriocin produced by several strains of Lactococcus lactis, was noted to have inhibitory activity
+against clinical isolates of C. difﬁcile, with spore viability
+reduced by 40e50% in-vitro.57 However, in-vivo evidence of
+nisin in treating CDI or its recurrence is absent.
+Development of a vaccine targeting the spores of C.
+difﬁcile provides a feasible pathway for preventing CDI
+recurrence.58 Anti-spore IgY from chickens delayed the
+occurrence of diarrhea by 1.5 d and the spore adherence to
+the colonic mucosa by 90% in a mouse model, and coadministration of anti-spore IgY coupled with vancomycin
+delayed the appearance of recurrent diarrhea by a median
+of 2 days.58
+Some small molecules and compounds were noted to
+have spore-inhibiting effects in-vitro, but a determination
+of their “real” clinical efﬁcacy needs further clinical trials.59,60 Carvacrol, a food-grade, plant-derived compound,
+signiﬁcantly reduces sporulation, germination and spore
+outgrowth of C. difﬁcile and downregulates critical genes
+involved in spore production in-vitro.59 Rhodomyrtone, a
+bioactive compound derived from the leaves of the rose
+myrtle (Rhodomyrtus tomentosa), is four-fold more potent
+than vancomycin in inhibiting C. difﬁcile spore outgrowth
+in-vitro.60
+Conclusion
+Developing an antimicrobial agent with a good inhibitory
+effect on both C. difﬁcile vegetative cells and spores can
+be expected to not only treat CDI but also prevent its
+recurrence, such as ﬁdaxomicin. Cadazolid and ridinilazole
+possess a spore-inhibiting effect in-vitro, and thus decrease
+the recurrence of CDI after cessation of the drug in phase II
+and III clinical trials. Some small molecules and compounds
+were noted to have spore-inhibiting effects in-vitro, but the
+determination of their “real” clinical efﬁcacy requires
+further clinical trials.
+Funding
+The present study was supported by research grants from
+the Ministry of Health and Welfare of Taiwan (MOHW105CDC-C-114-122113) and the Ministry of Science and Technology of Taiwan (MOST 108-2321-B-006-004 and 109-2314B-006-089-MY).
+Declaration of competing interest
+The authors declare that they have no conﬂicts of interest.
+References
+1. Kuijper EJ, van Dissel JT, Wilcox MH. Clostridium difﬁcile:
+changing epidemiology and new treatment options. Curr Opin
+Infect Dis 2007;20:376e83.
+2. Zhang RF, Man YX, Bai YY, Shao CH, Liu CM, Wang CH, et al.
+Molecular characterization of Clostridioides difﬁcile ribotype
+027 in a major Chinese hospital. J Microbiol Immunol Infect
+2021. https://doi.org/10.1016/j.jmii.2021.01.003.
+3. Lee JC, Hung YP, Tsai BY, Tsai PJ, Ko WC. Severe Clostridium
+difﬁcile infections in intensive care units: diverse clinical
+presentations.
+J
+Microbiol
+Immunol
+Infect
+2020.
+https:
+//doi.org/10.1016/j.jmii.2020.07.012.
+4. Chang TH, Hsu WY, Yang TI, Lu CY, Hsueh PR, Chen JM, et al.
+Increased age and proton pump inhibitors are associated with
+severe Clostridium difﬁcile infections in children. J Microbiol
+Immunol Infect 2020;53:578e84.
+5. Hung YP, Lee JC, Tsai BY, Wu JL, Liu HC, Liu HC, et al. Risk
+factors of Clostridium difﬁcile-associated diarrhea in hospitalized adults: vary by hospitalized duration. J Microbiol
+Immunol Infect 2021;54:276e83.
+6. Hung YP, Tsai CS, Tsai BY, Tsai PJ, Lee YT, Lee JC, et al. Clostridioides difﬁcile infection in patients with hematological
+malignancy: a multicenter study in Taiwan. J Microbiol Immunol Infect 2021. https://doi.org/10.1016/j.jmii.2021.02.002.
+7. Lin TC, Hung YP, Ko WC, Ruan JW. Fecal microbiota transplantation
+for
+Clostridium
+difﬁcile
+infection
+in
+Taiwan:
+establishment and implementation. J Microbiol Immunol Infect
+2019;52:841e50.
+8. Wu KS, Syue LS, Cheng A, Yen TY, Chen HM, Chiu YH, et al.
+Recommendations and guidelines for the treatment of Clostridioides difﬁcile infection in Taiwan. J Microbiol Immunol
+Infect 2020;53:191e208.
+9. Chang FC, Liu CP, Sun FJ, Lin CC. Optimizing laboratory
+workﬂow for the diagnosis of Clostridiodes difﬁcile infection in
+a medical center in Northern Taiwan. J Microbiol Immunol
+Infect 2021;54:284e9.
+10. Riddle DJ, Dubberke ER. Clostridium difﬁcile infection in the
+intensive care unit. Infect Dis Clin 2009;23:727e43.
+11. Bouza E, Onori R, Semiglia-Chong MA, Alvarez-Uria A, Alcala L,
+Burillo A. Fast track SSTI management program based on a
+rapid molecular test (GeneXpert(R) MRSA/SA SSTI) and antimicrobial stewardship. J Microbiol Immunol Infect 2020;53:
+328e35.
+12. McDonald LC, Gerding DN, Johnson S, Bakken JS, Carroll KC,
+Cofﬁn SE, et al. Clinical practice guidelines for Clostridium
+difﬁcile infection in adults and children: 2017 update by the
+infectious diseases society of America (IDSA) and society for
+Healthcare epidemiology of America (SHEA). Clin Infect Dis
+2018;66:987e94.
+13. Lewis BB, Bufﬁe CG, Carter RA, Leiner I, Toussaint NC, Miller LC,
+et al. Loss of microbiota-mediated colonization resistance to
+Clostridium difﬁcile infection with oral vancomycin compared
+with metronidazole. J Infect Dis 2015;212:1656e65.
+14. Kelly CP, LaMont JT. Clostridium difﬁcile–more difﬁcult than
+ever. N Engl J Med 2008;359:1932e40.
+15. Umemura T, Ota A, Mutoh Y, Norizuki C, Mizuno T, Kozaki K,
+et al. Efﬁcacy of prolonged tapered and pulsed vancomycin
+regimen on recurrent Clostridioides difﬁcile infection in the
+Japanese setting: a case control study. J Pharm Health Care Sci
+2019;5:19.
+Journal of Microbiology, Immunology and Infection 54 (2021) 1011e1017
+1015
+
+16. Paredes-Sabja D, Shen A, Sorg JA. Clostridium difﬁcile spore
+biology: sporulation, germination, and spore structural proteins. Trends Microbiol 2014;22:406e16.
+17. Higgins D, Dworkin J. Recent progress in Bacillus subtilis
+sporulation. FEMS Microbiol Rev 2012;36:131e48.
+18. Dawson
+LF,
+Valiente
+E,
+Donahue
+EH,
+Birchenough
+G,
+Wren BW. Hypervirulent Clostridium difﬁcile PCR-ribotypes
+exhibit resistance to widely used disinfectants. PloS One
+2011;6:e25754.
+19. Rodriguez-Palacios A, Lejeune JT. Moist-heat resistance, spore
+aging, and superdormancy in Clostridium difﬁcile. Appl Environ Microbiol 2011;77:3085e91.
+20. Setlow P. I will survive: DNA protection in bacterial spores.
+Trends Microbiol 2007;15:172e80.
+21. Kochan TJ, Foley MH, Shoshiev MS, Somers MJ, Carlson PE,
+Hanna PC. Updates to Clostridium difﬁcile spore germination.
+J Bacteriol 2018;200. e00218-18.
+22. Koenigsknecht MJ, Theriot CM, Bergin IL, Schumacher CA,
+Schloss PD, Young VB. Dynamics and establishment of Clostridium difﬁcile infection in the murine gastrointestinal tract.
+Infect Immun 2015;83:934e41.
+23. Abt MC, McKenney PT, Pamer EG. Clostridium difﬁcile colitis:
+pathogenesis and host defence. Nat Rev Microbiol 2016;14:
+609e20.
+24. Wilson KH, Kennedy MJ, Fekety FR. Use of sodium taurocholate
+to enhance spore recovery on a medium selective for Clostridium difﬁcile. J Clin Microbiol 1982;15:443e6.
+25. Sorg JA, Sonenshein AL. Inhibiting the initiation of Clostridium
+difﬁcile spore germination using analogs of chenodeoxycholic
+acid, a bile acid. J Bacteriol 2010;192:4983e90.
+26. Moore P, Kyne L, Martin A, Solomon K. Germination efﬁciency
+of clinical Clostridium difﬁcile spores and correlation with
+ribotype, disease severity and therapy failure. J Med Microbiol
+2013;62:1405e13.
+27. Vardakas KZ, Polyzos KA, Patouni K, Rafailidis PI, Samonis G,
+Falagas ME. Treatment failure and recurrence of Clostridium
+difﬁcile infection following treatment with vancomycin or
+metronidazole: a systematic review of the evidence. Int J
+Antimicrob Agents 2012;40:1e8.
+28. Crowther
+GS,
+Chilton
+CH,
+Todhunter
+SL,
+Nicholson
+S,
+Freeman J, Baines SD, et al. Comparison of planktonic and
+bioﬁlm-associated communities of Clostridium difﬁcile and
+indigenous gut microbiota in a triple-stage chemostat gut
+model. J Antimicrob Chemother 2014;69:2137e47.
+29. Chilton CH, Pickering DS, Freeman J. Microbiologic factors
+affecting Clostridium difﬁcile recurrence. Clin Microbiol
+Infect 2018;24:476e82.
+30. Babakhani F, Bouillaut L, Gomez A, Sears P, Nguyen L,
+Sonenshein AL. Fidaxomicin inhibits spore production in Clostridium difﬁcile. Clin Infect Dis 2012;55(Suppl 2):S162e9.
+31. Garey KW, Ghantoji SS, Shah DN, Habib M, Arora V, Jiang ZD,
+et al. A randomized, double-blind, placebo-controlled pilot
+study to assess the ability of rifaximin to prevent recurrent
+diarrhoea in patients with Clostridium difﬁcile infection. J
+Antimicrob Chemother 2011;66:2850e5.
+32. Petrosillo N, Granata G, Cataldo MA. Novel Antimicrobials for
+the treatment of Clostridium difﬁcile infection. Front Med
+2018;5:96.
+33. Louie T, Nord CE, Talbot GH, Wilcox M, Gerding DN, Buitrago M,
+et al. Multicenter, double-blind, randomized, phase 2 study
+evaluating the novel antibiotic cadazolid in patients with
+Clostridium difﬁcile infection. Antimicrob Agents Chemother
+2015;59:6266e73.
+34. Locher HH, Seiler P, Chen X, Schroeder S, Pfaff P, Enderlin M,
+et al. In vitro and in vivo antibacterial evaluation of cadazolid,
+a new antibiotic for treatment of Clostridium difﬁcile infections. Antimicrob Agents Chemother 2014;58:892e900.
+35. Vickers RJ, Tillotson GS, Nathan R, Hazan S, Pullman J,
+Lucasti C, et al. Efﬁcacy and safety of ridinilazole compared
+with vancomycin for the treatment of Clostridium difﬁcile
+infection:
+a
+phase
+2,
+randomised,
+double-blind,
+activecontrolled, non-inferiority study. Lancet Infect Dis 2017;17:
+735e44.
+36. Basseres E, Endres BT, Khaleduzzaman M, Miraftabi F, Alam MJ,
+Vickers RJ, et al. Impact on toxin production and cell
+morphology in Clostridium difﬁcile by ridinilazole (SMT19969),
+a novel treatment for C. difﬁcile infection. J Antimicrob
+Chemother 2016;71:1245e51.
+37. Freeman J, Baines SD, Jabes D, Wilcox MH. Comparison of the
+efﬁcacy of ramoplanin and vancomycin in both in vitro and
+in vivo models of clindamycin-induced Clostridium difﬁcile
+infection. J Antimicrob Chemother 2005;56:717e25.
+38. Chen YH, Li TJ, Tsai BY, Chen LK, Lai YH, Li MJ, et al. Vancomycin-loaded nanoparticles enhance sporicidal and antibacterial
+efﬁcacy
+for
+Clostridium
+difﬁcile
+infection.
+Front
+Microbiol 2019;10:1141.
+39. Kraus CN, Lyerly MW, Carman RJ. Ambush of Clostridium
+difﬁcile spores by ramoplanin: activity in an in vitro model.
+Antimicrob Agents Chemother 2015;59:2525e30.
+40. Manthey CF, Eckmann L, Fuhrmann V. Therapy for Clostridium
+difﬁcile infection - any news beyond metronidazole and vancomycin? Expet Rev Clin Pharmacol 2017;10:1239e50.
+41. Aldape MJ, Heeney DD, Bryant AE, Stevens DL. Tigecycline
+suppresses toxin A and B production and sporulation in Clostridium difﬁcile. J Antimicrob Chemother 2015;70:153e9.
+42. Allen CA, Babakhani F, Sears P, Nguyen L, Sorg JA. Both
+ﬁdaxomicin and vancomycin inhibit outgrowth of Clostridium
+difﬁcile
+spores.
+Antimicrob
+Agents
+Chemother
+2013;57:
+664e7.
+43. Chilton CH, Crowther GS, Ashwin H, Longshaw CM, Wilcox MH.
+Association of Fidaxomicin with C. difﬁcile Spores: effects of
+persistence on subsequent spore recovery, outgrowth and toxin
+production. PloS One 2016;11:e0161200.
+44. James GA, Chesnel L, Boegli L, deLancey Pulcini E, Fisher S,
+Stewart PS. Analysis of Clostridium difﬁcile bioﬁlms: imaging
+and antimicrobial treatment. J Antimicrob Chemother 2018;
+73:102e8.
+45. Goldstein EJ, Citron DM, Sears P, Babakhani F, Sambol SP,
+Gerding DN. Comparative susceptibilities to ﬁdaxomicin (OPT80) of isolates collected at baseline, recurrence, and failure
+from patients in two phase III trials of ﬁdaxomicin against
+Clostridium difﬁcile infection. Antimicrob Agents Chemother
+2011;55:5194e9.
+46. Louie TJ, Miller MA, Mullane KM, Weiss K, Lentnek A, Golan Y,
+et al. Fidaxomicin versus vancomycin for Clostridium difﬁcile
+infection. N Engl J Med 2011;364:422e31.
+47. Yamaguchi T, Konishi H, Aoki K, Ishii Y, Chono K, Tateda K. The
+gut microbiome diversity of Clostridioides difﬁcile-inoculated
+mice treated with vancomycin and ﬁdaxomicin. J Infect Chemother 2020;26:483e91.
+48. Ajami NJ, Cope JL, Wong MC, Petrosino JF, Chesnel L. Impact
+of oral ﬁdaxomicin administration on the intestinal microbiota
+and susceptibility to Clostridium difﬁcile colonization in mice.
+Antimicrob Agents Chemother 2018;62:e02112e7.
+49. Guery B, Menichetti F, Anttila VJ, Adomakoh N, Aguado JM,
+Bisnauthsing K, et al. Extended-pulsed ﬁdaxomicin versus
+vancomycin for Clostridium difﬁcile infection in patients 60
+years and older (EXTEND): a randomised, controlled, openlabel, phase 3b/4 trial. Lancet Infect Dis 2018;18:296e307.
+50. Louie TJ, Cannon K, Byrne B, Emery J, Ward L, Eyben M, et al.
+Fidaxomicin preserves the intestinal microbiome during and
+after treatment of Clostridium difﬁcile infection (CDI) and
+reduces both toxin reexpression and recurrence of CDI. Clin
+Infect Dis 2012;55(Suppl 2):S132e42.
+C.-W. Chiu, P.-J. Tsai, C.-C. Lee et al.
+1016
+
+51. Gerding DN, Cornely OA, Grill S, Kracker H, Marrast AC,
+Nord CE, et al. Cadazolid for the treatment of Clostridium
+difﬁcile infection: results of two double-blind, placebocontrolled, non-inferiority, randomised phase 3 trials. Lancet
+Infect Dis 2019;19:265e74.
+52. Chilton CH, Crowther GS, Baines SD, Todhunter SL, Freeman J,
+Locher HH, et al. In vitro activity of cadazolid against clinically
+relevant Clostridium difﬁcile isolates and in an in vitro gut
+model of C. difﬁcile infection. J Antimicrob Chemother 2014;
+69:697e705.
+53. Muhammad A, Simcha W, Rawish F, Sabih R, Albert E, Ali N.
+Cadazolid vs vancomycin for the treatment of Clostridioides
+difﬁcile infection: systematic review with meta-analysis. Curr
+Clin Pharmacol 2020;15:4e10.
+54. Corbett D, Wise A, Birchall S, Warn P, Baines SD, Crowther G,
+et
+al. In
+vitro susceptibility of
+Clostridium difﬁcile to
+SMT19969 and comparators, as well as the killing kinetics and
+post-antibiotic effects of SMT19969 and comparators against C.
+difﬁcile. J Antimicrob Chemother 2015;70:1751e6.
+55. Qian X, Yanagi K, Kane AV, Alden N, Lei M, Snydman DR, et al.
+Ridinilazole, a narrow spectrum antibiotic for treatment of
+Clostridioides difﬁcile infection, enhances preservation of
+microbiota-dependent bile acids. Am J Physiol Gastrointest
+Liver Physiol 2020;319:G227e37.
+56. Ochsner UA, Bell SJ, O’Leary AL, Hoang T, Stone KC, Young CL,
+et al. Inhibitory effect of REP3123 on toxin and spore formation
+in Clostridium difﬁcile, and in vivo efﬁcacy in a hamster
+gastrointestinal infection model. J Antimicrob Chemother
+2009;63:964e71.
+57. Lay CL, Dridi L, Bergeron MG, Ouellette M, Fliss IL. Nisin is an
+effective inhibitor of Clostridium difﬁcile vegetative cells and
+spore germination. J Med Microbiol 2016;65:169e75.
+58. Pizarro-Guajardo M, Diaz-Gonzalez F, Alvarez-Lobos M, Paredes-Sabja D. Characterization of chicken IgY speciﬁc to
+Clostridium difﬁcile R20291 spores and the effect of oral
+administration in mouse models of initiation and recurrent
+disease. Front Cell Infect Microbiol 2017;7:365.
+59. Mooyottu S, Flock G, Venkitanarayanan K. Carvacrol reduces
+Clostridium difﬁcile sporulation and spore outgrowth in vitro.
+J Med Microbiol 2017;66:1229e34.
+60. Srisuwan S, Mackin KE, Hocking D, Lyras D, Bennett-Wood V,
+Voravuthikunchai SP, et al. Antibacterial activity of rhodomyrtone on Clostridium difﬁcile vegetative cells and spores
+in vitro. Int J Antimicrob Agents 2018;52:724e9.
+Journal of Microbiology, Immunology and Infection 54 (2021) 1011e1017
+1017
