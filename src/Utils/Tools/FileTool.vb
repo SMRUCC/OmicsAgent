@@ -54,11 +54,11 @@ Public Class FileTool
         Return absPath
     End Function
 
-    <Description("Write text content to a file in the workspace. Creates parent directories if they don't exist. Overwrites existing file by default.")>
+    <Description("将文本内容写入工作区内的文件。如果父目录不存在会自动创建。默认覆盖已存在的文件。")>
     Public Function write_file(
-        <Argument("path", Description:="File path relative to workspace root, or absolute path")> path As String,
-        <Argument("content", Description:="Text content to write to the file")> content As String,
-        <Argument("append", Description:="If true, append to existing file instead of overwriting (default false)")> Optional append As Boolean = False
+        <Argument("path", Description:="文件路径，相对于工作区根目录或绝对路径")> path As String,
+        <Argument("content", Description:="要写入文件的文本内容")> content As String,
+        <Argument("append", Description:="为 true 时追加到已存在的文件而非覆盖（默认 false）")> Optional append As Boolean = False
     ) As String
         Try
             Dim absPath = ResolvePath(path, enforceWorkspace:=True)
@@ -95,8 +95,8 @@ Public Class FileTool
         End Try
     End Function
 
-    <Description("Get previews summary of the csv table file, returns the dimension size and column headers")>
-    Public Function peek_csv(<Argument("path", Description:="File path relative to workspace root, or absolute path")> path As String) As String
+    <Description("获取 csv 表格文件的预览摘要，返回维度大小和列标题")>
+    Public Function peek_csv(<Argument("path", Description:="文件路径，相对于工作区根目录或绝对路径")> path As String) As String
         Try
             Dim dims = DataFrame.GetDimension(path)
             Dim content As String = $"Csv Table[{dims.rows} Rows x {dims.cols} Cols]; column_headers:{dims.header.GetJson}"
@@ -107,9 +107,9 @@ Public Class FileTool
         End Try
     End Function
 
-    <Description("Read all text content from a file in the workspace. Returns the file content as a string. do not use this function for read all large text/csv file")>
+    <Description("读取工作区内文件的全部文本内容，以字符串形式返回。请勿使用此函数读取大型文本/csv 文件的全部内容")>
     Public Function read_file(
-        <Argument("path", Description:="File path relative to workspace root, or absolute path")> path As String
+        <Argument("path", Description:="文件路径，相对于工作区根目录或绝对路径")> path As String
     ) As String
         Try
             Dim absPath = ResolvePath(path)
@@ -125,10 +125,10 @@ Public Class FileTool
         End Try
     End Function
 
-    <Description("Peek the top N lines of a text (or csv) file. Returns the peeked file contents as a string. Default reads 15 lines.")>
+    <Description("查看文本（或 csv）文件的前 N 行，以字符串形式返回所查看的文件内容。默认读取 15 行。")>
     Public Function peek_file(
-        <Argument("path", Description:="File path relative to workspace root, or absolute path")> path As String,
-        <Argument("line_count", Description:="Number of lines to read from the top (default 15)")> Optional line_count As Integer = 15
+        <Argument("path", Description:="文件路径，相对于工作区根目录或绝对路径")> path As String,
+        <Argument("line_count", Description:="从顶部开始读取的行数（默认 15）")> Optional line_count As Integer = 15
     ) As String
         Try
             Dim absPath = ResolvePath(path)
@@ -142,9 +142,9 @@ Public Class FileTool
         End Try
     End Function
 
-    <Description("Check if a file exists in the workspace.")>
+    <Description("检查工作区内是否存在指定的文件。")>
     Public Function file_exists(
-        <Argument("path", Description:="File path relative to workspace root, or absolute path")> path As String
+        <Argument("path", Description:="文件路径，相对于工作区根目录或绝对路径")> path As String
     ) As String
         Try
             Dim absPath = ResolvePath(path)
@@ -155,10 +155,10 @@ Public Class FileTool
         End Try
     End Function
 
-    <Description("List all files in a directory within the workspace. Optionally filter by file extension.")>
+    <Description("列出工作区内某个目录下的所有文件，可选按文件扩展名进行过滤。")>
     Public Function list_files(
-        <Argument("dir_path", Description:="Directory path relative to workspace root, or absolute path")> dir_path As String,
-        <Argument("extension", Description:="Optional file extension filter, e.g. '.csv' or '.R' (empty for all files)")> Optional extension As String = ""
+        <Argument("dir_path", Description:="目录路径，相对于工作区根目录或绝对路径")> dir_path As String,
+        <Argument("extension", Description:="可选的文件扩展名过滤器，例如 '.csv' 或 '.R'（留空表示所有文件）")> Optional extension As String = ""
     ) As String
         Try
             Dim absPath = ResolvePath(dir_path)
@@ -180,9 +180,9 @@ Public Class FileTool
         End Try
     End Function
 
-    <Description("Create a directory in the workspace. Creates all parent directories if needed.")>
+    <Description("在工作区内创建目录，如有需要会创建所有父目录。")>
     Public Function create_directory(
-        <Argument("dir_path", Description:="Directory path relative to workspace root, or absolute path")> dir_path As String
+        <Argument("dir_path", Description:="目录路径，相对于工作区根目录或绝对路径")> dir_path As String
     ) As String
         Try
             Dim absPath = ResolvePath(dir_path, enforceWorkspace:=True)
@@ -199,9 +199,9 @@ Public Class FileTool
     ' 文件操作工具
     ' ========================================================================
 
-    <Description("Delete a file from the workspace.")>
+    <Description("从工作区中删除一个文件。")>
     Public Function delete_file(
-        <Argument("path", Description:="File path relative to workspace root, or absolute path")> path As String
+        <Argument("path", Description:="文件路径，相对于工作区根目录或绝对路径")> path As String
     ) As String
         Try
             Dim absPath = ResolvePath(path, enforceWorkspace:=True)
@@ -216,10 +216,10 @@ Public Class FileTool
         End Try
     End Function
 
-    <Description("Copy a file to a new location within the workspace. Creates parent directories if needed. Overwrites existing file.")>
+    <Description("将文件复制到工作区内的新位置。如有需要会创建父目录。会覆盖已存在的文件。")>
     Public Function copy_file(
-        <Argument("src_path", Description:="Source file path relative to workspace root, or absolute path")> src_path As String,
-        <Argument("dest_path", Description:="Destination file path relative to workspace root, or absolute path")> dest_path As String
+        <Argument("src_path", Description:="源文件路径，相对于工作区根目录或绝对路径")> src_path As String,
+        <Argument("dest_path", Description:="目标文件路径，相对于工作区根目录或绝对路径")> dest_path As String
     ) As String
         Try
             Dim absSrc = ResolvePath(src_path)
@@ -239,10 +239,10 @@ Public Class FileTool
         End Try
     End Function
 
-    <Description("Move or rename a file to a new location within the workspace. Creates parent directories if needed. Overwrites existing file.")>
+    <Description("将文件移动或重命名到工作区内的新位置。如有需要会创建父目录。会覆盖已存在的文件。")>
     Public Function move_file(
-        <Argument("src_path", Description:="Source file path relative to workspace root, or absolute path")> src_path As String,
-        <Argument("dest_path", Description:="Destination file path relative to workspace root, or absolute path")> dest_path As String
+        <Argument("src_path", Description:="源文件路径，相对于工作区根目录或绝对路径")> src_path As String,
+        <Argument("dest_path", Description:="目标文件路径，相对于工作区根目录或绝对路径")> dest_path As String
     ) As String
         Try
             Dim absSrc = ResolvePath(src_path, enforceWorkspace:=True)
@@ -262,9 +262,9 @@ Public Class FileTool
         End Try
     End Function
 
-    <Description("Get metadata information about a file or directory: size, last modified time, extension, type.")>
+    <Description("获取文件或目录的元数据信息：大小、最后修改时间、扩展名、类型。")>
     Public Function get_file_info(
-        <Argument("path", Description:="File or directory path relative to workspace root, or absolute path")> path As String
+        <Argument("path", Description:="文件或目录路径，相对于工作区根目录或绝对路径")> path As String
     ) As String
         Try
             Dim absPath = ResolvePath(path)
@@ -286,11 +286,11 @@ Public Class FileTool
     ' 高级文件读取工具
     ' ========================================================================
 
-    <Description("Read a specific range of lines from a text file. Useful for large files where read_file would be too much data. Line numbers are 1-based.")>
+    <Description("从文本文件中读取指定范围的行。适用于使用 read_file 读取数据量过大的情况。行号从 1 开始计数。")>
     Public Function read_file_lines(
-        <Argument("path", Description:="File path relative to workspace root, or absolute path")> path As String,
-        <Argument("start_line", Description:="1-based line number to start reading from (default 1)")> Optional start_line As Integer = 1,
-        <Argument("line_count", Description:="Number of lines to read (default 50)")> Optional line_count As Integer = 50
+        <Argument("path", Description:="文件路径，相对于工作区根目录或绝对路径")> path As String,
+        <Argument("start_line", Description:="开始读取的行号，从 1 开始计数（默认 1）")> Optional start_line As Integer = 1,
+        <Argument("line_count", Description:="要读取的行数（默认 50）")> Optional line_count As Integer = 50
     ) As String
         Try
             Dim absPath = ResolvePath(path)
@@ -313,10 +313,10 @@ Public Class FileTool
         End Try
     End Function
 
-    <Description("Read the last N lines of a text file. Useful for checking log files or script outputs. Default reads last 20 lines.")>
+    <Description("读取文本文件的最后 N 行。适用于查看日志文件或脚本输出。默认读取最后 20 行。")>
     Public Function tail_file(
-        <Argument("path", Description:="File path relative to workspace root, or absolute path")> path As String,
-        <Argument("line_count", Description:="Number of lines to read from the end of the file (default 20)")> Optional line_count As Integer = 20
+        <Argument("path", Description:="文件路径，相对于工作区根目录或绝对路径")> path As String,
+        <Argument("line_count", Description:="从文件末尾开始读取的行数（默认 20）")> Optional line_count As Integer = 20
     ) As String
         Try
             Dim absPath = ResolvePath(path)
@@ -343,11 +343,11 @@ Public Class FileTool
         End Try
     End Function
 
-    <Description("Search for a text pattern in a file (case-insensitive). Returns matching lines with their line numbers. Default max 50 results.")>
+    <Description("在文件中搜索文本模式（不区分大小写）。返回匹配的行及其行号。默认最多返回 50 条结果。")>
     Public Function search_in_file(
-        <Argument("path", Description:="File path relative to workspace root, or absolute path")> path As String,
-        <Argument("pattern", Description:="Text pattern to search for (case-insensitive)")> pattern As String,
-        <Argument("max_results", Description:="Maximum number of matching lines to return (default 50)")> Optional max_results As Integer = 50
+        <Argument("path", Description:="文件路径，相对于工作区根目录或绝对路径")> path As String,
+        <Argument("pattern", Description:="要搜索的文本模式（不区分大小写）")> pattern As String,
+        <Argument("max_results", Description:="返回匹配行的最大数量（默认 50）")> Optional max_results As Integer = 50
     ) As String
         Try
             Dim absPath = ResolvePath(path)
@@ -377,9 +377,9 @@ Public Class FileTool
     ' 目录操作工具
     ' ========================================================================
 
-    <Description("List all subdirectories in a directory within the workspace.")>
+    <Description("列出工作区内某个目录下的所有子目录。")>
     Public Function list_directories(
-        <Argument("dir_path", Description:="Directory path relative to workspace root, or absolute path")> dir_path As String
+        <Argument("dir_path", Description:="目录路径，相对于工作区根目录或绝对路径")> dir_path As String
     ) As String
         Try
             Dim absPath = ResolvePath(dir_path)
@@ -395,9 +395,9 @@ Public Class FileTool
         End Try
     End Function
 
-    <Description("Check if a directory exists in the workspace.")>
+    <Description("检查工作区内是否存在指定的目录。")>
     Public Function directory_exists(
-        <Argument("dir_path", Description:="Directory path relative to workspace root, or absolute path")> dir_path As String
+        <Argument("dir_path", Description:="目录路径，相对于工作区根目录或绝对路径")> dir_path As String
     ) As String
         Try
             Dim absPath = ResolvePath(dir_path)
@@ -408,10 +408,10 @@ Public Class FileTool
         End Try
     End Function
 
-    <Description("Delete a directory from the workspace. If recursive is true, deletes all subdirectories and files.")>
+    <Description("从工作区中删除一个目录。如果 recursive 为 true，则递归删除所有子目录和文件。")>
     Public Function delete_directory(
-        <Argument("dir_path", Description:="Directory path relative to workspace root, or absolute path")> dir_path As String,
-        <Argument("recursive", Description:="If true, delete all subdirectories and files recursively (default false)")> Optional recursive As Boolean = False
+        <Argument("dir_path", Description:="目录路径，相对于工作区根目录或绝对路径")> dir_path As String,
+        <Argument("recursive", Description:="为 true 时递归删除所有子目录和文件（默认 false）")> Optional recursive As Boolean = False
     ) As String
         Try
             Dim absPath = ResolvePath(dir_path, enforceWorkspace:=True)
@@ -426,10 +426,10 @@ Public Class FileTool
         End Try
     End Function
 
-    <Description("Recursively list files and subdirectories in a tree structure. Default max depth is 3 to prevent extremely large outputs.")>
+    <Description("以树形结构递归列出文件和子目录。默认最大深度为 3，以防止输出内容过大。")>
     Public Function list_tree(
-        <Argument("dir_path", Description:="Directory path relative to workspace root, or absolute path")> dir_path As String,
-        <Argument("max_depth", Description:="Maximum depth to traverse (default 3)")> Optional max_depth As Integer = 3
+        <Argument("dir_path", Description:="目录路径，相对于工作区根目录或绝对路径")> dir_path As String,
+        <Argument("max_depth", Description:="遍历的最大深度（默认 3）")> Optional max_depth As Integer = 3
     ) As String
         Try
             Dim absPath = ResolvePath(dir_path)
@@ -487,10 +487,10 @@ Public Class FileTool
     ' ZIP 压缩包工具
     ' ========================================================================
 
-    <Description("Compress a directory into a ZIP archive file. Creates parent directories for the output zip if needed. Overwrites existing zip file.")>
+    <Description("将目录压缩为 ZIP 归档文件。如有需要会为输出 zip 文件创建父目录。会覆盖已存在的 zip 文件。")>
     Public Function create_zip(
-        <Argument("source_dir", Description:="Source directory to compress, relative to workspace root or absolute")> source_dir As String,
-        <Argument("zip_path", Description:="Output ZIP file path, relative to workspace root or absolute")> zip_path As String
+        <Argument("source_dir", Description:="要压缩的源目录，相对于工作区根目录或绝对路径")> source_dir As String,
+        <Argument("zip_path", Description:="输出的 ZIP 文件路径，相对于工作区根目录或绝对路径")> zip_path As String
     ) As String
         Try
             Dim absSrc = ResolvePath(source_dir)
@@ -534,10 +534,10 @@ Public Class FileTool
         End Try
     End Function
 
-    <Description("Extract a ZIP archive to a directory within the workspace. Creates the destination directory if it doesn't exist. Overwrites existing files.")>
+    <Description("将 ZIP 归档文件解压到工作区内的目录。如果目标目录不存在则会创建。会覆盖已存在的文件。")>
     Public Function extract_zip(
-        <Argument("zip_path", Description:="ZIP file path, relative to workspace root or absolute")> zip_path As String,
-        <Argument("dest_dir", Description:="Destination directory to extract to, relative to workspace root or absolute")> dest_dir As String
+        <Argument("zip_path", Description:="ZIP 文件路径，相对于工作区根目录或绝对路径")> zip_path As String,
+        <Argument("dest_dir", Description:="解压到的目标目录，相对于工作区根目录或绝对路径")> dest_dir As String
     ) As String
         Try
             Dim absZip = ResolvePath(zip_path)
@@ -588,9 +588,9 @@ Public Class FileTool
         End Try
     End Function
 
-    <Description("List all file entries inside a ZIP archive without extracting. Returns entry names, sizes, and compressed sizes.")>
+    <Description("在不解压的情况下列出 ZIP 归档内的所有文件条目。返回条目名称、大小和压缩后大小。")>
     Public Function list_zip_contents(
-        <Argument("zip_path", Description:="ZIP file path, relative to workspace root or absolute")> zip_path As String
+        <Argument("zip_path", Description:="ZIP 文件路径，相对于工作区根目录或绝对路径")> zip_path As String
     ) As String
         Try
             Dim absZip = ResolvePath(zip_path)
@@ -613,10 +613,10 @@ Public Class FileTool
         End Try
     End Function
 
-    <Description("Read the text content of a single file entry inside a ZIP archive without extracting the whole archive.")>
+    <Description("在不解压整个归档的情况下读取 ZIP 归档内单个文件条目的文本内容。")>
     Public Function read_zip_entry(
-        <Argument("zip_path", Description:="ZIP file path, relative to workspace root or absolute")> zip_path As String,
-        <Argument("entry_name", Description:="Name/path of the entry inside the ZIP to read")> entry_name As String
+        <Argument("zip_path", Description:="ZIP 文件路径，相对于工作区根目录或绝对路径")> zip_path As String,
+        <Argument("entry_name", Description:="要读取的 ZIP 内条目的名称/路径")> entry_name As String
     ) As String
         Try
             Dim absZip = ResolvePath(zip_path)

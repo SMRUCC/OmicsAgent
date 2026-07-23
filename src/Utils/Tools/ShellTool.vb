@@ -27,10 +27,10 @@ Public Class ShellTool
         _timeout_seconds = timeout_seconds
     End Sub
 
-    <Description("Execute an R script file using Rscript interpreter. Returns the stdout, stderr, and exit code. The script file path should be relative to workspace root or absolute.")>
+    <Description("使用 Rscript 解释器执行 R 脚本文件。返回标准输出、标准错误和退出码。脚本文件路径应为相对于工作区根目录或绝对路径。")>
     Public Function run_rscript(
-        <Argument("script_path", Description:="Path to the .R script file to execute")> script_path As String,
-        <Argument("args", Description:="Optional command-line arguments to pass to the R script")> Optional args As String = ""
+        <Argument("script_path", Description:="要执行的 .R 脚本文件路径")> script_path As String,
+        <Argument("args", Description:="传递给 R 脚本的可选命令行参数")> Optional args As String = ""
     ) As String
         Try
             Dim absScriptPath = ResolvePath(script_path)
@@ -44,10 +44,10 @@ Public Class ShellTool
         End Try
     End Function
 
-    <Description("Execute a Python script file using the configured Python interpreter. Returns stdout, stderr, and exit code.")>
+    <Description("使用已配置的 Python 解释器执行 Python 脚本文件。返回标准输出、标准错误和退出码。")>
     Public Function run_python(
-        <Argument("script_path", Description:="Path to the .py script file to execute")> script_path As String,
-        <Argument("args", Description:="Optional command-line arguments to pass to the Python script")> Optional args As String = ""
+        <Argument("script_path", Description:="要执行的 .py 脚本文件路径")> script_path As String,
+        <Argument("args", Description:="传递给 Python 脚本的可选命令行参数")> Optional args As String = ""
     ) As String
         Try
             Dim absScriptPath = ResolvePath(script_path)
@@ -61,10 +61,10 @@ Public Class ShellTool
         End Try
     End Function
 
-    <Description("Execute an R# (Rsharp) script file using the configured Rsharp interpreter. Returns stdout, stderr, and exit code.")>
+    <Description("使用已配置的 Rsharp 解释器执行 R# (Rsharp) 脚本文件。返回标准输出、标准错误和退出码。")>
     Public Function run_rsharp(
-        <Argument("script_path", Description:="Path to the .R Rsharp script file to execute")> script_path As String,
-        <Argument("args", Description:="Optional command-line arguments to pass to the Rsharp script")> Optional args As String = ""
+        <Argument("script_path", Description:="要执行的 .R Rsharp 脚本文件路径")> script_path As String,
+        <Argument("args", Description:="传递给 Rsharp 脚本的可选命令行参数")> Optional args As String = ""
     ) As String
         Try
             Dim absScriptPath = ResolvePath(script_path)
@@ -78,11 +78,11 @@ Public Class ShellTool
         End Try
     End Function
 
-    <Description("Execute wkhtmltopdf to convert an HTML file to PDF. Used for generating the final analysis report.")>
+    <Description("执行 wkhtmltopdf 将 HTML 文件转换为 PDF。用于生成最终的分析报告。")>
     Public Function run_wkhtmltopdf(
-        <Argument("html_path", Description:="Path to the input HTML file")> html_path As String,
-        <Argument("pdf_path", Description:="Path to the output PDF file")> pdf_path As String,
-        <Argument("extra_args", Description:="Optional extra command-line arguments for wkhtmltopdf")> Optional extra_args As String = ""
+        <Argument("html_path", Description:="输入 HTML 文件路径")> html_path As String,
+        <Argument("pdf_path", Description:="输出 PDF 文件路径")> pdf_path As String,
+        <Argument("extra_args", Description:="wkhtmltopdf 的可选额外命令行参数")> Optional extra_args As String = ""
     ) As String
         Try
             Dim absHtmlPath = ResolvePath(html_path)
