@@ -50,7 +50,7 @@ For each analysis:
 - Save score tables as CSV
 - Generate stage conclusion text
 
-Return your plan as JSON:
+Return your plan as JSON, at least one execution step for your plan must be generated:
 {{
   ""module_name"": ""PCA/PLSDA/OPLSDA Analysis"",
   ""goal"": ""<brief description>"",

@@ -45,7 +45,7 @@ Design a plan for advanced analysis including:
    - Construct latent variables for each omics layer
    - Perform PLS-PM (Partial Least Squares Path Modeling) causal path analysis
 
-Return your plan as JSON:
+Return your plan as JSON, at least one execution step for your plan must be generated:
 {{
   ""module_name"": ""Advanced Analysis"",
   ""goal"": ""<brief description>"",

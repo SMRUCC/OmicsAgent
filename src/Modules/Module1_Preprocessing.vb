@@ -1,3 +1,5 @@
+Imports Microsoft.VisualBasic.MIME.application.json
+Imports Microsoft.VisualBasic.MIME.application.json.LenientJson
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Ollama
 Imports OmicsAgent.AppRuntime
@@ -45,7 +47,7 @@ Design a preprocessing plan for the expression matrix data. The standard preproc
 - The preprocessed matrix should be saved as CSV in the tmp/ directory
 - Use the R scripts in the rscript/ folder as reference; source them when applicable
 
-Return your plan as JSON:
+Return your plan as JSON, at least one execution step for your plan must be generated:
 {{
   ""module_name"": ""Expression Matrix Preprocessing"",
   ""goal"": ""<brief description of the preprocessing goal>"",
@@ -57,13 +59,55 @@ Return your plan as JSON:
 "
         Dim resp = Await llm.Chat(prompt, cancellationToken)
         Dim json = resp.ExtractJsonFromResponse
-        Dim plan As ModulePlan
-        If Not String.IsNullOrEmpty(json) Then
-            plan = json.LoadJSON(Of ModulePlan)
-            plan.module_name = ModuleName
-        Else
-            plan = New ModulePlan() With {.module_name = ModuleName, .goal = resp.output}
-        End If
+        Dim plan As New ModulePlan With {.module_name = ModuleName}
+        Dim goal As String = Nothing
+        Dim actions As [Step]() = Nothing
+        Dim note As String = Nothing
+
+        For retry_round As Integer = 0 To 9
+            If Not json.StringEmpty(, True) Then
+                plan = LenientJsonParser.ParseJSON(json).CreateObject(Of ModulePlan)
+                plan.module_name = ModuleName
+
+                If Not plan.goal.StringEmpty(, True) Then
+                    goal = plan.goal
+                End If
+                If Not plan.execution_steps.IsNullOrEmpty Then
+                    actions = plan.execution_steps
+                End If
+                If Not plan.notes.StringEmpty(, True) Then
+                    note = plan.notes
+                End If
+
+                If Not (goal.StringEmpty(, True) OrElse actions.IsNullOrEmpty) Then
+                    plan = New ModulePlan With {
+                        .module_name = ModuleName,
+                        .execution_steps = actions,
+                        .goal = goal,
+                        .notes = note
+                    }
+
+                    Exit For
+                Else
+                    resp = Await llm.Chat("Your generated execution plan JSON string is missing the following required fields:
+
+""goal"": Explains the expected outcome that the current analysis module can achieve in the context of the user’s research background.
+""notes"": Highlights any issues that require special attention in this execution plan.
+""execution_steps"" (array): Break down the current execution plan into multiple steps and fill them into the ""execution_steps"" array following the specified JSON format.
+
+Return your plan as JSON, at least one execution step for your plan must be generated:
+{
+  ""module_name"": ""Expression Matrix Preprocessing"",
+  ""goal"": ""<brief description of the preprocessing goal>"",
+  ""input_files"": [""<input file paths>""],
+  ""output_files"": [""<expected output file paths>""],
+  ""execution_steps"": [{""action"": ""<description of current step action>"", ""goal"": ""<goal of current step...>""}, ...],
+  ""notes"": ""<any special considerations>""
+}
+", cancellationToken)
+                End If
+            End If
+        Next
 
         Return plan
     End Function
@@ -79,7 +123,7 @@ You are a bioinformatics R script expert. Write and execute R script to preproce
 
 plan goal: {plan.goal}
 plan notes: {plan.notes}
-current plan execution step: {[step].GetJson}
+current plan execution step: {[step].GetJson(comment:=True)}
 
 All scripts and the generated CSV files are placed in this designated temporary workspace folder: {Workspace.GetDirectoryFullPath}
 All pdf/png figure image files should save to workspace folder: {FiguresDir.GetDirectoryFullPath}

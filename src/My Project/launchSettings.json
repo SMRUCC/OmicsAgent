@@ -2,7 +2,7 @@
   "profiles": {
     "OmicsAgent": {
       "commandName": "Project",
-      "commandLineArgs": "-r=research.txt -e=expression.csv -a=metabolites.csv -s=sampleinfo.csv -k=./pubmed/ -w=./demo/ -c=config.ini --skip-literature",
+      "commandLineArgs": "-r=research.txt -e=expression.csv -a=metabolites.csv -s=sampleinfo.csv -k=./pubmed/ -w=./demo/ -c=config.ini --skip-literature --skip-kb",
       "workingDirectory": "G:\\OmicsWorks\\test\\metabolism"
     }
   }

@@ -1,4 +1,0 @@
-"Method","Observed_Ratio","P_value","Significant","Interpretation"
-"PCA",0.18018988858608,0,TRUE,"Group clustering tighter than expected (p<0.05)"
-"PLSDA",0.135256206666707,0,TRUE,"Group clustering tighter than expected (p<0.05)"
-"OPLSDA",NA,NA,NA,NA

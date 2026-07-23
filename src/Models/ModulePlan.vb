@@ -27,9 +27,21 @@ Public Class ModulePlan
     ''' <summary>阶段性总结文本</summary>
     Public Property conclusion As String = ""
 
+    Public Property comparisons As Comparison()
+
     Public Function ToJson() As String
         Return Me.GetJson
     End Function
+
+End Class
+
+Public Class Comparison
+
+    Public Property name As String
+    Public Property treatment As String
+    Public Property control As String
+    Public Property biological_rationale As String
+    Public Property expected_findings As String
 
 End Class
 

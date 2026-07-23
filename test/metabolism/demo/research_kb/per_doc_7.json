@@ -5,70 +5,69 @@
  "tcdB",
  "TcdA (toxin A)",
  "TcdB (toxin B)",
- "ferric uptake regulator (Fur)",
- "ABC transporters",
  "16S rRNA",
- "GAPDH"
+ "GAPDH",
+ "Fur (ferric uptake regulator)",
+ "pCD-METRO plasmid",
+ "siderophores",
+ "ABC transporters",
+ "deferoxamine (DFO)",
+ "ferrichrome"
  ],
  "key_pathways": [
- "iron metabolism",
- "quorum sensing",
- "siderophore-mediated iron acquisition"
+ "Iron metabolism and acquisition",
+ "Quorum sensing regulation of toxin synthesis",
+ "Metronidazole resistance mechanism (iron-mediated)",
+ "Siderophore-mediated iron uptake"
  ],
  "key_metabolites": [
  "Fe3+ (ferric iron)",
+ "deferoxamine (DFO)",
  "metronidazole",
  "vancomycin",
  "fidaxomicin",
- "deferoxamine (DFO)",
  "ferrichrome",
- "heme",
- "reactive oxygen species (ROS)",
- "transferrin",
- "ferritin"
+ "haem"
  ],
  "biological_mechanisms": [
  {
- "mechanism": "Iron (Fe3+) stimulates C. difficile growth in a dose-dependent manner",
- "evidence": "Figure1a: Fe3+ at10 µM increased CFU3.5-fold, peaking at100 µM with13.8-fold increase in strain9689. Co-treatment with DFO reduced CFU."
+ "mechanism": "Iron stimulates C. difficile growth and colony formation in a dose-dependent manner.",
+ "evidence": "Exposure to Fe3+ increased CFU/mL up to13.8-fold at100 µM in strain9689; co-incubation with iron chelator DFO significantly reduced CFU (Figure1a)."
  },
  {
- "mechanism": "Iron upregulates expression of toxin genes tcdA and tcdB",
- "evidence": "Figure1b:50 µM Fe3+ increased tcdA mRNA2.2-fold and tcdB mRNA3.3-fold relative to control (p <0.05)."
+ "mechanism": "Iron upregulates toxin gene expression (tcdA and tcdB) and increases toxin A protein production.",
+ "evidence": "qRT-PCR showed tcdA and tcdB mRNA levels increased2.2-fold and3.3-fold, respectively, with50 µM Fe3+; Western blot showed toxin A increased up to8.6-fold in a dose-dependent manner (Figure1b,c)."
  },
  {
- "mechanism": "Iron increases production of toxin A protein",
- "evidence": "Figure1c: Western blot showed dose-dependent increase in toxin A:2.6-,3.8-,5.5-, and8.6-fold at10,20,50,100 µM Fe3+ respectively."
+ "mechanism": "Increase in toxin A is partially attributable to increased bacterial cell density rather than per-cell upregulation.",
+ "evidence": "When toxin A levels were normalized to CFU, no significant change was observed after Fe3+ treatment (Figure1d)."
  },
  {
- "mechanism": "Normalized to CFU, iron does not increase toxin A per cell, suggesting increased growth is the primary driver",
- "evidence": "Figure1d: After normalizing toxin A band density to CFU, no significant change was observed vs control."
+ "mechanism": "Iron reduces susceptibility of C. difficile to metronidazole by elevating minimum inhibitory concentrations (MICs).",
+ "evidence": "In strain9689,50 µM Fe3+ increased metronidazole MIC from0.17 µg/mL to1.38 µg/mL (8-fold) at48 h; co-treatment with DFO restored MIC to control levels (Figure2a, Figure3d)."
  },
  {
- "mechanism": "Iron increases minimum inhibitory concentration (MIC) of metronidazole in susceptible strains",
- "evidence": "Figure2a: In strain9689,50 µM Fe3+ increased MTZ MIC from0.17 µg/mL to1.38 µg/mL at48 h. No effect on vancomycin MIC (Figure2b)."
+ "mechanism": "Iron also increases MICs of fidaxomicin but does not affect vancomycin MICs.",
+ "evidence": "Fidaxomicin MIC increased6.7-fold at24 h with50 µM Fe3+ in strain9689; vancomycin MICs remained unchanged even at48 h (Figure2b,c, Supplementary Tables S3 and S4)."
  },
  {
- "mechanism": "Iron chelator deferoxamine reverses iron-induced growth, toxin production, and metronidazole resistance",
- "evidence": "Figure3b: DFO (50 µM) reduced CFU to45.8% of control. Figure3c: DFO co-treatment reduced toxin A from5.2-fold to2.1-fold. Figure3d: DFO restored MTZ MIC to baseline."
+ "mechanism": "The iron chelator deferoxamine effectively reverses iron-induced growth, toxin production, and metronidazole resistance.",
+ "evidence": "DFO alone reduced CFU to45.8% of control at50 µM; DFO co-treatment decreased toxin A from5.2-fold to2.1-fold of control; DFO resensitized C. difficile to metronidazole, reducing MIC back to baseline (Figure3b-d)."
  },
  {
- "mechanism": "Iron may increase MIC of fidaxomicin but not vancomycin",
- "evidence": "Figure2c: In strain9689,50 µM Fe3+ increased fidaxomicin MIC6.7-fold at24 h, but remained <1 µg/mL."
- },
- {
- "mechanism": "Iron overload leads to increased susceptibility of C. difficile to metronidazole tolerance via iron metabolism",
- "evidence": "Discussion cites earlier proteomic analysis linking iron metabolism to metronidazole resistance; Boekhoud et al. found haem (iron-containing) increased MTZ MIC8-25 fold."
+ "mechanism": "Iron chelation by DFO was confirmed by CAS colorimetric assay, while metronidazole exhibited only weak iron-chelating ability at high concentration and vancomycin had none.",
+ "evidence": "DFO and ferrichrome (positive control) significantly reduced A650 in CAS assay; vancomycin had no effect; metronidazole showed chelation only at1000 µg/mL (Figure3a)."
  }
  ],
  "key_findings": [
- "Excess iron (Fe3+) stimulates C. difficile growth and toxin production in a dose-dependent manner in vitro.",
- "Iron exposure increases expression of tcdA and tcdB mRNA and increases toxin A protein levels.",
- "Iron increases the MIC of metronidazole and fidaxomicin but does not affect vancomycin susceptibility.",
- "Iron chelator deferoxamine effectively reduces iron-induced growth, toxin production, and restores metronidazole susceptibility.",
- "The hypervirulent strain R20291 is intrinsically metronidazole-resistant (MIC >64 µg/mL) independent of iron supplementation.",
- "The increase in toxin A with iron is partially attributable to increased bacterial cell density rather than increased per-cell toxin production.",
- "Iron may contribute to metronidazole treatment failure in iron-overloaded patients, supporting vancomycin as first-line therapy."
+ "Excess iron (Fe3+) stimulates C. difficile growth in a dose-dependent manner, with CFU increase up to13.8-fold at100 µM.",
+ "Iron exposure increases expression of toxin genes tcdA and tcdB and production of toxin A protein.",
+ "The increase in toxin production is mainly due to increased bacterial cell number, not elevated per-cell toxin expression.",
+ "Iron reduces susceptibility to metronidazole (up to8-fold MIC increase) and fidaxomicin, but vancomycin susceptibility remains unchanged.",
+ "The iron chelator deferoxamine effectively reverses iron-induced growth stimulation, toxin production, and metronidazole resistance.",
+ "In the hypervirulent strain R20291 (ribotype027), metronidazole resistance is intrinsic and not further increased by iron.",
+ "Iron may play a role in clinical treatment failure of metronidazole in CDI patients with iron overload.",
+ "Vancomycin remains a reliable alternative for CDI treatment in iron-overloaded patients."
  ],
- "relevance_to_research_topic": "This paper provides in vitro evidence that excess iron directly promotes C. difficile growth and toxin production, and reduces susceptibility to metronidazole and fidaxomicin. These findings are highly relevant to the research topic investigating the effects of a high-iron diet on CDI in mice, as they suggest dietary iron overload could exacerbate infection by enhancing pathogen fitness and altering antibiotic responses. The paper also highlights the potential role of iron chelation as a therapeutic strategy, which aligns with studying 'diet-gut microbiota-host' interactions in CDI susceptibility."
+ "relevance_to_research_topic": "This paper directly investigates the effects of iron on Clostridioides difficile growth, toxin production, and antibiotic susceptibility, providing in vitro mechanistic evidence that excess iron promotes C. difficile virulence and reduces metronidazole efficacy. These findings support the hypothesis that high-iron diet could exacerbate CDI by enhancing pathogen growth and toxin production, and by impairing antibiotic treatment response. The paper also highlights the potential of iron chelation therapy as a strategy to counteract these effects, which is directly relevant to the proposed research on diet–gut microbiota–host interactions in CDI."
 }

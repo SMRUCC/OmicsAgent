@@ -46,7 +46,7 @@ Design a plan for WGCNA analysis including:
 5. Linear regression analysis of modules vs trait values
 6. KEGG enrichment analysis of module molecules
 
-Return your plan as JSON:
+Return your plan as JSON, at least one execution step for your plan must be generated:
 {{
   ""module_name"": ""WGCNA Trait Association Analysis"",
   ""goal"": ""<brief description>"",

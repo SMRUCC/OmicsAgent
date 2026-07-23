@@ -1,108 +1,105 @@
 ﻿{
  "source_file": "pharmaceutics-18-00651.txt",
  "key_genes_proteins": [
- "β-glucuronidases",
- "azoreductases",
- "bile salt hydrolases (BSH)",
- "sulphatases",
- "nitroreductases",
- "HMG-CoA reductase",
- "cyclooxygenase-1 (COX-1)",
- "cyclooxygenase-2 (COX-2)",
- "sodium-glucose co-transporter1 (SGLT1)",
- "sodium-glucose co-transporter2 (SGLT2)",
- "AMP-activated protein kinase (AMPK)",
- "farnesoid X receptor (FXR)",
- "GPR41",
- "GPR43",
- "Toll-like receptor2 (TLR2)",
- "Amuc_1100",
- "organic cation transporter1 (OCT1)",
- "enterobactin",
- "aerobactin",
- "yersiniabactin",
- "FGF19",
- "C4 (7α-hydroxy-4-cholesten-3-one)",
- "I-FABP",
- "calprotectin",
+ "Bacterial β-glucuronidases",
+ "Azoreductases",
+ "Bile salt hydrolases (BSH)",
+ "Sulphatases",
+ "Nitroreductases",
+ "Cytochrome P450 system",
  "H+/K+-ATPase",
- "vacuolar H+/K+-ATPase"
+ "COX-1 (cyclooxygenase-1)",
+ "COX-2 (cyclooxygenase-2)",
+ "HMG-CoA reductase (3-hydroxy-3-methylglutaryl-coenzyme A reductase)",
+ "SGLT1 (sodium-glucose co-transporter1)",
+ "SGLT2 (sodium-glucose co-transporter2)",
+ "OCT1 (organic cation transporter1)",
+ "FXR (farnesoid X receptor)",
+ "AMPK (AMP-activated protein kinase)",
+ "Amuc_1100 (Akkermansia muciniphila surface protein)",
+ "TLR2 (Toll-like receptor2)",
+ "GPR41 (G-protein coupled receptor41)",
+ "GPR43 (G-protein coupled receptor43)",
+ "GLP-1 (glucagon-like peptide-1)",
+ "FGF19 (fibroblast growth factor19)",
+ "C4 (7α-hydroxy-4-cholesten-3-one)",
+ "Metalloproteins",
+ "Enterobactin",
+ "Aerobactin",
+ "Yersiniabactin",
+ "Siderophores"
  ],
  "key_pathways": [
- "bile acid biotransformation",
- "short-chain fatty acid (SCFA) production",
- "butyrate biosynthesis (MF0114 module)",
- "propionate biosynthesis (MF0125 module)",
- "bacterial invasion of epithelial cells (PICRUSt predicted pathway)",
- "GUDCA–intestinal FXR signalling",
- "methanogenesis from acetate",
- "pyrimidine pathway",
- "amino-acid pathways",
- "menaquinol-8 biosynthesis II",
- "enterohepatic recirculation",
- "Fenton reaction (iron-mediated ROS production)",
- "intestinal gluconeogenesis",
- "glucose-SGLT1 sensing",
- "GLP-1 secretion",
- "gut–liver–bile acid axis",
- "gut–brain axis"
+ "Bacterial invasion of epithelial cells (PICRUSt-predicted pathway)",
+ "FXR signalling (intestinal farnesoid X receptor)",
+ "Bile acid metabolism",
+ "Butyrate biosynthesis (MF0114 module)",
+ "Propionate biosynthesis (MF0125 module)",
+ "Short-chain fatty acid (SCFA) signalling via GPR41/43",
+ "Intestinal gluconeogenesis",
+ "Methanogenesis from acetate",
+ "Pyrimidine pathway",
+ "Menaquinol-8 biosynthesis II",
+ "PGE2 and PGI2 prostaglandin pathways",
+ "Enterohepatic recirculation",
+ "NF-κB suppression (statin pleiotropic anti-inflammatory mechanism)",
+ "NLRP3 inflammasome inhibition (β-hydroxybutyrate effect)"
  ],
  "key_metabolites": [
- "short-chain fatty acids (SCFAs): acetate, propionate, butyrate",
- "lactate",
- "glycoursodeoxycholic acid (GUDCA)",
- "tauroursodeoxycholic acid (TUDCA)",
- "primary bile acids",
- "secondary bile acids",
- "cholesterol",
- "β-hydroxybutyrate",
- "cobalamin (vitamin B12)",
- "folate",
- "vitamin K",
- "sphingomyelin",
- "uric acid",
+ "Short-chain fatty acids (SCFAs): butyrate, propionate, acetate, lactate",
+ "Glycoursodeoxycholic acid (GUDCA)",
+ "Tauroursodeoxycholic acid (TUDCA)",
+ "Primary bile acids",
+ "Secondary bile acids",
+ "β-hydroxybutyrate (ketone body)",
+ "Cobalamin (vitamin B12)",
+ "Vitamin K",
+ "Folate",
+ "Faecal calprotectin",
+ "Cyclopassifloside II (prenol lipid mediator)",
+ "Nervonic acid",
+ "Docosanamide",
+ "Sphingomyelin",
+ "Uric acid",
  "cis-aconitate",
- "glycochenodeoxycholate",
- "nervonic acid",
- "docosanamide",
- "cyclopassifloside II",
- "ferrous iron",
- "calprotectin",
- "formic acid"
+ "Glycochenodeoxycholate",
+ "Trimethylamine (TMA) / trimethylamine N-oxide (TMAO)",
+ "Reactive oxygen species (ROS)"
  ],
  "biological_mechanisms": [
  {
- "mechanism": "PPI-induced 'oralisation of the gut': Proton pump inhibitor-mediated elevation of intragastric pH from <2.0 to4.0–6.0 abrogates the gastric acid barrier, permitting viable oral-origin bacteria to transit to the colon and enrich oral taxa (Streptococcaceae, Veillonellaceae, Rothia) at the expense of butyrogenic commensals (Lachnospiraceae, Ruminococcaceae). This reduces colonisation resistance and increases susceptibility to Clostridioides difficile infection (CDI) and small intestinal bacterial overgrowth (SIBO).",
- "evidence": "Section3.3.2: Freedberg et al. (2015) open-label crossover trial (n=12) showed >10-fold increase in Streptococcaceae and44% decrease in Clostridiaceae; Imhann et al. (2016) meta-analysis (n=1815) confirmed92/460 taxa altered with enrichment of oral-origin genera; Jackson et al. (2016) TwinsUK cohort (n=1827) replicated in MZ-discordant pairs."
+ "mechanism": "Proton pump inhibitors (PPIs) abolish the gastric acid barrier, raising intragastric pH from <2 to4–6, which permits oral bacteria to transit to the colon, a phenomenon termed 'oralisation of the gut'. This leads to enrichment of oral-origin taxa (Streptococcaceae, Enterococcaceae, Micrococcaceae, Staphylococcaceae) and depletion of commensals like Clostridiaceae and butyrate producers, predisposing to Clostridioides difficile infection (CDI) and small intestinal bacterial overgrowth (SIBO).",
+ "evidence": "Imhann et al. (2016) [3] in1815 participants found ~20% of taxa significantly altered; Rothia enrichment p=9.8×10⁻³⁸; Shannon diversity reduced; PCoA shift toward oral composition p=1.39×10⁻²⁰. Freedberg et al. (2015) [34]12-volunteer crossover trial showed within-individual >10-fold increase in Streptococcaceae (p<0.01) and44% decrease in Clostridiaceae (p=0.03). Meta-analysis: pooled OR1.99 for CDI (Trifan et al.,2017 [6]) and pooled OR2.28 for SIBO (Lo and Chan,2013 [7])."
  },
  {
- "mechanism": "Metformin-mediated enrichment of Akkermansia muciniphila via intestinal AMPK-driven mucin secretion expands the mucosal niche for this mucin-degrading bacterium. A. muciniphila strengthens tight junction integrity via Amuc_1100/TLR2 signalling, contributing to glycaemic control. Additionally, metformin decreases Bacteroides fragilis abundance, elevating intestinal GUDCA, which antagonises intestinal FXR signalling and improves glucose homeostasis.",
- "evidence": "Section3.4.1 and3.4.2: Sun L. et al. (2018) showed marked decrease in B. fragilis within3 days, accumulation of GUDCA/TUDCA, and suppression of FXR signalling; Wu et al. (2017) RCT confirmed A. muciniphila enrichment at4 months and faecal microbiota transplantation from metformin-treated donors transferred glucose tolerance to germ-free mice."
+ "mechanism": "Metformin exerts its glucose-lowering effects partly via gut microbiota: it enriches Akkermansia muciniphila through AMPK-mediated mucin secretion, strengthens tight junctions via Amuc_1100–TLR2 signalling, and reduces Bacteroides fragilis abundance, leading to accumulation of glycoursodeoxycholic acid (GUDCA) that antagonises intestinal FXR signalling, thereby improving glucose homeostasis.",
+ "evidence": "Sun L. et al. (2018) [22] in22 treatment-naïve T2DM patients: marked B. fragilis decrease within3 days of metformin, accumulation of GUDCA/TUDCA, suppression of FXR signalling (↓FGF19, ↑C4). Wu et al. (2017) [40] double-blind RCT in40 patients: metformin enriched A. muciniphila at4 months, increased faecal propionate and butyrate, and FMT from metformin-treated donors to germ-free mice causally transferred glucose tolerance improvement. Forslund et al. (2015) [21] in784 participants: metformin-specific signal independent of T2DM status, enrichment of Escherichia spp., depletion of Intestinibacter, correlation with serum metformin concentration."
  },
  {
- "mechanism": "NSAID-induced gut microbiota disruption: COX-1/2 inhibition suppresses prostaglandin synthesis (PGE2, PGI2), leading to mucus thinning, reduced bicarbonate secretion, and increased epithelial permeability. This selects for aerotolerant and proteolytic taxa (Enterobacteriaceae) and depletes anti-inflammatory butyrate producers like Faecalibacterium prausnitzii and Roseburia, creating a feed-forward loop of mucosal inflammation.",
- "evidence": "Section3.5.1 and3.5.2: Rogers and Aronoff (2016) cross-sectional study (n=155) showed consistent depletion of F. prausnitzii and Roseburia across NSAID types; Xiao et al. (2017) germ-free mouse model demonstrated that microbiota composition modulates indomethacin-induced enteropathy severity."
+ "mechanism": "Non-steroidal anti-inflammatory drugs (NSAIDs) disrupt gut microbiota through COX-dependent prostaglandin depletion (PGE2, PGI2), thinning the mucus layer, increasing intestinal permeability, and selectively depleting anti-inflammatory commensals such as Faecalibacterium prausnitzii and Roseburia spp., while enriching Enterobacteriaceae and other pathobionts. Co-administration with PPIs synergistically exacerbates small intestinal dysbiosis and injury.",
+ "evidence": "Rogers and Aronoff (2016) [23] cross-sectional study (n=155): NSAID type-specific profiles, ibuprofen and celecoxib enriched Enterobacteriaceae and Acidaminococcaceae; naproxen discriminated by Enterobacteriaceae and Bacteroides spp. Wallace et al. (2011) [76] rodent model: PPI+NSAID combination produced synergistic dysbiosis and small intestinal injury. Vich Vila et al. (2020) [5] in1883 individuals: dose-dependent depletion of Roseburia intestinalis (r=−0.41, p<0.001) but signal attenuated after polypharmacy correction."
  },
  {
- "mechanism": "Statin-mediated modulation of gut microbiota: HMG-CoA reductase inhibition alters bile acid pool composition, which selectively shapes microbial ecology. Statins also exhibit direct antimicrobial activity against Gram-positive species and enrich butyrate-producing taxa (Faecalibacterium, Roseburia) while reducing the prevalence of the dysbiotic Bact2 enterotype (high Bacteroides, low Faecalibacterium).",
- "evidence": "Section3.6.2: Vieira-Silva et al. (2020) MetaCardis study (n=888) using quantitative microbiome profiling found statin use associated with lower Bact2 prevalence (5.88% vs17.73% in obese non-statin users); Hu et al. (2021) prospective cohort (n=133) showed enrichment of Bifidobacterium longum, Anaerostipes hadrus, and Ruminococcus obeum."
+ "mechanism": "Statins (HMG-CoA reductase inhibitors) modulate gut microbiota via bile acid metabolism alteration and direct antimicrobial activity, resulting in enrichment of short-chain fatty acid (SCFA)-producing taxa (Faecalibacterium, Roseburia) and a reduction in the prevalence of the dysbiotic 'Bact2' enterotype (high Bacteroides, low Faecalibacterium, low microbial load), contributing to anti-inflammatory and metabolic benefits.",
+ "evidence": "Vieira-Silva et al. (2020) [25] MetaCardis study (n=888 + validation): statin therapy associated with lower Bact2 prevalence in obese individuals (5.88% vs.17.73%, Fisher p=0.028), independent of BMI, diet and co-medication. Hu et al. (2021) [39] in133 ACS patients: statin therapy enriched Bifidobacterium longum, Anaerostipes hadrus, Ruminococcus obeum, and depleted Parabacteroides merdae; in vitro culture confirmed direct atorvastatin–microbe interactions."
  },
  {
- "mechanism": "Oral iron supplementation enriches siderophilic Enterobacteriaceae (Escherichia coli, Salmonella, Klebsiella) at the expense of beneficial commensals (Lactobacillus, Bifidobacterium). Unabsorbed ferrous iron (85–95%) reaches the colon and provides a competitive advantage via bacterial siderophore systems (enterobactin, aerobactin). Iron also catalyses Fenton reactions producing ROS that damage strict anaerobes and promote mucosal inflammation.",
- "evidence": "Section3.8.2: Jaeggi et al. (2015) RCT in115 Kenyan infants showed increased Enterobacteriaceae (including pathogenic E. coli) and Clostridium, decreased Bifidobacterium, and elevated faecal calprotectin; Paganini et al. (2017) factorial RCT (n=155) showed galacto-oligosaccharide co-supplementation partially mitigated these effects."
+ "mechanism": "SGLT2 inhibitors (e.g., empagliflozin, dapagliflozin) alter the intestinal luminal environment through glycosuria-mediated substrate changes, potentially enriching SCFA-producing genera (Roseburia, Eubacterium, Faecalibacterium) and Akkermansia muciniphila, while depleting pro-inflammatory taxa like Escherichia-Shigella and Bilophila. However, clinical evidence remains discordant.",
+ "evidence": "Deng et al. (2022) [91] open-label RCT in76 treatment-naïve T2DM patients: empagliflozin (10 mg/day for3 months) significantly increased Roseburia, Eubacterium, Faecalibacterium, and decreased Escherichia-Shigella, Bilophila, Hungatella; α-diversity increased. van Bommel et al. (2020) [92] double-blind RCT in44 metformin-treated T2DM patients: dapagliflozin added to metformin showed no significant change in α-diversity, β-diversity, or A. muciniphila abundance; subject identity dominated composition."
  },
  {
- "mechanism": "PPI + NSAID synergistic dysbiosis: Co-administration of PPIs with NSAIDs produces compounded small intestinal injury through converging mechanisms: PPI-induced Gram-negative enrichment in the proximal intestine amplifies NSAID-mediated barrier disruption, leading to synergistic increases in Enterobacteriaceae and gut permeability beyond either drug alone.",
- "evidence": "Section3.5.2 and Table10: Wallace et al. (2011) rodent model demonstrated that PPIs exacerbate NSAID-induced small intestinal injury by inducing dysbiosis; Vich Vila et al. (2020) population-level data documented dose-dependent depletion of Roseburia intestinalis by NSAIDs."
+ "mechanism": "Oral iron supplements deliver85–95% of ingested iron unabsorbed to the colon, creating a competitive advantage for siderophilic Gram-negative Enterobacteriaceae (E. coli, Salmonella, Klebsiella) via efficient siderophore systems, while commensal Lactobacillus and Bifidobacterium species (which lack siderophores and use manganese-dependent enzymes) are suppressed. Unabsorbed iron also catalyses Fenton reactions generating ROS, damaging strict anaerobes and promoting mucosal inflammation.",
+ "evidence": "Jaeggi et al. (2015) [30] RCT in115 Kenyan infants: iron fortification (12.5 mg Fe) increased Enterobacteriaceae (p=0.010) and Clostridium (p=0.033), decreased Bifidobacterium (p=0.047), elevated faecal calprotectin (p=0.002). Zimmermann et al. (2010) [38] RCT in139 Ivorian schoolchildren: iron-fortified biscuits increased enterobacteria (p<0.005) and decreased lactobacilli (p<0.0001), with elevated faecal calprotectin (p<0.01). Paganini et al. (2017) [44] factorial RCT in155 Kenyan infants: GOS prebiotic co-supplementation mitigated iron-induced dysbiosis and preserved Bifidobacterium."
  }
  ],
  "key_findings": [
- "PPI use is the most consistently adverse microbiome modulator among the six drug classes, with enrichment of oral-origin taxa and reduced diversity, associated with increased risk of Clostridioides difficile infection (pooled OR1.99), SIBO (pooled OR2.28), and multidrug-resistant organism colonisation.",
- "Metformin's therapeutic efficacy is partly mediated by gut microbiota: enrichment of Akkermansia muciniphila and modulation of the B. fragilis–GUDCA–intestinal FXR axis are causally linked to improved glucose homeostasis (validated by faecal microbiota transplantation in germ-free mice).",
- "NSAIDs deplete anti-inflammatory commensals (Faecalibacterium prausnitzii, Roseburia) and PPI co-prescription synergistically exacerbates dysbiosis and small intestinal injury.",
- "Statin therapy is associated with reduced prevalence of the dysbiotic Bact2 enterotype and enrichment of butyrate-producing taxa, suggesting microbiome-mediated cardiovascular benefits beyond lipid lowering.",
- "Oral iron supplements consistently enrich Enterobacteriaceae and Clostridium spp. while depleting Lactobacillus and Bifidobacterium, and increase intestinal inflammation (elevated faecal calprotectin), particularly in paediatric populations.",
- "Polypharmacy is a major confounder in microbiome studies; after correcting for co-medications, PPIs, metformin, antibiotics, and laxatives retain the strongest microbiome signals, while NSAIDs lose significance."
+ "PPIs are associated with the most consistently adverse microbiome profile among the six drug classes, including enrichment of oral-origin taxa ('oralisation of the gut'), reduced Shannon diversity, and increased risk of Clostridioides difficile infection (OR1.99,95% CI1.73–2.30) and small intestinal bacterial overgrowth (OR2.28).",
+ "Metformin enriches Akkermansia muciniphila and butyrate producers (e.g., Butyrivibrio, Bifidobacterium adolescentis) while depleting Intestinibacter; these changes are causally linked to improved glucose tolerance via FXR–bile acid axis and are partially responsible for its efficacy and gastrointestinal adverse effects.",
+ "NSAIDs deplete anti-inflammatory commensals (Faecalibacterium prausnitzii, Roseburia spp.) and, when co-prescribed with PPIs, cause synergistic small intestinal dysbiosis and injury, undermining the gastroprotective rationale for co-prescription.",
+ "Statins are associated with reduced prevalence of the dysbiotic Bact2 enterotype, enrichment of SCFA-producing taxa (Faecalibacterium, Roseburia), and anti-inflammatory ecological shifts independent of lipid lowering, suggesting microbiota-mediated pleiotropic benefits.",
+ "SGLT2 inhibitor effects on gut microbiota are discordant: empagliflozin in treatment-naïve patients showed favourable remodelling (↑SCFA producers, ↓pathobionts), while dapagliflozin added to metformin showed no detectable changes, likely due to background metformin masking or insufficient power.",
+ "Oral iron consistently enriches Enterobacteriaceae and decreases beneficial Lactobacillus and Bifidobacterium, induces gut inflammation (elevated faecal calprotectin), and increases pathogen virulence gene abundance; prebiotic co-administration (e.g., GOS) partially mitigates these adverse effects.",
+ "Polypharmacy scenarios (e.g., PPI+NSAID, PPI+oral iron) produce compounded or synergistic microbiome disruption; multi-drug adjustment is essential in pharmacomicrobiomic studies to disentangle single-drug signals."
  ],
- "relevance_to_research_topic": "The paper provides extensive evidence on how non-antibiotic drugs (including oral iron) modulate gut microbiota composition and host susceptibility to Clostridioides difficile infection (CDI). Specifically, it documents that oral iron enrichment of Enterobacteriaceae and depletion of beneficial commensals parallels the dysbiotic signatures associated with CDI risk. The PPI section demonstrates a direct pharmacomicrobiomic link between PPI-induced 'oralisation of the gut' and increased CDI susceptibility, with detailed mechanisms (loss of colonisation resistance, enrichment of CDI-permissive taxa). Although the paper does not directly address high-iron diet in a mouse CDI model, its findings on iron-driven dysbiosis and CDI-relevant microbial shifts (e.g., reduced Lachnospiraceae/Ruminococcaceae, increased Enterobacteriaceae/Clostridiaceae) are directly applicable to the user's research topic. The description of metformin's bile acid–FXR axis and A. muciniphila-mediated barrier protection offers additional mechanistic context for host immune and metabolic responses during infection. The paper's emphasis on 'diet–microbiota–host' interactions and pharmacomicrobiomic causality supports the user's framework for investigating how high-iron diets alter CDI outcomes."
+ "relevance_to_research_topic": "This paper provides comprehensive mechanistic and clinical evidence on how oral iron alters gut microbiota composition and function, specifically enriching Enterobacteriaceae and depleting beneficial commensals while inducing intestinal inflammation. These findings are directly relevant to the research topic investigating the impact of high-iron diet on Clostridioides difficile infection (CDI) in mice, as iron-driven dysbiosis may influence host susceptibility to CDI by disrupting colonisation resistance. Additionally, the paper discusses PPIs as a major risk factor for CDI through microbiota-mediated mechanisms, offering a pharmacological context. However, the paper does not address high-iron diet per se but rather oral iron supplements; the mechanistic overlap (iron as a modulator of luminal microbiota) supports the hypothesis that high dietary iron could similarly alter the gut ecosystem and CDI outcomes. The evidence on metformin, NSAIDs, statins, and SGLT2 inhibitors is less directly related but contributes to the broader 'diet–microbiota–host' interaction framework."
 }

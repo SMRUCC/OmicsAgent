@@ -54,7 +54,7 @@ The report should include:
 6. Conclusion
 7. Figures and Tables (with captions in both Chinese and English)
 
-Return your plan as JSON:
+Return your plan as JSON, at least one execution step for your plan must be generated:
 {{
   ""module_name"": ""Paper Draft Report"",
   ""goal"": ""<brief description>"",

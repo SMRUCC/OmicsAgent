@@ -270,6 +270,10 @@ $"Research topic:{vbCrLf}{researchTopic}"
                 Dim prompt = BuildSummaryPrompt(_context.ResearchTopic, combinedExtractions)
                 Dim resp = Await llm.Chat(prompt, cancellationToken)
                 Dim kbJson = resp.ExtractJsonFromResponse
+
+                ' 20260723 try to fix of the possible json error
+                kbJson = LenientJson.ParseJsonLenient(kbJson).BuildJsonString
+
                 If Not String.IsNullOrEmpty(kbJson) Then
                     File.WriteAllText(_context.KnowledgeBaseFile, kbJson, Encoding.UTF8)
                 Else
