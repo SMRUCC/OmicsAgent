@@ -52,6 +52,7 @@ Return your plan as JSON:
   ""goal"": ""<brief description>"",
   ""input_files"": [""<input file paths>""],
   ""output_files"": [""<expected output file paths>""],
+  ""execution_steps"": [{{""action"": ""<description of current step action>"", ""goal"": ""<goal of current step...>""}}, ...],
   ""notes"": ""<special considerations>""
 }}
 "
@@ -60,21 +61,29 @@ Return your plan as JSON:
         Dim plan As ModulePlan
         If Not String.IsNullOrEmpty(json) Then
             plan = json.LoadJSON(Of ModulePlan)
+            plan.module_name = ModuleName
         Else
-            plan = New ModulePlan() With {.ModuleName = ModuleName, .Goal = resp.output}
+            plan = New ModulePlan() With {.module_name = ModuleName, .goal = resp.output}
         End If
-        plan.ModuleName = ModuleName
+
         Return plan
     End Function
 
     Protected Overrides Async Function GenerateAndRunScriptAsync(llm As LLMClient, plan As ModulePlan, [step] As [Step], cancellationToken As CancellationToken) As Task
         Dim prompt = $"
-You are a bioinformatics R script expert. Write an R script to perform LIMMA differential analysis.
+You are a bioinformatics R script expert. Write and execute R script to perform LIMMA differential analysis according to the following plan.
 
 {BuildContextInfo()}
 
 # Analysis Plan
-{plan.ToJson()}
+{plan.module_name}
+
+plan goal: {plan.goal}
+plan notes: {plan.notes}
+current plan execution step: {[step].GetJson}
+
+All scripts and the generated CSV files are placed in this designated temporary workspace folder: {Workspace.GetDirectoryFullPath}
+All pdf/png figure image files should save to workspace folder: {FiguresDir.GetDirectoryFullPath}
 
 # Your Task
 Write a complete R script that:
@@ -104,24 +113,13 @@ Write a complete R script that:
 - Save both PNG (300 dpi) and PDF versions
 
 # Important Notes
-- Use source() to load helper scripts from rscript/ folder when applicable
+- Use the source() function to load helper scripts from the rscript/ folder when applicable
 - Handle missing packages gracefully
-- Print progress messages
-- Use absolute paths
-
-Write the complete R script. Use ```r ... ``` code block.
+- Save all output files using absolute paths
+- The script should be self-contained and runnable via Rscript
+- Print progress messages to stdout
 "
-        Dim resp = Await llm.Chat(prompt, cancellationToken)
-        Dim rCode = resp.ExtractCodeBlock("r")
-
-        Dim scriptFile = Path.Combine(_context.ScriptsDir, $"module_{ModuleIndex}_limma.R")
-        rCode.SaveTo(scriptFile)
-        plan.RScriptContent = rCode
-        plan.RScriptFile = scriptFile
-
-        Dim shell As New ShellTool(_config, _context.WorkspaceDir, _logger)
-        Dim result = shell.run_rscript($"scripts/module_{ModuleIndex}_limma.R")
-        LogInfo($"R script execution result: {result.Substring(0, Math.Min(300, result.Length))}")
+        Await llm.Chat(prompt, cancellationToken)
     End Function
 
     Protected Overrides Async Function GenerateConclusionAsync(llm As LLMClient, plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)

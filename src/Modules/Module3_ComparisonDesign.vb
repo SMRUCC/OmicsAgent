@@ -46,6 +46,7 @@ Return your plan as JSON:
   ""goal"": ""<brief description of comparison design rationale>"",
   ""input_files"": [""<input file paths>""],
   ""output_files"": [""<expected output file paths>""],
+  ""execution_steps"": [{{""action"": ""<description of current step action>"", ""goal"": ""<goal of current step...>""}}, ...],
   ""comparisons"": [
     {{
       ""name"": ""<comparison name, e.g., 'disease_vs_control'>"",
@@ -73,33 +74,34 @@ Return your plan as JSON:
 
     Protected Overrides Async Function GenerateAndRunScriptAsync(llm As LLMClient, plan As ModulePlan, [step] As [Step], cancellationToken As CancellationToken) As Task
         Dim prompt = $"
-You are a bioinformatics R script expert. Write an R script to save the comparison design as a structured CSV file.
+You are a bioinformatics R script expert. Write and execute R script to save the comparison design as a structured CSV file according to the following plan.
 
 {BuildContextInfo()}
 
 # Comparison Design Plan
-{plan.ToJson()}
+{plan.module_name}
+
+plan goal: {plan.goal}
+plan notes: {plan.notes}
+current plan execution step: {[step].GetJson}
+
+All scripts and the generated CSV files are placed in this designated temporary workspace folder: {Workspace.GetDirectoryFullPath}
+All pdf/png figure image files should save to workspace folder: {FiguresDir.GetDirectoryFullPath}
 
 # Your Task
-Write an R script that:
+Write a complete R script that:
 1. Creates a data frame containing the comparison design
 2. Columns: comparison_name, treatment_group, control_group, biological_rationale, expected_findings
 3. Saves the design as CSV to tables/comparison_design.csv
 4. Generates a summary visualization showing the comparison structure
 
-Write the complete R script. Use ```r ... ``` code block.
+# Important Notes
+- Use the source() function to load helper scripts from the rscript/ folder when applicable
+- Save all output files using absolute paths
+- The script should be self-contained and runnable via Rscript
+- Print progress messages to stdout
 "
-        Dim resp = Await llm.Chat(prompt, cancellationToken)
-        Dim rCode = resp.ExtractCodeBlock("r")
-
-        Dim scriptFile = Path.Combine(_context.ScriptsDir, $"module_{ModuleIndex}_comparison_design.R")
-        rCode.SaveTo(scriptFile)
-        plan.RScriptContent = rCode
-        plan.RScriptFile = scriptFile
-
-        Dim shell As New ShellTool(_config, _context.WorkspaceDir, _logger)
-        Dim result = shell.run_rscript($"scripts/module_{ModuleIndex}_comparison_design.R")
-        LogInfo($"R script execution result: {result.Substring(0, Math.Min(300, result.Length))}")
+        Await llm.Chat(prompt, cancellationToken)
     End Function
 
     Protected Overrides Async Function GenerateConclusionAsync(llm As LLMClient, plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)
