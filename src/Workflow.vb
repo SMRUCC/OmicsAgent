@@ -280,10 +280,61 @@ Module Workflow
             Case 7 : Return New AdvancedAnalysisModule(_config, _context, _logger)
             Case 8 : Return New ResultTablesModule(_config, _context, _logger)
             Case 9 : Return New ReportModule(_config, _context, _logger)
+            Case Is >= 10
+                ' 自定义模块：索引从 10 开始，映射到 _customModules 列表
+                Dim customIdx = index - 10
+                If customIdx < _customModules.Count Then
+                    Dim def = _customModules(customIdx)
+                    Return New JsonDefinedModule(_config, _context, _logger, def, index)
+                End If
+                _logger($"Unknown custom module index: {index}")
+                Return Nothing
             Case Else
                 _logger($"Unknown module index: {index}")
                 Return Nothing
         End Select
+    End Function
+
+    ''' <summary>获取自定义模块文件夹路径</summary>
+    Private Function GetCustomModulesDir(parsed As Opts) As String
+        ' 优先使用命令行参数指定的路径
+        If Not parsed.custom_modules.StringEmpty(, True) Then
+            Return parsed.custom_modules.GetDirectoryFullPath
+        End If
+
+        ' 默认使用应用程序根目录下的 custom_modules/ 文件夹
+        Return Path.Combine(AgentConfig.ApplicationRoot, "custom_modules").GetDirectoryFullPath
+    End Function
+
+    ''' <summary>扫描文件夹加载自定义模块 JSON 定义</summary>
+    Private Function LoadCustomModules(dir As String) As List(Of CustomModuleDefinition)
+        Dim result As New List(Of CustomModuleDefinition)()
+
+        If dir.StringEmpty(, True) Then Return result
+
+        If Not Directory.Exists(dir) Then
+            _logger($"Custom modules directory not found: {dir} (skipping)")
+            Return result
+        End If
+
+        _logger($"Scanning custom modules in: {dir}")
+
+        For Each jsonFile In Directory.GetFiles(dir, "*.json")
+            Try
+                Dim def = CustomModuleDefinition.LoadFromFile(jsonFile)
+                If def IsNot Nothing Then
+                    result.Add(def)
+                    _logger($"  [OK] Loaded custom module: {def.module_name} from {Path.GetFileName(jsonFile)}")
+                Else
+                    _logger($"  [SKIP] Failed to load custom module from: {jsonFile}")
+                End If
+            Catch ex As Exception
+                _logger($"  [ERROR] Failed to load {jsonFile}: {ex.Message}")
+            End Try
+        Next
+
+        _logger($"Loaded {result.Count} custom module(s)")
+        Return result
     End Function
 
     Private Sub ConsoleLog(msg As String)

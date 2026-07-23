@@ -1,0 +1,6 @@
+{
+  "module_name": "Custom Network Analysis",
+  "csv_file_name_prefix": "custom_network_",
+  "generate_plan_prompt": "Design a plan for biological network analysis:\n1. Construct a protein-protein interaction (PPI) network using differential molecules from module 4\n2. Calculate network topological properties (degree, betweenness, closeness)\n3. Identify hub genes and bottleneck nodes\n4. Perform network module detection using community detection algorithms\n5. KEGG enrichment analysis for each network module\n\n# Implementation Requirements\n- Read differential analysis results from module 4 (tables/ directory)\n- Use igraph or STRINGdb for network construction\n- Use cluster_fast_greedy or cluster_louvain for community detection\n- Generate the following plots (PNG + PDF, 300 dpi, English labels):\n  - Full network visualization (colored by community)\n  - Hub gene subnetwork\n  - Module enrichment dot plot\n- Save network topology and module results as CSV\n\n# Important Notes\n- Handle missing packages gracefully\n- Filter network edges by confidence score if applicable",
+  "conclusion_items": "1. 网络分析的整体结果（网络规模、节点数、边数、模块数）\n2. 关键 hub 基因/分子的识别及其生物学意义（参考 kb.json 知识库）\n3. 网络模块的生物学功能（KEGG 富集结果）\n4. 网络拓扑特征与用户研究主题的关联性\n5. 与差异分析和 WGCNA 结果的一致性和互补性"
+}

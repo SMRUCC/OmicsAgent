@@ -29,6 +29,7 @@ Omics Data Analysis LLM Agent
   --skip-literature       跳过文献检索步骤
   --skip-kb               跳过知识库构建步骤
   --module=<n>            仅执行指定模块（1-9），多个模块用逗号分隔
+  --custom-modules=<path> 自定义分析模块 JSON 文件夹路径（默认为程序根目录下的 custom_modules/ 文件夹）
  
   --check_r               用于测试R脚本调用
 
