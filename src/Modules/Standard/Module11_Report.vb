@@ -5,7 +5,7 @@ Imports OmicsAgent.AppRuntime
 Imports OmicsAgent.ReportData
 
 ' ============================================================================
-' 模块 9: 撰写论文初稿（生成 HTML 报告并转换为 PDF）
+' 模块 11: 撰写论文初稿（生成 HTML 报告并转换为 PDF）
 ' ============================================================================
 
 ''' <summary>
@@ -24,7 +24,7 @@ Imports OmicsAgent.ReportData
 Public Class ReportModule : Inherits AnalysisModuleBase
 
     Public Overrides ReadOnly Property ModuleName As String = "Paper Draft Report"
-    Public Overrides ReadOnly Property ModuleIndex As Integer = 9
+    Public Overrides ReadOnly Property ModuleIndex As Integer = 11
 
     Public Overrides ReadOnly Property CsvFileNamePrefix As String
         Get
@@ -49,7 +49,9 @@ The report should include:
    - 4.4 LIMMA Differential Analysis
    - 4.5 KEGG Functional Analysis
    - 4.6 WGCNA Trait Association Analysis
-   - 4.7 Advanced Analysis
+   - 4.7 CMeans Fuzzy Clustering Analysis
+   - 4.8 Dynamic Bayesian Network Analysis
+   - 4.9 PLS-PM Causal Path Analysis
 5. Discussion (biological mechanism interpretation)
 6. Conclusion
 7. Figures and Tables (with captions in both Chinese and English)"

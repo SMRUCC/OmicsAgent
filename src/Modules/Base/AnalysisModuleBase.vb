@@ -240,12 +240,13 @@ Simply generate the specific execution plan here. Do not execute the actual anal
 
     ''' <summary>调用 LLM 编写并执行脚本</summary>
     Protected Async Function GenerateAndRunScriptAsync(plan As ModulePlan, cancellationToken As CancellationToken) As Task
-        For Each [step] As [Step] In plan.execution_steps
-            Using llm As LLMClient = _config.CreateLLMClient(FolderBaseName & "-analysis", _context.TmpDir)
-                RegisterTools(llm, True)
+        Using llm As LLMClient = _config.CreateLLMClient(FolderBaseName & "-analysis", _context.TmpDir)
+            Call RegisterTools(llm, True)
+
+            For Each [step] As [Step] In plan.execution_steps
                 Await GenerateAndRunScriptAsync(llm, plan, [step], cancellationToken)
-            End Using
-        Next
+            Next
+        End Using
     End Function
 
     ''' <summary>调用 LLM 生成阶段性总结</summary>
@@ -270,7 +271,7 @@ You are a bioinformatics R script expert. Write and execute R script to process 
 
 {plan.notes}
 
-# Your Task
+# Your Current Task
 Write a complete R script that:
 
 {[step].action}
@@ -307,7 +308,7 @@ Write a conclusion in Chinese that describes:
 
 {GetConclusionItems()}
 
-Do not write any file, just generates the conclusion text in markdown format and return it back to me. The conclusion should be 500-800 words in Chinese. Be specific and rigorous. Do NOT fabricate data.
+Do not write any file, just generates the conclusion text in markdown format and return it back to me. The conclusion should be 800-1200 words in Chinese. Be specific and rigorous. Do NOT fabricate data.
 "
         Dim resp = Await llm.Chat(prompt, cancellationToken)
         Return resp.output

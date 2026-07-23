@@ -57,7 +57,7 @@ Namespace AppRuntime
                 Return modules.Split(","c).Select(Function(s) Integer.Parse(s.Trim())).ToList()
             End If
             ' 默认执行所有模块
-            Return {1, 2, 3, 4, 5, 6, 7, 8, 9}.ToList()
+            Return {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}.ToList()
         End Function
     End Class
 End Namespace

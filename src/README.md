@@ -12,9 +12,11 @@
 4. LIMMA 差异比较分析
 5. KEGG 生物学功能分析（富集 + GSVA）
 6. 生物学性状关联分析（WGCNA）
-7. 进阶分析（CMeans 模糊聚类 + bnlearn 动态贝叶斯网络 + PLS-PM 因果路径）
-8. 结果表格整理（xlsx）
-9. 论文初稿撰写（PDF）
+7. CMeans 模糊聚类分析
+8. bnlearn 动态贝叶斯网络分析
+9. PLS-PM 因果路径分析
+10. 结果表格整理（xlsx）
+11. 论文初稿撰写（PDF）
 
 ## 项目结构
 
@@ -45,9 +47,11 @@ OmicsAgent/
 │   ├── Module4_Limma.vb
 │   ├── Module5_KEGG.vb
 │   ├── Module6_WGCNA.vb
-│   ├── Module7_Advanced.vb
-│   ├── Module8_ResultTables.vb
-│   └── Module9_Report.vb
+│   ├── Module7_CMeans.vb
+│   ├── Module8_Bayesian.vb
+│   ├── Module9_PLSPM.vb
+│   ├── Module10_ResultTables.vb
+│   └── Module11_Report.vb
 ├── rscript/                    ' R 语言工具函数脚本
 │   ├── preprocess_expression.R
 │   ├── pca_plsda_analysis.R
@@ -150,7 +154,7 @@ research.exe --research=research.txt --expression=data.csv --annotation=anno.csv
 - `--config=<path>` - INI 配置文件路径（默认为 ./config.ini）
 - `--skip-literature` - 跳过文献检索步骤
 - `--skip-kb` - 跳过知识库构建步骤
-- `--module=<n>` - 仅执行指定模块（1-9），多个模块用逗号分隔
+- `--module=<n>` - 仅执行指定模块（1-11），多个模块用逗号分隔
 - `--help` - 显示帮助信息
 
 ## 输入文件格式要求
@@ -217,7 +221,7 @@ analysis/
 │   ├── tables/
 │   └── figures/
 ├── ...
-├── analysis_modules_9/         ' 模块 9 分析结果
+├── analysis_modules_11/         ' 模块 11 分析结果
 │   ├── conclusion.txt
 │   ├── tables/
 │   └── figures/
@@ -276,15 +280,23 @@ scripts/                        ' Agent 编写的 R/Rsharp 脚本
 - 共表达模块分子的 KEGG 功能富集分析
 - 多组学数据：下游组学 GSVA 结果作为表型数据
 
-### 模块 7：进阶分析
+### 模块 7：CMeans 模糊聚类分析
 
 - CMeans 模糊聚类
 - 聚类簇 KEGG 富集分析
 - 聚类簇与 WGCNA 模块关联分析
-- 时间序列数据：bnlearn 动态贝叶斯网络
-- 多组学数据：PLS-PM 因果路径分析
 
-### 模块 8：结果表格整理
+### 模块 8：动态贝叶斯网络分析
+
+- 时间序列数据：bnlearn 动态贝叶斯网络
+- 识别分子/模块之间的调控关系
+
+### 模块 9：PLS-PM 因果路径分析
+
+- 多组学数据：PLS-PM 因果路径分析
+- 各组学层次潜变量构建与路径系数估计
+
+### 模块 10：结果表格整理
 
 将中间结果 csv 表格按分析主题写入 xlsx 文件，样式要求：
 - 全局 Cambria Math 11 号字体，缩放 90%
@@ -293,7 +305,7 @@ scripts/                        ' Agent 编写的 R/Rsharp 脚本
 - 第二行（列标题）：深蓝色背景，白色加粗字体
 - 第一列 + 第二行 freeze panes 冻结
 
-### 模块 9：论文初稿撰写
+### 模块 11：论文初稿撰写
 
 - 以中文撰写分析结果报告
 - 每章插图和表格编写图注（先中文后英文翻译）

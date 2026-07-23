@@ -72,19 +72,19 @@ Module Workflow
         Dim customModuleDir = GetCustomModulesDir(parsed)
         _customModules = LoadCustomModules(customModuleDir)
 
-        ' 若执行列表包含报告模块(8/9)，则在第一个报告模块之前插入自定义模块索引
+        ' 若执行列表包含报告模块(10/11)，则在第一个报告模块之前插入自定义模块索引
         ' 确保自定义模块在 ResultTablesModule 和 ReportModule 之前执行
         If _customModules.Count > 0 Then
             Dim firstReportIdx = -1
             For i = 0 To modulesToRun.Count - 1
-                If modulesToRun(i) = 8 OrElse modulesToRun(i) = 9 Then
+                If modulesToRun(i) = 10 OrElse modulesToRun(i) = 11 Then
                     firstReportIdx = i
                     Exit For
                 End If
             Next
 
             If firstReportIdx >= 0 Then
-                Dim customIndices = Enumerable.Range(0, _customModules.Count).Select(Function(i) 10 + i).ToList()
+                Dim customIndices = Enumerable.Range(0, _customModules.Count).Select(Function(i) 12 + i).ToList()
                 modulesToRun.InsertRange(firstReportIdx, customIndices)
             End If
         End If
@@ -108,8 +108,8 @@ Module Workflow
             End Try
         Next
 
-        ' 5. 生成最终报告（如果模块 9 未在指定列表中，也强制执行）
-        If Not modulesToRun.Contains(9) AndAlso Not modulesToRun.Contains(0) Then
+        ' 5. 生成最终报告（如果模块 11 未在指定列表中，也强制执行）
+        If Not modulesToRun.Contains(11) AndAlso Not modulesToRun.Contains(0) Then
             ' 如果用户指定了具体模块，则不强制执行报告模块
         End If
     End Function
@@ -277,12 +277,14 @@ Module Workflow
             Case 4 : Return New LimmaDiffModule(_config, _context, _logger)
             Case 5 : Return New KeggFunctionModule(_config, _context, _logger)
             Case 6 : Return New WGCNAModule(_config, _context, _logger)
-            Case 7 : Return New AdvancedAnalysisModule(_config, _context, _logger)
-            Case 8 : Return New ResultTablesModule(_config, _context, _logger)
-            Case 9 : Return New ReportModule(_config, _context, _logger)
-            Case Is >= 10
-                ' 自定义模块：索引从 10 开始，映射到 _customModules 列表
-                Dim customIdx = index - 10
+            Case 7 : Return New CMeansAnalysisModule(_config, _context, _logger)
+            Case 8 : Return New BayesianNetworkModule(_config, _context, _logger)
+            Case 9 : Return New PLSPMAnalysisModule(_config, _context, _logger)
+            Case 10 : Return New ResultTablesModule(_config, _context, _logger)
+            Case 11 : Return New ReportModule(_config, _context, _logger)
+            Case Is >= 12
+                ' 自定义模块：索引从 12 开始，映射到 _customModules 列表
+                Dim customIdx = index - 12
                 If customIdx < _customModules.Count Then
                     Dim def = _customModules(customIdx)
                     Return New JsonDefinedModule(_config, _context, _logger, def, index)

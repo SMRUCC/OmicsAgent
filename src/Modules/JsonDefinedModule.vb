@@ -26,7 +26,7 @@ Public Class JsonDefinedModule : Inherits AnalysisModuleBase
     ''' <param name="context">分析上下文</param>
     ''' <param name="logger">日志输出委托</param>
     ''' <param name="definition">从 JSON 文件加载的模块定义</param>
-    ''' <param name="moduleIndex">模块序号（从 10 开始，避免与标准模块 1-9 冲突）</param>
+    ''' <param name="moduleIndex">模块序号（从 12 开始，避免与标准模块 1-11 冲突）</param>
     Public Sub New(config As AgentConfig,
                    context As AnalysisContext,
                    logger As Action(Of String),
