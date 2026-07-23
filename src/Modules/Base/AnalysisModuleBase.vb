@@ -94,6 +94,8 @@ Public MustInherit Class AnalysisModuleBase
             Dim plan = Await GeneratePlanAsync(cancellationToken)
             LogInfo($"分析计划已生成：{plan.Goal}")
 
+            Call plan.GetJson(comment:=True).SaveTo($"{Workspace}/plan.json")
+
             ' 2. 编写并执行脚本
             Await GenerateAndRunScriptAsync(plan, cancellationToken)
 
@@ -103,6 +105,9 @@ Public MustInherit Class AnalysisModuleBase
             LogInfo($"阶段性总结已保存：{ConclusionFile}")
 
             ' 4. 记录到上下文
+            plan.conclusion = conclusion
+            plan.GetJson(comment:=True).SaveTo($"{Workspace}/plan.json")
+
             _context.ModuleResults.Add(New ModuleResult() With {
                 .ModuleName = ModuleName,
                 .ModuleIndex = ModuleIndex,
