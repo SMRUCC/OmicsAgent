@@ -94,7 +94,7 @@ Public MustInherit Class AnalysisModuleBase
             Dim plan = Await GeneratePlanAsync(cancellationToken)
             LogInfo($"分析计划已生成：{plan.Goal}")
 
-            Call plan.GetJson(comment:=True).SaveTo($"{Workspace}/plan.json")
+            plan.GetJson(comment:=True).SaveTo($"{Workspace}/plan.json")
 
             ' 2. 编写并执行脚本
             Await GenerateAndRunScriptAsync(plan, cancellationToken)
@@ -188,6 +188,8 @@ Return your plan as JSON, at least one execution step for your plan must be gene
 ", cancellationToken)
             json = resp.ExtractJsonFromResponse
         Next
+
+        plan.llm_response = If(resp, New LLMsResponse).output
 
         Return plan
     End Function

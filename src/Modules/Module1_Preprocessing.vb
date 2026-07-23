@@ -69,21 +69,15 @@ You are a bioinformatics R script expert. Write and execute R script to preproce
 
 plan goal: {plan.goal}
 plan notes: {plan.notes}
-current plan execution step: {[step].GetJson(comment:=True)}
-
-All scripts and the generated CSV files are placed in this designated temporary workspace folder: {Workspace.GetDirectoryFullPath}
-All pdf/png figure image files should save to workspace folder: {FiguresDir.GetDirectoryFullPath}
 
 # Your Task
 Write a complete R script that:
-1. Reads each expression matrix CSV file (rows = molecules, columns = samples, first column = molecule ID, first row = sample IDs)
-2. For each matrix:
-   a. Replace NA/0 values with half of the minimum positive value in each row
-   b. Normalize by column sum (divide each value by column sum, multiply by 1e6 for readability)
-   c. Apply log2 transformation if max value > 100
-   d. Median scale per row (subtract row median)
-3. Save preprocessed matrices to the tmp/ directory with prefix 'preprocessed_'
-4. Generate a summary statistics table (before/after: number of molecules, samples, NA count, value range)
+
+{[step].action}
+{[step].goal}
+
+All scripts and the generated CSV files are placed in this designated temporary workspace folder: {Workspace.GetDirectoryFullPath}
+All pdf/png figure image files should save to workspace folder: {FiguresDir.GetDirectoryFullPath}
 
 # Important Notes
 - Use the source() function to load helper scripts from the rscript/ folder when applicable
