@@ -98,35 +98,12 @@ Public MustInherit Class AnalysisModuleBase
         Call FiguresDir.MakeDir
 
         Try
-            ' 1. 生成分析计划
-            Dim plan = Await GeneratePlanAsync(cancellationToken)
-            LogInfo($"分析计划已生成：{plan.Goal}")
-
-            plan.GetJson(comment:=True).SaveTo($"{Workspace}/plan.json")
-
-            ' 2. 编写并执行脚本
-            Await GenerateAndRunScriptAsync(plan, cancellationToken)
-
-            ' 3. 生成阶段性总结
-            Dim conclusion = Await GenerateConclusionAsync(plan, cancellationToken)
-            conclusion.SaveTo(ConclusionFile)
-            LogInfo($"阶段性总结已保存：{ConclusionFile}")
-
-            ' 4. 记录到上下文
-            plan.conclusion = conclusion
-            plan.GetJson(comment:=True).SaveTo($"{Workspace}/plan.json")
-
-            If ModuleName = "Comparison Group Design" Then
-                plan.comparisons.GetJson(comment:=False).SaveTo($"{_context.AnalysisDir}/design.json")
-            End If
-
             _context.ModuleResults.Add(New ModuleResult() With {
                 .ModuleName = ModuleName,
                 .ModuleIndex = ModuleIndex,
-                .Conclusion = conclusion,
+                .Conclusion = Await RunAgent(cancellationToken),
                 .OutputDir = OutputDir
             })
-
         Catch ex As Exception
             LogInfo($"[错误] 模块 {ModuleName} 执行失败：{ex.Message}")
             LogInfo(ex.StackTrace)
@@ -134,6 +111,38 @@ Public MustInherit Class AnalysisModuleBase
             Call $"Module {ModuleName} failed with error: {ex.Message}{vbCrLf}{vbCrLf}Stack trace:{vbCrLf}{ex.StackTrace}".SaveTo(ConclusionFile)
             Call App.LogException(ex)
         End Try
+    End Function
+
+    Private Async Function RunAgent(cancellationToken As CancellationToken) As Task(Of String)
+        Dim plan As ModulePlan
+        Dim conclusion As String
+
+        Using llm As LLMClient = _config.CreateLLMClient(FolderBaseName & "-agent", _context.TmpDir)
+            ' 1. 生成分析计划
+            plan = Await GeneratePlanAsync(llm, cancellationToken)
+
+            Call plan.GetJson(comment:=True).SaveTo($"{Workspace}/plan.json")
+            Call LogInfo($"分析计划已生成：{plan.goal}")
+
+            ' 2. 编写并执行脚本
+            Await GenerateAndRunScriptAsync(llm, plan, cancellationToken)
+
+            ' 3. 生成阶段性总结
+            conclusion = Await GenerateConclusionAsync(llm, plan, cancellationToken)
+
+            Call conclusion.SaveTo(ConclusionFile)
+            Call LogInfo($"阶段性总结已保存：{ConclusionFile}")
+
+            ' 4. 记录到上下文
+            plan.conclusion = conclusion
+            plan.GetJson(comment:=True).SaveTo($"{Workspace}/plan.json")
+        End Using
+
+        If ModuleName = "Comparison Group Design" Then
+            plan.comparisons.GetJson(comment:=False).SaveTo($"{_context.AnalysisDir}/design.json")
+        End If
+
+        Return conclusion
     End Function
 
     ''' <summary>调用 LLM 生成分析计划</summary>
@@ -247,6 +256,13 @@ Simply generate the specific execution plan here. Do not execute the actual anal
                 Await GenerateAndRunScriptAsync(llm, plan, [step], cancellationToken)
             Next
         End Using
+    End Function
+
+    ''' <summary>调用 LLM 编写并执行脚本</summary>
+    Private Async Function GenerateAndRunScriptAsync(llm As LLMClient, plan As ModulePlan, cancellationToken As CancellationToken) As Task
+        For Each [step] As [Step] In plan.execution_steps
+            Await GenerateAndRunScriptAsync(llm, plan, [step], cancellationToken)
+        Next
     End Function
 
     ''' <summary>调用 LLM 生成阶段性总结</summary>
