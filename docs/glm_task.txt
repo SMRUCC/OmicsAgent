@@ -78,6 +78,14 @@ Public Class LLMsResponse
     ''' <returns></returns>
     Public Property output As String
 	
+	''' <summary>从 LLM 响应中提取代码块</summary>
+    Public Function ExtractCodeBlock(language As String) As String
+
+    ''' <summary>
+    ''' 从 LLM 响应中提取 JSON 内容。支持提取完整、截断/不完整的 JSON 数据。
+    ''' </summary>
+    Public Function ExtractJsonFromResponse() As String
+	
 End Class
 
 在这里展示的三个公开函数，分别实现了外部程序代码通过这个模块与Ollama的LLMs模型进行对话，AddFunction实现了将vb.net函数注册到大语言模型会话中，从而实现能够让大语言模型进行函数调用，让大语言模型获取得到本地文件读取，调用本地命令行工具等额外的能力。
