@@ -1,6 +1,7 @@
 ﻿Public Class ModuleResult
     Public Property ModuleName As String
     Public Property ModuleIndex As Integer
+    Public Property Goal As String
     Public Property Conclusion As String
     ''' <summary>
     ''' Analysis result dir located in analysis/

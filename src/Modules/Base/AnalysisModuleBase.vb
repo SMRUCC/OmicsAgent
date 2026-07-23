@@ -26,6 +26,8 @@ Public MustInherit Class AnalysisModuleBase
     Protected ReadOnly _context As AnalysisContext
     Protected ReadOnly _logger As Action(Of String)
 
+    Dim plan As ModulePlan
+
     ''' <summary>模块名称，用于创建输出目录</summary>
     Public MustOverride ReadOnly Property ModuleName As String
 
@@ -90,13 +92,16 @@ Public MustInherit Class AnalysisModuleBase
         Call FiguresDir.MakeDir
 
         Try
-            _context.ModuleResults.Add(New ModuleResult() With {
+            Dim _result As New ModuleResult() With {
                 .ModuleName = ModuleName,
                 .ModuleIndex = ModuleIndex,
                 .Conclusion = Await RunAgent(cancellationToken),
                 .OutputDir = OutputDir,
                 .Workdir = Workspace
-            })
+            }
+
+            _result.Goal = If(plan, New ModulePlan).goal
+            _context.ModuleResults.Add(_result)
         Catch ex As Exception
             LogInfo($"[错误] 模块 {ModuleName} 执行失败：{ex.Message}")
             LogInfo(ex.StackTrace)
@@ -107,7 +112,6 @@ Public MustInherit Class AnalysisModuleBase
     End Function
 
     Private Async Function RunAgent(cancellationToken As CancellationToken) As Task(Of String)
-        Dim plan As ModulePlan
         Dim conclusion As String
 
         Using llm As LLMClient = _config.CreateLLMClient(FolderBaseName & "-agent", _context.TmpDir)
