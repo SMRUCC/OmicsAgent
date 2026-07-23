@@ -28,6 +28,7 @@ Public Class ModulePlan
     Public Property conclusion As String = ""
 
     Public Property comparisons As Comparison()
+    Public Property llm_response As String
 
     Public Function ToJson() As String
         Return Me.GetJson

@@ -1,0 +1,39 @@
+{
+ "module_name": "Expression Matrix Preprocessing",
+ "goal": "Preprocess the metabolomics expression matrix (2059 metabolites ×18 samples) by handling missing values, normalizing to relative abundance, assessing log-transformation needs, and performing median scaling per molecule, to prepare data for downstream differential analysis and biomarker discovery related to high-iron diet effects on Clostridioides difficile infection (CDI).",
+ "input_files": [
+ "G:/OmicsWorks/test/metabolism/expression.csv",
+ "G:/OmicsWorks/test/metabolism/sampleinfo.csv"
+ ],
+ "output_files": [
+ "G:/OmicsWorks/test/metabolism/demo/tmp/preprocessed_expression_matrix.csv",
+ "G:/OmicsWorks/test/metabolism/demo/tmp/preprocessing_report.txt"
+ ],
+ "execution_steps": [
+ {
+ "action": "Read expression matrix and sample metadata. Set the first unnamed column (empty header) as the molecule/compound identifier (row names). Separate the18 sample columns (Fc16YH_CD1-6, Fc16YH_FE1-6, Fc16YH_NC1-6) from the molecule names. Note that3 QC samples (Fc16YH_QC01-03) exist in sampleinfo.csv but are absent from the expression matrix — they will be ignored during preprocessing.",
+ "goal": "Load and parse the raw expression data correctly, establish molecule-to-sample structure."
+ },
+ {
+ "action": "Impute missing values (NA/NaN/empty) per molecule row: for each row, identify the minimum positive non-zero value, then replace any missing value with half of that minimum positive value. If a row has no positive values, skip imputation (or use a small constant like0.001 as fallback). Record the number and percentage of imputed values in the report.",
+ "goal": "Handle missing data without introducing zero or large artifacts, preserving data structure for downstream analysis."
+ },
+ {
+ "action": "Column sum normalization (total sum scaling): For each sample column, divide each value by the column sum, then multiply by1,000,000 to obtain parts-per-million (PPM) relative abundance values. This converts absolute intensities to relative expression values, removing systematic differences in total signal between samples.",
+ "goal": "Normalize for total abundance differences across samples, enabling cross-sample comparability."
+ },
+ {
+ "action": "Assess log-transformation necessity: Compute the global maximum value across the entire normalized matrix. If max >100 (indicating non-log scale distribution with large dynamic range), apply log2 transformation: log2(value +1). Based on data inspection (current raw values range ~0.1 to ~5.8), the max is far below100, so log transformation will NOT be applied. Record the decision and evidence in the report.",
+ "goal": "Ensure data follows an approximately normal distribution if needed; avoid unnecessary transformation when data is already on a reasonable scale."
+ },
+ {
+ "action": "Median scaling per molecule (row): For each molecule row, subtract the row median from all values (center to zero) and then divide by the row median absolute deviation (MAD) or simply divide by the row median if MAD is zero. This standardizes each metabolite's expression profile around a common reference point, making low- and high-abundance metabolites comparable.",
+ "goal": "Eliminate systematic between-metabolite abundance differences, enabling relative comparison of fold-changes across all metabolites."
+ },
+ {
+ "action": "Save the preprocessed matrix as CSV to tmp/preprocessed_expression_matrix.csv with molecule names as the first column and sample IDs as headers. Generate a preprocessing summary report (tmp/preprocessing_report.txt) documenting: number of molecules and samples, number of imputed values, column sum normalization factor per sample, log-transform decision (not applied), and median scaling confirmation.",
+ "goal": "Persist the preprocessed data for downstream analysis and document the preprocessing steps for reproducibility."
+ }
+ ],
+ "notes": "1. DATA TYPE: This is untargeted metabolomics LC-MS data (2059 metabolites, confirmed by molecule annotation table with m/z, retention time, and adduct information). The expression values appear to be raw peak areas or intensity values (range ~0.1 to ~5.8), which is relatively narrow — they may already be partially normalized. The standard preprocessing pipeline will still be applied to ensure consistency.\n\n2. QC SAMPLES: Three QC samples (Fc16YH_QC01-03) are listed in sampleinfo.csv but do NOT appear in the expression matrix columns. These will be noted and excluded.\n\n3. SAMPLE GROUPS (from sampleinfo.csv):\n - 'high iron diet before' (FE1-FE6): High-iron diet + CDI infection (experimental group)\n - 'Clostridium difficile infection' (CD1-CD6): CDI infection only (disease control)\n - 'Standard (control)' (NC1-NC6): Healthy, no infection (baseline control)\n\n4. LOG TRANSFORMATION: The raw max value (~5.8) is <<100, so the data appears to already be on a linear scale or partially normalized, and log transformation will be skipped.\n\n5. MOLECULE ANNOTATION: A complementary annotation file (G:/OmicsWorks/test/metabolism/metabolites.csv) with2172 entries and32 annotation columns (KEGG, HMDB, PubChem, ChEBI, SMILES, chemical class hierarchy, m/z, RT, adducts, etc.) is available for downstream biological interpretation but is not needed during preprocessing.\n\n6. RESEARCH CONTEXT: The preprocessed data will be used to compare metabolite abundance across the three groups (High-iron+CDI vs CDI-alone vs Healthy control) to identify metabolites mediating the protective effect of high-iron diet against CDI, particularly L-proline, TUDCA, and other bile acids / SCFAs as described in the research background."
+}
