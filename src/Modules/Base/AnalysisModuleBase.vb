@@ -206,7 +206,7 @@ Public MustInherit Class AnalysisModuleBase
 ""notes"": 指出本执行计划中需要特别注意的事项。
 ""execution_steps""（数组）：将当前执行计划拆分为多个步骤，按指定 JSON 格式填入 ""execution_steps"" 数组。
 
-请仅生成本次执行计划，不要执行实际分析代码。以 JSON 格式返回计划，至少生成 1 个执行步骤，最多不超过 3 个步骤：
+请仅生成本次执行计划，不要执行实际分析代码。以如下所示的 JSON 格式返回分析计划，至少生成 1 个执行步骤，最多不超过 3 个步骤：
 {GetPlantJSONTemplate()}
 ", cancellationToken)
             json = resp.ExtractJsonFromResponse
@@ -231,7 +231,7 @@ Public MustInherit Class AnalysisModuleBase
 # 你的任务
 {GeneratePlanPromptText()}
 
-请仅生成本次执行计划，不要执行实际分析代码。以 JSON 格式返回计划，至少生成 1 个执行步骤，最多不超过 3 个步骤：
+请仅生成本次执行计划，不要执行实际分析代码。以如下所示的 JSON 格式返回分析计划，至少生成 1 个执行步骤，最多不超过 3 个步骤：
 {GetPlantJSONTemplate()}
 "
         Return Await GeneratePlanAsync(llm, Await llm.Chat(prompt, cancellationToken), cancellationToken)
