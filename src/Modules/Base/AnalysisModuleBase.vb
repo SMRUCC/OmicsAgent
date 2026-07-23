@@ -118,6 +118,8 @@ Public MustInherit Class AnalysisModuleBase
         Dim conclusion As String
 
         Using llm As LLMClient = _config.CreateLLMClient(FolderBaseName & "-agent", _context.TmpDir)
+            Call RegisterTools(llm, True)
+
             ' 1. 生成分析计划
             plan = Await GeneratePlanAsync(llm, cancellationToken)
 
