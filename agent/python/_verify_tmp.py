@@ -4,7 +4,7 @@
 import re, json
 
 DOI_PATTERN = re.compile(r"\b10\.\d{4,9}/[-._;()/:A-Za-z0-9]+", re.IGNORECASE)
-YEAR_PATTERN = re.compile(r"\b(19|20)\d{2}\b")
+YEAR_PATTERN = re.compile(r"\b(?:19|20)\d{2}\b")
 KEYWORDS_START_REGEX = re.compile(r"(?:^|\n)\s*(?:Key\s*words?|Keywords|Index\s+Terms|Index\s+terms)\s*[:：]", re.IGNORECASE)
 REFERENCES_START_REGEX = re.compile(r"\n\s*(?:References|Reference|Bibliography|REFERENCES)\b", re.IGNORECASE)
 REFERENCES_END_REGEX = re.compile(r"\n\s*(?:Appendix|Appendices|Acknowledg(?:e?ments?|ment)|Supporting\s+Information|Supplementary\s+(?:Material|Information)|Author\s+Contributions|Conflict\s+of\s+Interest|CRediT\s+authorship)\b", re.IGNORECASE)
@@ -30,7 +30,7 @@ def extract_journal(full_text, first_page_text=""):
     if first_page_text: candidates.append(first_page_text)
     candidates.append(full_text)
     for text in candidates:
-        m = re.search(r"\b(?:The\s+)?(?:Journal\s+of\s+[\w\s&\-]+?|Journal\s+[A-Z][\w\s&\-]+?|IEEE\s+[\w\s]+?|Proceedings\s+of\s+[\w\s&\-]+?)\b", text)
+        m = re.search(r"\b(?:The\s+)?(?:Journal\s+of\s+[\w\s&\-]+|Journal\s+[A-Z][\w\s&\-]+|IEEE\s+[\w\s]+|Proceedings\s+of\s+[\w\s&\-]+)", text)
         if m:
             name = m.group(0).strip(); name = re.sub(r"\s+", " ", name)
             if 3 <= len(name) <= 120: return name
