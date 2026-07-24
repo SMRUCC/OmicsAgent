@@ -382,8 +382,16 @@ def _parse_reference_entry(raw: str) -> dict:
     doi_m = DOI_PATTERN.search(text)
     if doi_m:
         entry["doi"] = re.sub(r"[.,;:)\]\}]+$", "", doi_m.group(0)).strip()
-        # 从文本中移除 doi，便于后续解析
-        text = text[:doi_m.start()] + text[doi_m.end():]
+        # 从文本中移除 doi 及其前置的 URL 前缀（如 "https://doi.org/"、"doi:"）
+        prefix = re.search(
+            r"(?:https?://(?:dx\.)?doi\.org/|doi:)\s*$",
+            text[:doi_m.start()],
+            re.IGNORECASE,
+        )
+        if prefix:
+            text = text[:prefix.start()] + text[doi_m.end():]
+        else:
+            text = text[:doi_m.start()] + text[doi_m.end():]
 
     # 年份（最后一个或第一个四位年份，参考文献年份通常靠后）
     years = YEAR_PATTERN.findall(text)
