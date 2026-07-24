@@ -374,42 +374,7 @@ Public Class ResultTablesModule : Inherits AnalysisModuleBase
 10. 重要：所有文本（XLSX 文件名、工作表名、注释、列标题）必须使用英文。
 
 # 参考模板（根据需要调整）
-library(openxlsx)
-if (!require(openxlsx)) install.packages('openxlsx')
-if (!require(jsonlite)) install.packages('jsonlite')
-library(openxlsx)
-library(jsonlite)
-
-desc <- fromJSON('{DESC_PATH}', simplifyVector = TRUE)
-out_dir <- '{OUT_DIR}'
-xlsx_name <- '{XLSX_FILE}'
-
-defaultStyle <- createStyle(fontName = 'Cambria Math', fontSize = 11)
-annotStyle <- createStyle(fontName = 'Cambria Math', fontSize = 11, fontColour = '#228B22')
-headerStyle <- createStyle(fontName = 'Cambria Math', fontSize = 11, fontColour = 'FFFFFF', fgFill = '#1F4E79', textDecoration = 'bold')
-idStyle <- createStyle(fontName = 'Cambria Math', fontSize = 11, fgFill = '#D9D9D9', textDecoration = 'italic', fontColour = '000000')
-
-wb <- createWorkbook()
-for (j in seq_along(desc$sheets)) {
-  sh <- desc$sheets[[j]]
-  if (!file.exists(sh$csv)) { warning(paste('Missing CSV:', sh$csv)); next }
-  df <- read.csv(sh$csv, stringsAsFactors = FALSE, check.names = FALSE)
-  ncol <- ncol(df)
-  lastRow <- nrow(df) + 2
-  addWorksheet(wb, sheetName = sh$sheet_name)
-  writeData(wb, sh$sheet_name, x = sh$annotation, startRow = 1, startCol = 1, colNames = FALSE, rowNames = FALSE)
-  writeData(wb, sh$sheet_name, x = as.data.frame(t(colnames(df))), startRow = 2, startCol = 1, colNames = FALSE, rowNames = FALSE)
-  writeData(wb, sh$sheet_name, x = df, startRow = 3, startCol = 1, colNames = FALSE, rowNames = FALSE)
-  addStyle(wb, sh$sheet_name, defaultStyle, rows = 1:lastRow, cols = 1:ncol, gridExpand = TRUE)
-  addStyle(wb, sh$sheet_name, annotStyle, rows = 1, cols = 1:ncol, gridExpand = TRUE)
-  addStyle(wb, sh$sheet_name, headerStyle, rows = 2, cols = 1:ncol, gridExpand = TRUE)
-  addStyle(wb, sh$sheet_name, idStyle, rows = 3:lastRow, cols = 1, gridExpand = TRUE)
-  freezePane(wb, sh$sheet_name, firstRow = 3, firstCol = 2)
-  setZoom(wb, sh$sheet_name, zoom = 90)
-  cat(paste('Prepared sheet', sh$sheet_name, 'for', xlsx_name, '\n'))
-}
-saveWorkbook(wb, file.path(out_dir, xlsx_name), overwrite = TRUE)
-cat(paste('Saved', xlsx_name, '\n'))
+读取并修改这个R脚本：{R_TEMPLATE}/xlsxTable.R
 
 # 重要注意事项
 - 使用绝对路径。
@@ -429,7 +394,8 @@ cat(paste('Saved', xlsx_name, '\n'))
                        .Replace("{MODULE_NAME}", mr.ModuleName) _
                        .Replace("{PLAN_GOAL}", plan.goal) _
                        .Replace("{STEP}", [step].GetJson) _
-                       .Replace("{WORKSPACE}", Workspace.GetDirectoryFullPath)
+                       .Replace("{WORKSPACE}", Workspace.GetDirectoryFullPath) _
+                       .Replace("{R_TEMPLATE}", AgentConfig.RScriptsDir)
         Return prompt
     End Function
 
