@@ -70,8 +70,8 @@ ABSTRACT_END_REGEX = re.compile("|".join(ABSTRACT_END_PATTERNS), re.IGNORECASE)
 # 摘要起始标志
 ABSTRACT_START_REGEX = re.compile(r"\bAbstract\b", re.IGNORECASE)
 
-# 年份：四位数字 19xx 或 20xx（含可选择的括号/逗号上下文）
-YEAR_PATTERN = re.compile(r"\b(19|20)\d{2}\b")
+# 年份：四位数字 19xx 或 20xx（非捕获分组，findall 返回完整年份）
+YEAR_PATTERN = re.compile(r"\b(?:19|20)\d{2}\b")
 
 # 关键词起始标志
 KEYWORDS_START_REGEX = re.compile(
@@ -294,10 +294,12 @@ def extract_journal(full_text: str, first_page_text: str = "") -> str:
 
     for text in candidates:
         # 模式 A: Journal of / Journal für / IEEE ... 等以 Journal 开头的名称
+        # 使用贪婪匹配并在字符类边界（逗号/句号/括号等非单词字符）自然截断，
+        # 避免惰性 + 尾随 \b 导致多词期刊名被过早截断。
         m = re.search(
-            r"\b(?:The\s+)?(?:Journal\s+of\s+[\w\s&\-]+?|"
-            r"Journal\s+[A-Z][\w\s&\-]+?|IEEE\s+[\w\s]+?|"
-            r"Proceedings\s+of\s+[\w\s&\-]+?)\b",
+            r"\b(?:The\s+)?(?:Journal\s+of\s+[\w\s&\-]+|"
+            r"Journal\s+[A-Z][\w\s&\-]+|IEEE\s+[\w\s]+|"
+            r"Proceedings\s+of\s+[\w\s&\-]+)",
             text,
         )
         if m:
@@ -397,6 +399,15 @@ def _parse_reference_entry(raw: str) -> dict:
 
     # 标题：去掉编号、作者、年份、期刊、doi 后的剩余文本（尽力而为）
     title_text = text
+    # 去掉开头的参考文献编号（如 "[1]"、"1."、"(1)"）
+    title_text = re.sub(
+        r"^\s*(?:\[\d{1,3}\]|\(?\d{1,3}\)?[.):]?)\s*", "", title_text
+    ).strip()
+    # 去掉残留的 DOI 链接前缀（如 "https://doi.org/"、"doi:"）
+    title_text = re.sub(
+        r"^\s*(?:https?://(?:dx\.)?doi\.org/|doi:)\s*", "", title_text,
+        flags=re.IGNORECASE,
+    ).strip()
     # 去掉开头的作者列表（如 "Smith J, Doe A." 或 "Smith J. and Doe A."）
     title_text = re.sub(
         r"^[A-Z][\w.\-]*(?:,?\s*(?:and\s+)?[A-Z][\w.\-]*){0,10}\.?",
