@@ -310,7 +310,7 @@ Public MustInherit Class AnalysisModuleBase
     End Function
 
     ''' <summary>调用 LLM 生成阶段性总结</summary>
-    Private Async Function GenerateConclusionAsync(llm As LLMClient, plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)
+    Protected Overridable Async Function GenerateConclusionAsync(llm As LLMClient, plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)
         Dim prompt = $"
 你是一位生物医学研究专家。请基于 {FolderBaseName} 的分析结果，撰写中文阶段性总结。
 

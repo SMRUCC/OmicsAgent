@@ -39,6 +39,12 @@ Public Class ResultTablesModule : Inherits AnalysisModuleBase
         End Get
     End Property
 
+    Protected Overrides ReadOnly Property NeedsPlantSteps As Boolean
+        Get
+            Return False
+        End Get
+    End Property
+
     Public Sub New(config As AgentConfig, context As AnalysisContext, Optional logger As Action(Of String) = Nothing)
         MyBase.New(config, context, logger)
     End Sub
@@ -64,6 +70,21 @@ Public Class ResultTablesModule : Inherits AnalysisModuleBase
 3. 表格样式规范的应用情况（字体、背景色、冻结窗格等）
 4. 各工作表的英文注释说明内容（结合模块目标/结论与知识库）
 5. 与用户研究主题的关联性说明"
+    End Function
+
+    ' Protected Overrides Async Function GenerateConclusionAsync(llm As LLMClient, plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)
+    '     Return Await Task.FromResult(GetConclusionItems)
+    ' End Function
+
+    ''' <summary>调用 LLM 生成分析计划</summary>
+    Protected Overrides Async Function GeneratePlanAsync(llm As LLMClient, cancellationToken As CancellationToken) As Task(Of ModulePlan)
+        Return Await Task.FromResult(New ModulePlan With {
+            .execution_steps = {
+                New [Step] With {.action = "生成xlsx文件", .goal = "生成xlsx文件"}
+            },
+            .goal = "生成xlsx文件",
+            .module_name = ModuleName
+        })
     End Function
 
     ''' <summary>
@@ -411,4 +432,12 @@ cat(paste('Saved', xlsx_name, '\n'))
                        .Replace("{WORKSPACE}", Workspace.GetDirectoryFullPath)
         Return prompt
     End Function
+
+    Public Class TableAnnotation
+
+        Public Property csv As String
+        Public Property sheet_name As String
+        Public Property annotation As String
+
+    End Class
 End Class
