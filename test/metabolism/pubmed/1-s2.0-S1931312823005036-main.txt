@@ -1,27 +1,7 @@
-======================================================================
-论文信息提取结果
-======================================================================
-
-【源文件】1-s2.0-S1931312823005036-main.pdf
-
-----------------------------------------------------------------------
-【标题 / Title】
-----------------------------------------------------------------------
 Another iron in C. difﬁcile’s ﬁre
+{"doi": "10.1016/j.chom.2023.12.008", "year": "2023", "journal": "", "keywords": []}
+[{"title": "E.S., Nicholson, M.R., Spraggins, J.M., Zhou, Q., and Skaar, E.P. (). Clostridioides difﬁcile ferrosome organelles combat nutritional immunity. Nature 623, 1009–1016", "doi": "", "year": "2023", "journal": ""}, {"title": "(). Iron, the Oxygen-Carrier of Respiration-Ferment. Science 61, 575–582", "doi": "", "year": "1925", "journal": ""}, {"title": "(). Escape from bacterial iron piracy through rapid evolution of transferrin. Science 346, 1362–1366", "doi": "", "year": "2014", "journal": ""}, {"title": "D.R., Raymond, K.N., Wanner, B.L., Strong, R.K., Walsh, C.T., et al. ().Thepathogen-associatediroAgenecluster mediates bacterial evasion of lipocalin 2. Proc. Natl. Acad. Sci. USA 103, 16502–16507", "doi": "", "year": "2006", "journal": ""}, {"title": "(). Clostridium difﬁcile infection. N. Engl. J. Med. 372, 1539–1548", "doi": "", "year": "2015", "journal": ""}, {"title": "(). Diagnosis and management of Clostridioides difﬁcile infection in patients with inﬂammatory bowel disease. Curr. Opin. Gastroenterol. 37, 336–343", "doi": "", "year": "2021", "journal": ""}, {"title": "A. (). Distinct gene clusters drive formation of ferrosome organelles in bacteria. Nature 606, 160–164", "doi": "", "year": "2022", "journal": ""}, {"title": "(). Transcriptional response of Clostridium difﬁcile to low iron conditions. Pathog. Dis. 76, fty009", "doi": "", "year": "2018", "journal": ""}, {"title": "A., Boekhorst, J., Timmerman, H.M., Swinkels, D.W., Tjalsma, H., et al. (). Iron fortiﬁcation adversely affects the gut microbiome, increases pathogen abundance and induces intestinal inﬂammation in . Gut 64, 731–742", "doi": "", "year": "2015", "journal": "Kenyan infants"}, {"title": "J., Moretti, D., Lacroix, C., Karanja, S., and Zimmermann, M.B. (). Iron-containing micronutrient powders modify the effect of oral antibiotics on the infant gut microbiome and increase post-antibiotic diarrhoea risk: a controlled study in . Gut 68, 645–653. Previews 2 Cell Host & Microbe 32, January 10, ll", "doi": "", "year": "2024", "journal": "Kenya"}]
 
-----------------------------------------------------------------------
-【DOI】
-----------------------------------------------------------------------
-10.1016/j.chom.2023.12.008
-
-----------------------------------------------------------------------
-【摘要 / Abstract】
-----------------------------------------------------------------------
-[未识别到摘要]
-
-----------------------------------------------------------------------
-【全文 / Full Text】
-----------------------------------------------------------------------
 Previews
 Another iron in C. difﬁcile’s ﬁre
 Hal Drakesmith1,* and Michael B. Zimmermann1
