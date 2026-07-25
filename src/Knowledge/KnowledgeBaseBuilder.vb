@@ -69,15 +69,6 @@ Public Class KnowledgeBaseBuilder
             Return result
         End If
 
-        For Each f In Directory.GetFiles(_context.ReferenceDir, "*.txt")
-            ' 复制到 research_kb 目录
-            Dim dst = Path.Combine(_context.KnowledgeDir, Path.GetFileName(f))
-            If Not File.Exists(dst) Then
-                File.Copy(f, dst, True)
-            End If
-            result.Add(dst)
-        Next
-
         For Each f In Directory.GetFiles(_context.ReferenceDir, "*.pdf")
             Dim text_cache As String = $"{_context.ReferenceDir}/{f.BaseName}.txt"
             Dim dst = Path.Combine(_context.KnowledgeDir, $"{f.BaseName}.txt")
@@ -98,7 +89,16 @@ Public Class KnowledgeBaseBuilder
             End If
         Next
 
-        Return result
+        For Each f In Directory.GetFiles(_context.ReferenceDir, "*.txt")
+            ' 复制到 research_kb 目录
+            Dim dst = Path.Combine(_context.KnowledgeDir, Path.GetFileName(f))
+            If Not File.Exists(dst) Then
+                File.Copy(f, dst, True)
+            End If
+            result.Add(dst)
+        Next
+
+        Return New List(Of String)(result.Select(Function(f) f.GetFullPath).Distinct)
     End Function
 
     ''' <summary>根据检索策略搜索文献</summary>
