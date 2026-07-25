@@ -1,6 +1,6 @@
 Iron Effects on Clostridioides difficile Toxin Production and Antimicrobial Susceptibilities
 {"doi": "10.3390/antibiotics11050537", "year": "2022", "journal": "Antibiotics", "keywords": ["C. difficile infection", "iron overload", "iron chelator", "metronidazole", "vancomycin", "deferoxamine"]}
-[{"title": "et al. Burden of Clostridium difficile Infection in the United States. N. Engl. J. Med", "doi": "", "year": "2015", "journal": ""}, {"title": "et al. NAP1 strain type predicts outcomes from Clostridium difficile infection. Clin. Infect. Dis", "doi": "", "year": "2014", "journal": ""}, {"title": "tcdC genotypes associated with severe TcdC truncation in an epidemic clone and other strains of Clostridium difficile. J. Clin. Microbiol", "doi": "", "year": "2007", "journal": ""}, {"title": "Toxin production by an emerging strain of Clostridium difficile associated with outbreaks of severe disease in North America and Europe", "doi": "", "year": "2005", "journal": "Lancet"}, {"title": "Risks factors and outcomes of Clostridium difficile infection in patients with cancer: A matched case-control study. Support. Care Cancer", "doi": "", "year": "1930", "journal": ""}, {"title": "et al. Clinical Practice Guidelines for Clostridium difficile Infection in Adults and Children: 2017 Update by the Infectious Diseases Society of America (IDSA) and Society for Healthcare Epidemiology of America (SHEA). Clin. Infect. Dis. 2018, 66, e1-e", "doi": "", "year": "2018", "journal": ""}, {"title": "Risk factors, preemptive therapy, and antiperistaltic agents for Clostridium difficile infection in cancer patients. Transpl. Infect. Dis", "doi": "", "year": "2013", "journal": ""}, {"title": "Clostridium difficile infection: Update on emerging antibiotic treatment options and antibiotic resistance. Expert Rev. Anti-Infect. Ther", "doi": "", "year": "2010", "journal": ""}, {"title": "All-cause mortality in hospitalized patients with infectious diarrhea: Clostridium difficile versus other enteric pathogens in Austria from 2008 to 2010. J. Infect. Public Health 2014, 7, 133-144. 2022, 11, 537 12 of", "doi": "", "year": "2022", "journal": "Antibiotics"}, {"title": "Clostridium difficile Infection Is Associated with Increased Risk of Death and Prolonged Hospitalization in . Clin. Infect. Dis", "doi": "", "year": "2013", "journal": "Children"}, {"title": "Clostridium difficile Infection in children. Pediatr", "doi": "", "year": "2013", "journal": "JAMA"}, {"title": "et al. Characterization of a Stable, Metronidazole-Resistant Clostridium difficile Clinical Isolate. 2013, 8", "doi": "", "year": "2013", "journal": "PLoS ONE"}, {"title": "Review on iron and its importance for human health. J. Res. Med. Sci", "doi": "", "year": "2014", "journal": ""}, {"title": "et al. Disparity in the management of iron overload between patients with sickle cell disease and thalassemia who received transfusions. Transfusion", "doi": "", "year": "1980", "journal": ""}, {"title": "Understanding iron overload: Screening, monitoring, and caring for patients with transfusion-dependent anemias. Clin. J. Oncol. Nurs", "doi": "", "year": "2009", "journal": ""}, {"title": "How I treat transfusional iron overload. Blood", "doi": "", "year": "2012", "journal": ""}, {"title": "Clinical consequences of iron overload from chronic red blood cell transfusions, its diagnosis, and its management by chelation therapy. Transfusion", "doi": "", "year": "2010", "journal": ""}, {"title": "The adverse effect of iron repletion on the course of certain infections. BMJ", "doi": "", "year": "1978", "journal": ""}, {"title": "Development of Clinical Methods of Iron Deprivation for Suppression of Neoplastic and Infectious Diseases. Cancer Investig", "doi": "", "year": "1999", "journal": ""}, {"title": "The struggle for iron-a metal at the host-pathogen interface. Cell. Microbiol", "doi": "", "year": "2010", "journal": ""}, {"title": "Iron and microbial infection. Nat. Rev. Microbiol", "doi": "", "year": "2004", "journal": ""}, {"title": "Specificity for Human Hemoglobin Enhances Staphylococcus aureus Infection. Cell Host Microbe", "doi": "", "year": "2010", "journal": ""}, {"title": "HowStaphylococcus aureusAdapts to Its Host. N. Engl. J. Med", "doi": "", "year": "1990", "journal": ""}, {"title": "Iron acquisition in fungal pathogens of humans. Metallomics", "doi": "", "year": "2017", "journal": ""}, {"title": "Iron and infection. Int. J. Hematol", "doi": "", "year": "2018", "journal": ""}, {"title": "Pretransplant serum ferritin level may be a predictive marker for outcomes in patients having undergone allogeneic hematopoietic stem cell transplantation. Neoplasma", "doi": "", "year": "2012", "journal": ""}, {"title": "et al. Mucormycosis after allogeneic haematopoietic stem cell transplantation: A French Multicentre Cohort Study (2003-2008). Clin. Microbiol. Infect. 2012, 18, E396-E", "doi": "", "year": "2012", "journal": ""}, {"title": "Tigecycline suppresses toxin A and B production and sporulation in . J. Antimicrob. Chemother", "doi": "", "year": "2014", "journal": "Clostridium difficile"}, {"title": "Clinical and Laboratory Standards Institute (CLSI). Principles and Procedures for Dection of Anaerobes in , Approved Guideline; CLSI document M56-A; Clinical and Laboratory Standards Institute: Wayne, PA, USA", "doi": "", "year": "2014", "journal": "Clinical Specimen"}, {"title": "Susceptibility of Clostridium difficile Isolates of Varying Antimicrobial Resistance Phenotypes to SMT19969 and 11 Comparators. Antimicrob. Agents Chemother", "doi": "", "year": "2016", "journal": ""}, {"title": "Antibiotic Resistance and Toxin Production of Clostridium difficile Isolates from the Hospitalized Patients in a Large Hospital in . Front. Microbiol", "doi": "", "year": "2017", "journal": "Florida"}, {"title": "-P.; Mayrand, D. Iron-Chelating Activity of Tetracyclines and Its Impact on the Susceptibility of Actinobacillus actinomycetemcomitans to These . Antimicrob. Agents Chemother", "doi": "", "year": "2000", "journal": "Antibiotics"}, {"title": "Universal chemical assay for the detection and determination of siderophores. Anal. Biochem", "doi": "", "year": "1987", "journal": ""}, {"title": "National Comprehensive Cancer Network. NCCN Clinical Practice Guidelines in Oncology: Hematopoietic Growth Factors. Version 1. 2022. 22 December 2021. Available online: https://www.nccn.org/professionals/physician_gls/pdf/growthfactors.pdf (accessed on 18 April 2022)", "doi": "", "year": "2022", "journal": ""}, {"title": "Transcriptional regulation by Ferric Uptake Regulator (Fur) in pathogenic bacteria. Front. Cell. Infect. Microbiol", "doi": "", "year": "2013", "journal": ""}, {"title": "Ferric Uptake Regulator Fur Control of Putative Iron Acquisition Systems in . J. Bacteriol", "doi": "", "year": "2015", "journal": "Clostridium difficile"}, {"title": "Transcriptional response of Clostridium difficile to low iron conditions. Pathog. Dis. 2018, 76, fty", "doi": "", "year": "2018", "journal": ""}, {"title": "Iron: An essential nutrient for Aspergillus fumigatus and a fulcrum for pathogenesis. Curr. Opin. Infect. Dis. 2018, 31, 506-511. 2022, 11, 537 13 of", "doi": "", "year": "2022", "journal": "Antibiotics"}, {"title": "Effects of chelators (deferoxamine, deferiprone and deferasirox) on the growth of Klebsiella pneumoniae and Aeromonas hydrophila isolated from transfusion-dependent thalassemia patients. Hemoglobin", "doi": "", "year": "2009", "journal": ""}, {"title": "The Canadian Nosocomial Infection Surveillance Program (CNISP). Proteomic Analysis of a NAP1 Clostridium difficile Clinical Isolate Resistant to Metronidazole. 2014, 9", "doi": "", "year": "2014", "journal": "PLoS ONE"}, {"title": "Plasmid-mediated metronidazole resistance in . Nat. Commun", "doi": "", "year": "2020", "journal": "Clostridioides difficile"}, {"title": "-J.; Deshpande, A.; Carlson, T.J.; Dotson, K.M.; Lancaster, C.; Begum, K.; Alam, M.J.; Hurdle, J.G.; et al. Reduced Susceptibility to Metronidazole Is Associated With Initial Clinical Failure in . Open Forum Infect. Dis. 2021, 8, ofab", "doi": "", "year": "2021", "journal": "Clostridioides difficile Infection"}, {"title": "et al. Haem is crucial for medium-dependent metronidazole resistance in clinical isolates of Clostridioides difficile. J. Antimicrob. Chemother", "doi": "", "year": "2021", "journal": ""}, {"title": "Toxin Synthesis by Clostridium difficile Is Regulated through Quorum Signaling. 2015, 6", "doi": "", "year": "2015", "journal": "mBio"}, {"title": "Clostridium difficile-Associated Diarrhea in the Oncology Patient. J. Oncol. Pract", "doi": "", "year": "2017", "journal": ""}, {"title": "Evaluation of Clostridium difficile-Associated Disease Pressure as a Risk Factor for C difficile-Associated Disease. Arch. Intern. Med", "doi": "", "year": "2007", "journal": ""}, {"title": "Severity of Clostridium difficile-Associated Disease (CDAD) in Allogeneic Stem Cell Transplant Recipients: Evaluation of a CDAD Severity Grading System. Infect. Control Hosp. Epidemiol", "doi": "", "year": "2007", "journal": ""}, {"title": "van Dissel, J.; Kuijper, E. Clinical and microbiological characteristics of community-onset Clostridium difficile infection in . Clin. Microbiol. Infect", "doi": "", "year": "2009", "journal": "The Netherlands"}, {"title": "Pathogenesis and management of iron toxicity in thalassemia. Ann. N. Y. Acad. Sci", "doi": "", "year": "2010", "journal": ""}, {"title": "Design of iron chelators with therapeutic application. Dalton Trans", "doi": "", "year": "2012", "journal": ""}, {"title": "Iron Chelators: Development of Novel Compounds with High and Selective Anti-Tumour Activity. Curr. Drug Deliv", "doi": "", "year": "2010", "journal": ""}, {"title": "Oral iron chelators-Development and application. Best Pract. Res. Clin. Haematol", "doi": "", "year": "2002", "journal": ""}, {"title": "Cancer cell iron metabolism and the development of potent iron chelators as anti-tumour agents. Biochim. Biophys. Acta Gen. Subj", "doi": "", "year": "2009", "journal": ""}, {"title": "The Design and Development of Deferiprone (L1) and Other Iron Chelators for Clinical Use: Targeting Methods and Application Prospects. Curr. Med. Chem", "doi": "", "year": "2004", "journal": ""}, {"title": "Development of Tridentate Iron Chelators: From Desferrithiocin to ICL670. Curr. Med. Chem", "doi": "", "year": "2003", "journal": ""}, {"title": "Mechanism-Based Development of New Antimalarials: Synthesis of Derivatives of Artemisinin Attached to Iron Chelators. J. Med. Chem", "doi": "", "year": "1995", "journal": ""}, {"title": "Deferasirox (Exjade®) for the Treatment of Iron Overload. Acta Haematol", "doi": "", "year": "2009", "journal": ""}]
+[{"title": "Burden of Clostridium difficile Infection in the United States. N. Engl. J", "doi": "", "year": "2015", "journal": "Med"}, {"title": "NAP1 strain type predicts outcomes from Clostridium difficile infection. Clin. Infect", "doi": "", "year": "2014", "journal": "Dis"}, {"title": "tcdC genotypes associated with severe TcdC truncation in an epidemic clone and other strains of Clostridium difficile. J. Clin", "doi": "", "year": "2007", "journal": "Microbiol"}, {"title": "Toxin production by an emerging strain of Clostridium difficile associated with outbreaks of severe disease in North America and Europe", "doi": "", "year": "2005", "journal": "Lancet"}, {"title": "Risks factors and outcomes of Clostridium difficile infection in patients with cancer: A matched case-control study. Support", "doi": "", "year": "1930", "journal": "Care Cancer"}, {"title": "Clinical Practice Guidelines for Clostridium difficile Infection in Adults and Children: 2017 Update by the Infectious Diseases Society of America (IDSA) and Society for Healthcare Epidemiology of America (SHEA). Clin. Infect", "doi": "", "year": "2018", "journal": "Dis"}, {"title": "Risk factors, preemptive therapy, and antiperistaltic agents for Clostridium difficile infection in cancer patients. Transpl. Infect", "doi": "", "year": "2013", "journal": "Dis"}, {"title": "Clostridium difficile infection: Update on emerging antibiotic treatment options and antibiotic resistance. Expert Rev. Anti-Infect", "doi": "", "year": "2010", "journal": "Ther"}, {"title": "All-cause mortality in hospitalized patients with infectious diarrhea: Clostridium difficile versus other enteric pathogens in Austria from 2008 to 2010. J. Infect. Public Health 2014, 7, 133-144", "doi": "", "year": "2022", "journal": "Antibiotics"}, {"title": "Clostridium difficile Infection Is Associated with Increased Risk of Death and Prolonged Hospitalization in Children. Clin. Infect", "doi": "", "year": "2013", "journal": "Dis"}, {"title": "Clostridium difficile Infection in children", "doi": "", "year": "2013", "journal": "JAMA Pediatr"}, {"title": "Characterization of a Stable, Metronidazole-Resistant Clostridium difficile Clinical Isolate", "doi": "", "year": "2013", "journal": "PLoS ONE"}, {"title": "Review on iron and its importance for human health. J. Res. Med", "doi": "", "year": "2014", "journal": "Sci"}, {"title": "Disparity in the management of iron overload between patients with sickle cell disease and thalassemia who received transfusions", "doi": "", "year": "1980", "journal": "Transfusion"}, {"title": "Screening, monitoring, and caring for patients with transfusion-dependent anemias. Clin. J. Oncol", "doi": "", "year": "2009", "journal": "Nurs"}, {"title": "How I treat transfusional iron overload", "doi": "", "year": "2012", "journal": "Blood"}, {"title": "Clinical consequences of iron overload from chronic red blood cell transfusions, its diagnosis, and its management by chelation therapy", "doi": "", "year": "2010", "journal": "Transfusion"}, {"title": "The adverse effect of iron repletion on the course of certain infections", "doi": "", "year": "1978", "journal": "BMJ"}, {"title": "Development of Clinical Methods of Iron Deprivation for Suppression of Neoplastic and Infectious Diseases", "doi": "", "year": "1999", "journal": "Cancer Investig"}, {"title": "The struggle for iron-a metal at the host-pathogen interface. Cell", "doi": "", "year": "2010", "journal": "Microbiol"}, {"title": "Iron and microbial infection. Nat. Rev", "doi": "", "year": "2004", "journal": "Microbiol"}, {"title": "Specificity for Human Hemoglobin Enhances Staphylococcus aureus Infection", "doi": "", "year": "2010", "journal": "Cell Host Microbe"}, {"title": "HowStaphylococcus aureusAdapts to Its Host. N. Engl. J. Med", "doi": "", "year": "1990", "journal": ""}, {"title": "Iron acquisition in fungal pathogens of humans", "doi": "", "year": "2017", "journal": "Metallomics"}, {"title": "Iron and infection. Int. J", "doi": "", "year": "2018", "journal": "Hematol"}, {"title": "Pretransplant serum ferritin level may be a predictive marker for outcomes in patients having undergone allogeneic hematopoietic stem cell transplantation", "doi": "", "year": "2012", "journal": "Neoplasma"}, {"title": "Mucormycosis after allogeneic haematopoietic stem cell transplantation: A French Multicentre Cohort Study (2003-2008). Clin. Microbiol", "doi": "", "year": "2012", "journal": "Infect"}, {"title": "Tigecycline suppresses toxin A and B production and sporulation in Clostridium difficile. J. Antimicrob", "doi": "", "year": "2014", "journal": "Chemother"}, {"title": "Clinical and Laboratory Standards Institute (CLSI)", "doi": "", "year": "2014", "journal": ""}, {"title": "Susceptibility of Clostridium difficile Isolates of Varying Antimicrobial Resistance Phenotypes to SMT19969 and 11 Comparators. Antimicrob", "doi": "", "year": "2016", "journal": "Agents Chemother"}, {"title": "Antibiotic Resistance and Toxin Production of Clostridium difficile Isolates from the Hospitalized Patients in a Large Hospital in Florida. Front", "doi": "", "year": "2017", "journal": "Microbiol"}, {"title": "Iron-Chelating Activity of Tetracyclines and Its Impact on the Susceptibility of Actinobacillus actinomycetemcomitans to These Antibiotics. Antimicrob", "doi": "", "year": "2000", "journal": "Agents Chemother"}, {"title": "Universal chemical assay for the detection and determination of siderophores. Anal", "doi": "", "year": "1987", "journal": "Biochem"}, {"title": "NCCN Clinical Practice Guidelines in Oncology: Hematopoietic Growth Factors", "doi": "", "year": "2022", "journal": "Version"}, {"title": "Transcriptional regulation by Ferric Uptake Regulator (Fur) in pathogenic bacteria. Front. Cell. Infect", "doi": "", "year": "2013", "journal": "Microbiol"}, {"title": "Ferric Uptake Regulator Fur Control of Putative Iron Acquisition Systems in Clostridium difficile. J", "doi": "", "year": "2015", "journal": "Bacteriol"}, {"title": "Transcriptional response of Clostridium difficile to low iron conditions. Pathog", "doi": "", "year": "2018", "journal": "Dis"}, {"title": "An essential nutrient for Aspergillus fumigatus and a fulcrum for pathogenesis. Curr. Opin. Infect. Dis. 2018, 31, 506-511", "doi": "", "year": "2022", "journal": "Antibiotics"}, {"title": "Effects of chelators (deferoxamine, deferiprone and deferasirox) on the growth of Klebsiella pneumoniae and Aeromonas hydrophila isolated from transfusion-dependent thalassemia patients", "doi": "", "year": "2009", "journal": "Hemoglobin"}, {"title": "Proteomic Analysis of a NAP1 Clostridium difficile Clinical Isolate Resistant to Metronidazole", "doi": "", "year": "2014", "journal": "PLoS ONE"}, {"title": "Plasmid-mediated metronidazole resistance in Clostridioides difficile. Nat", "doi": "", "year": "2020", "journal": "Commun"}, {"title": "Reduced Susceptibility to Metronidazole Is Associated With Initial Clinical Failure in Clostridioides difficile Infection. Open Forum Infect", "doi": "", "year": "2021", "journal": "Dis"}, {"title": "Haem is crucial for medium-dependent metronidazole resistance in clinical isolates of Clostridioides difficile. J. Antimicrob", "doi": "", "year": "2021", "journal": "Chemother"}, {"title": "Toxin Synthesis by Clostridium difficile Is Regulated through Quorum Signaling", "doi": "", "year": "2015", "journal": ""}, {"title": "Clostridium difficile-Associated Diarrhea in the Oncology Patient. J. Oncol", "doi": "", "year": "2017", "journal": "Pract"}, {"title": "Evaluation of Clostridium difficile-Associated Disease Pressure as a Risk Factor for C difficile-Associated Disease. Arch. Intern", "doi": "", "year": "2007", "journal": "Med"}, {"title": "Severity of Clostridium difficile-Associated Disease (CDAD) in Allogeneic Stem Cell Transplant Recipients: Evaluation of a CDAD Severity Grading System. Infect. Control Hosp", "doi": "", "year": "2007", "journal": "Epidemiol"}, {"title": "Clinical and microbiological characteristics of community-onset Clostridium difficile infection in The Netherlands. Clin. Microbiol", "doi": "", "year": "2009", "journal": "Infect"}, {"title": "Pathogenesis and management of iron toxicity in thalassemia. Ann. N. Y. Acad", "doi": "", "year": "2010", "journal": "Sci"}, {"title": "Design of iron chelators with therapeutic application", "doi": "", "year": "2012", "journal": "Dalton Trans"}, {"title": "Iron Chelators: Development of Novel Compounds with High and Selective Anti-Tumour Activity. Curr", "doi": "", "year": "2010", "journal": "Drug Deliv"}, {"title": "Oral iron chelators-Development and application. Best Pract. Res. Clin", "doi": "", "year": "2002", "journal": "Haematol"}, {"title": "Cancer cell iron metabolism and the development of potent iron chelators as anti-tumour agents. Biochim. Biophys. Acta Gen", "doi": "", "year": "2009", "journal": "Subj"}, {"title": "The Design and Development of Deferiprone (L1) and Other Iron Chelators for Clinical Use: Targeting Methods and Application Prospects. Curr. Med", "doi": "", "year": "2004", "journal": "Chem"}, {"title": "Development of Tridentate Iron Chelators: From Desferrithiocin to ICL670. Curr. Med", "doi": "", "year": "2003", "journal": "Chem"}, {"title": "Mechanism-Based Development of New Antimalarials: Synthesis of Derivatives of Artemisinin Attached to Iron Chelators. J. Med", "doi": "", "year": "1995", "journal": "Chem"}, {"title": "Deferasirox (Exjade) for the Treatment of Iron Overload", "doi": "", "year": "2009", "journal": "Acta Haematol"}]
 
 Citation: Yamaki, J.; Chawla, S.;
 Tong, S.; Lozada, K.A.; Yang, S. Iron
@@ -114,21 +114,21 @@ induced by iron.
 The effects of Fe3+ on bacterial growth were assessed by colony-forming units (CFUs).
 As shown in Figure 1a, a significant increase in CFU/mL after 16 h incubation was evident
 in the 9689 strain grown in media supplemented with FeCl3. The increase in CFU was
-observed in the presence of Fe3+ as low as 10 µM (3.5-fold of control) and peaked at 100 µM
+observed in the presence of Fe3+ as low as 10 uM (3.5-fold of control) and peaked at 100 uM
 in a dose-dependent manner to 13.8-fold of control. Co-incubation with DFO significantly
-reduced the CFU in the presence of 50 µM Fe3+, compared with FeCl3 alone (p < 0.05).
+reduced the CFU in the presence of 50 uM Fe3+, compared with FeCl3 alone (p < 0.05).
 However, the average CFU with DFO and FeCl3 co-treatment remained higher than the
 control. The induction of CFU was also evident in the R20291 strain but to a lesser extent
 (~1.9-fold of control, Supplementary Figure S1).
 The gene expression levels of tcdA and tcdB were also detected by qRT-PCR (Figure 1b) [28]
 after iron treatments for 16 h. As shown in Figure 1b, the tcdA and tcdB expression levels
-were significantly increased by 50 µM Fe3+ treatment in the 9689 strain, where mRNA levels
+were significantly increased by 50 uM Fe3+ treatment in the 9689 strain, where mRNA levels
 of tcdA and tcdB increased to 2.2- and 3.3-fold of the non-treatment control, respectively
 (p < 0.05).
 After culturing at various concentrations of Fe3+ for 16 h, the bacterial culture supernatants were collected and concentrated using a 3K concentration spin. Equal volumes
 of samples were subjected to Western Blot analysis, and the band densities were measured (Figure 1c). The presence of iron increased strain 9689 toxin A production in a
 dose-dependent manner, resulting in 2.6-, 3.8-, 5.5-, and 8.6-fold change with concentrations
-of 10 µM, 20 µM, 50 µM, and 100 µM of Fe3+, respectively. However, when normalizing the
+of 10 uM, 20 uM, 50 uM, and 100 uM of Fe3+, respectively. However, when normalizing the
 
 Antibiotics 2022, 11, 537
 3 of 13
@@ -140,7 +140,7 @@ control (Figure 1d).
 Figure 1. Effects of iron on C. difficile colony formation and production of toxins: (a) the increase in
 colony formation units following Fe3+ treatments was suppressed by iron chelator DFO co-treatment
 in C. difficile strain 9689. The results are presented as the average of colonies formed from three
-plates. *, p < 0.05 compared to vehicle control; #, p < 0.05 compared to 50 µM Fe3+; (b,c) C. difficile
+plates. *, p < 0.05 compared to vehicle control; #, p < 0.05 compared to 50 uM Fe3+; (b,c) C. difficile
 toxins expressions were increased by iron exposure. After 16 h treatments, total RNA or concentrated
 bacterial supernatants were collected for qRT-PCR (b) and Western Blot (c) analyses. The mRNA
 expression levels of tcdA and tcdB were normalized by GAPDH expression and standardized by
@@ -159,13 +159,13 @@ Antibiotics 2022, 11, 537
 absence or presence of excess Fe3+. The C. difficile strains tested included the historical
 9689 and the clinical hypervirulent R20291 strains. The 9689 strain is susceptible to MTZ,
 while the R20291 strain is MTZ-non-susceptible. In our study, R20291 showed a marked
-decrease in the susceptibility to MTZ, and MICs were up to 64 µg/mL under the standard
+decrease in the susceptibility to MTZ, and MICs were up to 64 ug/mL under the standard
 treatment conditions.
 In the presence of excess iron, the MICs of MTZ were significantly increased in
 C. difficile strain 9689 (Figure 2a and Supplementary Table S2). After 48 h incubation with
-50 µM Fe3+, the average MIC increased from 0.17 µg/mL to 1.38 µg/mL, and in some
-replicates, the MIC was up to 2 µg/mL, which is at the breakpoint indicated by the European Committee on Antimicrobial Susceptibility Testing (EUCAST) for MTZ and C. difficile.
-The MTZ MICs were highest after co-incubation with 50 µM Fe3+. Increasing iron concentration to 100 µM did not increase the MICs any further. In the MTZ-non-susceptible strain,
+50 uM Fe3+, the average MIC increased from 0.17 ug/mL to 1.38 ug/mL, and in some
+replicates, the MIC was up to 2 ug/mL, which is at the breakpoint indicated by the European Committee on Antimicrobial Susceptibility Testing (EUCAST) for MTZ and C. difficile.
+The MTZ MICs were highest after co-incubation with 50 uM Fe3+. Increasing iron concentration to 100 uM did not increase the MICs any further. In the MTZ-non-susceptible strain,
 R20291, no changes in susceptibility to metronidazole were observed for 24 h or 48 h under
 any of the treatment concentrations (Supplementary Table S2).
 
@@ -174,19 +174,19 @@ Figure 2. The presence of iron affected the MICs of metronidazole in different C
 The effect of Fe3+ on metronidazole MICs (a), vancomycin MICs (b), and fidaxomicin MICs (c) in
 C. difficile strain 9689. The antibiotic susceptibility was determined by the minimum inhibitory
 concentration (MIC). Each experiment was repeated at least three times independently and presented
-as mean ± SD. *, p < 0.05 compared to 24 h control; #, p < 0.05 compared to 48 h control.
+as mean +- SD. *, p < 0.05 compared to 24 h control; #, p < 0.05 compared to 48 h control.
 
 Antibiotics 2022, 11, 537
 5 of 13
 Fidaxomicin MICs also significantly increased in the presence of Fe3+. As shown in
-Figure 2c, after 24 h incubation, Fe3+ (50 µM) increased the MIC of fidaxomicin to 6.7-fold
-of control in the C. difficile 9689 strain but were still at values < 1 µg/mL, which would be
+Figure 2c, after 24 h incubation, Fe3+ (50 uM) increased the MIC of fidaxomicin to 6.7-fold
+of control in the C. difficile 9689 strain but were still at values < 1 ug/mL, which would be
 considered susceptible. In strain R20291, there was an eightfold increase in MIC at 48 h
-regardless of the presence of iron and an approximately twofold increase under 10 µM and
-50 µM iron concentrations. The fidaxomicin MIC was consistently 1 µg/mL at 24 h under
+regardless of the presence of iron and an approximately twofold increase under 10 uM and
+50 uM iron concentrations. The fidaxomicin MIC was consistently 1 ug/mL at 24 h under
 control conditions and tested three different iron concentrations (Supplementary Table S4).
-However, at 48 h, the MICs of control increased to 8 µg/mL, and under 50 µM Fe3+, the
-MIC further increased to 16 µg/mL. Notably, a MIC value higher than 8 µg/mL would
+However, at 48 h, the MICs of control increased to 8 ug/mL, and under 50 uM Fe3+, the
+MIC further increased to 16 ug/mL. Notably, a MIC value higher than 8 ug/mL would
 be considered to have reduced fidaxomicin susceptibility [30,31]. Interestingly, both the
 tested C. difficile strains remained susceptible to vancomycin (Figure 2b and Supplementary
 Table S3), and the MICs of vancomycin in the presence of excess iron were not significantly
@@ -200,7 +200,7 @@ formed complexes with iron resulting in a significant decrease in the optical de
 the solution. The cyclic hexapeptide, ferrichrome, possessing a high ability to form iron
 complexes, was used as a positive control. Vancomycin exhibited no iron chelation activity
 at any of the tested concentrations, while metronidazole exhibited some iron chelation
-ability only evident at a high concentration of 1000 µg/mL.
+ability only evident at a high concentration of 1000 ug/mL.
 
 Figure 3. Cont.
 
@@ -215,22 +215,22 @@ for 16 h. The results were presented as the average of colonies formed from thre
 compared to vehicle control; (c) increased production of C. difficile toxin A after iron exposure was
 diminished by DFO co-treatment in strain 9689. Concentrated culture supernatant after treatments
 were subjected to Western Blot analysis. Experiments were repeated at least three times independently
-and presented as band density (mean ± SD); (d) effect of DFO on the susceptibility of C. difficile to
+and presented as band density (mean +- SD); (d) effect of DFO on the susceptibility of C. difficile to
 metronidazole. The antibiotic susceptibility was determined by the MICs. Each experiment was
-repeated at least three times independently and presented as mean ± SD. *, p < 0.05 compared to 24 h
-control; #, p < 0.05 compared to 48 h control; **, p < 0.05 compared to 24 h 50 µM Fe3+; ##, p < 0.05
-compared to 48 h 50 µM Fe3+.
+repeated at least three times independently and presented as mean +- SD. *, p < 0.05 compared to 24 h
+control; #, p < 0.05 compared to 48 h control; **, p < 0.05 compared to 24 h 50 uM Fe3+; ##, p < 0.05
+compared to 48 h 50 uM Fe3+.
 Treatment of DFO alone effectively reduced colony formation in the C. difficile 9689
-strain in a dose-dependent manner (Figure 3b). After exposure to DFO (50 µM) for 16 h,
+strain in a dose-dependent manner (Figure 3b). After exposure to DFO (50 uM) for 16 h,
 the CFU reduced to 45.8% of control (p < 0.05). Iron-induced toxin A production was
 also diminished by DFO, with the expression levels of toxin A reduced from 5.2-fold to
 2.1-fold of control after DFO co-treatment (Figure 3c). Consistently, co-incubation with
 DFO sensitized C. difficile to MTZ treatment and effectively reduced the MICs of MTZ in
 the presence of excess iron (p < 0.05, Figure 3d).
 Finally, to determine if removing free Fe3+ via chelation with DFO resulted in a
-reversion to baseline susceptibility, strain 9689 was co-treated with 50 µM DFO and MTZ
+reversion to baseline susceptibility, strain 9689 was co-treated with 50 uM DFO and MTZ
 for 24 h and 48 h. As shown in Figure 3d, the MIC had increased by 3.3-fold of control after
-exposure to 50 µM of FeCl3. DFO co-treatment effectively re-sensitized C. difficile to MTZ,
+exposure to 50 uM of FeCl3. DFO co-treatment effectively re-sensitized C. difficile to MTZ,
 
 Antibiotics 2022, 11, 537
 7 of 13
@@ -261,17 +261,17 @@ In recent years, Boekhoud et al. discovered the high replication number of pCD-M
 plasmid in C. difficile isolates that displayed stable and medium-independent resistance to
 metronidazole in a large collection of clinical isolates [41]. In our study, we sought to explore
 whether the presence of iron in the medium could lead to resistance to metronidazole.
-We found that the addition of Fe3+ to growth media at concentrations of 10, 50, and 100 µM
+We found that the addition of Fe3+ to growth media at concentrations of 10, 50, and 100 uM
 resulted in more than eightfold increases in MICs, compared with control media with no
-additional iron supplementation. The most significant increases occurred at 50 µM in both
+additional iron supplementation. The most significant increases occurred at 50 uM in both
 24 and 48 h time points in strain 9689. While the folds of increase were significant, the MIC
-values of MTZ would not be considered resistant as the EUCAST breakpoint is 2 µg/mL,
-and the CLSI breakpoint is 32 µg/mL. Thus, iron did not lead to MIC values that would be
+values of MTZ would not be considered resistant as the EUCAST breakpoint is 2 ug/mL,
+and the CLSI breakpoint is 32 ug/mL. Thus, iron did not lead to MIC values that would be
 classified as resistant. However, such increases observed in our study may still be clinically
 relevant. Gonzalez-Luna et al. recently found through classification and regression tree
-(CART) analysis that MICs higher than 1 µg/mL were significantly associated with clinical
+(CART) analysis that MICs higher than 1 ug/mL were significantly associated with clinical
 failure in the treatment of C. difficile [42]. The highly virulent epidemic NAP1/027 C. difficile
-strain R20291 exhibited resistance to metronidazole treatment with MICs >64 µg/mL,
+strain R20291 exhibited resistance to metronidazole treatment with MICs >64 ug/mL,
 independent of media iron supplementation.
 During the time of this study, Boekhoud et al. followed up on their medium-independent
 metronidazole resistance finding, with a discovery of medium-dependent resistance [43].
@@ -341,16 +341,16 @@ Antibiotics 2022, 11, 537
 4. Materials and Methods
 4.1. Bacterial Strains, Culture Conditions, and Growth Analysis
 Two different strains of C. difficile were studied: the historic TcdA and TcdB producing
-ATCC® 9689™, and PFGE Type NAP1, ribotype 027 strain R20291 (Supplementary Table S1).
-ATCC® 9689 was purchased from VWR (Wayne, PA, USA). C. difficile strain R20291
+ATCC 9689, and PFGE Type NAP1, ribotype 027 strain R20291 (Supplementary Table S1).
+ATCC 9689 was purchased from VWR (Wayne, PA, USA). C. difficile strain R20291
 was a kind gift from Dr.
 Kevin Garey, University of Houston College of Pharmacy,
 Houston, TX, USA.
-Both C. difficile strains were routinely cultured from frozen glycerol stocks (−80 ◦C) and
+Both C. difficile strains were routinely cultured from frozen glycerol stocks (-80 ◦C) and
 maintained on brain heart infusion (BHI) media (Hardy Diagnostics, Santa Maria, CA, USA)
 and agar plates supplemented with 0.5% yeast extract (VWR, Wayne, PA, USA) and 0.1%
 L-cysteine (Sigma Aldrich, St. Louis, MO, USA) under anaerobic conditions (85% N2, 5%
-H2, and 10% CO2) in a BACTRON™300 anaerobic chamber (Sheldon Manufacturing Inc.,
+H2, and 10% CO2) in a BACTRON300 anaerobic chamber (Sheldon Manufacturing Inc.,
 Cornelius, OR, USA). Overnight cultures in BHI broth were started using identical starting
 inoculation volume and optical density at 600 nm wavelength (OD600) taken using a V-12
 Spectrophotometer (VWR).
@@ -362,45 +362,45 @@ IL, USA) and vancomycin (VAN, vancomycin hydrochloride for injection, Alvogen, M
 NJ, USA) and the iron chelator deferoxamine (Sigma Aldrich Chemical Co.; St. Louis, MO,
 USA) were reconstituted with sterile water. Exogenous iron was added to growth media as
 iron (III) chloride (Sigma-Aldrich, St. Louis, MO, USA) in sterile water. All stock solutions
-were filter-sterilized (0.22 µm) before use.
+were filter-sterilized (0.22 um) before use.
 4.3. Susceptibility Testing
 C. difficile strains were first grown overnight in BHI broth. The susceptibilities to
 metronidazole (MTZ) or vancomycin (VAN) were then conducted using the broth microdilution method in 96-well round-bottomed plates. BHI broth cultures were diluted
 to 0.5 McFarland turbidity in normal saline, and a 1:150 dilution was used to inoculate
 pre-reduced BHI broth. Antibiotic stocks were further diluted in BHI broth with serial
 twofold dilutions. Negative and positive controls were tested in parallel. Ferric chloride
-was added at final concentrations of 10, 50, and 100 µM into BHI broth to assess the effect
+was added at final concentrations of 10, 50, and 100 uM into BHI broth to assess the effect
 of iron overload on antibiotic susceptibility. In experiments that required an iron chelator,
-deferoxamine was added to the media at final a concentration of 50 µM. Then, 125 µL of
+deferoxamine was added to the media at final a concentration of 50 uM. Then, 125 uL of
 prepared C. difficile solution (1:150 dilution) was added to duplicate wells of a 96-well plate
-containing 125 µL of twofold serially diluted MTZ, VAN, and fidaxomicin. MIC plates
+containing 125 uL of twofold serially diluted MTZ, VAN, and fidaxomicin. MIC plates
 were incubated anaerobically at 37 ◦C, and results were read after 24 h and 48 h incubations
-using an iMark™Microplate Reader (Bio-Rad, Hercules, CA, USA). At least three independent experiments with two replicates in each were performed. The MIC was defined as
+using an iMarkMicroplate Reader (Bio-Rad, Hercules, CA, USA). At least three independent experiments with two replicates in each were performed. The MIC was defined as
 the lowest concentration of antibiotic that prevented visible and measurable (via optical
 density) bacterial growth after 24 h and 48 h.
 4.4. Polyacrylamide Gel Electrophoresis (PAGE) and Western Blot Analysis
 Iron at various concentrations was added to the bacterial culture to determine the
 effects of iron on the levels of C. difficile toxin production. After 16 h incubation, 10 mL
-bacterial supernatants were collected, 0.5 mL was used for CFU counting, and the remaining 9.5 mL was centrifuged at 5000× g for 10 min and concentrated 10 times using 3K
-MWCO Amicon® Ultra-15 Centrifugal Filter Unit (Sigma-Aldrich, St. Louis, MO, USA).
+bacterial supernatants were collected, 0.5 mL was used for CFU counting, and the remaining 9.5 mL was centrifuged at 5000x g for 10 min and concentrated 10 times using 3K
+MWCO Amicon Ultra-15 Centrifugal Filter Unit (Sigma-Aldrich, St. Louis, MO, USA).
 Equal volumes of clear concentrated supernatants were subjected to SDS-PAGE Western
 Blot analysis.
 
 Antibiotics 2022, 11, 537
 10 of 13
-Samples in 4 × sample buffer (Bio-Rad, Hercules, CA, USA) were separated by SDSpolyacrylamide (7.5%) gel electrophoresis, followed by transfer onto nitrocellulose membranes (GE Healthcare). After incubation with blocking solution (1 × TBS, 10% non-fat milk,
+Samples in 4 x sample buffer (Bio-Rad, Hercules, CA, USA) were separated by SDSpolyacrylamide (7.5%) gel electrophoresis, followed by transfer onto nitrocellulose membranes (GE Healthcare). After incubation with blocking solution (1 x TBS, 10% non-fat milk,
 and 0.1% Tween-20) for 2 h at room temperature, the blocked membrane was incubated
 with primary Anti-Clostridium difficile toxin A (PCG4, #ab19953) overnight (4 ◦C, 1:1000 dilution). Secondary antibodies, anti-mouse-IgG-horseradish peroxidase-linked or anti-rabbit
 IgG-horseradish peroxidase-linked whole antibodies (Cell Signaling Technology, Danvers,
 MA, USA), were used at a dilution of 1:5000 in blocking solution. Immunoreactive bands
-were visualized using the SuperSignal™West Pico PLUS Chemiluminescent Substrate
+were visualized using the SuperSignalWest Pico PLUS Chemiluminescent Substrate
 (Thermo Fisher Scientific, Waltham, MA, USA) and Bio-Rad Imager (Bio-Rad, Hercules,
 CA, USA).
 4.5. Chrome Azurol S (CAS) Assay
 Antibiotics at different concentrations were subjected to the chrome azurol S (CAS)
 assay, a colorimetric method that detects siderophore-iron complexes, performed according
-to Schwyn and Neilands (1987) [33]. Briefly, 500 µL of compound dilutions were added
-to 500 µL of CAS assay solution (6 mL of 10 mM hexadecyltrimethylammonium bromide
+to Schwyn and Neilands (1987) [33]. Briefly, 500 uL of compound dilutions were added
+to 500 uL of CAS assay solution (6 mL of 10 mM hexadecyltrimethylammonium bromide
 (HDTMA), 1.5 mL of 1 mM FeCl3, 7.5 mL of 2 mM CAS, 4.307 g of piperazine, and 6.25 mL
 of 12 M HCl diluted to 100 mL in deionized water; final pH of 5.6) and incubated for 1 h at
 room temperature with gentle mixing. Absorbance spectra for CAS solution-supernatant
@@ -408,27 +408,27 @@ mixtures were then measured at 630 nm using a V-12 Spectrophotometer (VWR, Wayne
 USA). Iron chelator DFO and ferrichrome, a siderophore produced by Ustilago sphaerogena,
 were positive controls.
 4.6. Isolation of RNA and qRT-PCR Assay
-Total RNA was isolated from collected bacterial pellets using the using Quick-RNA™
+Total RNA was isolated from collected bacterial pellets using the using Quick-RNA
 Miniprep kit (Zymo Research, Irvine, CA, USA) according to the manufacturer's instructions and quantified using Nanodrop. Changes in tcdA and tcdB gene expressions
 were assessed by quantitative real-time PCR using methods previously described with
 C. difficile 16S rRNA as the internal control. The primers were tcdA-forward, CAACACCTTAACCCAGCCATA; tcdA-reverse, AGAGTTTTCTGCGGTAGCTGA; tcdB-forward,
 ATCTGGAGAATGGAAGGTGGT; tcdB-reverse, TGATGGTGCTGAAAAGAAGTG; 16S
 rRNA-forward, AGCGGTGAAATGCGTAGATAT; 16S rRNA-reverse, CAG CGTCAGTTACAGTCCAGA [28]. First-strand cDNA was prepared from 500 ng RNA using the
 iScriptTM cDNA Synthesis Kit (BioRad; Hercules, CA, USA). cDNA synthesis was carried
-out in C1000 Touch™Thermal Cycler (BioRad) with priming at 25 ◦C for 5 min, reverse
+out in C1000 TouchThermal Cycler (BioRad) with priming at 25 ◦C for 5 min, reverse
 transcription at 50 ◦C for 10 min, followed by iScript reverse transcriptase inactivation at
 95 ◦C for 5 min. Quantitative PCR was performed using SsoAdvanced Universal SYBR
-Green Supermix (BioRad, Hercules, CA, USA) in CFX96 Touch™Real-Time PCR Detection
-System (BioRad, Hercules, CA, USA). PCR amplification of cDNA (1 µg) was performed
+Green Supermix (BioRad, Hercules, CA, USA) in CFX96 TouchReal-Time PCR Detection
+System (BioRad, Hercules, CA, USA). PCR amplification of cDNA (1 ug) was performed
 under the following conditions: 95 ◦C for 10 min; 40 cycles at 95 ◦C for 15 s, followed
-by 55 ◦C for 60 s. Relative gene expression was determined using the 2−∆∆Ct method.
+by 55 ◦C for 60 s. Relative gene expression was determined using the 2-∆∆Ct method.
 The sample's mean value of Ct of 16S rRNA (internal control gene) was subtracted from the
-sample mean Ct of the tcdA and tcdB genes (∆Ct), respectively. ∆Ct of the no treatment control was subtracted from the mean ∆Ct of each experimental sample (∆∆Ct). This 2−∆∆Ct
+sample mean Ct of the tcdA and tcdB genes (∆Ct), respectively. ∆Ct of the no treatment control was subtracted from the mean ∆Ct of each experimental sample (∆∆Ct). This 2-∆∆Ct
 method yields the fold of change in gene expression of the gene of interest normalized to
 the expression of the 16S rRNA internal control and relative to the no treatment control.
 4.7. Statistical Analysis
 Data are presented as numbers and percentages for categorical variables and as means
-± standard deviation for continuous variables. Statistical analyses were performed with
++- standard deviation for continuous variables. Statistical analyses were performed with
 t-tests for independent variances. Two-sided p-values of <0.05 were considered significant.
 
 Antibiotics 2022, 11, 537
@@ -646,4 +646,4 @@ From Desferrithiocin to ICL670. Curr. Med. Chem. 2003, 10, 1065-1076. [CrossRef]
 Kamchonwongpaisan, S.; Paitayatat, S.; Thebtaranonth, Y.; Wilairat, P.; Yuthavong, Y. Mechanism-Based Development of New
 Antimalarials: Synthesis of Derivatives of Artemisinin Attached to Iron Chelators. J. Med. Chem. 1995, 38, 2311-2316. [CrossRef]
 57.
-Cappellini, M.D.; Taher, A. Deferasirox (Exjade®) for the Treatment of Iron Overload. Acta Haematol. 2009, 122, 165-173. [CrossRef]
+Cappellini, M.D.; Taher, A. Deferasirox (Exjade) for the Treatment of Iron Overload. Acta Haematol. 2009, 122, 165-173. [CrossRef]

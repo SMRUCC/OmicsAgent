@@ -1,6 +1,6 @@
 Engineering probiotics to inhibit Clostridioides difficile infection by dynamic regulation of intestinal metabolism
 {"doi": "10.1038/s41467-022-31334-z", "year": "2022", "journal": "Nature Communications", "keywords": []}
-[{"title": "et al. Global burden of Clostridium difficile infections: a systematic review and meta-analysis. J. Glob. Health 9, 010407 (2019)", "doi": "", "year": "2019", "journal": ""}, {"title": "et al. Trends in U.S. burden of Clostridioides difficile infection and outcomes. N. Engl. J. Med. 382, 1320-1330 (2020)", "doi": "", "year": "2020", "journal": ""}, {"title": "Risk factors and treatment outcomes of severe Clostridioides difficile infection in . Sci. Rep. 9, 13440 (2019)", "doi": "", "year": "2019", "journal": "Singapore"}, {"title": "Burden of Clostridium difficile on the healthcare system. Clin. Infect. Dis. 55, S88-S92 (2012)", "doi": "", "year": "2012", "journal": ""}, {"title": "Cruz Aguilar, M. R., Mellinghof, S. & Vehreschild, M. Economic burden and cost-effective management of Clostridium difficile infections. Med Mal. Infect. 48, 23-29 (2018)", "doi": "", "year": "2018", "journal": ""}, {"title": "Tackling the recurrence of Clostridium difficile infection. Med Mal. Infect. 48, 18-22 (2018)", "doi": "", "year": "2018", "journal": ""}, {"title": "et al. Understanding Clostridium difficile Colonization. Clin. Microbiol. Rev. (2018)", "doi": "10.1128/CMR.00021-17", "year": "2018", "journal": ""}, {"title": "et al. A modified R-type bacteriocin specifically targeting Clostridium difficile prevents colonization of mice without affecting gut microbiota diversity. (2015)", "doi": "10.1128/mBio.02368-14", "year": "2015", "journal": "mBio"}, {"title": "Bile salts and glycine as cogerminants for Clostridium difficile spores. J. Bacteriol. 190, 2505-2512 (2008)", "doi": "", "year": "2008", "journal": ""}, {"title": "et al. Defining the roles of TcdA and TcdB in localized gastrointestinal disease, systemic organ damage, and the host response during Clostridium difficile infections. 6, e00551 (2015)", "doi": "", "year": "2015", "journal": "mBio"}, {"title": "et al. Clostridium difficile toxins disrupt epithelial barrier function by altering membrane microdomain localization of tight junction proteins. Infect. Immun. 69, 1329-1336 (2001)", "doi": "", "year": "2001", "journal": ""}, {"title": "et al. Precision microbiome reconstitution restores bile acid mediated resistance to Clostridium difficile. Nature 517, 205-208 (2015)", "doi": "", "year": "2015", "journal": ""}, {"title": "Antibiotic-induced alterations of the gut microbiota alter secondary bile acid production and allow for Clostridium difficile spore germination and outgrowth in the large intestine. (2016)", "doi": "10.1128/mSphere.00045-15", "year": "2016", "journal": "mSphere"}, {"title": "et al. A simple and accurate HPLC method for fecal bile acid profile in healthy and cirrhotic subjects: validation by GC-MS and LC-MS. J. Lipid Res. 55, 978-990 (2014)", "doi": "", "year": "2014", "journal": ""}, {"title": "The interaction between bacteria and bile. FEMS Microbiol. Rev. 29, 625-651 (2005)", "doi": "", "year": "2005", "journal": ""}, {"title": "Bile salt biotransformations by human intestinal bacteria. J. Lipid Res. 47, 241-259 (2006)", "doi": "", "year": "2006", "journal": ""}, {"title": "Clostridioides difficile biology: sporulation, germination, and corresponding therapies for C. difficile infection. Front. Cell Infect. Microbiol. 8, 29 (2018)", "doi": "", "year": "2018", "journal": ""}, {"title": "et al. A metabolic pathway for bile acid dehydroxylation by the gut microbiome. Nature 582, 566-570 (2020)", "doi": "", "year": "2020", "journal": ""}, {"title": "et al. Microbiota-liberated host sugars facilitate post-antibiotic expansion of enteric pathogens. Nature 502, 96-99 (2013)", "doi": "", "year": "2013", "journal": ""}, {"title": "et al. Human cecal bile acids: concentration and spectrum. Am. J. Physiol. Gastrointest. Liver Physiol. 293, G256-G263 (2007)", "doi": "", "year": "2007", "journal": ""}, {"title": "Cloning and characterization of a conjugated bile acid hydrolase gene from Clostridium perfringens. Appl Environ. Microbiol. 61, 2514-2520 (1995)", "doi": "", "year": "1995", "journal": ""}, {"title": "et al. Engineered probiotic Escherichia coli can eliminate and prevent Pseudomonas aeruginosa gut infection in animal models. Nat. Commun. 8, 15028 (2017)", "doi": "", "year": "2017", "journal": ""}, {"title": "et al. Engineered E. coli Nissle 1917 for the delivery of matrix-tethered therapeutic domains to the gut. Nat. Commun. 10, 5580 (2019)", "doi": "", "year": "2019", "journal": ""}, {"title": "et al. Engineered commensal microbes for diet-mediated colorectalcancer chemoprevention. Nat. Biomed. Eng. 2, 27-37 (2018)", "doi": "", "year": "2018", "journal": ""}, {"title": "Microbiologic factors affecting Clostridium difficile recurrence. Clin. Microbiol. Infect. 24, 476-482 (2018)", "doi": "", "year": "2018", "journal": ""}, {"title": "von Itzstein, M. & Hennet, T. Sialic acid catabolism drives intestinal inflammation and microbial dysbiosis in mice. Nat. Commun. 6, 8141 (2015)", "doi": "", "year": "2015", "journal": ""}, {"title": "Host-derived sialic acids are an important nutrient source required for optimal bacterial fitness in vivo. 7, e02237-02215 (2016)", "doi": "", "year": "2016", "journal": "mBio"}, {"title": "Sialic acid utilization by bacterial pathogens. Microbiology 153, 2817-2822 (2007)", "doi": "", "year": "2007", "journal": ""}, {"title": "Regulation of sialic acid catabolism by the DNA binding protein NanR in . J. Bacteriol. 185, 4806-4815 (2003)", "doi": "", "year": "2003", "journal": "Escherichia coli"}, {"title": "Luminal glucose concentrations in the gut under normal conditions. Am. J. Physiol. 259, G822-G837 (1990)", "doi": "", "year": "1990", "journal": ""}, {"title": "Identification of elements involved in transcriptional regulation of the Escherichia coli cad operon by external pH. J. Bacteriol. 174, 530-540 (1992)", "doi": "", "year": "1992", "journal": ""}, {"title": "et al. Gastrointestinal pH and transit time profiling in healthy volunteers using the IntelliCap system confirms ileo-colonic release of ColoPulse tablets. PLoS One 10, e0129076 (2015)", "doi": "", "year": "2015", "journal": ""}, {"title": "High concentrations of conjugated bile acids inhibit bacterial growth of Clostridium perfringens and induce its extracellular cholylglycine hydrolase. Steroids 59, 485-489 (1994)", "doi": "", "year": "1994", "journal": ""}, {"title": "et al. A mouse model of Clostridium difficile-associated disease. Gastroenterology 135, 1984-1992 (2008)", "doi": "", "year": "2008", "journal": ""}, {"title": "et al. Mouse relapse model of Clostridium difficile infection. Infect. Immun. 79, 2856-2864 (2011)", "doi": "", "year": "2011", "journal": ""}, {"title": "Small animal models for the study of Clostridium difficile disease pathogenesis. FEMS Microbiol. Lett. 352, 140-149 (2014)", "doi": "", "year": "2014", "journal": ""}, {"title": "A new strategy for the prevention of Clostridium difficile infection. J. Infect. Dis. 207, 1498-1504 (2013)", "doi": "", "year": "2013", "journal": ""}, {"title": "et al. Development of a standardized scoring system to assess a murine model of Clostridium difficile colitis. J. Invest. Surg. 33, 887-895 (2020)", "doi": "", "year": "2020", "journal": ""}, {"title": "et al. Clinical practice guidelines for Clostridium difficile infection in adults and children: 2017 update by the Infectious Diseases Society of America (IDSA) and Society for Healthcare Epidemiology of America (SHEA). Clin. Infect. Dis. 66, 987-994 (2018)", "doi": "", "year": "2018", "journal": ""}, {"title": "Fecal transplantation for recurrent Clostridium difficile infection in older adults: a review. J. Am. Geriatr. Soc. 61, 1394-1398 (2013)", "doi": "", "year": "2013", "journal": ""}, {"title": "Systematic review of intestinal microbiota transplantation (fecal bacteriotherapy) for recurrent Clostridium difficile infection. Clin. Infect. Dis. 53, 994-1002 (2011)", "doi": "", "year": "2011", "journal": ""}, {"title": "et al. Post-antibiotic gut mucosal microbiome reconstitution is impaired by probiotics and improved by autologous FMT. Cell 174, 1406-1423 e1416 (2018)", "doi": "", "year": "2018", "journal": ""}, {"title": "et al. BglBricks: a flexible standard for biological part assembly. J. Biol. Eng. 4, 1 (2010)", "doi": "", "year": "2010", "journal": ""}, {"title": "et al. Evaluation of general 16S ribosomal RNA gene PCR primers for classical and next-generation sequencing-based diversity studies. Nucleic Acids Res. 41, e1 (2013)", "doi": "", "year": "2013", "journal": ""}, {"title": "et al. QIIME allows analysis of high-throughput community sequencing data. Nat. Methods 7, 335-336 (2010)", "doi": "", "year": "2010", "journal": ""}, {"title": "et al. Greengenes, a chimera-checked 16S rRNA gene database and workbench compatible with ARB. Appl. Environ. Microbiol. 72, 5069-5072 (2006)", "doi": "", "year": "2006", "journal": ""}]
+[{"title": "Balsells, E. et al. Global burden of Clostridium difficile infections: a systematic review and meta-analysis. J. Glob. Health 9, 010407 (2019)", "doi": "", "year": "2019", "journal": ""}, {"title": "Guh, A. Y. et al. Trends in U.S. burden of Clostridioides difficile infection and outcomes. N. Engl. J. Med. 382, 1320-1330 (2020)", "doi": "", "year": "2020", "journal": ""}, {"title": "Tay, H. L., Chow, A., Ng, T. M. & Lye, D. C. Risk factors and treatment outcomes of severe Clostridioides difficile infection in Singapore. Sci. Rep. 9, 13440 (2019)", "doi": "", "year": "2019", "journal": ""}, {"title": "Dubberke, E. R. & Olsen, M. A. Burden of Clostridium difficile on the healthcare system. Clin. Infect. Dis. 55, S88-S92 (2012)", "doi": "", "year": "2012", "journal": ""}, {"title": "Heimann, S. M., Cruz Aguilar, M. R., Mellinghof, S. & Vehreschild, M. Economic burden and cost-effective management of Clostridium difficile infections. Med Mal. Infect. 48, 23-29 (2018)", "doi": "", "year": "2018", "journal": ""}, {"title": "Petrosillo, N. Tackling the recurrence of Clostridium difficile infection. Med Mal. Infect. 48, 18-22 (2018)", "doi": "", "year": "2018", "journal": ""}, {"title": "Crobach, M. J. T. et al. Understanding Clostridium difficile Colonization. Clin. Microbiol. Rev. (2018)", "doi": "10.1128/CMR.00021-17", "year": "2018", "journal": ""}, {"title": "Gebhart, D. et al. A modified R-type bacteriocin specifically targeting Clostridium difficile prevents colonization of mice without affecting gut microbiota diversity. mBio (2015)", "doi": "10.1128/mBio.02368-14", "year": "2015", "journal": ""}, {"title": "Sorg, J. A. & Sonenshein, A. L. Bile salts and glycine as cogerminants for Clostridium difficile spores. J. Bacteriol. 190, 2505-2512 (2008)", "doi": "", "year": "2008", "journal": ""}, {"title": "Carter, G. P. et al. Defining the roles of TcdA and TcdB in localized gastrointestinal disease, systemic organ damage, and the host response during Clostridium difficile infections. mBio 6, e00551 (20", "doi": "", "year": "2015", "journal": ""}, {"title": "Nusrat, A. et al. Clostridium difficile toxins disrupt epithelial barrier function by altering membrane microdomain localization of tight junction proteins. Infect. Immun. 69, 1329-1336 (2001)", "doi": "", "year": "2001", "journal": ""}, {"title": "Buffie, C. G. et al. Precision microbiome reconstitution restores bile acid mediated resistance to Clostridium difficile. Nature 517, 205-208 (2015)", "doi": "", "year": "2015", "journal": ""}, {"title": "Theriot, C. M., Bowman, A. A. & Young, V. B. Antibiotic-induced alterations of the gut microbiota alter secondary bile acid production and allow for Clostridium difficile spore germination and outgrow", "doi": "10.1128/mSphere.00045-15", "year": "2016", "journal": ""}, {"title": "Kakiyama, G. et al. A simple and accurate HPLC method for fecal bile acid profile in healthy and cirrhotic subjects: validation by GC-MS and LC-MS. J. Lipid Res. 55, 978-990 (2014)", "doi": "", "year": "2014", "journal": ""}, {"title": "Begley, M., Gahan, C. G. & Hill, C. The interaction between bacteria and bile. FEMS Microbiol. Rev. 29, 625-651 (2005)", "doi": "", "year": "2005", "journal": ""}, {"title": "Ridlon, J. M., Kang, D. J. & Hylemon, P. B. Bile salt biotransformations by human intestinal bacteria. J. Lipid Res. 47, 241-259 (2006)", "doi": "", "year": "2006", "journal": ""}, {"title": "Zhu, D., Sorg, J. A. & Sun, X. Clostridioides difficile biology: sporulation, germination, and corresponding therapies for C. difficile infection. Front. Cell Infect. Microbiol. 8, 29 (2018)", "doi": "", "year": "2018", "journal": ""}, {"title": "Funabashi, M. et al. A metabolic pathway for bile acid dehydroxylation by the gut microbiome. Nature 582, 566-570 (2020)", "doi": "", "year": "2020", "journal": ""}, {"title": "Ng, K. M. et al. Microbiota-liberated host sugars facilitate post-antibiotic expansion of enteric pathogens. Nature 502, 96-99 (2013)", "doi": "", "year": "2013", "journal": ""}, {"title": "Hamilton, J. P. et al. Human cecal bile acids: concentration and spectrum. Am. J. Physiol. Gastrointest. Liver Physiol. 293, G256-G263 (2007)", "doi": "", "year": "2007", "journal": ""}, {"title": "Coleman, J. P. & Hudson, L. L. Cloning and characterization of a conjugated bile acid hydrolase gene from Clostridium perfringens. Appl Environ. Microbiol. 61, 2514-2520 (1995)", "doi": "", "year": "1995", "journal": ""}, {"title": "Hwang, I. Y. et al. Engineered probiotic Escherichia coli can eliminate and prevent Pseudomonas aeruginosa gut infection in animal models. Nat. Commun. 8, 15028 (2017)", "doi": "", "year": "2017", "journal": ""}, {"title": "Praveschotinunt, P. et al. Engineered E. coli Nissle 1917 for the delivery of matrix-tethered therapeutic domains to the gut. Nat. Commun. 10, 5580 (2019)", "doi": "", "year": "2019", "journal": ""}, {"title": "Ho, C. L. et al. Engineered commensal microbes for diet-mediated colorectalcancer chemoprevention. Nat. Biomed. Eng. 2, 27-37 (2018)", "doi": "", "year": "2018", "journal": ""}, {"title": "Chilton, C. H., Pickering, D. S. & Freeman, J. Microbiologic factors affecting Clostridium difficile recurrence. Clin. Microbiol. Infect. 24, 476-482 (2018)", "doi": "", "year": "2018", "journal": ""}, {"title": "Huang, Y. L., Chassard, C., Hausmann, M., von Itzstein, M. & Hennet, T. Sialic acid catabolism drives intestinal inflammation and microbial dysbiosis in mice. Nat. Commun. 6, 8141 (2015)", "doi": "", "year": "2015", "journal": ""}, {"title": "McDonald, N. D., Lubin, J. B., Chowdhury, N. & Boyd, E. F. Host-derived sialic acids are an important nutrient source required for optimal bacterial fitness in vivo. mBio 7, e02237-02215 (2016)", "doi": "", "year": "2016", "journal": ""}, {"title": "Severi, E., Hood, D. W. & Thomas, G. H. Sialic acid utilization by bacterial pathogens. Microbiology 153, 2817-2822 (2007)", "doi": "", "year": "2007", "journal": ""}, {"title": "Kalivoda, K. A., Steenbergen, S. M., Vimr, E. R. & Plumbridge, J. Regulation of sialic acid catabolism by the DNA binding protein NanR in Escherichia coli. J. Bacteriol. 185, 4806-4815 (2003)", "doi": "", "year": "2003", "journal": ""}, {"title": "Ferraris, R. P., Yasharpour, S., Lloyd, K. C., Mirzayan, R. & Diamond, J. M. Luminal glucose concentrations in the gut under normal conditions. Am. J. Physiol. 259, G822-G837 (1990)", "doi": "", "year": "1990", "journal": ""}, {"title": "Watson, N., Dunyak, D. S., Rosey, E. L., Slonczewski, J. L. & Olson, E. R. Identification of elements involved in transcriptional regulation of the Escherichia coli cad operon by external pH. J. Bacte", "doi": "", "year": "1992", "journal": ""}, {"title": "Maurer, J. M. et al. Gastrointestinal pH and transit time profiling in healthy volunteers using the IntelliCap system confirms ileo-colonic release of ColoPulse tablets. PLoS One 10, e0129076 (2015)", "doi": "", "year": "2015", "journal": ""}, {"title": "Kishinaka, M., Umeda, A. & Kuroki, S. High concentrations of conjugated bile acids inhibit bacterial growth of Clostridium perfringens and induce its extracellular cholylglycine hydrolase. Steroids 59", "doi": "", "year": "1994", "journal": ""}, {"title": "Chen, X. et al. A mouse model of Clostridium difficile-associated disease. Gastroenterology 135, 1984-1992 (2008)", "doi": "", "year": "2008", "journal": ""}, {"title": "Sun, X. et al. Mouse relapse model of Clostridium difficile infection. Infect. Immun. 79, 2856-2864 (2011)", "doi": "", "year": "2011", "journal": ""}, {"title": "Hutton, M. L., Mackin, K. E., Chakravorty, A. & Lyras, D. Small animal models for the study of Clostridium difficile disease pathogenesis. FEMS Microbiol. Lett. 352, 140-149 (2014)", "doi": "", "year": "2014", "journal": ""}, {"title": "Howerton, A., Patra, M. & Abel-Santos, E. A new strategy for the prevention of Clostridium difficile infection. J. Infect. Dis. 207, 1498-1504 (2013)", "doi": "", "year": "2013", "journal": ""}, {"title": "Shelby, R. D. et al. Development of a standardized scoring system to assess a murine model of Clostridium difficile colitis. J. Invest. Surg. 33, 887-895 (2020)", "doi": "", "year": "2020", "journal": ""}, {"title": "McDonald, L. C. et al. Clinical practice guidelines for Clostridium difficile infection in adults and children: 2017 update by the Infectious Diseases Society of America (IDSA) and Society for Healthc", "doi": "", "year": "2018", "journal": ""}, {"title": "Burke, K. E. & Lamont, J. T. Fecal transplantation for recurrent Clostridium difficile infection in older adults: a review. J. Am. Geriatr. Soc. 61, 1394-1398 (2013)", "doi": "", "year": "2013", "journal": ""}, {"title": "Gough, E., Shaikh, H. & Manges, A. R. Systematic review of intestinal microbiota transplantation (fecal bacteriotherapy) for recurrent Clostridium difficile infection. Clin. Infect. Dis. 53, 994-1002", "doi": "", "year": "2011", "journal": ""}, {"title": "Suez, J. et al. Post-antibiotic gut mucosal microbiome reconstitution is impaired by probiotics and improved by autologous FMT. Cell 174, 1406-1423 e1416 (2018)", "doi": "", "year": "2018", "journal": ""}, {"title": "Anderson, J. C. et al. BglBricks: a flexible standard for biological part assembly. J. Biol. Eng. 4, 1 (2010)", "doi": "", "year": "2010", "journal": ""}, {"title": "Klindworth, A. et al. Evaluation of general 16S ribosomal RNA gene PCR primers for classical and next-generation sequencing-based diversity studies. Nucleic Acids Res. 41, e1 (2013)", "doi": "", "year": "2013", "journal": ""}, {"title": "Caporaso, J. G. et al. QIIME allows analysis of high-throughput community sequencing data. Nat. Methods 7, 335-336 (2010)", "doi": "", "year": "2010", "journal": ""}, {"title": "DeSantis, T. Z. et al. Greengenes, a chimera-checked 16S rRNA gene database and workbench compatible with ARB. Appl. Environ. Microbiol. 72, 5069-5072 (2006)", "doi": "", "year": "2006", "journal": ""}]
 
 ARTICLE
 Engineering probiotics to inhibit Clostridioides
@@ -81,7 +81,7 @@ the distal small intestine (ileum) and returned to the liver via the
 portal circulation9,14. Bile salts are discharged from the human
 liver as primary bile salts conjugated to taurine or glycine. The
 conjugated primary bile salts then undergo deconjugation and
-subsequent 7α-dehydroxylation to secondary bile acids by
+subsequent 7alpha-dehydroxylation to secondary bile acids by
 members of the intestinal microbiota15-17. As a result of these
 modifications, bile salts in the colon exist predominantly as
 unconjugated primary or secondary forms9,15,16. Physiological
@@ -435,7 +435,7 @@ for each respective day, with three technical replicates. C Histological Injury 
 severity based on the score is indicated by dotted lines. Mann-Whitney test was performed (outlier (*) was excluded for analysis). *P < 0.05 (p value for
 no-infection control and treatment = 0.036; no-infection and wild-type = 0.024; infection and treatment = 0.036). The numbers of independent samples
 for each group are no-infection control group, n = 3; for all other groups, n = 6. D Representative microscopic images of H&E-stained colon tissue from
-each group were assessed. Submucosal oedema (*) and neutrophil infiltration (arrow) were identified. The scale bar corresponds to 100 µm. Source data
+each group were assessed. Submucosal oedema (*) and neutrophil infiltration (arrow) were identified. The scale bar corresponds to 100 um. Source data
 are provided as a Source Data file, and the black bars indicate the means and SEMs of the groups.
 ARTICLE
 NATURE COMMUNICATIONS | https://doi.org/10.1038/s41467-022-31334-z
@@ -474,11 +474,11 @@ adjuvants to standard antibiotic therapy against CDI, assisting
 antibiotics in inhibiting and killing vegetative, virulent C. difficile
 Fig. 7 The engineered probiotics modify bile salt composition in the host gut. A Timeline of sample collection for metabolite examination in relation to
 the animal experiment timeline. B Quantification of sialic acid in faecal samples during antibiotic-containing water treatment. Paired Student's t-test was
-performed to compare the day −6 and day -3 data (p = 0.0027). **P < 0.01. The black bars indicate the means and SEMs of the groups. n = 3 independent
-samples. C Quantification of (i) taurocholate and (ii) cholate in faecal samples prior to C. difficile challenge from day −6 to 0 in the EcN-Cbh and infection
+performed to compare the day -6 and day -3 data (p = 0.0027). **P < 0.01. The black bars indicate the means and SEMs of the groups. n = 3 independent
+samples. C Quantification of (i) taurocholate and (ii) cholate in faecal samples prior to C. difficile challenge from day -6 to 0 in the EcN-Cbh and infection
 control groups ("No probiotic"). ND not detected. Unpaired Student's t-test was performed between the EcN-Cbh and infection control groups for
-taurocholate on day −1 (p = 0.0507) and cholate on day −3 (p = 0.0056). **P < 0.01. The black bars indicate the means and SEMs of the groups. n = 3
-independent samples. D Quantification of (i) taurocholate and (ii) cholate in faecal samples collected from day −1 to day 3 from each group. Mixed-model
+taurocholate on day -1 (p = 0.0507) and cholate on day -3 (p = 0.0056). **P < 0.01. The black bars indicate the means and SEMs of the groups. n = 3
+independent samples. D Quantification of (i) taurocholate and (ii) cholate in faecal samples collected from day -1 to day 3 from each group. Mixed-model
 ANOVA was performed to compare groups (p value for taurocholate for no-sensor control group = 0.1362; no-amplifier control group = 0.1117; noactuator control group = 0.0152; wild-type control group <0.0001; infection control group = 0.0051; for cholate for no-sensor control group = 0.8709; noamplifier control group = 0.2829; no-actuator control group = 0.0002; wild-type control group = 0.0001; infection control group <0.0001). *P < 0.05;
 **P < 0.01; ***P < 0.001; ****P < 0.0001. The black bars indicate the means and SEMs of the groups and days. LOD limit of detection. Source data are
 provided as a Source Data file.
@@ -556,7 +556,7 @@ exerting direct lethality, should be considered for the development
 of future microbiome-based antimicrobial therapeutics.
 Methods
 Culture and maintenance. All E. coli strains were maintained in Luria broth (LB)
-medium at 37 °C with appropriate antibiotics and/or supplements unless stated
+medium at 37 degreeC with appropriate antibiotics and/or supplements unless stated
 otherwise (final concentrations: 30 mg/L kanamycin and 50 mg/L D-alanine).
 Cloning was performed with E. coli Top10 (Invitrogen), heterologous protein
 expression was performed with E. coli BL21 (Thermo Fisher Scientific), and
@@ -565,26 +565,26 @@ difficile culture was carried out in a Coy Lab Vinyl Anaerobic Chamber and
 anaerobic jar to maintain anaerobic conditions. Cells were cultured in brain heart
 infusion-supplemented (BHIS) medium supplemented with 5% w/v yeast extract
 and 0.03% w/v L-cysteine. Taurocholate was supplemented as necessary. The cells
-were incubated anaerobically at 37 °C. C. difficile CD630, VPI10463, BAA1870 and
+were incubated anaerobically at 37 degreeC. C. difficile CD630, VPI10463, BAA1870 and
 9689 were obtained from the American Type Culture Collection (ATCC). The
 Caco-2 cell line (ATCC) was maintained in Dulbecco's modified Eagle's medium
-(DMEM) supplemented with 20% foetal bovine serum and 1% penicillin/streptomycin (10000 U/mL). The cells were incubated at 37 °C under a 5% CO2/95% air
+(DMEM) supplemented with 20% foetal bovine serum and 1% penicillin/streptomycin (10000 U/mL). The cells were incubated at 37 degreeC under a 5% CO2/95% air
 atmosphere. Cell passage was performed at ~70 to 90% confluence.
 C. difficile endospore germination efficiency assay and vegetative cell growth
 assay. C. difficile endospores were extracted by resuspending C. difficile CD630
 following 6 days of incubation in 50% v/v ethanol/PBS for 1 h. The cells were then
-washed twice in PBS before incubation at 70 °C for 20 min and resuspended in PBS
+washed twice in PBS before incubation at 70 degreeC for 20 min and resuspended in PBS
 with 1% w/v bovine serum albumin (BSA). The extracted endospores were counted
 under anaerobic conditions for CFU determination by tenfold serial dilution on BHIS
 agar containing 2 mM taurocholate, unless otherwise stated13. The endospores were
 diluted in PBS with 1% w/v BSA to a final concentration of ~106/mL and then
 counted under anaerobic conditions for CFU determination on BHIS plates containing bile salts at concentrations ranging from 1 to 5 mM. To assess endospore
-germination efficiency or vegetative cell growth with Cbh-treated or engineered EcNtreated taurocholate, purified 10 μM Cbh or engineered EcN at an optical density at
+germination efficiency or vegetative cell growth with Cbh-treated or engineered EcNtreated taurocholate, purified 10 muM Cbh or engineered EcN at an optical density at
 600 nm wavelength (OD600) of 0.5 was incubated with 10 mM taurocholate for 3 h
 before the addition of C. difficile endospores or vegetative cells. The bile salt reaction
 mixture was diluted five times to achieve a final 2 mM bile salt concentration and
 incubated anaerobically with endospores at a final concentration of ~106/mL for 1 h
-or with vegetative C. difficile at an OD600 of 0.2 (~2 × 107 CFU/mL) for 12 h. C.
+or with vegetative C. difficile at an OD600 of 0.2 (~2 x 107 CFU/mL) for 12 h. C.
 difficile were then counted for CFU determination under anaerobic conditions on
 BHIS agar. All assays were performed in triplicate unless stated otherwise.
 Molecular cloning and protein expression. The BglBrick standard was used in
@@ -597,14 +597,14 @@ a 10 kDa molecular weight cut-off (MWCO) in protein buffer (50 mM Tris-HCl,
 100 mM NaCl, 10% v/v glycerol, pH 8.0).
 Characterisation of bile salt deconjugation activity. Bile salts were detected with
 a high-performance liquid chromatography (HPLC) system. To assay protein
-activity, 10 μM purified Cbh was incubated with 10 mM taurocholate in protein
-buffer at 37 °C for 3 h. Four volumes of methanol were then added to precipitate
+activity, 10 muM purified Cbh was incubated with 10 mM taurocholate in protein
+buffer at 37 degreeC for 3 h. Four volumes of methanol were then added to precipitate
 the proteins. The mixture was dried by a vacuum concentrator, resuspended in
-70% v/v acetonitrile, and subjected to HPLC analysis. For assays involving probiotics, the cells were pre-induced with 0.2% w/v sialic acid for 3 h at 37 °C,
+70% v/v acetonitrile, and subjected to HPLC analysis. For assays involving probiotics, the cells were pre-induced with 0.2% w/v sialic acid for 3 h at 37 degreeC,
 adjusted to an OD600 of 3.0 and further incubated with 10 mM taurocholate for 3 h.
 The supernatants were then collected for quantification of the bile acids using
 UPLC-electrospray ionisation (ESI)-tandem MS (MS/MS) in negative ionisation
-mode with an Eclipse Plus C18 column (2.1 mm × 100 mm, 1.8 µm particle size)
+mode with an Eclipse Plus C18 column (2.1 mm x 100 mm, 1.8 um particle size)
 (Agilent Technologies). (See 'Liquid chromatography (LC)-mass spectrometry
 (MS) quantification of faecal bile salts' for further details).
 Growth and protein expression assay. Cells or constructs were characterised
@@ -620,35 +620,35 @@ NATURE COMMUNICATIONS | (2022) 13:3834 | https://doi.org/10.1038/s41467-022-3133
 fluorescence (excitation: 485 nm, emission: 528 nm) in the sample medium relative
 to the blank medium was read to indicate GFP expression. The initial cell densities
 (OD600 values) of pre-cultures at the early exponential phase were adjusted to an
-absorbance of 0.2 prior to microtitre plate reading. Then, 200 µL of culture was
+absorbance of 0.2 prior to microtitre plate reading. Then, 200 uL of culture was
 added to each well of a clear-bottom 96-well microtitre plate along with a blank
 medium for background reading normalisation and water for pathlength normalisation. Appropriate chemicals were added accordingly for induction of cells
-(final concentrations: 0.2% w/v sialic acid, 0.2% w/v L-arabinose, and 20 mM glucose). The microtitre plates were incubated at 37 °C and agitated at 225 rpm with
+(final concentrations: 0.2% w/v sialic acid, 0.2% w/v L-arabinose, and 20 mM glucose). The microtitre plates were incubated at 37 degreeC and agitated at 225 rpm with
 orbital shaking in the plate reader. Cbh expression was confirmed in an immunoblot using an anti-His tag antibody conjugated with HRP at 1:1000 dilution
 (#9991 S, Cell Signaling Technology).
 Flow cytometry characterisation of protein expression. Fluorescent protein
 expression under multiple inducer concentrations was characterised on an Accuri C6
 flow cytometer (Becton Dickinson). The initial cell densities (OD600 values) of precultures at the early exponential phase were adjusted to an absorbance of 0.2. Then,
-200 µL of culture was added to each well of a 96-well microtitre plate. Appropriate
+200 uL of culture was added to each well of a 96-well microtitre plate. Appropriate
 chemicals were added accordingly for induction of cells (final concentrations: 0.05 to
-0.2% w/v sialic acid and 0.00001 to 0.1% w/v L-arabinose). The cultures were incubated at 37 °C for 12 h with agitation at 1000 rpm. The cells were then diluted 100
+0.2% w/v sialic acid and 0.00001 to 0.1% w/v L-arabinose). The cultures were incubated at 37 degreeC for 12 h with agitation at 1000 rpm. The cells were then diluted 100
 times in water and sampled with a flow cytometer. Ten thousand size-gated samples
 were taken for each experiment, and the median fluorescence reading was quantified.
 C. difficile toxin extraction and coculture assay. Engineered EcN-treated bile salt
 supernatants were collected as previously described. The supernatants were diluted
 five times with BHIS and then incubated anaerobically with C. difficile endospores
-(106/mL) at 37 °C. Supernatants of the coculture were collected at regular intervals
-and concentrated ten times using speedvac vacuum concentrator (Savant SpeedVac™, Thermo Fisher Scientific), and the buffer was exchanged for protein buffer
+(106/mL) at 37 degreeC. Supernatants of the coculture were collected at regular intervals
+and concentrated ten times using speedvac vacuum concentrator (Savant SpeedVac, Thermo Fisher Scientific), and the buffer was exchanged for protein buffer
 (50 mM Tris-HCl, 100 mM NaCl, pH 8.0) with 50 kDa MWCO ultrafiltration
-columns. The concentrated supernatants were probed with 500 μg/L anti-TcdA
+columns. The concentrated supernatants were probed with 500 mug/L anti-TcdA
 antibody (PCG4, ab19953, Abcam) and anti-mouse IgG conjugated to HRP at
 1:2000 dilution (#7076, Cell Signaling Technology) in an immunoblot assay. Direct
 coculture of Caco-2 cells and C. difficile was not possible due to the differences in
 laboratory growth conditions. An indirect coculture assay was performed by
 incubating concentrated supernatants from C. difficile with Caco-2 cells. Caco-2
 cells with passage numbers between 16 and 20 were used for the assay. Cells
-(5 × 104/mL) in 100 µL of culture medium were seeded in each well of clear-bottom
-96-well microtitre plates. The cells were allowed to proliferate for 48 h at 37 °C.
+(5 x 104/mL) in 100 uL of culture medium were seeded in each well of clear-bottom
+96-well microtitre plates. The cells were allowed to proliferate for 48 h at 37 degreeC.
 Fresh complete medium without antibiotics was provided, and concentrated
 supernatants were added to the Caco-2 cells. The supernatant was concentrated
 tenfold and then dilute ten times in Caco-2 growth media to achieve a final concentration equivalent to one time of the C. difficile culture during which sufficient
@@ -665,11 +665,11 @@ CDI mouse model has been previously reported34. Male C57BL/6 mice (5-6 weeks
 old) were provided with an antibiotic cocktail in water (0.4 mg/mL kanamycin,
 0.035 mg/mL gentamicin, 850 U/mL colistin, 0.215 mg/mL metronidazole, 0.045 mg/
 mL vancomycin) for 3 days following acclimatisation (day -6 to -3; pre-infection). A
-dose of clindamycin (10 mg/kg) was administered intraperitoneally on day −1.
+dose of clindamycin (10 mg/kg) was administered intraperitoneally on day -1.
 Infection with C. difficile VPI10463 (107 CFU of vegetative cells) was performed on
-day 0 through oral gavage. The mice were maintained on a complex carbohydratefree diet (D15091702Bi AIN-93G, Research Inc.). Probiotics (109 CFU) were provided through oral gavage on day −3 as necessary. The animals were monitored up to
+day 0 through oral gavage. The mice were maintained on a complex carbohydratefree diet (D15091702Bi AIN-93G, Research Inc.). Probiotics (109 CFU) were provided through oral gavage on day -3 as necessary. The animals were monitored up to
 day 9 postinfection, under standard housing conditions (12 light/12 dark cycle,
-22-24 °C with humidity set at 40-50%). Symptoms were scored with a standardised
+22-24 degreeC with humidity set at 40-50%). Symptoms were scored with a standardised
 CSS system as described previously38. Briefly, the scoring was based on three major
 symptoms observed in humans: behavioural changes, stool characteristics and weight
 loss. Each category of the CSS system was scored from 0 to 4, and individual scores
@@ -694,10 +694,10 @@ a pathologist who was blinded to the treatment information. Images were captured
 on Leica DMi8 Inverted Microscope.
 Derivation of sialic acid for HPLC detection. Faecal samples were collected and
 homogenised in water. The homogenised samples were filtered and resuspended in
-7 mM 1,2-diamino-4,5-methylenedioxybenzene dihydrochloride (DMB), 0.75 M βmercaptoethanol and 18 mM sodium hydrosulfite in 1.4 M acetic acid. The samples
-were incubated in the dark at 50 °C for 2.5 h and then analysed by reverse-phase
-HPLC with an octadecyl silica Inertsil ODS-3 column (4.6 mm × 250 mm, 5 µm
-particle size) (GL Sciences). A 5 μL aliquot was injected into the column. The run
+7 mM 1,2-diamino-4,5-methylenedioxybenzene dihydrochloride (DMB), 0.75 M betamercaptoethanol and 18 mM sodium hydrosulfite in 1.4 M acetic acid. The samples
+were incubated in the dark at 50 degreeC for 2.5 h and then analysed by reverse-phase
+HPLC with an octadecyl silica Inertsil ODS-3 column (4.6 mm x 250 mm, 5 um
+particle size) (GL Sciences). A 5 muL aliquot was injected into the column. The run
 was performed at a flow rate of 0.9 mL/min with linear gradient elution at 5:88:7 to
 20:73:7 v/v/v acetonitrile:water:methanol solvent until a run time of 15 min, isocratic elution at 20:73:7 until a run time of 18 min, gradient elution to 80:13:7 until
 a run time of 19 min, isocratic elution at 80:13:7 until a run time of 22 min,
@@ -709,21 +709,21 @@ the corresponding elution peaks in the elution spectra.
 Liquid chromatography (LC)-mass spectrometry (MS) quantification of faecal
 bile salts. Faecal samples were collected and homogenised in Zymobiomics DNA
 miniprep lysis buffer (Zymo Research). Ten microlitres of the homogenised mixture
-was mixed with 90 uL of LC-MS grade methanol and filtered through a 0.2 µm
+was mixed with 90 uL of LC-MS grade methanol and filtered through a 0.2 um
 syringe PTFE filter for organic solutions (Millipore). Quantification of the bile acids
 was performed in a UPLC-electrospray ionisation (ESI)-tandem MS (MS/MS) in
-negative ionisation mode with an Eclipse Plus C18 column (2.1 mm × 100 mm,
-1.8 µm particle size) (Agilent Technologies). Ten microlitres of the samples were
+negative ionisation mode with an Eclipse Plus C18 column (2.1 mm x 100 mm,
+1.8 um particle size) (Agilent Technologies). Ten microlitres of the samples were
 injected into the column with mobile phases A and B consisting of 0.1% formic acid
 in 7.5 mM ammonium acetate in water and 7.5 mM ammonium acetate in acetonitrile, respectively. The separation of the analytes was performed at a flow rate of
 0.25 mL/min with a gradient at 40%B from 0 to 5 min, 100%B from 5 to 7 min and
-back to 40%B for 3 min. The gas temperature was set to 250 °C at a flow of 15 L/min,
-and the sheath temperature to 400 °C at 12 L/min. Capillary and nozzle voltages were
+back to 40%B for 3 min. The gas temperature was set to 250 degreeC at a flow of 15 L/min,
+and the sheath temperature to 400 degreeC at 12 L/min. Capillary and nozzle voltages were
 set at 3500 and 2000 V, respectively. The bile acids were detected using the following
-multiple reaction monitoring conditions: cholic acid (m/z 407→341, collision energy
-36 V), chenodeoxycholic acid (m/z 391→391, CE 30 V); deoxycholic acid (m/z
-391→345, CE 36 V); glycocholic acid (m/z 464→74, CE 36 V), lithocholic acid (m/z
-375→375, CE 30 V) and taurocholic acid (m/z 514→80, CE 64 V). The gas temperature was set to 250 °C at a flow of 15 L/min, and the sheath temperature to 400 °C
+multiple reaction monitoring conditions: cholic acid (m/z 407->341, collision energy
+36 V), chenodeoxycholic acid (m/z 391->391, CE 30 V); deoxycholic acid (m/z
+391->345, CE 36 V); glycocholic acid (m/z 464->74, CE 36 V), lithocholic acid (m/z
+375->375, CE 30 V) and taurocholic acid (m/z 514->80, CE 64 V). The gas temperature was set to 250 degreeC at a flow of 15 L/min, and the sheath temperature to 400 degreeC
 at 12 L/min. Mass spectrometry data will be provided upon request.
 Statistics and reproducibility. All in vitro experiments conducted on 96-well
 microtitre plates, with the exception of the flow cytometry and MTT assays, were

@@ -1,6 +1,6 @@
 Non-invasive treatment of Clostridioides difficile infection with a human-origin probiotic cocktail through gut microbiome-gut metabolome modulations
 {"doi": "10.3389/fmicb.2025.1555220", "year": "2025", "journal": "Frontiers in Microbiology", "keywords": ["hospital-associated diarrhea", "Clostridioides difficile", "probiotics", "gut microbiome", "gut metabolites"]}
-[{"title": "1080/19490976.2022.2094672 Ahmadi, S., Wang, S., Nagpal, R., Wang, B., Jain, S., Razazan, A., et al. (2020). A human-origin probiotic cocktail ameliorates aging-related leaky gut and inflammation via modulating the microbiota/taurine/tight junction axis. JCI Insight 5:132055. doi:", "doi": "", "year": "2020", "journal": ""}, {"title": "1172/jci.insight.132055 Allen, S. J., Wareham, K., Wang, D., Bradley, C., Hutchings, H., Harris, W., et al. (2013). Lactobacilli and bifidobacteria in the prevention of antibiotic-associated diarrhoea and Clostridium difficile diarrhoea in older inpatients (PLACIDE): a randomised, double-blind, placebo-controlled, multicentre trial. 382, 1249-1257. doi: Alrabaa, S., Jariwala, R., Zeitler, K., and Montero, J. (2017). Fecal microbiota transplantation outcomes in immunocompetent and immunocompromised patients: a single-center experience. Transpl. Infect. Dis. 19:12726. doi: 10.1111/tid.12726 Arakawa, K., Kawai, Y., Fujitani, K., Nishimura, J., Kitazawa, H., Komine, K., et al. (2008). Bacteriocin production of probiotic Lactobacillus gasseri LA39 isolated from human feces in milk-based media. Anim. Sci. J. 79, 634-640. doi: 10.1111/j.1740-0929.2008.00574.x Barathikannan, K., Chelliah, R., Rubab, M., Daliri, E. B.-M., Elahi, F., Kim, D.-H., et al. (2019). Gut microbiome modulation based on probiotic application for anti-obesity: a review on efficacy and validation. Microorganisms 7:456. doi: 10.3390/microorganisms7100456 Barbosa, M. L. L., Albano, M. O., da Silva Martins, C., Warren, C. A., and de Castro Brito, G. A. (2023). Role of probiotics in preventing Clostridioides difficile infection in older adults: an integrative review. Front Med 10:1219225. doi:", "doi": "10.1016/S0140-6736(13)61218-0", "year": "2023", "journal": "Lancet"}, {"title": "3389/fmed.2023.1219225 Bien, J., Palagani, V., and Bozko, P. (2013). The intestinal microbiota dysbiosis and Clostridium difficile infection: is there a relationship with inflammatory bowel disease? Ther. Adv. Gastroenterol. 6, 53-68. doi: Blachier, F., Boutry, C., Bos, C., and Tomé, D. (2009). Metabolism and functions of l-glutamate in the epithelial cells of the small and large intestines12. Am. J. Clin. Nutr. 90, 814S-821S. doi: 10.3945/ajcn.2009.27462S Bloemendaal, M., Szopinska-Tokov, J., Belzer, C., Boverhoff, D., Papalini, S., Michels, F., et al. (2021). Probiotics-induced changes in gut microbial composition and its effects on cognitive performance after stress: exploratory analyses. Transl. Psychiatry 11, 300-311. doi: 10.1038/s41398-021-01404-9 Blomstrand, E., Eliasson, J., Karlsson, H. K., and Köhnke, R. (2006). Branched-chain amino acids activate key enzymes in protein synthesis after physical exercise*, †, **. J. Nutr. 136, 269S-273S. doi: 10.1093/jn/136.1.269S Buckel, W., and Barker, H. A. (1974). Two pathways of glutamate fermentation by anaerobic Bacteria. J. Bacteriol. 117, 1248-1260. doi: 10.1128/jb.117.3.1248-1260.1974 Byun, R., Nadkarni, M. A., Chhour, K.-L., Martin, F. E., Jacques, N. A., and Hunter, N. (2004). Quantitative analysis of diverse Lactobacillus species present in advanced dental caries. J. Clin. Microbiol. 42, 3128-3136. doi:", "doi": "10.1177/1756283X12454590", "year": "2004", "journal": ""}, {"title": "1128/JCM.42.7.3128-3136.2004 Carter, G. P., Rood, J. I., and Lyras, D. (2010). The role of toxin a and toxin B in Clostridium difficile-associated disease: past and present perspectives. 1, 58-64. doi: Cornely, O. A., Miller, M. A., Louie, T. J., Crook, D. W., and Gorbach, S. L. (2012). Treatment of first recurrence of Clostridium difficile infection: Fidaxomicin versus vancomycin. Clin. Infect. Dis. 55, S154-S161. doi: 10.1093/cid/cis462 Costerton, J. W. (2007). The biofilm primer, Springer Series on Biofilms. Berlin, Heidelberg: Springer. Dawson, L. F., Valiente, E., Faulds-Pain, A., Donahue, E. H., and Wren, B. W. (2012). Characterisation of Clostridium difficile biofilm formation, a role for Spo0A. PLoS One 7:e50527. doi: 10.1371/journal.pone.0050527 Dogi, C. A., and Perdigón, G. (2006). Importance of the host specificity in the selection of probiotic bacteria. J. Dairy Res. 73, 357-366. doi: 10.1017/S0022029906001993 Dsouza, M., Menon, R., Crossette, E., Bhattarai, S. K., Schneider, J., Kim, Y.-G., et al. (2022). Colonization of the live biotherapeutic product VE303 and modulation of the microbiota and metabolites in healthy volunteers. Cell Host Microbe 30, 583-598.e8. doi:", "doi": "10.4161/gmic.1.1.10768", "year": "2022", "journal": "Gut Microbes"}, {"title": "1016/j.chom.2022.03.016 Éliás, A. J., Barna, V., Patoni, C., Demeter, D., Veres, D. S., Bunduc, S., et al. (2023). Probiotic supplementation during antibiotic treatment is unjustified in maintaining the gut microbiome diversity: a systematic review and meta-analysis. BMC Med. 21:262. doi:", "doi": "", "year": "2023", "journal": ""}, {"title": "1186/s12916-023-02961-0 Fachi, J. L., Sécca, C., Rodrigues, P. B., de Mato, F. C. P., Di Luccia, B., de Felipe, J., et al. (2019). Acetate coordinates neutrophil and ILC3 responses against C. difficile through FFAR2. J. Exp. Med. 217:e20190489. doi: Feuerstadt, P., Louie, T. J., Lashner, B., Wang, E. E. L., Diao, L., Bryant, J. A., et al. (2022). SER-109, an Oral microbiome therapy for recurrent Clostridioides difficile infection. N. Engl. J. Med. 386, 220-229. doi: 10.1056/NEJMoa2106516 Finn, E., Andersson, F. L., and Madin-Warburton, M. (2021). Burden of Clostridioides difficile infection (CDI) - a systematic review of the epidemiology of primary and recurrent CDI. BMC Infect. Dis. 21:456. doi: 10.1186/s12879-021-06147-y Fischer, M., Sipe, B., Cheng, Y.-W., Phelps, E., Rogers, N., Sagi, S., et al. (2017). Fecal microbiota transplant in severe and severe-complicated Clostridium difficile: a promising treatment approach. 8, 289-302. doi: 10.1080/19490976.2016.1273998 Fletcher, J. R., Erwin, S., Lanzas, C., and Theriot, C. M. (2018). Shifts in the gut metabolome and Clostridium difficile transcriptome throughout colonization and infection in a mouse model. mSphere 3:89. doi: 10.1128/mSphere.00089-18 Fontana, L., Bermudez-Brito, M., Plaza-Diaz, J., Muñoz-Quezada, S., and Gil, A. (2013). Sources, isolation, characterisation and evaluation of probiotics. Br. J. Nutr. 109, S35-S50. doi: 10.1017/S0007114512004011 Gaisawat, M. B., MacPherson, C. W., Tremblay, J., Piano, A., Iskandar, M. M., Tompkins, T. A., et al. (2020). Probiotic supplementation in a Clostridium difficileinfected gastrointestinal model is associated with restoring metabolic function of microbiota. Microorganisms 8:60. doi: 10.3390/microorganisms8010060 Gonzales-Luna, A. J., Carlson, T. J., and Garey, K. W. (2023). Gut microbiota changes associated with Clostridioides difficile infection and its various treatment strategies. 15:2223345. doi: 10.1080/19490976.2023.2223345 Hayashi, A., Nagao-Kitamoto, H., Kitamoto, S., Kim, C. H., and Kamada, N. (2021). The butyrate-producing bacterium Clostridium butyricum suppresses Clostridioides difficile infection via neutrophil- and antimicrobial cytokine-dependent but GPR43/109a-independent mechanisms. J. Immunol. 206, 1576-1585. doi:", "doi": "10.1084/jem.20190489", "year": "2021", "journal": "Gut Microbes"}, {"title": "4049/jimmunol.2000353 Heil, E. L., Harris, A. D., Brown, C., Seung, H., Thom, K. A., von Rosenvinge, E., et al. (2021). A multicenter evaluation of probiotic use for the primary prevention of Clostridioides difficile infection. Clin. Infect. Dis. 73, 1330-1337. doi: Hudson, S. L., Arnoczy, G., Gibson, H., Thurber, C., Lee, J., and Kessell, A. (2019). Probiotic use as prophylaxis for Clostridium difficile-associated diarrhea in a community hospital. Am. J. Infect. Control 47, 1028-1029. doi: 10.1016/j.ajic.2018.12.018 Isaac, S., Scher, J. U., Djukovic, A., Jiménez, N., Littman, D. R., Abramson, S. B., et al. (2017). Short-and long-term effects of oral vancomycin on the human intestinal microbiota. J. Antimicrob. Chemother. 72, 128-136. doi: 10.1093/jac/dkw383 Jo, S.-H., Jeon, H.-J., Song, W.-S., Lee, J.-S., Kwon, J.-E., Park, J.-H., et al. (2023). Unveiling the inhibition mechanism of Clostridioides difficile by Bifidobacterium longum via multiomics approach. Front. Microbiol. 14:1293149. doi: 10.3389/fmicb.2023.1293149 Kaci, G., Goudercourt, D., Dennin, V., Pot, B., Doré, J., Ehrlich, S. D., et al. (2014). Anti-inflammatory properties of Streptococcus salivarius, a commensal bacterium of the Oral cavity and digestive tract. Appl. Environ. Microbiol. 80, 928-934. doi:", "doi": "10.1093/cid/ciab417", "year": "2014", "journal": ""}, {"title": "1128/AEM.03133-13 Kaewarsar, E., Chaiyasut, C., Lailerd, N., Makhamrueang, N., Peerajan, S., and Sirilun, S. (2023). Effects of Synbiotic Lacticaseibacillus paracasei, Bifidobacterium breve, and prebiotics on the growth stimulation of beneficial gut microbiota. Food Secur. 12:3847. doi: Gurung et al", "doi": "10.3390/foods12203847", "year": "2023", "journal": ""}, {"title": "3389/fmicb.2025.1555220 12 frontiersin.org Kalakuntla, A. S., Nalakonda, G., Nalakonda, K., Pidikiti, C. V., and Aasim, S. A. (2019). Probiotics and Clostridium Difficile: a review of Dysbiosis and the rehabilitation of gut microbiota. Cureus 11:e5063. doi: Karska-Wysocki, B., Bazo, M., and Smoragiewicz, W. (2010). Antibacterial activity of Lactobacillus acidophilus and Lactobacillus casei against methicillin-resistant Staphylococcus aureus (MRSA). Microbiol. Res. 165, 674-686. doi:", "doi": "10.7759/cureus.5063", "year": "2010", "journal": "Frontiers in Microbiology"}, {"title": "1016/j.micres.2009.11.008 Kim, M.-H., and Kim, H. (2017). The roles of glutamine in the intestine and its implication in intestinal diseases. Int. J. Mol. Sci. 18:1051. doi: Kolling, G. L., Wu, M., Warren, C. A., Durmaz, E., Klaenhammer, T. R., and Guerrant, R. L. (2012). Lactic acid production by Streptococcus thermophilus alters Clostridium difficile infection and in vitro toxin a production. 3, 523-529. doi: 10.4161/gmic.21757 Kordus, S. L., Thomas, A. K., and Lacy, D. B. (2022). Clostridioides difficile toxins: mechanisms of action and antitoxin therapeutics. Nat. Rev. Microbiol. 20, 285-298. doi:", "doi": "10.3390/ijms18051051", "year": "2022", "journal": "Gut Microbes"}, {"title": "1038/s41579-021-00660-2 Kumar, V., and Fischer, M. (2020). Expert opinion on fecal microbiota transplantation for the treatment of Clostridioides difficile infection and beyond. Expert. Opin. Biol. Ther. 20, 73-81. doi: Lee, D. H., Kim, J. H., Kang, K. S., Lee, J.-S., Lim, N. R., Lee, W. S., et al. (2021). S176 effect of probiotics mixture against Clostridium difficile growth inhibition. Am. College Gastroenterol. S78:61825. doi: 10.14309/01.ajg.0000773176.61825.39 Leong, K. W. C., Cooley, L. A., Anderson, T. L., Gautam, S. S., McEwan, B., Wells, A., et al. (2018). Emergence of vancomycin-resistant Enterococcus faecium at an Australian hospital: a whole genome sequencing analysis. Sci. Rep. 8:6274. doi:", "doi": "10.1080/14712598.2020.1689952", "year": "2018", "journal": ""}, {"title": "1038/s41598-018-24614-6 Lessa, F. C., Winston, L. G., and McDonald, L. C. (2015). Burden of Clostridium difficile infection in the United States. N. Engl. J. Med. 372, 2369-2370. doi:", "doi": "", "year": "2015", "journal": ""}, {"title": "1056/NEJMc1505190 Li, X., Chu, Q., Huang, Y., Xiao, Y., Song, L., Zhu, S., et al. (2019). Consortium of probiotics attenuates colonization of Clostridioides difficile. Front. Microbiol. 10:2871. doi: Lick, S., Keller, M., Bockelmann, W., and Heller, J. (1996). Rapid identification of Streptococcus thermophilus by primer-specific PCR amplification based on its lacZ gene. Syst. Appl. Microbiol. 19, 74-77. doi: 10.1016/S0723-2020(96)80012-9 Louie, T., Golan, Y., Khanna, S., Bobilev, D., Erpelding, N., Fratazzi, C., et al. (2023). VE303, a defined bacterial consortium, for prevention of recurrent Clostridioides difficile infection: a randomized clinical trial. 329, 1356-1366. doi:", "doi": "10.3389/fmicb.2019.02871", "year": "2023", "journal": "JAMA"}, {"title": "1001/jama.2023.4314 Łukawska, A., and Mulak, A. (2022). Impact of primary and secondary bile acids on Clostridioides difficile infection. Pol. J. Microbiol. 71, 11-18. doi:", "doi": "", "year": "2022", "journal": ""}, {"title": "33073/pjm-2022-007 Martin-Gallausiaux, C., Marinelli, L., Blottière, H. M., Larraufie, P., and Lapaque, N. (2021). SCFA: mechanisms and functional importance in the gut. Proc. Nutr. Soc. 80, 37-49. doi: Matsuki, T., Watanabe, K., and Tanaka, R. (2003). Genus-and species-specific PCR primers for the detection and identification of bifidobacteria. Curr. Issues Intest. Microbiol. 4, 61-69 Matzaras, R., Nikopoulou, A., Protonotariou, E., and Christaki, E. (2022). Gut microbiota modulation and prevention of Dysbiosis as an alternative approach to antimicrobial resistance: a narrative review. Yale J. Biol. Med. 95, 479-494 Muwonge, A., Karuppannan, A. K., and Opriessnig, T. (2021). Probiotics mediated gut microbiota diversity shifts are associated with reduction in histopathology and shedding of Lawsonia intracellularis. Animal 3:22. doi:", "doi": "10.1017/S0029665120006916", "year": "2021", "journal": "Microbiome"}, {"title": "1186/s42523-021-00084-6 Nagpal, R., Wang, S., Ahmadi, S., Hayes, J., Gagliano, J., Subashchandrabose, S., et al. (2018). Human-origin probiotic cocktail increases short-chain fatty acid production via modulation of mice and human gut microbiome. Sci. Rep. 8:12649. doi:", "doi": "", "year": "2018", "journal": ""}, {"title": "1038/s41598-018-30114-4 Nogal, A., Valdes, A. M., and Menni, C. (2021). The role of short-chain fatty acids in the interplay between gut microbiota and diet in cardio-metabolic health. 13, 1-24. doi: Ouyang, Z., Niu, X., Wang, W., and Zhao, J. (2022). The role of short-chain fatty acids in Clostridioides difficile infection: a review. Anaerobe 75:102585. doi:", "doi": "10.1080/19490976.2021.1897212", "year": "2022", "journal": "Gut Microbes"}, {"title": "1016/j.anaerobe.2022.102585 Pal, R., Athamneh, A. I., Deshpande, R., Ramirez, J. A. R., Adu, K. T., Muthuirulan, P., et al. (2022). Probiotics: insights and new opportunities for Clostridioides difficile intervention. Crit. Rev. Microbiol. 49, 414-434. doi: Pamer, E. G. (2014). Fecal microbiota transplantation: effectiveness, complexities, and lingering concerns. Mucosal Immunol. 7, 210-214. doi: 10.1038/mi.2013.117 Patangia, D. V., Anthony Ryan, C., Dempsey, E., Paul Ross, R., and Stanton, C. (2022). Impact of antibiotics on the human microbiome and consequences for host health. Microbiology 11:e1260. doi: 10.1002/mbo3.1260 Pensinger, D. A., Fisher, A. T., Dobrila, H. A., Van Treuren, W., Gardner, J. O., Higginbottom, S. K., et al. (2023). Butyrate differentiates permissiveness to Clostridioides difficile infection and influences growth of Diverse C. difficile isolates. Infect. Immun. 91:e0057022. doi: 10.1128/iai.00570-22 Perez, J., Springthorpe, V. S., and Sattar, S. A. (2011). Clospore: a liquid medium for producing high titers of semi-purified spores of Clostridium difficile. J. AOAC Int. 94, 618-626. doi: 10.1093/jaoac/94.2.618 Piccioni, A., Rosa, F., Manca, F., Pignataro, G., Zanza, C., Savioli, G., et al. (2022). Gut microbiota and Clostridium difficile: what we know and the new Frontiers. Int. J. Mol. Sci. 23:13323. doi: 10.3390/ijms232113323 Przybylski, D., Rohwerder, T., Harms, H., Yaneva, N., and Müller, R. H. (2013). Synthesis of the building block 2-hydroxyisobutyrate from fructose and butyrate by Cupriavidus necator H16. Appl. Microbiol. Biotechnol. 97, 8875-8885. doi:", "doi": "10.1080/1040841X.2022.2072705", "year": "2013", "journal": ""}, {"title": "1007/s00253-013-5064-x Russell, B. J., Brown, S. D., Siguenza, N., Mai, I., Saran, A. R., Lingaraju, A., et al. (2022). Intestinal transgene delivery with native E. coli chassis allows persistent physiological changes. Cell 185, 3263-3277.e15. doi: Schäffler, H., and Breitrück, A. (2018). Clostridium difficile - from colonization to infection. Front. Microbiol. 9:646. doi: 10.3389/fmicb.2018.00646 Schifano, E., Conta, G., Preziosi, A., Ferrante, C., Batignani, G., Mancini, P., et al. (2022). 2-hydroxyisobutyric acid (2-HIBA) modulates ageing and fat deposition in . Front. Mol. Biosci. 9:986022. doi: 10.3389/fmolb.2022.986022 Schubert, A. M., Sinani, H., and Schloss, P. D. (2015). Antibiotic-induced alterations of the murine gut microbiota and subsequent effects on colonization resistance against Clostridium difficile. MBio 6:e00974. doi: 10.1128/mbio.00974-15 Smith, A. B., Jenior, M. L., Keenan, O., Hart, J. L., Specker, J., Abbas, A., et al. (2022). Enterococci enhance Clostridioides difficile Pathogenesis. Nature 611, 780-786. doi:", "doi": "10.1016/j.cell.2022.06.050", "year": "2022", "journal": "Caenorhabditis elegans"}, {"title": "1038/s41586-022-05438-x Solomon, S. L., and Oliver, K. B. (2014). Antibiotic resistance threats in the United States: stepping Back from the brink. afp 89, 938-941. Spinler, J. K., Auchtung, J., Brown, A., Boonma, P., Oezguen, N., Ross, C. L., et al. (2017). Next-generation probiotics targeting Clostridium difficile through precursordirected antimicrobial biosynthesis. Infect. Immun. 85, e00303-e00317. doi:", "doi": "", "year": "2017", "journal": ""}, {"title": "1128/IAI.00303-17 Taggart, M. G., Snelling, W. J., Naughton, P. J., Ragione, R. M. L., Dooley, J. S. G., and Ternan, N. G. (2021). Biofilm regulation in Clostridioides difficile: novel systems linked to hypervirulence. PLoS Pathog. 17:e1009817. doi:", "doi": "", "year": "2021", "journal": ""}, {"title": "1371/journal.ppat.1009817 Tejero-Sariñena, S., Barlow, J., Costabile, A., Gibson, G. R., and Rowland, I. (2012). In vitro evaluation of the antimicrobial activity of a range of probiotics against pathogens: evidence for the effects of organic acids. Anaerobe 18, 530-538. doi:", "doi": "", "year": "2012", "journal": ""}, {"title": "1016/j.anaerobe.2012.08.004 Theriot, C. M., Bowman, A. A., and Young, V. B. (2016). Antibiotic-induced alterations of the gut microbiota Alter secondary bile acid production and allow for Clostridium difficile spore germination and outgrowth in the large intestine. 1, e00045e00015. doi: Todorov, S. D., Kang, H.-J., Ivanova, I. V., and Holzapfel, W. H. (2020). Bacteriocins from LAB and other alternative approaches for the control of Clostridium and Clostridiodes related gastrointestinal colitis. Front. Bioeng. Biotechnol. 8:581778. doi:", "doi": "10.1128/mSphere.00045-15", "year": "2020", "journal": "mSphere"}, {"title": "3389/fbioe.2020.581778 Voth, D. E., and Ballard, J. D. (2005). Clostridium difficile toxins: mechanism of action and role in disease. Clin. Microbiol. Rev. 18, 247-263. doi:", "doi": "", "year": "2005", "journal": ""}, {"title": "1128/CMR.18.2.247-263.2005 Vuotto, C., Donelli, G., Buckley, A., and Chilton, C. (2018). \"Clostridium difficile Biofilm\" in Updates on Clostridium Difficile in Europe: Advances in microbiology, infectious diseases and public health. eds. P. Mastrantonio and M. Rupnik, vol. 8 (Cham: Springer International Publishing), 97-115. Wang, S., Ahmadi, S., Nagpal, R., Jain, S., Mishra, S. P., Kavanagh, K., et al. (2019). Lipoteichoic acid from the cell wall of a heat killed Lactobacillus paracasei D3-5 ameliorates aging-related leaky gut, inflammation and improves physical and cognitive functions: from C. elegans to mice. GeroScience 42, 333-352. doi:", "doi": "", "year": "2019", "journal": ""}, {"title": "1007/s11357-019-00137-4 Wang, S., Courreges, M. C., Xu, L., Gurung, B., Berryman, M., and Gu, T. (2024). Revealing roles of S-layer protein (SlpA) in Clostridioides difficile pathogenicity by generating the first slpA gene deletion mutant. Microbiol Spectr 12:e0400523. doi:", "doi": "", "year": "2024", "journal": ""}, {"title": "1128/spectrum.04005-23 Wang, S., Hong, W., Dong, S., Zhang, Z.-T., Zhang, J., Wang, L., et al. (2018). Genome engineering of Clostridium difficile using the CRISPR-Cas9 system. Clin. Microbiol. Infect. 24, 1095-1099. doi: Wang, B., Maldonado-Devincci, A. M., and Jiang, L. (2020). Evaluating linebroadening factors on a reference spectrum as a bucketing method for NMR based metabolomics. Anal. Biochem. 606:113872. doi: 10.1016/j.ab.2020.113872 Wang, S., Song, F., Gu, H., Shu, Z., Wei, X., Zhang, K., et al. (2022). Assess the diversity of gut microbiota among healthy adults for forensic application. Microb. Cell Factories 21:46. doi: 10.1186/s12934-022-01769-6 Wang, S., Xiang, L., Li, F., Deng, W., Lv, P., and Chen, Y. (2023). Butyrate protects against Clostridium difficile infection by regulating bile acid metabolism. Microbiol Spectr 11:e0447922. doi: 10.1128/spectrum.04479-22 Gurung et al", "doi": "10.1016/j.cmi.2018.03.026", "year": "2023", "journal": ""}, {"title": "3389/fmicb.2025.1555220 13 frontiersin.org Wei, Y., Yang, F., Wu, Q., Gao, J., Liu, W., Liu, C., et al. (2018). Protective effects of Bifidobacterial strains against toxigenic Clostridium difficile. Front. Microbiol. 9:888. doi:", "doi": "", "year": "2018", "journal": "Frontiers in Microbiology"}, {"title": "3389/fmicb.2018.00888 Willett, J. L. E., Ji, M. M., and Dunny, G. M. (2019). Exploiting biofilm phenotypes for functional characterization of hypothetical genes in . npj Biofilms Microbiomes 5, 23-14. doi: Zhang, S., Palazuelos-Munoz, S., Balsells, E. M., Nair, H., Chit, A., and Kyaw, M. H. (2016). Cost of hospital management of Clostridium difficile infection in United States-a meta-analysis and modelling study. BMC Infect. Dis. 16:447. doi:", "doi": "10.1038/s41522-019-0099-0", "year": "2016", "journal": "Enterococcus faecalis"}, {"title": "1186/s12879-016-1786-6 Zhou, H., Yu, B., Gao, J., Htoo, J. K., and Chen, D. (2018). Regulation of intestinal health by branched-chain amino acids. Anim. Sci. J. 89, 3-11. doi:", "doi": "", "year": "2018", "journal": ""}, {"title": "1111/asj.12937 Zommiti, M., Feuilloley, M. G. J., and Connil, N. (2020). Update of probiotics in human world: a nonstop source of benefactions till the end of time. 8 doi:", "doi": "10.3390/microorganisms8121907", "year": "1907", "journal": "Microorganisms"}]
+[{"title": "A human-origin probiotic cocktail ameliorates aging-related leaky gut and inflammation via modulating the microbiota/taurine/tight junction axis", "doi": "", "year": "2020", "journal": "JCI Insight"}, {"title": "Lactobacilli and bifidobacteria in the prevention of antibiotic-associated diarrhoea and Clostridium difficile diarrhoea in older inpatients (PLACIDE): a randomised, double-blind, placebo-controlled, multicentre trial", "doi": "10.1016/S0140-6736(13)61218-0", "year": "2013", "journal": "Lancet"}, {"title": "The intestinal microbiota dysbiosis and Clostridium difficile infection: is there a relationship with inflammatory bowel disease? Ther", "doi": "10.1177/1756283X12454590", "year": "2013", "journal": "Adv. Gastroenterol"}, {"title": "The role of toxin a and toxin B in Clostridium difficile-associated disease: past and present perspectives", "doi": "10.4161/gmic.1.1.10768", "year": "2010", "journal": "Gut Microbes"}, {"title": "Probiotic supplementation during antibiotic treatment is unjustified in maintaining the gut microbiome diversity: a systematic review and meta-analysis", "doi": "", "year": "2023", "journal": "BMC Med"}, {"title": "Acetate coordinates neutrophil and ILC3 responses against C", "doi": "10.1084/jem.20190489", "year": "2019", "journal": ""}, {"title": "A multicenter evaluation of probiotic use for the primary prevention of Clostridioides difficile infection", "doi": "10.1093/cid/ciab417", "year": "2021", "journal": "Clin. Infect. Dis"}, {"title": "Effects of Synbiotic Lacticaseibacillus paracasei, Bifidobacterium breve, and prebiotics on the growth stimulation of beneficial gut microbiota", "doi": "10.3390/foods12203847", "year": "2023", "journal": "Food Secur"}, {"title": "Probiotics and Clostridium Difficile: a review of Dysbiosis and the rehabilitation of gut microbiota", "doi": "10.7759/cureus.5063", "year": "2019", "journal": "Cureus"}, {"title": "The roles of glutamine in the intestine and its implication in intestinal diseases", "doi": "10.3390/ijms18051051", "year": "2017", "journal": "Int. J. Mol. Sci"}, {"title": "Expert opinion on fecal microbiota transplantation for the treatment of Clostridioides difficile infection and beyond", "doi": "10.1080/14712598.2020.1689952", "year": "2020", "journal": "Expert. Opin. Biol. Ther"}, {"title": "Burden of Clostridium difficile infection in the United States", "doi": "", "year": "2015", "journal": "N. Engl. J. Med"}, {"title": "Consortium of probiotics attenuates colonization of Clostridioides difficile", "doi": "10.3389/fmicb.2019.02871", "year": "2019", "journal": "Front. Microbiol"}, {"title": "Impact of primary and secondary bile acids on Clostridioides difficile infection", "doi": "", "year": "2022", "journal": "Pol. J. Microbiol"}, {"title": "SCFA: mechanisms and functional importance in the gut", "doi": "10.1017/S0029665120006916", "year": "2021", "journal": "Proc. Nutr. Soc"}, {"title": "Human-origin probiotic cocktail increases short-chain fatty acid production via modulation of mice and human gut microbiome", "doi": "", "year": "2018", "journal": "Sci. Rep"}, {"title": "The role of short-chain fatty acids in the interplay between gut microbiota and diet in cardio-metabolic health", "doi": "10.1080/19490976.2021.1897212", "year": "2021", "journal": "Gut Microbes"}, {"title": "Probiotics: insights and new opportunities for Clostridioides difficile intervention", "doi": "10.1080/1040841X.2022.2072705", "year": "2022", "journal": "Crit. Rev. Microbiol"}, {"title": "Intestinal transgene delivery with native E", "doi": "10.1016/j.cell.2022.06.050", "year": "2022", "journal": ""}, {"title": "Antibiotic resistance threats in the United States: stepping Back from the brink", "doi": "", "year": "2014", "journal": ""}, {"title": "Biofilm regulation in Clostridioides difficile: novel systems linked to hypervirulence", "doi": "", "year": "2021", "journal": "PLoS Pathog"}, {"title": "In vitro evaluation of the antimicrobial activity of a range of probiotics against pathogens: evidence for the effects of organic acids", "doi": "", "year": "2012", "journal": "Anaerobe"}, {"title": "Antibiotic-induced alterations of the gut microbiota Alter secondary bile acid production and allow for Clostridium difficile spore germination and outgrowth in the large intestine", "doi": "10.1128/mSphere.00045-15", "year": "2016", "journal": ""}, {"title": "Clostridium difficile toxins: mechanism of action and role in disease", "doi": "", "year": "2005", "journal": "Clin. Microbiol. Rev"}, {"title": "\"Clostridium difficile Biofilm\" in Updates on Clostridium Difficile in Europe: Advances in microbiology, infectious diseases and public health", "doi": "", "year": "2018", "journal": ""}, {"title": "Revealing roles of S-layer protein (SlpA) in Clostridioides difficile pathogenicity by generating the first slpA gene deletion mutant", "doi": "", "year": "2024", "journal": "Microbiol Spectr"}, {"title": "Genome engineering of Clostridium difficile using the CRISPR-Cas9 system", "doi": "10.1016/j.cmi.2018.03.026", "year": "2018", "journal": "Clin. Microbiol. Infect"}, {"title": "Protective effects of Bifidobacterial strains against toxigenic Clostridium difficile", "doi": "", "year": "2018", "journal": "Front. Microbiol"}, {"title": "Exploiting biofilm phenotypes for functional characterization of hypothetical genes in Enterococcus faecalis", "doi": "10.1038/s41522-019-0099-0", "year": "2019", "journal": ""}, {"title": "Regulation of intestinal health by branched-chain amino acids", "doi": "", "year": "2018", "journal": "Anim. Sci. J"}, {"title": "Update of probiotics in human world: a nonstop source of benefactions till the end of time", "doi": "10.3390/microorganisms8121907", "year": "2020", "journal": "Microorganisms"}]
 
 Frontiers in Microbiology
 01
@@ -11,12 +11,12 @@ with a human-origin probiotic
 cocktail through gut
 microbiome-gut metabolome
 modulations
-Bijay Gurung 1,2, Maria C. Courreges 1, Julie Pollak 3,
-Ramiro Malgor 1, Lin Jiang 4, Bo Wang 3 and Shaohua Wang 1,2*
-1 Department of Biomedical Sciences, Ohio University Heritage College of Osteopathic Medicine,
-Ohio University, Athens, OH, United States, 2 Infectious and Tropical Disease Institute, Ohio University,
-Athens, OH, United States, 3 Department of Chemistry and Chemical Engineering, Florida Institute of
-Technology, Melbourne, FL, United States, 4 Division of Natural Sciences, New College of Florida,
+Bijay Gurung 1,2, Maria C. Courreges 1, Julie Pollak 3,
+Ramiro Malgor 1, Lin Jiang 4, Bo Wang 3 and Shaohua Wang 1,2*
+1 Department of Biomedical Sciences, Ohio University Heritage College of Osteopathic Medicine,
+Ohio University, Athens, OH, United States, 2 Infectious and Tropical Disease Institute, Ohio University,
+Athens, OH, United States, 3 Department of Chemistry and Chemical Engineering, Florida Institute of
+Technology, Melbourne, FL, United States, 4 Division of Natural Sciences, New College of Florida,
 Sarasota, FL, United States
 Clostridioides difficile (C. difficile) is a leading cause of hospital-associated diarrhea,
 primarily due to gut dysbiosis following antibiotic use. Probiotics have been found
@@ -87,9 +87,9 @@ accordance with accepted academic
 practice. No use, distribution or reproduction
 is permitted which does not comply with
 these terms.
-TYPE  Original Research
-PUBLISHED  26 February 2025
-DOI  10.3389/fmicb.2025.1555220
+TYPE Original Research
+PUBLISHED 26 February 2025
+DOI 10.3389/fmicb.2025.1555220
 
 Gurung et al.
 10.3389/fmicb.2025.1555220
@@ -174,16 +174,16 @@ characterization of human-origin
 probiotics
 Baby diapers (unidentified) containing fecal samples were
 collected from the Child Development Center at Ohio University
-(Athens, OH). Fecal samples from 27 individual diapers (0.5 g) were
-resuspended in 5 mL of MRS (for isolation of Lactobacillus strains),
+(Athens, OH). Fecal samples from 27 individual diapers (0.5 g) were
+resuspended in 5 mL of MRS (for isolation of Lactobacillus strains),
 MRS-L-cysteine (MRS plus 0.1% of L-cysteine for isolation of
 Bifidobacterium strains), and LM17 (M17 supplemented with 2%
-lactose, for isolation of Streptococcus strains). After incubation at 37°C
-(Lactobacillus and Bifidobacterium strains) and 42°C (Streptococcus
-strains) for 24 h, cell cultures were serially diluted and spread onto the
+lactose, for isolation of Streptococcus strains). After incubation at 37 degreeC
+(Lactobacillus and Bifidobacterium strains) and 42 degreeC (Streptococcus
+strains) for 24 h, cell cultures were serially diluted and spread onto the
 corresponding selection agar medium plates (MRS for Lactobacillus,
 TOS-propionate for Bifidobacterium, and LM17 for Streptococcus
-strains), and cultivated for 12-24 h. At least 10 colonies were picked
+strains), and cultivated for 12-24 h. At least 10 colonies were picked
 and purified with the streak plate method. Colony PCR with
 Lactobacillus specific primer pairs (5'-TGGAAACAGRTGCTAATA
 CCG-3′; 5'-GTCCATTGTGGAAGATTCCC-3′) (Byun et al., 2004),
@@ -195,8 +195,8 @@ CACTATGCTCAGAATACA-3′; 5'-CGAACAGCATTGATGTTA-3′)
 corresponding screening medium plates. Colonies demonstrating
 corresponding specific bands were chosen for further identification by
 sequencing (GeneWiz LLC, NJ, USA) of the 16S rDNA amplified with
-the 27 F and 1492 R universal primers (27 F: 5′-AGAGTTTGAT
-CCTGGCTCAG-3′ and 1492 R: 5′-GGTTACCTTGTTACGACTT-3′)
+the 27 F and 1492 R universal primers (27 F: 5′-AGAGTTTGAT
+CCTGGCTCAG-3′ and 1492 R: 5′-GGTTACCTTGTTACGACTT-3′)
 as being described in our previous study (Nagpal et al., 2018).
 Screening of the most efficient probiotics
 based on their inhibitory activity against
@@ -212,26 +212,26 @@ Frontiers in Microbiology
 03
 frontiersin.org
 Lactobacillus, MRS-L-cysteine for Bifidobacterium, and LM17 for
-Streptococcus. After incubation at 37°C for 12 h, 5 μL of each probiotic
+Streptococcus. After incubation at 37 degreeC for 12 h, 5 muL of each probiotic
 strain were spotted on the MRS agar plates and incubated at
-37°C. After 24 h, the spots were overlayed with BHIS (brain heart
+37 degreeC. After 24 h, the spots were overlayed with BHIS (brain heart
 infusion broth supplemented with 0.5% yeast extract and 0.1%
-L-cysteine) (Wang et al., 2018) soft agar containing 200 μL of
+L-cysteine) (Wang et al., 2018) soft agar containing 200 muL of
 overnight culture of C. difficile. Then, the plates were incubated at
-37°C for 24 h in an anaerobic chamber (90% N2, 5% CO2, 5% H2 by
+37 degreeC for 24 h in an anaerobic chamber (90% N2, 5% CO2, 5% H2 by
 volume) (Wang et al., 2024), and the zone of inhibition was measured.
 Antibiotic susceptibility test
 Disc diffusion tests were performed to determine the antibiotic
-susceptibility of the probiotic strains with antibiotic discs (BBL™
-Sensi-Disc™) from BD Life Sciences, USA. Lactobacillus,
+susceptibility of the probiotic strains with antibiotic discs (BBL
+Sensi-Disc) from BD Life Sciences, USA. Lactobacillus,
 Bifidobacterium, and Streptococcus strains were cultivated overnight
-in MRS, MRS-L-Cysteine, and LM17, respectively. 100 μL of each
+in MRS, MRS-L-Cysteine, and LM17, respectively. 100 muL of each
 fresh culture was mixed with the corresponding soft agar and overlaid
 onto corresponding agar plates. Once the soft agar solidified, antibiotic
-discs containing tetracycline (30 μg), penicillin (6 μg), erythromycin
-(15 μg), novobiocin (30 μg), chloramphenicol (30 μg), and
-streptomycin (10 μg) were placed on the plates. The plates were
-incubated overnight at 37°C, and diameters of the inhibition zones
+discs containing tetracycline (30 mug), penicillin (6 mug), erythromycin
+(15 mug), novobiocin (30 mug), chloramphenicol (30 mug), and
+streptomycin (10 mug) were placed on the plates. The plates were
+incubated overnight at 37 degreeC, and diameters of the inhibition zones
 were measured in millimeters. Antibiotic susceptibility was
 categorized as resistant (R), intermediate (I), or susceptible (S)
 according to Clinical and Laboratory Standard Institute (CLSI)
@@ -244,30 +244,30 @@ performed. Probiotic strains were cultured in their corresponding
 liquid media, MRS, MRS-L-Cysteine, and LM17 for Lactobacillus,
 Bifidobacterium, and Streptococcus, respectively. After overnight
 anaerobic cultivation, each probiotic strain was inoculated at 1%
-(v/v) into 5 mL of BHIS medium, with C. difficile inoculated at the
+(v/v) into 5 mL of BHIS medium, with C. difficile inoculated at the
 same ratio. BHIS inoculated with only C. difficile (1% v/v) was set
-as control. After 6 h cultivation at 37°C, the co-culture was serially
+as control. After 6 h cultivation at 37 degreeC, the co-culture was serially
 diluted, and plated on the BHIS plates containing cefoxitin and
 D-cycloserine for selective detection of C. difficile (Dsouza et al.,
-2022). C. difficile was enumerated after 48 h of anaerobic cultivation
-at 37°C. The experiments were performed in triplicate and repeated
+2022). C. difficile was enumerated after 48 h of anaerobic cultivation
+at 37 degreeC. The experiments were performed in triplicate and repeated
 three times.
 Effects of cell-free supernatant (CFS) on
 biofilm formation of Clostridioides difficile
 The effect on biofilm formation of C. difficile was studied using
 CFS from the 11 probiotic strains. The cell-free supernatant was
-obtained by centrifuging (13,000 g, 5 min) the probiotic strains culture
-(12 h cultivation), followed by filtration through 0. 0.22 μm filters. The
+obtained by centrifuging (13,000 g, 5 min) the probiotic strains culture
+(12 h cultivation), followed by filtration through 0. 0.22 mum filters. The
 CFS was diluted (1:10) with BHISG medium (BHIS supplemented
-with 0.1 M glucose), where 1% of the overnight C. difficile culture was
+with 0.1 M glucose), where 1% of the overnight C. difficile culture was
 inoculated, and cultivated in 96 well tissue culture-treated polystyrene
-plates anaerobically at 37°C for 24 h. Optical density (OD) was
-measured at 600 nm to assess the growth using a Synergy H1
+plates anaerobically at 37 degreeC for 24 h. Optical density (OD) was
+measured at 600 nm to assess the growth using a Synergy H1
 microplate reader (BioTech). The CV staining method was used for
 biofilm assay (Dawson et al., 2012; Willett et al., 2019), where
 planktonic bacteria were removed, and the wells were washed with
 phosphate buffer saline (PBS), stained with crystal violet (CV), and
-dissolved in methanol to read the absorbance at 595 nm. The effects
+dissolved in methanol to read the absorbance at 595 nm. The effects
 of probiotics CFSs on biofilm formation were normalized by
 calculating the ratio of biofilm-specific staining to the overall
 cell density.
@@ -280,31 +280,31 @@ for mice study, individual probiotic strains were cultured in their
 respective media (MRS for Lactobacillus, MRS-L-Cysteine for
 Bifidobacterium, and LM17 for Streptococcus). Cultures were harvested
 during the later logarithmic growth phase, combined in a 1:1 ratio based
-on optical density (OD 600 nm), washed twice with PBS, resuspended
+on optical density (OD 600 nm), washed twice with PBS, resuspended
 in 1/10 of the total volume (relative to the combined volume of all 11
-strains) in PBS with glycerol, and stored at −80°C. The final concentration
+strains) in PBS with glycerol, and stored at -80 degreeC. The final concentration
 of the cocktail was quantified using MRS agar under anaerobic conditions.
 Mouse model of infection
 Spores of C. difficile were prepared as described by Theriot et al. by
-cultivating C. difficile (ATCC43255) with Clospore media at 37°C
-anaerobically for 5-7 days (Perez et al., 2011; Theriot et al., 2016). Spores
-were heat-treated for 20 min at 65°C to kill the remaining vegetative
+cultivating C. difficile (ATCC43255) with Clospore media at 37 degreeC
+anaerobically for 5-7 days (Perez et al., 2011; Theriot et al., 2016). Spores
+were heat-treated for 20 min at 65 degreeC to kill the remaining vegetative
 bacilli and enumerated by cultivation on TCCFA (taurocholate,
 cefoxitin, cycloserine, and fructose agar) plates. Mice from the probiotics
-group were given probiotic cocktail (5 × 109 CFU/mL) in drinking water
-(1 mL of probiotic cocktail at 1012 CFU/mL was added to 200 mL of the
+group were given probiotic cocktail (5 x 109 CFU/mL) in drinking water
+(1 mL of probiotic cocktail at 1012 CFU/mL was added to 200 mL of the
 drinking water) starting one week before antibiotic treatment and
 continuously throughout the whole process (Ahmadi et al., 2020). Mice
 from the control group were given the same amount of glycerol in
-drinking water. The special drinking water was changed every 2 days.
-C57BL/6 wild-type male mice (6-8 weeks old) were given antibiotic
-(cefoperazone, 0.5 mg/mL) in sterile drinking water for 5 days with
-changes every 2 days, followed by 2 days regular drinking water before
-challenge with C. difficile spores (100 μL of 106 CFU, delivering 105 CFU
+drinking water. The special drinking water was changed every 2 days.
+C57BL/6 wild-type male mice (6-8 weeks old) were given antibiotic
+(cefoperazone, 0.5 mg/mL) in sterile drinking water for 5 days with
+changes every 2 days, followed by 2 days regular drinking water before
+challenge with C. difficile spores (100 muL of 106 CFU, delivering 105 CFU
 per mice) through oral gavage (Fletcher et al., 2018). The mice were
-monitored for 7 days, and clinical scores including body weight, activity,
+monitored for 7 days, and clinical scores including body weight, activity,
 posture, eyes, coat, diarrhea, and dehydration were recorded. Mice were
-monitored every 6 hours during the daytime from day 1 to 3 postinfection, then once daily until 7 days post-infection. Disease severity
+monitored every 6 hours during the daytime from day 1 to 3 postinfection, then once daily until 7 days post-infection. Disease severity
 was assessed using a scoring system (0: normal, 1: mild, 2: moderate; 3:
 severe), with the total score calculated as the sum of all recorded signs.
 Mice were euthanized if their clinical score exceeded 12. All the animal
@@ -320,32 +320,32 @@ frontiersin.org
 Clostridioides difficile burden and toxins
 production
 Fecal samples collected one day post infection were weighed and
-vortexed in PBS (1 mg feces/10 μL PBS). After settling down for
-10 min, supernatants were diluted serially, and C. difficile colonies
-were enumerated on TCCFA plates after 2-3 days of anaerobic
+vortexed in PBS (1 mg feces/10 muL PBS). After settling down for
+10 min, supernatants were diluted serially, and C. difficile colonies
+were enumerated on TCCFA plates after 2-3 days of anaerobic
 cultivation. Concentration of C. difficile toxins (TcdA/B) in fecal
 samples was measured with Fecal C. difficile Toxin A & B ELISA Kit
 from EDI (Epitope Diagnostics, INC.) according to the instruction.
 Gut leakage markers determination with
 enzyme-linked immunosorbent assay
 (ELISA)
-Mice serum samples were collected after 2 days of infection, and
+Mice serum samples were collected after 2 days of infection, and
 the concentration of secreted CD14 and LBP were tested by Mouse
 CD14 Quantikine ELISA Kit (R and D Systems) and Mouse LBP
 PicoKine ELISA Kit (Boster Bio) following the protocols provided by
 suppliers. Results were read with a Synergy H1 microplate reader
 (BioTech) plate reader.
 Histological analyses
-After 2 days of infection, intestine tissues (colon) were harvested,
+After 2 days of infection, intestine tissues (colon) were harvested,
 washed with PBS, fixed in 10% formalin overnight, and paraffin
-embedded for histological assays. Sections (0.5 μm thickness) were
+embedded for histological assays. Sections (0.5 mum thickness) were
 stained with hematoxylin and eosin (H&E) and imaged with an
-AmScope microscope on ×10 magnification at the Histology Core
+AmScope microscope on x10 magnification at the Histology Core
 Facility at Ohio University.
 Gut microbiota analysis
 Gut microbiota composition was compared according to protocols
 described previously (Nagpal et al., 2018; Wang et al., 2019). Briefly,
-genomic DNA was extracted from ~100 mg of mice feces using the
+genomic DNA was extracted from ~100 mg of mice feces using the
 QIAamp Fast DNA Stool Mini Kit (QIAGEN). The V4 region of
 bacterial 16S rDNA was amplified and sequenced with an Illumina P1
 600cyc NextSeq2000 Flowcell platform at SeqCenter (Pittsburgh, PA).
@@ -358,12 +358,12 @@ unique bacterial taxa driving differences after probiotic treatment.
 Gut metabolomics analysis
 Fecal metabolites were analyzed with NMR. Fecal samples
 collected after one day infection were resuspended in water, followed
-by sonication and centrifugation (12,000 g, 10 min, 4°C) to obtain
+by sonication and centrifugation (12,000 g, 10 min, 4 degreeC) to obtain
 soluble fractions, followed by being mixed with PBS (pH 7.4)
-containing 10% D2O and 0.1 mM trimethylsilyl propionate (TSP).
-NMR experiments were performed with a Joel 400 MHz NMR using
+containing 10% D2O and 0.1 mM trimethylsilyl propionate (TSP).
+NMR experiments were performed with a Joel 400 MHz NMR using
 a presaturation experiment on Delta 5.3.3 (JEOL Ltd.) with 64 scans
-and 4 s relaxation delay. NMR spectra were preprocessed with zerofilled 1 time and windows function single exponential 0.25 Hz and
+and 4 s relaxation delay. NMR spectra were preprocessed with zerofilled 1 time and windows function single exponential 0.25 Hz and
 transferred to Matlab for data analysis. NMR peak intensities were
 obtained using the average peak width approach previously reported
 with slight adjustment (Wang et al., 2020), and total intensity
@@ -373,14 +373,14 @@ Statistical information
 Statistical differences among groups/treatments were analyzed
 using two-tailed unpaired Student's t-test and/or ANOVA. All the
 assays were performed at least two to three times with three to five
-replicates at each time and n ≥ 5 animals in each group, and the values
-presented in graphs/tables are means ± standard error of means or
-means ± SEM. Principal component analysis (PCA) created in R
+replicates at each time and n >= 5 animals in each group, and the values
+presented in graphs/tables are means +- standard error of means or
+means +- SEM. Principal component analysis (PCA) created in R
 statistical software package was applied to distinguish microbiota and
 metabolism features of C. difficile with and without probiotics
 treatment. LefSe was used to identify unique bacterial taxa that drives
 differences in probiotics-treated samples and control. GraphPad
-(Prism9) was used for making figures. p < 0.05 was considered
+(Prism9) was used for making figures. p < 0.05 was considered
 statistically significant.
 Results
 Isolation, identification, and screening
@@ -456,7 +456,7 @@ increased inflammatory cells (Figure 3A). To further study the role of
 probiotic strains in reducing inflammation, we measured the
 expression of pro-inflammatory markers in the colon tissues using a
 RT-PCR. Although no significant differences in expression of IL-6 and
-TNF-α were observed, IL-1β was significantly decreased in the
+TNF-alpha were observed, IL-1beta was significantly decreased in the
 probiotics-fed mice compared to the control (Figure 3C), suggesting
 effects of the probiotic cocktail on reducing inflammation during
 CDI. These results suggested that the probiotic cocktail could maintain
@@ -489,7 +489,7 @@ and Enterococcus which contains lots of potential pathogens decreased
 in the Pro11-fed group (Figure 4B). On the species level, the increase
 of beneficial species in the Pro11-fed mice includes the Lactobacillus,
 Bifidobacterium, Streptococcus species which our probiotic cocktail
-TABLE 1  List of probiotic strains used for the study.
+TABLE 1 List of probiotic strains used for the study.
 ID
 Identification
 Name used in manuscript
@@ -567,10 +567,10 @@ hospital-associated diarrhea (Bien et al., 2013; Matzaras et al., 2022).
 FIGURE 1
 Effects of probiotics on growth and biofilm formation of C. difficile. (A) Probiotic strains inhibited growth of C. difficile on double layer soft layer with
 inhibition zones around cultures. (B) Nine of the 11 probiotic strains showed significant growth inhibition against C. difficile during co-culture in broth
-(Data represent mean ± SE from three independent experiments, statistical significance was analyzed using a two-tailed Student's T-test). (C) Cell free
-supernatant (CFS) of all the 11 probiotics reduced biofilm formation of C. difficile (Data represent mean ± SE from three independent experiment,
+(Data represent mean +- SE from three independent experiments, statistical significance was analyzed using a two-tailed Student's T-test). (C) Cell free
+supernatant (CFS) of all the 11 probiotics reduced biofilm formation of C. difficile (Data represent mean +- SE from three independent experiment,
 statistical significance was analyzed using a two-tailed Student's t-test). p-values for differences between the co-culture and the single C. difficile
-culture control, *p < 0.05, **p < 0.01, and ***p < 0.001.
+culture control, *p < 0.05, **p < 0.01, and ***p < 0.001.
 
 Gurung et al.
 10.3389/fmicb.2025.1555220
@@ -626,12 +626,12 @@ acid secretion, and colonization resistance (Jo et al., 2023; Kolling
 et al., 2012; Lee et al., 2021; Spinler et al., 2017). To increase the
 diversity of the probiotic cocktail, the top strains from each species
 FIGURE 2
-Probiotic cocktail protected the host during C. difficile infection (CDI). Probiotic cocktail ameliorated CDI in mice (n = 8 per group) with lower clinical
-scores (A) and higher survival (B) compared to that from the control group [Panel (A): data represent mean ± SE from two independent experiments.
+Probiotic cocktail protected the host during C. difficile infection (CDI). Probiotic cocktail ameliorated CDI in mice (n = 8 per group) with lower clinical
+scores (A) and higher survival (B) compared to that from the control group [Panel (A): data represent mean +- SE from two independent experiments.
 Statistical significance was analyzed using a two-tailed Student's T-test for different time points]. Analysis with fecal samples indicated roles of the
-probiotics cocktail in reducing burden (C) and toxins production of C. difficile (D) in vivo. [Panel (C): data represent mean ± SE from n = 8 mice. Panel
-(D): data represent mean ± SE from n = 13 mice. Statistical significance was analyzed using a two-tailed Student's t-test]. p-values for differences
-between the probiotics-fed and control mice, *p < 0.05, **p < 0.01 and ***p < 0.001.
+probiotics cocktail in reducing burden (C) and toxins production of C. difficile (D) in vivo. [Panel (C): data represent mean +- SE from n = 8 mice. Panel
+(D): data represent mean +- SE from n = 13 mice. Statistical significance was analyzed using a two-tailed Student's t-test]. p-values for differences
+between the probiotics-fed and control mice, *p < 0.05, **p < 0.01 and ***p < 0.001.
 
 Gurung et al.
 10.3389/fmicb.2025.1555220
@@ -676,9 +676,9 @@ FIGURE 3
 Probiotic cocktail strengthened gut barriers and reduced inflammation during CDI. (A) Histopathological analysis of the colon tissue using hematoxylin
 and eosin (H&E). Comparing to the increased inflitration of neutrophils (red arrow) and disruption of the villi (black arrow) in control due to CDI, the
 probiotic cocktail-fed mice maintained comparable intact villi and less inflitration of neutrophils. Accordingly, less serum sCD14 concentration (B) and
-reduced pro-inflammatory marker IL-1β (C) were detected in the probiotics group [Panel (B): data represent mean ± SE from n = 4 mice serum. Panel
-(C): data represent mean ± SE from n = 4 mice colon tissues. Statistical significance was analyzed using a two-tailed Student's t-test]. p-values for
-differences between the probiotics-fed and control group, *p < 0.05, ns, non-significant difference.
+reduced pro-inflammatory marker IL-1beta (C) were detected in the probiotics group [Panel (B): data represent mean +- SE from n = 4 mice serum. Panel
+(C): data represent mean +- SE from n = 4 mice colon tissues. Statistical significance was analyzed using a two-tailed Student's t-test]. p-values for
+differences between the probiotics-fed and control group, *p < 0.05, ns, non-significant difference.
 
 Gurung et al.
 10.3389/fmicb.2025.1555220
@@ -705,7 +705,7 @@ FIGURE 4
 Probiotic cocktail beneficially modulated gut microbiome during CDI. Probiotics prompted gut microbiome diversity (A), enhanced beneficial genus
 Lactobacillus, Bifidobacterium and Bacillus, while reducing the Enterococcous genus (B) compared to the control (without Pro11 treatment). (C) Linear
 discriminatory analysis (LDA) effect size (LefSe) demonstrated representative species significantly modulated with probiotics treatment. p-values for
-differences between the probiotics-fed and control mice, *p < 0.05, **p < 0.01 and ***p < 0.001.
+differences between the probiotics-fed and control mice, *p < 0.05, **p < 0.01 and ***p < 0.001.
 FIGURE 5
 Probiotic cocktail modulated gut metabolites. (A) PCA plot demonstrated significant metabolites clusters for the control and probiotic cocktail groups.
 The PC1 and PC2 in (A) represent the first and second principal components and are useful to visualize the differences between the groups.
