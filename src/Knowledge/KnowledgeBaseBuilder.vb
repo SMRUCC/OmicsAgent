@@ -1,3 +1,4 @@
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.Utility
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Ollama
@@ -42,7 +43,7 @@ Public Class KnowledgeBaseBuilder
         _context.KnowledgeDir.MakeDir
 
         ' 2. 处理参考文献
-        Dim referenceFiles = CollectReferenceFiles()
+        Dim referenceFiles = Await CollectReferenceFiles(cancellationToken)
         If referenceFiles.Count = 0 AndAlso _config.Literature.AutoSearchLiterature Then
             LogInfo("未提供参考文献，根据 INI 配置自动检索文献...")
             referenceFiles = Await SearchLiteratureAsync(_context.ResearchTopic, cancellationToken)
@@ -62,7 +63,7 @@ Public Class KnowledgeBaseBuilder
     End Function
 
     ''' <summary>收集用户提供的参考文献 txt 文件</summary>
-    Private Function CollectReferenceFiles() As List(Of String)
+    Private Async Function CollectReferenceFiles(cancellationToken As CancellationToken) As Task(Of List(Of String))
         Dim result As New List(Of String)()
         If String.IsNullOrEmpty(_context.ReferenceDir) OrElse Not Directory.Exists(_context.ReferenceDir) Then
             Return result
@@ -76,6 +77,22 @@ Public Class KnowledgeBaseBuilder
             End If
             result.Add(dst)
         Next
+
+        Using llm As LLMClient = _config.CreateLLMClient("extract_pdf_text", _context.TmpDir)
+            For Each f In Directory.GetFiles(_context.ReferenceDir, "*.pdf")
+                Dim text As String = $"{_context.ReferenceDir}/{f.BaseName}.txt"
+                Dim dst = Path.Combine(_context.KnowledgeDir, $"{f.BaseName}.txt")
+
+                If Not text.FileExists Then
+                    Using s As Stream = f.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                        Dim fulltext As String = Await PDFText.ExtractCleanText(s, llm:=llm, cancellationToken)
+
+                        Call fulltext.SaveTo(dst)
+                        Call result.Add(dst)
+                    End Using
+                End If
+            Next
+        End Using
 
         Return result
     End Function
