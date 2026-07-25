@@ -80,13 +80,14 @@ Public Class KnowledgeBaseBuilder
 
         Using llm As LLMClient = _config.CreateLLMClient("extract_pdf_text", _context.TmpDir)
             For Each f In Directory.GetFiles(_context.ReferenceDir, "*.pdf")
-                Dim text As String = $"{_context.ReferenceDir}/{f.BaseName}.txt"
+                Dim text_cache As String = $"{_context.ReferenceDir}/{f.BaseName}.txt"
                 Dim dst = Path.Combine(_context.KnowledgeDir, $"{f.BaseName}.txt")
 
-                If Not text.FileExists Then
+                If Not text_cache.FileExists Then
                     Using s As Stream = f.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
                         Dim fulltext As String = Await PDFText.ExtractCleanText(s, llm:=llm, cancellationToken)
 
+                        Call fulltext.SaveTo(text_cache)
                         Call fulltext.SaveTo(dst)
                         Call result.Add(dst)
                     End Using
