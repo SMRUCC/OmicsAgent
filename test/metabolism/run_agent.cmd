@@ -2,4 +2,5 @@
 
 set agent="G:\OmicsWorks\agent\bin\research.exe"
 
-CALL %agent% -r=research.txt -e=expression.csv -a=metabolites.csv -s=sampleinfo.csv -k=./pubmed/ -w=./demo/ -c=config.ini --skip-literature --skip-kb 
+CALL %agent% -r=research.txt -e=expression.csv -a=metabolites.csv -s=sampleinfo.csv -k=./pubmed/ -w=./demo/ -c=config.ini 
+REM --skip-literature --skip-kb 
