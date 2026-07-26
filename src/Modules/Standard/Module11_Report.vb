@@ -260,7 +260,7 @@ Public Class ReportModule : Inherits AnalysisModuleBase
         sb.AppendLine("<html lang='zh-CN'>")
         sb.AppendLine("<head>")
         sb.AppendLine("<meta charset='UTF-8'>")
-        sb.AppendLine("<title>" & EscapeHtml(content.title) & "</title>")
+        sb.AppendLine("<title>" & content.title & "</title>")
         sb.AppendLine("<style>")
         sb.AppendLine("@page { size: A3; margin: 15mm; }")
         sb.AppendLine("body { font-family: 'Cambria', 'Times New Roman', serif; font-size: 12pt; line-height: 1.6; color: #333; }")
@@ -282,11 +282,11 @@ Public Class ReportModule : Inherits AnalysisModuleBase
         sb.AppendLine("<body>")
 
         ' 标题
-        sb.AppendLine($"<h1>{EscapeHtml(content.title)}</h1>")
+        sb.AppendLine($"<h1>{content.title}</h1>")
 
         ' 摘要
         sb.AppendLine("<h2>摘要</h2>")
-        sb.AppendLine($"<div class='abstract'><p>{EscapeHtml(content.abstract)}</p></div>")
+        sb.AppendLine($"<div class='abstract'>{EscapeHtml(content.abstract)}</div>")
 
         ' 关键词
         If content.keywords IsNot Nothing AndAlso content.keywords.Count > 0 Then
@@ -295,18 +295,18 @@ Public Class ReportModule : Inherits AnalysisModuleBase
 
         ' 引言
         sb.AppendLine("<h2>1. 引言</h2>")
-        sb.AppendLine($"<p>{EscapeHtml(content.introduction)}</p>")
+        sb.AppendLine($"{EscapeHtml(content.introduction)}")
 
         ' 材料与方法
         sb.AppendLine("<h2>2. 材料与方法</h2>")
-        sb.AppendLine($"<p>{EscapeHtml(content.materials_methods)}</p>")
+        sb.AppendLine($"{EscapeHtml(content.materials_methods)}")
 
         ' 结果
         sb.AppendLine("<h2>3. 结果</h2>")
         If content.results_sections IsNot Nothing Then
             For Each section In content.results_sections
                 sb.AppendLine($"<h3>3.{section.module_index} {EscapeHtml(section.title)}</h3>")
-                sb.AppendLine($"<p>{EscapeHtml(section.content)}</p>")
+                sb.AppendLine($"{EscapeHtml(section.content)}")
 
                 ' 插入图表
                 ' 插入表格说明
@@ -332,7 +332,7 @@ Public Class ReportModule : Inherits AnalysisModuleBase
                     ElseIf figPath IsNot Nothing Then
                         ' 读取 CSV 表格文件，提取前 9 行数据，按 fields 指定的列构建 HTML 表格
                         sb.AppendLine("<div>")
-                        sb.AppendLine($"<p><strong>表格说明：</strong>{EscapeHtml(data_rep.caption_cn)}<br><strong>Table Caption:</strong> {EscapeHtml(data_rep.caption_en)}</p>")
+                        sb.AppendLine($"<strong>表格说明：</strong>{EscapeHtml(data_rep.caption_cn)}<br><strong>Table Caption:</strong> {EscapeHtml(data_rep.caption_en)}")
 
                         Try
                             Dim csvDf As DataFrameResolver = DataFrameResolver.Load(figPath.Item2)
@@ -396,11 +396,11 @@ Public Class ReportModule : Inherits AnalysisModuleBase
 
         ' 讨论
         sb.AppendLine("<h2>4. 讨论</h2>")
-        sb.AppendLine($"<p>{EscapeHtml(content.discussion)}</p>")
+        sb.AppendLine($"{EscapeHtml(content.discussion)}")
 
         ' 结论
         sb.AppendLine("<h2>5. 结论</h2>")
-        sb.AppendLine($"<p>{EscapeHtml(content.conclusion)}</p>")
+        sb.AppendLine($"{EscapeHtml(content.conclusion)}")
 
         sb.AppendLine("</body>")
         sb.AppendLine("</html>")
