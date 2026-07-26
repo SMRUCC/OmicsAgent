@@ -16,10 +16,12 @@
         Public Property module_index As Integer
         Public Property title As String = ""
         Public Property content As String = ""
-        Public Property figure_tables As TableFigureCaption()
+        Public Property figures As TableFigureCaption()
+        Public Property tables As TableFigureCaption()
     End Class
 
     Public Class TableFigureCaption
+
         Public Property file As String = ""
         Public Property type As String
         ''' <summary>
@@ -30,6 +32,10 @@
         Public Property fields As String()
         Public Property caption_cn As String = ""
         Public Property caption_en As String = ""
+
+        Public Overrides Function ToString() As String
+            Return $"[{type}] {caption_cn}"
+        End Function
     End Class
 
 End Namespace
