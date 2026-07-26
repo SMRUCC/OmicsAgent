@@ -96,7 +96,7 @@ Public Class ShellTool
                 Directory.CreateDirectory(dir)
             End If
 
-            Dim args = $"--page-size A3 --orientation Portrait {extra_args} ""{absHtmlPath}"" ""{absPdfPath}"""
+            Dim args = $"--page-size A4 --orientation Portrait {extra_args} ""{absHtmlPath}"" ""{absPdfPath}"""
             Return RunProcess(_config.Tools.WkHtmlToPdfPath, args)
         Catch ex As Exception
             Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
