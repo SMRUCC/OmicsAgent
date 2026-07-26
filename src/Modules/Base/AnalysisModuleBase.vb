@@ -405,10 +405,10 @@ Public MustInherit Class AnalysisModuleBase
         ' 注册写入类文件操作工具（受 allowWriteFile 控制）
         If allowWriteFile Then
             llm.AddFunction(fileTool, "write_file")
-            llm.AddFunction(fileTool, "delete_file")
+            ' llm.AddFunction(fileTool, "delete_file")
             llm.AddFunction(fileTool, "copy_file")
-            llm.AddFunction(fileTool, "move_file")
-            llm.AddFunction(fileTool, "delete_directory")
+            ' llm.AddFunction(fileTool, "move_file")
+            ' llm.AddFunction(fileTool, "delete_directory")
             llm.AddFunction(fileTool, "create_zip")
             llm.AddFunction(fileTool, "extract_zip")
         End If

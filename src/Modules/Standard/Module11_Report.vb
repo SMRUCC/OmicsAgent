@@ -185,7 +185,7 @@ Public Class ReportModule : Inherits AnalysisModuleBase
 {String.Join(vbCrLf, tables.Select(Function(t) $"- 模块 {t.Item1}: {t.Item2}"))}
 
 对于表格内容，你应该首先通过 peek_csv 工具进行表格文件的内容预览，然后再决定将哪些表格，以及表格中的哪些字段放入到分析结果报告中。
-在每一个小节中，需要进行展示的图和表都以相同的数据结构存储在figure_tables这个属性中，这两种数据类型通过figure_tables.type属性值是否为table还是figure来进行区分，对于table类别，仅仅是额外多了一个fields字符串数组属性
+在每一个小节中，需要进行图和表的混合展示，展示的图和表都以相同的数据结构存储在figure_tables这个属性中，这两种数据类型通过figure_tables.type属性值是否为table还是figure来进行区分，对于table类别，仅仅是额外多了一个fields字符串数组属性
 
 # 你的任务
 撰写一份完整的中文研究论文初稿，结构如下：
@@ -221,6 +221,8 @@ Public Class ReportModule : Inherits AnalysisModuleBase
   ""conclusion"": ""<中文结论>""
 }}
 "
+            Call RegisterTools(llm, allowWriteFile:=False)
+
             Dim resp = Await llm.Chat(prompt, cancellationToken)
             Dim json = resp.ExtractJsonFromResponse
             If Not String.IsNullOrEmpty(json) Then
@@ -403,10 +405,6 @@ Public Class ReportModule : Inherits AnalysisModuleBase
         End If
 
         Return text _
-            .Replace("&", "&amp;") _
-            .Replace("<", "&lt;") _
-            .Replace(">", "&gt;") _
-            .Replace("""", "&quot;") _
             .Replace(vbCrLf, "<br>") _
             .Replace(vbLf, "<br>")
     End Function
