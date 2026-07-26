@@ -1,4 +1,3 @@
-Imports System
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.MIME.application.json.LenientJson
 Imports Ollama
@@ -6,7 +5,8 @@ Imports OmicsAgent
 
 Module Program
     Sub Main(args As String())
-        test_rscriptSyntaxError()
+        test_reportjson()
+        ' test_rscriptSyntaxError()
         Pause()
     End Sub
 
@@ -27,6 +27,14 @@ Module Program
         Console.WriteLine()
         Console.WriteLine("--- 直接修正整个脚本的结果 ---")
         Console.WriteLine(RScriptFixer.FixEntireRScript(rScript))
+    End Sub
+
+    Sub test_reportjson()
+        Dim respo As New LLMsResponse With {.output = "G:\OmicsWorks\test\metabolism\demo\tmp\11_paper_draft_report\report.txt".ReadAllText}
+        Dim json As String = respo.ExtractJsonFromResponse
+        Dim plan As ReportData.ReportContent = LenientJsonParser.ParseJSON(json).CreateObject(Of ReportData.ReportContent)
+
+        Pause()
     End Sub
 
     Sub test_planjson()
