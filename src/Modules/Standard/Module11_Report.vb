@@ -106,36 +106,16 @@ Public Class ReportModule : Inherits AnalysisModuleBase
         ' 生成 HTML 文件
         Dim htmlPath = Path.Combine(_context.WorkspaceDir, "analysis", "report.html")
         Dim html = BuildHtmlReport(reportContent, figures, tables)
+
         html.SaveTo(htmlPath)
+        reportContent.GetJson.SaveTo(Path.Combine(_context.WorkspaceDir, "analysis", "report.json"))
+
         LogInfo($"HTML report generated: {htmlPath}")
 
         ' 通过 LLM 函数调用工具执行 wkhtmltopdf 转换为 PDF
         Dim pdfPath = Path.Combine(_context.WorkspaceDir, "analysis", "report.pdf")
-        Dim prompt = $"
-你是一位报告生成助手。请使用 run_wkhtmltopdf 工具将已生成的 HTML 报告转换为 PDF。
 
-{BuildContextInfo()}
-
-# 分析计划
-{plan.module_name}
-
-计划目标: {plan.goal}
-计划备注: {plan.notes}
-当前执行步骤: {[step].GetJson}
-
-所有脚本和生成的文件放置在指定临时工作区目录: {Workspace.GetDirectoryFullPath}
-
-# 你的任务
-HTML 报告已生成于: {htmlPath}
-请将其转换为 PDF: {pdfPath}
-使用 run_wkhtmltopdf 工具，参数如下：
-- html_path: {htmlPath}
-- pdf_path: {pdfPath}
-- extra_args: --margin-top 15mm --margin-bottom 15mm --margin-left 15mm --margin-right 15mm --enable-local-file-access
-
-请验证 PDF 文件是否成功生成。
-"
-        Await llm.Chat(prompt, cancellationToken)
+        Call New ShellTool(_config, _context.WorkspaceDir, _logger).run_wkhtmltopdf(htmlPath, pdfPath, extra_args:="")
     End Function
 
     ''' <summary>收集所有模块的结论文本</summary>
@@ -160,7 +140,7 @@ HTML 报告已生成于: {htmlPath}
             Dim figuresDir As String = Path.Combine(result.OutputDir, "figures")
             Dim idx As Integer = result.ModuleIndex
 
-            For Each f In Directory.GetFiles(FiguresDir, "*.png")
+            For Each f In Directory.GetFiles(figuresDir, "*.png")
                 figures.Add(Tuple.Create(idx, f))
             Next
         Next
@@ -246,12 +226,12 @@ HTML 报告已生成于: {htmlPath}
 
             ' 返回默认内容
             Return New ReportContent() With {
-                .Title = "组学数据分析报告",
-                .Abstract = resp.output,
-                .Introduction = "",
-                .MaterialsMethods = "",
-                .Discussion = "",
-                .Conclusion = ""
+                .title = "组学数据分析报告",
+                .abstract = resp.output,
+                .introduction = "",
+                .materials_methods = "",
+                .discussion = "",
+                .conclusion = ""
             }
         End Using
     End Function
@@ -264,7 +244,7 @@ HTML 报告已生成于: {htmlPath}
         sb.AppendLine("<html lang='zh-CN'>")
         sb.AppendLine("<head>")
         sb.AppendLine("<meta charset='UTF-8'>")
-        sb.AppendLine("<title>" & EscapeHtml(content.Title) & "</title>")
+        sb.AppendLine("<title>" & EscapeHtml(content.title) & "</title>")
         sb.AppendLine("<style>")
         sb.AppendLine("@page { size: A3; margin: 15mm; }")
         sb.AppendLine("body { font-family: 'Cambria', 'Times New Roman', serif; font-size: 12pt; line-height: 1.6; color: #333; }")
@@ -286,50 +266,50 @@ HTML 报告已生成于: {htmlPath}
         sb.AppendLine("<body>")
 
         ' 标题
-        sb.AppendLine($"<h1>{EscapeHtml(content.Title)}</h1>")
+        sb.AppendLine($"<h1>{EscapeHtml(content.title)}</h1>")
 
         ' 摘要
         sb.AppendLine("<h2>摘要</h2>")
-        sb.AppendLine($"<div class='abstract'><p>{EscapeHtml(content.Abstract)}</p></div>")
+        sb.AppendLine($"<div class='abstract'><p>{EscapeHtml(content.abstract)}</p></div>")
 
         ' 关键词
-        If content.Keywords IsNot Nothing AndAlso content.Keywords.Count > 0 Then
-            sb.AppendLine($"<p class='keywords'><strong>关键词：</strong>{String.Join("；", content.Keywords)}</p>")
+        If content.keywords IsNot Nothing AndAlso content.keywords.Count > 0 Then
+            sb.AppendLine($"<p class='keywords'><strong>关键词：</strong>{String.Join("；", content.keywords)}</p>")
         End If
 
         ' 引言
         sb.AppendLine("<h2>1. 引言</h2>")
-        sb.AppendLine($"<p>{EscapeHtml(content.Introduction)}</p>")
+        sb.AppendLine($"<p>{EscapeHtml(content.introduction)}</p>")
 
         ' 材料与方法
         sb.AppendLine("<h2>2. 材料与方法</h2>")
-        sb.AppendLine($"<p>{EscapeHtml(content.MaterialsMethods)}</p>")
+        sb.AppendLine($"<p>{EscapeHtml(content.materials_methods)}</p>")
 
         ' 结果
         sb.AppendLine("<h2>3. 结果</h2>")
-        If content.ResultsSections IsNot Nothing Then
-            For Each section In content.ResultsSections
-                sb.AppendLine($"<h3>3.{section.ModuleIndex} {EscapeHtml(section.Title)}</h3>")
-                sb.AppendLine($"<p>{EscapeHtml(section.Content)}</p>")
+        If content.results_sections IsNot Nothing Then
+            For Each section In content.results_sections
+                sb.AppendLine($"<h3>3.{section.module_index} {EscapeHtml(section.title)}</h3>")
+                sb.AppendLine($"<p>{EscapeHtml(section.content)}</p>")
 
                 ' 插入图表
-                If section.FigureCaptions IsNot Nothing Then
-                    For Each cap In section.FigureCaptions
-                        Dim figPath = figures.FirstOrDefault(Function(f) Path.GetFileName(f.Item2) = cap.File)
+                If section.figure_captions IsNot Nothing Then
+                    For Each cap In section.figure_captions
+                        Dim figPath = figures.FirstOrDefault(Function(f) Path.GetFileName(f.Item2) = cap.file)
                         If figPath IsNot Nothing Then
                             sb.AppendLine("<figure>")
-                            sb.AppendLine($"<img src='{New DataURI(figPath.Item2).ToString}' alt='{EscapeHtml(cap.CaptionEn)}'>")
-                            sb.AppendLine($"<figcaption><strong>图注：</strong>{EscapeHtml(cap.CaptionCn)}<br><strong>Figure Caption:</strong> {EscapeHtml(cap.CaptionEn)}</figcaption>")
+                            sb.AppendLine($"<img src='{New DataURI(figPath.Item2).ToString}' alt='{EscapeHtml(cap.caption_en)}'>")
+                            sb.AppendLine($"<figcaption><strong>图注：</strong>{EscapeHtml(cap.caption_cn)}<br><strong>Figure Caption:</strong> {EscapeHtml(cap.caption_en)}</figcaption>")
                             sb.AppendLine("</figure>")
                         End If
                     Next
                 End If
 
                 ' 插入表格说明
-                If section.TableCaptions IsNot Nothing Then
-                    For Each cap In section.TableCaptions
+                If section.table_captions IsNot Nothing Then
+                    For Each cap In section.table_captions
                         sb.AppendLine("<div>")
-                        sb.AppendLine($"<p><strong>表格说明：</strong>{EscapeHtml(cap.CaptionCn)}<br><strong>Table Caption:</strong> {EscapeHtml(cap.CaptionEn)}</p>")
+                        sb.AppendLine($"<p><strong>表格说明：</strong>{EscapeHtml(cap.caption_cn)}<br><strong>Table Caption:</strong> {EscapeHtml(cap.caption_en)}</p>")
                         sb.AppendLine("</div>")
                     Next
                 End If
@@ -338,11 +318,11 @@ HTML 报告已生成于: {htmlPath}
 
         ' 讨论
         sb.AppendLine("<h2>4. 讨论</h2>")
-        sb.AppendLine($"<p>{EscapeHtml(content.Discussion)}</p>")
+        sb.AppendLine($"<p>{EscapeHtml(content.discussion)}</p>")
 
         ' 结论
         sb.AppendLine("<h2>5. 结论</h2>")
-        sb.AppendLine($"<p>{EscapeHtml(content.Conclusion)}</p>")
+        sb.AppendLine($"<p>{EscapeHtml(content.conclusion)}</p>")
 
         sb.AppendLine("</body>")
         sb.AppendLine("</html>")
