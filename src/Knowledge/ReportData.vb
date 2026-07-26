@@ -22,6 +22,11 @@
     Public Class TableFigureCaption
         Public Property file As String = ""
         Public Property type As String
+        ''' <summary>
+        ''' field names to display on html report.
+        ''' empty means * for display all fields
+        ''' </summary>
+        ''' <returns></returns>
         Public Property fields As String()
         Public Property caption_cn As String = ""
         Public Property caption_en As String = ""
