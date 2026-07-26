@@ -1,5 +1,6 @@
 Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Data.Framework.StorageProvider
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.text.markdown
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -210,8 +211,11 @@ Public Class ReportModule : Inherits AnalysisModuleBase
       ""module_index"": 1,
       ""title"": ""<章节标题>"",
       ""content"": ""<章节内容>"",
-      ""figure_tables"": [
+      ""figures"": [
          {{""file"": ""<文件名>"", ""type"": ""figure"", ""caption_cn"": ""<中文图注>"", ""caption_en"": ""<英文图注>""}},
+         ...
+      ],
+      ""tables"": [
          {{""file"": ""<文件名>"", ""type"": ""table"", ""caption_cn"": ""<中文表注>"", ""caption_en"": ""<英文表注>"", ""fields"": [""字段名称1"",""字段名称2"", ...]}},
          ...
       ]
@@ -306,7 +310,12 @@ Public Class ReportModule : Inherits AnalysisModuleBase
 
                 ' 插入图表
                 ' 插入表格说明
-                For Each data_rep As TableFigureCaption In section.figure_tables
+                For Each data_rep As TableFigureCaption In section.figures _
+                    .JoinIterates(section.tables) _
+                    .OrderBy(Function(a)
+                                 Return a.fields.BaseName
+                             End Function)
+
                     Dim figPath = figures.FirstOrDefault(Function(f) Path.GetFileName(f.Item2).TextEquals(data_rep.file))
 
                     If figPath Is Nothing AndAlso data_rep.file.FileExists Then
