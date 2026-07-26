@@ -109,7 +109,7 @@ Public Class ReportModule : Inherits AnalysisModuleBase
 
         ' 生成 HTML 文件
         Dim htmlPath = Path.Combine(_context.WorkspaceDir, "analysis", "report.html")
-        Dim html = BuildHtmlReport(reportContent, figures, tables)
+        Dim html = BuildHtmlReport(reportContent, figures, tables).Replace("<br><br>", "")
 
         html.SaveTo(htmlPath)
         reportContent.GetJson.SaveTo(Path.Combine(_context.WorkspaceDir, "analysis", "report.json"))
@@ -228,7 +228,7 @@ Public Class ReportModule : Inherits AnalysisModuleBase
             Call RegisterFileTools(llm, allowWriteFile:=False)
 
             Dim resp = Await llm.Chat(prompt, cancellationToken)
-            Dim json = resp.ExtractJsonFromResponse
+            Dim json = Strings.Trim(resp.ExtractJsonFromResponse).Replace("\n\n", "\n")
 
             Call resp.output.SaveTo($"{Workspace}/report.txt")
 
@@ -262,21 +262,7 @@ Public Class ReportModule : Inherits AnalysisModuleBase
         sb.AppendLine("<meta charset='UTF-8'>")
         sb.AppendLine("<title>" & content.title & "</title>")
         sb.AppendLine("<style>")
-        sb.AppendLine("@page { size: A3; margin: 15mm; }")
-        sb.AppendLine("body { font-family: 'Cambria', 'Times New Roman', serif; font-size: 12pt; line-height: 1.6; color: #333; }")
-        sb.AppendLine("h1 { font-size: 22pt; text-align: center; color: #1F4E79; margin-bottom: 20pt; }")
-        sb.AppendLine("h2 { font-size: 16pt; color: #1F4E79; border-bottom: 2px solid #1F4E79; padding-bottom: 5pt; margin-top: 20pt; }")
-        sb.AppendLine("h3 { font-size: 14pt; color: #2E5C8A; margin-top: 15pt; }")
-        sb.AppendLine("p { text-align: justify; text-indent: 2em; }")
-        sb.AppendLine("figure { text-align: center; margin: 15pt 0; page-break-inside: avoid; }")
-        sb.AppendLine("img { max-width: 100%; max-height: 500px; }")
-        sb.AppendLine("figcaption { font-size: 10pt; color: #555; margin-top: 5pt; text-align: center; }")
-        sb.AppendLine("table { width: 100%; border-collapse: collapse; margin: 10pt 0; font-size: 10pt; }")
-        sb.AppendLine("th { background-color: #1F4E79; color: white; padding: 5pt; border: 1px solid #ccc; }")
-        sb.AppendLine("td { padding: 5pt; border: 1px solid #ccc; }")
-        sb.AppendLine("tr:nth-child(even) { background-color: #f9f9f9; }")
-        sb.AppendLine(".keywords { font-style: italic; color: #555; }")
-        sb.AppendLine(".abstract { background-color: #f5f5f5; padding: 10pt; border-left: 4px solid #1F4E79; }")
+        sb.AppendLine($"{App.HOME}/../docs/report.css".ReadAllText)
         sb.AppendLine("</style>")
         sb.AppendLine("</head>")
         sb.AppendLine("<body>")
