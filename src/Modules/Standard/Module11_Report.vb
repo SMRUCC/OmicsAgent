@@ -180,7 +180,10 @@ Public Class ReportModule : Inherits AnalysisModuleBase
 {String.Join(vbCrLf, figures.Select(Function(f) $"- 模块 {f.Item1}: {Path.GetFileName(f.Item2)}"))}
 
 # 可用表格
-{String.Join(vbCrLf, tables.Select(Function(t) $"- 模块 {t.Item1}: {Path.GetFileName(t.Item2)}"))}
+{String.Join(vbCrLf, tables.Select(Function(t) $"- 模块 {t.Item1}: {t.Item2}"))}
+
+对于表格内容，你应该首先通过 peek_csv 工具进行表格文件的内容预览，然后再决定将哪些表格，以及表格中的哪些字段放入到分析结果报告中。
+在每一个小节中，需要进行展示的图和表都以相同的数据结构存储在figure_tables这个属性中，这两种数据类型通过figure_tables.type属性值是否为table还是figure来进行区分，对于table类别，仅仅是额外多了一个fields字符串数组属性
 
 # 你的任务
 撰写一份完整的中文研究论文初稿，结构如下：
@@ -193,9 +196,7 @@ Public Class ReportModule : Inherits AnalysisModuleBase
 7. 讨论（Discussion）- 生物学机制解读，与文献对比
 8. 结论（Conclusion）- 主要发现总结
 
-对于涉及的每个图表，撰写中英文双语图注。
-
-以 JSON 格式返回：
+对于涉及的每个图表，撰写中英文双语图注。以下面的 JSON 格式返回结果，以方便我做自动化解析：
 {{
   ""title"": ""<中文标题>"",
   ""abstract"": ""<中文摘要>"",
@@ -207,8 +208,11 @@ Public Class ReportModule : Inherits AnalysisModuleBase
       ""module_index"": 1,
       ""title"": ""<章节标题>"",
       ""content"": ""<章节内容>"",
-      ""figure_captions"": [{{""file"": ""<文件名>"", ""caption_cn"": ""<中文图注>"", ""caption_en"": ""<英文图注>""}}],
-      ""table_captions"": [{{""file"": ""<文件名>"", ""caption_cn"": ""<中文表注>"", ""caption_en"": ""<英文表注>""}}]
+      ""figure_tables"": [
+         {{""file"": ""<文件名>"", ""type"": ""figure"", ""caption_cn"": ""<中文图注>"", ""caption_en"": ""<英文图注>""}},
+         {{""file"": ""<文件名>"", ""type"": ""table"", ""caption_cn"": ""<中文表注>"", ""caption_en"": ""<英文表注>"", ""fields"": [""字段名称1"",""字段名称2"", ...]}},
+         ...
+      ]
     }}
   ],
   ""discussion"": ""<中文讨论>"",
@@ -294,26 +298,27 @@ Public Class ReportModule : Inherits AnalysisModuleBase
                 sb.AppendLine($"<p>{EscapeHtml(section.content)}</p>")
 
                 ' 插入图表
-                If section.figure_captions IsNot Nothing Then
-                    For Each cap In section.figure_captions
-                        Dim figPath = figures.FirstOrDefault(Function(f) Path.GetFileName(f.Item2) = cap.file)
+                ' 插入表格说明
+                For Each data_rep As TableFigureCaption In section.figure_tables
+                    Dim figPath = figures.FirstOrDefault(Function(f) Path.GetFileName(f.Item2).TextEquals(data_rep.file))
+
+                    If figPath Is Nothing AndAlso data_rep.file.FileExists Then
+                        figPath = New Tuple(Of Integer, String)(0, data_rep.file)
+                    End If
+
+                    If data_rep.type = "figure" OrElse Not data_rep.file.ExtensionSuffix("csv") Then
                         If figPath IsNot Nothing Then
                             sb.AppendLine("<figure>")
-                            sb.AppendLine($"<img src='{New DataURI(figPath.Item2).ToString}' alt='{EscapeHtml(cap.caption_en)}'>")
-                            sb.AppendLine($"<figcaption><strong>图注：</strong>{EscapeHtml(cap.caption_cn)}<br><strong>Figure Caption:</strong> {EscapeHtml(cap.caption_en)}</figcaption>")
+                            sb.AppendLine($"<img src='{New DataURI(figPath.Item2).ToString}' alt='{EscapeHtml(data_rep.caption_en)}'>")
+                            sb.AppendLine($"<figcaption><strong>图注：</strong>{EscapeHtml(data_rep.caption_cn)}<br><strong>Figure Caption:</strong> {EscapeHtml(data_rep.caption_en)}</figcaption>")
                             sb.AppendLine("</figure>")
                         End If
-                    Next
-                End If
-
-                ' 插入表格说明
-                If section.table_captions IsNot Nothing Then
-                    For Each cap In section.table_captions
+                    Else
                         sb.AppendLine("<div>")
-                        sb.AppendLine($"<p><strong>表格说明：</strong>{EscapeHtml(cap.caption_cn)}<br><strong>Table Caption:</strong> {EscapeHtml(cap.caption_en)}</p>")
+                        sb.AppendLine($"<p><strong>表格说明：</strong>{EscapeHtml(data_rep.caption_cn)}<br><strong>Table Caption:</strong> {EscapeHtml(data_rep.caption_en)}</p>")
                         sb.AppendLine("</div>")
-                    Next
-                End If
+                    End If
+                Next
             Next
         End If
 
