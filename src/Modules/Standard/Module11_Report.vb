@@ -129,7 +129,7 @@ Public Class ReportModule : Inherits AnalysisModuleBase
             Dim conclusionFile = Path.Combine(result.OutputDir, "conclusion.md")
             Dim idx As Integer = result.ModuleIndex
 
-            results(idx) = File.ReadAllText(conclusionFile, Encoding.UTF8)
+            results(idx) = conclusionFile.ReadAllText(Encoding.UTF8)
         Next
 
         Return results
