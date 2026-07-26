@@ -1,0 +1,88 @@
+﻿{
+  "module_index": 9,
+  "module_name": "PLS-PM Causal Path Analysis",
+  "xlsx_file": "9_pls_pm_causal_path_analysis.xlsx",
+  "output_dir": "G:/OmicsWorks/test/metabolism/demo/analysis\9_pls_pm_causal_path_analysis",
+  "sheets": [
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/9_pls_pm_causal_path_analysis\tables\plspm_cronbach_alpha.csv",
+      "sheet_name": "plspm_cronbach_alpha",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/9_pls_pm_causal_path_analysis\tables\plspm_model_comparison.csv",
+      "sheet_name": "plspm_model_comparison",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/9_pls_pm_causal_path_analysis\tables\plspm_module_gof.csv",
+      "sheet_name": "plspm_module_gof",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/9_pls_pm_causal_path_analysis\tables\plspm_module_inner_model.csv",
+      "sheet_name": "plspm_module_inner_model",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/9_pls_pm_causal_path_analysis\tables\plspm_module_latent_scores.csv",
+      "sheet_name": "plspm_module_latent_scores",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/9_pls_pm_causal_path_analysis\tables\plspm_module_outer_model.csv",
+      "sheet_name": "plspm_module_outer_model",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/9_pls_pm_causal_path_analysis\tables\plspm_module_path_coefficients.csv",
+      "sheet_name": "plspm_module_path_coefficients",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/9_pls_pm_causal_path_analysis\tables\plspm_module_total_effects.csv",
+      "sheet_name": "plspm_module_total_effects",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/9_pls_pm_causal_path_analysis\tables\plspm_module_unidimensionality.csv",
+      "sheet_name": "plspm_module_unidimensionality",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/9_pls_pm_causal_path_analysis\tables\plspm_pathway_gof.csv",
+      "sheet_name": "plspm_pathway_gof",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/9_pls_pm_causal_path_analysis\tables\plspm_pathway_inner_model.csv",
+      "sheet_name": "plspm_pathway_inner_model",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/9_pls_pm_causal_path_analysis\tables\plspm_pathway_latent_scores.csv",
+      "sheet_name": "plspm_pathway_latent_scores",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/9_pls_pm_causal_path_analysis\tables\plspm_pathway_outer_model.csv",
+      "sheet_name": "plspm_pathway_outer_model",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/9_pls_pm_causal_path_analysis\tables\plspm_pathway_path_coefficients.csv",
+      "sheet_name": "plspm_pathway_path_coefficients",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/9_pls_pm_causal_path_analysis\tables\plspm_pathway_total_effects.csv",
+      "sheet_name": "plspm_pathway_total_effects",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/9_pls_pm_causal_path_analysis\tables\plspm_pathway_unidimensionality.csv",
+      "sheet_name": "plspm_pathway_unidimensionality",
+      "annotation": ""
+    }
+  ]
+}

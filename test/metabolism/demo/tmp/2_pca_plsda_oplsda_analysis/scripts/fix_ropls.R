@@ -1,0 +1,10 @@
+lines <- readLines("G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/scripts/plsda_oplsda_analysis.R")
+# Fix the opls call: fig.pdf.nb -> fig.pdfC, info.txt -> info.txtC
+target <- grep("ropls::opls", lines)
+cat("OPLS call at line", target, "\n")
+cat("Before:", lines[target], "\n")
+lines[target] <- gsub("fig.pdf.nb =0", "fig.pdfC = \"none\"", lines[target])
+lines[target] <- gsub("info.txt = FALSE", "info.txtC = \"none\"", lines[target])
+cat("After:", lines[target], "\n")
+writeLines(lines, "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/scripts/plsda_oplsda_analysis.R")
+cat("Fixed.\n")

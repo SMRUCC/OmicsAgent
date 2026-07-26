@@ -1,0 +1,88 @@
+{
+ "module_index":9,
+ "module_name": "PLS-PM Causal Path Analysis",
+ "xlsx_file": "9_pls_pm_causal_path_analysis.xlsx",
+ "output_dir": "G:/OmicsWorks/test/metabolism/demo/analysis\\9_pls_pm_causal_path_analysis",
+ "sheets": [
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/9_pls_pm_causal_path_analysis\\tables\\plspm_cronbach_alpha.csv",
+ "sheet_name": "plspm_cronbach_alpha",
+ "annotation": "Cronbach's alpha reliability coefficients for latent variables (LVs) in both Model A (Module-level:6 WGCNA MEs, each with single indicator) and Model B (Pathway-level:5 KEGG pathway composites). Columns: LV (latent variable name, prefixed A_ or B_ for model), N_Ind (number of manifest indicators per LV), Alpha (Cronbach's alpha; NA for single-indicator LVs). Model B reveals that Energy_Metabolism (Alpha=0.788) and Excretory_System (Alpha=0.622) achieve acceptable internal consistency, while Iron_Metabolism (Alpha=0.450) shows lower reliability. This table helps assess construct reliability for the pathway-level causal model linking dietary iron to CDI susceptibility."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/9_pls_pm_causal_path_analysis\\tables\\plspm_model_comparison.csv",
+ "sheet_name": "plspm_model_comparison",
+ "annotation": "Side-by-side comparison of the two PLS-PM causal models. Columns: Model (model name), LVs (number of latent variables), GoF (Goodness-of-Fit index; NaN if unavailable), Sig_Paths (number of statistically significant paths). Model A (Module-level) uses6 WGCNA module eigengenes as single-indicator LVs with6 BN-derived paths; Model B (Pathway-level) uses5 KEGG pathway aggregation groups. This table allows quick comparison of model complexity and performance, supporting the conclusion that module-level aggregation (Model A) captures causal regulatory structure more effectively than pathway-level aggregation."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/9_pls_pm_causal_path_analysis\\tables\\plspm_module_gof.csv",
+ "sheet_name": "plspm_module_gof",
+ "annotation": "Overall Goodness-of-Fit (GoF) value for Model A (Module-level PLS-PM), which quantifies the model's predictive power as the geometric mean of outer model communality and inner model R-squared. Columns: GoF (single numeric value). While the GoF value provides a global fit metric, the primary strength of Model A lies in its path-level significance: all6 BN-derived causal paths reached statistical significance (p<0.01), validating the 'high-iron diet → metabolic module reprogramming → immune signaling suppression → CDI susceptibility' causal chain."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/9_pls_pm_causal_path_analysis\\tables\\plspm_module_inner_model.csv",
+ "sheet_name": "plspm_module_inner_model",
+ "annotation": "Inner model regression results for Model A (Module-level), showing the estimated path coefficients with statistical testing. Columns: Estimate (path coefficient), Std. Error (standard error), t value (t-statistic), Pr(>|t|) (p-value), Dependent (dependent LV), Predictor (predictor LV). All6 BN-identified paths are significant (p<0.01): Turquoise→Red (-0.722, p=7.7e-9), Magenta→Red (+1.127, p=4.2e-6), Magenta→Blue (-0.809, p=1.5e-4), Turquoise→Blue (-0.350, p=5.4e-5), Blue→Red (+0.635, p=4.7e-3), Black→Purple (+0.613, p=6.8e-3). These results provide quantitative path-level causal evidence for the 'diet-microbiome-host' interaction framework in CDI."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/9_pls_pm_causal_path_analysis\\tables\\plspm_module_latent_scores.csv",
+ "sheet_name": "plspm_module_latent_scores",
+ "annotation": "Latent variable scores for each sample across the6 WGCNA modules in Model A. Columns: PurpleModule, RedModule, BlueModule, BlackModule, TurquoiseModule, MagentaModule (module eigengene scores), Sample (sample ID), Group (experimental group: CD=CDI, FE=High Iron Diet, NC=Normal Control). Turquoise module scores are elevated in FE group, Red module in CD group, and Blue module in NC group, consistent with the directional path coefficients. Users can explore sample-level LV distributions to validate group separation patterns linked to the causal paths."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/9_pls_pm_causal_path_analysis\\tables\\plspm_module_outer_model.csv",
+ "sheet_name": "plspm_module_outer_model",
+ "annotation": "Outer model (measurement model) results for Model A, showing the relationship between each manifest variable and its latent variable. Columns: name (LV name), block (assigned block), weight (outer weight), loading (outer loading), communality (squared loading), redundancy (redundancy index). Since Model A uses single-indicator LVs (WGCNA module eigengenes), all loadings and weights equal1.0, and communality equals1.0. Redundancy values indicate the proportion of LV variance explained by its predictors; Turquoise (0.965) and Magenta (0.768) show highest redundancy, reflecting strong predictive relationships from upstream LVs."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/9_pls_pm_causal_path_analysis\\tables\\plspm_module_path_coefficients.csv",
+ "sheet_name": "plspm_module_path_coefficients",
+ "annotation": "Path coefficient matrix for Model A (Module-level), where rows represent predictor LVs and columns represent dependent LVs. Matrix entries are the estimated path coefficients for each directed relationship derived from the upstream Bayesian Network (Module8). Key findings: Turquoise→Red (-0.722) confirms high-iron diet suppresses immune signaling; Magenta→Red (+1.127) shows CDI infection activates immune signaling; Blue→Red (+0.635) shows normal control metabolism supports immune function. These results quantify the causal path structure underlying the dietary iron-CDI susceptibility axis."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/9_pls_pm_causal_path_analysis\\tables\\plspm_module_total_effects.csv",
+ "sheet_name": "plspm_module_total_effects",
+ "annotation": "Decomposition of causal effects into direct, indirect, and total effects for each pair of latent variables in Model A. Columns: relationships (source→target path), direct (direct effect coefficient), indirect (mediated effect coefficient), total (direct + indirect). Key finding: the Magenta→Red relationship has direct effect +1.127 but total effect +0.614 due to negative indirect mediation (-0.513) via Blue module, revealing complex regulation. The Turquoise→Red total effect is -0.944 (direct -0.722 + indirect -0.222), confirming strong overall suppression of immune signaling by the high-iron diet-induced module."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/9_pls_pm_causal_path_analysis\\tables\\plspm_module_unidimensionality.csv",
+ "sheet_name": "plspm_module_unidimensionality",
+ "annotation": "Unidimensionality assessment for each latent variable in Model A (Module-level). Columns: Mode (measurement mode A or B), MVs (number of manifest variables), C.alpha (Cronbach's alpha), DG.rho (Dillon-Goldstein's rho), eig.1st (first eigenvalue), eig.2nd (second eigenvalue). Since Model A uses single-indicator LVs (WGCNA module eigengenes), all MVs=1, C.alpha=1, DG.rho=1, and eig.1st=1eig.2nd=0, indicating perfect unidimensionality by definition. This table confirms the measurement structure for the module-level causal model."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/9_pls_pm_causal_path_analysis\\tables\\plspm_pathway_gof.csv",
+ "sheet_name": "plspm_pathway_gof",
+ "annotation": "Overall Goodness-of-Fit (GoF) value for Model B (Pathway-level PLS-PM), assessing predictive performance of the KEGG pathway-based causal model. Columns: GoF (single numeric value). Model B tests the 'Iron_Metabolism → Lipid_Metabolism/Energy_Metabolism → Signal_Transduction/Excretory_System' causal chain using aggregated KEGG pathway scores. The GoF is supplementary to path-level significance; only2/6 paths reached significance in Model B, suggesting pathway-level aggregation captures less regulatory structure than module-level aggregation in Model A."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/9_pls_pm_causal_path_analysis\\tables\\plspm_pathway_inner_model.csv",
+ "sheet_name": "plspm_pathway_inner_model",
+ "annotation": "Inner model regression results for Model B (Pathway-level), showing path coefficient estimates and significance tests. Columns: Estimate (path coefficient), Std. Error, t value, Pr(>|t|) (p-value), Dependent (dependent LV), Predictor (predictor LV). Only2 of6 paths are significant: Iron_Metabolism→Energy_Metabolism (+0.674, p=0.003) and Iron_Metabolism→Signal_Transduction (+0.403, p=0.043). Non-significant paths include Iron_Metabolism→Lipid_Metabolism (-0.047, p=0.832) and Iron_Metabolism→Excretory_System (+0.304, p=0.177). These results indicate that iron-related pathway activity significantly drives energy metabolism and signal transduction, consistent with the known role of iron in host immune-metabolic regulation during CDI."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/9_pls_pm_causal_path_analysis\\tables\\plspm_pathway_latent_scores.csv",
+ "sheet_name": "plspm_pathway_latent_scores",
+ "annotation": "Latent variable scores for each sample across the5 KEGG pathway composite LVs in Model B. Columns: Excretory_System, Signal_Transduction, Lipid_Metabolism, Energy_Metabolism, Iron_Metabolism (pathway composite scores), Sample (sample ID), Group (experimental group: CD=CDI, FE=High Iron Diet, NC=Normal Control). Iron_Metabolism and Energy_Metabolism scores are elevated in FE group, while Signal_Transduction scores are higher in CD group. These sample-level scores can be used to visualize group differences in pathway activity and validate the causal path directions."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/9_pls_pm_causal_path_analysis\\tables\\plspm_pathway_outer_model.csv",
+ "sheet_name": "plspm_pathway_outer_model",
+ "annotation": "Outer model (measurement model) results for Model B (Pathway-level), showing manifest variable relationships to each KEGG pathway LV. Columns: name (LV name), block (assigned block), weight (outer weight), loading (outer loading), communality (squared loading), redundancy (redundancy index). Single-indicator LVs have weight=loading=communality=1.0. Redundancy values: Iron_Metabolism (0.632) reflects the proportion of its variance explained by predictor LVs (Energy_Metabolism, Signal_Transduction, Lipid_Metabolism, Excretory_System), indicating that the iron metabolism pathway composite is substantially predicted by upstream pathway activities."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/9_pls_pm_causal_path_analysis\\tables\\plspm_pathway_path_coefficients.csv",
+ "sheet_name": "plspm_pathway_path_coefficients",
+ "annotation": "Path coefficient matrix for Model B (Pathway-level), where rows are predictor LVs and columns are dependent LVs. Key significant paths: Iron_Metabolism→Energy_Metabolism (+0.674, p=0.003), Iron_Metabolism→Signal_Transduction (+0.403, p=0.043); non-significant: Excretory_System→Energy_Metabolism (+0.289, p=0.245), Iron_Metabolism→Excretory_System (+0.304, p=0.177), Lipid_Metabolism→Signal_Transduction (+0.126, p=0.620), Iron_Metabolism→Lipid_Metabolism (-0.047, p=0.832). This matrix reveals that iron-related pathways positively drive energy metabolism and signal transduction, providing pathway-level causal evidence complementing the module-level findings."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/9_pls_pm_causal_path_analysis\\tables\\plspm_pathway_total_effects.csv",
+ "sheet_name": "plspm_pathway_total_effects",
+ "annotation": "Decomposition of direct, indirect, and total causal effects for all LV pairs in Model B (Pathway-level). Columns: relationships (source→target path), direct, indirect, total effect coefficients. The Iron_Metabolism→Iron_Metabolism total effect (self-loop via mediators) includes indirect contributions from Energy_Metabolism (+0.674 *0.674 =0.454) and Signal_Transduction (+0.403 *0.403 =0.162), yielding total =0.499. These effect decompositions help understand how iron metabolism pathway activation propagates through the diet-microbiome-host causal network to influence immune signaling and excretory function in CDI."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/9_pls_pm_causal_path_analysis\\tables\\plspm_pathway_unidimensionality.csv",
+ "sheet_name": "plspm_pathway_unidimensionality",
+ "annotation": "Unidimensionality metrics for each latent variable in Model B (Pathway-level). Columns: Mode (measurement mode A or B), MVs (number of manifest variables), C.alpha (Cronbach's alpha), DG.rho (Dillon-Goldstein's rho), eig.1st (first eigenvalue), eig.2nd (second eigenvalue). Note: this table reports per-LV aggregate values; the separate Cronbach's alpha table (plspm_cronbach_alpha) provides the actual alpha values for multi-indicator LVs. Users should refer to the alpha table for reliability assessment of each pathway composite."
+ }
+ ]
+}

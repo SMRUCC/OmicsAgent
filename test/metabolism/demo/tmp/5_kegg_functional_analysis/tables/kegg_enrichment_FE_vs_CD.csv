@@ -1,0 +1,21 @@
+"Pathway","Class","Count_in_Sig","Count_in_BG","Sig_Size","Bg_Size","pvalue","pvalue_adj","enriched"
+"09110 Biosynthesis of other secondary metabolites","09100 Metabolism",36,87,146,447,0.0368997283395797,0.411456471661412,FALSE
+"09143 Cell growth and death","09140 Cellular Processes",4,5,146,447,0.0411456471661412,0.411456471661412,FALSE
+"09103 Lipid metabolism","09100 Metabolism",27,73,146,447,0.232805610976231,0.948611541707965,FALSE
+"09107 Glycan biosynthesis and metabolism","09100 Metabolism",4,8,146,447,0.243419829332248,0.948611541707965,FALSE
+"09161 Cancer: overview","09160 Human Diseases",7,18,146,447,0.366102959501902,0.948611541707965,FALSE
+"09158 Development and regeneration","09150 Organismal Systems",2,4,146,447,0.395436169592357,0.948611541707965,FALSE
+"09131 Membrane transport","09130 Environmental Information Processing",2,4,146,447,0.395436169592357,0.948611541707965,FALSE
+"09154 Digestive system","09150 Organismal Systems",5,13,146,447,0.426875193768584,0.948611541707965,FALSE
+"09101 Carbohydrate metabolism","09100 Metabolism",5,13,146,447,0.426875193768584,0.948611541707965,FALSE
+"09106 Metabolism of other amino acids","09100 Metabolism",3,8,146,447,0.51600385722559,0.957200223356067,FALSE
+"09156 Nervous system","09150 Organismal Systems",2,5,146,447,0.526460122845837,0.957200223356067,FALSE
+"09108 Metabolism of cofactors and vitamins","09100 Metabolism",10,32,146,447,0.638496876799947,0.993036336091608,FALSE
+"09102 Energy metabolism","09100 Metabolism",1,3,146,447,0.695661745236969,0.993036336091608,FALSE
+"09123 Folding, sorting and degradation","09120 Genetic Information Processing",1,4,146,447,0.795736937118506,0.993036336091608,FALSE
+"09157 Sensory system","09150 Organismal Systems",1,4,146,447,0.795736937118506,0.993036336091608,FALSE
+"09132 Signal transduction","09130 Environmental Information Processing",2,8,146,447,0.796159663671524,0.993036336091608,FALSE
+"09109 Metabolism of terpenoids and polyketides","09100 Metabolism",8,31,146,447,0.851875799879408,0.993036336091608,FALSE
+"09111 Xenobiotics biodegradation and metabolism","09100 Metabolism",14,54,146,447,0.901643454013758,0.993036336091608,FALSE
+"09152 Endocrine system","09150 Organismal Systems",1,8,146,447,0.959008851654876,0.993036336091608,FALSE
+"09105 Amino acid metabolism","09100 Metabolism",11,56,146,447,0.993036336091608,0.993036336091608,FALSE

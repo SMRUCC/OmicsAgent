@@ -1,0 +1,7 @@
+"Node","ModuleSize","AssociatedGroup","CMeansCluster","Color"
+"turquoise",539,"FE (r=0.971)","Cluster1","#E41A1C"
+"blue",511,"NC (r=0.919)","Cluster3","#377EB8"
+"red",116,"Signal+ (r=0.978) / FE- (r=-0.913)","Cluster2","#FF7F00"
+"magenta",279,"CD (r=0.892)","Cluster2","#4DAF4A"
+"black",577,"Basal Metabolism","Cluster4","#999999"
+"purple",37,"Minor Module","Cluster4","#A65628"

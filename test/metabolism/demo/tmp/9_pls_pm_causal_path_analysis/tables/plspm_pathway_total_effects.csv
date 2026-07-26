@@ -1,0 +1,11 @@
+"relationships","direct","indirect","total"
+"Excretory_System -> Signal_Transduction",0,0,0
+"Excretory_System -> Lipid_Metabolism",0,0,0
+"Excretory_System -> Energy_Metabolism",0.28859354740774,0,0.28859354740774
+"Excretory_System -> Iron_Metabolism",0.3044699986946,0.194572074710612,0.499042073405212
+"Signal_Transduction -> Lipid_Metabolism",0.125513119012163,0,0.125513119012163
+"Signal_Transduction -> Energy_Metabolism",0,0,0
+"Signal_Transduction -> Iron_Metabolism",0.403392792582908,-0.00583745612392035,0.397555336458988
+"Lipid_Metabolism -> Energy_Metabolism",0,0,0
+"Lipid_Metabolism -> Iron_Metabolism",-0.0465087328708219,0,-0.0465087328708219
+"Energy_Metabolism -> Iron_Metabolism",0.674207987178973,0,0.674207987178973

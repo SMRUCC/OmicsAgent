@@ -1,0 +1,20 @@
+"Pathway","Class","Count_in_Sig","Count_in_BG","Sig_Size","Bg_Size","pvalue","pvalue_adj","enriched"
+"09123 Folding, sorting and degradation","09120 Genetic Information Processing",3,4,105,447,0.0419751092227753,0.647657110161535,FALSE
+"09152 Endocrine system","09150 Organismal Systems",4,8,105,447,0.0920672242629306,0.647657110161535,FALSE
+"09161 Cancer: overview","09160 Human Diseases",7,18,105,447,0.102261648972874,0.647657110161535,FALSE
+"09155 Excretory system","09150 Organismal Systems",2,3,105,447,0.138967801669348,0.660097057929401,FALSE
+"09157 Sensory system","09150 Organismal Systems",2,4,105,447,0.23596049411592,0.747830740410159,FALSE
+"09103 Lipid metabolism","09100 Metabolism",20,73,105,447,0.236157075918998,0.747830740410159,FALSE
+"09105 Amino acid metabolism","09100 Metabolism",15,56,105,447,0.318865160467028,0.796137096476724,FALSE
+"09143 Cell growth and death","09140 Cellular Processes",2,5,105,447,0.335215619569147,0.796137096476724,FALSE
+"09108 Metabolism of cofactors and vitamins","09100 Metabolism",8,32,105,447,0.48954965153527,0.894016708319277,FALSE
+"09106 Metabolism of other amino acids","09100 Metabolism",2,8,105,447,0.596094077808252,0.894016708319277,FALSE
+"09132 Signal transduction","09130 Environmental Information Processing",2,8,105,447,0.596094077808252,0.894016708319277,FALSE
+"09107 Glycan biosynthesis and metabolism","09100 Metabolism",2,8,105,447,0.596094077808252,0.894016708319277,FALSE
+"09158 Development and regeneration","09150 Organismal Systems",1,4,105,447,0.658749153498415,0.894016708319277,FALSE
+"09131 Membrane transport","09130 Environmental Information Processing",1,4,105,447,0.658749153498415,0.894016708319277,FALSE
+"09111 Xenobiotics biodegradation and metabolism","09100 Metabolism",11,54,105,447,0.769450633854257,0.970855133849351,FALSE
+"09101 Carbohydrate metabolism","09100 Metabolism",2,13,105,447,0.850301369317119,0.970855133849351,FALSE
+"09109 Metabolism of terpenoids and polyketides","09100 Metabolism",5,31,105,447,0.89323017963459,0.970855133849351,FALSE
+"09110 Biosynthesis of other secondary metabolites","09100 Metabolism",15,87,105,447,0.956007217083707,0.970855133849351,FALSE
+"09154 Digestive system","09150 Organismal Systems",1,13,105,447,0.970855133849351,0.970855133849351,FALSE

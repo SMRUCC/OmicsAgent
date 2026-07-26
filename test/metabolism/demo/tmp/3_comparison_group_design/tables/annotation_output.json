@@ -1,0 +1,13 @@
+{
+ "module_index":3,
+ "module_name": "Comparison Group Design",
+ "xlsx_file": "3_comparison_group_design.xlsx",
+ "output_dir": "G:/OmicsWorks/test/metabolism/demo/analysis/3_comparison_group_design",
+ "sheets": [
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/3_comparison_group_design\tables\comparison_design.csv",
+ "sheet_name": "Comparison Design",
+ "annotation": "This table defines three pairwise comparisons designed for LIMMA differential analysis and KEGG GSVA pathway enrichment, targeting how high-iron diet modulates Clostridioides difficile infection (CDI) susceptibility via gut metabolite reprogramming. Columns: comparison_name (unique comparison ID), treatment_group (experimental condition), control_group (reference baseline), biological_rationale (biological justification linking to the research question, referencing key mechanisms such as FeoAB/Fhu/Fur iron uptake, TcdA/TcdB toxin regulation, ferrosome Fez system, Cbh bile salt hydrolase, and host nutritional immunity via calprotectin/lipocalin-2), expected_findings (anticipated metabolic shifts in iron homeostasis metabolites, bile acid profiles, short-chain fatty acids, and oxidative stress markers). The three comparisons form a hierarchical strategy: FE_vs_CD (core comparison, isolating high-iron diet effect on CDI metabolic landscape), CD_vs_NC (model validation, establishing CDI infection baseline signature), and FE_vs_NC (overall perturbation, assessing combined high-iron diet plus CDI impact relative to healthy controls), providing a complete evidence chain from infection baseline through dietary intervention to integrated metabolic disruption."
+ }
+ ]
+}

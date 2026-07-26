@@ -18,11 +18,15 @@ Namespace AppRuntime
 
         <Opt("--custom-modules")> Public Property custom_modules As String
 
+        <Opt("--debug-cache")> Public Property debug_cache As Boolean
+
         ''' <summary>
         ''' make check for run Rscript
         ''' </summary>
         ''' <returns></returns>
-        <Opt("--check_r")> Public Property check_interop As Boolean
+        <Opt("--check-r")> Public Property check_interop As Boolean
+
+        <Opt("--make-report")> Public Property makeReport As Boolean
 
         <Opt("--help", "-h")> Public Property help As Boolean = False
 

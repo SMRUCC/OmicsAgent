@@ -1,0 +1,48 @@
+﻿{
+ "module_index":5,
+ "module_name": "KEGG Functional Analysis",
+ "xlsx_file": "5_kegg_functional_analysis.xlsx",
+ "output_dir": "G:/OmicsWorks/test/metabolism/demo/analysis\\5_kegg_functional_analysis",
+ "sheets": [
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/5_kegg_functional_analysis\\tables\\kegg_enrichment_CD_vs_NC.csv",
+ "sheet_name": "kegg_enrich_CD_vs_NC",
+ "annotation": "Fisher's exact test results for KEGG pathway enrichment analysis comparing CD (C. difficile infection) vs NC (normal control) groups. Columns: Pathway (KEGG pathway name and ID), Class (KEGG pathway class hierarchy, e.g., '09100 Metabolism'), Count_in_Sig (number of significantly changed metabolites mapped to this pathway), Count_in_BG (number of background metabolites mapped to this pathway), Sig_Size (total number of significant differential metabolites tested), Bg_Size (total number of background metabolites), pvalue (raw Fisher's exact test p-value), pvalue_adj (FDR-corrected p-value), enriched (TRUE/FALSE indicator). Top enriched pathways include 'Folding, sorting and degradation' (3/4, p=0.042) and 'Endocrine system' (4/8, p=0.092), reflecting CDI-induced host stress responses and endocrine changes. Note: no pathway reached FDR <0.05 significance due to limited KEGG metabolite coverage (21.7%) and conservative multiple testing correction."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/5_kegg_functional_analysis\\tables\\kegg_enrichment_FE_vs_CD.csv",
+ "sheet_name": "kegg_enrich_FE_vs_CD",
+ "annotation": "Fisher's exact test results for KEGG pathway enrichment analysis comparing FE (high-iron diet + CDI) vs CD (standard diet + CDI) groups. This is the core comparison assessing the impact of high-iron diet on CDI host metabolism. Columns: Pathway, Class, Count_in_Sig, Count_in_BG, Sig_Size (146 differential metabolites), Bg_Size (447 background metabolites), pvalue, pvalue_adj, enriched. Top enriched pathways: 'Biosynthesis of other secondary metabolites' (36/87, p=0.037) and 'Cell growth and death' (4/5, p=0.041), indicating high-iron diet influences microbial secondary metabolism and host cell processes. 'Lipid metabolism' (27/73, p=0.233) shows enrichment trend aligning with expected reduction of SCFA-producing beneficial bacteria under high-iron conditions (kb: pharmaceutics-18-00651). However, no pathway passed FDR correction due to limited annotation coverage and conservative Fisher test."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/5_kegg_functional_analysis\\tables\\kegg_enrichment_FE_vs_NC.csv",
+ "sheet_name": "kegg_enrich_FE_vs_NC",
+ "annotation": "Fisher's exact test results for KEGG pathway enrichment analysis comparing FE (high-iron diet + CDI) vs NC (normal control) groups, representing the overall effect of high-iron diet on the CDI metabolic landscape. Columns: Pathway, Class, Count_in_Sig (136 significant metabolites), Count_in_BG, Sig_Size, Bg_Size (447), pvalue, pvalue_adj, enriched. Top pathways include 'Cell growth and death' (3/5, p=0.168) and 'Lipid metabolism' (26/73, p=0.180), with 'Biosynthesis of other secondary metabolites' (29/87, p=0.297) also showing enrichment. The pattern is consistent with FE_vs_CD but attenuated, reflecting the combined dietary and infection effects. No pathways met FDR significance thresholds."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/5_kegg_functional_analysis\\tables\\kegg_gsva_differential_CD_vs_NC.csv",
+ "sheet_name": "gsva_diff_CD_vs_NC",
+ "annotation": "LIMMA differential analysis results of GSVA (Gene Set Variation Analysis) enrichment scores comparing CD vs NC groups. GSVA computes per-sample pathway activity scores independent of differential metabolite counts, offering complementary sensitivity. Columns: Pathway, Class, logFC (log2 fold-change of GSVA scores between groups), AveExpr (average expression across all samples), t_statistic (moderated t-statistic), pvalue (raw p-value), pvalue_adj (FDR-corrected p-value), significant (TRUE/FALSE at FDR <0.05), Direction (Up/Down/Not Significant). Three pathways were significantly upregulated: 'Cancer: overview' (logFC=+0.71, p_adj=7.2e-4), 'Glycan biosynthesis and metabolism' (logFC=+0.56, p_adj=9.7e-4), and 'Sensory system' (logFC=+0.61, p_adj=7.6e-3). These reflect host defense and stress signaling triggered by CDI infection itself."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/5_kegg_functional_analysis\\tables\\kegg_gsva_differential_FE_vs_CD.csv",
+ "sheet_name": "gsva_diff_FE_vs_CD",
+ "annotation": "LIMMA differential analysis of GSVA enrichment scores comparing FE (high-iron diet + CDI) vs CD (standard diet + CDI) groups — the core comparison. Columns: Pathway, Class, logFC, AveExpr, t_statistic, pvalue, pvalue_adj, significant, Direction.13 of22 pathways were significantly altered (FDR <0.05):6 upregulated,7 downregulated. Key findings: 'Signal transduction' (logFC=-0.96, p_adj=3.4e-6) was the most strongly downregulated pathway, suggesting high-iron diet suppresses host immune signaling during CDI (kb: 'high-iron alters neutrophil recruitment'). 'Energy metabolism' (logFC=+0.90, p_adj=8.6e-5) and 'Excretory system' (logFC=+0.73, p_adj=2.3e-5) were strongly upregulated, reflecting enhanced mitochondrial respiration and iron-detoxification mechanisms. 'Nervous system' (logFC=-0.77, p_adj=3.5e-5) was downregulated, indicating gut-brain axis perturbation. 'Lipid metabolism' was downregulated (logFC=-0.22, p_adj=0.039), directly supporting the hypothesis that high-iron diet reduces SCFA-producing beneficial bacteria."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/5_kegg_functional_analysis\\tables\\kegg_gsva_differential_FE_vs_NC.csv",
+ "sheet_name": "gsva_diff_FE_vs_NC",
+ "annotation": "LIMMA differential analysis of GSVA enrichment scores comparing FE (high-iron diet + CDI) vs NC (normal control) groups, reflecting the overall effect of the combined intervention. Columns: Pathway, Class, logFC, AveExpr, t_statistic, pvalue, pvalue_adj, significant, Direction.9 of22 pathways were significant (FDR <0.05), with a pattern highly similar to FE_vs_CD: 'Signal transduction' down (logFC=-0.70, p_adj=6.4e-5), 'Energy metabolism' up (logFC=+0.90, p_adj=6.4e-5), 'Excretory system' up (logFC=+0.87, p_adj=3.4e-6), 'Nervous system' down (logFC=-0.90, p_adj=5.4e-6), 'Lipid metabolism' down (logFC=-0.26, p_adj=0.020). This confirms that high-iron diet induces similar pathway activity alterations regardless of infection context, with consistent suppression of signal transduction and lipid metabolism, and activation of energy metabolism and excretory pathways."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/5_kegg_functional_analysis\\tables\\kegg_gsva_scores.csv",
+ "sheet_name": "kegg_gsva_scores",
+ "annotation": "GSVA enrichment scores for22 KEGG pathways across all18 samples. Columns: Pathway (KEGG pathway name), Fc16YH_CD1 through Fc16YH_CD6 (6 CD group samples: standard diet + CDI), Fc16YH_FE1 through Fc16YH_FE6 (6 FE group samples: high-iron diet + CDI), Fc16YH_NC1 through Fc16YH_NC6 (6 NC group samples: healthy controls). Positive scores indicate pathway activation; negative scores indicate suppression relative to the whole sample set. Samples cluster by group (NC→CD→FE) with clear separation: NC samples show high activity in 'Lipid metabolism' and 'Cofactor/vitamin metabolism', FE samples show high activity in 'Energy metabolism' and 'Excretory system', while CD samples exhibit intermediate profiles. This matrix can be used for hierarchical clustering, group comparisons, and correlation analyses with metabolite or microbiome features."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/5_kegg_functional_analysis\\tables\\kegg_pathway_background.csv",
+ "sheet_name": "kegg_pathway_background",
+ "annotation": "Background KEGG pathway mapping reference for all22 pathways used in this analysis. Columns: Pathway (KEGG pathway name and ID), Class (KEGG functional class hierarchy, e.g., '09100 Metabolism' for Metabolism, '09150 Organismal Systems'), N_Metabolites (number of detected metabolites successfully mapped to this pathway). The largest pathways are 'Biosynthesis of other secondary metabolites' (87 metabolites), 'Lipid metabolism' (73), and 'Amino acid metabolism' (56). Pathway class distribution: Metabolism (13 pathways,329 metabolites), Organismal Systems (5 pathways), Human Diseases (2), Environmental Information Processing (2), Cellular Processes (1), Genetic Information Processing (1). This background table defines the annotation scope used for both enrichment and GSVA analyses; note that only447 of2059 detected metabolites (21.7%) had KEGG pathway annotations."
+ }
+ ]
+}

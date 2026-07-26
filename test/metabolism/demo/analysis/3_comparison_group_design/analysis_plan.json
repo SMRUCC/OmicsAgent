@@ -1,0 +1,70 @@
+{
+ "module_name": "3_comparison_group_design",
+ "goal": "设计符合研究主题的差异分析比对组对",
+ "input_files": [
+ "G:/OmicsWorks/test/metabolism/sampleinfo.csv",
+ "G:/OmicsWorks/test/metabolism/expression.csv",
+ "G:/OmicsWorks/test/metabolism/demo/tmp/preprocessed_expression.csv"
+ ],
+ "output_files": [
+ "G:/OmicsWorks/test/metabolism/demo/tmp/3_comparison_group_design/tables/comparison_design.csv",
+ "G:/OmicsWorks/test/metabolism/demo/analysis/3_comparison_group_design/comparison_design_visualization.png"
+ ],
+ "comparison_summary": {
+ "available_groups": [
+ {
+ "group_name": "Standard (control)",
+ "group_label": "NC",
+ "sample_count":6,
+ "sample_ids": ["Fc16YH_NC1","Fc16YH_NC2","Fc16YH_NC3","Fc16YH_NC4","Fc16YH_NC5","Fc16YH_NC6"],
+ "description": "健康对照小鼠，无任何处理"
+ },
+ {
+ "group_name": "Clostridium difficile infection",
+ "group_label": "CD",
+ "sample_count":6,
+ "sample_ids": ["Fc16YH_CD1","Fc16YH_CD2","Fc16YH_CD3","Fc16YH_CD4","Fc16YH_CD5","Fc16YH_CD6"],
+ "description": "艰难梭菌感染组，标准饲料"
+ },
+ {
+ "group_name": "high iron diet before",
+ "group_label": "FE",
+ "sample_count":6,
+ "sample_ids": ["Fc16YH_FE1","Fc16YH_FE2","Fc16YH_FE3","Fc16YH_FE4","Fc16YH_FE5","Fc16YH_FE6"],
+ "description": "感染前高铁饮食（400mg/kg硫酸亚铁）干预组"
+ }
+ ],
+ "excluded_groups": [
+ {
+ "group_name": "QC",
+ "sample_count":3,
+ "sample_ids": ["Fc16YH_QC01","Fc16YH_QC02","Fc16YH_QC03"],
+ "reason": "质控样本，仅用于评估实验数据采集稳定性，不参与生物学分析"
+ }
+ ],
+ "designed_comparisons": [
+ {
+ "comparison_name": "FE_vs_CD",
+ "treatment": "high iron diet before",
+ "control": "Clostridium difficile infection",
+ "type": "核心干预比对",
+ "priority":1
+ },
+ {
+ "comparison_name": "CD_vs_NC",
+ "treatment": "Clostridium difficile infection",
+ "control": "Standard (control)",
+ "type": "模型验证比对",
+ "priority":2
+ },
+ {
+ "comparison_name": "FE_vs_NC",
+ "treatment": "high iron diet before",
+ "control": "Standard (control)",
+ "type": "整体效应比对",
+ "priority":3
+ }
+ ]
+ },
+ "notes": "1. QC样本不参与任何生物学比对。\n2.所有生物学分组均有6个重复，统计效力充足。\n3.横截面设计，无时间序列比对。\n4. FE_vs_CD为最核心比对，优先关注。"
+}

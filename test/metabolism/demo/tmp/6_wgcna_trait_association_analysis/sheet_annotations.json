@@ -1,0 +1,58 @@
+{
+ "module_index":6,
+ "module_name": "WGCNA Trait Association Analysis",
+ "xlsx_file": "6_wgcna_trait_association_analysis.xlsx",
+ "output_dir": "G:/OmicsWorks/test/metabolism/demo/analysis\\6_wgcna_trait_association_analysis",
+ "sheets": [
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/6_wgcna_trait_association_analysis\\tables\\wgcna_all_traits.csv",
+ "sheet_name": "wgcna_all_traits",
+ "annotation": "This sheet contains the combined sample trait matrix used for WGCNA module-trait association analysis. Columns: 'Sample' (mouse sample ID), 'is_NC' (binary:1=NC healthy control group), 'is_CD' (binary:1=Clostridioides difficile infection group), 'is_FE' (binary:1=high-iron diet + CDI group), followed by26 KEGG pathway GSVA enrichment scores (e.g., '09103 Lipid metabolism', '09132 Signal transduction', '09155 Excretory system') providing multi-omics pathway-level phenotypes. Users can examine how each sample's group assignment and pathway activity profile correlate with module eigengenes to identify biologically relevant modules."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/6_wgcna_trait_association_analysis\\tables\\wgcna_gsva_scores.csv",
+ "sheet_name": "wgcna_gsva_scores",
+ "annotation": "This sheet contains the GSVA (Gene Set Variation Analysis) enrichment scores for26 KEGG pathways across all18 samples. Rows represent KEGG pathway categories (e.g., 'Signal transduction', 'Energy metabolism', 'Excretory system'), and columns represent individual samples across three groups: CD (C. difficile infection, Fc16YH_CD1-6), FE (high-iron diet + CDI, Fc16YH_FE1-6), and NC (healthy control, Fc16YH_NC1-6). These scores serve as quantitative pathway-level traits for module-trait correlation analysis, enabling the identification of WGCNA modules whose eigengenes significantly correlate with specific KEGG pathway activities."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/6_wgcna_trait_association_analysis\\tables\\wgcna_kegg_enrichment_all_modules.csv",
+ "sheet_name": "wgcna_KEGG_enrichment",
+ "annotation": "This sheet presents KEGG pathway enrichment results (Fisher's exact test) for metabolites in each WGCNA module. Columns: 'Module' (module color), 'Pathway' (KEGG pathway name), 'Count_in_module' (metabolites mapped to this pathway within the module), 'Pathway_size' (total metabolites in the pathway), 'Module_size' (total metabolites in the module), 'Bg_size' (background total metabolites, n=2059), 'Ratio' (Count_in_module/Module_size), 'pvalue' (Fisher's exact p-value), 'p_adj' (BH-adjusted p-value), 'enriched' (TRUE if p_adj<0.1). Key findings: Turquoise module (FE-up) shows enrichment in 'Biosynthesis of other secondary metabolites' (p=0.0049), consistent with high-iron diet promoting gut microbial secondary metabolism; Magenta module (CD-up) is significantly enriched in 'Cancer: overview' (p_adj=0.025), suggesting CDI-triggered cell stress and host defense signaling."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/6_wgcna_trait_association_analysis\\tables\\wgcna_module_colors.csv",
+ "sheet_name": "wgcna_module_colors",
+ "annotation": "This sheet records the module color assignment for each of the2,059 metabolites included in the WGCNA co-expression network. Columns: 'Feature' (metabolite ID), 'Module' (assigned module color: turquoise, blue, black, magenta, red, or purple). Six co-expression modules were identified via dynamic tree cutting (minClusterSize=10) and module merging (cutHeight=0.25) at soft-threshold power beta=6. Module sizes: turquoise (539,26.2%), black (577,28.0%), blue (511,24.8%), magenta (279,13.5%), red (116,5.6%), purple (37,1.8%). Users can use this sheet to retrieve which metabolites belong to which module for downstream analyses."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/6_wgcna_trait_association_analysis\\tables\\wgcna_module_eigengenes.csv",
+ "sheet_name": "wgcna_module_eigengenes",
+ "annotation": "This sheet contains the module eigengene (ME) values — the first principal component of each module's metabolite expression matrix — for all18 samples across the6 modules. Columns: 'Sample' (mouse sample ID), 'MEturquoise' through 'MEpurple' (module eigengene values). These MEs summarize the overall expression pattern of each co-expression module per sample and serve as the basis for module-trait correlation and regression analyses. Key results: Turquoise ME is strongly elevated in FE group (r=0.971 with is_FE, p=2.3e-11), while Magenta ME is selectively upregulated in CD group (r=0.892, p=6.8e-07), identifying these as hallmark modules for high-iron diet and C. difficile infection, respectively."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/6_wgcna_trait_association_analysis\\tables\\wgcna_module_membership.csv",
+ "sheet_name": "wgcna_module_membership",
+ "annotation": "This sheet quantifies the module membership (MM, also known as eigengene-based connectivity, kME) for each of the2,059 metabolites across all6 modules. Columns: 'Feature' (metabolite ID), 'Module' (assigned module), 'MM_turquoise' through 'MM_purple' (Pearson correlation between the metabolite's expression profile and each module eigengene). MM values range from -1 to1; metabolites with high absolute MM (e.g., |MM|>0.8) within their assigned module are considered hub metabolites. Users can identify the top hub metabolites (e.g., top30% by |MM|) per module for network visualization and to link specific metabolites to key biological modules associated with high-iron diet or CDI."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/6_wgcna_trait_association_analysis\\tables\\wgcna_module_trait_correlation.csv",
+ "sheet_name": "wgcna_module_trait_corr",
+ "annotation": "This sheet reports Pearson correlations between each module eigengene (ME) and each trait (3 group variables +26 KEGG pathway GSVA scores), forming the core module-trait association results. Columns: 'Module' (module color), 'Trait' (trait name), 'Correlation' (Pearson r), 'pvalue', 'Significance' (* p<0.05, ** p<0.01, *** p<0.001). Key findings: Turquoise module shows extremely strong positive correlation with FE group (r=0.971, p=2.3e-11) and strong negative correlation with Signal transduction pathway (r=-0.901, p=3.5e-07), supporting the hypothesis that high-iron diet suppresses host immune signaling. Red module is strongly positively correlated with Signal transduction (r=0.978, p=2.7e-12) and negatively with FE group (r=-0.913). Magenta module is strongly associated with CD group (r=0.892, p=6.8e-07), identifying it as the CDI-specific signature module."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/6_wgcna_trait_association_analysis\\tables\\wgcna_module_trait_regression.csv",
+ "sheet_name": "wgcna_module_trait_reg",
+ "annotation": "This sheet presents linear regression results (model: ME ~ is_FE + is_NC, with CD group as baseline) quantifying how group membership predicts module eigengene expression. Columns: 'Module' (module color), 'Term' (predictor: is_FE or is_NC), 'Estimate' (regression coefficient relative to CD baseline), 'StdError', 't_value', 'p_value', 'R_squared', 'Adj_R_squared', 'p_adj' (BH-corrected p-value). Key results: Turquoise module (R²=0.949, adj.R²=0.943) — is_FE highly positive (Estimate=+0.462, p=6.4e-10), confirming strong FE-specific activation. Red module (R²=0.861, adj.R²=0.842) — is_FE strongly negative (Estimate=-0.503, p=1.8e-07). Magenta module (R²=0.810, adj.R²=0.784) — both is_FE and is_NC negative, confirming CD-group-specific high expression."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/6_wgcna_trait_association_analysis\\tables\\wgcna_pathway_background.csv",
+ "sheet_name": "wgcna_pathway_background",
+ "annotation": "This sheet defines the KEGG pathway annotation background used for module enrichment analysis. Columns: 'Pathway' (KEGG pathway name), 'FeatureCount' (number of metabolites annotated to this pathway in the background set of2,059 metabolites), 'Features' (semicolon-separated list of metabolite IDs mapped to this pathway). This background represents the full set of KEGG-annotated metabolites from the metabolomics dataset, against which the enrichment of each module's metabolite set is tested using Fisher's exact test. Users can review pathway coverage and metabolite composition of the entire dataset."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/6_wgcna_trait_association_analysis\\tables\\wgcna_soft_threshold.csv",
+ "sheet_name": "wgcna_soft_threshold",
+ "annotation": "This sheet contains the scale-free topology fit indices for soft-thresholding power selection in WGCNA network construction. Columns: 'Power' (soft-threshold exponent beta, tested from1 to15), 'SFT_R_sq' (scale-free topology model fitting R²), 'Slope' (regression slope of log(k) vs log(p(k))), 'Mean_k' (mean connectivity), 'Median_k' (median connectivity), 'Max_k' (maximum connectivity). The optimal power beta=6 was selected (signed network), achieving SFT R²=0.63 with moderate mean connectivity (Mean_k=202), satisfying the scale-free network approximation. This threshold was used to construct the adjacency matrix and topological overlap matrix (TOM) for module detection."
+ }
+ ]
+}

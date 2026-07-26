@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.ApplicationServices.Terminal.Utility
 Imports Microsoft.VisualBasic.Data.Framework.IO.CSVFile
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports OmicsAgent.AppRuntime
 
 Module Workflow
@@ -94,18 +95,36 @@ Module Workflow
                 Exit For
             End If
 
-            Try
-                Dim [module] As AnalysisModuleBase = CreateModule(moduleIdx)
-                If [module] IsNot Nothing Then
-                    Console.WriteLine($"========== Module {moduleIdx}: {[module].ModuleName} ==========")
+            Dim [module] As AnalysisModuleBase = CreateModule(moduleIdx)
+
+            If parsed.makeReport Then
+                If TypeOf [module] Is ReportModule Then
                     Await [module].RunAsync(cancellationToken)
-                    Console.WriteLine()
+                Else
+                    _context.ModuleConclusions.Add($"{[module].ConclusionFile}")
+                    _context.ModuleResults.Add($"{[module].Workspace}/result.json".ReadAllText.LoadJSON(Of ModuleResult))
                 End If
-            Catch ex As Exception
-                _logger($"ERROR in module {moduleIdx}: {ex.Message}")
-                Console.Error.WriteLine(ex.StackTrace)
-                Console.WriteLine("Continuing to next module...")
-            End Try
+            Else
+                Try
+                    If [module] IsNot Nothing Then
+                        Dim checkCache = $"{[module].ConclusionFile}".FileExists AndAlso $"{[module].Workspace}/result.json".FileExists
+
+                        If checkCache AndAlso parsed.debug_cache Then
+                            ' skip
+                            _context.ModuleConclusions.Add($"{[module].ConclusionFile}")
+                            _context.ModuleResults.Add($"{[module].Workspace}/result.json".ReadAllText.LoadJSON(Of ModuleResult))
+                        Else
+                            Console.WriteLine($"========== Module {moduleIdx}: {[module].ModuleName} ==========")
+                            Await [module].RunAsync(cancellationToken)
+                            Console.WriteLine()
+                        End If
+                    End If
+                Catch ex As Exception
+                    _logger($"ERROR in module {moduleIdx}: {ex.Message}")
+                    Console.Error.WriteLine(ex.StackTrace)
+                    Console.WriteLine("Continuing to next module...")
+                End Try
+            End If
         Next
 
         ' 5. 生成最终报告（如果模块 11 未在指定列表中，也强制执行）

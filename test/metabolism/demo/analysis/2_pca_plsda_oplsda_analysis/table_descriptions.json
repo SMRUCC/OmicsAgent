@@ -1,0 +1,88 @@
+﻿{
+  "module_index": 2,
+  "module_name": "PCA/PLSDA/OPLSDA Analysis",
+  "xlsx_file": "2_pca_plsda_oplsda_analysis.xlsx",
+  "output_dir": "G:/OmicsWorks/test/metabolism/demo/analysis/2_pca_plsda_oplsda_analysis",
+  "sheets": [
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/multi_anova_results.csv",
+      "sheet_name": "multi_anova_results",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/oplsda_model_params.csv",
+      "sheet_name": "oplsda_model_params",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/oplsda_permutation_test_results.csv",
+      "sheet_name": "oplsda_permutation_test_results",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/oplsda_scores.csv",
+      "sheet_name": "oplsda_scores",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/oplsda_s_plot.csv",
+      "sheet_name": "oplsda_s_plot",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/oplsda_weighted_distances.csv",
+      "sheet_name": "oplsda_weighted_distances",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/overall_f_test.csv",
+      "sheet_name": "overall_f_test",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/pca_loadings.csv",
+      "sheet_name": "pca_loadings",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/pca_scores.csv",
+      "sheet_name": "pca_scores",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/pca_variance_explained.csv",
+      "sheet_name": "pca_variance_explained",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/pca_weighted_distances.csv",
+      "sheet_name": "pca_weighted_distances",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/permutation_test_results.csv",
+      "sheet_name": "permutation_test_results",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/plsda_permutation_test_results.csv",
+      "sheet_name": "plsda_permutation_test_results",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/plsda_scores.csv",
+      "sheet_name": "plsda_scores",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/plsda_vip_scores.csv",
+      "sheet_name": "plsda_vip_scores",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/plsda_weighted_distances.csv",
+      "sheet_name": "plsda_weighted_distances",
+      "annotation": ""
+    }
+  ]
+}

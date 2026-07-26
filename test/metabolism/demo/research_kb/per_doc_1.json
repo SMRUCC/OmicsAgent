@@ -1,0 +1,57 @@
+﻿{
+ "source_file": "41467_2022_Article_31334.txt",
+ "key_genes_proteins": [
+ "Cbh (bile salt hydrolase from Clostridium perfringens)",
+ "NanR (transcriptional regulator)",
+ "CadC (transcriptional activator)",
+ "TcdA (C. difficile toxin A)",
+ "TcdB (C. difficile toxin B)",
+ "pNanA (promoter responsive to sialic acid)",
+ "pCadBA (promoter activated by CadC)",
+ "GFP (green fluorescent protein, used as reporter)"
+ ],
+ "key_pathways": [
+ "Bile salt metabolism (synthesis, conjugation, deconjugation,7α-dehydroxylation)",
+ "C. difficile spore germination pathway (taurocholate as germinant)",
+ "Sialic acid catabolism (dysbiosis-responsive pathway)",
+ "C. difficile sporulation/germination cycle",
+ "Toxin secretion pathway (TcdA and TcdB)"
+ ],
+ "key_metabolites": [
+ "Taurocholate (conjugated primary bile salt, germinant)",
+ "Cholate (unconjugated primary bile salt, inhibitor of germination)",
+ "Glycocholate (conjugated primary bile salt, germinant)",
+ "Chenodeoxycholate (primary bile salt)",
+ "Lithocholate (secondary bile salt)",
+ "Deoxycholate (secondary bile salt)",
+ "Sialic acid (dysbiosis proxy signal)",
+ "Glucose (modulates pNanA activity)"
+ ],
+ "biological_mechanisms": [
+ {
+ "mechanism": "Bile salt hydrolase (Cbh) deconjugates taurocholate to cholate, thereby inhibiting C. difficile spore germination and vegetative growth.",
+ "evidence": "Figure2A-B: cholate reduced germination by up to81% and viable vegetative cells by up to82%. Figure2E-F: recombinant Cbh reduced germination by96% and vegetative cells by89%."
+ },
+ {
+ "mechanism": "Sialic acid acts as a proxy signal for antibiotic-induced microbiome dysbiosis; engineered probiotics use a sialic acid-responsive sensor (pNanA-NanR) to dynamically control Cbh expression.",
+ "evidence": "Figure7B: sialic acid levels increased6-fold upon antibiotic treatment. Figure3A-B: pNanA-NanR sensor responds to sialic acid and is modulated by glucose."
+ },
+ {
+ "mechanism": "Engineered probiotics (EcN-Cbh) convert taurocholate to cholate in the gut, reducing C. difficile spore germination and toxin production, thereby protecting host intestinal epithelial cells.",
+ "evidence": "Figure4A-B: EcN-Cbh fully converted taurocholate to cholate and caused98% reduction in endospore germination. Figure4D-E: EcN-Cbh decreased TcdA levels and improved Caco-2 cell viability."
+ },
+ {
+ "mechanism": "Complete sensor-amplifier-actuator circuit (including CadC amplifier) is required for optimal in vivo protection against CDI, including100% survival, improved clinical scores, and histopathological protection.",
+ "evidence": "Figure5D-F: only the complete circuit group achieved100% survival and lowest clinical sickness score. Figure6C-D: lower histological injury scores in EcN-Cbh group."
+ }
+ ],
+ "key_findings": [
+ "Taurocholate is a strong germinant for C. difficile spores, while cholate inhibits germination and growth.",
+ "Bile salt hydrolase Cbh from C. perfringens efficiently deconjugates taurocholate and glycocholate into their unconjugated forms.",
+ "Sialic acid levels increase in the gut lumen following antibiotic treatment, making it a suitable signal for dysbiosis.",
+ "Engineered probiotics (E. coli Nissle1917) with a sialic acid-responsive sensor-amplifier-actuator circuit can restore intestinal bile salt metabolism and inhibit CDI.",
+ "Treating CDI model mice with the engineered probiotics resulted in100% survival, reduced C. difficile abundance, improved microbiome diversity, and decreased clinical and histological disease severity.",
+ "The complete circuit (sensor, amplifier, actuator) was necessary for significant protection; controls lacking any module showed lower survival and worse outcomes."
+ ],
+ "relevance_to_research_topic": "This paper provides fundamental knowledge on the role of bile salt metabolism in C. difficile infection (CDI) and how modulating the gut microenvironment (via engineered probiotics) can alter disease outcome. Although the research topic focuses on high-iron diet effects, the paper does not address iron. However, it elucidates the 'diet-microbiota-host' axis through bile salt regulation, which could be relevant for understanding how dietary components (including iron) might influence bile salt profiles and CDI susceptibility. The paper also establishes sialic acid as a dysbiosis marker, which may be indirectly affected by dietary interventions. The mechanisms described (germination inhibition, toxin reduction, microbiome restoration) are directly applicable to understanding host susceptibility to CDI."
+}

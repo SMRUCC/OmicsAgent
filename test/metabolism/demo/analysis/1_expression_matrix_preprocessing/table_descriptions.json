@@ -1,0 +1,33 @@
+﻿{
+ "module_index":1,
+ "module_name": "Expression Matrix Preprocessing",
+ "xlsx_file": "1_expression_matrix_preprocessing.xlsx",
+ "output_dir": "G:/OmicsWorks/test/metabolism/demo/analysis\\1_expression_matrix_preprocessing",
+ "sheets": [
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/1_expression_matrix_preprocessing\\preprocessed_expression.csv",
+ "sheet_name": "Final_Expression",
+ "annotation": "Final preprocessed metabolomics expression matrix (2,059 metabolites x18 samples from CD, FE, and NC groups). The first column 'rownames(expr_scaled)' lists metabolite names (e.g. Tandutinib, Octadecanoic acid); columns 'Fc16YH_CD1'~'Fc16YH_CD6' represent the CDI infection group (Clostridioides difficile infection), 'Fc16YH_FE1'~'Fc16YH_FE6' the high-iron diet pre-treatment group, and 'Fc16YH_NC1'~'Fc16YH_NC6' the healthy standard-diet control group. Values are relative abundances after complete preprocessing: half-minimum missing value imputation, column-sum normalization to ppm (×10⁶), log2(x+1) transformation, and row-wise median scaling. All2,059 metabolite medians are exactly1.0, with values ranging ~0.217-2.365, eliminating absolute abundance differences to enable cross-metabolite comparisons. This matrix is the standardised input for downstream PCA (Module2), LIMMA differential analysis (Module4), WGCNA co-expression network analysis (Module6), and CMeans clustering (Module7), designed to reveal metabolic changes in bile acids, SCFAs, siderophores, and haem-related metabolites underlying high-iron diet modulation of CDI susceptibility."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/1_expression_matrix_preprocessing\\preprocess_step2_normalized.csv",
+ "sheet_name": "Normalized_PPM",
+ "annotation": "Intermediate expression matrix after Step2: column-sum normalisation (relative abundance in ppm). The first column 'rownames(expr_normalized)' contains metabolite identifiers; the18 sample columns correspond to three experimental groups: CD (Fc16YH_CD1-6, C. difficile infection), FE (Fc16YH_FE1-6, high-iron diet pre-treatment before infection), and NC (Fc16YH_NC1-6, healthy control). Each value represents the metabolite's ion count divided by its sample total and multiplied by1×10⁶. After normalisation, all sample column sums converge to ~999,610-999,729 ppm (SD=37.89), effectively removing systematic technical variation from sample preparation and instrument sensitivity. Values range from ~2.59 to ~84,110 ppm. High-iron diet and CDI are known to alter bile acid profiles (taurocholate, chenodeoxycholate), SCFAs, and iron-related metabolites (haem, siderophores, lipocalin-2 targets); this normalised matrix preserves these biological signals for subsequent log transformation and scaling."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/1_expression_matrix_preprocessing\\preprocess_step3_log2.csv",
+ "sheet_name": "Log2_Transformed",
+ "annotation": "Intermediate expression matrix after Step3: log2(x+1) transformation applied to the ppm-normalised data. The first column 'rownames(expr_log)' lists metabolite names; the18 sample columns represent the CD (Fc16YH_CD1-6), FE (Fc16YH_FE1-6), and NC (Fc16YH_NC1-6) groups. Values now range from ~1.85 to ~16.36 (mean ~8.45), compressing the wide dynamic range of raw metabolomics data and shifting the distribution from heavily right-skewed to approximately normal. This transformation stabilises variance across low- and high-abundance metabolites and meets normality assumptions required for parametric tests such as LIMMA differential analysis, which will compare CD vs NC to identify CDI-induced metabolic perturbations (e.g. bile acid dysregulation, SCFA reduction, siderophore elevation) and FE vs CD to assess the modulatory effect of high-iron diet pre-treatment on the infection metabolome."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/1_expression_matrix_preprocessing\\preprocess_step3_scaled.csv",
+ "sheet_name": "Median_Scaled",
+ "annotation": "Intermediate expression matrix after Step4: row-wise median scaling applied to the log2(x+1)-transformed data. The first column 'rownames(expr_scaled)' contains metabolite names; the18 sample columns correspond to CD (Fc16YH_CD1-6), FE (Fc16YH_FE1-6), and NC (Fc16YH_NC1-6) groups. Each value is the log2-transformed abundance divided by the median of that metabolite across all18 samples, resulting in all2,059 metabolites having a median of exactly1.0. Values span ~0.217-2.365 (mean=1.025, SD=0.127). Group means after scaling are CD=1.037, FE=1.005, NC=1.033—all centred near1.0 while preserving relative fold differences. This scaling eliminates absolute abundance disparities between high- and low-abundance metabolites, enabling fair cross-metabolite comparisons in heatmap visualisation and clustering. This file is identical to the final 'preprocessed_expression' output."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/1_expression_matrix_preprocessing\\sampleinfo.csv",
+ "sheet_name": "Sample_Info",
+ "annotation": "Sample metadata table for the metabolomics study (21 entries). 'ID': unique sample identifier; 'sample_name': abbreviated sample label; 'sample_info': experimental group assignment — 'QC' (Fc16YH_QC01-03, quality control samples for technical stability assessment, not present in the expression matrix), 'Clostridium difficile infection' (Fc16YH_CD1-6, CDI group, n=6), 'high iron diet before' (Fc16YH_FE1-6, high-iron diet pre-treatment group, n=6), and 'Standard (control)' (Fc16YH_NC1-6, healthy control group, n=6). The three-group design enables key comparisons: CD vs NC reveals CDI-induced metabolic dysbiosis (bile acid dysregulation, SCFA decline, siderophore elevation), FE vs CD assesses how high-iron diet modulates infection metabolome (iron homeostasis, haem, ferritin, bile acid metabolism), and FE vs NC evaluates the effect of high-iron diet alone on normal gut metabolism."
+ }
+ ]
+}
