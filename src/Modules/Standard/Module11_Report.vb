@@ -1,3 +1,4 @@
+Imports Microsoft.VisualBasic.MIME.text.markdown
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Ollama
@@ -331,8 +332,20 @@ Public Class ReportModule : Inherits AnalysisModuleBase
     End Function
 
     Private Function EscapeHtml(text As String) As String
-        If String.IsNullOrEmpty(text) Then Return ""
-        Return text.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;").Replace("""", "&quot;").Replace(vbCrLf, "<br>").Replace(vbLf, "<br>")
+        If String.IsNullOrEmpty(text) Then
+            Return ""
+        Else
+            Static markdown As New MarkdownRender
+            text = markdown.Transform(text)
+        End If
+
+        Return text _
+            .Replace("&", "&amp;") _
+            .Replace("<", "&lt;") _
+            .Replace(">", "&gt;") _
+            .Replace("""", "&quot;") _
+            .Replace(vbCrLf, "<br>") _
+            .Replace(vbLf, "<br>")
     End Function
 
 End Class
