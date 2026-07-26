@@ -1,0 +1,42 @@
+{
+ "module_name": "2_pca_plsda_oplsda_analysis",
+ "goal": "对预处理后的代谢组表达矩阵执行 PCA、PLSDA、OPLSDA降维分析以及总体 F检验和多因素 ANOVA，评估 CD（艰难梭菌感染组）、FE（高铁饮食感染组）、NC（健康对照组）三组样本在主成分空间中的分离趋势和数据质量，计算各样本得分与加权欧氏距离并通过置换检验验证分组显著性，为下游 LIMMA差异分析和最终报告提供数据质量参考与可视化结果。",
+ "input_files": [
+ "G:/OmicsWorks/test/metabolism/demo/tmp/preprocessed_expression.csv",
+ "G:/OmicsWorks/test/metabolism/sampleinfo.csv"
+ ],
+ "output_files": [
+ "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/pca_scores.csv",
+ "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/plsda_scores.csv",
+ "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/oplsda_scores.csv",
+ "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/pca_scatter.png",
+ "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/pca_scatter.pdf",
+ "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/plsda_scatter.png",
+ "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/plsda_scatter.pdf",
+ "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/oplsda_scatter.png",
+ "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/oplsda_scatter.pdf",
+ "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/pca_weighted_distances.csv",
+ "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/permutation_test_results.csv",
+ "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/overall_f_test.csv",
+ "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/multi_anova_results.csv",
+ "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/pca_variance_explained.csv",
+ "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/plsda_vip_scores.csv",
+ "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/oplsda_s_plot.csv",
+ "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/module_summary.md"
+ ],
+ "execution_steps": [
+ {
+ "action": "读取预处理表达矩阵（preprocessed_expression.csv）和样本信息表（sampleinfo.csv），过滤掉 QC样本，将表达矩阵转置为样本×代谢物格式；使用 prcomp(scale=TRUE)执行 PCA，提取 PC1/PC2/PC3的样本得分和方差解释率；计算各样本到其组别质心的加权欧氏距离（以各 PC方差解释率占前 N个 PC总解释率的比例为权重）；执行1000次置换检验比较组内距离与组间距离的差异显著性；绘制 PCA散点图（PC1 vs PC2和 PC1 vs PC3），按分组着色、按元数据使用不同形状标记、叠加95%置信椭圆和样本标签，同时保存 PNG（300 dpi）和 PDF两种格式；将得分表、加权距离表和方差解释率保存为 CSV。",
+ "goal": "完成无监督 PCA降维分析，检测离群样本，评估三组样本在无监督条件下的分离趋势，通过置换检验量化分组有效性，获得样本得分和可视化结果供后续模块参考。"
+ },
+ {
+ "action": "使用 mixOmics包执行 PLSDA（ncomp=2，以组别为分类标签），提取 X变元得分和 VIP得分，计算加权欧氏距离并进行置换检验；使用 ropls包执行 OPLSDA（1个预测主成分 +1个正交主成分），提取样本得分、S-plot载荷和模型参数（R2X、R2Y、Q2），同样计算加权距离和置换检验；分别绘制 PLSDA和 OPLSDA散点图，按分组着色、不同形状区分样本元数据、叠加95%置信椭圆和样本标签，同时保存 PNG和 PDF；将得分表、VIP得分表和 S-plot载荷表保存为 CSV。",
+ "goal": "通过有监督降维验证组间分离的显著性和判别能力，提取对分组区分贡献最大的关键代谢物（VIP >1和 S-plot中 p(corr) >0.5），评估 PLSDA/OPLSDA模型的过拟合风险。"
+ },
+ {
+ "action": "对每个代谢物执行单因素 ANOVA检验（以组别为因子），统计显著差异代谢物数量并做 FDR校正，保存总体 F检验结果表；以组别为主要因子、考虑潜在协变量（如批次信息）执行多因素 ANOVA，保存 ANOVA结果表；汇总 PCA/PLSDA/OPLSDA的组间分离趋势、置换检验 p值、VIP关键代谢物数量和规律、ANOVA显著代谢物比例，生成阶段性总结 Markdown文件（module_summary.md）。",
+ "goal": "完成统计检验评估代谢物整体差异显著性，全面总结降维分析结果和数据质量控制结论，确保模块4（LIMMA差异分析）和模块11（最终报告）基于可靠的数据质量信息开展工作。"
+ }
+ ],
+ "notes": "1.样本信息表中包含3个 QC样本（Fc16YH_QC01~QC03），但表达矩阵中无对应列，QC样本不参与任何降维分析和统计检验，需在读取样本信息表后过滤掉。\n2.三组标签需标准化为简洁英文名称：CD（Clostridium difficile infection）、FE（high iron diet before）、NC（Standard control）。\n3.缺失的 R包需自动安装：mixOmics和 ropls需从 Bioconductor安装（BiocManager::install），ggplot2、RColorBrewer/viridis、FactoMineR等从 CRAN安装。\n4.加权欧氏距离计算方式：权重 =各 PC方差解释率 /前 N个 PC的方差解释率之和，距离 = sqrt(sum(权重 × (样本得分 -组质心得分)^2))。\n5.所有图形使用 ggplot2绘制，文字标签统一使用英文，同时保存 PNG（300 dpi）和 PDF两种格式。\n6.置换检验（n=1000）若组内距离均值显著小于组间距离均值（p <0.05），则说明分组具有统计显著性。\n7.表达矩阵为2059代谢物 ×18样本（CD6 + FE6 + NC6），无缺失值，数据质量良好。"
+}

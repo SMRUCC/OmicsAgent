@@ -1,0 +1,33 @@
+{
+ "module_index":7,
+ "module_name": "CMeans Fuzzy Clustering Analysis",
+ "xlsx_file": "7_cmeans_fuzzy_clustering_analysis.xlsx",
+ "output_dir": "G:/OmicsWorks/test/metabolism/demo/analysis\\7_cmeans_fuzzy_clustering_analysis",
+ "sheets": [
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/7_cmeans_fuzzy_clustering_analysis\\cmeans_cluster_assignments.csv",
+ "sheet_name": "cmeans_cluster_assignments",
+ "annotation": "This table lists all2,059 metabolites with their CMeans fuzzy cluster assignment (1-4) and maximum membership score (MaxMembership). Columns: Metabolite (metabolite name), Cluster (assigned CMeans soft cluster: Cluster1 corresponds to WGCNA Turquoise/FE-up; Cluster2 to Magenta/CD-up and Red/signal transduction; Cluster3 to Blue/NC-healthy; Cluster4 to Black/background metabolism), MaxMembership (the highest membership value across all clusters, indicating assignment confidence). Cluster sizes: C1=496, C2=455, C3=524, C4=584 metabolites. This table directly links each metabolite to the 'high-iron diet -> gut dysbiosis -> CDI susceptibility' expression pattern clusters identified by fuzzy clustering, complementing WGCNA hard clustering from Module6."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/7_cmeans_fuzzy_clustering_analysis\\cmeans_cluster_kegg_enrichment.csv",
+ "sheet_name": "cmeans_cluster_kegg_enrichment",
+ "annotation": "KEGG pathway enrichment results (Fisher's exact test, background=2,059 metabolites) for each CMeans cluster. Columns: Category (KEGG pathway/compound category code), Count_in_sig (metabolites in the cluster annotated to this category), Count_in_bg (metabolites in the full background annotated to this category), Sig_size (cluster size), Bg_size (total background size), pvalue, pvalue_adj (Benjamini-Hochberg corrected), enriched (TRUE if Count_in_sig > expected), Cluster (cluster label). Cluster3 (524 metabolites, matched to WGCNA Blue/healthy) shows the most significant enrichments (272 pathways), Cluster2 (455, matched to CD infection) has214 enriched pathways, Cluster1 (496, FE/iron diet) has modest enrichment, and Cluster4 (584, background metabolism) has none significant. These results identify the biological functions disrupted by high-iron diet and CDI, with key pathways including bile acid metabolism, SCFA biosynthesis, sialic acid degradation, and metal homeostasis (calprotectin/Feo/Fur systems from the knowledge base)."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/7_cmeans_fuzzy_clustering_analysis\\cmeans_validation_metrics.csv",
+ "sheet_name": "cmeans_validation_metrics",
+ "annotation": "Cluster validation metrics evaluating CMeans clustering quality across k=2 to15. Columns: k (number of clusters), FPC (Fuzzy Partition Coefficient, range0-1, higher = crisper clusters), PE (Partition Entropy, lower = better separation), Sil (average Silhouette width, higher = better cohesion/separation). The optimal k=6 was selected by combined elbow and silhouette scoring, but2 centroids collapsed, yielding4 non-empty clusters. Silhouette values (~0.27-0.29 for k=2-6) indicate reasonable clustering structure. These metrics support the reliability of the4-cluster solution used to define metabolite groups along the 'healthy (NC) -> CDI infection -> high-iron diet (FE)' trajectory."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/7_cmeans_fuzzy_clustering_analysis\\cmeans_vs_wgcna_contingency.csv",
+ "sheet_name": "cmeans_vs_wgcna_contingency",
+ "annotation": "Contingency table comparing CMeans fuzzy clusters (rows1-4) against WGCNA modules (columns: Black, Blue, Magenta, Purple, Red, Turquoise) from Module6. Cell values = number of metabolites shared between each CMeans cluster and WGCNA module. Key alignments: CMeans Cluster1 -> Turquoise (496/496,100%), Cluster2 -> Magenta (275) + Red (67), Cluster3 -> Blue (469/524,90%), Cluster4 -> Black (502/584,87%). This table demonstrates near-perfect concordance between the two independent clustering methods (global Fisher p<0.0001), cross-validating that CMeans soft clustering captures the same biological structure as WGCNA network-based hard clustering, and reinforcing the diet-microbiome-host trajectory."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/7_cmeans_fuzzy_clustering_analysis\\cmeans_vs_wgcna_fisher.csv",
+ "sheet_name": "cmeans_vs_wgcna_fisher",
+ "annotation": "Pairwise Fisher's exact test results quantifying the statistical significance of each CMeans cluster-to-WGCNA module association. Columns: CMeans (cluster label), WGCNA (module name), Count (observed overlap count), Expected (expected count under independence), Fold (enrichment fold = Count/Expected), p_value, p_adj (Benjamini-Hochberg corrected). Seven of16 pairs are significant (p_adj<0.05). Top hits: C1-Turquoise (Fold=3.82, p≈0), C3-Blue (Fold=3.61, p≈0), C4-Black (Fold=3.07, p_adj≈0), C2-Magenta (Fold=4.46, p_adj≈0), C2-Red (Fold=2.61, p_adj<10^-16). These results quantitatively confirm that CMeans Cluster1 captures the high-iron diet signature (Turquoise, FE-up, r=0.971), Cluster2 captures CDI infection + host immune signaling (Magenta+Red), Cluster3 captures healthy homeostasis (Blue, NC-up), and Cluster4 captures background metabolic functions (Black)."
+ }
+ ]
+}

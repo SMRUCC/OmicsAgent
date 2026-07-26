@@ -1,0 +1,53 @@
+﻿{
+ "source_file": "1-s2.0-S2590097825000023-main.txt",
+ "key_genes_proteins": ["TcdA", "TcdB", "CRISPR/Cas9", "serine protease (Saccharomyces boulardii)", "serine protease (Bacillus clausii)", "bacteriocin (CBM-B from Clostridium butyricum MIYAIRI588)", "human monoclonal antibodies (HuMab) against TcdA and TcdB"],
+ "key_pathways": ["host GTPase inactivation", "cytoskeleton disruption", "neutrophilic influx", "NF-κB phosphorylation", "TNFα protein expression", "quorum sensing of C. difficile"],
+ "key_metabolites": ["short-chain fatty acids (SCFAs)", "butyrate", "bile acids", "polyphenols (including ellagitannins, tea polyphenols, proanthocyanidins, flavan-3-ols, anthocyanins, flavanols, hydroxycinnamic acids, hydroxybenzoic acids, stilbenes, phenolic alcohols)", "postbiotics (including bacteriocins, cell lysates, teichoic acid, vitamins, extracellular polysaccharides)"],
+ "biological_mechanisms": [
+ {
+ "mechanism": "Colonization resistance provided by the indigenous gut microbiome against C. difficile through competition for nutrients, production of inhibitory metabolites, and stimulation of host immune responses.",
+ "evidence": "Paper states: 'The indigenous gut microbiome provides colonization resistance against C. difficile through multiple mechanisms, including competition for nutrients, production of inhibitory metabolites, and stimulation of host immune responses.'"
+ },
+ {
+ "mechanism": "C. difficile toxins TcdA and TcdB cause disease by endocytosis into colon cells, inactivating host GTPases, disrupting cytoskeleton, leading to neutrophilic influx, cell apoptosis and necrosis.",
+ "evidence": "Paper states: 'C. difficile primarily elicit the disease by the production of two types of toxins such as TcdA and TcdB that upon endocytosis into the colon, inactivate host GTPases, and disrupt the cytoskeleton and neutrophilic influx, which eventually causes cell apoptosis and necrosis.'"
+ },
+ {
+ "mechanism": "Probiotics (e.g., Lactobacillus and Bifidobacterium) inhibit C. difficile adhesion to intestinal epithelial cells and mucus, reduce toxin effects, and modulate immune responses.",
+ "evidence": "Paper states: 'Several studies show that a few species of Lactobacillus and Bifidobacterium can reduce C. difficile’s adherence to the epithelial cell line and mucus of the intestine.' Also: 'Probiotics can also boost immunity, and thereby guide the body to block the pathogens.'"
+ },
+ {
+ "mechanism": "Saccharomyces boulardii serine protease disrupts C. difficile quorum sensing and suppresses TcdA; Bacillus clausii protease effective against TcdB.",
+ "evidence": "Paper states: 'A serine protease from S. boulardii has been shown to disrupt the quorum sensing mechanism of C. difficile... moreover, this protease was also shown to effectively suppress the toxin TcdA. Similarly, a protease from B. clausii was found to be effective against TcdB.'"
+ },
+ {
+ "mechanism": "Probiotic nano-armor (tannic acid and ferric ions coating) protects probiotic cells in hostile environments (high temperature, acidic conditions) and enhances their efficacy against pathogens.",
+ "evidence": "Paper states: 'Pan et al. (2022) recently demonstrated that bacterial cells can be coated in tannic acids and ferric ions (\"probiotic nano armour\")... provides enhanced protection to the probiotic cells in hostile environments... more effective than uncoated cells in providing protection against pathogens.'"
+ },
+ {
+ "mechanism": "Postbiotics (metabolic byproducts of probiotics) exert antimicrobial, anti-inflammatory, and immunomodulatory effects, inhibiting C. difficile growth and toxin production.",
+ "evidence": "Paper states: 'Postbiotics, known for their antimicrobial, anti-inflammatory, and immunomodulatory properties, are emerging as a promising option for treating or preventing CDI. Research has demonstrated that postbiotics can inhibit the growth of Clostridium difficile... as well as reduce toxin production.'"
+ },
+ {
+ "mechanism": "Fecal microbiota transplantation (FMT) restores gut microbial balance by introducing healthy donor microbiota, producing beneficial metabolites (anti-inflammatory, antibacterial, antifungal) and modulating immune response.",
+ "evidence": "Paper states: 'Recent research has revealed that healthy commensal bacteria in the gut can collaborate to produce beneficial metabolites with anti-inflammatory, antibacterial, and even antifungal properties. These metabolites might be accountable for the health-promoting effects of FMT. In addition, FMT also modulates the immune response, reduces inflammation, and restores a balanced gut microbiota.'"
+ },
+ {
+ "mechanism": "Engineered probiotics using CRISPR/Cas9 can be designed to target C. difficile, enhance resistance to antibiotics, produce therapeutic proteins, and restore beneficial bacteria.",
+ "evidence": "Paper states: 'CRISPR/Cas9 technique can modify the genes of certain probiotic strains to increase their resistance to antibiotics and other drugs... gene-editing tools have been used to engineer probiotic bacteria with the ability to produce therapeutic proteins that can help reduce inflammation...'"
+ }
+ ],
+ "key_findings": [
+ "C. difficile infection reduces gut microbiome biodiversity and causes intestinal dysbiosis.",
+ "The gut microbiome provides colonization resistance against C. difficile through multiple mechanisms.",
+ "Probiotics such as Lactobacillus and Bifidobacterium can reduce C. difficile adherence and prevent infection.",
+ "Saccharomyces boulardii and Bacillus clausii proteases can neutralize C. difficile toxins TcdA and TcdB.",
+ "Prebiotics (e.g., FOS, inulin, lactulose, GOS, polyphenols) can modulate gut microbiota and reduce C. difficile colonization.",
+ "Synbiotics (combination of probiotics and prebiotics) show synergistic effects in preventing CDI recurrence.",
+ "Fecal microbiota transplantation (FMT) has >90% success rate for recurrent CDI.",
+ "Postbiotics (non-viable bacterial products) inhibit C. difficile growth and toxin production.",
+ "Engineered probiotics with CRISPR/Cas9 offer targeted therapeutic potential for CDI.",
+ "Polyphenols (from tea, pomegranate, grape seeds, etc.) exhibit anti-C. difficile activity and prebiotic effects."
+ ],
+ "relevance_to_research_topic": "This paper provides comprehensive background on CDI pathogenesis (toxins TcdA/TcdB, host GTPase inactivation, neutrophilic influx), host-microbiome interactions (colonization resistance, gut microbiota dysbiosis), and alternative therapeutic strategies (probiotics, prebiotics, synbiotics, postbiotics, FMT). Although it does not directly address high-iron diet, the mechanisms of gut microbiota modulation, metabolite production (SCFAs, bile acids, polyphenols), and immune responses (e.g., NF-κB, TNFα) are relevant to understanding how dietary factors like iron could influence CDI susceptibility and severity. The paper's emphasis on diet-microbiota-host interplay aligns with the research topic's goal of elucidating 'diet-gut microbiota-host' interactions in CDI."
+}

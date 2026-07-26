@@ -1,0 +1,38 @@
+﻿{
+  "module_index": 4,
+  "module_name": "LIMMA Differential Analysis",
+  "xlsx_file": "4_limma_differential_analysis.xlsx",
+  "output_dir": "G:/OmicsWorks/test/metabolism/demo/analysis\4_limma_differential_analysis",
+  "sheets": [
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/4_limma_differential_analysis\tables\limma_all_comparisons_consolidated.csv",
+      "sheet_name": "limma_all_comparisons_consolida",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/4_limma_differential_analysis\tables\limma_CD_vs_NC.csv",
+      "sheet_name": "limma_CD_vs_NC",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/4_limma_differential_analysis\tables\limma_FE_vs_CD.csv",
+      "sheet_name": "limma_FE_vs_CD",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/4_limma_differential_analysis\tables\limma_FE_vs_NC.csv",
+      "sheet_name": "limma_FE_vs_NC",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/4_limma_differential_analysis\tables\limma_multifactor_anova.csv",
+      "sheet_name": "limma_multifactor_anova",
+      "annotation": ""
+    },
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/4_limma_differential_analysis\tables\limma_overall_ftest.csv",
+      "sheet_name": "limma_overall_ftest",
+      "annotation": ""
+    }
+  ]
+}

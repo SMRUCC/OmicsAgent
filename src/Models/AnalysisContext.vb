@@ -31,7 +31,7 @@ Public Class AnalysisContext
     ' 数据集
     ' ------------------------------------------------------------------
     ''' <summary>所有组学数据集列表</summary>
-    Public Property Datasets As List(Of OmicsDataset) = New List(Of OmicsDataset)()
+    Public Property Datasets As New List(Of OmicsDataset)()
 
     ''' <summary>是否为多组学分析</summary>
     Public ReadOnly Property IsMultiOmics As Boolean
@@ -101,25 +101,25 @@ Public Class AnalysisContext
     ' 分析结果
     ' ------------------------------------------------------------------
     ''' <summary>所有差异比较组别设计</summary>
-    Public Property Comparisons As List(Of ComparisonGroup) = New List(Of ComparisonGroup)()
+    Public Property Comparisons As New List(Of ComparisonGroup)()
 
     ''' <summary>各分析模块的阶段性总结文本文件路径列表（用于最终报告生成）</summary>
-    Public Property ModuleConclusions As List(Of String) = New List(Of String)()
+    Public Property ModuleConclusions As New List(Of String)()
 
     ''' <summary>各分析模块的章节标题（与 ModuleConclusions 一一对应）</summary>
-    Public Property ModuleTitles As List(Of String) = New List(Of String)()
+    Public Property ModuleTitles As New List(Of String)()
 
     ''' <summary>各分析模块生成的图片文件路径列表（用于最终报告插图）</summary>
-    Public Property ModuleFigures As List(Of String) = New List(Of String)()
+    Public Property ModuleFigures As New List(Of String)()
 
     ''' <summary>各分析模块生成的表格文件路径列表（用于最终报告表格）</summary>
-    Public Property ModuleTables As List(Of String) = New List(Of String)()
+    Public Property ModuleTables As New List(Of String)()
 
     ''' <summary>各分析模块的图片注解文本（中文）</summary>
-    Public Property FigureCaptions As Dictionary(Of String, String) = New Dictionary(Of String, String)()
+    Public Property FigureCaptions As New Dictionary(Of String, String)()
 
     ''' <summary>各分析模块的图片注解文本（英文）</summary>
-    Public Property FigureCaptionsEn As Dictionary(Of String, String) = New Dictionary(Of String, String)()
+    Public Property FigureCaptionsEn As New Dictionary(Of String, String)()
 
     ' ------------------------------------------------------------------
     ' 配置

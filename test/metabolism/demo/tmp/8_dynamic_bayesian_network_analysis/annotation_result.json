@@ -1,0 +1,23 @@
+{
+ "module_index":8,
+ "module_name": "Dynamic Bayesian Network Analysis",
+ "xlsx_file": "8_dynamic_bayesian_network_analysis.xlsx",
+ "output_dir": "G:/OmicsWorks/test/metabolism/demo/analysis\\8_dynamic_bayesian_network_analysis",
+ "sheets": [
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/8_dynamic_bayesian_network_analysis\\bayesian_module_eigengenes.csv",
+ "sheet_name": "module_eigengenes_by_sample",
+ "annotation": "This sheet contains the module eigengene (ME) expression values for each of the six WGCNA metabolic co-expression modules (turquoise, blue, red, magenta, black, purple) across eighteen samples from three groups (NC = healthy control, CD = C. difficile infection, FE = high-iron diet + C. difficile). Each row is a sample; the numeric columns represent the first principal component (eigengene) of each module, and the Group column indicates the experimental condition. The eigengene values serve as the input node features for the Bayesian network analysis, revealing a clear metabolic trajectory: NC samples exhibit high Blue (r = +0.919 with NC) and low Turquoise, CD samples show elevated Magenta (r = +0.892 with CD) and Red, while FE samples display strongly elevated Turquoise (r = +0.971 with FE) along with suppressed Blue and Red — directly supporting the high-iron diet-driven metabolic reprogramming hypothesis."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/8_dynamic_bayesian_network_analysis\\bayesian_network_arcs.csv",
+ "sheet_name": "bayesian_network_arcs",
+ "annotation": "This sheet lists the six high-confidence directed edges learned by the Hill-Climbing Bayesian network algorithm (BIC score,200 bootstrap replicates, confidence threshold >=0.7). Columns: 'from' = source module, 'to' = target module, 'strength' = arc confidence (0-1, proportion of bootstraps supporting this edge), 'direction' = directional confidence (0-1, fraction of supporting bootstraps agreeing on orientation). The top edge Turquoise -> Blue (strength =0.985) indicates that the high-iron diet signature module (Turquoise, FE group) exerts strong suppressive regulation on the healthy-baseline module (Blue, NC group). Turquoise -> Red (strength =0.870) directly supports the central hypothesis that high-iron diet suppresses host immune signaling (Red module, r = -0.913 with FE), consistent with knowledge-base mechanisms of iron-driven attenuation of neutrophil-mediated immunity. Magenta -> Blue and Magenta -> Red reflect C. difficile infection impacts on health and immunity, while Blue -> Red (strength =0.735) represents the positive support of healthy metabolism for immune signaling — a relationship disrupted after dietary intervention and infection."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/8_dynamic_bayesian_network_analysis\\bayesian_node_attributes.csv",
+ "sheet_name": "bayesian_node_attributes",
+ "annotation": "This sheet provides biological annotation for each of the six module nodes used in the Bayesian network. Columns: 'Node' = module color name, 'ModuleSize' = number of metabolites assigned to that module by WGCNA, 'AssociatedGroup' = the experimental group or biological process most strongly correlated with this module (with Pearson r value), 'CMeansCluster' = cluster assignment from the upstream CMeans clustering analysis (Cluster1-4), 'Color' = color hex code for visualization. Key biological mappings: Turquoise (539 metabolites, FE-associated, Cluster1) is the high-iron diet response module; Blue (511 metabolites, NC-associated, Cluster3) represents healthy baseline metabolism; Red (116 metabolites, signaling-associated, Cluster2) captures immune signal transduction; Magenta (279 metabolites, CD-associated, Cluster2) reflects C. difficile infection metabolic signature; Black (577 metabolites, Cluster4) represents basal/core metabolism; Purple (37 metabolites, Cluster4) is a minor module. This mapping bridges WGCNA co-expression modules with CMeans clustering (Fisher test p <0.0001) and assigns functional context to each network node."
+ }
+ ]
+}

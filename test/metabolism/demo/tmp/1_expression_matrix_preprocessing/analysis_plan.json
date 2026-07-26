@@ -1,0 +1,26 @@
+{
+ "module_name": "1_expression_matrix_preprocessing",
+ "goal": "对高铁饮食干预艰难梭菌感染小鼠模型的代谢组表达矩阵进行标准化预处理，包括缺失值填充、列和归一化、log转换及中位数缩放，生成可供下游PCA、LIMMA、WGCNA、CMeans分析的标准化表达矩阵。",
+ "input_files": [
+ "G:/OmicsWorks/test/metabolism/expression.csv",
+ "G:/OmicsWorks/test/metabolism/sampleinfo.csv"
+ ],
+ "output_files": [
+ "G:/OmicsWorks/test/metabolism/demo/tmp/preprocessed_expression.csv"
+ ],
+ "execution_steps": [
+ {
+ "action": "步骤1 -缺失值填充：按行（代谢物分子）逐行检测缺失值，对该行所有非缺失正值取最小值的一半作为填充值。如某行所有值均为缺失或零，则填充为0。",
+ "goal": "确保表达矩阵完整无缺失值，避免下游分析因NA值报错。虽然当前数据经检测无NA值，但该步骤作为标准质控流程的一部分保留执行。"
+ },
+ {
+ "action": "步骤2 -列总和归一化：对填充后的表达矩阵按列（样本）求和，将每个样本中所有代谢物的表达值除以该样本总和，并乘以缩放因子1e6转换为相对丰度（ppm单位）。",
+ "goal": "消除样本间总体代谢物载量差异，使不同样本的表达值具有可比性。代谢组学数据常受样本制备、仪器灵敏度等系统误差影响，列和归一化可校正此类技术变异。"
+ },
+ {
+ "action": "步骤3 - Log转换与中位数缩放：检测到最大值(283.38)>100，表明数据未经过log转换。先执行log2(x+1)转换使数据分布更接近正态；再按行（代谢物）计算中位数，将每个代谢物在所有样本中的值除以其中位数，完成中位数缩放。",
+ "goal": "log转换压缩数据动态范围、稳定方差，满足下游统计分析方法对正态性的假设要求；中位数缩放使不同量级代谢物间的表达值具有可比性，消除代谢物间绝对丰度的量级差异，适合热图可视化和聚类分析。"
+ }
+ ],
+ "notes": "特别注意：\n1.样本信息表中有3个QC样本(Fc16YH_QC01-3)，但表达矩阵中仅有18个生物学样本(CD/FE/NC各6个)，QC样本未包含在表达矩阵中，预处理时仅处理18个生物学样本，QC组信息保留于sampleinfo.csv供后续质控评估使用。\n2.数据集为代谢组学数据(2059个代谢物分子)，未发现用户指定的特殊预处理例外情况，按标准四步流程处理。\n3.预处理后的矩阵保存为 preprocessed_expression.csv，作为下游模块2(PCA)、4(LIMMA)、6(WGCNA)、7(CMeans)的输入。\n4.三个分组为：CD组(Clostridium difficile infection)、FE组(high iron diet before)、NC组(Standard control)。"
+}

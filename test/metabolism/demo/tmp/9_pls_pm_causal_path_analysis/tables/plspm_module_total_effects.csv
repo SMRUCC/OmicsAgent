@@ -1,0 +1,16 @@
+"relationships","direct","indirect","total"
+"PurpleModule -> RedModule",0,0,0
+"PurpleModule -> BlueModule",0,0,0
+"PurpleModule -> BlackModule",0.61335090014568,0,0.61335090014568
+"PurpleModule -> TurquoiseModule",0,0,0
+"PurpleModule -> MagentaModule",0,0,0
+"RedModule -> BlueModule",0.634565136387857,0,0.634565136387857
+"RedModule -> BlackModule",0,0,0
+"RedModule -> TurquoiseModule",-0.722405894503301,-0.221867793998418,-0.944273688501719
+"RedModule -> MagentaModule",1.12741461986027,-0.513222520207401,0.61419209965287
+"BlueModule -> BlackModule",0,0,0
+"BlueModule -> TurquoiseModule",-0.34963754116931,0,-0.34963754116931
+"BlueModule -> MagentaModule",-0.808778312544593,0,-0.808778312544593
+"BlackModule -> TurquoiseModule",0,0,0
+"BlackModule -> MagentaModule",0,0,0
+"TurquoiseModule -> MagentaModule",0,0,0

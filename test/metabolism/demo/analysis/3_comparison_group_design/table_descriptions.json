@@ -1,0 +1,13 @@
+﻿{
+  "module_index": 3,
+  "module_name": "Comparison Group Design",
+  "xlsx_file": "3_comparison_group_design.xlsx",
+  "output_dir": "G:/OmicsWorks/test/metabolism/demo/analysis\3_comparison_group_design",
+  "sheets": [
+    {
+      "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/3_comparison_group_design\tables\comparison_design.csv",
+      "sheet_name": "comparison_design",
+      "annotation": ""
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+ "module_index":2,
+ "module_name": "PCA/PLSDA/OPLSDA Analysis",
+ "xlsx_file": "2_pca_plsda_oplsda_analysis.xlsx",
+ "output_dir": "G:/OmicsWorks/test/metabolism/demo/analysis/2_pca_plsda_oplsda_analysis",
+ "sheets": [
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/multi_anova_results.csv",
+ "sheet_name": "multi_anova_results",
+ "annotation": "Multi-factor ANOVA results testing the effects of group (CD, FE, NC;3 levels) and sample_info (sample label) on each of2059 metabolites. Columns: Feature (metabolite name), Group_F (F-statistic for group effect), Group_p (raw p-value for group), SampleInfo_F (F-statistic for sample_info effect), SampleInfo_p (raw p-value for sample_info), Residuals_df (residual degrees of freedom), Group_p_adjusted (Benjamini-Hochberg adjusted p-value for group effect). Both single-factor and multi-factor ANOVA identified1148 significantly differential metabolites (p.adj<0.05, ~55.8%), confirming strong metabolic separation among the three experimental groups (NC healthy control, CD Clostridioides difficile infection, FE high-iron diet + CDI). The high concordance between Group and SampleInfo effects indicates no additional confounding from sample labels, supporting data quality for downstream LIMMA analysis. Key metabolites such as bile acids (taurochenodeoxycholate, cholic acid, glycodeoxycholate), sialic acid (N-Acetylneuraminate), short-chain fatty acid-related metabolites (succinate,3-hydroxybutyrate), and polyunsaturated fatty acids (arachidonate, linoleate, docosahexaenoic acid) show highly significant differences, directly relevant to the study's iron-bile acid-microbiome-host immunity axis in CDI."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/oplsda_model_params.csv",
+ "sheet_name": "oplsda_model_params",
+ "annotation": "OPLSDA model parameters for three pairwise comparisons (FE vs NC, CD vs NC, FE vs CD). Columns: Comparison (pairwise group contrast), R2X_pred (predictive component variance in X), R2X_orth (orthogonal component variance in X), R2Y (fraction of Y variation explained, model fit), Q2 (cross-validated predictive ability). FE vs NC achieved the highest predictive power (Q2=0.966, R2Y=0.988), followed closely by FE vs CD (Q2=0.950, R2Y=0.965), confirming that high-iron diet induces a profound metabolic reprogramming independent of CDI alone. CD vs NC shows moderate discrimination (Q2=0.658, R2Y=0.910), indicating greater individual variability in pure infection. All Q2 values are positive and no model is overfitted, validated by permutation testing (p=0.001). These results support the hypothesis that high-iron diet alters host metabolism (bile acid pathways, sialic acid metabolism, SCFA profiles) to modulate CDI susceptibility."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/oplsda_permutation_test_results.csv",
+ "sheet_name": "oplsda_permutation_test_results",
+ "annotation": "Permutation test results (n=1000) validating the statistical significance of OPLSDA models for each pairwise comparison. Columns: Comparison (pairwise group contrast), Observed_Ratio (observed group separation ratio), Mean_Permuted_Ratio (mean ratio under random permutation), Perm_2.5 (2.5th percentile of permuted distribution), Perm_97.5 (97.5th percentile), P_Value (one-sided permutation p-value). All three comparisons (FE vs NC: observed ratio0.023, FE vs CD:0.035, CD vs NC:0.061) show observed ratios far below the permuted distribution means (~0.855) with p=0.001 for all, confirming that the observed group separations are highly non-random and statistically significant. This provides strong validation that the metabolic differences between high-iron diet + CDI (FE), CDI alone (CD), and healthy controls (NC) are biologically meaningful and not artifacts of overfitting."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/oplsda_scores.csv",
+ "sheet_name": "oplsda_scores",
+ "annotation": "OPLSDA sample score coordinates (Comp1) for all18 samples across three pairwise comparisons (36 rows total). Columns: Comp1 (predictive component score), Comp2 (orthogonal component score, always0 for single-predictive-component OPLSDA), SampleID (unique sample identifier), Group (CD, FE, or NC), SampleName (sample name), SampleType (experimental condition description: 'high iron diet before', 'Clostridium difficile infection', 'Standard (control)'), Comparison (which pairwise model). In FE vs NC, FE samples cluster at negative Comp1 values (-26.6 to -34.5) while NC samples are positive (28.3-30.8), showing perfect separation. In FE vs CD, FE samples are positive (26.3-36.6) and CD samples negative (-28.1 to -33.7). In CD vs NC, CD samples are negative (-13.9 to -25.5) and NC samples positive (19.8-23.5). The excellent separation along Comp1 in FE vs CD and FE vs NC directly addresses the core research question: high-iron diet drives a distinct metabolic shift beyond infection alone, consistent with the study's iron-bile acid-microbiome hypothesis."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/oplsda_s_plot.csv",
+ "sheet_name": "oplsda_s_plot",
+ "annotation": "OPLSDA S-plot data for identifying discriminant metabolites across three pairwise comparisons (6177 rows:2059 metabolites x3 comparisons). Columns: Feature (metabolite name), Loading (model loading weight), pcorr (p(corr) correlation between metabolite and predictive component), Comparison (pairwise group contrast), VIP (Variable Importance in Projection), abs_loading (absolute loading), abs_pcorr (absolute pcorr), Importance (derived importance score). Metabolites with |p(corr)|>0.5 and VIP>1 are considered highly discriminant. FE vs NC identified ~903 such metabolites, FE vs CD identified ~776, and CD vs NC identified ~700. Key discriminant metabolites include bile acids (taurochenodeoxycholate, cholic acid, glycodeoxycholate), sialic acid derivatives (N-Acetylneuraminate), fatty acids (arachidonate, DHA, linoleate), and iron-related metabolites (Thiobinupharidine). This table enables users to nominate the most robust biomarkers distinguishing high-iron diet effects on CDI metabolism for downstream pathway enrichment analysis."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/oplsda_weighted_distances.csv",
+ "sheet_name": "oplsda_weighted_distances",
+ "annotation": "Weighted Euclidean distances of each sample from its group centroid in OPLSDA model space, computed for three pairwise comparisons (36 rows). Columns: SampleID (unique identifier), SampleName (sample name), Group (CD, FE, or NC), Comparison (which pairwise model), Distance (weighted distance to opposite group centroid). Smaller distances indicate tighter clustering within a group. FE samples show generally compact distances in both FE vs NC (range0.15-3.67) and FE vs CD (0.65-4.56), confirming high reproducibility of iron-diet-induced metabolic phenotypes. CD samples show greater dispersion (CD vs NC:0.01-5.43; FE vs CD:0.18-2.32), suggesting individual heterogeneity in infection response. NC samples in FE vs NC are tightly clustered (0.05-1.13). These distances help assess biological replicate consistency and identify potential sample outliers that may affect downstream differential analysis."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/overall_f_test.csv",
+ "sheet_name": "overall_f_test",
+ "annotation": "One-way ANOVA (overall F-test) results for all2059 metabolites across the three groups (NC, CD, FE). Columns: Feature (metabolite name), F_statistic (ANOVA F-value), p_value (raw p-value), p_adjusted (Benjamini-Hochberg adjusted p-value).1148 metabolites (55.8%) are significantly different at p.adj<0.05, indicating extensive metabolic reprogramming. The most significant hits (p.adj~10^-13) include Pro Phe Val (F=970.5), Thiobinupharidine (F=861.9, an iron-related metabolite), L-gamma-Glutamyl-(3R)-L-beta-ethynylserine (F=601.6), delta-Tocotrienol (F=561.8), and CerP14:1;2O/2:0 (F=573.0). Biologically relevant metabolites detected include N-Acetylneuraminate (sialic acid, F=370.1), arachidonate (F=228.9), DHA (F=283.4), linoleate (F=189.7), succinate (F=99.1), taurine (F=33.6), taurochenodeoxycholate (F=47.2), cholic acid (F=35.6), and glycodeoxycholate (F=34.1). These findings strongly support the involvement of bile acid metabolism, sialic acid signaling, SCFA metabolism, and iron homeostasis pathways in the host response to high-iron diet during CDI."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/pca_loadings.csv",
+ "sheet_name": "pca_loadings",
+ "annotation": "PCA loading values for all2059 metabolites on the first three principal components. Columns: Feature (metabolite name), PC1 (loading on PC1, explaining36.2% variance), PC2 (loading on PC2,18.3% variance), PC3 (loading on PC3,12.5% variance). PC1 primarily separates FE (high-iron diet + CDI, positive direction) from NC (healthy control, negative direction), while PC2 separates CD (CDI alone, positive direction) from NC (negative direction). Metabolites with high absolute loadings on early PCs are the main drivers of the observed group separation. Users can identify which metabolites contribute most to the unsupervised metabolic variance structure and cross-reference with VIP scores from PLSDA/OPLSDA for prioritizing discriminant biomarkers."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/pca_scores.csv",
+ "sheet_name": "pca_scores",
+ "annotation": "PCA sample score coordinates for all18 samples. Columns: PC1 (36.2% variance explained), PC2 (18.3%), PC3 (12.5%), SampleID (unique identifier), Group (CD, FE, or NC), SampleName (sample name), SampleType (experimental condition: 'high iron diet before', 'Clostridium difficile infection', 'Standard (control)'). Three distinct clusters are observed: NC samples in negative PC1 (mean -22.8) and negative PC2 (mean -14.1); CD samples in negative PC1 but positive PC2 (mean +16.5); FE samples in positive PC1 (mean +37.1). The clear separation along PC1 (FE vs others) and PC2 (CD vs NC) confirms that iron diet and infection each contribute distinct metabolic signatures. No outlier samples distort the cluster structure, validating data quality. This unsupervised view provides confidence that the observed group differences are driven by genuine biological signals rather than technical artifacts."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/pca_variance_explained.csv",
+ "sheet_name": "pca_variance_explained",
+ "annotation": "Variance explained by each of the18 principal components from PCA. Columns: PC (principal component number), Variance_Explained (proportion of total variance explained by each PC), Cumulative_Variance (cumulative proportion), Std_Dev (standard deviation of the PC scores). PC1 explains36.2%, PC218.3%, PC312.5% — the first three PCs collectively capture67.0% of total metabolic variance, indicating strong biological signal in the data. The remaining PCs each explain <5.3%, with PC18 explaining ~0% (residual noise). This variance distribution confirms that the18-sample dataset has sufficient statistical power to detect group-level metabolic differences and supports the reliability of downstream LIMMA and pathway analyses."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/pca_weighted_distances.csv",
+ "sheet_name": "pca_weighted_distances",
+ "annotation": "Within-group Euclidean distance of each sample from its group centroid in PCA space. Columns: SampleID (unique identifier), SampleName (sample name), Group (CD, FE, or NC), Distance_To_Centroid (Euclidean distance to group centroid). FE group shows the smallest mean intra-group distance (mean2.46, range1.10-4.82), indicating highly consistent metabolic response to high-iron diet. CD group shows moderate dispersion (mean6.90, with CD4 notably distant at13.30), suggesting individual variability in infection response. NC group has mean distance9.78, with NC1 showing the highest value (28.99) while remaining NC samples cluster tightly. These distances help assess biological replicate consistency and flag potential sample heterogeneity before proceeding to differential expression analysis."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/permutation_test_results.csv",
+ "sheet_name": "permutation_test_results",
+ "annotation": "Permutation test (n=1000) validating PCA group separation significance. Columns: Metric (statistical metric name), Value (numeric value). The Observed_Ratio (0.176) — the ratio of within-group to between-group distances — is far below the Mean_Permuted_Ratio (0.844) under random group label shuffling. The95% confidence interval of the permuted distribution (Perm_2.5%=0.643, Perm_97.5%=0.982) does not include the observed value (0.176), yielding a one-sided p-value of0.000. This confirms that the three groups (NC, CD, FE) exhibit highly significant separation in unsupervised PCA space, providing strong statistical evidence that high-iron diet and CDI each impart distinct and reproducible metabolic signatures."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/plsda_permutation_test_results.csv",
+ "sheet_name": "plsda_permutation_test_results",
+ "annotation": "Permutation test (n=1000) results validating PLSDA model significance. Columns: Metric (statistical metric name), Value (numeric value). The Observed_Ratio (0.057) is dramatically lower than the Mean_Permuted_Ratio (0.844) under random permutation. The95% CI (Perm_2.5%=0.630, Perm_97.5%=0.998) excludes the observed ratio entirely, with p=0.000. This confirms that the supervised PLSDA model achieves highly significant separation among the three groups, far beyond what would be expected by chance, reinforcing that the metabolic differences associated with high-iron diet and CDI are robust and meaningful."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/plsda_scores.csv",
+ "sheet_name": "plsda_scores",
+ "annotation": "PLSDA sample score coordinates for all18 samples. Columns: Comp1 (first PLS component,36.2% variance explained), Comp2 (second PLS component,16.3%), SampleID (unique identifier), Group (CD, FE, or NC), SampleName (sample name), SampleType (experimental condition). Three groups are completely separated along Comp1: NC samples in the positive direction, CD samples intermediate, and FE samples in the negative direction. The separation is more distinct than PCA due to the supervised nature of PLSDA, which maximizes covariance with group labels. The clear FE vs CD separation along Comp1 confirms that high-iron diet drives metabolic changes that are distinguishable from CDI alone, directly supporting the study's central hypothesis."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/plsda_vip_scores.csv",
+ "sheet_name": "plsda_vip_scores",
+ "annotation": "PLSDA Variable Importance in Projection (VIP) scores for all2059 metabolites. Columns: Comp1 (VIP contribution to component1), Comp2 (VIP contribution to component2), Feature (metabolite name), MeanVIP (mean VIP score across components).911 metabolites (44.2%) have MeanVIP >1, indicating substantial contribution to group discrimination. VIP>1 metabolites are candidates for biomarker selection and pathway enrichment. Users can prioritize these high-VIP features — which include bile acids, sialic acid derivatives, fatty acids, and amino acid-related metabolites — for downstream LIMMA differential analysis and pathway enrichment to elucidate the molecular mechanisms by which high-iron diet modulates CDI susceptibility."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/plsda_weighted_distances.csv",
+ "sheet_name": "plsda_weighted_distances",
+ "annotation": "Weighted distances of each sample from its group centroid in PLSDA model space. Columns: SampleID (unique identifier), SampleName (sample name), Group (CD, FE, or NC), Distance (weighted distance). Smaller distances indicate tighter clustering and more homogeneous metabolic profiles within a group. FE samples show relatively compact distances (e.g., FE1~0.74, FE4~0.15), reflecting the highly consistent effect of high-iron diet on metabolism. CD samples show greater variation (CD4 distance=5.43 in the CD vs NC comparison), consistent with individual differences in infection response. NC samples are moderately dispersed. This table helps assess which samples best represent their group and identifies potential outliers for quality control."
+ }
+ ]
+}

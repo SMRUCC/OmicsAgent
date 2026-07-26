@@ -1,0 +1,33 @@
+{
+ "module_index":7,
+ "module_name": "CMeans Fuzzy Clustering Analysis",
+ "xlsx_file": "7_cmeans_fuzzy_clustering_analysis.xlsx",
+ "output_dir": "G:/OmicsWorks/test/metabolism/demo/analysis/7_cmeans_fuzzy_clustering_analysis",
+ "sheets": [
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/7_cmeans_fuzzy_clustering_analysis/cmeans_cluster_assignments.csv",
+ "sheet_name": "cmeans_cluster_assignments",
+ "annotation": ""
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/7_cmeans_fuzzy_clustering_analysis/cmeans_cluster_kegg_enrichment.csv",
+ "sheet_name": "cmeans_cluster_kegg_enrichment",
+ "annotation": ""
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/7_cmeans_fuzzy_clustering_analysis/cmeans_validation_metrics.csv",
+ "sheet_name": "cmeans_validation_metrics",
+ "annotation": ""
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/7_cmeans_fuzzy_clustering_analysis/cmeans_vs_wgcna_contingency.csv",
+ "sheet_name": "cmeans_vs_wgcna_contingency",
+ "annotation": ""
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/7_cmeans_fuzzy_clustering_analysis/cmeans_vs_wgcna_fisher.csv",
+ "sheet_name": "cmeans_vs_wgcna_fisher",
+ "annotation": ""
+ }
+ ]
+}

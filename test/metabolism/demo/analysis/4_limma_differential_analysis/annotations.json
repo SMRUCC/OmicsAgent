@@ -1,0 +1,38 @@
+{
+ "module_index":4,
+ "module_name": "LIMMA Differential Analysis",
+ "xlsx_file": "4_limma_differential_analysis.xlsx",
+ "output_dir": "G:/OmicsWorks/test/metabolism/demo/analysis/4_limma_differential_analysis",
+ "sheets": [
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/4_limma_differential_analysis/tables/limma_all_comparisons_consolidated.csv",
+ "sheet_name": "limma_all_comparisons_cons",
+ "annotation": "Consolidated LIMMA results for all2,059 metabolites across three pairwise comparisons (FE_vs_CD, CD_vs_NC, FE_vs_NC). Columns: Feature (metabolite ID), name, logFC_FE_vs_CD, pval_adj_FE_vs_CD, VIP_FE_vs_CD, sig_FE_vs_CD (TRUE if p.adj<0.05 & VIP>1), direction_FE_vs_CD (Up/Down/Not Significant), and analogous columns for CD_vs_NC and FE_vs_NC, plus n_significant (count of comparisons where significant). This master table enables cross-comparison of differential expression patterns, revealing metabolites consistently altered across contrasts. Key biological insights: the FE_vs_CD core comparison reveals how high-iron diet modulates CDI susceptibility via iron homeostasis (heme, siderophores), bile acid metabolism (FXR pathway, conjugated/deconjugated bile acids affecting spore germination), and SCFA reduction; CD_vs_NC validates CDI model features; FE_vs_NC shows the combined diet-infection perturbation exceeds infection alone."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/4_limma_differential_analysis/tables/limma_CD_vs_NC.csv",
+ "sheet_name": "limma_CD_vs_NC",
+ "annotation": "LIMMA differential analysis results for CDI (C. difficile infection) vs Normal Control (model validation). Columns: Feature (metabolite ID), logFC (log2 fold change), AveExpr (average expression), t_statistic, pvalue, pvalue_adj (FDR-corrected), B_statistic (log-odds of differential expression), VIP (PLS-DA variable importance in projection), significant (TRUE/FALSE based on p.adj<0.05 & VIP>1), direction (Up/Down/Not Significant), name (metabolite name). This comparison identifies440 DE metabolites characterizing CDI itself (190 up,250 down) and establishes baseline CDI metabolic signatures: bile acid dysmetabolism (conjugated bile acids promoting spore germination vs deconjugated inhibiting it), reduced SCFAs (butyrate, propionate, acetate), increased inflammatory mediators, and Stickland fermentation products. Serves as the reference for distinguishing 'CDI effects' from 'high-iron diet叠加 effects' in the FE_vs_CD comparison."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/4_limma_differential_analysis/tables/limma_FE_vs_CD.csv",
+ "sheet_name": "limma_FE_vs_CD",
+ "annotation": "LIMMA differential analysis results for High-Iron Diet + CDI (FE) vs CDI alone (core comparison). Columns: Feature, logFC, AveExpr, t_statistic, pvalue, pvalue_adj, B_statistic, VIP, significant, direction, name. Of1,435 metabolites with p.adj<0.05,784 pass VIP>1, and the top500 by |logFC| are reported (193 up,307 down). This table directly addresses whether high-iron diet alters gut metabolome under identical CDI conditions. Metabolites changing here represent diet-specific modulation mechanisms: iron homeostasis (heme, enterobactin siderophores via FeoAB/Fhu/Fur systems), bile acid pool composition (conjugated bile acids affecting C. difficile spore germination via taurocholate/chenodeoxycholate), reduced SCFAs (butyrate/propionate depletion from suppressed Lactobacillus/Bifidobacterium), and enhanced Stickland fermentation (proline/hydroxyproline metabolites reflecting C. difficile metabolic adaptation to nutritional immunity)."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/4_limma_differential_analysis/tables/limma_FE_vs_NC.csv",
+ "sheet_name": "limma_FE_vs_NC",
+ "annotation": "LIMMA differential analysis results for High-Iron Diet + CDI (FE) vs Normal Control (comprehensive perturbation). Columns: Feature, logFC, AveExpr, t_statistic, pvalue, pvalue_adj, B_statistic, VIP, significant, direction, name. This comparison reveals500 DE metabolites (204 up,296 down) reflecting the combined effect of high-iron pretreatment plus CDI infection versus health. The magnitude of logFC values and number of DE metabolites exceed those in CD_vs_NC (440 DE), confirming that high-iron diet exacerbates CDI-associated metabolic disruption. Metabolites unique to this contrast capture synergistic diet-infection interactions in iron homeostasis, oxidative stress (ROS), host nutritional immunity (calprotectin S100A8/S100A9 chelation, lipocalin-2 siderophore binding), and FXR/NLRP3 pathway modulation. Downregulation dominates (~59%), consistent with suppression of beneficial microbial metabolites (SCFAs, secondary bile acids)."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/4_limma_differential_analysis/tables/limma_multifactor_anova.csv",
+ "sheet_name": "limma_multifactor_anova",
+ "annotation": "Multi-factor ANOVA results testing global differences across all three experimental groups (NC, CD, FE) for each of2,059 metabolites. Columns: Feature, name, F_statistic, Df_group (group degrees of freedom =2), Df_residual (residual degrees of freedom), pvalue, pvalue_adj (FDR-corrected). At FDR<0.05,1,148 metabolites (55.7%) show significant abundance differences among groups, confirming extensive metabolic reprogramming across conditions. This first-layer screening precedes pairwise LIMMA comparisons and provides statistical evidence that NC, CD, and FE groups represent distinct metabolic states. Significant ANOVA results support the biological premise that high-iron diet (FE) induces metabolic changes beyond those caused by CDI infection alone, warranting subsequent pairwise differential analyses."
+ },
+ {
+ "csv": "G:/OmicsWorks/test/metabolism/demo/tmp/4_limma_differential_analysis/tables/limma_overall_ftest.csv",
+ "sheet_name": "limma_overall_ftest",
+ "annotation": "Limma overall (moderated) F-test results testing whether any of the three group means (NC, CD, FE) differ significantly for each of2,059 metabolites. Columns: Feature, name, F_statistic, pvalue, pvalue_adj (FDR-corrected). A total of1,209 metabolites (58.7%) are significant at FDR<0.05, showing high concordance with the multi-factor ANOVA (1,148/55.7%), validating the robustness of the statistical approach. The limma F-test uses empirical Bayes moderation to stabilize variance estimates, providing reliable detection of metabolome-wide changes even with limited sample sizes (n=6/group). Significant metabolites represent the core metabolic features distinguishing the three experimental conditions, setting the stage for subsequent pairwise LIMMA analyses and pathway enrichment."
+ }
+ ]
+}
