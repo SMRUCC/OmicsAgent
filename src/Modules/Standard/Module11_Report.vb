@@ -1,3 +1,4 @@
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Data.Framework.StorageProvider
 Imports Microsoft.VisualBasic.MIME.text.markdown
 Imports Microsoft.VisualBasic.Net.Http
@@ -315,10 +316,64 @@ Public Class ReportModule : Inherits AnalysisModuleBase
                             sb.AppendLine("</figure>")
                         End If
                     ElseIf figPath IsNot Nothing Then
-                        Dim csvDf As DataFrameResolver = DataFrameResolver.Load(figPath.Item2)
-
+                        ' 读取 CSV 表格文件，提取前 9 行数据，按 fields 指定的列构建 HTML 表格
                         sb.AppendLine("<div>")
                         sb.AppendLine($"<p><strong>表格说明：</strong>{EscapeHtml(data_rep.caption_cn)}<br><strong>Table Caption:</strong> {EscapeHtml(data_rep.caption_en)}</p>")
+
+                        Try
+                            Dim csvDf As DataFrameResolver = DataFrameResolver.Load(figPath.Item2)
+
+                            ' 确定需要显示的列名及其在 CSV 中的列索引
+                            ' fields 为空/Nothing 时显示全部列；非空时仅保留 CSV 中实际存在的字段
+                            Dim displayColumns As New List(Of String)()
+                            Dim columnOrdinals As New List(Of Integer)()
+
+                            If data_rep.fields.IsNullOrEmpty() Then
+                                ' 显示全部列
+                                For Each header As String In csvDf.HeadTitles
+                                    displayColumns.Add(header)
+                                    columnOrdinals.Add(csvDf.GetOrdinal(header))
+                                Next
+                            Else
+                                ' 仅显示 fields 中指定的、且在 CSV 中存在的列
+                                For Each fieldName As String In data_rep.fields
+                                    Dim ordinal As Integer = csvDf.GetOrdinal(fieldName)
+                                    If ordinal >= 0 Then
+                                        displayColumns.Add(fieldName)
+                                        columnOrdinals.Add(ordinal)
+                                    End If
+                                Next
+                            End If
+
+                            ' 仅当存在有效列时才生成表格
+                            If displayColumns.Count > 0 Then
+                                sb.AppendLine("<table>")
+                                sb.AppendLine("<thead>")
+                                sb.AppendLine("<tr>")
+                                For Each colName As String In displayColumns
+                                    sb.AppendLine($"<th>{EscapeHtml(colName)}</th>")
+                                Next
+                                sb.AppendLine("</tr>")
+                                sb.AppendLine("</thead>")
+                                sb.AppendLine("<tbody>")
+
+                                ' 提取前 9 行数据行（不含表头）
+                                For Each row As RowObject In csvDf.Rows.Take(9)
+                                    sb.AppendLine("<tr>")
+                                    For Each ordinal As Integer In columnOrdinals
+                                        sb.AppendLine($"<td>{EscapeHtml(row(ordinal))}</td>")
+                                    Next
+                                    sb.AppendLine("</tr>")
+                                Next
+
+                                sb.AppendLine("</tbody>")
+                                sb.AppendLine("</table>")
+                            End If
+                        Catch ex As Exception
+                            LogInfo($"Failed to load csv table for report: {figPath.Item2} -> {ex.Message}")
+                            sb.AppendLine($"<p><em>(表格数据加载失败: {EscapeHtml(Path.GetFileName(figPath.Item2))})</em></p>")
+                        End Try
+
                         sb.AppendLine("</div>")
                     End If
                 Next
