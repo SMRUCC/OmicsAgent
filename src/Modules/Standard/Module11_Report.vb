@@ -1,3 +1,4 @@
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider
 Imports Microsoft.VisualBasic.MIME.text.markdown
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -313,7 +314,9 @@ Public Class ReportModule : Inherits AnalysisModuleBase
                             sb.AppendLine($"<figcaption><strong>图注：</strong>{EscapeHtml(data_rep.caption_cn)}<br><strong>Figure Caption:</strong> {EscapeHtml(data_rep.caption_en)}</figcaption>")
                             sb.AppendLine("</figure>")
                         End If
-                    Else
+                    ElseIf figPath IsNot Nothing Then
+                        Dim csvDf As DataFrameResolver = DataFrameResolver.Load(figPath.Item2)
+
                         sb.AppendLine("<div>")
                         sb.AppendLine($"<p><strong>表格说明：</strong>{EscapeHtml(data_rep.caption_cn)}<br><strong>Table Caption:</strong> {EscapeHtml(data_rep.caption_en)}</p>")
                         sb.AppendLine("</div>")
