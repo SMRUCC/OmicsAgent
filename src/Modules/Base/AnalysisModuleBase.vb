@@ -392,15 +392,8 @@ Public MustInherit Class AnalysisModuleBase
         Return sb.ToString()
     End Function
 
-    ''' <summary>
-    ''' 注册 Function Calling 工具到 LLM 客户端
-    ''' </summary>
-    ''' <param name="allowWriteFile">
-    ''' 是否允许LLM agent写文件
-    ''' </param>
-    Protected Sub RegisterTools(llm As LLMClient, allowWriteFile As Boolean)
+    Protected Sub RegisterFileTools(llm As LLMClient, allowWriteFile As Boolean)
         Dim fileTool As New FileTool(_context.WorkspaceDir, _logger)
-        Dim shellTool As New ShellTool(_config, _context.WorkspaceDir, _logger)
 
         ' 注册写入类文件操作工具（受 allowWriteFile 控制）
         If allowWriteFile Then
@@ -429,6 +422,19 @@ Public MustInherit Class AnalysisModuleBase
         llm.AddFunction(fileTool, "list_tree")
         llm.AddFunction(fileTool, "list_zip_contents")
         llm.AddFunction(fileTool, "read_zip_entry")
+    End Sub
+
+
+    ''' <summary>
+    ''' 注册 Function Calling 工具到 LLM 客户端
+    ''' </summary>
+    ''' <param name="allowWriteFile">
+    ''' 是否允许LLM agent写文件
+    ''' </param>
+    Protected Sub RegisterTools(llm As LLMClient, allowWriteFile As Boolean)
+        Dim shellTool As New ShellTool(_config, _context.WorkspaceDir, _logger)
+
+        Call RegisterFileTools(llm, allowWriteFile)
 
         ' 注册命令行执行工具
         llm.AddFunction(shellTool, "run_rscript")
