@@ -313,7 +313,7 @@ Public Class ReportModule : Inherits AnalysisModuleBase
                 For Each data_rep As TableFigureCaption In section.figures _
                     .JoinIterates(section.tables) _
                     .OrderBy(Function(a)
-                                 Return a.fields.BaseName
+                                 Return a.file.BaseName
                              End Function)
 
                     Dim figPath = figures.FirstOrDefault(Function(f) Path.GetFileName(f.Item2).TextEquals(data_rep.file))
