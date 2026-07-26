@@ -221,10 +221,13 @@ Public Class ReportModule : Inherits AnalysisModuleBase
   ""conclusion"": ""<中文结论>""
 }}
 "
-            Call RegisterTools(llm, allowWriteFile:=False)
+            Call RegisterFileTools(llm, allowWriteFile:=False)
 
             Dim resp = Await llm.Chat(prompt, cancellationToken)
             Dim json = resp.ExtractJsonFromResponse
+
+            Call resp.output.SaveTo($"{Workspace}/report.txt")
+
             If Not String.IsNullOrEmpty(json) Then
                 Try
                     Return json.LoadJSON(Of ReportContent)
