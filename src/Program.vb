@@ -48,7 +48,7 @@ Omics Data Analysis LLM Agent
 "
 
     ''' <summary>程序主入口</summary>
-    Function Main(args As String()) As Integer
+    Public Function Main(args As String()) As Integer
         ' 解析命令行参数
         Dim parsed As Opts = CommandLine.BuildFromArguments(args, NoSubCommand:=True).CreateOpts(Of Opts)
 
