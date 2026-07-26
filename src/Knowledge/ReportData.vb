@@ -16,18 +16,13 @@
         Public Property module_index As Integer
         Public Property title As String = ""
         Public Property content As String = ""
-        Public Property figure_captions As FigureCaption()
-        Public Property table_captions As TableCaption()
+        Public Property figure_tables As TableFigureCaption()
     End Class
 
-    Public Class FigureCaption
+    Public Class TableFigureCaption
         Public Property file As String = ""
-        Public Property caption_cn As String = ""
-        Public Property caption_en As String = ""
-    End Class
-
-    Public Class TableCaption
-        Public Property file As String = ""
+        Public Property type As String
+        Public Property fields As String()
         Public Property caption_cn As String = ""
         Public Property caption_en As String = ""
     End Class
