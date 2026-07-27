@@ -70,6 +70,8 @@ Public Class ShellTool
             Dim absScriptPath = ResolvePath(script_path)
             If Not File.Exists(absScriptPath) Then
                 Return $"{{""error"": ""Rsharp script file not found: {EscapeJson(absScriptPath)}""}}"
+            ElseIf Not _config.Tools.RsharpPath.FileExists Then
+                Return "Rsharp path not defined."
             End If
 
             Return RunProcess(_config.Tools.RsharpPath, $"""{absScriptPath}"" {args}".Trim())
