@@ -73,6 +73,9 @@ Namespace AppRuntime
         Private Function CheckSingleTool(toolName As String, path As String) As Boolean
             If String.IsNullOrWhiteSpace(path) Then
                 LogInfo($"  [X] {toolName}：路径未配置")
+                If toolName.ToLower = "rsharp" Then
+                    Return True
+                End If
                 Return False
             End If
             If Not File.Exists(path) Then
