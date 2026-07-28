@@ -13,14 +13,10 @@ Imports Microsoft.VisualBasic.Text
 ''' 这些方法通过 LLMClient.AddFunction 注册为大语言模型的函数调用工具，
 ''' 使 LLM 能够自主管理工作区内的脚本文件、配置文件、临时数据等。
 ''' </summary>
-Public Class FileTool
-
-    ReadOnly _workspaceRoot As String
-    ReadOnly _logger As Action(Of String)
+Public Class FileTool : Inherits WorkspaceTool
 
     Public Sub New(workspaceRoot As String, Optional logger As Action(Of String) = Nothing)
-        _workspaceRoot = workspaceRoot
-        _logger = If(logger, AddressOf Console.WriteLine)
+        MyBase.New(workspaceRoot, logger)
     End Sub
 
     ''' <summary>
@@ -29,26 +25,25 @@ Public Class FileTool
     ''' <param name="enforceWorkspace">
     ''' 为 True 时强制路径必须在工作区根目录内，用于写入类操作的安全检查
     ''' </param>
-    Private Function ResolvePath(relativePath As String, Optional enforceWorkspace As Boolean = False) As String
-        If String.IsNullOrWhiteSpace(relativePath) Then
-            Throw New ArgumentException("Path cannot be empty")
-        End If
-
-        Dim absPath As String
-        If Path.IsPathRooted(relativePath) Then
-            absPath = relativePath
-        Else
-            absPath = Path.Combine(_workspaceRoot, relativePath)
-        End If
-
+    Private Overloads Function ResolvePath(relativePath As String,
+                                           Optional enforceWorkspace As Boolean = False,
+                                           Optional ByRef err As String = Nothing) As String
         ' 规范化路径
-        absPath = Path.GetFullPath(absPath)
+        Dim absPath = MyBase.ResolvePath(relativePath)
+
+        If String.IsNullOrWhiteSpace(absPath) Then
+            err = "Path cannot be empty"
+            Return ""
+        End If
 
         ' 防止路径越界
         ' 允许读取工作区外的输入文件，但写入必须在工作区内
         Dim workspaceFull = Path.GetFullPath(_workspaceRoot)
         If enforceWorkspace AndAlso Not absPath.StartsWith(workspaceFull, StringComparison.OrdinalIgnoreCase) Then
-            Throw New UnauthorizedAccessException($"Path outside workspace is not allowed for write operations: {absPath}")
+            err = $"Path outside workspace is not allowed for write operations: {absPath}"
+            Return ""
+        Else
+            Call absPath.ParentPath.MakeDir
         End If
 
         Return absPath
@@ -61,10 +56,11 @@ Public Class FileTool
         <Argument("append", Description:="为 true 时追加到已存在的文件而非覆盖（默认 false）")> Optional append As Boolean = False
     ) As String
         Try
-            Dim absPath = ResolvePath(path, enforceWorkspace:=True)
-            Dim dir = System.IO.Path.GetDirectoryName(absPath)
-            If Not String.IsNullOrEmpty(dir) AndAlso Not Directory.Exists(dir) Then
-                Directory.CreateDirectory(dir)
+            Dim err As String = Nothing
+            Dim absPath = ResolvePath(path, enforceWorkspace:=True, err:=err)
+
+            If Not err Is Nothing Then
+                Return JsonMsg.error(err)
             End If
 
             If path.ExtensionSuffix("r") Then
@@ -91,7 +87,7 @@ Public Class FileTool
             _logger?.Invoke($"[FileTool] Wrote {content.Length} chars to {absPath}")
             Return $"{{""success"": true, ""path"": ""{EscapeJson(absPath)}"", ""bytes"": {Encoding.UTF8.GetByteCount(content)}}}"
         Catch ex As Exception
-            Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
+            Return JsonMsg.error(ex.Message)
         End Try
     End Function
 
@@ -103,7 +99,7 @@ Public Class FileTool
 
             Return content
         Catch ex As Exception
-            Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
+            Return JsonMsg.error(ex.Message)
         End Try
     End Function
 
@@ -112,16 +108,21 @@ Public Class FileTool
         <Argument("path", Description:="文件路径，相对于工作区根目录或绝对路径")> path As String
     ) As String
         Try
-            Dim absPath = ResolvePath(path)
+            Dim err As String = Nothing
+            Dim absPath = ResolvePath(path, err:=err)
+
+            If Not err Is Nothing Then
+                Return JsonMsg.error(err)
+            End If
             If Not File.Exists(absPath) Then
-                Return $"{{""error"": ""File not found: {EscapeJson(absPath)}""}}"
+                Return JsonMsg.error($"File not found: {path}")
             End If
 
             Dim content = File.ReadAllText(absPath, Encoding.UTF8)
             _logger?.Invoke($"[FileTool] Read {content.Length} chars from {absPath}")
             Return content
         Catch ex As Exception
-            Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
+            Return JsonMsg.error(ex.Message)
         End Try
     End Function
 
@@ -131,14 +132,19 @@ Public Class FileTool
         <Argument("line_count", Description:="从顶部开始读取的行数（默认 15）")> Optional line_count As Integer = 15
     ) As String
         Try
-            Dim absPath = ResolvePath(path)
+            Dim err As String = Nothing
+            Dim absPath = ResolvePath(path, err:=err)
+
+            If Not err Is Nothing Then
+                Return JsonMsg.error(err)
+            End If
             If Not File.Exists(absPath) Then
-                Return $"{{""error"": ""File not found: {EscapeJson(absPath)}""}}"
+                Return JsonMsg.error($"File not found: {path}")
             End If
 
             Return absPath.IterateAllLines.Take(line_count).JoinBy(vbCrLf)
         Catch ex As Exception
-            Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
+            Return JsonMsg.error(ex.Message)
         End Try
     End Function
 
@@ -147,11 +153,16 @@ Public Class FileTool
         <Argument("path", Description:="文件路径，相对于工作区根目录或绝对路径")> path As String
     ) As String
         Try
-            Dim absPath = ResolvePath(path)
+            Dim err As String = Nothing
+            Dim absPath = ResolvePath(path, err:=err)
+
+            If Not err Is Nothing Then
+                Return JsonMsg.error(err)
+            End If
             Dim exists = File.Exists(absPath)
             Return $"{{""exists"": {exists.ToString().ToLower()}, ""path"": ""{EscapeJson(absPath)}""}}"
         Catch ex As Exception
-            Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
+            Return JsonMsg.error(ex.Message)
         End Try
     End Function
 
@@ -161,7 +172,11 @@ Public Class FileTool
         <Argument("extension", Description:="可选的文件扩展名过滤器，例如 '.csv' 或 '.R'（留空表示所有文件）")> Optional extension As String = ""
     ) As String
         Try
-            Dim absPath = ResolvePath(dir_path)
+            Dim err As String = Nothing
+            Dim absPath = ResolvePath(dir_path, err:=err)
+            If Not err Is Nothing Then
+                Return JsonMsg.error(err)
+            End If
             If Not Directory.Exists(absPath) Then
                 Return $"{{""error"": ""Directory not found: {EscapeJson(absPath)}""}}"
             End If
@@ -176,7 +191,7 @@ Public Class FileTool
             Dim fileList = files.Select(Function(f) Path.GetFileName(f)).ToArray()
             Return $"{{""count"": {fileList.Length}, ""dir"": ""{EscapeJson(absPath)}"", ""files"": [""{String.Join(""", """, fileList)}""]}}"
         Catch ex As Exception
-            Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
+            Return JsonMsg.error(ex.Message)
         End Try
     End Function
 
@@ -191,7 +206,7 @@ Public Class FileTool
             End If
             Return $"{{""success"": true, ""path"": ""{EscapeJson(absPath)}""}}"
         Catch ex As Exception
-            Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
+            Return JsonMsg.error(ex.Message)
         End Try
     End Function
 
@@ -212,7 +227,7 @@ Public Class FileTool
             _logger?.Invoke($"[FileTool] Deleted file: {absPath}")
             Return $"{{""success"": true, ""path"": ""{EscapeJson(absPath)}""}}"
         Catch ex As Exception
-            Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
+            Return JsonMsg.error(ex.Message)
         End Try
     End Function
 
@@ -235,7 +250,7 @@ Public Class FileTool
             _logger?.Invoke($"[FileTool] Copied {absSrc} -> {absDest}")
             Return $"{{""success"": true, ""src"": ""{EscapeJson(absSrc)}"", ""dest"": ""{EscapeJson(absDest)}""}}"
         Catch ex As Exception
-            Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
+            Return JsonMsg.error(ex.Message)
         End Try
     End Function
 
@@ -258,7 +273,7 @@ Public Class FileTool
             _logger?.Invoke($"[FileTool] Moved {absSrc} -> {absDest}")
             Return $"{{""success"": true, ""src"": ""{EscapeJson(absSrc)}"", ""dest"": ""{EscapeJson(absDest)}""}}"
         Catch ex As Exception
-            Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
+            Return JsonMsg.error(ex.Message)
         End Try
     End Function
 
@@ -278,7 +293,7 @@ Public Class FileTool
                 Return $"{{""exists"": false, ""path"": ""{EscapeJson(absPath)}""}}"
             End If
         Catch ex As Exception
-            Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
+            Return JsonMsg.error(ex.Message)
         End Try
     End Function
 
@@ -309,7 +324,7 @@ Public Class FileTool
             _logger?.Invoke($"[FileTool] Read lines {start_line}-{start_line + lines.Length - 1} from {absPath}")
             Return content
         Catch ex As Exception
-            Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
+            Return JsonMsg.error(ex.Message)
         End Try
     End Function
 
@@ -339,7 +354,7 @@ Public Class FileTool
             _logger?.Invoke($"[FileTool] Read last {buffer.Count} lines from {absPath}")
             Return content
         Catch ex As Exception
-            Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
+            Return JsonMsg.error(ex.Message)
         End Try
     End Function
 
@@ -369,7 +384,7 @@ Public Class FileTool
 
             Return $"{{""count"": {matches.Count}, ""pattern"": ""{EscapeJson(pattern)}"", ""matches"": [{String.Join(", ", matches)}]}}"
         Catch ex As Exception
-            Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
+            Return JsonMsg.error(ex.Message)
         End Try
     End Function
 
@@ -391,7 +406,7 @@ Public Class FileTool
             Dim dirList = dirs.Select(Function(d) Path.GetFileName(d)).ToArray()
             Return $"{{""count"": {dirList.Length}, ""dir"": ""{EscapeJson(absPath)}"", ""directories"": [""{String.Join(""", """, dirList)}""]}}"
         Catch ex As Exception
-            Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
+            Return JsonMsg.error(ex.Message)
         End Try
     End Function
 
@@ -404,7 +419,7 @@ Public Class FileTool
             Dim exists = Directory.Exists(absPath)
             Return $"{{""exists"": {exists.ToString().ToLower()}, ""path"": ""{EscapeJson(absPath)}""}}"
         Catch ex As Exception
-            Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
+            Return JsonMsg.error(ex.Message)
         End Try
     End Function
 
@@ -422,7 +437,7 @@ Public Class FileTool
             _logger?.Invoke($"[FileTool] Deleted directory: {absPath} (recursive={recursive})")
             Return $"{{""success"": true, ""path"": ""{EscapeJson(absPath)}""}}"
         Catch ex As Exception
-            Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
+            Return JsonMsg.error(ex.Message)
         End Try
     End Function
 
@@ -445,7 +460,7 @@ Public Class FileTool
             sb.Append("}")
             Return sb.ToString()
         Catch ex As Exception
-            Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
+            Return JsonMsg.error(ex.Message)
         End Try
     End Function
 
@@ -530,7 +545,7 @@ Public Class FileTool
             _logger?.Invoke($"[FileTool] Created zip: {absZip} ({zipInfo.Length} bytes)")
             Return $"{{""success"": true, ""source"": ""{EscapeJson(absSrc)}"", ""zip_path"": ""{EscapeJson(absZip)}"", ""size_bytes"": {zipInfo.Length}}}"
         Catch ex As Exception
-            Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
+            Return JsonMsg.error(ex.Message)
         End Try
     End Function
 
@@ -584,7 +599,7 @@ Public Class FileTool
             _logger?.Invoke($"[FileTool] Extracted {entryCount} entries from {absZip} -> {absDest}")
             Return $"{{""success"": true, ""zip_path"": ""{EscapeJson(absZip)}"", ""dest_dir"": ""{EscapeJson(absDest)}"", ""entries_extracted"": {entryCount}}}"
         Catch ex As Exception
-            Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
+            Return JsonMsg.error(ex.Message)
         End Try
     End Function
 
@@ -609,7 +624,7 @@ Public Class FileTool
 
             Return $"{{""count"": {entries.Count}, ""zip_path"": ""{EscapeJson(absZip)}"", ""entries"": [{String.Join(", ", entries)}]}}"
         Catch ex As Exception
-            Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
+            Return JsonMsg.error(ex.Message)
         End Try
     End Function
 
@@ -639,13 +654,7 @@ Public Class FileTool
                 End Using
             End Using
         Catch ex As Exception
-            Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
+            Return JsonMsg.error(ex.Message)
         End Try
     End Function
-
-    Private Shared Function EscapeJson(input As String) As String
-        If String.IsNullOrEmpty(input) Then Return ""
-        Return input.Replace("\", "\\").Replace("""", "\""").Replace(vbCr, "\r").Replace(vbLf, "\n").Replace(vbTab, "\t")
-    End Function
-
 End Class

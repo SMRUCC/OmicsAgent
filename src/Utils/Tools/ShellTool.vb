@@ -10,20 +10,18 @@ Imports OmicsAgent.AppRuntime
 ''' 这些方法通过 LLMClient.AddFunction 注册为大语言模型的函数调用工具，
 ''' 使 LLM 能够自主运行所编写的分析脚本并获取执行结果。
 ''' </summary>
-Public Class ShellTool
+Public Class ShellTool : Inherits WorkspaceTool
 
     ReadOnly _config As AgentConfig
-    ReadOnly _workspaceRoot As String
-    ReadOnly _logger As Action(Of String)
     ReadOnly _timeout_seconds As Integer = 3600
 
     Public Sub New(config As AgentConfig, workspaceRoot As String,
                    Optional logger As Action(Of String) = Nothing,
                    Optional timeout_seconds As Integer = 3600)
 
+        Call MyBase.New(workspaceRoot, logger)
+
         _config = config
-        _workspaceRoot = workspaceRoot
-        _logger = If(logger, AddressOf Console.WriteLine)
         _timeout_seconds = timeout_seconds
     End Sub
 
@@ -159,17 +157,6 @@ Public Class ShellTool
 
             Return $"{{""exit_code"": {exitCode}, ""stdout"": ""{EscapeJson(stdout)}"", ""stderr"": ""{EscapeJson(stderr)}""}}"
         End Using
-    End Function
-
-    Private Function ResolvePath(relativePath As String) As String
-        If String.IsNullOrWhiteSpace(relativePath) Then Return ""
-        If Path.IsPathRooted(relativePath) Then Return relativePath
-        Return Path.GetFullPath(Path.Combine(_workspaceRoot, relativePath))
-    End Function
-
-    Private Shared Function EscapeJson(input As String) As String
-        If String.IsNullOrEmpty(input) Then Return ""
-        Return input.Replace("\", "\\").Replace("""", "\""").Replace(vbCr, "\r").Replace(vbLf, "\n").Replace(vbTab, "\t")
     End Function
 
 End Class
