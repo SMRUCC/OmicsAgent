@@ -35,12 +35,12 @@ Public Class ShellTool
         Try
             Dim absScriptPath = ResolvePath(script_path)
             If Not File.Exists(absScriptPath) Then
-                Return $"{{""error"": ""R script file not found: {EscapeJson(absScriptPath)}""}}"
+                Return JsonMsg.error($"R script file not found: {absScriptPath}")
             End If
 
             Return RunProcess(_config.Tools.RscriptPath, $"--vanilla ""{absScriptPath}"" {args}".Trim())
         Catch ex As Exception
-            Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
+            Return JsonMsg.error(ex.Message)
         End Try
     End Function
 
@@ -52,12 +52,12 @@ Public Class ShellTool
         Try
             Dim absScriptPath = ResolvePath(script_path)
             If Not File.Exists(absScriptPath) Then
-                Return $"{{""error"": ""Python script file not found: {EscapeJson(absScriptPath)}""}}"
+                Return JsonMsg.error($"Python script file not found: {absScriptPath}")
             End If
 
             Return RunProcess(_config.Tools.PythonPath, $"""{absScriptPath}"" {args}".Trim())
         Catch ex As Exception
-            Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
+            Return JsonMsg.error(ex.Message)
         End Try
     End Function
 
@@ -69,14 +69,14 @@ Public Class ShellTool
         Try
             Dim absScriptPath = ResolvePath(script_path)
             If Not File.Exists(absScriptPath) Then
-                Return $"{{""error"": ""Rsharp script file not found: {EscapeJson(absScriptPath)}""}}"
+                Return JsonMsg.error($"Rsharp script file not found: {absScriptPath}")
             ElseIf Not _config.Tools.RsharpPath.FileExists Then
-                Return "Rsharp path not defined."
+                Return JsonMsg.error("Rsharp path not defined.")
             End If
 
             Return RunProcess(_config.Tools.RsharpPath, $"""{absScriptPath}"" {args}".Trim())
         Catch ex As Exception
-            Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
+            Return JsonMsg.error(ex.Message)
         End Try
     End Function
 
@@ -89,26 +89,24 @@ Public Class ShellTool
         Try
             Dim absHtmlPath = ResolvePath(html_path)
             Dim absPdfPath = ResolvePath(pdf_path)
+
             If Not File.Exists(absHtmlPath) Then
-                Return $"{{""error"": ""HTML file not found: {EscapeJson(absHtmlPath)}""}}"
+                Return JsonMsg.error($"HTML file not found: {absHtmlPath}")
             End If
 
-            Dim dir = Path.GetDirectoryName(absPdfPath)
-            If Not String.IsNullOrEmpty(dir) AndAlso Not Directory.Exists(dir) Then
-                Directory.CreateDirectory(dir)
-            End If
+            Call absPdfPath.ParentPath.MakeDir
 
             Dim args = $"--page-size A4 --orientation Portrait {extra_args} ""{absHtmlPath}"" ""{absPdfPath}"""
             Return RunProcess(_config.Tools.WkHtmlToPdfPath, args)
         Catch ex As Exception
-            Return $"{{""error"": ""{EscapeJson(ex.Message)}""}}"
+            Return JsonMsg.error(ex.Message)
         End Try
     End Function
 
     ''' <summary>执行外部进程并捕获输出</summary>
     Private Function RunProcess(executable As String, args As String) As String
         If String.IsNullOrEmpty(executable) OrElse Not File.Exists(executable) Then
-            Return $"{{""error"": ""Executable not found: {EscapeJson(executable)}""}}"
+            Return JsonMsg.error($"Executable not found: {executable}")
         End If
 
         Dim psi As New ProcessStartInfo()
