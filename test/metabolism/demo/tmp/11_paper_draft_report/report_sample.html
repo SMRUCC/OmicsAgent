@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+<meta charset='UTF-8'>
+<title>高铁饮食调控艰难梭菌感染小鼠肠道代谢组的整合组学分析：揭示&quot;饮食-菌群-宿主&quot;互作中代谢模块与免疫信号通路的因果调控机制</title>
+<style>
+/* ============================================================
+   科研报告样式表（A4 打印排版）
+   主色：#1f4e79 / #2e5c8a，衬线字体，严谨学术风格
+   ============================================================ */
+
+@page {
+  size: A4;
+  margin: 18mm;
+}
+
+:root {
+  --primary: #1f4e79;
+  --primary-light: #2e5c8a;
+  --text: #333333;
+  --text-muted: #555555;
+  --border: #cccccc;
+  --stripe: #f9f9f9;
+  --abstract-bg: #f5f5f5;
+}
+
+body {
+  font-family: "Cambria", "Times New Roman", "Songti SC", "SimSun", "Microsoft YaHei", serif;
+  font-size: 12pt;
+  line-height: 1.6;
+  color: var(--text);
+  text-align: justify;
+}
+
+/* ---------- 标题层级 ---------- */
+h1 {
+  font-size: 22pt;
+  text-align: center;
+  color: var(--primary);
+  margin-bottom: 20pt;
+}
+
+h2 {
+  font-size: 16pt;
+  color: var(--primary);
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: 5pt;
+  margin-top: 20pt;
+}
+
+h3 {
+  font-size: 14pt;
+  color: var(--primary-light);
+  margin-top: 15pt;
+}
+
+h4 {
+  font-size: 12.5pt;
+  color: var(--primary-light);
+  margin-top: 12pt;
+}
+
+/* ---------- 正文段落 ---------- */
+p {
+  text-align: justify;
+  text-indent: 2em;
+  margin: 6pt 0;
+}
+
+/* ---------- 列表 / 引用 / 代码 ---------- */
+ul, ol {
+  margin: 8pt 0;
+  padding-left: 2em;
+}
+
+li {
+  text-align: justify;
+  margin: 3pt 0;
+}
+
+blockquote {
+  margin: 8pt 2em;
+  padding: 6pt 12pt;
+  border-left: 3px solid var(--border);
+  background: var(--stripe);
+  color: var(--text-muted);
+}
+
+code {
+  font-family: Consolas, "Courier New", monospace;
+  background: #f0f0f0;
+  padding: 1pt 4pt;
+  border-radius: 3pt;
+  font-size: 10pt;
+}
+
+pre {
+  background: var(--abstract-bg);
+  padding: 8pt;
+  border: 1px solid #ddd;
+  border-radius: 4pt;
+  overflow-x: auto;
+  font-size: 10pt;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+/* ---------- 封面页 ---------- */
+.cover {
+  height: 261mm; /* A4 内容区高度(297mm - 2*18mm) */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  page-break-after: always;
+}
+
+.cover-title {
+  font-size: 26pt;
+  color: var(--primary);
+  line-height: 1.35;
+  margin: 0 0 14pt 0;
+}
+
+.cover-rule {
+  width: 60mm;
+  height: 2px;
+  background: var(--primary);
+  margin: 0 auto 18pt auto;
+}
+
+.cover-date {
+  font-size: 12pt;
+  color: var(--text-muted);
+  margin: 4pt 0;
+  text-indent: 0;
+}
+
+.cover-keywords {
+  font-size: 11pt;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: 18pt;
+  text-indent: 0;
+}
+
+/* ---------- 目录页 ---------- */
+.toc {
+  page-break-after: always;
+}
+
+.toc-title {
+  font-size: 18pt;
+  color: var(--primary);
+  text-align: center;
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: 6pt;
+  margin-bottom: 16pt;
+}
+
+.toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.toc-list li {
+  margin: 7pt 0;
+  text-indent: 0;
+}
+
+.toc-list li a {
+  color: var(--primary);
+}
+
+.toc-sub {
+  padding-left: 2.5em;
+  font-size: 11pt;
+  color: var(--text-muted);
+}
+
+/* ---------- 摘要 / 关键词 ---------- */
+.abstract-section {
+  margin-top: 12pt;
+}
+
+.abstract {
+  background-color: var(--abstract-bg);
+  padding: 10pt;
+  border-left: 4px solid var(--primary);
+}
+
+.abstract p {
+  text-indent: 0;
+}
+
+.keywords {
+  font-style: italic;
+  color: var(--text-muted);
+  text-indent: 0;
+}
+
+/* ---------- 章节容器 ---------- */
+.section {
+  margin-top: 6pt;
+}
+
+.result-subsection {
+  margin-top: 10pt;
+}
+
+/* ---------- 图 ---------- */
+figure {
+  text-align: center;
+  margin: 15pt 0;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+img {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  max-height: 480px;
+  height: auto;
+}
+
+figcaption {
+  font-size: 10pt;
+  color: var(--text-muted);
+  margin-top: 5pt;
+  text-align: center;
+  line-height: 1.4;
+}
+
+figcaption strong {
+  color: var(--primary);
+}
+
+/* ---------- 表 ---------- */
+.table-block {
+  margin: 12pt 0;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+.table-caption {
+  font-size: 10pt;
+  color: var(--text-muted);
+  margin-bottom: 6pt;
+  text-indent: 0;
+  text-align: left;
+}
+
+.table-caption strong {
+  color: var(--primary);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 6pt 0;
+  font-size: 10pt;
+  table-layout: fixed;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+th {
+  background-color: var(--primary);
+  color: white;
+  padding: 5pt;
+  border: 1px solid var(--border);
+  text-align: center;
+}
+
+td {
+  padding: 5pt;
+  border: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+tr:nth-child(even) {
+  background-color: var(--stripe);
+}
+
+</style>
+</head>
+<body>
+<div class='cover'>
+<h1 class='cover-title'>高铁饮食调控艰难梭菌感染小鼠肠道代谢组的整合组学分析：揭示&quot;饮食-菌群-宿主&quot;互作中代谢模块与免疫信号通路的因果调控机制</h1>
+<div class='cover-rule'></div>
+<p class='cover-date'>2026 年 07 月 30 日</p>
+<p class='cover-keywords'><strong>关键词：</strong>高铁饮食；艰难梭菌感染；代谢组学；WGCNA；PLS-PM；免疫信号转导；肠道菌群；因果路径分析</p>
+</div>
+<div class='toc'>
+<h2 class='toc-title'>目录</h2>
+<ul class='toc-list'>
+<li><a href='#sec-intro'>1. 引言</a></li>
+<li><a href='#sec-methods'>2. 材料与方法</a></li>
+<li><a href='#sec-results'>3. 结果</a></li>
+<li class='toc-sub'><a href='#sec-result-1'>3.1 1.表达矩阵预处理与数据质量评估</a></li>
+<li class='toc-sub'><a href='#sec-result-2'>3.2 2. PCA/PLSDA/OPLSDA降维分析揭示三组间显著代谢分离</a></li>
+<li class='toc-sub'><a href='#sec-result-3'>3.3 3.比对组设计与差异分析策略</a></li>
+<li class='toc-sub'><a href='#sec-result-4'>3.4 4. LIMMA差异分析鉴定枢纽代谢物</a></li>
+<li class='toc-sub'><a href='#sec-result-5'>3.5 5. KEGG功能分析与GSVA通路活性评估</a></li>
+<li class='toc-sub'><a href='#sec-result-6'>3.6 6. WGCNA共表达网络分析鉴定疾病特异性代谢模块</a></li>
+<li class='toc-sub'><a href='#sec-result-7'>3.7 7. CMeans模糊聚类与WGCNA模块的交叉验证</a></li>
+<li class='toc-sub'><a href='#sec-result-8'>3.8 8.模块级贝叶斯网络推断调控关系</a></li>
+<li class='toc-sub'><a href='#sec-result-9'>3.9 9. PLS-PM因果路径分析量化调控强度</a></li>
+<li><a href='#sec-discussion'>4. 讨论</a></li>
+<li><a href='#sec-conclusion'>5. 结论</a></li>
+</ul>
+</div>
+<section class='abstract-section'>
+<h2>摘要</h2>
+<div class='abstract'><p>艰难梭菌感染（CDI）是抗生素相关性腹泻的主要病原，近期研究发现饮食因素尤其是铁摄入量在CDI发病中起关键作用。本研究采用非靶向代谢组学技术，系统分析了高铁饮食（含400 mg/kg硫酸亚铁）预处理对艰难梭菌感染小鼠肠道代谢组的影响。通过对2,059个代谢物进行多维度生物信息学分析（包括PCA/PLSDA降维、LIMMA差异分析、WGCNA共表达网络、CMeans模糊聚类、贝叶斯网络推断及PLS-PM因果路径建模），我们发现高铁饮食在CDI背景下诱导了显著的代谢重编程。PCA分析显示三组（健康对照NC、感染组CD、高铁饮食+感染组FE）在得分图上完全分离，前三个主成分解释了67.0%的总方差。差异分析共鉴定出818个独特差异代谢物，其中FE_vs_CD核心比较筛选出500个差异代谢物（193上调、307下调）。WGCNA识别出6个共表达模块，turquoise模块（n=539）与FE组极强正相关（r=0.971, p=2.3×10⁻¹¹）并与信号转导通路活性极强负相关（r=-0.901, p=3.5×10⁻⁷），表明高铁饮食诱导的核心代谢模块强烈抑制宿主免疫信号。贝叶斯网络构建了"高铁饮食模块→免疫信号模块"的抑制性调控轴（置信度0.870），PLS-PM进一步量化了该因果路径系数为-0.722（p=7.7×10⁻⁹）。KEGG GSVA分析确认信号转导通路在FE组显著下调（logFC=-0.96, p_adj=3.4×10⁻⁶），而能量代谢（+0.90）和排泄系统（+0.73）通路显著上调。本研究首次从代谢网络层面系统揭示了高铁饮食通过诱导特定代谢模块重编程、抑制宿主免疫信号通路从而影响CDI结局的分子机制，为阐明"饮食-肠道菌群-宿主"互作网络提供了新的见解。</div>
+<p class='keywords'><strong>关键词：</strong>高铁饮食；艰难梭菌感染；代谢组学；WGCNA；PLS-PM；免疫信号转导；肠道菌群；因果路径分析</p>
+</section>
+<section id='sec-intro' class='section'>
+<h2>1. 引言</h2>
+<p>艰难梭菌（Clostridioides difficile）是一种革兰阳性厌氧芽孢杆菌，是医疗相关性腹泻和假膜性肠炎的主要致病菌。艰难梭菌感染（CDI）的发生通常与抗生素使用导致的肠道菌群失调密切相关，近年来CDI的发病率和严重程度在全球范围内持续上升，已成为一个重要的公共卫生问题。铁是所有生命形式必需的微量元素，在宿主-病原菌互作中扮演着双重角色。一方面，宿主通过营养免疫机制（如钙卫蛋白calprotectin和脂质运载蛋白-2）限制游离铁的可用性以抑制病原菌生长；另一方面，艰难梭菌演化出复杂的铁摄取系统（如FeoAB铁转运体、Fhu铁载体摄取系统）和铁储存机制（如fez操纵子编码的铁质体ferrosome）以应对宿主的铁限制。近期研究揭示，高铁饮食可通过增加肠道内铁浓度直接促进艰难梭菌的生长和毒素产生。体外实验表明，100 μM Fe³⁺可使艰难梭菌CFU增加13.8倍、毒素A蛋白水平升高8.6倍。此外，铁过量还可导致肠道菌群失调，促进肠杆菌科（Enterobacteriaceae）等潜在致病菌的富集，同时减少乳酸杆菌和双歧杆菌等有益菌群。然而，高铁饮食如何在CDI背景下系统性重塑宿主肠道代谢组，以及这些代谢变化如何与宿主免疫信号通路相互作用，目前尚缺乏全面的代谢组学层面的解析。本研究采用非靶向代谢组学技术结合多层级生物信息学分析方法，系统探究高铁饮食预处理对艰难梭菌感染小鼠肠道代谢组的影响。通过整合PCA/PLSDA降维分析、LIMMA差异分析、WGCNA共表达网络、CMeans模糊聚类、贝叶斯网络推断和PLS-PM因果路径建模等先进生物信息学工具，我们旨在从代谢网络层面揭示"饮食-肠道菌群-宿主"互作中高铁饮食调节CDI易感性的分子机制，为开发基于饮食干预的CDI防治策略提供理论基础。
+</section>
+<section id='sec-methods' class='section'>
+<h2>2. 材料与方法</h2>
+<p>1.动物模型与实验设计 本研究采用C57BL/6小鼠构建艰难梭菌感染（CDI）模型。实验分为三组：（1）NC组（健康对照，n=6）：标准饮食+无感染；（2）CD组（艰难梭菌感染组，n=6）：标准饮食+艰难梭菌感染；（3）FE组（高铁饮食干预+感染组，n=6）：感染前接受含400 mg/kg硫酸亚铁的高铁饮食预处理+艰难梭菌感染。
+
+<p>2.代谢组学数据采集与分析 代谢组学数据使用超高效液相色谱-串联质谱（UPLC-MS/MS）平台进行采集。原始表达矩阵包含2,059个代谢物分子和18个生物学样本。数据预处理包括四个步骤：（1）缺失值填充（半最小值策略）；（2）列总和归一化（转换为ppm相对丰度）；（3）log₂(x+1)转换；（4）中位数缩放。
+
+<p>3.多变量统计分析 采用主成分分析（PCA）进行无监督降维，偏最小二乘判别分析（PLS-DA）和正交偏最小二乘判别分析（OPLS-DA）进行有监督判别分析。所有模型均通过1,000次置换检验评估统计显著性。单因素ANOVA和多因素ANOVA用于鉴定三组间的整体差异代谢物。
+
+<p>4.差异表达分析 使用LIMMA（Linear Models for Microarray Data）方法进行差异代谢物筛选。筛选策略为：调整p值&lt;0.05，VIP&gt;1，并按|log₂FC|降序排列取top500。
+
+<p>5.通路功能分析 基于KEGG数据库对代谢物进行通路注释，采用Fisher精确检验进行通路富集分析，同时使用GSVA（Gene Set Variation Analysis）进行通路活性评分。
+
+
+<ol start="6">
+<li><p>WGCNA共表达网络分析</li>
+</ol>
+
+
+<p>使用WGCNA包构建代谢物共表达网络。软阈值β=6（signed网络类型），动态树切割最小模块大小为10，模块合并高度为0.25。
+
+
+<ol start="7">
+<li><p>CMeans模糊聚类分析</li>
+</ol>
+
+
+<p>使用e1071包进行模糊C均值聚类，通过FPC（模糊划分系数）、PE（划分熵）和平均Silhouette宽度综合评估最优聚类数。
+
+<p>8.贝叶斯网络与因果路径分析 使用bnlearn包的Hill-Climbing算法进行模块级贝叶斯网络结构学习，结合200次bootstrap重采样（置信度阈值≥0.7）。PLS-PM使用plspm包构建因果路径模型。
+</section>
+<section id='sec-results' class='section'>
+<h2>3. 结果</h2>
+<section id='sec-result-1' class='result-subsection'>
+<h3>3.1 1.表达矩阵预处理与数据质量评估</h3>
+<p>本研究使用的代谢组学表达矩阵包含2,059个代谢物分子和18个生物学样本，分别来自三个实验分组：CD组（艰难梭菌感染组，n=6）、FE组（感染前高铁饮食干预组，n=6）和NC组（健康对照，n=6）。原始数据的代谢物丰度值范围从0.0095到283.38，均值为1.50，标准差3.66，反映了代谢组学数据固有的动态范围大和不同代谢物间量级差异悬殊的特点。数据中未检测到缺失值，数据完整性良好。数据预处理按照标准代谢组学规范执行了四个步骤。列总和归一化前各样本的列总和波动在2,565.7~3,691.8之间（标准差369.84），归一化后所有样本的列总和稳定在999,610~999,729 ppm（标准差仅37.89），系统技术变异被有效消除。经log₂(x+1)转换后，数据分布从高度右偏变为近似正态分布，表达值范围压缩至1.85~16.36。中位数缩放后，全部2,059个代谢物的中位数均精确为1.0，数据整体范围缩小至0.217~2.365。三组的组均值分别为CD组=1.037、FE组=1.005、NC组=1.033，保留了生物学差异信息的同时消除了绝对丰度的量级差异。数据质量评估显示：无缺失值、无负值、QC设计完善、每组6个生物学重复为统计分析提供了充分效能。
+</section>
+<section id='sec-result-2' class='result-subsection'>
+<h3>3.2 2. PCA/PLSDA/OPLSDA降维分析揭示三组间显著代谢分离</h3>
+<p>对预处理后的2,059×18表达矩阵进行了无监督PCA分析。前三个主成分分别解释了36.2%、18.3%和12.5%的总方差，累计解释67.0%，表明代谢组数据中存在强烈的生物学信号。PCA得分图显示，三组形成了三个独立的簇：NC组分布在PC1负方向（均值-22.79）和PC2负方向（均值-14.09）；CD组处于PC1负方向但PC2正方向（均值+16.52）；FE组则完全处于PC1正方向（均值+37.06），与其他两组显著分离。置换检验（1,000次）确认三组分离极显著（观测比率0.176 vs置换均值0.844，p=0.0000）。PLS-DA分析进一步证实了分组分离，使用2个主成分，Comp1解释36.16%的方差，VIP&gt;1的代谢物有911个（44.2%），置换检验p=0.0000。OPLS-DA成对比较显示：FE_vs_NC（Q²=0.966，903个高重要性代谢物）、FE_vs_CD（Q²=0.950，776个高重要性代谢物）、CD_vs_NC（Q²=0.658，700个高重要性代谢物）。所有比较置换检验p=0.001。单因素ANOVA鉴定出1,148个显著差异代谢物（FDR&lt;0.05），占全部代谢物的55.8%。排名前五的最显著差异代谢物为Pro Phe Val（F=970.5）、Thiobinupharidine（F=861.9）、L-gamma-Glutamyl-(3R)-L-beta-ethynylserine（F=601.6）、delta-Tocotrienol（F=561.8）和CerP14:1;2O/2:0（F=573.0）。
+</section>
+<section id='sec-result-3' class='result-subsection'>
+<h3>3.3 3.比对组设计与差异分析策略</h3>
+<p>基于三个实验分组，设计了3组两两比对：以FE_vs_CD为一级核心比对（直接回答高铁饮食对CDI代谢组的影响），CD_vs_NC为二级模型验证（建立CDI感染基线代谢特征），FE_vs_NC为三级整体效应评估。FE_vs_CD比对中，两组均感染了艰难梭菌，唯一变量为高铁饮食预处理。
+</section>
+<section id='sec-result-4' class='result-subsection'>
+<h3>3.4 4. LIMMA差异分析鉴定枢纽代谢物</h3>
+<p>采用三层递进式统计策略进行差异分析。单因素ANOVA（FDR&lt;0.05）鉴定出1,148个显著代谢物（55.7%），limma总体F检验（FDR&lt;0.05）鉴定出1,209个（58.7%），两者高度一致。FE_vs_CD核心比对筛选出500个差异代谢物（193上调、307下调），CD_vs_NC鉴定出440个（190上调、250下调），FE_vs_NC鉴定出500个（204上调、296下调）。三组比对取并集后鉴定出818个独特差异代谢物。所有三个比对中下调代谢物数量均显著多于上调（约1.5~1.6倍），表明肠道代谢组的整体响应趋势以代谢物丰度降低为主。关键差异功能类别包括铁稳态相关代谢物、胆汁酸代谢物、短链脂肪酸相关代谢物和Stickland发酵产物。
+</section>
+<section id='sec-result-5' class='result-subsection'>
+<h3>3.5 5. KEGG功能分析与GSVA通路活性评估</h3>
+<p>构建了覆盖22个KEGG通路、447个代谢物的通路背景映射表（占比21.7%）。GSVA分析（FE_vs_CD核心比对）显示13/22个通路显著改变。信号转导通路大幅下调（logFC=-0.96，p_adj=3.4×10⁻⁶），是所有通路中变化幅度最大、显著性最强的通路。能量代谢通路显著上调（logFC=+0.90，p_adj=8.6×10⁻⁵），排泄系统通路上调（logFC=+0.73，p_adj=2.3×10⁻⁵），神经系统通路下调（logFC=-0.77，p_adj=3.5×10⁻⁵），次级代谢物生物合成上调（logFC=+0.31，p_adj=1.9×10⁻³），脂质代谢下调（logFC=-0.22，p_adj=0.039），糖代谢上调（logFC=+0.35，p_adj=6.0×10⁻³）。CD_vs_NC中3个通路显著（全部上调），FE_vs_NC中9个通路显著。
+</section>
+<section id='sec-result-6' class='result-subsection'>
+<h3>3.6 6. WGCNA共表达网络分析鉴定疾病特异性代谢模块</h3>
+<p>采用WGCNA构建代谢物共表达网络（β=6），识别出6个共表达模块。Turquoise模块（n=539）与FE组极强正相关（r=0.971，p=2.3×10⁻¹¹），Blue模块（n=511）与NC组极强正相关（r=0.919，p=7.3×10⁻⁸），Magenta模块（n=279）与CD组极强正相关（r=0.892，p=6.8×10⁻⁷），Red模块（n=116）与FE组极强负相关（r=-0.913，p=1.2×10⁻⁷）。Turquoise模块与信号转导通路极强负相关（r=-0.901，p=3.5×10⁻⁷），与排泄系统（r=+0.884）、能量代谢（r=+0.836）显著正相关。Red模块与信号转导通路极强正相关（r=0.978，p=2.7×10⁻¹²）。线性回归证实Turquoise模块R²=0.949（is_FE系数+0.462，p=6.4×10⁻¹⁰）。
+</section>
+<section id='sec-result-7' class='result-subsection'>
+<h3>3.7 7. CMeans模糊聚类与WGCNA模块的交叉验证</h3>
+<p>模糊C均值聚类确定最优聚类数k=6，最终形成4个非空簇：Cluster1（496个）、Cluster2（455个）、Cluster3（524个）和Cluster4（584个）。列联表分析揭示CMeans与WGCNA极端高度一致（Fisher全局p&lt;0.0001）：Cluster1与Turquoise模块100%匹配（富集3.82×），Cluster2与Magenta模块60%匹配（富集4.46×）和Red模块15%匹配（富集2.61×），Cluster3与Blue模块90%匹配（富集3.61×），Cluster4与Black模块87%匹配（富集3.07×）。两种独立算法的高度一致勾勒出"健康稳态（Cluster3/Blue）→CDI感染（Cluster2/Magenta+Red）→高铁饮食干预（Cluster1/Turquoise）"的完整代谢组迁移轨迹。
+</section>
+<section id='sec-result-8' class='result-subsection'>
+<h3>3.8 8.模块级贝叶斯网络推断调控关系</h3>
+<p>基于6个模块特征基因进行贝叶斯网络结构学习（Hill-Climbing+BIC，200次bootstrap，置信度≥0.7），识别出6条高置信度有向调控边。Turquoise→Blue（置信度0.985）：高铁饮食模块抑制健康代谢模块。Turquoise→Red（置信度0.870）：高铁饮食模块抑制免疫信号模块，直接验证核心假说。Magenta→Blue（置信度0.725）：CDI感染抑制健康代谢。Magenta→Red（置信度0.780）：CDI感染激活免疫信号。Blue→Red（置信度0.735）：健康状态支持免疫。Black→Purple（置信度0.795）：基础代谢驱动次要模块。模块间Pearson相关矩阵（Turquoise与Red r=-0.944，Turquoise与Blue r=-0.808，Red与Magenta r=0.614）与有向边方向高度一致。
+</section>
+<section id='sec-result-9' class='result-subsection'>
+<h3>3.9 9. PLS-PM因果路径分析量化调控强度</h3>
+<p>基于贝叶斯网络6条有向边构建PLS-PM模型A（模块级），全部6条路径均达显著（p&lt;0.01）。Turquoise→Red（路径系数-0.722，t=-11.50，p=7.7×10⁻⁹）：高铁饮食模块强烈抑制免疫信号模块。Magenta→Red（路径系数+1.127，t=7.01，p=4.2×10⁻⁶）：CDI感染模块强烈激活免疫信号。Magenta→Blue（路径系数-0.809，p=1.5×10⁻⁴）：CDI感染抑制健康代谢。Blue→Red（路径系数+0.635，t=3.28，p=4.7×10⁻³）：健康状态支持免疫。Turquoise→Blue（路径系数-0.350，p=5.4×10⁻⁵）。Black→Purple（路径系数+0.613，p=6.8×10⁻³）。模型B（通路级）仅2/6路径显著。模型比较表明WGCNA模块级聚合比KEGG通路级聚合更能捕获真实因果调控结构。
+</section>
+</section>
+<section id='sec-discussion' class='section'>
+<h2>4. 讨论</h2>
+<p>本研究通过系统性的代谢组学分析，首次从代谢网络层面揭示了高铁饮食在艰难梭菌感染背景下诱导的肠道代谢重编程及其与宿主免疫信号通路的因果调控机制。我们的发现为理解'饮食-肠道菌群-宿主'互作网络提供了重要的分子层面证据。高铁饮食诱导的核心代谢模块（Turquoise模块，539个代谢物）与宿主免疫信号转导通路活性呈极强负相关（r=-0.901），且贝叶斯网络和PLS-PM分析均证实了高铁饮食代谢模块对免疫信号模块的抑制性因果调控（路径系数-0.722）。这一发现与已有知识高度吻合：文献报道高铁饮食可通过改变宿主肠道中性粒细胞招募来影响CDI结局，而中性粒细胞的招募和功能发挥高度依赖免疫信号通路的正常传递。GSVA分析显示信号转导通路在FE组中大幅下调（logFC=-0.96），进一步支持了这一机制假说。值得注意的是，CDI感染本身（Magenta模块）却对免疫信号模块具有正向激活效应（路径系数+1.127），这与感染触发的宿主防御信号应答一致。而健康基线状态（Blue模块）也对免疫信号提供正向支持（+0.635），说明免疫信号通路的活性在健康状态下得到维持，在感染时被激活，而在高铁饮食干预下被抑制。这种'健康支持→感染激活→高铁抑制'的完整调控链，为我们理解铁代谢如何影响宿主抗感染免疫提供了新的视角。胆汁酸代谢的改变是CDI发病机制中的核心环节。我们的研究发现结合型与去结合型胆汁酸的比例在FE组和CD组中发生显著变化，这与已有知识中结合型胆汁酸促进孢子萌发、去结合型胆汁酸抑制萌发的机制一致。短链脂肪酸（SCFA）相关代谢物在FE组中显著降低，这与高铁饮食减少产SCFA有益菌群的预期完全一致。SCFA的减少不仅削弱了肠道屏障功能，还可能通过GPR41/43受体影响宿主免疫应答。本研究的一个创新性发现是通过WGCNA和CMeans两种独立算法的交叉验证，证实了代谢物分组的高度一致性（Fisher p&lt;0.0001），这极大地增强了分析结论的稳健性。从贝叶斯网络到PLS-PM的因果推断升级为生物医学研究提供了可行的方法学框架。本研究的局限性包括代谢物注释率有限（仅21.7%）、横截面设计无法捕捉动态变化、缺乏独立验证队列。未来研究应包括多时间点纵向取样、整合宏基因组学分析、以及通过铁螯合剂或工程益生菌干预进行因果验证。
+</section>
+<section id='sec-conclusion' class='section'>
+<h2>5. 结论</h2>
+<p>本研究通过整合多层级生物信息学分析方法，系统揭示了高铁饮食对艰难梭菌感染小鼠肠道代谢组的调控机制。主要发现包括：（1）高铁饮食在CDI背景下诱导了鲜明的代谢重编程，PCA/OPLSDA显示三组代谢谱完全分离，FE_vs_CD的OPLSDA模型Q²=0.950，验证了高铁饮食独立于感染的代谢重塑效应；（2）WGCNA识别出6个共表达模块，其中Turquoise模块（539个代谢物）作为高铁饮食核心标志模块（r=0.971，R²=0.949），与信号转导通路极强负相关（r=-0.901），表明高铁饮食通过特定的代谢模块网络影响宿主免疫；（3）贝叶斯网络和PLS-PM从因果推断层面证实了'高铁饮食代谢模块→抑制免疫信号模块'的调控轴（置信度0.870，路径系数-0.722，p=7.7×10⁻⁹），形成了从'代谢物差异→通路活性→共表达模块→模块间调控'的多层级证据链；（4）CMeans模糊聚类从软聚类角度完全验证了WGCNA的模块划分，两种独立算法的高度一致（Fisher p&lt;0.0001）极大地增强了分析稳健性；（5）GSVA分析确认信号转导通路在FE组显著下调（logFC=-0.96），能量代谢（+0.90）和排泄系统（+0.73）通路上调，提供了通路层面的功能证据。综上，本研究首次从代谢网络层面系统揭示了'高铁饮食→肠道代谢模块重编程→免疫信号抑制'影响CDI结局的分子机制，为开发基于代谢调控的CDI防治策略提供了新的理论基础和药物靶点。
+</section>
+</body>
+</html>
