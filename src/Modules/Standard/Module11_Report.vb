@@ -97,19 +97,17 @@ Public Class ReportModule : Inherits AnalysisModuleBase
 
         ' 收集所有模块的结论文本
         Dim conclusions = CollectModuleConclusions()
-
         ' 收集所有图表
-        Dim figures = CollectAllFigures()
-
+        Dim figures = CollectAllFigures().ToArray
         ' 收集所有表格
-        Dim tables = CollectAllTables()
+        Dim tables = CollectAllTables().ToArray
 
         ' 调用 LLM 生成报告的各章节内容
         Dim reportContent = Await GenerateReportContentAsync(conclusions, figures, tables, cancellationToken)
 
         ' 生成 HTML 文件
         Dim htmlPath = Path.Combine(_context.WorkspaceDir, "analysis", "report.html")
-        Dim html = BuildHtmlReport(reportContent, figures, tables).Replace("<br><br>", "")
+        Dim html = reportContent.BuildHtmlReport(New ReportResource With {.figures = figures, .tables = tables}, AddressOf LogInfo).Replace("<br><br>", "")
 
         html.SaveTo(htmlPath)
         reportContent.GetJson.SaveTo(Path.Combine(_context.WorkspaceDir, "analysis", "report.json"))
@@ -137,39 +135,31 @@ Public Class ReportModule : Inherits AnalysisModuleBase
     End Function
 
     ''' <summary>收集所有图表</summary>
-    Private Function CollectAllFigures() As List(Of Tuple(Of Integer, String))
-        Dim figures As New List(Of Tuple(Of Integer, String))()
-
+    Private Iterator Function CollectAllFigures() As IEnumerable(Of HtmlReport.ResourceFile)
         For Each result As ModuleResult In _context.ModuleResults
             Dim figuresDir As String = Path.Combine(result.OutputDir, "figures")
             Dim idx As Integer = result.ModuleIndex
 
             For Each f In Directory.GetFiles(figuresDir, "*.png")
-                figures.Add(Tuple.Create(idx, f))
+                Yield New ResourceFile(idx, f)
             Next
         Next
-
-        Return figures
     End Function
 
     ''' <summary>收集所有表格</summary>
-    Private Function CollectAllTables() As List(Of Tuple(Of Integer, String))
-        Dim tables As New List(Of Tuple(Of Integer, String))()
-
+    Private Iterator Function CollectAllTables() As IEnumerable(Of HtmlReport.ResourceFile)
         For Each result As ModuleResult In _context.ModuleResults
             Dim tablesDir = result.Workdir
             Dim idx As Integer = result.ModuleIndex
 
             For Each f In Directory.GetFiles(tablesDir, "*.csv")
-                tables.Add(Tuple.Create(idx, f))
+                Yield New ResourceFile(idx, f)
             Next
         Next
-
-        Return tables
     End Function
 
     ''' <summary>调用 LLM 生成报告内容</summary>
-    Private Async Function GenerateReportContentAsync(conclusions As Dictionary(Of Integer, String), figures As List(Of Tuple(Of Integer, String)), tables As List(Of Tuple(Of Integer, String)), cancellationToken As CancellationToken) As Task(Of ReportContent)
+    Private Async Function GenerateReportContentAsync(conclusions As Dictionary(Of Integer, String), figures As ResourceFile(), tables As ResourceFile(), cancellationToken As CancellationToken) As Task(Of ReportContent)
         Using llm As LLMClient = _config.CreateLLMClient(FolderBaseName & "-create_report", _context.TmpDir)
             Dim prompt = $"
 你是一位生物医学研究论文撰写专家。请基于分析结果撰写一份完整的中文研究报告。
@@ -180,10 +170,10 @@ Public Class ReportModule : Inherits AnalysisModuleBase
 {String.Join(vbCrLf + vbCrLf, conclusions.Select(Function(c) $"## 模块 {c.Key}:{vbCrLf}{c.Value}"))}
 
 # 可用图片
-{String.Join(vbCrLf, figures.Select(Function(f) $"- 模块 {f.Item1}: {Path.GetFileName(f.Item2)}"))}
+{String.Join(vbCrLf, figures.Select(Function(f) $"- 模块 {f.module_index}: {Path.GetFileName(f.filename)}"))}
 
 # 可用表格
-{String.Join(vbCrLf, tables.Select(Function(t) $"- 模块 {t.Item1}: {t.Item2}"))}
+{String.Join(vbCrLf, tables.Select(Function(t) $"- 模块 {t.module_index}: {t.filename}"))}
 
 对于表格内容，你应该首先通过 peek_csv 工具进行表格文件的内容预览，然后再决定将哪些表格，以及表格中的哪些字段放入到分析结果报告中。
 在每一个小节中，需要进行图和表的混合展示，展示的图和表都以相同的数据结构存储在figure_tables这个属性中，这两种数据类型通过figure_tables.type属性值是否为table还是figure来进行区分，对于table类别，仅仅是额外多了一个fields字符串数组属性
@@ -251,160 +241,4 @@ Public Class ReportModule : Inherits AnalysisModuleBase
             }
         End Using
     End Function
-
-    ''' <summary>构建 HTML 报告</summary>
-    Private Function BuildHtmlReport(content As ReportContent, figures As List(Of Tuple(Of Integer, String)), tables As List(Of Tuple(Of Integer, String))) As String
-        Dim sb As New StringBuilder()
-
-        sb.AppendLine("<!DOCTYPE html>")
-        sb.AppendLine("<html lang='zh-CN'>")
-        sb.AppendLine("<head>")
-        sb.AppendLine("<meta charset='UTF-8'>")
-        sb.AppendLine("<title>" & content.title & "</title>")
-        sb.AppendLine("<style>")
-        sb.AppendLine($"{App.HOME}/../docs/report.css".ReadAllText)
-        sb.AppendLine("</style>")
-        sb.AppendLine("</head>")
-        sb.AppendLine("<body>")
-
-        ' 标题
-        sb.AppendLine($"<h1>{content.title}</h1>")
-
-        ' 摘要
-        sb.AppendLine("<h2>摘要</h2>")
-        sb.AppendLine($"<div class='abstract'>{EscapeHtml(content.abstract)}</div>")
-
-        ' 关键词
-        If content.keywords IsNot Nothing AndAlso content.keywords.Count > 0 Then
-            sb.AppendLine($"<p class='keywords'><strong>关键词：</strong>{String.Join("；", content.keywords)}</p>")
-        End If
-
-        ' 引言
-        sb.AppendLine("<h2>1. 引言</h2>")
-        sb.AppendLine($"{EscapeHtml(content.introduction)}")
-
-        ' 材料与方法
-        sb.AppendLine("<h2>2. 材料与方法</h2>")
-        sb.AppendLine($"{EscapeHtml(content.materials_methods)}")
-
-        ' 结果
-        sb.AppendLine("<h2>3. 结果</h2>")
-        If content.results_sections IsNot Nothing Then
-            For Each section In content.results_sections
-                sb.AppendLine($"<h3>3.{section.module_index} {EscapeHtml(section.title)}</h3>")
-                sb.AppendLine($"{EscapeHtml(section.content)}")
-
-                ' 插入图表
-                ' 插入表格说明
-                For Each data_rep As TableFigureCaption In section.figures _
-                    .JoinIterates(section.tables) _
-                    .OrderBy(Function(a)
-                                 Return a.file.BaseName
-                             End Function)
-
-                    Dim figPath = figures.FirstOrDefault(Function(f) Path.GetFileName(f.Item2).TextEquals(data_rep.file))
-
-                    If figPath Is Nothing AndAlso data_rep.file.FileExists Then
-                        figPath = New Tuple(Of Integer, String)(0, data_rep.file)
-                    End If
-
-                    If data_rep.type = "figure" OrElse Not data_rep.file.ExtensionSuffix("csv") Then
-                        If figPath IsNot Nothing Then
-                            sb.AppendLine("<figure>")
-                            sb.AppendLine($"<img src='{New DataURI(figPath.Item2).ToString}' alt='{EscapeHtml(data_rep.caption_en)}'>")
-                            sb.AppendLine($"<figcaption><strong>图注：</strong>{EscapeHtml(data_rep.caption_cn)}<br><strong>Figure Caption:</strong> {EscapeHtml(data_rep.caption_en)}</figcaption>")
-                            sb.AppendLine("</figure>")
-                        End If
-                    ElseIf figPath IsNot Nothing Then
-                        ' 读取 CSV 表格文件，提取前 9 行数据，按 fields 指定的列构建 HTML 表格
-                        sb.AppendLine("<div>")
-                        sb.AppendLine($"<strong>表格说明：</strong>{EscapeHtml(data_rep.caption_cn)}<br><strong>Table Caption:</strong> {EscapeHtml(data_rep.caption_en)}")
-
-                        Try
-                            Dim csvDf As DataFrameResolver = DataFrameResolver.Load(figPath.Item2)
-
-                            ' 确定需要显示的列名及其在 CSV 中的列索引
-                            ' fields 为空/Nothing 时显示全部列；非空时仅保留 CSV 中实际存在的字段
-                            Dim displayColumns As New List(Of String)()
-                            Dim columnOrdinals As New List(Of Integer)()
-
-                            If data_rep.fields.IsNullOrEmpty() Then
-                                ' 显示全部列
-                                For Each header As String In csvDf.HeadTitles
-                                    displayColumns.Add(header)
-                                    columnOrdinals.Add(csvDf.GetOrdinal(header))
-                                Next
-                            Else
-                                ' 仅显示 fields 中指定的、且在 CSV 中存在的列
-                                For Each fieldName As String In data_rep.fields
-                                    Dim ordinal As Integer = csvDf.GetOrdinal(fieldName)
-                                    If ordinal >= 0 Then
-                                        displayColumns.Add(fieldName)
-                                        columnOrdinals.Add(ordinal)
-                                    End If
-                                Next
-                            End If
-
-                            ' 仅当存在有效列时才生成表格
-                            If displayColumns.Count > 0 Then
-                                sb.AppendLine("<table>")
-                                sb.AppendLine("<thead>")
-                                sb.AppendLine("<tr>")
-                                For Each colName As String In displayColumns
-                                    sb.AppendLine($"<th>{EscapeHtml(colName)}</th>")
-                                Next
-                                sb.AppendLine("</tr>")
-                                sb.AppendLine("</thead>")
-                                sb.AppendLine("<tbody>")
-
-                                ' 提取前 9 行数据行（不含表头）
-                                For Each row As RowObject In csvDf.Rows.Take(9)
-                                    sb.AppendLine("<tr>")
-                                    For Each ordinal As Integer In columnOrdinals
-                                        sb.AppendLine($"<td>{EscapeHtml(row(ordinal))}</td>")
-                                    Next
-                                    sb.AppendLine("</tr>")
-                                Next
-
-                                sb.AppendLine("</tbody>")
-                                sb.AppendLine("</table>")
-                            End If
-                        Catch ex As Exception
-                            LogInfo($"Failed to load csv table for report: {figPath.Item2} -> {ex.Message}")
-                            sb.AppendLine($"<p><em>(表格数据加载失败: {EscapeHtml(Path.GetFileName(figPath.Item2))})</em></p>")
-                        End Try
-
-                        sb.AppendLine("</div>")
-                    End If
-                Next
-            Next
-        End If
-
-        ' 讨论
-        sb.AppendLine("<h2>4. 讨论</h2>")
-        sb.AppendLine($"{EscapeHtml(content.discussion)}")
-
-        ' 结论
-        sb.AppendLine("<h2>5. 结论</h2>")
-        sb.AppendLine($"{EscapeHtml(content.conclusion)}")
-
-        sb.AppendLine("</body>")
-        sb.AppendLine("</html>")
-
-        Return sb.ToString()
-    End Function
-
-    Private Function EscapeHtml(text As String) As String
-        If String.IsNullOrEmpty(text) Then
-            Return ""
-        Else
-            Static markdown As New MarkdownRender
-            text = markdown.Transform(text)
-        End If
-
-        Return text _
-            .Replace(vbCrLf, "<br>") _
-            .Replace(vbLf, "<br>")
-    End Function
-
 End Class
