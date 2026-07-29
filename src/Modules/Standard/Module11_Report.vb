@@ -158,6 +158,9 @@ Public Class ReportModule : Inherits AnalysisModuleBase
         Next
     End Function
 
+    ''' <summary>每个报告生成阶段的最大 JSON 解析重试次数</summary>
+    Private Const MaxReportStageRetries As Integer = 3
+
     ''' <summary>
     ''' 调用 LLM 生成报告内容。采用分阶段（前置部分 / 结果章节 / 讨论结论 / 材料与方法）逐步生成，
     ''' 复用同一个 LLMClient 实例，并针对每个阶段加入 JSON 解析错误重试机制，确保返回有效的 ReportContent。
