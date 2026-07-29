@@ -1,6 +1,7 @@
 Imports Microsoft.VisualBasic.MIME.application.json
+Imports Microsoft.VisualBasic.MIME.application.json.LenientJson
 Imports Ollama
-Imports OmicsAgent.ReportData
+Imports OmicsAgent
 
 Module Program
 
@@ -17,7 +18,7 @@ Module Program
         Dim json As String = respo.ExtractJsonFromResponse()
         Dim plan As ReportData.ReportContent = LenientJsonParser.ParseJSON(json).CreateObject(Of ReportData.ReportContent)
 
-        Call plan.GetJson.JsonFragment(indent:=True).SaveTo("G:\OmicsWorks\test\metabolism\demo\tmp\11_paper_draft_report\result.json")
+        Call plan.GetJson.SaveTo("G:\OmicsWorks\test\metabolism\demo\tmp\11_paper_draft_report\result.json")
     End Sub
 
 End Module
