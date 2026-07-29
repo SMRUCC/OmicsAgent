@@ -6,6 +6,7 @@ Imports OmicsAgent
 Module Program
     Sub Main(args As String())
         test_reportjson()
+        SampleHtml.Generate()
         ' test_rscriptSyntaxError()
         Pause()
     End Sub
