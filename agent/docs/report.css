@@ -1,89 +1,294 @@
+/* ============================================================
+   科研报告样式表（A4 打印排版）
+   主色：#1f4e79 / #2e5c8a，衬线字体，严谨学术风格
+   ============================================================ */
+
 @page {
-  size: A3;
-  margin: 15mm;
+  size: A4;
+  margin: 18mm;
+}
+
+:root {
+  --primary: #1f4e79;
+  --primary-light: #2e5c8a;
+  --text: #333333;
+  --text-muted: #555555;
+  --border: #cccccc;
+  --stripe: #f9f9f9;
+  --abstract-bg: #f5f5f5;
 }
 
 body {
-  font-family: "Cambria", "Times New Roman", serif;
+  font-family: "Cambria", "Times New Roman", "Songti SC", "SimSun", "Microsoft YaHei", serif;
   font-size: 12pt;
   line-height: 1.6;
-  color: #333;
+  color: var(--text);
+  text-align: justify;
 }
 
+/* ---------- 标题层级 ---------- */
 h1 {
   font-size: 22pt;
   text-align: center;
-  color: #1f4e79;
+  color: var(--primary);
   margin-bottom: 20pt;
 }
 
 h2 {
   font-size: 16pt;
-  color: #1f4e79;
-  border-bottom: 2px solid #1f4e79;
+  color: var(--primary);
+  border-bottom: 2px solid var(--primary);
   padding-bottom: 5pt;
   margin-top: 20pt;
 }
 
 h3 {
   font-size: 14pt;
-  color: #2e5c8a;
+  color: var(--primary-light);
   margin-top: 15pt;
 }
 
+h4 {
+  font-size: 12.5pt;
+  color: var(--primary-light);
+  margin-top: 12pt;
+}
+
+/* ---------- 正文段落 ---------- */
 p {
   text-align: justify;
   text-indent: 2em;
+  margin: 6pt 0;
 }
 
+/* ---------- 列表 / 引用 / 代码 ---------- */
+ul, ol {
+  margin: 8pt 0;
+  padding-left: 2em;
+}
+
+li {
+  text-align: justify;
+  margin: 3pt 0;
+}
+
+blockquote {
+  margin: 8pt 2em;
+  padding: 6pt 12pt;
+  border-left: 3px solid var(--border);
+  background: var(--stripe);
+  color: var(--text-muted);
+}
+
+code {
+  font-family: Consolas, "Courier New", monospace;
+  background: #f0f0f0;
+  padding: 1pt 4pt;
+  border-radius: 3pt;
+  font-size: 10pt;
+}
+
+pre {
+  background: var(--abstract-bg);
+  padding: 8pt;
+  border: 1px solid #ddd;
+  border-radius: 4pt;
+  overflow-x: auto;
+  font-size: 10pt;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+/* ---------- 封面页 ---------- */
+.cover {
+  height: 261mm; /* A4 内容区高度(297mm - 2*18mm) */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  page-break-after: always;
+}
+
+.cover-title {
+  font-size: 26pt;
+  color: var(--primary);
+  line-height: 1.35;
+  margin: 0 0 14pt 0;
+}
+
+.cover-rule {
+  width: 60mm;
+  height: 2px;
+  background: var(--primary);
+  margin: 0 auto 18pt auto;
+}
+
+.cover-date {
+  font-size: 12pt;
+  color: var(--text-muted);
+  margin: 4pt 0;
+  text-indent: 0;
+}
+
+.cover-keywords {
+  font-size: 11pt;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: 18pt;
+  text-indent: 0;
+}
+
+/* ---------- 目录页 ---------- */
+.toc {
+  page-break-after: always;
+}
+
+.toc-title {
+  font-size: 18pt;
+  color: var(--primary);
+  text-align: center;
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: 6pt;
+  margin-bottom: 16pt;
+}
+
+.toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.toc-list li {
+  margin: 7pt 0;
+  text-indent: 0;
+}
+
+.toc-list li a {
+  color: var(--primary);
+}
+
+.toc-sub {
+  padding-left: 2.5em;
+  font-size: 11pt;
+  color: var(--text-muted);
+}
+
+/* ---------- 摘要 / 关键词 ---------- */
+.abstract-section {
+  margin-top: 12pt;
+}
+
+.abstract {
+  background-color: var(--abstract-bg);
+  padding: 10pt;
+  border-left: 4px solid var(--primary);
+}
+
+.abstract p {
+  text-indent: 0;
+}
+
+.keywords {
+  font-style: italic;
+  color: var(--text-muted);
+  text-indent: 0;
+}
+
+/* ---------- 章节容器 ---------- */
+.section {
+  margin-top: 6pt;
+}
+
+.result-subsection {
+  margin-top: 10pt;
+}
+
+/* ---------- 图 ---------- */
 figure {
   text-align: center;
   margin: 15pt 0;
   page-break-inside: avoid;
+  break-inside: avoid;
 }
 
 img {
+  display: block;
+  margin: 0 auto;
   max-width: 100%;
-  max-height: 500px;
+  max-height: 480px;
+  height: auto;
 }
 
 figcaption {
   font-size: 10pt;
-  color: #555;
+  color: var(--text-muted);
   margin-top: 5pt;
   text-align: center;
+  line-height: 1.4;
+}
+
+figcaption strong {
+  color: var(--primary);
+}
+
+/* ---------- 表 ---------- */
+.table-block {
+  margin: 12pt 0;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+.table-caption {
+  font-size: 10pt;
+  color: var(--text-muted);
+  margin-bottom: 6pt;
+  text-indent: 0;
+  text-align: left;
+}
+
+.table-caption strong {
+  color: var(--primary);
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  margin: 10pt 0;
+  margin: 6pt 0;
   font-size: 10pt;
+  table-layout: fixed;
+  page-break-inside: avoid;
+  break-inside: avoid;
 }
 
 th {
-  background-color: #1f4e79;
+  background-color: var(--primary);
   color: white;
   padding: 5pt;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border);
+  text-align: center;
 }
 
 td {
   padding: 5pt;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-.keywords {
-  font-style: italic;
-  color: #555;
-}
-
-.abstract {
-  background-color: #f5f5f5;
-  padding: 10pt;
-  border-left: 4px solid #1f4e79;
+  background-color: var(--stripe);
 }
