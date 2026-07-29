@@ -107,7 +107,7 @@ Public Class ReportModule : Inherits AnalysisModuleBase
 
         ' 生成 HTML 文件
         Dim htmlPath = Path.Combine(_context.WorkspaceDir, "analysis", "report.html")
-        Dim html = reportContent.BuildHtmlReport(New ReportResource With {.figures = figures, .tables = tables}, AddressOf LogInfo).Replace("<br><br>", "")
+        Dim html = reportContent.BuildHtmlReport(New ReportResource With {.figures = figures, .tables = tables}, AddressOf LogInfo)
 
         html.SaveTo(htmlPath)
         reportContent.GetJson.SaveTo(Path.Combine(_context.WorkspaceDir, "analysis", "report.json"))
