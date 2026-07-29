@@ -1,47 +1,23 @@
 Imports Microsoft.VisualBasic.MIME.application.json
-Imports Microsoft.VisualBasic.MIME.application.json.LenientJson
 Imports Ollama
-Imports OmicsAgent
+Imports OmicsAgent.ReportData
 
 Module Program
+
     Sub Main(args As String())
-        SampleHtml.Generate()
-        ' test_rscriptSyntaxError()
+        Call test_reportjson()
         Pause()
     End Sub
 
-    Sub test_rscriptSyntaxError()
-        ' 模拟 LLM 生成的包含错误的 R 脚本
-        Dim rScript As String = "for (i in1:min(length(match_idx),3)) {" & Environment.NewLine &
-                                "  print(i)" & Environment.NewLine &
-                                "}" & Environment.NewLine &
-                                "# 正常的循环不应被影响" & Environment.NewLine &
-                                "for (j in 1:10) { print(j) }" & vbCrLf & vbCrLf & vbCrLf & "for(i in1   :   2) {" & Environment.NewLine &
-                                "  print(i)" & Environment.NewLine &
-                                "}" & Environment.NewLine
-
-        Console.WriteLine("--- 原始的错误脚本 ---")
-        Console.WriteLine(rScript)
-        Console.WriteLine()
-        Console.WriteLine()
-        Console.WriteLine()
-        Console.WriteLine("--- 直接修正整个脚本的结果 ---")
-        Console.WriteLine(RScriptFixer.FixEntireRScript(rScript))
-    End Sub
-
-    Sub test_reportjson()
+    ''' <summary>
+    ''' 测试从大语言模型返回结果之中解析出报告 json 对象
+    ''' </summary>
+    Private Sub test_reportjson()
         Dim respo As New LLMsResponse With {.output = "G:\OmicsWorks\test\metabolism\demo\tmp\11_paper_draft_report\report.txt".ReadAllText}
-        Dim json As String = respo.ExtractJsonFromResponse
+        Dim json As String = respo.ExtractJsonFromResponse()
         Dim plan As ReportData.ReportContent = LenientJsonParser.ParseJSON(json).CreateObject(Of ReportData.ReportContent)
 
-        Pause()
+        Call plan.GetJson.JsonFragment(indent:=True).SaveTo("G:\OmicsWorks\test\metabolism\demo\tmp\11_paper_draft_report\result.json")
     End Sub
 
-    Sub test_planjson()
-        Dim respo As New LLMsResponse With {.output = "G:\OmicsWorks\test\plan_response.txt".ReadAllText}
-        Dim json As String = respo.ExtractJsonFromResponse
-        Dim plan As ModulePlan = LenientJsonParser.ParseJSON(json).CreateObject(Of ModulePlan)
-
-        Pause()
-    End Sub
 End Module
