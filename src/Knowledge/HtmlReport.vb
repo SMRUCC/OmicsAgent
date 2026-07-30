@@ -71,13 +71,15 @@ Module HtmlReport
     ''' <summary>文档头：doctype / head / meta / title / 内联样式 / body 起始</summary>
     Private Function BuildDocumentHead(title As String) As String
         Dim sb As New StringBuilder()
+        Dim css As String = $"{App.HOME}/../docs/report.css".ReadAllText
         sb.AppendLine("<!DOCTYPE html>")
         sb.AppendLine("<html lang='zh-CN'>")
         sb.AppendLine("<head>")
         sb.AppendLine("<meta charset='UTF-8'>")
+        sb.AppendLine("<meta name='viewport' content='width=device-width, initial-scale=1.0'>")
         sb.AppendLine("<title>" & EscapeText(title) & "</title>")
         sb.AppendLine("<style>")
-        sb.AppendLine($"{App.HOME}/../docs/report.css".ReadAllText)
+        sb.AppendLine(css)
         sb.AppendLine("</style>")
         sb.AppendLine("</head>")
         sb.AppendLine("<body>")
