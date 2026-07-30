@@ -1,6 +1,7 @@
 Imports Microsoft.VisualBasic.Data.Trinity
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.MIME.application.json.LenientJson
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Ollama
 Imports OmicsAgent.AppRuntime
 
@@ -103,7 +104,7 @@ Public MustInherit Class AnalysisModuleBase
             _result.Goal = If(plan, New ModulePlan).goal
             _context.ModuleResults.Add(_result)
 
-            Call _result.GetJson.SaveTo($"{Workspace}/result.json")
+            Call JsonContract.GetJson(_result).SaveTo($"{Workspace}/result.json")
         Catch ex As Exception
             LogInfo($"[错误] 模块 {ModuleName} 执行失败：{ex.Message}")
             LogInfo(ex.StackTrace)
@@ -122,7 +123,7 @@ Public MustInherit Class AnalysisModuleBase
             ' 1. 生成分析计划
             plan = Await GeneratePlanAsync(llm, cancellationToken)
 
-            Call plan.GetJson(comment:=True).SaveTo($"{Workspace}/plan.json")
+            Call plan.GetJson(comment:=True, escapeUnicode:=False).SaveTo($"{Workspace}/plan.json")
             Call LogInfo($"分析计划已生成：{plan.goal}")
 
             ' 2. 编写并执行脚本
@@ -136,7 +137,7 @@ Public MustInherit Class AnalysisModuleBase
 
             ' 4. 记录到上下文
             plan.conclusion = conclusion
-            plan.GetJson(comment:=True).SaveTo($"{Workspace}/plan.json")
+            plan.GetJson(comment:=True, escapeUnicode:=False).SaveTo($"{Workspace}/plan.json")
         End Using
 
         If ModuleName = "Comparison Group Design" Then

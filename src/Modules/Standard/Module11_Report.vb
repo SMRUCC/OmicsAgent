@@ -1,5 +1,6 @@
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.MIME.application.json
+Imports Microsoft.VisualBasic.MIME.application.json.LenientJson
 Imports Ollama
 Imports OmicsAgent.AppRuntime
 Imports OmicsAgent.ReportData
@@ -106,7 +107,7 @@ Public Class ReportModule : Inherits AnalysisModuleBase
         Dim html = reportContent.BuildHtmlReport(New ReportResource With {.figures = figures, .tables = tables}, AddressOf LogInfo)
 
         html.SaveTo(htmlPath)
-        reportContent.GetJson.SaveTo(Path.Combine(_context.WorkspaceDir, "analysis", "report.json"))
+        reportContent.GetJson(indent:=True, escapeUnicode:=False).SaveTo(Path.Combine(_context.WorkspaceDir, "analysis", "report.json"))
 
         LogInfo($"HTML report generated: {htmlPath}")
 
@@ -212,7 +213,7 @@ Public Class ReportModule : Inherits AnalysisModuleBase
             If String.IsNullOrEmpty(report.title) Then report.title = "组学数据分析报告"
 
             ' 保留 report.txt 产出（便于排错），完整 JSON 仍由调用方写入 report.json
-            Call report.GetJson.SaveTo($"{Workspace}/report.txt")
+            Call report.GetJson(indent:=True, escapeUnicode:=False).SaveTo($"{Workspace}/report.txt")
 
             Return report
         End Using
@@ -236,7 +237,7 @@ Public Class ReportModule : Inherits AnalysisModuleBase
 
             If Not String.IsNullOrEmpty(json) Then
                 Try
-                    Dim part As ReportContent = json.LoadJSON(Of ReportContent)
+                    Dim part As ReportContent = LenientJsonParser.ParseJSON(json).CreateObject(Of ReportContent)
                     If part IsNot Nothing Then
                         Return part
                     End If
