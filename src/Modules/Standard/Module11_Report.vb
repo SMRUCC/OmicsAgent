@@ -1,3 +1,4 @@
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.MIME.application.json.LenientJson
@@ -103,14 +104,23 @@ Public Class ReportModule : Inherits AnalysisModuleBase
         Dim tables = CollectAllTables().ToArray
 
         ' 调用 LLM 生成报告的各章节内容
-        Dim reportContent = Await GenerateReportContentAsync(conclusions, figures, tables, cancellationToken)
+        Dim reportCache As String = Path.Combine(_context.WorkspaceDir, "analysis", "report.json")
+        Dim reportContent = Value(Of ReportContent).Default
+
+        If debugCache AndAlso reportCache.FileExists AndAlso (reportContent = reportCache.LoadJSON(Of ReportContent)) IsNot Nothing Then
+            ' 20260730
+            ' do nothing
+            ' just use the cache file data at here
+        Else
+            Call reportContent.Assign(Await GenerateReportContentAsync(conclusions, figures, tables, cancellationToken))
+        End If
 
         ' 生成 HTML 文件
         Dim htmlPath = Path.Combine(_context.WorkspaceDir, "analysis", "report.html")
-        Dim html = reportContent.BuildHtmlReport(New ReportResource With {.figures = figures, .tables = tables}, AddressOf LogInfo)
+        Dim html = reportContent.GetValueOrDefault.BuildHtmlReport(New ReportResource With {.figures = figures, .tables = tables}, AddressOf LogInfo)
 
         html.SaveTo(htmlPath)
-        JsonContract.GetJson(reportContent).SaveTo(Path.Combine(_context.WorkspaceDir, "analysis", "report.json"))
+        JsonContract.GetJson(reportContent.GetValueOrDefault).SaveTo(reportCache)
 
         LogInfo($"HTML report generated: {htmlPath}")
 
