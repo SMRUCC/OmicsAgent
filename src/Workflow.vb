@@ -40,7 +40,7 @@ Module Workflow
     End Function
 
     ''' <summary>异步主流程</summary>
-    Private Async Function MainAsync(parsed As Opts) As Task
+    Private Async Function MainAsync(opts As Opts) As Task
         Dim cancellationToken = UserTaskCancelAction.GetConsoleCancellationToken(prompt:="Cancellation requested...")
         ' 1. 环境检查
         Dim checker As New EnvironmentChecker(_config, _logger)
@@ -60,17 +60,17 @@ Module Workflow
         End If
 
         ' 3. 知识库构建（可选）
-        If Not parsed.skip_kb Then
+        If Not opts.skip_kb Then
             Dim kbBuilder As New KnowledgeBaseBuilder(_config, _context, _logger)
             Await kbBuilder.BuildAsync(cancellationToken)
             Console.WriteLine()
         End If
 
         ' 4. 执行分析模块
-        Dim modulesToRun = parsed.ParseModulesToRun
+        Dim modulesToRun = opts.ParseModulesToRun
 
         ' 加载自定义分析模块（从 JSON 配置文件）
-        Dim customModuleDir = GetCustomModulesDir(parsed)
+        Dim customModuleDir = GetCustomModulesDir(opts)
         _customModules = LoadCustomModules(customModuleDir)
 
         ' 若执行列表包含报告模块(10/11)，则在第一个报告模块之前插入自定义模块索引
@@ -90,15 +90,16 @@ Module Workflow
             End If
         End If
 
-        For Each moduleIdx In modulesToRun
+        For Each moduleIdx As Integer In modulesToRun
             If cancellationToken.IsCancellationRequested Then
                 Exit For
             End If
 
             Dim [module] As AnalysisModuleBase = CreateModule(moduleIdx)
 
-            If parsed.makeReport Then
+            If opts.make_report Then
                 If TypeOf [module] Is ReportModule Then
+                    DirectCast([module], ReportModule).debugCache = opts.debug_cache
                     Await [module].RunAsync(cancellationToken)
                 Else
                     _context.ModuleConclusions.Add($"{[module].ConclusionFile}")
@@ -109,7 +110,7 @@ Module Workflow
                     If [module] IsNot Nothing Then
                         Dim checkCache = $"{[module].ConclusionFile}".FileExists AndAlso $"{[module].Workspace}/result.json".FileExists
 
-                        If checkCache AndAlso parsed.debug_cache Then
+                        If checkCache AndAlso opts.debug_cache Then
                             ' skip
                             _context.ModuleConclusions.Add($"{[module].ConclusionFile}")
                             _context.ModuleResults.Add($"{[module].Workspace}/result.json".ReadAllText.LoadJSON(Of ModuleResult))
