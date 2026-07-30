@@ -3,7 +3,6 @@ Imports System.Reflection
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.MIME.application.json.LenientJson
 Imports Ollama
-Imports OmicsAgent
 Imports OmicsAgent.ReportData
 
 Module SampleHtml
