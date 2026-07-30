@@ -284,14 +284,14 @@ Public Class ReportModule : Inherits AnalysisModuleBase
 1. 标题（title）——基于用户研究主题
 2. 摘要（abstract）——200-300 字
 3. 关键词（keywords）——5-8 个
-4. 引言（introduction）——研究背景、目的与意义
+4. 引言（introduction）—— 分两段文本分别用于讲述用户的研究背景、目的与意义，每一段文本大约300字，总共两段文本600字左右
 
 以下面的 JSON 格式返回结果，不要包含任何额外解释或 markdown 代码围栏：
 {{
   ""title"": ""<中文标题>"",
   ""abstract"": ""<中文摘要>"",
   ""keywords"": [""<关键词1>"", ""<关键词2>"", ...],
-  ""introduction"": ""<中文引言>""
+  ""introduction"": ""引言段落一 <研究背景>   引言段落二 <研究目的与意义>""
 }}
 "
         Dim correction As String = "请重新仅返回包含 title / abstract / keywords / introduction 四个字段的合法 JSON。"
@@ -316,7 +316,7 @@ Public Class ReportModule : Inherits AnalysisModuleBase
 {tablesList}
 
 对于表格内容，你应该首先通过 peek_csv 工具进行表格文件的内容预览，然后再决定将哪些表格，以及表格中的哪些字段放入到分析结果报告中。
-在每一个小节中，需要进行图和表的混合展示，展示的图和表都以相同的数据结构存储在 figure_tables 这个属性中，这两种数据类型通过 type 属性值（figure 或 table）进行区分，对于 table 类别，仅仅是额外多了一个 fields 字符串数组属性。
+在每一个小节中，需要进行图和表的混合展示，并且应该至少有一张图以及一张表，展示的图和表都以相同的数据结构存储在 figure_tables 这个属性中，这两种数据类型通过 type 属性值（figure 或 table）进行区分，对于 table 类别，仅仅是额外多了一个 fields 字符串数组属性。
 
 # 你的任务
 仅撰写「结果（Results）」部分，按模块（module_index）组织，每个模块详尽描述，并给出中英文双语图注 / 表注。
@@ -351,8 +351,8 @@ Public Class ReportModule : Inherits AnalysisModuleBase
 
 # 你的任务
 仅撰写以下两个部分：
-1. 讨论（discussion）——生物学机制解读，并与已有文献进行对比
-2. 结论（conclusion）——主要发现的精炼总结
+1. 讨论（discussion）——分多段文本进行生物学机制解读，并与知识库中已有文献进行对比，大约1000字
+2. 结论（conclusion）——主要发现的精炼总结，大约600字
 
 以下面的 JSON 格式返回结果，不要包含任何额外解释或 markdown 代码围栏：
 {{
