@@ -54,7 +54,9 @@ Module HtmlReport
         ' 标准章节：引言 / 材料与方法 / 讨论 / 结论
         sb.Append(BuildStandardSection("1", "sec-intro", "引言", content.introduction))
         sb.Append(BuildStandardSection("2", "sec-methods", "材料与方法", content.materials_methods))
+        sb.AppendLine("<div style='page-break-after: always;'></div>")
         sb.Append(BuildResultsSection(content, res, counters, loginfo))
+        sb.AppendLine("<div style='page-break-after: always;'></div>")
         sb.Append(BuildStandardSection("4", "sec-discussion", "讨论", content.discussion))
         sb.Append(BuildStandardSection("5", "sec-conclusion", "结论", content.conclusion))
 
@@ -89,6 +91,14 @@ Module HtmlReport
     ''' <summary>封面页：标题、分隔线、生成日期、关键词</summary>
     Private Function BuildCoverPage(content As ReportContent) As String
         Dim sb As New StringBuilder()
+        sb.AppendLine("<br />")
+        sb.AppendLine("<br />")
+        sb.AppendLine("<br />")
+        sb.AppendLine("<br />")
+        sb.AppendLine("<br />")
+        sb.AppendLine("<br />")
+        sb.AppendLine("<br />")
+        sb.AppendLine("<br />")
         sb.AppendLine("<div class='cover'>")
         sb.AppendLine($"<h1 class='cover-title'>{EscapeText(content.title)}</h1>")
         sb.AppendLine("<div class='cover-rule'></div>")

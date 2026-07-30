@@ -7,7 +7,7 @@
 
 @page {
   size: A4;
-  margin: 20mm 18mm; /* 上下略多留白，方便装订 */
+  margin: 45mm; /* 上下略多留白，方便装订 */
 }
 
 body {
@@ -35,7 +35,7 @@ h6 {
 }
 
 h1 {
-  font-size: 24pt; /* 原32pt偏大，24pt更适合A4单栏排版 */
+  font-size: 36pt; /* 原32pt偏大，24pt更适合A4单栏排版 */
   text-align: center;
   color: #1f4e79;
   margin: 0 0 20pt 0;
@@ -43,7 +43,7 @@ h1 {
 }
 
 h2 {
-  font-size: 20pt; /* 作为章节标题，与正文16pt形成1.25倍比例 */
+  font-size: 32pt; /* 作为章节标题，与正文16pt形成1.25倍比例 */
   color: #1f4e79;
   border-bottom: 2px solid #1f4e79;
   padding-bottom: 6pt;
@@ -51,13 +51,13 @@ h2 {
 }
 
 h3 {
-  font-size: 18pt;
+  font-size: 24pt;
   color: #2e5c8a;
   margin: 18pt 0 8pt 0;
 }
 
 h4 {
-  font-size: 16pt; /* 与正文同字号，通过加粗和颜色区分 */
+  font-size: 18pt; /* 与正文同字号，通过加粗和颜色区分 */
   color: #2e5c8a;
   margin: 14pt 0 6pt 0;
 }
@@ -134,7 +134,7 @@ a {
 }
 
 .cover-title {
-  font-size: 28pt; /* 封面主标题放大 */
+  font-size: 36pt; /* 封面主标题放大 */
   color: #1f4e79;
   line-height: 1.4;
   margin: 0 0 18pt 0;
@@ -163,7 +163,7 @@ a {
 }
 
 .cover-keywords {
-  font-size: 12pt;
+  font-size: 24pt;
   color: #666666;
   font-style: italic;
   margin-top: 25pt;
@@ -176,7 +176,7 @@ a {
 }
 
 .toc-title {
-  font-size: 20pt;
+  font-size: 32pt;
   color: #1f4e79;
   text-align: center;
   border-bottom: 2px solid #1f4e79;
@@ -193,7 +193,7 @@ a {
 .toc-list li {
   margin: 8pt 0;
   text-indent: 0;
-  font-size: 14pt;
+  font-size: 24pt;
 }
 
 .toc-list li a {
@@ -202,7 +202,7 @@ a {
 
 .toc-sub {
   padding-left: 2.5em;
-  font-size: 13pt;
+  font-size: 16pt;
   color: #555555;
 }
 
@@ -216,7 +216,7 @@ a {
   background-color: #f7f9fc; /* 浅蓝底色 */
   padding: 12pt 15pt;
   border-left: 4px solid #1f4e79;
-  font-size: 14pt; /* 摘要字号略小于正文 */
+  font-size: 16pt; /* 摘要字号略小于正文 */
   line-height: 1.6;
 }
 
@@ -300,19 +300,20 @@ table {
 
 thead {
   display: table-header-group; /* 跨页时自动重复表头 */
+  text-align: left;
 }
 
 th {
   background-color: #1f4e79;
   color: white;
-  padding: 6pt 8pt;
+  /* padding: 6pt 8pt; */
   border: 1px solid #1f4e79;
   text-align: center;
   font-weight: bold;
 }
 
 td {
-  padding: 6pt 8pt;
+  /* padding: 6pt 8pt; */
   border: 1px solid #d1d1d1; /* 边框颜色稍浅，减少厚重感 */
   text-align: left;
   vertical-align: top;
