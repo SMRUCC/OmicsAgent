@@ -14,7 +14,7 @@
 
 @page {
   size: A4;
-  margin: 20mm 18mm; /* 上下略多留白，方便装订 */
+  margin: 45mm; /* 上下略多留白，方便装订 */
 }
 
 body {
@@ -42,7 +42,7 @@ h6 {
 }
 
 h1 {
-  font-size: 24pt; /* 原32pt偏大，24pt更适合A4单栏排版 */
+  font-size: 36pt; /* 原32pt偏大，24pt更适合A4单栏排版 */
   text-align: center;
   color: #1f4e79;
   margin: 0 0 20pt 0;
@@ -50,7 +50,7 @@ h1 {
 }
 
 h2 {
-  font-size: 20pt; /* 作为章节标题，与正文16pt形成1.25倍比例 */
+  font-size: 32pt; /* 作为章节标题，与正文16pt形成1.25倍比例 */
   color: #1f4e79;
   border-bottom: 2px solid #1f4e79;
   padding-bottom: 6pt;
@@ -58,13 +58,13 @@ h2 {
 }
 
 h3 {
-  font-size: 18pt;
+  font-size: 24pt;
   color: #2e5c8a;
   margin: 18pt 0 8pt 0;
 }
 
 h4 {
-  font-size: 16pt; /* 与正文同字号，通过加粗和颜色区分 */
+  font-size: 18pt; /* 与正文同字号，通过加粗和颜色区分 */
   color: #2e5c8a;
   margin: 14pt 0 6pt 0;
 }
@@ -141,7 +141,7 @@ a {
 }
 
 .cover-title {
-  font-size: 28pt; /* 封面主标题放大 */
+  font-size: 36pt; /* 封面主标题放大 */
   color: #1f4e79;
   line-height: 1.4;
   margin: 0 0 18pt 0;
@@ -170,7 +170,7 @@ a {
 }
 
 .cover-keywords {
-  font-size: 12pt;
+  font-size: 24pt;
   color: #666666;
   font-style: italic;
   margin-top: 25pt;
@@ -183,7 +183,7 @@ a {
 }
 
 .toc-title {
-  font-size: 20pt;
+  font-size: 32pt;
   color: #1f4e79;
   text-align: center;
   border-bottom: 2px solid #1f4e79;
@@ -200,7 +200,7 @@ a {
 .toc-list li {
   margin: 8pt 0;
   text-indent: 0;
-  font-size: 14pt;
+  font-size: 24pt;
 }
 
 .toc-list li a {
@@ -209,7 +209,7 @@ a {
 
 .toc-sub {
   padding-left: 2.5em;
-  font-size: 13pt;
+  font-size: 16pt;
   color: #555555;
 }
 
@@ -223,7 +223,7 @@ a {
   background-color: #f7f9fc; /* 浅蓝底色 */
   padding: 12pt 15pt;
   border-left: 4px solid #1f4e79;
-  font-size: 14pt; /* 摘要字号略小于正文 */
+  font-size: 16pt; /* 摘要字号略小于正文 */
   line-height: 1.6;
 }
 
@@ -307,19 +307,20 @@ table {
 
 thead {
   display: table-header-group; /* 跨页时自动重复表头 */
+  text-align: left;
 }
 
 th {
   background-color: #1f4e79;
   color: white;
-  padding: 6pt 8pt;
+  /* padding: 6pt 8pt; */
   border: 1px solid #1f4e79;
   text-align: center;
   font-weight: bold;
 }
 
 td {
-  padding: 6pt 8pt;
+  /* padding: 6pt 8pt; */
   border: 1px solid #d1d1d1; /* 边框颜色稍浅，减少厚重感 */
   text-align: left;
   vertical-align: top;
@@ -338,6 +339,14 @@ tr:nth-child(even) {
 </style>
 </head>
 <body>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
 <div class='cover'>
 <h1 class='cover-title'>高铁饮食通过调控肠道代谢重编程影响艰难梭菌感染易感性的代谢组学与网络调控机制研究</h1>
 <div class='cover-rule'></div>
@@ -376,6 +385,7 @@ tr:nth-child(even) {
 <h2>2. 材料与方法</h2>
 <p>实验动物模型与样本分组 本研究采用小鼠艰难梭菌感染（CDI）模型，共设置三个实验分组：健康对照组（NC组，Standard control，n=6）、艰难梭菌感染组（CD组，Clostridium difficile infection，n=6）和感染前高铁饮食干预组（FE组，high iron diet before，n=6）。FE组小鼠在感染前接受含400 mg/kg硫酸亚铁的高铁饮食干预，随后与CD组一同进行艰难梭菌感染。另有3个QC质控样本用于评估实验数据采集稳定性，但不参与后续生物学分析。所有样本在单一时间点收集，构成横截面研究设计。 代谢组学数据获取与预处理 采集小鼠肠道粪便或内容物样本进行非靶向代谢组学分析，原始表达矩阵包含2,059个代谢物分子在18个生物学样本中的丰度值。数据预处理采用标准的四步流程：（1）缺失值填充——按行检测缺失值，采用half-minimum策略（以该行所有非缺失正值最小值的一半作为填充值），原始数据无缺失值故该步骤仅作为质控保留执行；（2）列总和归一化——将每个代谢物表达值除以该样本的总和后再乘以缩放因子1×10⁶，转换为百万分之一（ppm）相对丰度；（3）log₂(x+1)转换——经检测数据最大值超过100阈值，故对归一化后数据执行以2为底、伪计数为1的对数转换，使数据分布从高度右偏变为近似正态分布；（4）中位数缩放——按行计算每个代谢物的中位数，将表达值除以其自身中位数，使所有代谢物的中位数均精确为1.0，消除不同代谢物间绝对丰度的量级差异。预处理的R脚本调用自标准化工具库（G:/OmicsWorks/agent/rscript/），包括data_io.R、missing_value.R和normalization.R中的函数（impute_half_min、normalize_sample_sum、transform_log和scale_feature_median）。 主成分分析（PCA）、偏最小二乘判别分析（PLS-DA）与正交偏最小二乘判别分析（OPLS-DA） 采用无监督PCA对有监督PLS-DA和OPLS-DA对预处理后的表达矩阵（2,059个代谢物×18个样本）执行降维分析。PCA使用prcomp函数进行，设置scale.=TRUE和center=TRUE，提取前三个主成分的样本得分和方差解释率。PLS-DA使用mixOmics包的plsda函数（ncomp=2，scale=TRUE），提取样本得分和变量重要性投影（VIP）值。OPLS-DA使用ropls包的opls函数对三组成对比较（FE_vs_NC、CD_vs_NC、FE_vs_CD）分别建模，设置predI=1（1个预测主成分）和orthoI=1（1个正交主成分），提取模型参数（R²X_pred、R²X_orth、R²Y、Q²）、样本得分、载荷和S-plot数据。所有模型均进行1,000次置换检验以评估分组分离的统计显著性。单因素和多因素ANOVA检验也同期执行以鉴定三组间的全局差异代谢物。 差异代谢物筛选与LIMMA分析 采用三层递进式统计策略进行差异分析：首先进行全局单因素ANOVA（FDR&lt;0.05）和limma总体F检验鉴定组间整体差异；随后对三组两两比较分别执行LIMMA差异分析（以p.adj&lt;0.05为显著性阈值），并结合PLS-DA的VIP值（VIP&gt;1）进行二次筛选，最终按|logFC|降序取前500个代谢物作为差异代谢物列表。通过limma包的lmFit、contrasts.fit和eBayes函数拟合线性模型，使用makeContrasts构建比较矩阵。同时提取mixOmics::vip函数计算的VIP值。利用ggVennDiagram绘制文氏图展示三组比较差异代谢物的重叠关系，pheatmap包对差异代谢物进行Z-score热图聚类可视化。 KEGG通路富集分析与GSVA通路活性分析 从代谢物注释文件（metabolites.csv）中提取KEGG通路注释信息（kegg_category和kegg_class列），构建覆盖22个KEGG通路、447个代谢物的通路背景映射表。Fisher精确检验（单侧，alternative='greater'）用于评估差异代谢物在各KEGG通路中的富集显著性，p值经BH法校正。基因集变异分析采用GSVA包的gsvaParam函数（kcdf='Gaussian'，minSize=3，maxSize=200）对全部代谢物的表达矩阵计算22条通路的活性得分矩阵。随后使用limma包对GSVA得分矩阵进行差异分析（p.adj&lt;0.05为显著性阈值），鉴定三组比较中通路活性的显著变化。GSVA差异分析结果以火山图（ggplot2）、箱线图和ComplexHeatmap热图进行可视化展示。 WGCNA共表达网络分析 采用加权基因共表达网络分析（WGCNA）构建代谢物共表达网络。由于代谢物总数（2,059个）未超过20,000阈值，全量代谢物纳入分析。首先通过WGCNA::pickSoftThreshold函数自动选定软阈值幂次β=6（signed网络类型，R²=0.63）。使用WGCNA::adjacency函数（type='signed'）构建邻接矩阵，WGCNA::TOMsimilarity函数计算拓扑重叠矩阵（TOM），基于1-TOM距离进行层次聚类（hclust，method='average'）。采用dynamicTreeCut::cutreeDynamic方法（method='tree'，minClusterSize=10）识别初始模块，再通过WGCNA::mergeCloseModules（cutHeight=0.25）合并相似模块。模块特征基因（Module Eigengene, ME）与分组性状（is_NC/is_CD/is_FE编码）及26个KEGG通路GSVA活性得分进行Pearson相关分析和线性回归分析。hub代谢物网络选取各模块连接度（rowSums(TOM)）前30%的代谢物（最多30个），使用igraph包进行网络可视化。 CMeans模糊聚类分析 经z-score标准化后的表达矩阵采用e1071包的cmeans函数执行模糊C均值聚类（模糊指数m=2，最大迭代100次）。通过综合评估模糊划分系数（FPC）、划分熵（PE）和平均Silhouette宽度在k=2~15范围内的变化趋势，结合肘部法与轮廓系数联合得分确定最优聚类数（最终形成4个非空模糊聚类簇）。表达模式剖面图使用ggplot2绘制，隶属度热图使用ComplexHeatmap展示。CMeans聚类结果与WGCNA模块通过列联表分析和Fisher精确检验进行一致性验证。 贝叶斯网络分析 鉴于数据集为横截面设计（单时间点），传统动态贝叶斯网络（DBN）的时间滞后因果关系建模无法实现，故适应性调整为模块级贝叶斯网络分析。以WGCNA识别的6个代谢物共表达模块的特征基因（MEs）作为高阶网络节点，使用bnlearn包的Hill-Climbing算法（hc）结合BIC-g评分函数进行结构学习。采用200次bootstrap重采样评估边的稳定性，在≥0.7置信度阈值下筛选可靠的有向调控边。模块间Pearson相关矩阵使用corrplot包进行可视化。 偏最小二乘路径建模（PLS-PM）因果路径分析 构建两类互补的PLS-PM模型。模型A（模块级）以6个WGCNA模块特征基因为潜变量（单指标潜变量，mode='A'），路径结构继承自贝叶斯网络识别的6条高置信度有向调控边。模型B（通路级）以5个KEGG通路聚合分组为潜变量，构建"铁代谢→脂质代谢/能量代谢→信号转导/排泄系统"的预设因果链。使用plspm包的plspm函数进行模型拟合（scaled=TRUE，boot.val=TRUE，br=1,000次bootstrap），提取路径系数、R²、内外模型载荷和总效应。潜变量信度评估使用psych::alpha函数计算Cronbach's α系数。路径图使用ggplot2和igraph包进行自定义可视化。 统计分析软件与数据可视化 所有统计分析均在R软件（4.x版本）中完成。核心分析包包括：limma（差异分析）、mixOmics（PLS-DA）、ropls（OPLS-DA）、WGCNA（共表达网络）、e1071（CMeans聚类）、bnlearn（贝叶斯网络）、plspm（PLS-PM路径建模）和GSVA（基因集变异分析）。数据可视化使用ggplot2、ggrepel、pheatmap、ComplexHeatmap、corrplot、igraph和RColorBrewer等R包。所有图形输出为PNG（300 dpi）和PDF双格式。所有表格文件按模块分别输出为结构化CSV文件，并使用openxlsx包统一编译为格式化的XLSX工作簿（Cambria Math字体11 pt，注释行森林绿色字体，表头行深蓝色背景白色加粗字体，冻结窗格）。
 </section>
+<div style='page-break-after: always;'></div>
 <section id='sec-results' class='section'>
 <h2>3. 结果</h2>
 <section id='sec-result-1' class='result-subsection'>
@@ -587,6 +597,7 @@ tr:nth-child(even) {
 <p>为便于结果查阅和数据重用，我们将上游8个分析模块（模块1至模块9，模块2的降维分析结果作为结论文档纳入）的核心输出结果整理为8个结构化的XLSX工作簿文件，合计包含53个工作表，全面覆盖了从"原始数据预处理→差异筛选→通路功能注释→共表达网络→网络调控推断→因果路径验证"的完整分析链。各工作簿统一采用专业样式规范：Cambria Math字体11 pt，第1行注释行为森林绿色字体，第2行表头行为深蓝色背景白色加粗字体，A列ID列为浅灰色背景黑色斜体字体，统一冻结前2行和A列，工作表缩放设为90%。这些结构化表格文件可直接用于研究报告和论文撰写中的数据引用，构成了"高铁饮食→肠道菌群失调→CDI易感性改变→代谢物介导"研究链条的完整分子证据链归档。
 </section>
 </section>
+<div style='page-break-after: always;'></div>
 <section id='sec-discussion' class='section'>
 <h2>4. 讨论</h2>
 <p>本研究通过系统的代谢组学分析，揭示了高铁饮食在艰难梭菌感染背景下诱导肠道代谢重编程的全景特征，并构建了"饮食-代谢模块-免疫信号"的因果调控网络模型。综合所有分析结果，我们提炼出以下三个层面的核心发现并进行生物学机制讨论。 首先，高铁饮食在CDI背景下诱导了鲜明且独立于感染本身的代谢重编程。PCA和OPLS-DA分析显示，FE组在无监督空间中有别于CD组和NC组形成独立簇（FE_vs_CD的Q²=0.950），且776个代谢物具有高判别价值，这直接证明了高铁饮食干预对宿主肠道代谢组的系统性重塑作用。差异代谢物涉及铁稳态相关代谢物（血红素、铁载体类）、胆汁酸代谢物、短链脂肪酸以及唾液酸信号分子等多个功能类别，与知识库中记载的FeoAB/Fhu/Fur铁摄取系统、ferrosome铁储存解毒机制以及胆汁酸参与孢子萌发调控的已知通路高度吻合。值得注意的是，三个比对中差异代谢物均以下调为主（约56%-61%），反映出高铁饮食和CDI感染的共同效应是抑制正常肠道代谢功能，而非激活新的代谢通路。这与知识库中"高铁饮食减少产SCFA有益菌群（乳酸杆菌、双歧杆菌）"的机制预期完全一致——产SCFA菌群丰度下降直接导致肠道短链脂肪酸水平的广泛降低，从而削弱了SCFA介导的GPR41/43受体信号和肠道屏障保护功能。 其次，信号转导通路的抑制是高铁饮食影响CDI宿主免疫的核心通路级事件。GSVA分析明确显示，FE_vs_CD比较中信号转导通路以所有22条通路中最大的变化幅度（logFC=-0.96，p_adj=3.4×10⁻⁶）显著下调。这一发现与知识库中"高铁饮食改变宿主肠道中性粒细胞招募"的机制假说高度吻合。基于WGCNA的共表达网络分析进一步揭示，Turquoise模块（FE组标志，r=0.971）与信号转导通路活性呈极强负相关（r=-0.901），而Red模块则与信号转导通路活性呈极强正相关（r=0.978）。贝叶斯网络与PLS-PM因果路径分析将这一关联量化为Turquoise→Red的抑制性因果路径（路径系数=-0.722，p=7.7×10⁻⁹），从而构建了从"高铁饮食诱导的代谢模块→宿主免疫信号抑制"的完整分子调控链。从生物学机制角度理解，高铁饮食可能通过增加肠道铁浓度直接促进艰难梭菌的生长和毒素产生（知识库记载体外Fe³⁺100 μM时CFU增加13.8倍、毒素A增加8.6倍），同时上调宿主营养免疫应答（calprotectin和lipocalin-2释放增强），激活的钙卫蛋白通过螯合Fe、Zn、Mn等金属离子限制病原菌获取金属，但艰难梭菌可通过fez操纵子编码的ferrosome铁储存器官部分抵抗这一金属限制。两方面因素共同作用下，宿主免疫信号通路被过度激活后耗竭或受到代谢物介导的负反馈抑制，表现为信号转导通路的显著下调。这一发现与知识库中"fezB缺失菌株在野生型小鼠中细菌负荷降低、体重减轻减少，但在钙卫蛋白敲除小鼠中无差异"的报道逻辑一致，暗示了宿主营养免疫与细菌铁适应机制之间的动态博弈。 第三，本研究建立的代谢模块间多层级因果调控网络，为理解"饮食-肠道菌群-宿主"互作提供了系统级的分子证据。CMeans模糊聚类与WGCNA硬聚类从完全不同的算法路径出发，却达成了近乎完美的代谢物分组一致性（Fisher全局p&lt;0.0001），特别是Cluster1与Turquoise模块的100%对应和Cluster3与Blue模块的90%对应，极大地增强了分析结论的稳健性。在贝叶斯网络识别的6条高置信度调控边中，Turquoise→Blue（置信度0.985）揭示了高铁饮食干预对健康基线代谢的强烈抑制；Magenta→Red（置信度0.780）和Blue→Red（置信度0.735）则分别刻画了CDI感染激活免疫信号和健康基线支持免疫信号的作用。PLS-PM进一步将这三条路径量化为"健康基线支持免疫（Blue→Red, +0.635）→ CDI感染激活免疫（Magenta→Red, +1.127）→高铁饮食抑制免疫（Turquoise→Red, -0.722）"的完整因果链，定量验证了高铁饮食通过诱导Turquoise代谢模块重编程抑制宿主免疫信号的核心机制路径。此外，排泄系统通路上调（GSVA logFC=+0.73）和脂质代谢下调（logFC=-0.22）进一步支持了高铁负荷下宿主增强金属排泄解毒、产SCFA菌群减少的预期效应。 本研究也存在一定局限性。首先，代谢组学数据为横截面设计（单一时间点），无法刻画高铁饮食干预的动态代谢变化过程，未来需纳入多时间点纵向采样设计。其次，KEGG代谢物注释覆盖度有限（仅21.7%），导致Fisher富集分析在多重检验校正后未达FDR阈值，GSVA虽然弥补了这一问题，但更完整的通路注释将有助于揭示更精细的分子机制。第三，本研究为单组学（代谢组学）设计，缺乏对肠道菌群16S rRNA或宏基因组的平行分析，无法直接验证知识库中"高铁饮食促进肠杆菌科富集、减少乳酸杆菌和双歧杆菌"的菌群变化预期。未来可通过多组学整合策略（代谢组+宏基因组+转录组）构建更加完整的"饮食-菌群-代谢-宿主应答"调控网络。最后，因果路径分析中的模块级调控关系（WGCNA ME→PLS-PM）虽具有统计显著性，但基于横截面数据的因果推断仍需通过体外细胞实验或动物干预实验（如铁螯合剂去铁胺处理、fezB基因敲除菌株感染）进行功能验证。
