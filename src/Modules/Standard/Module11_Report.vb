@@ -28,6 +28,8 @@ Public Class ReportModule : Inherits AnalysisModuleBase
     Public Overrides ReadOnly Property ModuleName As String = "Paper Draft Report"
     Public Overrides ReadOnly Property ModuleIndex As Integer = 11
 
+    Public Property debugCache As Boolean = False
+
     Public Overrides ReadOnly Property CsvFileNamePrefix As String
         Get
             Return "report_"

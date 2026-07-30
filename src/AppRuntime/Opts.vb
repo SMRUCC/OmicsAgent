@@ -2,6 +2,9 @@
 
 Namespace AppRuntime
 
+    ''' <summary>
+    ''' The commandline argument options
+    ''' </summary>
     Public Class Opts
 
         <Opt("--research", "-r")> Public Property research As String
@@ -26,7 +29,7 @@ Namespace AppRuntime
         ''' <returns></returns>
         <Opt("--check-r")> Public Property check_interop As Boolean
 
-        <Opt("--make-report")> Public Property makeReport As Boolean
+        <Opt("--make-report")> Public Property make_report As Boolean
 
         <Opt("--help", "-h")> Public Property help As Boolean = False
 

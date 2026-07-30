@@ -31,7 +31,9 @@ Omics Data Analysis LLM Agent
   --module=<n>            仅执行指定模块（1-11），多个模块用逗号分隔
   --custom-modules=<path> 自定义分析模块 JSON 文件夹路径（默认为程序根目录下的 custom_modules/ 文件夹）
  
-  --check_r               用于测试R脚本调用
+  --check_r               [调试用] 用于测试R脚本调用
+  --debug-cache           [调试用] 程序会跳过已经存在result.json结果文件的模块的执行
+  --make-report           [调试用] 用于调试程序的报告模块 
 
   --help,-h               显示帮助信息
 
