@@ -1,0 +1,40 @@
+﻿我将首先预览关键表格的结构，然后基于所有分析模块的总结撰写完整的结果部分。<｜｜DSML｜｜tool_calls>
+<｜｜DSML｜｜invoke name="peek_csv">
+<｜｜DSML｜｜parameter name="path" string="true">G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/oplsda_model_params.csv</｜｜DSML｜｜parameter>
+</｜｜DSML｜｜invoke>
+<｜｜DSML｜｜invoke name="peek_csv">
+<｜｜DSML｜｜parameter name="path" string="true">G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/plsda_vip_scores.csv</｜｜DSML｜｜parameter>
+</｜｜DSML｜｜invoke>
+<｜｜DSML｜｜invoke name="peek_csv">
+<｜｜DSML｜｜parameter name="path" string="true">G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/oplsda_s_plot.csv</｜｜DSML｜｜parameter>
+</｜｜DSML｜｜invoke>
+<｜｜DSML｜｜invoke name="peek_csv">
+<｜｜DSML｜｜parameter name="path" string="true">G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/multi_anova_results.csv</｜｜DSML｜｜parameter>
+</｜｜DSML｜｜invoke>
+</｜｜DSML｜｜tool_calls><｜｜DSML｜｜tool_calls>
+<｜｜DSML｜｜invoke name="peek_csv">
+<｜｜DSML｜｜parameter name="path" string="true">G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/plsda_vip_scores.csv</｜｜DSML｜｜parameter>
+</｜｜DSML｜｜invoke>
+<｜｜DSML｜｜invoke name="peek_csv">
+<｜｜DSML｜｜parameter name="path" string="true">G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/oplsda_model_params.csv</｜｜DSML｜｜parameter>
+</｜｜DSML｜｜invoke>
+<｜｜DSML｜｜invoke name="peek_csv">
+<｜｜DSML｜｜parameter name="path" string="true">G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/oplsda_s_plot.csv</｜｜DSML｜｜parameter>
+</｜｜DSML｜｜invoke>
+<｜｜DSML｜｜invoke name="peek_csv">
+<｜｜DSML｜｜parameter name="path" string="true">G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/overall_f_test.csv</｜｜DSML｜｜parameter>
+</｜｜DSML｜｜invoke>
+</｜｜DSML｜｜tool_calls><｜｜DSML｜｜tool_calls>
+<｜｜DSML｜｜invoke name="peek_csv">
+<｜｜DSML｜｜parameter name="path" string="true">G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/oplsda_s_plot.csv</｜｜DSML｜｜parameter>
+</｜｜DSML｜｜invoke>
+<｜｜DSML｜｜invoke name="peek_csv">
+<｜｜DSML｜｜parameter name="path" string="true">G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/plsda_vip_scores.csv</｜｜DSML｜｜parameter>
+</｜｜DSML｜｜invoke>
+<｜｜DSML｜｜invoke name="peek_csv">
+<｜｜DSML｜｜parameter name="path" string="true">G:/OmicsWorks/test/metabolism/demo/tmp/7_cmeans_fuzzy_clustering_analysis/cmeans_cluster_assignments.csv</｜｜DSML｜｜parameter>
+</｜｜DSML｜｜invoke>
+<｜｜DSML｜｜invoke name="peek_csv">
+<｜｜DSML｜｜parameter name="path" string="true">G:/OmicsWorks/test/metabolism/demo/tmp/8_dynamic_bayesian_network_analysis/bayesian_network_arcs.csv</｜｜DSML｜｜parameter>
+</｜｜DSML｜｜invoke>
+</｜｜DSML｜｜tool_calls>
