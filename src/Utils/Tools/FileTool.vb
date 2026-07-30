@@ -95,7 +95,7 @@ Public Class FileTool : Inherits WorkspaceTool
     Public Function peek_csv(<Argument("path", Description:="文件路径，相对于工作区根目录或绝对路径")> path As String) As String
         Try
             Dim dims = DataFrame.GetDimension(path)
-            Dim content As String = $"Csv Table[{dims.rows} Rows x {dims.cols} Cols]; column_headers:{dims.header.GetJson}"
+            Dim content As String = $"Csv Table[{dims.rows} Rows x {dims.cols} Cols]; column_headers:{JsonContract.GetJson(dims.header)}"
 
             Return content
         Catch ex As Exception

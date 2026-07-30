@@ -393,7 +393,7 @@ Public Class ResultTablesModule : Inherits AnalysisModuleBase
                        .Replace("{MODULE_INDEX}", mr.ModuleIndex.ToString()) _
                        .Replace("{MODULE_NAME}", mr.ModuleName) _
                        .Replace("{PLAN_GOAL}", plan.goal) _
-                       .Replace("{STEP}", [step].GetJson) _
+                       .Replace("{STEP}", JsonContract.GetJson([step])) _
                        .Replace("{WORKSPACE}", Workspace.GetDirectoryFullPath) _
                        .Replace("{R_TEMPLATE}", AgentConfig.RScriptsDir)
         Return prompt

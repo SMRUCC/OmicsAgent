@@ -1,6 +1,7 @@
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.MIME.application.json.LenientJson
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Ollama
 Imports OmicsAgent.AppRuntime
 Imports OmicsAgent.ReportData
@@ -107,7 +108,7 @@ Public Class ReportModule : Inherits AnalysisModuleBase
         Dim html = reportContent.BuildHtmlReport(New ReportResource With {.figures = figures, .tables = tables}, AddressOf LogInfo)
 
         html.SaveTo(htmlPath)
-        reportContent.GetJson(indent:=True, escapeUnicode:=False).SaveTo(Path.Combine(_context.WorkspaceDir, "analysis", "report.json"))
+        JsonContract.GetJson(reportContent).SaveTo(Path.Combine(_context.WorkspaceDir, "analysis", "report.json"))
 
         LogInfo($"HTML report generated: {htmlPath}")
 
@@ -213,7 +214,7 @@ Public Class ReportModule : Inherits AnalysisModuleBase
             If String.IsNullOrEmpty(report.title) Then report.title = "组学数据分析报告"
 
             ' 保留 report.txt 产出（便于排错），完整 JSON 仍由调用方写入 report.json
-            Call report.GetJson(indent:=True, escapeUnicode:=False).SaveTo($"{Workspace}/report.txt")
+            Call JsonContract.GetJson(report).SaveTo($"{Workspace}/report.txt")
 
             Return report
         End Using
