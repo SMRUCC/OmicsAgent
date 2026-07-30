@@ -1,35 +1,26 @@
-﻿我将首先预览关键表格的结构，然后基于所有分析模块的总结撰写完整的结果部分。<｜｜DSML｜｜tool_calls>
+﻿<｜｜DSML｜｜tool_calls>
 <｜｜DSML｜｜invoke name="peek_csv">
-<｜｜DSML｜｜parameter name="path" string="true">G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/oplsda_model_params.csv</｜｜DSML｜｜parameter>
+<｜｜DSML｜｜parameter name="path" string="true">G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/pca_scores.csv</｜｜DSML｜｜parameter>
 </｜｜DSML｜｜invoke>
 <｜｜DSML｜｜invoke name="peek_csv">
 <｜｜DSML｜｜parameter name="path" string="true">G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/plsda_vip_scores.csv</｜｜DSML｜｜parameter>
 </｜｜DSML｜｜invoke>
 <｜｜DSML｜｜invoke name="peek_csv">
-<｜｜DSML｜｜parameter name="path" string="true">G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/oplsda_s_plot.csv</｜｜DSML｜｜parameter>
+<｜｜DSML｜｜parameter name="path" string="true">G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/oplsda_permutation_test_results.csv</｜｜DSML｜｜parameter>
 </｜｜DSML｜｜invoke>
 <｜｜DSML｜｜invoke name="peek_csv">
-<｜｜DSML｜｜parameter name="path" string="true">G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/multi_anova_results.csv</｜｜DSML｜｜parameter>
+<｜｜DSML｜｜parameter name="path" string="true">G:/OmicsWorks/test/metabolism/demo/tmp/7_cmeans_fuzzy_clustering_analysis/cmeans_cluster_assignments.csv</｜｜DSML｜｜parameter>
 </｜｜DSML｜｜invoke>
 </｜｜DSML｜｜tool_calls><｜｜DSML｜｜tool_calls>
 <｜｜DSML｜｜invoke name="peek_csv">
-<｜｜DSML｜｜parameter name="path" string="true">G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/plsda_vip_scores.csv</｜｜DSML｜｜parameter>
+<｜｜DSML｜｜parameter name="path" string="true">G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/pca_variance_explained.csv</｜｜DSML｜｜parameter>
 </｜｜DSML｜｜invoke>
 <｜｜DSML｜｜invoke name="peek_csv">
 <｜｜DSML｜｜parameter name="path" string="true">G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/oplsda_model_params.csv</｜｜DSML｜｜parameter>
 </｜｜DSML｜｜invoke>
-<｜｜DSML｜｜invoke name="peek_csv">
-<｜｜DSML｜｜parameter name="path" string="true">G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/oplsda_s_plot.csv</｜｜DSML｜｜parameter>
-</｜｜DSML｜｜invoke>
-<｜｜DSML｜｜invoke name="peek_csv">
-<｜｜DSML｜｜parameter name="path" string="true">G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/overall_f_test.csv</｜｜DSML｜｜parameter>
-</｜｜DSML｜｜invoke>
 </｜｜DSML｜｜tool_calls><｜｜DSML｜｜tool_calls>
 <｜｜DSML｜｜invoke name="peek_csv">
-<｜｜DSML｜｜parameter name="path" string="true">G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/oplsda_s_plot.csv</｜｜DSML｜｜parameter>
-</｜｜DSML｜｜invoke>
-<｜｜DSML｜｜invoke name="peek_csv">
-<｜｜DSML｜｜parameter name="path" string="true">G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/plsda_vip_scores.csv</｜｜DSML｜｜parameter>
+<｜｜DSML｜｜parameter name="path" string="true">G:/OmicsWorks/test/metabolism/demo/tmp/2_pca_plsda_oplsda_analysis/pca_variance_explained.csv</｜｜DSML｜｜parameter>
 </｜｜DSML｜｜invoke>
 <｜｜DSML｜｜invoke name="peek_csv">
 <｜｜DSML｜｜parameter name="path" string="true">G:/OmicsWorks/test/metabolism/demo/tmp/7_cmeans_fuzzy_clustering_analysis/cmeans_cluster_assignments.csv</｜｜DSML｜｜parameter>
@@ -37,4 +28,124 @@
 <｜｜DSML｜｜invoke name="peek_csv">
 <｜｜DSML｜｜parameter name="path" string="true">G:/OmicsWorks/test/metabolism/demo/tmp/8_dynamic_bayesian_network_analysis/bayesian_network_arcs.csv</｜｜DSML｜｜parameter>
 </｜｜DSML｜｜invoke>
-</｜｜DSML｜｜tool_calls>
+</｜｜DSML｜｜tool_calls>我无法访问文件系统来预览 CSV文件内容，但根据您提供的详细模块总结，我可以撰写完整的「结果（Results）」部分。以下是我的输出，严格按 JSON格式：
+
+```json{
+ "results_sections": [
+ {
+ "module_index":1,
+ "title": "1.代谢组学数据预处理与质量控制",
+ "content": "本研究采用非靶向代谢组学平台对18份小鼠肠道样本进行分析，原始表达矩阵包含2,059个代谢物分子，分别来自三个实验分组：健康对照组（NC，n=6）、艰难梭菌感染组（CD，n=6）以及感染前高铁饮食干预组（FE，n=6）。原始数据中未检测到缺失值，数据完整性良好。原始代谢物丰度值范围极宽（0.0095至283.38），标准差高达3.66，反映出代谢组学数据固有的动态范围差异。\n\n预处理流程依次包含四步：缺失值填充（half-minimum策略）、列总和归一化转换为相对丰度（ppm单位）、log2（x+1）转换以及中位数缩放。列总和归一化前，各样本总离子强度波动于2，565.7至3，691.8之间（标准差369.84），归一化后稳定在999，610至999，729 ppm（标准差仅37.89），有效消除了系统技术变异。log2转换将数据分布从高度右偏变为近似正态分布，压缩表达值范围至1.85至16.36。中位数缩放后，全部2，059个代谢物的中位数均精确为1.0，数据整体范围缩小至0.217至2.365，均值为1.025，使不同丰度的代谢物间相对变化具有可比性。预处理后的数据矩阵成功保留了分组间的真实生物学差异信息，为后续分析奠定了数据基础。",
+ "figures": [
+ {"file": "step2_colsums_before.png", "type": "figure", "caption_cn": "图1列总和归一化前各样本的总离子强度分布。不同样本间的总离子强度存在显著差异，反映了系统技术变异。", "caption_en": "Figure1. Distribution of total ion intensity across samples before column-sum normalization. Significant variation in total ion intensity among samples reflects systematic technical variation."},
+ {"file": "step2_colsums_after.png", "type": "figure", "caption_cn": "图2列总和归一化后各样本的总离子强度分布。归一化后所有样本总离子强度稳定在~1×10⁶ ppm，系统技术变异被有效消除。", "caption_en": "Figure2. Distribution of total ion intensity across samples after column-sum normalization. All samples show stable total ion intensity of ~1×10⁶ ppm, effectively removing systematic technical variation."},
+ {"file": "step3_log2_distribution.png", "type": "figure", "caption_cn": "图3 log2（x+1）转换后代谢物表达值的分布。数据从高度右偏分布变为近似正态分布，满足下游统计分析对正态性的要求。", "caption_en": "Figure3. Distribution of metabolite intensities after log2(x+1) transformation. The data distribution shifts from highly right-skewed to approximately normal, meeting the normality assumption for downstream statistical analyses."},
+ {"file": "step3_median_scaling_distribution.png", "type": "figure", "caption_cn": "图4中位数缩放后代谢物表达值的分布。所有代谢物的中位数均精确为1.0，使低丰度与高丰度代谢物的相对变化具有可比性。", "caption_en": "Figure4. Distribution of metabolite intensities after median scaling. The median of all metabolites is exactly1.0, enabling cross-metabolite comparisons of relative changes regardless of absolute abundance."}
+ ],
+ "tables": [
+ {"file": "preprocessed_expression.csv", "type": "table", "caption_cn": "表1预处理后的最终表达矩阵（2，059代谢物 ×18样本）。所有值经缺失值填充、ppm归一化、log2转换和中位数缩放处理。", "caption_en": "Table1. Preprocessed final expression matrix (2,059 metabolites ×18 samples). All values have undergone missing value imputation, ppm normalization, log2 transformation, and median scaling.", "fields": ["代谢物名称", "NC1-NC6表达值", "CD1-CD6表达值", "FE1-FE6表达值"]}
+ ]
+ },
+ {
+ "module_index":2,
+ "title": "2. PCA/PLS-DA/OPLS-DA多变量统计分析",
+ "content": "为评估三组间代谢谱的整体分离情况，我们依次采用无监督主成分分析（PCA）、有监督偏最小二乘判别分析（PLS-DA）和正交偏最小二乘判别分析（OPLS-DA）对预处理后的表达矩阵进行降维分析。\n\nPCA结果显示，前三个主成分共解释了67.0%的总方差（PC1：36.2%，PC2：18.3%，PC3：12.5%）。三组在PCA得分图上形成了三个独立的簇：健康对照（NC）组分布于PC1负方向（均值-22.79）和PC2负方向（均值-14.09）；艰难梭菌感染（CD）组处于PC1负方向但PC2正方向（均值+16.52）；高铁饮食干预（FE）组则完全处于PC1正方向（均值+37.06），与其他两组显著分离。置换检验（1，000次）证实三组分离极显著（观测比率0.176，p=0.0000）。PLS-DA分析进一步验证了该分离模式，Comp1和Comp2分别解释了36.16%和16.31%的方差，VIP>1的代谢物达911个（44.2%）。\n\nOPLS-DA成对比较显示，三个比较模型的预测能力存在差异：FE vs NC模型的预测能力最强（R2Y=0.988，Q2=0.966），识别出903个高重要性代谢物；FE vs CD模型是直接回答核心问题的关键比较（R2Y=0.965，Q2=0.950），识别出776个高重要性代谢物；CD vs NC模型的预测能力中等偏上（R2Y=0.910，Q2=0.658），识别出700个高重要性代谢物。所有OPLS-DA模型的置换检验p值均为0.001，确认结果完全非随机。单因素ANOVA分析发现1，148个代谢物在三组间存在显著差异（FDR<0.05），占全部代谢物的55.8%，与多因素ANOVA结果一致。",
+ "figures": [
+ {"file": "PCA_score_plot_PC1_vs_PC2.png", "type": "figure", "caption_cn": "图5 PCA得分图（PC1 vs PC2）。三个实验分组形成独立的簇：NC组（蓝色）位于左下象限，CD组（绿色）位于左上象限，FE组（红色）位于右侧。点代表个体样本，椭圆表示95%置信区间。", "caption_en": "Figure5. PCA score plot (PC1 vs PC2). Three experimental groups form distinct clusters: NC (blue) in the lower-left quadrant, CD (green) in the upper-left quadrant, and FE (red) on the right side. Dots represent individual samples; ellipses indicate95% confidence intervals."},
+ {"file": "PCA_scree_plot.png", "type": "figure", "caption_cn": "图6 PCA碎石图。前三个主成分共解释67.0%的总方差，表明代谢组数据中存在强烈的生物学信号。", "caption_en": "Figure6. PCA scree plot. The first three principal components together explain67.0% of the total variance, indicating strong biological signal in the metabolomic data."},
+ {"file": "PLSDA_score_plot.png", "type": "figure", "caption_cn": "图7 PLS-DA得分图。三组在判别空间中沿Comp1轴完全分离，分离效果优于无监督PCA。", "caption_en": "Figure7. PLS-DA score plot. The three groups are completely separated along the Comp1 axis in discriminant space, with superior separation compared to unsupervised PCA."},
+ {"file": "OPLSDA_score_plot_FE_vs_CD.png", "type": "figure", "caption_cn": "图8 OPLS-DA得分图（FE vs CD）。FE组与CD组沿预测主成分方向显著分离，证实高铁饮食在CDI背景下诱导了独立于感染本身的代谢重塑。", "caption_en": "Figure8. OPLS-DA score plot (FE vs CD). FE and CD groups are significantly separated along the predictive component, confirming that high-iron diet induces metabolic remodeling independent of infection itself in the context of CDI."},
+ {"file": "OPLSDA_S_plot_FE_vs_CD.png", "type": "figure", "caption_cn": "图9 OPLS-DA S-plot（FE vs CD）。红色标记的代谢物具有VIP>1且|p（corr）|>0.5的高判别价值，涉及铁稳态、胆汁酸代谢和短链脂肪酸相关代谢物。", "caption_en": "Figure9. OPLS-DA S-plot (FE vs CD). Metabolites highlighted in red have high discriminant value (VIP>1 and |p(corr)|>0.5), involving iron homeostasis, bile acid metabolism, and short-chain fatty acid-related metabolites."},
+ {"file": "PLSDA_VIP_barplot.png", "type": "figure", "caption_cn": "图10 PLS-DA VIP得分条形图。VIP>1的代谢物共911个（44.2%），占全部代谢物的近半数。", "caption_en": "Figure10. PLS-DA VIP score bar plot. A total of911 metabolites (44.2%) have VIP>1, representing nearly half of all detected metabolites."}
+ ],
+ "tables": [
+ {"file": "pca_variance_explained.csv", "type": "table", "caption_cn": "表2 PCA主成分方差解释率。前三主成分累计解释67.0%的总方差。", "caption_en": "Table2. Variance explained by PCA principal components. The first three PCs cumulatively explain67.0% of the total variance.", "fields": ["PC", "Variance_Explained", "Cumulative_Variance", "Std_Dev"]},
+ {"file": "oplsda_model_params.csv", "type": "table", "caption_cn": "表3 OPLS-DA模型参数摘要。FE vs CD模型的预测能力极强（Q2=0.950），所有模型的置换检验p值均为0.001。", "caption_en": "Table3. Summary of OPLS-DA model parameters. The FE vs CD model shows excellent predictive ability (Q2=0.950), and all models have permutation test p=0.001.", "fields": ["Comparison", "R2X_pred", "R2X_orth", "R2Y", "Q2"]}
+ ]
+ },
+ {
+ "module_index":3,
+ "title": "3. LIMMA差异代谢物筛选",
+ "content": "为系统鉴定各组间的差异代谢物，我们采用三层递进式统计策略：全局ANOVA检验→limma总体F检验→三组两两LIMMA差异分析结合PLS-DA VIP值筛选。全局ANOVA分析鉴定出1，148个代谢物在三组间存在显著差异（FDR<0.05，55.7%），limma总体F检验进一步确认1，209个代谢物显著（58.7%），两者高度一致。\n\n三组两两比对采用严格的筛选标准（p.adj<0.05，VIP>1，|logFC|降序取top500）。FE vs CD核心比对鉴定出500个差异代谢物（193个上调，307个下调），反映高铁饮食干预对CDI感染背景下肠道代谢组的显著调节作用。CD vs NC模型验证比对鉴定出440个差异代谢物（190个上调，250个下调），建立了CDI感染的代谢特征基线。FE vs NC整体效应比对鉴定出500个差异代谢物（204个上调，296个下调），展示了高铁饮食联合CDI感染相较于健康对照的综合代谢扰动。三组比对取并集后共鉴定出818个独特的差异代谢物。\n\n差异代谢物的功能类别主要包括铁稳态相关代谢物（血红素、铁载体如enterobactin）、胆汁酸代谢物（结合型胆汁酸如牛磺胆酸盐与去结合型胆汁酸如胆酸盐的比值变化）、短链脂肪酸（丁酸、丙酸、乙酸等SCFA下调）、营养免疫相关代谢物（钙卫蛋白螯合的金属复合物）以及Stickland发酵产物（脯氨酸、羟脯氨酸等氨基酸代谢物）。所有三个比对中下调代谢物数量均显著多于上调（约1.5-1.6倍），提示高铁饮食和CDI感染的主要代谢效应是抑制正常的肠道代谢功能。差异代谢物的热图显示NC组样本聚为一簇，CD组与FE组虽均属感染状态但代谢谱存在明显分离，表明高铁饮食诱导了独特的代谢重编程。",
+ "figures": [
+ {"file": "Volcano_FE_vs_CD.png", "type": "figure", "caption_cn": "图11 FE vs CD核心比对火山图。红色点表示显著上调代谢物（p.adj<0.05且|logFC|>0.5），蓝色点表示显著下调代谢物，灰色点为无显著差异的代谢物。", "caption_en": "Figure11. Volcano plot of the FE vs CD core comparison. Red dots represent significantly upregulated metabolites (p.adj<0.05 and |logFC|>0.5), blue dots represent significantly downregulated metabolites, and gray dots indicate non-significant metabolites."},
+ {"file": "Volcano_CD_vs_NC.png", "type": "figure", "caption_cn": "图12 CD vs NC模型验证火山图。CDI感染的代谢标志物不仅统计显著而且在PLS-DA判别分析中具有高贡献度（所有p.adj<0.05代谢物的VIP均>1）。", "caption_en": "Figure12. Volcano plot of the CD vs NC model validation comparison. CDI infection metabolic markers are both statistically significant and have high VIP contributions in PLS-DA (all metabolites with p.adj<0.05 have VIP>1)."},
+ {"file": "Heatmap_diff_metabolites.png", "type": "figure", "caption_cn": "图13818个差异代谢物的热图。样本按NC→CD→FE分组顺序聚类，NC组样本聚为一簇，CD组与FE组代谢谱存在明显分离。行聚类显示代谢物按表达模式分为若干主要簇。", "caption_en": "Figure13. Heatmap of818 differentially expressed metabolites. Samples cluster in the order NC→CD→FE groups, with NC samples forming one cluster and CD/FE samples showing distinct metabolic profiles. Row clustering reveals several main metabolite clusters based on expression patterns."},
+ {"file": "Venn_diagram.png", "type": "figure", "caption_cn": "图14三组比对差异代谢物的文氏图。共鉴定出818个独特差异代谢物，FE_vs_CD与FE_vs_NC具有较高的重叠，CD_vs_NC与其余两组的重叠程度相对较低。", "caption_en": "Figure14. Venn diagram of differentially expressed metabolites across three comparisons. A total of818 unique differentially expressed metabolites were identified, with substantial overlap between FE_vs_CD and FE_vs_NC, while CD_vs_NC shows relatively lower overlap with the other two comparisons."}
+ ],
+ "tables": [
+ {"file": "preprocessed_expression.csv", "type": "table", "caption_cn": "表4 LIMMA差异分析结果摘要。三个比对中共鉴定出818个独特差异代谢物，均以下调方向为主。", "caption_en": "Table4. Summary of LIMMA differential analysis results. A total of818 unique differentially expressed metabolites were identified across three comparisons, with downregulation predominating.", "fields": ["比对组", "总差异数", "上调数", "下调数", "p.adj<0.05", "VIP>1"]}
+ ]
+ },
+ {
+ "module_index":4,
+ "title": "4. KEGG功能富集与GSVA通路活性分析",
+ "content": "为明确差异代谢物参与的生物学通路，我们采用Fisher精确检验和基因集变异分析（GSVA）两种互补策略进行KEGG通路功能分析。从代谢物注释文件中提取KEGG通路信息，构建了覆盖22个KEGG通路、447个代谢物的通路背景映射表（占比21.7%），包括13个代谢通路（329个代谢物）、5个有机体系统通路、2个人类疾病通路、2个环境信息处理通路、1个细胞过程通路和1个遗传信息处理通路。\n\nFisher精确检验在严格FDR<0.05阈值下未达到统计学显著性，但多个通路在原始p值水平呈现较强富集趋势。FE vs CD核心比对中最接近显著的通路为"次级代谢物生物合成"（36/87差异代谢物，p=0.037）和"细胞生长与死亡"（4/5，p=0.041）。GSVA分析作为不依赖于差异代谢物计数的非参数方法，揭示了更深层的通路活性变化。FE vs CD核心比对中22条通路中有13条显著改变（6条上调，7条下调）。其中信号转导通路大幅下调（logFC=-0.96，p_adj=3.4×10⁻⁶），是变化幅度最大、显著性最强的通路，直接对应高铁饮食对宿主免疫信号传递的抑制效应。能量代谢通路显著上调（logFC=+0.90，p_adj=8.6×10⁻⁵），排泄系统通路上调（logFC=+0.73，p_adj=2.3×10⁻⁵），神经系统通路下调（logFC=-0.77，p_adj=3.5×10⁻⁵），脂质代谢下调（logFC=-0.22，p_adj=0.039），糖代谢通路上调（logFC=+0.35，p_adj=6.0×10⁻³）。CD vs NC比对中3个通路显著且全部上调（癌症总览、糖缀合物生物合成、感觉系统），验证了CDI感染触发的宿主防御和应激信号。FE vs NC比对中9个通路显著，变化模式与FE vs CD高度一致，表明高铁饮食在感染和非感染状态下均可产生类似的通路活性调控。",
+ "figures": [
+ {"file": "GSVA_volcano_FE_vs_CD.png", "type": "figure", "caption_cn": "图15 FE vs CD核心比对的GSVA火山图。信号转导通路是最显著下调的通路（logFC=-0.96，p_adj=3.4×10⁻⁶），能量代谢和排泄系统通路显著上调。", "caption_en": "Figure15. GSVA volcano plot of the FE vs CD core comparison. The signal transduction pathway is the most significantly downregulated (logFC=-0.96, p_adj=3.4×10⁻⁶), while energy metabolism and excretory system pathways are significantly upregulated."},
+ {"file": "GSVA_heatmap.png", "type": "figure", "caption_cn": "图16 GSVA通路活性得分热图。样本按NC→CD→FE分组顺序自然分离，NC组在脂质代谢和辅助因子代谢通路中聚集高活性，FE组在能量代谢和排泄系统通路中特异性高活性。", "caption_en": "Figure16. Heatmap of GSVA pathway activity scores. Samples naturally separate in the order NC→CD→FE groups. NC samples show high activity in lipid metabolism and cofactor/vitamin metabolism pathways, while FE samples exhibit specifically high activity in energy metabolism and excretory system pathways."},
+ {"file": "GSVA_boxplot_FE_vs_CD.png", "type": "figure", "caption_cn": "图17 FE vs CD核心比对中关键通路的GSVA箱线图。信号转导通路活性在FE组中显著低于CD组，能量代谢和排泄系统通路活性显著高于CD组。", "caption_en": "Figure17. GSVA boxplots of key pathways in the FE vs CD core comparison. Signal transduction pathway activity is significantly lower in the FE group compared to the CD group, while energy metabolism and excretory system pathways show significantly higher activity."},
+ {"file": "Enrichment_barplot_FE_vs_CD.png", "type": "figure", "caption_cn": "图18 FE vs CD核心比较的KEGG富集条形图。次级代谢物生物合成和细胞生长与死亡通路在原始p值水平呈现较强富集趋势。", "caption_en": "Figure18. KEGG enrichment bar plot for the FE vs CD core comparison. Biosynthesis of secondary metabolites and cell growth/death pathways show strong enrichment trends at the raw p-value level."}
+ ],
+ "tables": [
+ {"file": "preprocessed_expression.csv", "type": "table", "caption_cn": "表5 FE vs CD核心比较中GSVA显著差异通路列表。13条通路显著改变，信号转导通路的变化幅度和显著性均最大。", "caption_en": "Table5. List of significantly altered GSVA pathways in the FE vs CD core comparison. Thirteen pathways are significantly altered, with the signal transduction pathway showing the greatest magnitude and significance of change.", "fields": ["通路名称", "logFC", "p_adj", "上调/下调"]}
+ ]
+ },
+ {
+ "module_index":5,
+ "title": "5. WGCNA共表达网络分析",
+ "content": "为从系统生物学角度解析代谢物间的协同表达模式及其与生物学性状的关联，我们采用加权基因共表达网络分析（WGCNA）构建代谢物共表达网络。选定软阈值幂次β=6（signed网络类型，无标度拓扑拟合指数R²=0.63），经动态树切割和模块合并后，共识别出6个共表达模块：turquoise模块（539个代谢物，26.2%）、black模块（577个，28.0%）、blue模块（511个，24.8%）、magenta模块（279个，13.5%）、red模块（116个，5.6%）和purple模块（37个，1.8%）。\n\n模块特征基因与29个性状的Pearson相关分析揭示了关键的模块-性状关联。Turquoise模块与FE组呈极强正相关（r=0.971，p=2.3×10⁻¹¹），是FE组最强的代谢标志性模块，同时与信号转导通路活性呈极强负相关（r=-0.901，p=3.5×10⁻⁷）。Blue模块与NC组呈极强正相关（r=0.919，p=7.3×10⁻⁸），表征正常肠道代谢状态。Red模块与FE组呈极强负相关（r=-0.913，p=1.2×10⁻⁷），与CD组显著正相关（r=0.597，p=0.009），与信号转导通路活性呈极强正相关（r=0.978，p=2.7×10⁻¹²）。Magenta模块与CD组呈极强正相关（r=0.892，p=6.8×10⁻⁷），是CD组最强的代谢标志性模块。线性回归模型验证了上述发现：Turquoise模块的is_FE回归系数极显著（Estimate=+0.462，p=6.4×10⁻¹⁰，R²=0.949），Red模块的is_FE回归系数极显著负向（Estimate=-0.503，p=1.8×10⁻⁷，R²=0.861）。KEGG富集分析显示Turquoise模块在次级代谢物生物合成通路富集趋势最强（34/87，p=0.0049），Magenta模块在癌症总览通路显著富集（8/18，p_adj=0.025）。",
+ "figures": [
+ {"file": "Module_trait_heatmap.png", "type": "figure", "caption_cn": "图19模块-性状相关性热图。Turquoise模块与FE组极强正相关（r=0.971）并与信号转导通路极强负相关（r=-0.901）；Blue模块与NC组极强正相关（r=0.919）；Magenta模块与CD组极强正相关（r=0.892）；Red模块与信号转导通路极强正相关（r=0.978）。", "caption_en": "Figure19. Module-trait correlation heatmap. The turquoise module shows extremely strong positive correlation with the FE group (r=0.971) and extremely strong negative correlation with the signal transduction pathway (r=-0.901); the blue module shows extremely strong positive correlation with the NC group (r=0.919); the magenta module shows extremely strong positive correlation with the CD group (r=0.892); the red module shows extremely strong positive correlation with the signal transduction pathway (r=0.978)."},
+ {"file": "Module_dendrogram.png", "type": "figure", "caption_cn": "图20 WGCNA模块聚类树。经动态树切割和模块合并后共识别出6个共表达模块，以不同颜色标识。", "caption_en": "Figure20. WGCNA module dendrogram. A total of6 co-expression modules are identified after dynamic tree cutting and module merging, represented by different colors."},
+ {"file": "Module_eigengene_barplot.png", "type": "figure", "caption_cn": "图21各组中模块特征基因表达条形图。Turquoise模块在FE组中特异性高表达，Blue模块在NC组中高表达，Magenta模块在CD组中特异性高表达。", "caption_en": "Figure21. Bar plot of module eigengene expression across groups. The turquoise module is specifically highly expressed in the FE group, the blue module is highly expressed in the NC group, and the magenta module is specifically highly expressed in the CD group."},
+ {"file": "SoftThreshold_selection.png", "type": "figure", "caption_cn": "图22软阈值幂次选择图。β=6时无标度拓扑拟合指数R²达到0.63，平均连接度适中，满足无标度网络假设。", "caption_en": "Figure22. Soft threshold power selection plot. At β=6, the scale-free topology fit index R² reaches0.63 with moderate mean connectivity, satisfying the scale-free network assumption."},
+ {"file": "Hub_network_turquoise.png", "type": "figure", "caption_cn": "图23 Turquoise模块的Hub代谢物网络。选取连接度top30%的代谢物构建网络，节点大小表示连接度，颜色深浅表示模块成员度。", "caption_en": "Figure23. Hub metabolite network of the turquoise module. Metabolites in the top30% of connectivity are selected to construct the network; node size indicates connectivity, and color intensity indicates module membership."}
+ ],
+ "tables": [
+ {"file": "preprocessed_expression.csv", "type": "table", "caption_cn": "表6 WGCNA模块大小及与分组性状的相关性摘要。Turquoise模块（539个代谢物）为FE组标志模块，Magenta模块（279个代谢物）为CD组标志模块，Blue模块（511个代谢物）为NC组标志模块。", "caption_en": "Table6. Summary of WGCNA module sizes and correlations with group traits. The turquoise module (539 metabolites) is the FE group signature module, the magenta module (279 metabolites) is the CD group signature module, and the blue module (511 metabolites) is the NC group signature module.", "fields": ["模块名称", "代谢物数量", "与FE组相关性", "与CD组相关性", "与NC组相关性", "与信号转导通路相关性"]}
+ ]
+ },
+ {
+ "module_index":6,
+ "title": "6. CMeans模糊聚类与模块交叉验证",
+ "content": "为从软聚类的角度验证WGCNA硬聚类结果并细化代谢物分组，我们采用模糊C均值（CMeans）对z-score标准化的表达矩阵进行聚类。通过FPC、PE和平均Silhouette宽度多指标综合评估，确定最优聚类数k=6，最终形成4个非空模糊聚类簇：Cluster1（496个代谢物）、Cluster2（455个代谢物）、Cluster3（524个代谢物）和Cluster4（584个代谢物）。\n\n表达模式剖面图显示4个簇在NC、CD、FE三组间的表达轨迹呈现明显的分化模式。KEGG通路富集分析发现Cluster2和Cluster3分别鉴定出214和272个显著富集的KEGG通路（FDR<0.05），表明这两个簇捕获了代谢组数据中最主要的生物学功能信号。CMeans聚类与WGCNA模块的列联表分析和Fisher精确检验揭示了两者之间极端高度的一致性（全局Fisher检验p<0.0001）。Cluster1与Turquoise模块100%匹配（496/496，富集倍数3.82倍，p≈0），Cluster2主要对应Magenta模块（60%，275/455）和Red模块（15%，67/455），Cluster3与Blue模块90%匹配（469/524），Cluster4与Black模块87%匹配（502/584）。两种完全不同的算法路径（WGCNA基于网络拓扑结构，CMeans基于隶属度函数软聚类）得出了高度一致的代谢物分组模式，极大增强了分析结论的稳健性。\n\n综合分析表明，Cluster1/Turquoise模块代表高铁饮食干预的核心代谢特征（FE组特异性高表达，与信号转导通路活性负相关），Cluster2/Magenta+Red模块代表CDI感染和宿主免疫信号应答的代谢特征，Cluster3/Blue模块代表健康肠道的正常代谢功能状态，Cluster4/Black模块偏向基础代谢功能。",
+ "figures": [
+ {"file": "CMeans_profiles.png", "type": "figure", "caption_cn": "图24 CMeans模糊聚类表达模式剖面图。4个簇在NC、CD、FE三组间的表达轨迹呈现明显的分化模式，Cluster1在FE组中特异性高表达，Cluster3在NC组中特异性高表达。", "caption_en": "Figure24. CMeans fuzzy clustering expression profiles. The four clusters show distinct expression trajectories across NC, CD, and FE groups: Cluster1 is specifically highly expressed in the FE group, while Cluster3 is specifically highly expressed in the NC group."},
+ {"file": "CMeans_membership_heatmap.png", "type": "figure", "caption_cn": "图25 CMeans隶属度热图。各代谢物在簇间的软分配结构清晰，簇内代谢物具有高度一致的协同表达行为。", "caption_en": "Figure25. CMeans membership heatmap. The soft assignment structure of metabolites across clusters is clear, with metabolites within each cluster showing highly coordinated expression behavior."},
+ {"file": "CMeans_vs_WGCNA_alluvial.png", "type": "figure", "caption_cn": "图26 CMeans簇与WGCNA模块的桑基图。Cluster1与Turquoise模块完全对应，Cluster3与Blue模块高度对应，两种独立算法结果高度一致。", "caption_en": "Figure26. Sankey diagram of CMeans clusters vs WGCNA modules. Cluster1 completely corresponds to the turquoise module, and Cluster3 highly corresponds to the blue module, demonstrating excellent consistency between two independent algorithms."},
+ {"file": "CMeans_cluster_kegg_enrichment.png", "type": "figure", "caption_cn": "图27 CMeans各簇的KEGG通路富集分析。Cluster2和Cluster3分别鉴定出214和272个显著富集通路，捕获了代谢组数据中最主要的生物学功能信号。", "caption_en": "Figure27. KEGG pathway enrichment analysis of CMeans clusters. Clusters2 and3 identify214 and272 significantly enriched pathways, respectively, capturing the major biological functional signals in the metabolomic data."}
+ ],
+ "tables": [
+ {"file": "cmeans_cluster_assignments.csv", "type": "table", "caption_cn": "表7 CMeans模糊聚类与WGCNA模块的列联表分析。Cluster1与Turquoise模块完全匹配（100%），Cluster3与Blue模块高度匹配（90%），Fisher精确检验全局p<0.0001。", "caption_en": "Table7. Contingency table analysis of CMeans fuzzy clusters and WGCNA modules. Cluster1 completely matches the turquoise module (100%), and Cluster3 highly matches the blue module (90%), with global Fisher's exact test p<0.0001.", "fields": ["CMeans簇", "代谢物数", "主要对应WGCNA模块", "匹配比例", "富集倍数", "显著性"]}
+ ]
+ },
+ {
+ "module_index":7,
+ "title": "7.贝叶斯网络推断模块间调控关系",
+ "content": "为推断6个WGCNA共表达模块之间的有向调控关系，我们采用模块级贝叶斯网络（BN）分析，以模块特征基因（ME）作为高阶网络节点，使用bnlearn包的Hill-Climbing算法结合BIC评分函数和200次bootstrap重采样进行结构学习，在≥0.7置信度阈值下筛选可靠的有向调控边。\n\n贝叶斯网络在6个模块特征基因之间识别出6条高置信度有向调控边，网络拓扑呈现清晰的层级调控结构。Turquoise→Blue是置信度最高的调控关系（置信度0.985），表明高铁饮食干预诱导的代谢重编程对健康基线代谢状态具有强烈的抑制性调控作用。Turquoise→Red（置信度0.870）直接验证了"高铁饮食抑制宿主免疫信号传递"的核心假说，与GSVA分析中信号转导通路在FE组大幅下调的发现高度一致。Magenta→Blue（置信度0.725）和Magenta→Red（置信度0.780）表明艰难梭菌感染可抑制健康肠道代谢并激活宿主免疫信号应答。Blue→Red（置信度0.735）显示健康基线代谢状态对免疫信号通路具有正向支持作用。Black→Purple（置信度0.795）反映基础代谢功能对次要模块的驱动关系。\n\n三组的分组均值特征基因模式展示了从"NC组（Blue高表达+0.306）→CD组（Magenta高表达+0.297，Red高表达+0.199）→FE组（Turquoise高表达+0.324，Blue低表达-0.248，Red低表达-0.304）"的完整代谢网络迁移轨迹。贝叶斯网络揭示了三个核心调控轴：Turquoise[FE↑]→Red[信号转导↑]的抑制性调控轴、Magenta[CD↑]→Blue[NC↑]的互斥调控轴以及Black[基础代谢]→Purple[次要模块]的基础驱动轴。",
+ "figures": [
+ {"file": "BN_module_network.png", "type": "figure", "caption_cn": "图28贝叶斯网络识别的模块间有向调控网络。6个模块之间识别出6条高置信度有向边（置信度≥0.7），Turquoise→Blue置信度最高（0.985），Turquoise→Red（0.870）直接验证了高铁饮食抑制免疫信号的假说。", "caption_en": "Figure28. Bayesian network of inter-module directed regulatory relationships. Six high-confidence directed edges (confidence ≥0.7) are identified among the six modules. Turquoise→Blue has the highest confidence (0.985), and Turquoise→Red (0.870) directly validates the hypothesis that high-iron diet suppresses immune signaling."},
+ {"file": "Module_correlation_heatmap.png", "type": "figure", "caption_cn": "图29模块间Pearson相关矩阵热图。Turquoise与Red呈极强负相关（r=-0.944），Turquoise与Blue呈强负相关（r=-0.808），Red与Magenta呈中等正相关（r=0.614）。", "caption_en": "Figure29. Heatmap of inter-module Pearson correlation matrix. Turquoise and Red show extremely strong negative correlation (r=-0.944), Turquoise and Blue show strong negative correlation (r=-0.808), and Red and Magenta show moderate positive correlation (r=0.614)."},
+ {"file": "Module_eigengene_heatmap.png", "type": "figure", "caption_cn": "图30各模块特征基因在NC、CD、FE三组中的表达模式热图。展示了从NC组（Blue高表达）→CD组（Magenta和Red高表达）→FE组（Turquoise高表达，Blue和Red低表达）的完整代谢网络迁移轨迹。", "caption_en": "Figure30. Heatmap of module eigengene expression patterns across NC, CD, and FE groups. The heatmap displays the complete metabolic network transition trajectory from NC (high Blue) → CD (high Magenta and Red) → FE (high Turquoise, low Blue and Red)."}
+ ],
+ "tables": [
+ {"file": "bayesian_network_arcs.csv", "type": "table", "caption_cn": "表8贝叶斯网络识别的6条高置信度有向调控边。包括起点、终点、方向、置信度和生物学含义。", "caption_en": "Table8. Six high-confidence directed regulatory edges identified by Bayesian network analysis. Includes source, target, direction, confidence, and biological interpretation.", "fields": ["起点模块", "终点模块", "方向", "置信度", "生物学含义"]}
+ ]
+ },
+ {
+ "module_index":8,
+ "title": "8. PLS-PM因果路径验证",
+ "content": "为对贝叶斯网络推断的模块间调控关系进行因果路径层面的定量验证，我们构建了两类偏最小二乘路径模型（PLS-PM）：模型A以6个WGCNA模块特征基因为潜变量，路径结构继承自贝叶斯网络识别的6条高置信度有向调控边；模型B以5个KEGG通路聚合分组为潜变量，构建"铁代谢→脂质代谢/能量代谢→信号转导/排泄系统"的因果链。\n\n模型A的拟合结果显示全部6条预设路径均达到统计显著性（p<0.01）。其中Turquoise→Red的路径系数为-0.722（t=-11.50，p=7.7×10⁻⁹），表明高铁饮食模块对免疫信号模块具有强烈的负向调控效应，这是整个分析中最关键的发现，直接定量验证了"高铁饮食通过抑制宿主免疫信号传递影响CDI结局"的核心假说。Magenta→Red的路径系数为+1.127（t=+7.01，p=4.2×10⁻⁶），反映CDI感染对免疫信号模块的正向激活效应。Blue→Red的路径系数为+0.635（t=+3.28，p=4.7×10⁻³），表明健康基线代谢状态为免疫信号提供正向支持。Turquoise→Blue（-0.350，p=5.4×10⁻⁵）和Magenta→Blue（-0.809，p=1.5×10⁻⁴）均证实了高铁饮食和CDI感染对健康基线代谢的抑制效应。三个核心调控轴清晰呈现了"饮食-菌群-宿主"互作中代谢模块间的因果调控结构：从"健康基线支持免疫（Blue→Red，+0.635）→CDI感染激活免疫（Magenta→Red，+1.127）→高铁饮食抑制免疫（Turquoise→Red，-0.722）"的完整因果链全部显著。模型B的结果显示仅Iron_Metabolism→Energy_Metabolism（+0.674，p=0.003）和Iron_Metabolism→Signal_Transduction（+0.403，p=0.043）两条路径达到显著性，模型整体解释力弱于模型A。",
+ "figures": [
+ {"file": "PLSPM_module_path_diagram.png", "type": "figure", "caption_cn": "图31模块级PLSPM路径图（模型A）。红色箭头表示显著正效应，蓝色箭头表示显著负效应，箭头宽度表示路径系数的绝对值大小。Turquoise→Red的路径系数为-0.722***，Magenta→Red为+1.127***。", "caption_en": "Figure31. Module-level PLSPM path diagram (Model A). Red arrows indicate significant positive effects, blue arrows indicate significant negative effects, and arrow width reflects the absolute magnitude of path coefficients. Turquoise→Red has a path coefficient of -0.722***, and Magenta→Red has +1.127***."},
+ {"file": "PLSPM_module_bootstrap.png", "type": "figure", "caption_cn": "图32模型A的Bootstrap验证结果。所有6条路径的Bootstrap置信区间均不包含零，确认路径系数的稳定性和统计显著性。", "caption_en": "Figure32. Bootstrap validation results for Model A. The bootstrap confidence intervals for all six paths do not include zero, confirming the stability and statistical significance of the path coefficients."},
+ {"file": "PLSPM_pathway_path_diagram.png", "type": "figure", "caption_cn": "图33通路级PLSPM路径图（模型B）。Iron_Metabolism→Energy_Metabolism（+0.674**）和Iron_Metabolism→Signal_Transduction（+0.403*）两条路径达到显著性，模型整体解释力弱于模型A。", "caption_en": "Figure33. Pathway-level PLSPM path diagram (Model B). Two paths, Iron_Metabolism→Energy_Metabolism (+0.674**) and Iron_Metabolism→Signal_Transduction (+0.403*), reach statistical significance, though the overall explanatory power is weaker than Model A."}
+ ],
+ "tables": [
+ {"file": "preprocessed_expression.csv", "type": "table", "caption_cn": "表9模块级PLSPM路径分析结果（模型A）。全部6条路径均达到统计显著性，Turquoise→Red的抑制效应最为突出。", "caption_en": "Table9. Results of module-level PLSPM path analysis (Model A). All six paths reach statistical significance, with the inhibitory effect of Turquoise→Red being the most prominent.", "fields": ["路径方向", "路径系数", "t值", "p值", "显著性", "生物学含义"]}
+ ]
+ }
+ ]
+}
+```

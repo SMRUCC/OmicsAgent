@@ -1,8 +1,1 @@
-﻿{
-    "Conclusion": "1. 研究报告的整体结构完整性\r\n2. 各章节内容的覆盖情况\r\n3. 图表及其图注的完整性\r\n4. 讨论部分对生物学机制的解读深度\r\n5. 报告与用户研究主题的契合度",
-    "Goal": "以论文的形式生成分析结果报告",
-    "ModuleIndex": 11,
-    "ModuleName": "Paper Draft Report",
-    "OutputDir": "G:\/OmicsWorks\/test\/metabolism\/demo\/analysis\\11_paper_draft_report",
-    "Workdir": "G:\/OmicsWorks\/test\/metabolism\/demo\/tmp\/11_paper_draft_report"
-}
+﻿{"Conclusion":"1. 研究报告的整体结构完整性\r\n2. 各章节内容的覆盖情况\r\n3. 图表及其图注的完整性\r\n4. 讨论部分对生物学机制的解读深度\r\n5. 报告与用户研究主题的契合度","Goal":"以论文的形式生成分析结果报告","ModuleIndex":11,"ModuleName":"Paper Draft Report","OutputDir":"G:\/OmicsWorks\/test\/metabolism\/demo\/analysis\\11_paper_draft_report","Workdir":"G:\/OmicsWorks\/test\/metabolism\/demo\/tmp\/11_paper_draft_report"}
