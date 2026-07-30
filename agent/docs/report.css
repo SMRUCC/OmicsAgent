@@ -1,118 +1,130 @@
-/* ============================================================
-   科研报告样式表（A4 打印排版）
-   主色：#1f4e79 / #2e5c8a，衬线字体，严谨学术风格
+/* ============================================================ 
+   科研报告样式表（A4 打印排版优化版） 
+   基准字号：16pt
+   主色：#1f4e79 / #2e5c8a
+   设计理念：严谨学术风格，中英文混排优化，打印分页控制
    ============================================================ */
 
 @page {
   size: A4;
-  margin: 18mm;
-}
-
-:root {
-  --primary: #1f4e79;
-  --primary-light: #2e5c8a;
-  --text: #333333;
-  --text-muted: #555555;
-  --border: #cccccc;
-  --stripe: #f9f9f9;
-  --abstract-bg: #f5f5f5;
+  margin: 20mm 18mm; /* 上下略多留白，方便装订 */
 }
 
 body {
-  font-family: "Cambria", "Times New Roman", "Songti SC", "SimSun", "Microsoft YaHei", serif;
-  font-size: 12pt;
-  line-height: 1.6;
-  color: var(--text);
-  text-align: justify;
+  /* 推荐：正文使用衬线体（宋体），中英混排更美观 */
+  font-family: "Times New Roman", "Songti SC", "SimSun", serif;
+  font-size: 16pt;
+  line-height: 1.8; /* 2.0略显稀疏，1.8是中文阅读最佳行高 */
+  color: #2b2b2b; /* 纯黑太刺眼，#2b2b2b 柔和且打印清晰 */
+  text-align: justify; /* 强制两端对齐 */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
-/* ---------- 标题层级 ---------- */
+/* ---------- 标题层级（使用黑体无衬线，形成对比） ---------- */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Microsoft YaHei", "PingFang SC", "SimHei", sans-serif;
+  font-weight: bold;
+  page-break-after: avoid; /* 避免标题独立留在页底 */
+  page-break-inside: avoid;
+}
+
 h1 {
-  font-size: 22pt;
+  font-size: 24pt; /* 原32pt偏大，24pt更适合A4单栏排版 */
   text-align: center;
-  color: var(--primary);
-  margin-bottom: 20pt;
+  color: #1f4e79;
+  margin: 0 0 20pt 0;
+  letter-spacing: 2pt;
 }
 
 h2 {
-  font-size: 16pt;
-  color: var(--primary);
-  border-bottom: 2px solid var(--primary);
-  padding-bottom: 5pt;
-  margin-top: 20pt;
+  font-size: 20pt; /* 作为章节标题，与正文16pt形成1.25倍比例 */
+  color: #1f4e79;
+  border-bottom: 2px solid #1f4e79;
+  padding-bottom: 6pt;
+  margin: 24pt 0 12pt 0;
 }
 
 h3 {
-  font-size: 14pt;
-  color: var(--primary-light);
-  margin-top: 15pt;
+  font-size: 18pt;
+  color: #2e5c8a;
+  margin: 18pt 0 8pt 0;
 }
 
 h4 {
-  font-size: 12.5pt;
-  color: var(--primary-light);
-  margin-top: 12pt;
+  font-size: 16pt; /* 与正文同字号，通过加粗和颜色区分 */
+  color: #2e5c8a;
+  margin: 14pt 0 6pt 0;
 }
 
 /* ---------- 正文段落 ---------- */
 p {
-  text-align: justify;
   text-indent: 2em;
-  margin: 6pt 0;
+  margin: 0 0 8pt 0; /* 段间距控制，避免过大空隙 */
 }
 
 /* ---------- 列表 / 引用 / 代码 ---------- */
-ul, ol {
+ul,
+ol {
   margin: 8pt 0;
   padding-left: 2em;
+  text-indent: 0;
 }
 
 li {
   text-align: justify;
-  margin: 3pt 0;
+  margin: 4pt 0;
 }
 
 blockquote {
-  margin: 8pt 2em;
-  padding: 6pt 12pt;
-  border-left: 3px solid var(--border);
-  background: var(--stripe);
-  color: var(--text-muted);
+  margin: 10pt 2em;
+  padding: 8pt 15pt;
+  border-left: 4px solid #1f4e79;
+  background: #f7f9fc; /* 极浅的蓝底，呼应主色调 */
+  color: #444444;
+  font-size: 15pt;
 }
 
 code {
   font-family: Consolas, "Courier New", monospace;
   background: #f0f0f0;
-  padding: 1pt 4pt;
+  padding: 2pt 5pt;
   border-radius: 3pt;
-  font-size: 10pt;
+  font-size: 13pt; /* 原10pt太小，调整为13pt便于阅读 */
 }
 
 pre {
-  background: var(--abstract-bg);
-  padding: 8pt;
+  background: #f5f5f5;
+  padding: 10pt;
   border: 1px solid #ddd;
   border-radius: 4pt;
   overflow-x: auto;
-  font-size: 10pt;
+  font-size: 13pt;
   white-space: pre-wrap;
   word-wrap: break-word;
+  line-height: 1.5; /* 代码块行高收紧 */
 }
 
 pre code {
   background: none;
   padding: 0;
   border-radius: 0;
+  font-size: 13pt;
 }
 
 a {
-  color: var(--primary);
+  color: #1f4e79;
   text-decoration: none;
 }
 
 /* ---------- 封面页 ---------- */
 .cover {
-  height: 261mm; /* A4 内容区高度(297mm - 2*18mm) */
+  height: 257mm; /* A4内容区高度(297mm - 20mm*2上下边距) */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -122,31 +134,39 @@ a {
 }
 
 .cover-title {
-  font-size: 26pt;
-  color: var(--primary);
-  line-height: 1.35;
-  margin: 0 0 14pt 0;
+  font-size: 28pt; /* 封面主标题放大 */
+  color: #1f4e79;
+  line-height: 1.4;
+  margin: 0 0 18pt 0;
+  font-weight: bold;
+}
+
+.cover-subtitle {
+  font-size: 16pt;
+  color: #555555;
+  margin-bottom: 30pt;
 }
 
 .cover-rule {
   width: 60mm;
   height: 2px;
-  background: var(--primary);
-  margin: 0 auto 18pt auto;
+  background: #1f4e79;
+  margin: 0 auto 20pt auto;
 }
 
-.cover-date {
-  font-size: 12pt;
-  color: var(--text-muted);
-  margin: 4pt 0;
+.cover-date,
+.cover-author {
+  font-size: 14pt; /* 原11/12pt太小，统一调整为14pt */
+  color: #333333;
+  margin: 6pt 0;
   text-indent: 0;
 }
 
 .cover-keywords {
-  font-size: 11pt;
-  color: var(--text-muted);
+  font-size: 12pt;
+  color: #666666;
   font-style: italic;
-  margin-top: 18pt;
+  margin-top: 25pt;
   text-indent: 0;
 }
 
@@ -156,12 +176,12 @@ a {
 }
 
 .toc-title {
-  font-size: 18pt;
-  color: var(--primary);
+  font-size: 20pt;
+  color: #1f4e79;
   text-align: center;
-  border-bottom: 2px solid var(--primary);
-  padding-bottom: 6pt;
-  margin-bottom: 16pt;
+  border-bottom: 2px solid #1f4e79;
+  padding-bottom: 8pt;
+  margin-bottom: 20pt;
 }
 
 .toc-list {
@@ -171,48 +191,55 @@ a {
 }
 
 .toc-list li {
-  margin: 7pt 0;
+  margin: 8pt 0;
   text-indent: 0;
+  font-size: 14pt;
 }
 
 .toc-list li a {
-  color: var(--primary);
+  color: #333333; /* 目录链接不用主色，避免满眼蓝色太刺眼 */
 }
 
 .toc-sub {
   padding-left: 2.5em;
-  font-size: 11pt;
-  color: var(--text-muted);
+  font-size: 13pt;
+  color: #555555;
 }
 
 /* ---------- 摘要 / 关键词 ---------- */
 .abstract-section {
-  margin-top: 12pt;
+  margin: 15pt 0;
+  page-break-inside: avoid;
 }
 
 .abstract {
-  background-color: var(--abstract-bg);
-  padding: 10pt;
-  border-left: 4px solid var(--primary);
+  background-color: #f7f9fc; /* 浅蓝底色 */
+  padding: 12pt 15pt;
+  border-left: 4px solid #1f4e79;
+  font-size: 14pt; /* 摘要字号略小于正文 */
+  line-height: 1.6;
 }
 
 .abstract p {
   text-indent: 0;
+  margin: 0 0 6pt 0;
 }
 
 .keywords {
   font-style: italic;
-  color: var(--text-muted);
+  color: #555555;
   text-indent: 0;
+  font-size: 14pt;
+  margin-top: 8pt;
 }
 
 /* ---------- 章节容器 ---------- */
 .section {
-  margin-top: 6pt;
+  margin-top: 10pt;
 }
 
 .result-subsection {
-  margin-top: 10pt;
+  margin-top: 12pt;
 }
 
 /* ---------- 图 ---------- */
@@ -226,69 +253,77 @@ figure {
 img {
   display: block;
   margin: 0 auto;
-  max-width: 100%;
-  max-height: 480px;
+  max-width: 90%; /* 留出10%边距，避免顶满页面 */
+  max-height: 450px; /* 限制高度，防止单图占据整页 */
   height: auto;
 }
 
 figcaption {
-  font-size: 10pt;
-  color: var(--text-muted);
-  margin-top: 5pt;
+  font-size: 13pt; /* 原10pt太小，调整至13pt */
+  color: #555555;
+  margin-top: 8pt;
   text-align: center;
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 figcaption strong {
-  color: var(--primary);
+  color: #1f4e79;
 }
 
 /* ---------- 表 ---------- */
 .table-block {
-  margin: 12pt 0;
+  margin: 15pt 0;
   page-break-inside: avoid;
   break-inside: avoid;
 }
 
 .table-caption {
-  font-size: 10pt;
-  color: var(--text-muted);
-  margin-bottom: 6pt;
+  font-size: 13pt; /* 原10pt太小 */
+  color: #555555;
+  margin-bottom: 8pt;
   text-indent: 0;
   text-align: left;
 }
 
 .table-caption strong {
-  color: var(--primary);
+  color: #1f4e79;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
   margin: 6pt 0;
-  font-size: 10pt;
+  font-size: 13pt; /* 表格13pt既清晰又不会撑破版心 */
   table-layout: fixed;
-  page-break-inside: avoid;
-  break-inside: avoid;
+  page-break-inside: auto; /* 允许长表格跨页 */
+}
+
+thead {
+  display: table-header-group; /* 跨页时自动重复表头 */
 }
 
 th {
-  background-color: var(--primary);
+  background-color: #1f4e79;
   color: white;
-  padding: 5pt;
-  border: 1px solid var(--border);
+  padding: 6pt 8pt;
+  border: 1px solid #1f4e79;
   text-align: center;
+  font-weight: bold;
 }
 
 td {
-  padding: 5pt;
-  border: 1px solid var(--border);
+  padding: 6pt 8pt;
+  border: 1px solid #d1d1d1; /* 边框颜色稍浅，减少厚重感 */
   text-align: left;
   vertical-align: top;
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
 
+tr {
+  page-break-inside: avoid; /* 避免单行数据被截断 */
+}
+
 tr:nth-child(even) {
-  background-color: var(--stripe);
+  background-color: #f7f9fc; /* 斑马纹使用极浅蓝色，呼应主题 */
 }
