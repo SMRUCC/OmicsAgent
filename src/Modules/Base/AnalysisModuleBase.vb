@@ -123,7 +123,7 @@ Public MustInherit Class AnalysisModuleBase
             ' 1. 生成分析计划
             plan = Await GeneratePlanAsync(llm, cancellationToken)
 
-            Call plan.GetJson(comment:=True, escapeUnicode:=False).SaveTo($"{Workspace}/plan.json")
+            Call JsonContract.GetJson(plan).SaveTo($"{Workspace}/plan.json")
             Call LogInfo($"分析计划已生成：{plan.goal}")
 
             ' 2. 编写并执行脚本
@@ -137,11 +137,11 @@ Public MustInherit Class AnalysisModuleBase
 
             ' 4. 记录到上下文
             plan.conclusion = conclusion
-            plan.GetJson(comment:=True, escapeUnicode:=False).SaveTo($"{Workspace}/plan.json")
+            JsonContract.GetJson(plan).SaveTo($"{Workspace}/plan.json")
         End Using
 
         If ModuleName = "Comparison Group Design" Then
-            plan.comparisons.GetJson(comment:=False).SaveTo($"{_context.AnalysisDir}/design.json")
+            JsonContract.GetJson(plan.comparisons).SaveTo($"{_context.AnalysisDir}/design.json")
         End If
 
         Return conclusion
