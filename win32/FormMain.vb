@@ -1,4 +1,5 @@
 ﻿Imports Galaxy.Workbench
+Imports Microsoft.VisualStudio.WinForms.Docking
 
 Public Class FormMain : Implements AppHost
 
@@ -16,6 +17,8 @@ Public Class FormMain : Implements AppHost
 
     Public Event ResizeForm As AppHost.ResizeFormEventHandler Implements AppHost.ResizeForm
     Public Event CloseWorkbench As AppHost.CloseWorkbenchEventHandler Implements AppHost.CloseWorkbench
+
+    ReadOnly _toolStripProfessionalRenderer As New ToolStripProfessionalRenderer()
 
     Public Sub SetWorkbenchVisible(visible As Boolean) Implements AppHost.SetWorkbenchVisible
         Me.Visible = visible
@@ -80,6 +83,19 @@ Public Class FormMain : Implements AppHost
     End Function
 
     Private Sub FormMain_Load(sender As Object, e As EventArgs) Handles Me.Load
+        DockPanel1.Theme = VS2015LightTheme1
+        DockPanel1.ShowDocumentIcon = True
+        VisualStudioToolStripExtender1.SetStyle(StatusStrip1, VisualStudioToolStripExtender.VsVersion.Vs2015, VS2015LightTheme1)
+
+        If DockPanel1.Theme.ColorPalette IsNot Nothing Then
+            StatusStrip1.BackColor = DockPanel1.Theme.ColorPalette.MainWindowStatusBarDefault.Background
+        End If
+
         Call CommonRuntime.Hook(Me)
+        Call Workbench.StartHttp()
+        Call Workbench.LoadConfig()
+        Call StatusMessage("Ready!", Icons8.Information)
+        Call CommonRuntime.GetOutputWindow.AddLog("startup", "omics analysis workshop is ready")
+        Call RibbonMenu.OpenStartupPage()
     End Sub
 End Class
