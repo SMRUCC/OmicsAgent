@@ -103,6 +103,11 @@
             height: 100vh;
         }
 
+        /* 抽屉遮罩：桌面端默认不显示，也不参与网格布局 */
+        .scrim {
+            display: none;
+        }
+
         header.topbar {
             grid-column: 1 / -1;
             display: flex;
@@ -202,6 +207,8 @@
 
         /* 侧栏 */
         aside.sidebar {
+            grid-column: 1;
+            grid-row: 2;
             background: var(--glass);
             backdrop-filter: blur(16px) saturate(130%);
             -webkit-backdrop-filter: blur(16px) saturate(130%);
@@ -297,6 +304,8 @@
 
         /* 主区 */
         main.content {
+            grid-column: 2;
+            grid-row: 2;
             overflow-y: auto;
             padding: 24px 30px 60px;
             min-height: 0;
@@ -723,7 +732,7 @@
 
 <body>
     <div class="app">
-        <header class="topbar">
+        <header class="topbar" id="topbar">
             <button class="btn drawer-toggle" id="drawerToggle" title="文献列表">
                 <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <line x1="3" y1="6" x2="21" y2="6" />
@@ -800,10 +809,13 @@
             if (!t) t = (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
             applyTheme(t);
         }
-        $("#themeBtn").addEventListener("click", () => {
+
+        function toggleTheme() {
             const cur = document.documentElement.getAttribute("data-theme");
             applyTheme(cur === "dark" ? "light" : "dark");
-        });
+        }
+
+        $("#themeBtn").addEventListener("click", () => toggleTheme());
 
         /* ===================== 网络层 ===================== */
         async function getText(path) {
