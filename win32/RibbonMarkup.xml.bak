@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application xmlns="http://schemas.microsoft.com/windows/2009/Ribbon">
+  <Application.Commands>
+    <Command Name="cmdButtonOpenKb" Id="2" LabelTitle="Open Research KB" />
+    <Command Name="cmdMenuResearchWork" Id="3" LabelTitle="Research" />
+    <Command Name="cmdGroupResearchWork" Id="4" LabelTitle="Research" />
+    <Command Name="cmdTabResearchWork" Id="5" LabelTitle="Research" />
+    <Command Name="cmdButtonOpenResearch" Id="6" LabelTitle="Start" />
+    <Command Name="cmdGroupMain" Id="7" />
+    <Command Name="cmdPanelMain" Id="8" />
+    <Command Name="cmdTabMain" Id="9" />
+  </Application.Commands>
+  <Application.Views>
+    <Ribbon>
+      <Ribbon.ApplicationMenu>
+        <ApplicationMenu />
+      </Ribbon.ApplicationMenu>
+      <Ribbon.QuickAccessToolbar>
+        <QuickAccessToolbar />
+      </Ribbon.QuickAccessToolbar>
+      <Ribbon.ContextualTabs>
+        <TabGroup CommandName="cmdMenuResearchWork">
+          <Tab CommandName="cmdTabResearchWork">
+            <Group CommandName="cmdGroupResearchWork" SizeDefinition="OneButton">
+              <Button CommandName="cmdButtonOpenKb" />
+            </Group>
+          </Tab>
+        </TabGroup>
+      </Ribbon.ContextualTabs>
+    </Ribbon>
+    <ContextPopup />
+  </Application.Views>
+</Application>
+<!--ResourceName Value="APPLICATION"-->

@@ -1,5 +1,6 @@
 ﻿Imports Galaxy.Workbench
 Imports Microsoft.VisualStudio.WinForms.Docking
+Imports OmicsWorks.RibbonLib.Controls
 
 Public Class FormMain : Implements AppHost
 
@@ -92,6 +93,7 @@ Public Class FormMain : Implements AppHost
         End If
 
         Call CommonRuntime.Hook(Me)
+        Call RibbonMenu.Hook(New RibbonItems(Ribbon1))
         Call Workbench.StartHttp()
         Call Workbench.LoadConfig()
         Call StatusMessage("Ready!", Icons8.Information)
