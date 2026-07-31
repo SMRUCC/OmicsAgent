@@ -1,5 +1,4 @@
 ﻿Imports System.Runtime.InteropServices
-Imports Galaxy.Workbench
 
 Namespace JavaScript
 
