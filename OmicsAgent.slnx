@@ -75,7 +75,9 @@
       <Platform Solution="*|x64" Project="x64" />
     </Project>
   </Folder>
-  <Project Path="OmicsWorks/OmicsWorks.vbproj" Id="653b8274-c74d-4306-88f4-2dc6e9a93998" />
+  <Project Path="OmicsWorks/OmicsWorks.vbproj" Id="653b8274-c74d-4306-88f4-2dc6e9a93998">
+    <Platform Solution="Debug|x64" Project="x64" />
+  </Project>
   <Project Path="src/OmicsAgent.vbproj">
     <Platform Solution="*|x64" Project="x64" />
   </Project>
