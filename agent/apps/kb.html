@@ -125,6 +125,7 @@
     -webkit-backdrop-filter: blur(16px) saturate(130%);
     border-right: 1px solid var(--border);
     padding: 18px 14px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px;
+    min-height: 0; /* 关键：允许网格项内部独立滚动，避免内容被 body 裁切 */
   }
   .sidebar h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-muted); margin: 4px 6px 0; }
   .search {
@@ -144,11 +145,11 @@
   .doc-item.active { border-color: var(--primary); background: var(--tag-bg); box-shadow: 0 0 0 1px var(--primary) inset; }
   .doc-item .fname { font-size: 11.5px; color: var(--text-muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
   .doc-item .title { font-size: 13.5px; font-weight: 600; line-height: 1.35;
-    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .doc-item .src { font-size: 11px; color: var(--primary-2); margin-top: 2px; }
 
   /* 主区 */
-  main.content { overflow-y: auto; padding: 24px 30px 60px; }
+  main.content { overflow-y: auto; padding: 24px 30px 60px; min-height: 0; min-width: 0; }
   .view { max-width: 1080px; margin: 0 auto; animation: fade .35s ease; }
   @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
   @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
@@ -291,6 +292,7 @@
 
   /* ===================== 配置 ===================== */
   const BASE_URL = "http://localhost"; // 知识库服务根地址（CORS 已开启）
+  let activeToken = 0; // 异步请求令牌：防止快速切换文献/汇总时的竞态覆盖
 
   /* ===================== 缓存 ===================== */
   const cache = {
@@ -382,9 +384,9 @@
       const item = el("button", "doc-item");
       item.dataset.name = name;
       const title = cache.titles.get(name);
-      item.innerHTML =
-        '<span class="fname">' + esc(name) + "</span>" +
-        '<span class="title">' + (esc(title || "（点击加载标题）") + "</span>");
+      let html = '<span class="fname">' + esc(name) + "</span>";
+      if (title) html += '<span class="title">' + esc(title) + "</span>";
+      item.innerHTML = html;
       item.addEventListener("click", () => selectDoc(name));
       box.appendChild(item);
     });
@@ -394,8 +396,13 @@
     cache.titles.set(name, title);
     const item = document.querySelector('.doc-item[data-name="' + CSS.escape(name) + '"]');
     if (item) {
-      const t = item.querySelector(".title");
-      if (t && (!t.textContent || t.textContent === "（点击加载标题）")) t.textContent = title;
+      let t = item.querySelector(".title");
+      if (!t) {
+        t = document.createElement("span");
+        t.className = "title";
+        item.appendChild(t);
+      }
+      t.textContent = title;
     }
   }
 
@@ -417,6 +424,36 @@
         (ev ? '<div class="e"><b>证据：</b>' + esc(ev) + "</div>" : "") + "</div>";
     }).join("");
     return '<div class="card"><h3><span class="dot"></span>生物机制（' + arr.length + "）</h3>" + cards + "</div>";
+  }
+
+  /* 仅 kb.json 汇总包含：对比设计建议 */
+  function comparisonSection(arr) {
+    if (!Array.isArray(arr) || arr.length === 0) return "";
+    const cards = arr.map((c) => {
+      const comp = (c && c.comparison) ? c.comparison : "";
+      const purp = (c && c.purpose) ? c.purpose : "";
+      return '<div class="mech"><div class="m">' + esc(comp) + "</div>" +
+        (purp ? '<div class="e"><b>目的：</b>' + esc(purp) + "</div>" : "") + "</div>";
+    }).join("");
+    return '<div class="card"><h3><span class="dot"></span>对比设计建议（' + arr.length + "）</h3>" + cards + "</div>";
+  }
+
+  /* 仅 kb.json 汇总包含：预期发现 */
+  function expectedFindingsSection(arr) {
+    if (!Array.isArray(arr) || arr.length === 0) return "";
+    const items = arr.map((x) => '<div class="ref"><div class="m">' + esc(x) + "</div></div>").join("");
+    return '<div class="card"><h3><span class="dot"></span>预期发现（' + arr.length + "）</h3><div class=\"ref-list\">" + items + "</div></div>";
+  }
+
+  /* 仅 kb.json 汇总包含：核心参考文献（含关键发现） */
+  function kbReferencesSection(arr) {
+    if (!Array.isArray(arr) || arr.length === 0) return "";
+    const refs = arr.map((r) =>
+      '<div class="ref"><div class="rt">' + esc((r && r.title) || "（无标题）") + "</div>" +
+      (r && r.key_finding ? '<div class="rm" style="margin-top:4px"><b style="color:var(--primary-3)">关键发现：</b>' + esc(r.key_finding) + "</div>" : "") +
+      "</div>"
+    ).join("");
+    return '<div class="card"><h3><span class="dot"></span>核心参考文献（' + arr.length + "）</h3><div class=\"ref-list\">" + refs + "</div></div>";
   }
 
   function renderKnowledge(obj) {
@@ -447,6 +484,10 @@
       html += '<div class="card relevance"><h3><span class="dot"></span>与研究主题相关性</h3><p>' +
         esc(obj.relevance_to_research_topic) + "</p></div>";
     }
+    // 仅 kb.json 汇总包含的三类区块（per_doc 无这些字段，依存在性跳过）
+    html += comparisonSection(obj.comparison_design_suggestions);
+    html += expectedFindingsSection(obj.expected_findings);
+    html += kbReferencesSection(obj.references);
     return html;
   }
 
@@ -455,6 +496,8 @@
     document.querySelectorAll(".doc-item").forEach((d) => d.classList.toggle("active", d.dataset.name === name));
     closeDrawer();
     const main = $("#content");
+    main.scrollTop = 0; // 切换时重置滚动位置
+    const token = ++activeToken; // 本次请求的令牌
     main.innerHTML = '<div class="view"><div class="skeleton" style="width:60%"></div><div class="skeleton" style="width:90%"></div><div class="skeleton" style="width:80%"></div></div>';
 
     try {
@@ -464,6 +507,7 @@
         perDoc = cache.perDoc.get(name);
       } else {
         perDoc = await getJson(name);
+        if (token !== activeToken) return; // 已切换，丢弃过期结果
         cache.perDoc.set(name, perDoc);
       }
 
@@ -474,6 +518,7 @@
         parsed = cache.txt.get(src);
       } else {
         const raw = await getText(src);
+        if (token !== activeToken) return; // 已切换，丢弃过期结果
         parsed = parseDocTxt(raw);
         cache.txt.set(src, parsed);
       }
@@ -509,9 +554,11 @@
       view += renderKnowledge(perDoc);
 
       view += "</div>";
+      if (token !== activeToken) return; // 渲染前再次校验，避免竞态覆盖
       main.innerHTML = view;
       bindTagToggle();
     } catch (err) {
+      if (token !== activeToken) return; // 过期请求的错误不覆盖当前视图
       console.error("加载文献失败", name, err);
       main.innerHTML = '<div class="view"><div class="banner err"><b>加载失败：</b>' +
         esc(err.message) + "<br/>请确认服务已启动（serve_kb.py）且地址为 " + esc(BASE_URL) + "。</div></div>";
@@ -523,9 +570,12 @@
     document.querySelectorAll(".doc-item").forEach((d) => d.classList.remove("active"));
     closeDrawer();
     const main = $("#content");
+    main.scrollTop = 0; // 切换时重置滚动位置
+    const token = ++activeToken; // 本次请求的令牌
     main.innerHTML = '<div class="view"><div class="skeleton" style="width:50%"></div><div class="skeleton" style="width:85%"></div><div class="skeleton" style="width:75%"></div></div>';
     try {
       const kb = cache.kb || (cache.kb = await getJson("kb.json"));
+      if (token !== activeToken) return; // 已切换，丢弃过期结果
       if (kb.research_topic) $("#topicLine").textContent = "主题：" + kb.research_topic;
       let view = '<div class="view">';
       view += '<div class="card"><h3><span class="dot"></span>知识库汇总（kb.json）</h3>' +
@@ -533,9 +583,11 @@
         (kb.research_topic ? "研究主题：" + esc(kb.research_topic) : "") + "</div></div>";
       view += renderKnowledge(kb);
       view += "</div>";
+      if (token !== activeToken) return; // 渲染前再次校验，避免竞态覆盖
       main.innerHTML = view;
       bindTagToggle();
     } catch (err) {
+      if (token !== activeToken) return; // 过期请求的错误不覆盖当前视图
       console.error("加载 kb.json 失败", err);
       main.innerHTML = '<div class="view"><div class="banner err"><b>加载 kb.json 失败：</b>' +
         esc(err.message) + "</div></div>";
