@@ -6,9 +6,11 @@ Imports RibbonLib.Interop
 Public Class FormKnowledgeBase
 
     Shared ReadOnly btnOpenKBLib As RibbonEventBinding
+    Shared ReadOnly btnToggleTheme As RibbonEventBinding
 
     Shared Sub New()
         btnOpenKBLib = New RibbonEventBinding(Ribbon.BtnOpenKBLib)
+        btnToggleTheme = New RibbonEventBinding(Ribbon.ButtonToggleTheme)
     End Sub
 
     Dim http As HttpServices
@@ -32,14 +34,19 @@ Public Class FormKnowledgeBase
         Await WebView21.CoreWebView2.ExecuteScriptAsync("showSummary();")
     End Function
 
+    Private Async Function toggleTheme() As Task
+        Await WebView21.CoreWebView2.ExecuteScriptAsync("toggleTheme();")
+    End Function
+
     Private Sub AvtivateRibbon()
         Ribbon.MenuKBLib.ContextAvailable = ContextAvailability.Active
 
         btnOpenKBLib.Addhandler(Async Sub() Await openKBLib())
+        btnToggleTheme.Addhandler(Async Sub() Await toggleTheme())
     End Sub
 
     Private Async Sub WebView21_NavigationCompleted(sender As Object, e As CoreWebView2NavigationCompletedEventArgs) Handles WebView21.NavigationCompleted
-        ' Await WebView21.CoreWebView2.ExecuteScriptAsync("")
+        Await WebView21.CoreWebView2.ExecuteScriptAsync("$('#topbar').style.display = 'none';")
     End Sub
 
     Private Sub WebView21_CoreWebView2InitializationCompleted(sender As Object, e As CoreWebView2InitializationCompletedEventArgs) Handles WebView21.CoreWebView2InitializationCompleted

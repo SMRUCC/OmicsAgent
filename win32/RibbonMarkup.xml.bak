@@ -1,18 +1,48 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Application xmlns="http://schemas.microsoft.com/windows/2009/Ribbon">
   <Application.Commands>
-    <Command Name="cmdButtonOpenKb" Id="2" LabelTitle="Open Research KB" />
+    <Command Name="cmdButtonOpenKb" Id="2" LabelTitle="Open Research KB">
+      <Command.SmallImages>
+        <Image MinDPI="192">Icons/icons8-books-96.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Icons/icons8-books-96.png</Image>
+      </Command.LargeImages>
+    </Command>
     <Command Name="cmdMenuResearchWork" Id="3" LabelTitle="Research" />
     <Command Name="cmdGroupResearchWork" Id="4" LabelTitle="Research" />
     <Command Name="cmdTabResearchWork" Id="5" LabelTitle="Research" />
-    <Command Name="cmdButtonOpenResearch" Id="6" LabelTitle="Start" />
-    <Command Name="cmdGroupMain" Id="7" />
-    <Command Name="cmdPanelMain" Id="8" />
-    <Command Name="cmdTabMain" Id="9" />
-    <Command Name="cmdBtnOpenKBLib" Id="10" LabelTitle="View KB" />
-    <Command Name="cmdTabKBLib" Id="11" />
-    <Command Name="cmdMenuKBLib" Id="12" />
-    <Command Name="cmdGroupKBLib" Id="13" />
+    <Command Name="cmdButtonOpenResearch" Id="6" LabelTitle="Start">
+      <Command.SmallImages>
+        <Image MinDPI="192">Icons/icons8-research-96.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Icons/icons8-research-96.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdGroupMain" Id="7" LabelTitle="Omics Research" />
+    <Command Name="cmdPanelMain" Id="8" LabelTitle="Omics Research" />
+    <Command Name="cmdTabMain" Id="9" LabelTitle="Omics Research" />
+    <Command Name="cmdBtnOpenKBLib" Id="10" LabelTitle="View KB">
+      <Command.SmallImages>
+        <Image MinDPI="192">Icons/icons8-library-96.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Icons/icons8-library-96.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdTabKBLib" Id="11" LabelTitle="Knowledge Base" />
+    <Command Name="cmdMenuKBLib" Id="12" LabelTitle="Knowledge Base" />
+    <Command Name="cmdGroupKBLib" Id="13" LabelTitle="Knowledge Base" />
+    <Command Name="cmdGroupTools" Id="14" LabelTitle="Tools" />
+    <Command Name="cmdButtonToggleTheme" Id="15" LabelTitle="Light/Dark Theme">
+      <Command.SmallImages>
+        <Image MinDPI="192">Icons/icons8-theme-96.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Icons/icons8-theme-96.png</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <Ribbon>
@@ -33,7 +63,7 @@
         <TabGroup CommandName="cmdMenuKBLib">
           <Tab CommandName="cmdTabKBLib">
             <Group CommandName="cmdGroupKBLib" SizeDefinition="OneButton">
-              <Button />
+              <Button CommandName="cmdBtnOpenKBLib" />
             </Group>
           </Tab>
         </TabGroup>

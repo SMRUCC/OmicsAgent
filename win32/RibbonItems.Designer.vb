@@ -23,6 +23,8 @@ Namespace RibbonLib.Controls
             Public Const cmdTabKBLib As UInteger = 11
             Public Const cmdGroupKBLib As UInteger = 13
             Public Const cmdBtnOpenKBLib As UInteger = 10
+            Public Const cmdGroupTools As UInteger = 14
+            Public Const cmdButtonToggleTheme As UInteger = 15
             Public Const cmdTabMain As UInteger = 9
             Public Const cmdGroupMain As UInteger = 7
             Public Const cmdButtonOpenResearch As UInteger = 6
@@ -84,6 +86,18 @@ Namespace RibbonLib.Controls
                 Return _BtnOpenKBLib
             End Get
         End Property
+        Private _GroupTools As RibbonGroup
+        Public ReadOnly Property GroupTools As RibbonGroup
+            Get
+                Return _GroupTools
+            End Get
+        End Property
+        Private _ButtonToggleTheme As RibbonButton
+        Public ReadOnly Property ButtonToggleTheme As RibbonButton
+            Get
+                Return _ButtonToggleTheme
+            End Get
+        End Property
         Private _TabMain As RibbonTab
         Public ReadOnly Property TabMain As RibbonTab
             Get
@@ -116,6 +130,8 @@ Namespace RibbonLib.Controls
             _TabKBLib = New RibbonTab(_ribbon, Cmd.cmdTabKBLib)
             _GroupKBLib = New RibbonGroup(_ribbon, Cmd.cmdGroupKBLib)
             _BtnOpenKBLib = New RibbonButton(_ribbon, Cmd.cmdBtnOpenKBLib)
+            _GroupTools = New RibbonGroup(_ribbon, Cmd.cmdGroupTools)
+            _ButtonToggleTheme = New RibbonButton(_ribbon, Cmd.cmdButtonToggleTheme)
             _TabMain = New RibbonTab(_ribbon, Cmd.cmdTabMain)
             _GroupMain = New RibbonGroup(_ribbon, Cmd.cmdGroupMain)
             _ButtonOpenResearch = New RibbonButton(_ribbon, Cmd.cmdButtonOpenResearch)
