@@ -23,7 +23,18 @@ import argparse
 import os
 import sys
 from functools import partial
-from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+
+try:
+    from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+    _HAS_THREADED = True
+except Exception:
+    from http.server import SimpleHTTPRequestHandler, HTTPServer
+    from socketserver import ThreadingMixIn
+
+    class ThreadingHTTPServer(ThreadingMixIn, HTTPServer):
+        daemon_threads = True
+
+    _HAS_THREADED = False
 
 
 class CORSRequestHandler(SimpleHTTPRequestHandler):
@@ -34,39 +45,38 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
         self.send_header("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD")
         self.send_header("Access-Control-Allow-Headers", "*")
         self.send_header("Cache-Control", "no-store")
-        super().end_headers()
+        super(CORSRequestHandler, self).end_headers()
 
     def do_OPTIONS(self):
         self.send_response(204)
         self.end_headers()
 
     def log_message(self, fmt, *args):
-        # 精简日志，仅输出请求行
-        sys.stderr.write("[serve_kb] %s - %s\n" % (self.address_string(), fmt % args))
+        sys.stderr.write("[serve_kb] " + (fmt % args) + "\n")
 
 
 def main():
     default_dir = os.path.dirname(os.path.abspath(__file__))
     parser = argparse.ArgumentParser(description="CORS-enabled static server for research_kb")
-    parser.add_argument("--port", type=int, default=80, help="监听端口 (默认 80)")
-    parser.add_argument("--dir", type=str, default=default_dir, help="托管目录 (默认脚本所在目录)")
+    parser.add_argument("--port", type=int, default=80, help="listen port (default 80)")
+    parser.add_argument("--dir", type=str, default=default_dir, help="directory to serve")
     args = parser.parse_args()
 
     directory = os.path.abspath(args.dir)
     if not os.path.isdir(directory):
-        print(f"[serve_kb] 错误：目录不存在 -> {directory}", file=sys.stderr)
+        sys.stderr.write("[serve_kb] ERROR: directory not found -> " + directory + "\n")
         sys.exit(1)
 
     handler = partial(CORSRequestHandler, directory=directory)
     httpd = ThreadingHTTPServer(("0.0.0.0", args.port), handler)
 
-    print(f"[serve_kb] 正在托管: {directory}")
-    print(f"[serve_kb] 访问地址: http://localhost:{args.port}/")
-    print(f"[serve_kb] 按 Ctrl+C 停止")
+    sys.stderr.write("[serve_kb] serving: " + directory + "\n")
+    sys.stderr.write("[serve_kb] url: http://localhost:" + str(args.port) + "/\n")
+    sys.stderr.write("[serve_kb] press Ctrl+C to stop\n")
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
-        print("\n[serve_kb] 已停止")
+        sys.stderr.write("\n[serve_kb] stopped\n")
         httpd.shutdown()
 
 
