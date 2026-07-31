@@ -18,4 +18,9 @@
 #define cmdGroupMain 7 
 #define cmdPanelMain 8 
 #define cmdTabMain 9 
-#define InternalCmd2_LabelTitle_RESID 60006
+#define cmdBtnOpenKBLib 10 
+#define cmdBtnOpenKBLib_LabelTitle_RESID 60006
+#define cmdTabKBLib 11 
+#define cmdMenuKBLib 12 
+#define cmdGroupKBLib 13 
+#define InternalCmd2_LabelTitle_RESID 60007

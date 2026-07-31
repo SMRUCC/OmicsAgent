@@ -9,6 +9,10 @@
     <Command Name="cmdGroupMain" Id="7" />
     <Command Name="cmdPanelMain" Id="8" />
     <Command Name="cmdTabMain" Id="9" />
+    <Command Name="cmdBtnOpenKBLib" Id="10" LabelTitle="View KB" />
+    <Command Name="cmdTabKBLib" Id="11" />
+    <Command Name="cmdMenuKBLib" Id="12" />
+    <Command Name="cmdGroupKBLib" Id="13" />
   </Application.Commands>
   <Application.Views>
     <Ribbon>
@@ -26,7 +30,21 @@
             </Group>
           </Tab>
         </TabGroup>
+        <TabGroup CommandName="cmdMenuKBLib">
+          <Tab CommandName="cmdTabKBLib">
+            <Group CommandName="cmdGroupKBLib" SizeDefinition="OneButton">
+              <Button />
+            </Group>
+          </Tab>
+        </TabGroup>
       </Ribbon.ContextualTabs>
+      <Ribbon.Tabs>
+        <Tab CommandName="cmdTabMain">
+          <Group CommandName="cmdGroupMain" SizeDefinition="OneButton">
+            <Button CommandName="cmdButtonOpenResearch" />
+          </Group>
+        </Tab>
+      </Ribbon.Tabs>
     </Ribbon>
     <ContextPopup />
   </Application.Views>

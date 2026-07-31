@@ -22,6 +22,10 @@ namespace RibbonLib.Controls
             public const uint cmdTabResearchWork = 5;
             public const uint cmdGroupResearchWork = 4;
             public const uint cmdButtonOpenKb = 2;
+            public const uint cmdMenuKBLib = 12;
+            public const uint cmdTabKBLib = 11;
+            public const uint cmdGroupKBLib = 13;
+            public const uint cmdBtnOpenKBLib = 10;
             public const uint cmdTabMain = 9;
             public const uint cmdGroupMain = 7;
             public const uint cmdButtonOpenResearch = 6;
@@ -34,6 +38,10 @@ namespace RibbonLib.Controls
         public RibbonTab TabResearchWork { get; private set; }
         public RibbonGroup GroupResearchWork { get; private set; }
         public RibbonButton ButtonOpenKb { get; private set; }
+        public RibbonTabGroup MenuKBLib { get; private set; }
+        public RibbonTab TabKBLib { get; private set; }
+        public RibbonGroup GroupKBLib { get; private set; }
+        public RibbonButton BtnOpenKBLib { get; private set; }
         public RibbonTab TabMain { get; private set; }
         public RibbonGroup GroupMain { get; private set; }
         public RibbonButton ButtonOpenResearch { get; private set; }
@@ -47,6 +55,10 @@ namespace RibbonLib.Controls
             TabResearchWork = new RibbonTab(ribbon, Cmd.cmdTabResearchWork);
             GroupResearchWork = new RibbonGroup(ribbon, Cmd.cmdGroupResearchWork);
             ButtonOpenKb = new RibbonButton(ribbon, Cmd.cmdButtonOpenKb);
+            MenuKBLib = new RibbonTabGroup(ribbon, Cmd.cmdMenuKBLib);
+            TabKBLib = new RibbonTab(ribbon, Cmd.cmdTabKBLib);
+            GroupKBLib = new RibbonGroup(ribbon, Cmd.cmdGroupKBLib);
+            BtnOpenKBLib = new RibbonButton(ribbon, Cmd.cmdBtnOpenKBLib);
             TabMain = new RibbonTab(ribbon, Cmd.cmdTabMain);
             GroupMain = new RibbonGroup(ribbon, Cmd.cmdGroupMain);
             ButtonOpenResearch = new RibbonButton(ribbon, Cmd.cmdButtonOpenResearch);

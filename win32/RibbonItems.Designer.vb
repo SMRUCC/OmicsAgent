@@ -19,6 +19,10 @@ Namespace RibbonLib.Controls
             Public Const cmdTabResearchWork As UInteger = 5
             Public Const cmdGroupResearchWork As UInteger = 4
             Public Const cmdButtonOpenKb As UInteger = 2
+            Public Const cmdMenuKBLib As UInteger = 12
+            Public Const cmdTabKBLib As UInteger = 11
+            Public Const cmdGroupKBLib As UInteger = 13
+            Public Const cmdBtnOpenKBLib As UInteger = 10
             Public Const cmdTabMain As UInteger = 9
             Public Const cmdGroupMain As UInteger = 7
             Public Const cmdButtonOpenResearch As UInteger = 6
@@ -56,6 +60,30 @@ Namespace RibbonLib.Controls
                 Return _ButtonOpenKb
             End Get
         End Property
+        Private _MenuKBLib As RibbonTabGroup
+        Public ReadOnly Property MenuKBLib As RibbonTabGroup
+            Get
+                Return _MenuKBLib
+            End Get
+        End Property
+        Private _TabKBLib As RibbonTab
+        Public ReadOnly Property TabKBLib As RibbonTab
+            Get
+                Return _TabKBLib
+            End Get
+        End Property
+        Private _GroupKBLib As RibbonGroup
+        Public ReadOnly Property GroupKBLib As RibbonGroup
+            Get
+                Return _GroupKBLib
+            End Get
+        End Property
+        Private _BtnOpenKBLib As RibbonButton
+        Public ReadOnly Property BtnOpenKBLib As RibbonButton
+            Get
+                Return _BtnOpenKBLib
+            End Get
+        End Property
         Private _TabMain As RibbonTab
         Public ReadOnly Property TabMain As RibbonTab
             Get
@@ -84,6 +112,10 @@ Namespace RibbonLib.Controls
             _TabResearchWork = New RibbonTab(_ribbon, Cmd.cmdTabResearchWork)
             _GroupResearchWork = New RibbonGroup(_ribbon, Cmd.cmdGroupResearchWork)
             _ButtonOpenKb = New RibbonButton(_ribbon, Cmd.cmdButtonOpenKb)
+            _MenuKBLib = New RibbonTabGroup(_ribbon, Cmd.cmdMenuKBLib)
+            _TabKBLib = New RibbonTab(_ribbon, Cmd.cmdTabKBLib)
+            _GroupKBLib = New RibbonGroup(_ribbon, Cmd.cmdGroupKBLib)
+            _BtnOpenKBLib = New RibbonButton(_ribbon, Cmd.cmdBtnOpenKBLib)
             _TabMain = New RibbonTab(_ribbon, Cmd.cmdTabMain)
             _GroupMain = New RibbonGroup(_ribbon, Cmd.cmdGroupMain)
             _ButtonOpenResearch = New RibbonButton(_ribbon, Cmd.cmdButtonOpenResearch)

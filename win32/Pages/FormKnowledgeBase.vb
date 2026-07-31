@@ -1,8 +1,15 @@
 ﻿Imports Fluteway
 Imports Galaxy.Workbench
 Imports Microsoft.Web.WebView2.Core
+Imports RibbonLib.Interop
 
 Public Class FormKnowledgeBase
+
+    Shared ReadOnly btnOpenKBLib As RibbonEventBinding
+
+    Shared Sub New()
+        btnOpenKBLib = New RibbonEventBinding(Ribbon.BtnOpenKBLib)
+    End Sub
 
     Dim http As HttpServices
 
@@ -17,6 +24,18 @@ Public Class FormKnowledgeBase
         Else
             Call CommonRuntime.Warning("Invalid knowledge base directory config!")
         End If
+
+        Call AvtivateRibbon()
+    End Sub
+
+    Private Async Function openKBLib() As Task
+        Await WebView21.CoreWebView2.ExecuteScriptAsync("$('#summaryBtn').click();")
+    End Function
+
+    Private Sub AvtivateRibbon()
+        Ribbon.MenuKBLib.ContextAvailable = ContextAvailability.Active
+
+        btnOpenKBLib.Addhandler(Async Sub() Await openKBLib())
     End Sub
 
     Private Async Sub WebView21_NavigationCompleted(sender As Object, e As CoreWebView2NavigationCompletedEventArgs) Handles WebView21.NavigationCompleted
