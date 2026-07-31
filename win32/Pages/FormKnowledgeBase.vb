@@ -29,7 +29,7 @@ Public Class FormKnowledgeBase
     End Sub
 
     Private Async Function openKBLib() As Task
-        Await WebView21.CoreWebView2.ExecuteScriptAsync("$('#summaryBtn').click();")
+        Await WebView21.CoreWebView2.ExecuteScriptAsync("showSummary();")
     End Function
 
     Private Sub AvtivateRibbon()
