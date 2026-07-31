@@ -22,10 +22,61 @@ Partial Class FormMain
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        components = New System.ComponentModel.Container()
+        components = New ComponentModel.Container()
+        VS2015LightTheme1 = New ThemeVS2015.VS2015LightTheme()
+        DockPanel1 = New Microsoft.VisualStudio.WinForms.Docking.DockPanel()
+        VisualStudioToolStripExtender1 = New Microsoft.VisualStudio.WinForms.Docking.VisualStudioToolStripExtender(components)
+        StatusStrip1 = New StatusStrip()
+        ToolStripStatusLabel1 = New ToolStripStatusLabel()
+        StatusStrip1.SuspendLayout()
+        SuspendLayout()
+        ' 
+        ' DockPanel1
+        ' 
+        DockPanel1.Dock = DockStyle.Fill
+        DockPanel1.Location = New Point(0, 0)
+        DockPanel1.Name = "DockPanel1"
+        DockPanel1.Size = New Size(1096, 748)
+        DockPanel1.TabIndex = 0
+        ' 
+        ' VisualStudioToolStripExtender1
+        ' 
+        VisualStudioToolStripExtender1.DefaultRenderer = Nothing
+        ' 
+        ' StatusStrip1
+        ' 
+        StatusStrip1.Items.AddRange(New ToolStripItem() {ToolStripStatusLabel1})
+        StatusStrip1.Location = New Point(0, 748)
+        StatusStrip1.Name = "StatusStrip1"
+        StatusStrip1.Size = New Size(1096, 22)
+        StatusStrip1.TabIndex = 1
+        StatusStrip1.Text = "StatusStrip1"
+        ' 
+        ' ToolStripStatusLabel1
+        ' 
+        ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
+        ToolStripStatusLabel1.Size = New Size(42, 17)
+        ToolStripStatusLabel1.Text = "Ready!"
+        ' 
+        ' FormMain
+        ' 
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(800, 450)
-        Text = "Form1"
+        ClientSize = New Size(1096, 770)
+        Controls.Add(DockPanel1)
+        Controls.Add(StatusStrip1)
+        Name = "FormMain"
+        Text = "Omics Works"
+        StatusStrip1.ResumeLayout(False)
+        StatusStrip1.PerformLayout()
+        ResumeLayout(False)
+        PerformLayout()
     End Sub
+
+    Friend WithEvents VS2015LightTheme1 As ThemeVS2015.VS2015LightTheme
+    Friend WithEvents DockPanel1 As Microsoft.VisualStudio.WinForms.Docking.DockPanel
+    Friend WithEvents VisualStudioToolStripExtender1 As Microsoft.VisualStudio.WinForms.Docking.VisualStudioToolStripExtender
+    Friend WithEvents StatusStrip1 As StatusStrip
+    Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
 
 End Class
