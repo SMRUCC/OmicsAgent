@@ -1,0 +1,56 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <StartupObject>Sub Main</StartupObject>
+    <UseWindowsForms>true</UseWindowsForms>
+    <MyType>WindowsForms</MyType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Windows.Forms" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\galaxy\src\dockpanelsuite\Themes\ThemeVS2015.vbproj" />
+    <ProjectReference Include="..\..\galaxy\src\dockpanelsuite\VSDockPanel\VSDockPanel.vbproj" />
+    <ProjectReference Include="..\..\galaxy\src\GalaxyData\GalaxyData.vbproj" />
+    <ProjectReference Include="..\..\galaxy\src\GalaxyWorkbench\GalaxyWorkbench.vbproj" />
+    <ProjectReference Include="..\..\galaxy\src\Microsoft.Windows.FeatureAPI\Microsoft.Windows.FeatureAPI.vbproj" />
+    <ProjectReference Include="..\..\GCModeller\src\GCModeller\analysis\HTS_matrix\HTS_matrix-netcore5.vbproj" />
+    <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\dataframework-netcore5.vbproj" />
+    <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\linear-netcore5.vbproj" />
+    <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\stats-netcore5.vbproj" />
+    <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
+    <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\mime\application%json\JSON-netcore5.vbproj" />
+    <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\mime\application%pdf\Pdf.NET5.vbproj" />
+    <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\xlsx-netcore5.vbproj" />
+    <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\mime\text%markdown\markdown.NET5.vbproj" />
+    <ProjectReference Include="..\..\GCModeller\src\runtime\sciBASIC#\mime\text%yaml\text.yaml.vbproj" />
+    <ProjectReference Include="..\..\GCModeller\src\workbench\modules\ExperimentDesigner\designer-netcore5.vbproj" />
+    <ProjectReference Include="..\..\graphQL\src\mysqli\LibMySQL\libmysql.vbproj" />
+    <ProjectReference Include="..\..\LLMs\src\Ollama\Ollama.vbproj" />
+    <ProjectReference Include="..\..\pubchem_kb\src\Researcher\Researcher.vbproj" />
+    <ProjectReference Include="..\src\OmicsAgent.vbproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="My Project\Application.Designer.vb">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+</Project>
