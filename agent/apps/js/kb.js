@@ -166,13 +166,15 @@ function updateDocItemTitle(name, title) {
 
 /* ===================== 知识点渲染 ===================== */
 // 通用：根据字段渲染（per_doc 与 kb.json 共用，因字段同名）
-function tagSection(titleText, arr) {
+// modClass: 彩色分类修饰类（card--blue 等），用于区分知识点类型
+function tagSection(titleText, arr, modClass) {
   if (!Array.isArray(arr) || arr.length === 0) return "";
+  const mod = modClass ? " " + modClass : "";
   const tags = arr
     .map((x) => '<span class="tag">' + esc(x) + "</span>")
     .join("");
   return (
-    '<div class="card"><h3><span class="dot"></span>' +
+    '<div class="card' + mod + '"><h3><span class="dot"></span>' +
     esc(titleText) +
     "（" +
     arr.length +
@@ -199,7 +201,7 @@ function mechanismsSection(arr) {
     })
     .join("");
   return (
-    '<div class="card"><h3><span class="dot"></span>生物机制（' +
+    '<div class="card card--orange"><h3><span class="dot"></span>生物机制（' +
     arr.length +
     "）</h3>" +
     cards +
@@ -224,7 +226,7 @@ function comparisonSection(arr) {
     })
     .join("");
   return (
-    '<div class="card"><h3><span class="dot"></span>对比设计建议（' +
+    '<div class="card card--pink"><h3><span class="dot"></span>对比设计建议（' +
     arr.length +
     "）</h3>" +
     cards +
@@ -239,7 +241,7 @@ function expectedFindingsSection(arr) {
     .map((x) => '<div class="ref"><div class="m">' + esc(x) + "</div></div>")
     .join("");
   return (
-    '<div class="card"><h3><span class="dot"></span>预期发现（' +
+    '<div class="card card--purple"><h3><span class="dot"></span>预期发现（' +
     arr.length +
     '）</h3><div class="ref-list">' +
     items +
@@ -265,7 +267,7 @@ function kbReferencesSection(arr) {
     )
     .join("");
   return (
-    '<div class="card"><h3><span class="dot"></span>核心参考文献（' +
+    '<div class="card card--gray"><h3><span class="dot"></span>核心参考文献（' +
     arr.length +
     '）</h3><div class="ref-list">' +
     refs +
@@ -300,16 +302,16 @@ function renderKnowledge(obj) {
       "</div></div>";
   }
   // 列表型知识点
-  html += tagSection("关键基因 / 蛋白", obj.key_genes_proteins);
-  html += tagSection("关键通路", obj.key_pathways);
-  html += tagSection("关键代谢物", obj.key_metabolites);
-  html += tagSection("关键发现", obj.key_findings);
+  html += tagSection("关键基因 / 蛋白", obj.key_genes_proteins, "card--blue");
+  html += tagSection("关键通路", obj.key_pathways, "card--purple");
+  html += tagSection("关键代谢物", obj.key_metabolites, "card--teal");
+  html += tagSection("关键发现", obj.key_findings, "card--green");
   // 机制
   html += mechanismsSection(obj.biological_mechanisms);
   // 相关性
   if (obj.relevance_to_research_topic) {
     html +=
-      '<div class="card relevance"><h3><span class="dot"></span>与研究主题相关性</h3><p>' +
+      '<div class="card card--blue relevance"><h3><span class="dot"></span>与研究主题相关性</h3><p>' +
       esc(obj.relevance_to_research_topic) +
       "</p></div>";
   }

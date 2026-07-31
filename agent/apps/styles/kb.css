@@ -1,57 +1,108 @@
-/* ===================== 设计令牌 ===================== */
+/* ===================== 设计令牌（Light 主题 · VS Code 亮色） ===================== */
 :root {
-  --primary: #10b981;
-  --primary-2: #14b8a6;
-  --primary-3: #059669;
-  --info: #0ea5e9;
-  --warn: #f59e0b;
-  --danger: #ef4444;
-  --radius: 16px;
-  --radius-sm: 10px;
-  --font:
-    "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  /* UI surfaces */
+  --ui-foreground: #1e1e1e;
+  --ui-foreground-muted: #6a6a6a;
+  --ui-foreground-subtle: #8a8a8a;
+  --ui-background: #ffffff;
+  --ui-background-alt: #f5f5f5;
+  --ui-background-hover: #e5f3ff;
+  --ui-border: #e0e0e0;
+  --ui-border-strong: #cccccc;
+
+  /* Accents (Visual Studio blue) */
+  --accent: #007acc;
+  --accent-hover: #0067b8;
+  --accent-soft: #e5f3ff;
+  --accent-soft-border: #b3d7f2;
+
+  /* Status bar */
+  --statusbar-background: #007acc;
+  --statusbar-foreground: #ffffff;
+
+  /* Code blocks */
+  --code-background: #f8f8f8;
+  --code-border: #e0e0e0;
+  --code-foreground: #1e1e1e;
+
+  /* Action card accents */
+  --card-blue: #007acc;
+  --card-blue-soft: #e5f3ff;
+  --card-green: #107c10;
+  --card-green-soft: #e6f4e6;
+  --card-purple: #6b5bcf;
+  --card-purple-soft: #eee9fb;
+  --card-orange: #ca5010;
+  --card-orange-soft: #fbeee6;
+  --card-teal: #038387;
+  --card-teal-soft: #e0f3f3;
+  --card-pink: #b3007a;
+  --card-pink-soft: #fbe6f1;
+  --card-gray: #5a5a5a;
+  --card-gray-soft: #eeeeee;
+
+  /* Fonts */
+  --font-ui:
+    "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  --font-code: "Cascadia Code", "Consolas", "Courier New", monospace;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+  /* 圆角 */
+  --radius: 8px;
+  --radius-sm: 6px;
 }
 
-html[data-theme="light"] {
-  --bg-0: #f0fdf9;
-  --bg-1: #ecfeff;
-  --bg-2: #d1fae5;
-  --text: #0f172a;
-  --text-soft: #064e3b;
-  --text-muted: #475569;
-  --glass: rgba(255, 255, 255, 0.62);
-  --glass-strong: rgba(255, 255, 255, 0.82);
-  --solid: #ffffff;
-  --border: rgba(16, 185, 129, 0.2);
-  --border-strong: rgba(16, 185, 129, 0.45);
-  --shadow: 0 10px 30px -12px rgba(6, 78, 59, 0.25);
-  --shadow-soft: 0 4px 16px -8px rgba(6, 78, 59, 0.2);
-  --blob-a: rgba(20, 184, 166, 0.28);
-  --blob-b: rgba(16, 185, 129, 0.22);
-  --tag-bg: rgba(16, 185, 129, 0.12);
-  --tag-text: #047857;
-  --code-bg: rgba(6, 78, 59, 0.06);
-}
-
+/* ===================== 设计令牌（Dark 主题 · VS Code Dark+） ===================== */
 html[data-theme="dark"] {
-  --bg-0: #0a1410;
-  --bg-1: #0b1b16;
-  --bg-2: #06120d;
-  --text: #e2e8f0;
-  --text-soft: #a7f3d0;
-  --text-muted: #94a3b8;
-  --glass: rgba(15, 31, 24, 0.62);
-  --glass-strong: rgba(15, 31, 24, 0.82);
-  --solid: #0f1f18;
-  --border: rgba(52, 211, 153, 0.18);
-  --border-strong: rgba(52, 211, 153, 0.5);
-  --shadow: 0 12px 36px -12px rgba(0, 0, 0, 0.6);
-  --shadow-soft: 0 4px 18px -8px rgba(0, 0, 0, 0.55);
-  --blob-a: rgba(20, 184, 166, 0.18);
-  --blob-b: rgba(16, 185, 129, 0.16);
-  --tag-bg: rgba(16, 185, 129, 0.16);
-  --tag-text: #6ee7b7;
-  --code-bg: rgba(167, 243, 208, 0.08);
+  /* UI surfaces */
+  --ui-foreground: #d4d4d4;
+  --ui-foreground-muted: #9d9d9d;
+  --ui-foreground-subtle: #858585;
+  --ui-background: #1e1e1e;
+  --ui-background-alt: #252526;
+  --ui-background-hover: #2a2d2e;
+  --ui-border: #3c3c3c;
+  --ui-border-strong: #555555;
+
+  /* Accents */
+  --accent: #007acc;
+  --accent-hover: #1f9cf0;
+  --accent-soft: #06283d;
+  --accent-soft-border: #1f4f6e;
+
+  /* Status bar */
+  --statusbar-background: #007acc;
+  --statusbar-foreground: #ffffff;
+
+  /* Code blocks */
+  --code-background: #1e1e1e;
+  --code-border: #3c3c3c;
+  --code-foreground: #d4d4d4;
+
+  /* Action card accents（暗色下降低 soft 明度，保留可读前景） */
+  --card-blue: #4daafc;
+  --card-blue-soft: #06283d;
+  --card-green: #5ec75e;
+  --card-green-soft: #0f2a0f;
+  --card-purple: #a594f5;
+  --card-purple-soft: #221c3a;
+  --card-orange: #e8863f;
+  --card-orange-soft: #33210f;
+  --card-teal: #3fc0c4;
+  --card-teal-soft: #0c2a2a;
+  --card-pink: #e85ab5;
+  --card-pink-soft: #33122a;
+  --card-gray: #b5b5b5;
+  --card-gray-soft: #2d2d2d;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.6);
 }
 
 * {
@@ -65,27 +116,13 @@ body {
 }
 
 body {
-  font-family: var(--font);
-  color: var(--text);
-  background: var(--bg-0);
+  font-family: var(--font-ui);
+  color: var(--ui-foreground);
+  background: var(--ui-background);
   overflow: hidden;
   transition:
     background-color 0.35s ease,
     color 0.35s ease;
-}
-
-/* 背景生物感光斑 */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  background:
-    radial-gradient(48vw 48vw at 12% 8%, var(--blob-a), transparent 60%),
-    radial-gradient(40vw 40vw at 88% 22%, var(--blob-b), transparent 60%),
-    radial-gradient(46vw 46vw at 70% 96%, var(--blob-a), transparent 62%),
-    linear-gradient(160deg, var(--bg-0), var(--bg-1) 45%, var(--bg-2));
-  transition: opacity 0.35s ease;
 }
 
 /* ===================== 布局 ===================== */
@@ -106,12 +143,10 @@ header.topbar {
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 14px 22px;
-  background: var(--glass);
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
-  border-bottom: 1px solid var(--border);
-  box-shadow: var(--shadow-soft);
+  padding: 12px 22px;
+  background: var(--ui-background);
+  border-bottom: 1px solid var(--ui-border);
+  box-shadow: var(--shadow-sm);
   z-index: 30;
 }
 
@@ -126,13 +161,13 @@ header.topbar {
   width: 38px;
   height: 38px;
   flex: none;
-  border-radius: 11px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-2));
+  border-radius: var(--radius);
+  background: var(--accent);
   display: grid;
   place-items: center;
   color: #fff;
   font-size: 20px;
-  box-shadow: 0 6px 16px -6px var(--primary-3);
+  box-shadow: var(--shadow-sm);
 }
 
 .brand h1 {
@@ -144,7 +179,7 @@ header.topbar {
 
 .brand .topic {
   font-size: 12px;
-  color: var(--text-muted);
+  color: var(--ui-foreground-muted);
   margin-top: 2px;
   white-space: nowrap;
   overflow: hidden;
@@ -157,15 +192,15 @@ header.topbar {
 }
 
 .btn {
-  font-family: var(--font);
+  font-family: var(--font-ui);
   font-size: 13.5px;
   font-weight: 600;
-  color: var(--text);
-  background: var(--glass);
+  color: var(--ui-foreground);
+  background: var(--ui-background);
   cursor: pointer;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  padding: 9px 15px;
+  border: 1px solid var(--ui-border-strong);
+  border-radius: var(--radius-sm);
+  padding: 8px 14px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -173,13 +208,15 @@ header.topbar {
     transform 0.15s ease,
     border-color 0.2s ease,
     background 0.2s ease,
-    box-shadow 0.2s ease;
+    box-shadow 0.2s ease,
+    color 0.2s ease;
 }
 
 .btn:hover {
   transform: translateY(-1px);
-  border-color: var(--border-strong);
-  box-shadow: var(--shadow-soft);
+  border-color: var(--accent);
+  background: var(--ui-background-hover);
+  box-shadow: var(--shadow-sm);
 }
 
 .btn:active {
@@ -187,13 +224,15 @@ header.topbar {
 }
 
 .btn.primary {
-  background: linear-gradient(135deg, var(--primary), var(--primary-2));
+  background: var(--accent);
   color: #fff;
-  border-color: transparent;
+  border-color: var(--accent);
 }
 
 .btn.primary:hover {
-  box-shadow: 0 8px 20px -8px var(--primary-3);
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+  box-shadow: var(--shadow-md);
 }
 
 .btn .ico {
@@ -206,42 +245,40 @@ header.topbar {
 aside.sidebar {
   grid-column: 1;
   grid-row: 2;
-  background: var(--glass);
-  backdrop-filter: blur(16px) saturate(130%);
-  -webkit-backdrop-filter: blur(16px) saturate(130%);
-  border-right: 1px solid var(--border);
+  background: var(--ui-background-alt);
+  border-right: 1px solid var(--ui-border);
   padding: 18px 14px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 12px;
   min-height: 0;
-  /* 关键：允许网格项内部独立滚动，避免内容被 body 裁切 */
 }
 
 .sidebar h2 {
-  font-size: 13px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 1.2px;
-  color: var(--text-muted);
+  color: var(--ui-foreground-muted);
   margin: 4px 6px 0;
 }
 
 .search {
   width: 100%;
-  padding: 10px 12px;
+  padding: 9px 12px;
   border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-  background: var(--glass-strong);
-  color: var(--text);
-  font-family: var(--font);
+  border: 1px solid var(--ui-border-strong);
+  background: var(--ui-background);
+  color: var(--ui-foreground);
+  font-family: var(--font-ui);
   font-size: 13px;
   outline: none;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .search:focus {
-  border-color: var(--primary);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-soft);
 }
 
 .doc-list {
@@ -255,9 +292,9 @@ aside.sidebar {
   cursor: pointer;
   border: 1px solid transparent;
   border-radius: var(--radius-sm);
-  background: var(--glass-strong);
+  background: var(--ui-background);
   padding: 11px 13px;
-  color: var(--text);
+  color: var(--ui-foreground);
   transition:
     transform 0.15s ease,
     border-color 0.2s ease,
@@ -270,20 +307,21 @@ aside.sidebar {
 
 .doc-item:hover {
   transform: translateX(3px);
-  border-color: var(--border-strong);
-  box-shadow: var(--shadow-soft);
+  border-color: var(--ui-border-strong);
+  background: var(--ui-background-hover);
+  box-shadow: var(--shadow-sm);
 }
 
 .doc-item.active {
-  border-color: var(--primary);
-  background: var(--tag-bg);
-  box-shadow: 0 0 0 1px var(--primary) inset;
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  box-shadow: 0 0 0 1px var(--accent) inset;
 }
 
 .doc-item .fname {
   font-size: 11.5px;
-  color: var(--text-muted);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: var(--ui-foreground-muted);
+  font-family: var(--font-code);
 }
 
 .doc-item .title {
@@ -299,7 +337,7 @@ aside.sidebar {
 
 .doc-item .src {
   font-size: 11px;
-  color: var(--primary-2);
+  color: var(--accent);
   margin-top: 2px;
 }
 
@@ -311,6 +349,7 @@ main.content {
   padding: 24px 30px 60px;
   min-height: 0;
   min-width: 0;
+  background: var(--ui-background);
 }
 
 .view {
@@ -344,14 +383,12 @@ main.content {
 }
 
 .card {
-  background: var(--glass);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid var(--border);
+  background: var(--ui-background);
+  border: 1px solid var(--ui-border);
   border-radius: var(--radius);
   padding: 20px 22px;
   margin-bottom: 20px;
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-sm);
   animation: rise 0.4s ease both;
 }
 
@@ -362,14 +399,15 @@ main.content {
   display: flex;
   align-items: center;
   gap: 9px;
-  color: var(--text-soft);
+  color: var(--ui-foreground);
 }
 
 .card h3 .dot {
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary), var(--primary-2));
+  background: var(--accent);
+  flex: none;
 }
 
 .meta-grid {
@@ -382,7 +420,7 @@ main.content {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.8px;
-  color: var(--text-muted);
+  color: var(--ui-foreground-muted);
 }
 
 .meta-cell .v {
@@ -404,9 +442,9 @@ main.content {
   border-radius: 999px;
   cursor: pointer;
   user-select: none;
-  background: var(--tag-bg);
-  color: var(--tag-text);
-  border: 1px solid transparent;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid var(--accent-soft-border);
   transition:
     transform 0.12s ease,
     box-shadow 0.2s ease,
@@ -419,9 +457,10 @@ main.content {
 }
 
 .tag.active {
-  background: linear-gradient(135deg, var(--primary), var(--primary-2));
+  background: var(--accent);
   color: #fff;
-  box-shadow: 0 6px 14px -6px var(--primary-3);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-sm);
 }
 
 .ref-list {
@@ -431,7 +470,7 @@ main.content {
 }
 
 .ref {
-  border-left: 3px solid var(--primary-2);
+  border-left: 3px solid var(--accent);
   padding: 4px 0 4px 13px;
   font-size: 13.5px;
   line-height: 1.5;
@@ -442,24 +481,25 @@ main.content {
 }
 
 .ref .rm {
-  color: var(--text-muted);
+  color: var(--ui-foreground-muted);
   font-size: 12.5px;
   margin-top: 2px;
 }
 
 .mech {
-  border: 1px solid var(--border);
+  border: 1px solid var(--ui-border);
+  border-left: 3px solid var(--card-orange);
   border-radius: var(--radius-sm);
   padding: 13px 15px;
   margin-bottom: 12px;
-  background: var(--glass-strong);
+  background: var(--card-orange-soft);
   transition:
     border-color 0.2s,
     transform 0.15s;
 }
 
 .mech:hover {
-  border-color: var(--border-strong);
+  border-color: var(--ui-border-strong);
   transform: translateY(-1px);
 }
 
@@ -470,14 +510,14 @@ main.content {
 
 .mech .e {
   font-size: 12.5px;
-  color: var(--text-soft);
+  color: var(--ui-foreground-muted);
   margin-top: 8px;
   padding-top: 8px;
-  border-top: 1px dashed var(--border);
+  border-top: 1px dashed var(--ui-border-strong);
 }
 
 .mech .e b {
-  color: var(--primary-3);
+  color: var(--card-orange);
 }
 
 .pill-row {
@@ -487,17 +527,18 @@ main.content {
 }
 
 .kv-pill {
-  border: 1px solid var(--border);
+  border: 1px solid var(--ui-border);
   border-radius: var(--radius-sm);
   padding: 12px 15px;
   min-width: 160px;
   flex: 1;
+  background: var(--ui-background-alt);
 }
 
 .kv-pill .k {
   font-size: 11px;
   letter-spacing: 0.6px;
-  color: var(--text-muted);
+  color: var(--ui-foreground-muted);
   text-transform: uppercase;
 }
 
@@ -511,21 +552,21 @@ main.content {
 .relevance p {
   font-size: 14px;
   line-height: 1.75;
-  color: var(--text-soft);
+  color: var(--ui-foreground);
 }
 
 /* markdown 正文 */
 .markdown-body {
   font-size: 15px;
   line-height: 1.8;
-  color: var(--text);
+  color: var(--ui-foreground);
   word-wrap: break-word;
 }
 
 .markdown-body h1,
 .markdown-body h2,
 .markdown-body h3 {
-  color: var(--text-soft);
+  color: var(--ui-foreground);
   line-height: 1.35;
   margin: 1.4em 0 0.6em;
 }
@@ -536,7 +577,7 @@ main.content {
 
 .markdown-body h2 {
   font-size: 1.4em;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--ui-border);
   padding-bottom: 0.25em;
 }
 
@@ -549,29 +590,30 @@ main.content {
 }
 
 .markdown-body a {
-  color: var(--primary-3);
+  color: var(--accent);
   text-decoration: none;
-  border-bottom: 1px solid var(--border-strong);
+  border-bottom: 1px solid var(--accent-soft-border);
 }
 
 .markdown-body a:hover {
-  border-bottom-color: var(--primary-3);
+  border-bottom-color: var(--accent);
 }
 
 .markdown-body code {
-  background: var(--code-bg);
+  background: var(--code-background);
   padding: 0.15em 0.45em;
-  border-radius: 6px;
+  border-radius: 4px;
   font-size: 0.9em;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-code);
+  color: var(--code-foreground);
 }
 
 .markdown-body pre {
-  background: var(--code-bg);
+  background: var(--code-background);
   padding: 14px 16px;
   border-radius: var(--radius-sm);
   overflow-x: auto;
-  border: 1px solid var(--border);
+  border: 1px solid var(--code-border);
 }
 
 .markdown-body pre code {
@@ -580,10 +622,10 @@ main.content {
 }
 
 .markdown-body blockquote {
-  border-left: 3px solid var(--primary-2);
+  border-left: 3px solid var(--accent);
   margin: 0.8em 0;
   padding: 0.2em 0 0.2em 14px;
-  color: var(--text-muted);
+  color: var(--ui-foreground-muted);
 }
 
 .markdown-body ul,
@@ -604,18 +646,22 @@ main.content {
 
 .markdown-body th,
 .markdown-body td {
-  border: 1px solid var(--border);
+  border: 1px solid var(--ui-border);
   padding: 7px 10px;
+}
+
+.markdown-body th {
+  background: var(--ui-background-alt);
 }
 
 .markdown-body sup {
   font-size: 0.72em;
-  color: var(--primary-3);
+  color: var(--accent);
 }
 
 .markdown-body img {
   max-width: 100%;
-  border-radius: 8px;
+  border-radius: 6px;
 }
 
 /* 状态/错误 */
@@ -628,15 +674,19 @@ main.content {
 }
 
 .banner.err {
-  background: rgba(239, 68, 68, 0.12);
+  background: rgba(239, 68, 68, 0.1);
   border: 1px solid rgba(239, 68, 68, 0.4);
-  color: var(--danger);
+  color: #d92b2b;
+}
+
+html[data-theme="dark"] .banner.err {
+  color: #f48771;
 }
 
 .banner.info {
-  background: var(--tag-bg);
-  border: 1px solid var(--border-strong);
-  color: var(--text-soft);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-soft-border);
+  color: var(--ui-foreground);
 }
 
 .skeleton {
@@ -645,9 +695,9 @@ main.content {
   margin: 10px 0;
   background: linear-gradient(
     90deg,
-    var(--glass-strong),
-    var(--border),
-    var(--glass-strong)
+    var(--ui-background-alt),
+    var(--ui-border),
+    var(--ui-background-alt)
   );
   background-size: 200% 100%;
   animation: shimmer 1.2s infinite;
@@ -665,7 +715,7 @@ main.content {
 
 .empty {
   text-align: center;
-  color: var(--text-muted);
+  color: var(--ui-foreground-muted);
   padding: 80px 20px;
 }
 
@@ -677,6 +727,100 @@ main.content {
 
 .drawer-toggle {
   display: none;
+}
+
+/* ===================== 彩色分类卡片 ===================== */
+/* 由 kb.js 按 block 类型追加 card--x 修饰类 */
+.card--blue {
+  background: var(--card-blue-soft);
+  border-left: 3px solid var(--card-blue);
+}
+.card--green {
+  background: var(--card-green-soft);
+  border-left: 3px solid var(--card-green);
+}
+.card--purple {
+  background: var(--card-purple-soft);
+  border-left: 3px solid var(--card-purple);
+}
+.card--orange {
+  background: var(--card-orange-soft);
+  border-left: 3px solid var(--card-orange);
+}
+.card--teal {
+  background: var(--card-teal-soft);
+  border-left: 3px solid var(--card-teal);
+}
+.card--pink {
+  background: var(--card-pink-soft);
+  border-left: 3px solid var(--card-pink);
+}
+.card--gray {
+  background: var(--card-gray-soft);
+  border-left: 3px solid var(--card-gray);
+}
+
+.card--blue h3,
+.card--green h3,
+.card--purple h3,
+.card--orange h3,
+.card--teal h3,
+.card--pink h3,
+.card--gray h3 {
+  color: var(--ui-foreground);
+}
+
+.card--blue h3 .dot {
+  background: var(--card-blue);
+}
+.card--green h3 .dot {
+  background: var(--card-green);
+}
+.card--purple h3 .dot {
+  background: var(--card-purple);
+}
+.card--orange h3 .dot {
+  background: var(--card-orange);
+}
+.card--teal h3 .dot {
+  background: var(--card-teal);
+}
+.card--pink h3 .dot {
+  background: var(--card-pink);
+}
+.card--gray h3 .dot {
+  background: var(--card-gray);
+}
+
+.card--blue .tag {
+  background: var(--card-blue-soft);
+  color: var(--card-blue);
+  border-color: var(--card-blue);
+}
+.card--green .tag {
+  background: var(--card-green-soft);
+  color: var(--card-green);
+  border-color: var(--card-green);
+}
+.card--purple .tag {
+  background: var(--card-purple-soft);
+  color: var(--card-purple);
+  border-color: var(--card-purple);
+}
+.card--teal .tag {
+  background: var(--card-teal-soft);
+  color: var(--card-teal);
+  border-color: var(--card-teal);
+}
+.card--pink .tag {
+  background: var(--card-pink-soft);
+  color: var(--card-pink);
+  border-color: var(--card-pink);
+}
+.card--gray .tag {
+  background: var(--card-gray-soft);
+  color: var(--card-gray);
+  border-color: var(--card-gray);
 }
 
 @media (max-width: 860px) {
@@ -697,7 +841,7 @@ main.content {
 
   aside.sidebar.open {
     transform: none;
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow-lg);
   }
 
   .drawer-toggle {
@@ -732,7 +876,7 @@ main.content {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--border-strong);
+  background: var(--ui-border-strong);
   border-radius: 10px;
 }
 
