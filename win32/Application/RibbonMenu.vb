@@ -1,3 +1,3 @@
-﻿Module Module1
+﻿Module RibbonMenu
 
 End Module
