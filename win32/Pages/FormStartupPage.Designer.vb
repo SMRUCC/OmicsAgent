@@ -24,6 +24,7 @@ Partial Class FormStartupPage
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormStartupPage))
         WebView21 = New Microsoft.Web.WebView2.WinForms.WebView2()
         CType(WebView21, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
@@ -48,6 +49,7 @@ Partial Class FormStartupPage
         Controls.Add(WebView21)
         DockAreas = Microsoft.VisualStudio.WinForms.Docking.DockAreas.Float Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.DockLeft Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.DockRight Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.DockTop Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.DockBottom Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.Document
         DoubleBuffered = True
+        Icon = CType(resources.GetObject("$this.Icon"), Icon)
         Name = "FormStartupPage"
         ShowHint = Microsoft.VisualStudio.WinForms.Docking.DockState.Unknown
         TabPageContextMenuStrip = DockContextMenuStrip1

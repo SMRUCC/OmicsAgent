@@ -24,6 +24,7 @@ Partial Class FormKnowledgeBase
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormKnowledgeBase))
         WebView21 = New Microsoft.Web.WebView2.WinForms.WebView2()
         CType(WebView21, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
@@ -48,9 +49,11 @@ Partial Class FormKnowledgeBase
         Controls.Add(WebView21)
         DockAreas = Microsoft.VisualStudio.WinForms.Docking.DockAreas.Float Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.DockLeft Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.DockRight Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.DockTop Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.DockBottom Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.Document
         DoubleBuffered = True
+        Icon = CType(resources.GetObject("$this.Icon"), Icon)
         Name = "FormKnowledgeBase"
         ShowHint = Microsoft.VisualStudio.WinForms.Docking.DockState.Unknown
         TabPageContextMenuStrip = DockContextMenuStrip1
+        Text = "Knowledge Base"
         CType(WebView21, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
     End Sub
