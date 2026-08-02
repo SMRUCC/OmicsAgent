@@ -1,4 +1,3 @@
-
 "use strict";
 
 /* ================================================================
@@ -57,8 +56,7 @@ function initTheme() {
 }
 
 function toggleTheme() {
-  var current =
-    document.documentElement.getAttribute("data-theme") || "light";
+  var current = document.documentElement.getAttribute("data-theme") || "light";
   var next = current === "dark" ? "light" : "dark";
   document.documentElement.setAttribute("data-theme", next);
   localStorage.setItem("omics-theme", next);
@@ -66,8 +64,7 @@ function toggleTheme() {
 }
 
 function updateThemeIcon() {
-  var isDark =
-    document.documentElement.getAttribute("data-theme") === "dark";
+  var isDark = document.documentElement.getAttribute("data-theme") === "dark";
   themeToggle.innerHTML = isDark ? sunSvg : moonSvg;
   themeToggle.title = isDark ? "切换到亮色主题" : "切换到暗色主题";
 }
@@ -148,8 +145,7 @@ async function fetchModules() {
     if (modules.length > 0) {
       loadModule(modules[0]);
     } else {
-      moduleList.innerHTML =
-        '<div class="no-results">模块列表为空</div>';
+      moduleList.innerHTML = '<div class="no-results">模块列表为空</div>';
     }
   } catch (err) {
     moduleList.innerHTML =
@@ -166,8 +162,7 @@ function renderModuleList(list) {
   moduleList.innerHTML = "";
 
   if (list.length === 0) {
-    moduleList.innerHTML =
-      '<div class="no-results">没有匹配的模块</div>';
+    moduleList.innerHTML = '<div class="no-results">没有匹配的模块</div>';
     return;
   }
 
@@ -212,8 +207,8 @@ function filterModules(query) {
   var q = query.toLowerCase().trim();
   var filtered = q
     ? modules.filter(function (m) {
-      return m.toLowerCase().indexOf(q) !== -1;
-    })
+        return m.toLowerCase().indexOf(q) !== -1;
+      })
     : modules;
   renderModuleList(filtered);
 }
@@ -365,7 +360,7 @@ if (window.matchMedia) {
       if (!localStorage.getItem("omics-theme")) {
         document.documentElement.setAttribute(
           "data-theme",
-          e.matches ? "dark" : "light"
+          e.matches ? "dark" : "light",
         );
         updateThemeIcon();
       }
@@ -381,4 +376,3 @@ sidebarToggle.innerHTML = panelLeftSvg;
  * ================================================================ */
 initTheme();
 fetchModules();
-
