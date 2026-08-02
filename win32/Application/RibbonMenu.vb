@@ -25,8 +25,10 @@ Module RibbonMenu
         Call CommonRuntime.ShowSingleDocument(Of FormStartupPage)()
     End Sub
 
-    Public Sub OpenKbPage(dir As String)
-        Dim page As New FormKnowledgeBase With {.kb_dir = dir}
-        Call CommonRuntime.ShowDocument(page)
+    Public Sub OpenKbPage(dir As String, base As FormResearchWork)
+        Call CommonRuntime.ShowDocument(New FormKnowledgeBase With {
+            .kb_dir = dir,
+            .base = base
+        })
     End Sub
 End Module

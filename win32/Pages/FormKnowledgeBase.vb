@@ -1,5 +1,4 @@
-﻿Imports Fluteway
-Imports Galaxy.Workbench
+﻿Imports Galaxy.Workbench
 Imports Microsoft.Web.WebView2.Core
 Imports RibbonLib.Interop
 
@@ -13,20 +12,11 @@ Public Class FormKnowledgeBase
         btnToggleTheme = New RibbonEventBinding(Ribbon.ButtonToggleTheme)
     End Sub
 
-    Dim http As HttpServices
-
     Public Property kb_dir As String
+    Public Property base As FormResearchWork
 
     Private Async Sub FormKnowledgeBase_Load(sender As Object, e As EventArgs) Handles Me.Load
         Await WebViewLoader.Init(WebView21)
-
-        If kb_dir.DirectoryExists Then
-            http = New HttpServices(kb_dir)
-            http.StartHttp()
-        Else
-            Call CommonRuntime.Warning("Invalid knowledge base directory config!")
-        End If
-
         Call AvtivateRibbon()
     End Sub
 
@@ -46,7 +36,8 @@ Public Class FormKnowledgeBase
     End Sub
 
     Private Async Sub WebView21_NavigationCompleted(sender As Object, e As CoreWebView2NavigationCompletedEventArgs) Handles WebView21.NavigationCompleted
-        Await WebView21.CoreWebView2.ExecuteScriptAsync("$('#topbar').style.display = 'none';")
+        Await WebView21.CoreWebView2.ExecuteScriptAsync("document.getElementById('topbar').style.display = 'none';")
+        Await WebView21.CoreWebView2.ExecuteScriptAsync($"run('http://127.0.0.1:{base.port}/research_kb/');")
     End Sub
 
     Private Sub WebView21_CoreWebView2InitializationCompleted(sender As Object, e As CoreWebView2InitializationCompletedEventArgs) Handles WebView21.CoreWebView2InitializationCompleted

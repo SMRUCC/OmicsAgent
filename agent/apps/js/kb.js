@@ -1,5 +1,8 @@
 "use strict";
 
+var showSummary = null;
+var toggleTheme = null;
+
 // 知识库服务根地址（CORS 已开启）
 function run(BASE_URL) {
   let activeToken = 0; // 异步请求令牌：防止快速切换文献/汇总时的竞态覆盖
@@ -57,10 +60,10 @@ function run(BASE_URL) {
     applyTheme(t);
   }
 
-  function toggleTheme() {
+  toggleTheme = function () {
     const cur = document.documentElement.getAttribute("data-theme");
     applyTheme(cur === "dark" ? "light" : "dark");
-  }
+  };
 
   $("#themeBtn").addEventListener("click", () => toggleTheme());
 
@@ -451,7 +454,7 @@ function run(BASE_URL) {
   }
 
   /* ===================== 汇总视图 (kb.json) ===================== */
-  async function showSummary() {
+  showSummary = async function () {
     document
       .querySelectorAll(".doc-item")
       .forEach((d) => d.classList.remove("active"));
@@ -485,7 +488,7 @@ function run(BASE_URL) {
         esc(err.message) +
         "</div></div>";
     }
-  }
+  };
   $("#summaryBtn").addEventListener("click", showSummary);
 
   /* 标签点击高亮 */
@@ -541,7 +544,7 @@ function run(BASE_URL) {
 }
 
 /* ===================== 配置 ===================== */
-run(
-  // BASE_URL
-  "http://localhost",
-);
+// run(
+//   // BASE_URL
+//   "http://localhost",
+// );
