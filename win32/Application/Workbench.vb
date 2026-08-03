@@ -1,8 +1,10 @@
 ﻿Imports Fluteway
+Imports OmicsWorks.Settings
 
 Module Workbench
 
     Public ReadOnly Property wwwroot As String
+    Public ReadOnly Property config As AppConfig
 
     Public ReadOnly Property port As Integer
         Get
@@ -47,8 +49,9 @@ Module Workbench
         End If
     End Function
 
-    Public Function LoadConfig()
-
+    Public Function LoadConfig() As AppConfig
+        _config = AppConfig.Load
+        Return config
     End Function
 
 End Module

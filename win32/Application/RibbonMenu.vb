@@ -1,7 +1,9 @@
 ﻿Imports Galaxy.Workbench
 Imports Galaxy.Workbench.CommonDialogs
 Imports Microsoft.VisualStudio.WinForms.Docking
+Imports Ollama
 Imports OmicsWorks.RibbonLib.Controls
+Imports OmicsWorks.Settings
 
 Module RibbonMenu
 
@@ -23,9 +25,12 @@ Module RibbonMenu
         Dim llm As FormLLMWindow = CommonRuntime.TryGetToolWindow("llm_window")
 
         If llm Is Nothing Then
+            Dim config As llm = Workbench.config.llm
+
             llm = New FormLLMWindow With {
                 .Name = "llm_window"
             }
+            llm.WebView2llmui1.SetHost(New LLMClient(LLMUrl.Create(config.endpoint, config.apiKey), config.model))
 
             CommonRuntime.RegisterToolWindow(llm, DockState.DockRight)
         End If

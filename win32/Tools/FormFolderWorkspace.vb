@@ -116,8 +116,9 @@ Public Class FormFolderWorkspace
         Else
             ' file display
             Dim fsNode As FileSystemTree = DirectCast(node.Tag, FileSystemTree)
+            Dim filetype As String = fsNode.FullName.ExtensionSuffix
 
-            Select Case fsNode.FullName.ExtensionSuffix
+            Select Case filetype
                 Case "csv", "tsv", "bmp", "jpg", "jpeg", "png", "gif", "tiff", "svg", "pdf", "txt", "log", "json", "jsonl", "xml", "html", "md"
                     If viewer Is Nothing OrElse viewer.Pinned Then
                         viewer = New FormFileViewer With {
@@ -132,7 +133,12 @@ Public Class FormFolderWorkspace
                 Case "xlsx"
                     ' Handle Excel files
                 Case Else
-                    Call CommonRuntime.Warning($"Sorry, the file type(*.{fsNode.FullName.ExtensionSuffix}) is not yet supported")
+                    Call CommonRuntime.Warning($"Sorry, the file type(*.{filetype}) is not yet supported")
+            End Select
+
+            Select Case filetype
+                Case "csv", "tsv", "txt", "log", "json", "jsonl", "xml", "html", "md"
+                    Call RibbonMenu.OpenLLmTool.WebView2llmui1.SetFileReference(Folder & "/" & fsNode.FullName)
             End Select
         End If
     End Sub
