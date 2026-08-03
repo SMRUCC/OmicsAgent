@@ -1,0 +1,6 @@
+"from","to","strength","direction","from_feature","to_feature","from_label","to_label","lag","self_loop"
+"nicotinate_ester_synthase_t0","nicotinate_phosphoribosyltransferase_t1",0.833333333333333,1,"nicotinate_ester_synthase","nicotinate_phosphoribosyltransferase","nicotinate_ester_synthase","nicotinate_phosphoribosyltransferase",1,FALSE
+"RBCS_t0","RBCS_t1",0.816666666666667,1,"RBCS","RBCS","RBCS","RBCS",1,TRUE
+"nicotinate_ester_synthase_t0","nicotinate_ester_synthase_t1",0.566666666666667,1,"nicotinate_ester_synthase","nicotinate_ester_synthase","nicotinate_ester_synthase","nicotinate_ester_synthase",1,TRUE
+"citronellol_dehydratase_t0","hexanal_reductase_t1",0.516666666666667,1,"citronellol_dehydratase","hexanal_reductase","citronellol_dehydratase","hexanal_reductase",1,FALSE
+"tryptophanase_t0","tryptophanase_t1",0.483333333333333,1,"tryptophanase","tryptophanase","tryptophanase","tryptophanase",1,TRUE

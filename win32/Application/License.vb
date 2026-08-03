@@ -28,7 +28,7 @@ Module License
         ' ===== 第一步：初始化授权管理器 =====
         licenseManager = New LicenseManager(
             publicKeyXml:=GetEmbeddedPublicKey(),
-            productName:="我的商业软件",
+            productName:="OmicsFlow工作站",
             productVersion:="1.0.0",
             serverUrl:="https://license.example.com/api/activate",
             hmacKey:=GetEmbeddedHmacKey()
@@ -72,10 +72,16 @@ Module License
 
             If Not licenseManager.IsLicensed Then
                 ' 用户未完成授权，退出程序
-                MessageBox.Show("软件未授权，某些程序功能模块的使用将会受到限制。",
+                Call DirectCast(CommonRuntime.AppHost, FormMain).SetLicenseStatus()
+                Call MessageBox.Show("软件未授权，某些程序功能模块的使用将会受到限制。",
                                 "授权验证失败", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+
                 Return False
+            Else
+                Call DirectCast(CommonRuntime.AppHost, FormMain).SetLicenseStatus()
             End If
+        Else
+            Call DirectCast(CommonRuntime.AppHost, FormMain).SetLicenseStatus()
         End If
 
         Return True
@@ -83,5 +89,6 @@ Module License
 
     Public Sub OpenLicenseDialog()
         Call licenseManager.OpenLicenseDialog()
+        Call DirectCast(CommonRuntime.AppHost, FormMain).SetLicenseStatus()
     End Sub
 End Module

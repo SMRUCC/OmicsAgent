@@ -1,0 +1,6 @@
+"network","type","n_nodes","n_arcs","n_features","n_timepoints","n_series","n_transitions","n_inter_omics_arcs","n_intra_omics_arcs","mean_arc_strength","mean_degree","max_out_degree","max_in_degree","algorithm","score"
+"microbiome","dbn_layer",36,11,18,13,4,48,NA,NA,0.7955,0.611,8,1,"hc","bic"
+"transcriptome","dbn_layer",36,5,18,13,4,48,NA,NA,0.6433,0.278,2,1,"hc","bic"
+"proteome","dbn_layer",36,11,18,13,4,48,NA,NA,0.5682,0.611,5,1,"hc","bic"
+"metabolome","dbn_layer",36,10,18,13,4,48,NA,NA,0.5417,0.556,5,1,"hc","bic"
+"volatilome","dbn_layer",36,3,18,13,4,48,NA,NA,0.4944,0.167,3,1,"hc","bic"
