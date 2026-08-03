@@ -18,6 +18,10 @@ namespace RibbonLib.Controls
     {
         private static class Cmd
         {
+            public const uint cmdButtonOpenFolder = 16;
+            public const uint cmdButtonOpenResearch = 6;
+            public const uint cmdButtonOpenConsole = 22;
+            public const uint cmdButtonLicense = 18;
             public const uint cmdButtonExit = 17;
             public const uint cmdMenuResearchWork = 3;
             public const uint cmdTabResearchWork = 5;
@@ -31,13 +35,18 @@ namespace RibbonLib.Controls
             public const uint cmdButtonToggleTheme = 15;
             public const uint cmdTabMain = 9;
             public const uint cmdGroupMain = 7;
-            public const uint cmdButtonOpenFolder = 16;
-            public const uint cmdButtonOpenResearch = 6;
+            public const uint cmdGroupWorkTools = 21;
+            public const uint cmdTabInformation = 19;
+            public const uint cmdGroupInformation = 20;
         }
 
         // ContextPopup CommandName
 
         public Ribbon Ribbon { get; private set; }
+        public RibbonButton ButtonOpenFolder { get; private set; }
+        public RibbonButton ButtonOpenResearch { get; private set; }
+        public RibbonButton ButtonOpenConsole { get; private set; }
+        public RibbonButton ButtonLicense { get; private set; }
         public RibbonButton ButtonExit { get; private set; }
         public RibbonTabGroup MenuResearchWork { get; private set; }
         public RibbonTab TabResearchWork { get; private set; }
@@ -51,14 +60,19 @@ namespace RibbonLib.Controls
         public RibbonButton ButtonToggleTheme { get; private set; }
         public RibbonTab TabMain { get; private set; }
         public RibbonGroup GroupMain { get; private set; }
-        public RibbonButton ButtonOpenFolder { get; private set; }
-        public RibbonButton ButtonOpenResearch { get; private set; }
+        public RibbonGroup GroupWorkTools { get; private set; }
+        public RibbonTab TabInformation { get; private set; }
+        public RibbonGroup GroupInformation { get; private set; }
 
         public RibbonItems(Ribbon ribbon)
         {
             if (ribbon == null)
                 throw new ArgumentNullException(nameof(ribbon), "Parameter is null");
             this.Ribbon = ribbon;
+            ButtonOpenFolder = new RibbonButton(ribbon, Cmd.cmdButtonOpenFolder);
+            ButtonOpenResearch = new RibbonButton(ribbon, Cmd.cmdButtonOpenResearch);
+            ButtonOpenConsole = new RibbonButton(ribbon, Cmd.cmdButtonOpenConsole);
+            ButtonLicense = new RibbonButton(ribbon, Cmd.cmdButtonLicense);
             ButtonExit = new RibbonButton(ribbon, Cmd.cmdButtonExit);
             MenuResearchWork = new RibbonTabGroup(ribbon, Cmd.cmdMenuResearchWork);
             TabResearchWork = new RibbonTab(ribbon, Cmd.cmdTabResearchWork);
@@ -72,8 +86,9 @@ namespace RibbonLib.Controls
             ButtonToggleTheme = new RibbonButton(ribbon, Cmd.cmdButtonToggleTheme);
             TabMain = new RibbonTab(ribbon, Cmd.cmdTabMain);
             GroupMain = new RibbonGroup(ribbon, Cmd.cmdGroupMain);
-            ButtonOpenFolder = new RibbonButton(ribbon, Cmd.cmdButtonOpenFolder);
-            ButtonOpenResearch = new RibbonButton(ribbon, Cmd.cmdButtonOpenResearch);
+            GroupWorkTools = new RibbonGroup(ribbon, Cmd.cmdGroupWorkTools);
+            TabInformation = new RibbonTab(ribbon, Cmd.cmdTabInformation);
+            GroupInformation = new RibbonGroup(ribbon, Cmd.cmdGroupInformation);
         }
 
     }
