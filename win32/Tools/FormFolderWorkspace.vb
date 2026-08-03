@@ -138,7 +138,10 @@ Public Class FormFolderWorkspace
 
             Select Case filetype
                 Case "csv", "tsv", "txt", "log", "json", "jsonl", "xml", "html", "md"
-                    Call RibbonMenu.OpenLLmTool.WebView2llmui1.SetFileReference(Folder & "/" & fsNode.FullName)
+                    Dim llm = RibbonMenu.OpenLLmTool.WebView2llmui1
+
+                    Await llm.ClearFileReference
+                    Await llm.SetFileReference(Folder & "/" & fsNode.FullName)
             End Select
         End If
     End Sub
