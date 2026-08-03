@@ -10,6 +10,8 @@
 # ---- Setup ----
 set.seed(42)
 
+source("G:\\OmicsWorks\\agent\\rscript\\source_all_scripts.R");
+
 # Source all OmicsFlow R files
 cat("=== Loading OmicsFlow functions ===\n")
 files <- list.files("R", pattern="\\.R$", full.names=TRUE, recursive=TRUE)
@@ -39,9 +41,9 @@ dir.create(tab_dir, recursive=TRUE, showWarnings=FALSE)
 # ==============================================================================
 cat("\n=== Step 1: Data Loading ===\n")
 
-expr_file <- file.path(data_dir, "6a6fcab88fe914f0baa6a3f4_expression.csv")
-sample_file <- file.path(data_dir, "6a6fcab8e4fc816b52cf905b_sampleinfo.csv")
-metab_file <- file.path(data_dir, "6a6fcab88fe914f0baa6a3f5_metabolites.csv")
+expr_file <- file.path(data_dir, "expression.csv")
+sample_file <- file.path(data_dir, "sampleinfo.csv")
+metab_file <- file.path(data_dir, "metabolites.csv")
 
 expr_mat <- load_expression_matrix(expr_file, na_values=c("", "NA", "N/A", "null"))
 cat("  Expression matrix:", nrow(expr_mat), "features x", ncol(expr_mat), "samples\n")
@@ -320,7 +322,7 @@ cat("\n=== Step 15b: KEGG Pathway Enrichment ===\n")
 kegg_mapping_file <- file.path(dirname(getwd()), "inst", "extdata",
                                 "kegg_pathway_mapping.csv")
 if (!file.exists(kegg_mapping_file)) {
-  kegg_mapping_file <- "inst/extdata/kegg_pathway_mapping.csv"
+  kegg_mapping_file <- "G:\\OmicsWorks\\agent\\data\\kegg_pathway_mapping.csv"
 }
 if (!file.exists(kegg_mapping_file)) {
   kegg_mapping_file <- "/home/z/my-project/OmicsFlow_build/inst/extdata/kegg_pathway_mapping.csv"

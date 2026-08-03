@@ -119,7 +119,7 @@ for (i in seq_along(ordered_full)) {
   f <- ordered_full[i]
   r <- ordered_rel[i]
   ok <- tryCatch({
-    source(f, local = FALSE, echo = FALSE, keep.source = TRUE)
+    source(r, local = FALSE, echo = FALSE, keep.source = TRUE)
     TRUE
   }, error = function(e) {
     message(sprintf("[source] 错误: 加载 '%s' 失败 -> %s", r, conditionMessage(e)))
