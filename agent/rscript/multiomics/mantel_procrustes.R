@@ -311,7 +311,9 @@ run_procrustes <- function(mat_x, mat_y,
   proc <- vegan::procrustes(pcoa_x, pcoa_y, symmetric = TRUE)
   prot <- vegan::protest(pcoa_x, pcoa_y, permutations = permutations)
 
-  resid <- vegan::residuals(proc)
+  # residuals() is an S3 method registered by vegan, not an exported object,
+  # so it has to be dispatched through the generic in stats.
+  resid <- stats::residuals(proc)
 
   coords <- data.frame(
     sample = common,
@@ -333,7 +335,7 @@ run_procrustes <- function(mat_x, mat_y,
     procrustes = proc,
     protest = prot,
     ss = as.numeric(proc$ss),
-    correlation = as.numeric(prot$scale),
+    correlation = as.numeric(prot$t0),
     p_value = as.numeric(prot$signif),
     coordinates = coords,
     params = list(name_x = name_x, name_y = name_y, ncomp = ncomp)
