@@ -20,6 +20,7 @@ namespace RibbonLib.Controls
         {
             public const uint cmdButtonOpenFolder = 16;
             public const uint cmdButtonOpenResearch = 6;
+            public const uint cmdMenuTools = 24;
             public const uint cmdButtonOpenConsole = 22;
             public const uint cmdButtonVennTool = 23;
             public const uint cmdButtonLicense = 18;
@@ -46,6 +47,7 @@ namespace RibbonLib.Controls
         public Ribbon Ribbon { get; private set; }
         public RibbonButton ButtonOpenFolder { get; private set; }
         public RibbonButton ButtonOpenResearch { get; private set; }
+        public RibbonDropDownButton MenuTools { get; private set; }
         public RibbonButton ButtonOpenConsole { get; private set; }
         public RibbonButton ButtonVennTool { get; private set; }
         public RibbonButton ButtonLicense { get; private set; }
@@ -73,6 +75,7 @@ namespace RibbonLib.Controls
             this.Ribbon = ribbon;
             ButtonOpenFolder = new RibbonButton(ribbon, Cmd.cmdButtonOpenFolder);
             ButtonOpenResearch = new RibbonButton(ribbon, Cmd.cmdButtonOpenResearch);
+            MenuTools = new RibbonDropDownButton(ribbon, Cmd.cmdMenuTools);
             ButtonOpenConsole = new RibbonButton(ribbon, Cmd.cmdButtonOpenConsole);
             ButtonVennTool = new RibbonButton(ribbon, Cmd.cmdButtonVennTool);
             ButtonLicense = new RibbonButton(ribbon, Cmd.cmdButtonLicense);

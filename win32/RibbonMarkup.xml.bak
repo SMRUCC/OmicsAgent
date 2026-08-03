@@ -86,6 +86,7 @@
         <Image MinDPI="192">Icons/icons8-venn-diagram-100.png</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdMenuTools" Id="24" LabelTitle="Tools" />
   </Application.Commands>
   <Application.Views>
     <Ribbon>
@@ -96,8 +97,10 @@
             <Button CommandName="cmdButtonOpenResearch" />
           </MenuGroup>
           <MenuGroup Class="StandardItems">
-            <Button CommandName="cmdButtonOpenConsole" />
-            <Button CommandName="cmdButtonVennTool" />
+            <DropDownButton CommandName="cmdMenuTools">
+              <Button CommandName="cmdButtonOpenConsole" />
+              <Button CommandName="cmdButtonVennTool" />
+            </DropDownButton>
           </MenuGroup>
           <MenuGroup>
             <Button CommandName="cmdButtonLicense" />
@@ -135,8 +138,9 @@
             <Button CommandName="cmdButtonOpenFolder" />
             <Button CommandName="cmdButtonOpenResearch" />
           </Group>
-          <Group CommandName="cmdGroupWorkTools" SizeDefinition="OneButton">
+          <Group CommandName="cmdGroupWorkTools" SizeDefinition="TwoButtons">
             <Button CommandName="cmdButtonOpenConsole" />
+            <Button CommandName="cmdButtonVennTool" />
           </Group>
         </Tab>
         <Tab CommandName="cmdTabInformation">

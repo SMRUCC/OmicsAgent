@@ -63,7 +63,8 @@ html[data-theme="dark"] {
   display: flex;
   flex-direction: column;
   padding: 0;
-  overflow: hidden; /* 由 .viewer-stage 自己滚动 */
+  overflow: hidden;
+  /* 由 .viewer-stage 自己滚动 */
 }
 
 /* 顶栏：文件名与路径 */
@@ -286,7 +287,7 @@ html[data-theme="dark"] {
   animation: fade 0.35s ease;
 }
 
-.viewer-stage > .empty {
+.viewer-stage>.empty {
   padding: 80px 20px;
 }
 
@@ -824,7 +825,7 @@ html[data-theme="dark"] {
   line-height: 1;
 }
 
-.jt-node.collapsed > .jt-row > .jt-toggle::before {
+.jt-node.collapsed>.jt-row>.jt-toggle::before {
   content: "▸";
 }
 
@@ -841,7 +842,7 @@ html[data-theme="dark"] {
   border-left: 1px dashed var(--ui-border-strong);
 }
 
-.jt-node.collapsed > .jt-children {
+.jt-node.collapsed>.jt-children {
   display: none;
 }
 
@@ -852,7 +853,7 @@ html[data-theme="dark"] {
   margin-left: 4px;
 }
 
-.jt-node:not(.collapsed) > .jt-row > .jt-summary {
+.jt-node:not(.collapsed)>.jt-row>.jt-summary {
   display: none;
 }
 

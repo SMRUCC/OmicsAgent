@@ -17,6 +17,7 @@ Namespace RibbonLib.Controls
         Private Class Cmd
             Public Const cmdButtonOpenFolder As UInteger = 16
             Public Const cmdButtonOpenResearch As UInteger = 6
+            Public Const cmdMenuTools As UInteger = 24
             Public Const cmdButtonOpenConsole As UInteger = 22
             Public Const cmdButtonVennTool As UInteger = 23
             Public Const cmdButtonLicense As UInteger = 18
@@ -56,6 +57,12 @@ Namespace RibbonLib.Controls
         Public ReadOnly Property ButtonOpenResearch As RibbonButton
             Get
                 Return _ButtonOpenResearch
+            End Get
+        End Property
+        Private _MenuTools As RibbonDropDownButton
+        Public ReadOnly Property MenuTools As RibbonDropDownButton
+            Get
+                Return _MenuTools
             End Get
         End Property
         Private _ButtonOpenConsole As RibbonButton
@@ -180,6 +187,7 @@ Namespace RibbonLib.Controls
             _ribbon = ribbon
             _ButtonOpenFolder = New RibbonButton(_ribbon, Cmd.cmdButtonOpenFolder)
             _ButtonOpenResearch = New RibbonButton(_ribbon, Cmd.cmdButtonOpenResearch)
+            _MenuTools = New RibbonDropDownButton(_ribbon, Cmd.cmdMenuTools)
             _ButtonOpenConsole = New RibbonButton(_ribbon, Cmd.cmdButtonOpenConsole)
             _ButtonVennTool = New RibbonButton(_ribbon, Cmd.cmdButtonVennTool)
             _ButtonLicense = New RibbonButton(_ribbon, Cmd.cmdButtonLicense)
