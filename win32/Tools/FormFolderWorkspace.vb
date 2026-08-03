@@ -62,6 +62,7 @@ Public Class FormFolderWorkspace
                         Call CommonRuntime.ShowDocument(viewer)
                     End If
 
+                    Await viewer.CheckReady
                     Await viewer.ViewFile(fsNode.FullName)
 
                 Case "xlsx"
