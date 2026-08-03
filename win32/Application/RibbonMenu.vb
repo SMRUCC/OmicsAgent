@@ -1,4 +1,5 @@
 ﻿Imports Galaxy.Workbench
+Imports Galaxy.Workbench.CommonDialogs
 Imports Microsoft.VisualStudio.WinForms.Docking
 Imports OmicsWorks.RibbonLib.Controls
 
@@ -13,6 +14,11 @@ Module RibbonMenu
         AddHandler ribbon.ButtonOpenFolder.ExecuteEvent, Sub() Call OpenFolder()
         AddHandler ribbon.ButtonExit.ExecuteEvent, Sub() Call DirectCast(CommonRuntime.AppHost, Form).Close()
         AddHandler ribbon.ButtonOpenConsole.ExecuteEvent, Sub() Call OpenConsole()
+        AddHandler ribbon.ButtonLicense.ExecuteEvent, Sub() Call OpenLicenseDialog()
+    End Sub
+
+    Public Sub OpenLicenseDialog()
+        Call InputDialog.ShowDialog(Of FormLicenseDialog)()
     End Sub
 
     Public Sub OpenConsole()
