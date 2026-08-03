@@ -6,6 +6,19 @@
 	<meta charset="utf-8">
 	<title>jvenn</title>
 
+	<!-- Theme bootstrap (no flash): set data-theme before paint -->
+	<script>
+		(function () {
+			try {
+				var saved = localStorage.getItem('theme');
+				var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+				document.documentElement.dataset.theme = saved || (prefersDark ? 'dark' : 'light');
+			} catch (e) {
+				document.documentElement.dataset.theme = 'light';
+			}
+		})();
+	</script>
+
 	<!-- Les styles -->
 	<link href="vendor/css/bootstrap.css" rel="stylesheet" media="screen">
 	<style type="text/css">
@@ -17,6 +30,10 @@
 	<link href="vendor/css/prettify.css" rel="stylesheet" media="screen">
 	<link href="vendor/css/bootstrap-responsive.css" rel="stylesheet" media="screen">
 	<link href="vendor/css/bootstrap-colorpicker.min.css" rel="stylesheet" media="screen">
+
+	<!-- Project design tokens & viewer style reference -->
+	<link href="styles/kb.css" rel="stylesheet" media="screen">
+	<link href="styles/viewer.css" rel="stylesheet" media="screen">
 
 	<script type="text/javascript" src="vendor/js/jquery.min.js"></script>
 	<script type="text/javascript" src="vendor/js/bootstrap.min.js"></script>
@@ -31,7 +48,183 @@
 	<script type="text/javascript" src="vendor/js/jvenn/app.js"></script>
 
 	<style type="text/css">
-		/* add classes control-group.color */
+		/* ===== jvenn local styles, scoped under .jvenn-app to avoid clashing =====
+		   ===== with kb.css global classes (e.g. .btn). Tokens come from kb.css. */
+
+		.jvenn-app {
+			/* ensure app container picks up token background/foreground */
+			background: var(--ui-background);
+			color: var(--ui-foreground);
+		}
+
+		.jvenn-app a {
+			color: var(--accent);
+		}
+
+		/* Buttons: token-driven VS Code style, scoped so Bootstrap .btn is overridden */
+		.jvenn-app .btn {
+			border: 1px solid var(--ui-border-strong);
+			border-radius: var(--radius-sm);
+			background: var(--ui-background);
+			color: var(--ui-foreground);
+			box-shadow: none;
+			text-shadow: none;
+			transition: border-color .2s, background .2s, box-shadow .2s, transform .15s, color .2s;
+		}
+
+		.jvenn-app .btn:hover,
+		.jvenn-app .btn:focus {
+			border-color: var(--accent);
+			background: var(--ui-background-hover);
+			box-shadow: var(--shadow-sm);
+			color: var(--ui-foreground);
+			transform: translateY(-1px);
+			background-position: 0 0;
+		}
+
+		.jvenn-app .btn:active,
+		.jvenn-app .btn.active {
+			background: var(--accent);
+			border-color: var(--accent);
+			color: #fff;
+			box-shadow: inset 0 1px 2px rgba(0, 0, 0, .12);
+			transform: translateY(0);
+		}
+
+		.jvenn-app .btn-mini {
+			border-radius: var(--radius-sm);
+		}
+
+		/* Configuration card */
+		.jvenn-app .bs-docs-example {
+			position: relative;
+			margin: 0 0 25px 0;
+			padding: 39px 19px 14px;
+			background-color: var(--ui-background);
+			border: 1px solid var(--ui-border);
+			-webkit-border-radius: var(--radius);
+			-moz-border-radius: var(--radius);
+			border-radius: var(--radius);
+			box-shadow: var(--shadow-sm);
+		}
+
+		/* Card corner label */
+		.jvenn-app .bs-docs-example:after {
+			content: attr(content-value);
+			position: absolute;
+			top: -1px;
+			left: -1px;
+			padding: 3px 7px;
+			font-size: 12px;
+			font-weight: bold;
+			background-color: var(--ui-background-alt);
+			border: 1px solid var(--ui-border);
+			color: var(--ui-foreground-muted);
+			-webkit-border-radius: var(--radius-sm) 0 var(--radius-sm) 0;
+			-moz-border-radius: var(--radius-sm) 0 var(--radius-sm) 0;
+			border-radius: var(--radius-sm) 0 var(--radius-sm) 0;
+		}
+
+		/* Inline labels (search status) */
+		.jvenn-app .label.label-info {
+			background-color: var(--accent);
+			color: #fff;
+			border-radius: var(--radius-sm);
+			text-shadow: none;
+			padding: 2px 6px;
+		}
+
+		/* Inputs & textareas */
+		.jvenn-app input[type="text"],
+		.jvenn-app textarea {
+			border: 1px solid var(--ui-border-strong);
+			border-radius: var(--radius-sm);
+			background: var(--ui-background);
+			color: var(--ui-foreground);
+			box-shadow: none;
+			transition: border-color .2s, box-shadow .2s;
+		}
+
+		.jvenn-app input[type="text"]:focus,
+		.jvenn-app textarea:focus {
+			border-color: var(--accent);
+			box-shadow: 0 0 0 2px var(--accent-soft);
+			outline: none;
+		}
+
+		/* Nav tabs */
+		.jvenn-app .nav-tabs {
+			border-bottom: 1px solid var(--ui-border);
+		}
+
+		.jvenn-app .nav-tabs > li > a {
+			border: 1px solid transparent;
+			border-bottom: none;
+			border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+			color: var(--ui-foreground-muted);
+			background: transparent;
+		}
+
+		.jvenn-app .nav-tabs > li > a:hover {
+			border-color: var(--ui-border);
+			color: var(--accent);
+			background: var(--ui-background-hover);
+		}
+
+		.jvenn-app .nav-tabs > li.active > a,
+		.jvenn-app .nav-tabs > li.active > a:hover {
+			color: var(--accent);
+			background: var(--ui-background);
+			border-color: var(--ui-border);
+			border-bottom-color: transparent;
+			font-weight: 600;
+		}
+
+		.jvenn-app .tab-content {
+			border-left: 1px solid var(--ui-border);
+			border-right: 1px solid var(--ui-border);
+			border-bottom: 1px solid var(--ui-border);
+			border-radius: 0 0 var(--radius) var(--radius);
+			background: var(--ui-background);
+		}
+
+		/* "How to cite" reference card */
+		.jvenn-app .col-12 {
+			background-color: var(--ui-background);
+			border: 1px solid var(--ui-border);
+			border-radius: var(--radius);
+			box-shadow: var(--shadow-sm);
+			color: var(--ui-foreground-muted);
+		}
+
+		.jvenn-app .col-12 .label {
+			background-color: var(--accent);
+			color: #fff;
+			text-shadow: none;
+		}
+
+		.jvenn-app .col-12 h6 {
+			color: var(--ui-foreground);
+		}
+
+		/* Body helper text */
+		.jvenn-app .bodytext {
+			color: var(--ui-foreground-muted);
+		}
+
+		.jvenn-app p {
+			color: var(--ui-foreground-muted);
+		}
+
+		.jvenn-app hr {
+			border-top: 1px solid var(--ui-border);
+		}
+
+		.add-on {
+			margin-left: -7px !important;
+		}
+
+		/* ===== Keep the 6 semantic data colors; soften focus glow with tokens ===== */
 		.control-group.color1 input,
 		.control-group.color1 textarea {
 			color: #006600;
@@ -41,9 +234,9 @@
 		.control-group.color1 input:focus,
 		.control-group.color1 textarea:focus {
 			border-color: #65a265;
-			-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #006600;
-			-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #006600;
-			box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #006600;
+			-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
+			-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
+			box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
 		}
 
 		.control-group.color2 input,
@@ -55,9 +248,9 @@
 		.control-group.color2 input:focus,
 		.control-group.color2 textarea:focus {
 			border-color: #5a9bd4;
-			-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #5a9bd4;
-			-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #5a9bd4;
-			box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #5a9bd4;
+			-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
+			-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
+			box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
 		}
 
 		.control-group.color3 input,
@@ -69,9 +262,9 @@
 		.control-group.color3 input:focus,
 		.control-group.color3 textarea:focus {
 			border-color: #f15a60;
-			-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #f15a60;
-			-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #f15a60;
-			box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #f15a60;
+			-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
+			-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
+			box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
 		}
 
 		.control-group.color4 input,
@@ -83,9 +276,9 @@
 		.control-group.color4 input:focus,
 		.control-group.color4 textarea:focus {
 			border-color: #cfcf1b;
-			-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #cfcf1b;
-			-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #cfcf1b;
-			box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #cfcf1b;
+			-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
+			-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
+			box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
 		}
 
 		.control-group.color5 input,
@@ -97,9 +290,9 @@
 		.control-group.color5 input:focus,
 		.control-group.color5 textarea:focus {
 			border-color: #ff7500;
-			-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #ff7500;
-			-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #ff7500;
-			box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #ff7500;
+			-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
+			-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
+			box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
 		}
 
 		.control-group.color6 input,
@@ -111,54 +304,49 @@
 		.control-group.color6 input:focus,
 		.control-group.color6 textarea:focus {
 			border-color: #c09853;
-			-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #c09853;
-			-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #c09853;
-			box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #c09853;
-		}
-
-		.add-on {
-			margin-left: -7px !important;
-		}
-
-		/* Venn conf pane css */
-		.bs-docs-example {
-			position: relative;
-			margin: 0 0 25px 0;
-			padding: 39px 19px 14px;
-			*padding-top: 19px;
-			background-color: #fff;
-			border: 1px solid #ddd;
-			-webkit-border-radius: 4px;
-			-moz-border-radius: 4px;
-			border-radius: 4px;
-		}
-
-		/* Echo out a label for the example */
-		.bs-docs-example:after {
-			content: attr(content-value);
-			/*"Venn global configuration";*/
-			position: absolute;
-			top: -1px;
-			left: -1px;
-			padding: 3px 7px;
-			font-size: 12px;
-			font-weight: bold;
-			background-color: #f5f5f5;
-			border: 1px solid #ddd;
-			color: #9da0a4;
-			-webkit-border-radius: 4px 0 4px 0;
-			-moz-border-radius: 4px 0 4px 0;
-			border-radius: 4px 0 4px 0;
+			-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
+			-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
+			box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
 		}
 
 		.colorpicker {
 			min-width: 100px;
 		}
+
+		/* Theme switch button (top-right) */
+		.jvenn-app .theme-toggle {
+			position: fixed;
+			top: 14px;
+			right: 18px;
+			z-index: 1050;
+			width: 38px;
+			height: 34px;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			padding: 0;
+			font-size: 16px;
+			line-height: 1;
+			cursor: pointer;
+			border: 1px solid var(--ui-border-strong);
+			border-radius: var(--radius-sm);
+			background: var(--ui-background);
+			color: var(--ui-foreground);
+			box-shadow: var(--shadow-sm);
+			transition: border-color .2s, background .2s, box-shadow .2s, transform .15s;
+		}
+
+		.jvenn-app .theme-toggle:hover {
+			border-color: var(--accent);
+			background: var(--ui-background-hover);
+			box-shadow: var(--shadow-md);
+			transform: translateY(-1px);
+		}
 	</style>
 </head>
 
 <body>
-	<div class="container">
+	<div class="jvenn-app container">
 
 		<div class="row-fluid">
 			<div class="span12">
@@ -409,7 +597,7 @@
 		<div class="row" padding="padding-left: 20px;">
 
 			<div class="col-12"
-				style="position:absolute;padding:0px 5px 0 5px;background-color:white;border:1px solid lightgrey;border-radius:5px;text-align:justify">
+				style="position:relative;padding:14px 16px 14px 16px;text-align:justify">
 				<span class="label label-info" style="position:absolute;top:-10px;left:-10px">How to cite</span>
 				<h6>Philippe Bardou, Jérôme Mariette, Frédéric Escudié, Christophe Djemiel and Christophe Klopp.
 					jvenn: an interactive Venn diagram viewer.
@@ -420,6 +608,10 @@
 			</div>
 		</div>
 
+		<!-- Theme switch button -->
+		<button id="theme-toggle" class="theme-toggle" type="button"
+			title="Toggle light / dark theme" aria-label="Toggle theme"></button>
+
 
 
 	</div>
@@ -429,6 +621,29 @@
 				window.prettyPrint && prettyPrint()
 			})
 		}(window.jQuery)
+	</script>
+
+	<script>
+		(function () {
+			var root = document.documentElement;
+			var btn = document.getElementById('theme-toggle');
+
+			function syncIcon() {
+				btn.textContent = root.dataset.theme === 'dark' ? '☀' : '☾';
+			}
+
+			function applyTheme(theme) {
+				root.dataset.theme = theme;
+				try { localStorage.setItem('theme', theme); } catch (e) {}
+				syncIcon();
+			}
+
+			syncIcon();
+
+			btn.addEventListener('click', function () {
+				applyTheme(root.dataset.theme === 'dark' ? 'light' : 'dark');
+			});
+		})();
 	</script>
 </body>
 
