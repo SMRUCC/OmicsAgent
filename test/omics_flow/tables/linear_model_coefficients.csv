@@ -1,33 +1,31 @@
-"feature_id","group","coefficient"
-"Clostridium difficile infection","(Intercept)",0.538798231278534
-"high iron diet before","(Intercept)",-1.25627324114875
-"Clostridium difficile infection.1","Pro.Phe.Val",0.427505421726914
-"high iron diet before.1","Pro.Phe.Val",-0.0691368033038137
-"Clostridium difficile infection.2","Methyleugenol",-0.233816414738433
-"high iron diet before.2","Methyleugenol",-0.306332351372799
-"Clostridium difficile infection.3","X3...Ethylphenylamino.methyl.benzenesulfonic.acid",0.0303413592588404
-"high iron diet before.3","X3...Ethylphenylamino.methyl.benzenesulfonic.acid",0.0595062363176207
-"Clostridium difficile infection.4","X.2R.3R.5R..2..S.Pantetheinyl..carbapenam.3.carboxylate",-0.02835274030836
-"high iron diet before.4","X.2R.3R.5R..2..S.Pantetheinyl..carbapenam.3.carboxylate",0.0538809457537017
-"Clostridium difficile infection.5","X3.Ketolactose",-0.816122330330013
-"high iron diet before.5","X3.Ketolactose",0.00878861168000143
-"Clostridium difficile infection.6","Val.Pro.Met.Gln",0.242135133463684
-"high iron diet before.6","Val.Pro.Met.Gln",0.00930324819631183
-"Clostridium difficile infection.7","X5..Deoxyadenosine",-0.101904659602826
-"high iron diet before.7","X5..Deoxyadenosine",0.0933539661394185
-"Clostridium difficile infection.8","Isovalerylglutamic.acid",-0.10405651671674
-"high iron diet before.8","Isovalerylglutamic.acid",0.0460490988263728
-"Clostridium difficile infection.9","Promazine",0.0539273955278341
-"high iron diet before.9","Promazine",-0.0081719746032376
-"Clostridium difficile infection.10","Lactobionic.acid",0.271235498337981
-"high iron diet before.10","Lactobionic.acid",0.18757635128596
-"Clostridium difficile infection.11","X5..Oxoinosine",0.124827223199614
-"high iron diet before.11","X5..Oxoinosine",0.235180833291577
-"Clostridium difficile infection.12","X.4...5.6.Diphenylpyrazin.2.yl..isopropyl.amino.butoxy.acetic.acid",-0.117735545719335
-"high iron diet before.12","X.4...5.6.Diphenylpyrazin.2.yl..isopropyl.amino.butoxy.acetic.acid",-0.0254434915868738
-"Clostridium difficile infection.13","NA.His.6.0",-0.116788177483249
-"high iron diet before.13","NA.His.6.0",0.0397637960583693
-"Clostridium difficile infection.14","alpha.N.Acetylneuraminyl.2.6.beta.D.galactosyl.1.4.N.acetyl.beta.D.glucosamine",-0.0953465792537797
-"high iron diet before.14","alpha.N.Acetylneuraminyl.2.6.beta.D.galactosyl.1.4.N.acetyl.beta.D.glucosamine",-0.0101481359536327
-"Clostridium difficile infection.15","Thiobinupharidine",-0.678512914223625
-"high iron diet before.15","Thiobinupharidine",-0.419432152832194
+"feature_id","comparison","slope","intercept","r2","adj_r2","p_value","p_adj","n","equation"
+"Pro Phe Val","Standard (control)(a=0) vs Clostridium difficile infection(b=1)",-0.225611497230238,-6.18905521413249,0.802779223222102,0.783057145544312,8.03575127483162e-05,0.000602681345612372,12,"y = -0.2256*x - 6.189"
+"Methyleugenol","Standard (control)(a=0) vs Clostridium difficile infection(b=1)",-0.14494014727908,-2.53665010743714,0.646101800307862,0.610711980338648,0.00162981763681597,0.00814908818407986,12,"y = -0.1449*x - 2.537"
+"3-((Ethylphenylamino)methyl)benzenesulfonic acid","Standard (control)(a=0) vs Clostridium difficile infection(b=1)",0.00973021541789299,0.675418541034722,0.00124348439294653,-0.0986321671677588,0.913363497528473,0.913363497528474,12,"y = 0.00973*x + 0.6754"
+"(2R,3R,5R)-2-(S-Pantetheinyl)-carbapenam-3-carboxylate","Standard (control)(a=0) vs Clostridium difficile infection(b=1)",0.00943410478632705,0.664855574765424,0.00124348439294655,-0.0986321671677588,0.913363497528473,0.913363497528474,12,"y = 0.009434*x + 0.6649"
+"3-Ketolactose","Standard (control)(a=0) vs Clostridium difficile infection(b=1)",-0.0510936540489957,-0.748984569273625,0.0800146480668921,-0.0119838871264186,0.372997077758262,0.913363497528474,12,"y = -0.05109*x - 0.749"
+"Val Pro Met Gln","Standard (control)(a=0) vs Clostridium difficile infection(b=1)",0.010557888751519,0.706356366559518,0.00124348439294651,-0.0986321671677588,0.913363497528474,0.913363497528474,12,"y = 0.01056*x + 0.7064"
+"5'-Deoxyadenosine","Standard (control)(a=0) vs Clostridium difficile infection(b=1)",0.00928281583465557,0.65951720786832,0.00124348439294656,-0.0986321671677588,0.913363497528472,0.913363497528474,12,"y = 0.009283*x + 0.6595"
+"Isovalerylglutamic acid","Standard (control)(a=0) vs Clostridium difficile infection(b=1)",0.00901043415297675,0.650288381298436,0.00124348439294657,-0.0986321671677588,0.913363497528472,0.913363497528474,12,"y = 0.00901*x + 0.6503"
+"Promazine","Standard (control)(a=0) vs Clostridium difficile infection(b=1)",0.00956809467607083,0.66944087372307,0.00124348439294653,-0.0986321671677588,0.913363497528473,0.913363497528474,12,"y = 0.009568*x + 0.6694"
+"Lactobionic acid","Standard (control)(a=0) vs Clostridium difficile infection(b=1)",0.114353653211184,3.88042971626706,0.408333111099544,0.349166422209498,0.0252897853131256,0.0948366949242211,12,"y = 0.1144*x +  3.88"
+"5'-Oxoinosine","Standard (control)(a=0) vs Clostridium difficile infection(b=1)",0.123308223152652,3.76390135810743,0.327888070155106,0.260676877170616,0.0516719691379163,0.155015907413749,12,"y = 0.1233*x + 3.764"
+"(4-((5,6-Diphenylpyrazin-2-yl)(isopropyl)amino)butoxy)acetic acid","Standard (control)(a=0) vs Clostridium difficile infection(b=1)",0.00869757518152041,0.639902355480944,0.00124348439294652,-0.0986321671677588,0.913363497528473,0.913363497528474,12,"y = 0.008698*x + 0.6399"
+"NA-His 6:0","Standard (control)(a=0) vs Clostridium difficile infection(b=1)",0.00897191415618433,0.648854033122821,0.0012434843929466,-0.0986321671677588,0.913363497528471,0.913363497528474,12,"y = 0.008972*x + 0.6489"
+"alpha-N-Acetylneuraminyl-2,6-beta-D-galactosyl-1,4-N-acetyl-beta-D-glucosamine","Standard (control)(a=0) vs Clostridium difficile infection(b=1)",0.00882975275335482,0.644066848253701,0.00124348439294656,-0.0986321671677588,0.913363497528472,0.913363497528474,12,"y = 0.00883*x + 0.6441"
+"Thiobinupharidine","Standard (control)(a=0) vs Clostridium difficile infection(b=1)",-0.0211901917573803,0.677128354114386,0.985568266696686,0.984125093366354,1.54996212170261e-10,2.32494318255392e-09,12,"y = -0.02119*x + 0.6771"
+"Pro Phe Val","Standard (control)(a=0) vs high iron diet before(b=1)",0.0114084484722258,0.320729494212998,0.994435103121555,0.99387861343371,1.31642352195446e-12,5.45573467565769e-12,12,"y = 0.01141*x + 0.3207"
+"Methyleugenol","Standard (control)(a=0) vs high iron diet before(b=1)",0.0164188180483213,0.309706556202868,0.995379855268896,0.994917840795786,5.19058387050005e-13,5.45573467565769e-12,12,"y = 0.01642*x + 0.3097"
+"3-((Ethylphenylamino)methyl)benzenesulfonic acid","Standard (control)(a=0) vs high iron diet before(b=1)",0.0183628585198505,0.335061776695763,0.994322746291495,0.993755020920645,1.45486258017538e-12,5.45573467565769e-12,12,"y = 0.01836*x + 0.3351"
+"(2R,3R,5R)-2-(S-Pantetheinyl)-carbapenam-3-carboxylate","Standard (control)(a=0) vs high iron diet before(b=1)",0.0189308106714321,0.335221271089097,0.993662813607628,0.993029094968391,2.52192932085196e-12,7.56578796255589e-12,12,"y = 0.01893*x + 0.3352"
+"3-Ketolactose","Standard (control)(a=0) vs high iron diet before(b=1)",0.0137108269668143,0.327051469113834,0.994747809476088,0.994222590423697,9.85724462612748e-13,5.45573467565769e-12,12,"y = 0.01371*x + 0.3271"
+"Val Pro Met Gln","Standard (control)(a=0) vs high iron diet before(b=1)",0.0168983139176503,0.335356843208052,0.991839431571067,0.991023374728174,8.93685279271844e-12,1.48947546545307e-11,12,"y = 0.0169*x + 0.3354"
+"5'-Deoxyadenosine","Standard (control)(a=0) vs high iron diet before(b=1)",0.0192212411944268,0.335493446989588,0.992188900659836,0.991407790725819,7.17925989111607e-12,1.48947546545307e-11,12,"y = 0.01922*x + 0.3355"
+"Isovalerylglutamic acid","Standard (control)(a=0) vs high iron diet before(b=1)",0.0198024335802829,0.335537132302241,0.992242873363381,0.991467160699719,6.93447271364234e-12,1.48947546545307e-11,12,"y = 0.0198*x + 0.3355"
+"Promazine","Standard (control)(a=0) vs high iron diet before(b=1)",0.0186414594908963,0.335545366753536,0.991573145333616,0.990730459866978,1.04944239775949e-11,1.57416359663923e-11,12,"y = 0.01864*x + 0.3355"
+"Lactobionic acid","Standard (control)(a=0) vs high iron diet before(b=1)",0.0109649422927934,0.347720027799757,0.991986889840473,0.991185578824521,8.15757816510625e-12,1.48947546545307e-11,12,"y = 0.01096*x + 0.3477"
+"5'-Oxoinosine","Standard (control)(a=0) vs high iron diet before(b=1)",0.012273344415712,0.345724628387301,0.990924165511894,0.990016582063083,1.52118578857497e-11,2.07434425714769e-11,12,"y = 0.01227*x + 0.3457"
+"(4-((5,6-Diphenylpyrazin-2-yl)(isopropyl)amino)butoxy)acetic acid","Standard (control)(a=0) vs high iron diet before(b=1)",0.0204849153705899,0.335980056719816,0.989977079024437,0.988974786926881,2.49973384218174e-11,3.12466730272718e-11,12,"y = 0.02048*x + 0.336"
+"NA-His 6:0","Standard (control)(a=0) vs high iron diet before(b=1)",0.0198540652469144,0.335987420046664,0.989578925214768,0.988536817736245,3.03778823460705e-11,3.50514027070044e-11,12,"y = 0.01985*x + 0.336"
+"alpha-N-Acetylneuraminyl-2,6-beta-D-galactosyl-1,4-N-acetyl-beta-D-glucosamine","Standard (control)(a=0) vs high iron diet before(b=1)",0.0201496894345046,0.336327560992321,0.987709951358898,0.986480946494788,6.93592703114512e-11,6.93592703114512e-11,12,"y = 0.02015*x + 0.3363"
+"Thiobinupharidine","Standard (control)(a=0) vs high iron diet before(b=1)",-0.0204365734537179,0.65221482165584,0.987745143433857,0.986519657777243,6.83708899071572e-11,6.93592703114512e-11,12,"y = -0.02044*x + 0.6522"
