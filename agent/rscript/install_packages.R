@@ -23,7 +23,8 @@ cran_packages <- c(
   "ggplot2", "ggrepel", "RColorBrewer", "VennDiagram", "UpSetR",
   "pheatmap", "WGCNA", "dynamicTreeCut", "plsdepot", "cluster",
   "bnlearn", "randomForest", "fastshap", "nnet", "MASS",
-  "mixOmics", "glmnet", "metaboanalyst"
+  "mixOmics", "glmnet", "metaboanalyst",
+  "vegan", "igraph"
 )
 
 # Bioconductor 包（必须用 BiocManager::install 安装）
