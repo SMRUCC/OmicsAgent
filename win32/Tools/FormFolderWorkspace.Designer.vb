@@ -32,12 +32,13 @@ Partial Class FormFolderWorkspace
         ToolStripButton2 = New ToolStripButton()
         TreeView1 = New TreeView()
         ImageList1 = New ImageList(components)
+        ToolStripDropDownButton1 = New ToolStripDropDownButton()
         ToolStrip1.SuspendLayout()
         SuspendLayout()
         ' 
         ' ToolStrip1
         ' 
-        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripSeparator1, ToolStripButton2})
+        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripDropDownButton1, ToolStripSeparator1, ToolStripButton2})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
         ToolStrip1.Size = New Size(355, 25)
@@ -87,6 +88,15 @@ Partial Class FormFolderWorkspace
         ImageList1.Images.SetKeyName(1, "icons8-file-explorer-new-96.png")
         ImageList1.Images.SetKeyName(2, "icons8-books-96.png")
         ' 
+        ' ToolStripDropDownButton1
+        ' 
+        ToolStripDropDownButton1.DisplayStyle = ToolStripItemDisplayStyle.Image
+        ToolStripDropDownButton1.Image = CType(resources.GetObject("ToolStripDropDownButton1.Image"), Image)
+        ToolStripDropDownButton1.ImageTransparentColor = Color.Magenta
+        ToolStripDropDownButton1.Name = "ToolStripDropDownButton1"
+        ToolStripDropDownButton1.Size = New Size(29, 22)
+        ToolStripDropDownButton1.Text = "Filter Files"
+        ' 
         ' FormFolderWorkspace
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -112,4 +122,5 @@ Partial Class FormFolderWorkspace
     Friend WithEvents ImageList1 As ImageList
     Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
     Friend WithEvents ToolStripButton2 As ToolStripButton
+    Friend WithEvents ToolStripDropDownButton1 As ToolStripDropDownButton
 End Class

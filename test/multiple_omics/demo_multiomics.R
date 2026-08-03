@@ -29,6 +29,11 @@
 #      aroma compounds that define flavour?
 #   Q4 Pathway bridging: can a signal be traced from gene to protein to
 #      metabolite to aroma compound within the same functional category?
+#   Q5 WGCNA trait screen: which transcriptome co-expression modules track the
+#      abundance of specific downstream metabolome molecules (used as traits)?
+#   Q6 Cross-omics regression: univariate linear models with one layer on the
+#      x-axis (microbiome or transcriptome) and another on the y-axis
+#      (volatilome or metabolome).
 #
 # Outputs are written to figures/ (PNG and PDF) and tables/ (CSV).
 # ==============================================================================
@@ -622,8 +627,127 @@ if (length(pairs_list) > 0) {
 }
 
 
-# ==== Step 16: Summary ========================================================
-cat("\n=== Step 16: Summary ===\n")
+# ==== Step 16: WGCNA module - downstream trait association ====================
+cat("\n=== Step 16: WGCNA modules on transcriptome vs metabolome traits ===\n")
+# Co-expression modules are built on one layer (transcriptome) and the molecular
+# features of a downstream layer (metabolome) are used as the biological traits.
+# Every module eigengene is correlated with every metabolome feature, so modules
+# whose expression tracks specific downstream molecules can be identified.
+
+wgcna_res <- tryCatch({
+  build_wgcna_modules_layer(
+    mo, "transcriptome",
+    min_module_size = 20, network_type = "signed", cor_fn = "cor")
+}, error = function(e) {
+  cat(sprintf("  WGCNA module building failed: %s\n", conditionMessage(e)))
+  NULL
+})
+
+if (!is.null(wgcna_res)) {
+  export_table(wgcna_res$membership, tab_dir,
+               "step16_wgcna_module_membership.csv", use_rownames = FALSE)
+
+  # Use metabolome molecules as the phenotype / trait matrix.
+  traits_met <- tryCatch({
+    wgcna_traits_from_layer(mo, "metabolome", reference_samples = rownames(wgcna_res$MEs))
+  }, error = function(e) {
+    cat(sprintf("  Trait extraction failed: %s\n", conditionMessage(e)))
+    NULL
+  })
+
+  if (!is.null(traits_met)) {
+    wgcna_assoc <- tryCatch({
+      run_wgcna_trait_association(wgcna_res, traits_met, trait_layer = "metabolome")
+    }, error = function(e) {
+      cat(sprintf("  WGCNA trait association failed: %s\n", conditionMessage(e)))
+      NULL
+    })
+
+    if (!is.null(wgcna_assoc) && nrow(wgcna_assoc$module_trait) > 0) {
+      annot <- annotate_wgcna_trait_result(
+        wgcna_assoc,
+        trait_feature_info = get_feature_info(mo, "metabolome"),
+        module_layer = "transcriptome", trait_layer = "metabolome")
+      export_table(annot, tab_dir,
+                   "step16_wgcna_module_trait_pairs.csv", use_rownames = FALSE)
+      export_table(wgcna_assoc$module_summary, tab_dir,
+                   "step16_wgcna_module_summary.csv", use_rownames = FALSE)
+
+      cat(sprintf("  WGCNA: %d modules, %d module-trait pairs, %d significant\n",
+                  nrow(wgcna_assoc$module_summary),
+                  nrow(wgcna_assoc$module_trait),
+                  sum(wgcna_assoc$module_trait$significant)))
+
+      p <- plot_wgcna_trait_heatmap(wgcna_assoc, top_n_traits = 30,
+                                    title = "Transcriptome modules vs metabolome traits")
+      if (!is.null(p)) {
+        export_plot(p, fig_dir, "step16_wgcna_module_trait_heatmap",
+                    width = 10, height = 8)
+      }
+
+      # Report the module with the most significant trait associations.
+      top_mod <- wgcna_assoc$module_summary[1, ]
+      cat(sprintf("  Module with most trait hits: %s (%d significant, mean |r| = %.2f)\n",
+                  top_mod$module, top_mod$n_significant, top_mod$mean_abs_r))
+    }
+  }
+}
+
+
+# ==== Step 17: Cross-omics linear regression ==================================
+cat("\n=== Step 17: Cross-omics linear regression ===\n")
+# Univariate linear models: microbiome (x) drives volatilome (y), and
+# transcriptome (x) drives metabolome (y). Pairs are ranked by adjusted p-value.
+
+reg_pairs_cfg <- list(
+  list(x = "microbiome", y = "volatilome", tag = "microbiome_volatilome"),
+  list(x = "transcriptome", y = "metabolome", tag = "transcriptome_metabolome")
+)
+
+reg_results <- list()
+for (cfg in reg_pairs_cfg) {
+  tryCatch({
+    reg <- run_cross_omics_regression(
+      get_omics_matrix(mo, cfg$x), get_omics_matrix(mo, cfg$y),
+      x_name = cfg$x, y_name = cfg$y)
+    reg_results[[cfg$tag]] <- reg
+
+    export_table(reg$pairs, tab_dir,
+                 sprintf("step17_regression_%s_pairs.csv", cfg$tag),
+                 use_rownames = FALSE)
+    export_table(reg$x_summary, tab_dir,
+                 sprintf("step17_regression_%s_xsummary.csv", cfg$tag),
+                 use_rownames = FALSE)
+
+    # Scatter plots for the top significant pairs.
+    top_pairs <- top_regression_pairs(reg, top_n = 9)
+    if (nrow(top_pairs) > 0) {
+      X <- get_omics_matrix(mo, cfg$x)
+      Y <- get_omics_matrix(mo, cfg$y)
+      common <- intersect(colnames(X), colnames(Y))
+      for (k in seq_len(nrow(top_pairs))) {
+        xf <- top_pairs$x_feature[k]
+        yf <- top_pairs$y_feature[k]
+        if (!xf %in% rownames(X) || !yf %in% rownames(Y)) next
+        p <- plot_regression_pair(
+          X[xf, common], Y[yf, common],
+          x_label = sprintf("%s (%s)", xf, cfg$x),
+          y_label = sprintf("%s (%s)", yf, cfg$y),
+          title = sprintf("Regression: %s -> %s (R2=%.2f, padj=%.2g)",
+                          cfg$x, cfg$y, top_pairs$r_squared[k], top_pairs$padj[k]))
+        export_plot(p, fig_dir,
+                    sprintf("step17_scatter_%s_%02d", cfg$tag, k))
+      }
+    }
+  }, error = function(e) {
+    cat(sprintf("  Regression %s -> %s failed: %s\n",
+                cfg$x, cfg$y, conditionMessage(e)))
+  })
+}
+
+
+# ==== Step 18: Summary ========================================================
+cat("\n=== Step 18: Summary ===\n")
 
 n_fig <- length(list.files(fig_dir, pattern = "\\.(png|pdf)$"))
 n_tab <- length(list.files(tab_dir, pattern = "\\.csv$"))
@@ -660,5 +784,16 @@ if (!is.null(traj_all) && nrow(traj_all$path_summary) > 0) {
 if (!is.null(cc_volat)) {
   cat(sprintf(" Q3 drivers    : %d significant microbe-aroma associations\n",
               nrow(cc_volat$pairs)))
+}
+if (!is.null(wgcna_assoc) && nrow(wgcna_assoc$module_trait) > 0) {
+  cat(sprintf(" Q4 WGCNA      : %d transcriptome module-metabolome trait pairs significant\n",
+              sum(wgcna_assoc$module_trait$significant)))
+}
+if (length(reg_results) > 0) {
+  for (tg in names(reg_results)) {
+    pr <- reg_results[[tg]]$pairs
+    cat(sprintf(" Q4 regression : %s -> %s: %d significant pairs\n",
+                pr$x_name[1], pr$y_name[1], sum(pr$significant)))
+  }
 }
 cat("--------------------------------------------------------------\n\n")
