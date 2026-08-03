@@ -197,6 +197,16 @@ run_limma <- function(expr_matrix, sample_info, group_col = "sample_info",
   rownames(combined) <- NULL
   rownames(sig_results) <- NULL
 
+  # Move feature_id to the first column for clear, consistent export ordering.
+  if ("feature_id" %in% colnames(combined)) {
+    combined <- combined[, c("feature_id",
+                             setdiff(colnames(combined), "feature_id")), drop = FALSE]
+  }
+  if ("feature_id" %in% colnames(sig_results)) {
+    sig_results <- sig_results[, c("feature_id",
+                                   setdiff(colnames(sig_results), "feature_id")), drop = FALSE]
+  }
+
   return(list(
     results = combined,
     significant = sig_results,
