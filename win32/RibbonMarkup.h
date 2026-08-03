@@ -63,4 +63,8 @@
 #define cmdButtonOpenConsole_LabelTitle_RESID 60035
 #define cmdButtonOpenConsole_SmallImages_192__RESID 60036
 #define cmdButtonOpenConsole_LargeImages_192__RESID 60037
-#define InternalCmd2_LabelTitle_RESID 60038
+#define cmdButtonVennTool 23 
+#define cmdButtonVennTool_LabelTitle_RESID 60038
+#define cmdButtonVennTool_SmallImages_192__RESID 60039
+#define cmdButtonVennTool_LargeImages_192__RESID 60040
+#define InternalCmd2_LabelTitle_RESID 60041

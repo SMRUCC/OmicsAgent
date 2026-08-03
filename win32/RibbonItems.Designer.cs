@@ -21,6 +21,7 @@ namespace RibbonLib.Controls
             public const uint cmdButtonOpenFolder = 16;
             public const uint cmdButtonOpenResearch = 6;
             public const uint cmdButtonOpenConsole = 22;
+            public const uint cmdButtonVennTool = 23;
             public const uint cmdButtonLicense = 18;
             public const uint cmdButtonExit = 17;
             public const uint cmdMenuResearchWork = 3;
@@ -46,6 +47,7 @@ namespace RibbonLib.Controls
         public RibbonButton ButtonOpenFolder { get; private set; }
         public RibbonButton ButtonOpenResearch { get; private set; }
         public RibbonButton ButtonOpenConsole { get; private set; }
+        public RibbonButton ButtonVennTool { get; private set; }
         public RibbonButton ButtonLicense { get; private set; }
         public RibbonButton ButtonExit { get; private set; }
         public RibbonTabGroup MenuResearchWork { get; private set; }
@@ -72,6 +74,7 @@ namespace RibbonLib.Controls
             ButtonOpenFolder = new RibbonButton(ribbon, Cmd.cmdButtonOpenFolder);
             ButtonOpenResearch = new RibbonButton(ribbon, Cmd.cmdButtonOpenResearch);
             ButtonOpenConsole = new RibbonButton(ribbon, Cmd.cmdButtonOpenConsole);
+            ButtonVennTool = new RibbonButton(ribbon, Cmd.cmdButtonVennTool);
             ButtonLicense = new RibbonButton(ribbon, Cmd.cmdButtonLicense);
             ButtonExit = new RibbonButton(ribbon, Cmd.cmdButtonExit);
             MenuResearchWork = new RibbonTabGroup(ribbon, Cmd.cmdMenuResearchWork);

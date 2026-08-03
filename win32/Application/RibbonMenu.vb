@@ -15,6 +15,11 @@ Module RibbonMenu
         AddHandler ribbon.ButtonExit.ExecuteEvent, Sub() Call DirectCast(CommonRuntime.AppHost, Form).Close()
         AddHandler ribbon.ButtonOpenConsole.ExecuteEvent, Sub() Call OpenConsole()
         AddHandler ribbon.ButtonLicense.ExecuteEvent, Sub() Call OpenLicenseDialog()
+        AddHandler ribbon.ButtonVennTool.ExecuteEvent, Sub() Call OpenJVennTool()
+    End Sub
+
+    Public Sub OpenJVennTool()
+        Call CommonRuntime.ShowDocument(New FormHtmlViewer With {.URL = $"http://127.0.0.1:{Workbench.port}/jvenn.html", .TabText = "jVenn"})
     End Sub
 
     Public Sub OpenLicenseDialog()

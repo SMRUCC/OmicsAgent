@@ -78,6 +78,14 @@
         <Image MinDPI="192">Icons/icons8-bash-96.png</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdButtonVennTool" Id="23" LabelTitle="jVenn Tool">
+      <Command.SmallImages>
+        <Image MinDPI="192">Icons/icons8-venn-diagram-100.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Icons/icons8-venn-diagram-100.png</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <Ribbon>
@@ -89,6 +97,7 @@
           </MenuGroup>
           <MenuGroup Class="StandardItems">
             <Button CommandName="cmdButtonOpenConsole" />
+            <Button CommandName="cmdButtonVennTool" />
           </MenuGroup>
           <MenuGroup>
             <Button CommandName="cmdButtonLicense" />
@@ -126,8 +135,9 @@
             <Button CommandName="cmdButtonOpenFolder" />
             <Button CommandName="cmdButtonOpenResearch" />
           </Group>
-          <Group CommandName="cmdGroupWorkTools" SizeDefinition="OneButton">
+          <Group CommandName="cmdGroupWorkTools" SizeDefinition="TwoButtons">
             <Button CommandName="cmdButtonOpenConsole" />
+            <Button CommandName="cmdButtonVennTool" />
           </Group>
         </Tab>
         <Tab CommandName="cmdTabInformation">

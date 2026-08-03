@@ -1,8 +1,8 @@
 ﻿Imports Galaxy.Workbench.DockDocument
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class FormConsole
-    Inherits ToolWindow
+Partial Class FormHtmlViewer
+    Inherits DocumentWindow
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -24,34 +24,37 @@ Partial Class FormConsole
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        components = New ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormConsole))
-        WebViewConsole1 = New Microsoft.VisualBasic.Windows.Forms.WebViewConsole()
+        WebView21 = New Microsoft.Web.WebView2.WinForms.WebView2()
+        CType(WebView21, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
-        ' WebViewConsole1
+        ' WebView21
         ' 
-        WebViewConsole1.Dock = DockStyle.Fill
-        WebViewConsole1.Font = New Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        WebViewConsole1.Location = New Point(0, 0)
-        WebViewConsole1.Name = "WebViewConsole1"
-        WebViewConsole1.Size = New Size(800, 450)
-        WebViewConsole1.TabIndex = 0
+        WebView21.AllowExternalDrop = True
+        WebView21.CreationProperties = Nothing
+        WebView21.DefaultBackgroundColor = Color.White
+        WebView21.Dock = DockStyle.Fill
+        WebView21.Location = New Point(0, 0)
+        WebView21.Name = "WebView21"
+        WebView21.Size = New Size(863, 578)
+        WebView21.TabIndex = 1
+        WebView21.ZoomFactor = 1R
         ' 
-        ' FormConsole
+        ' FormHtmlViewer
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(800, 450)
-        Controls.Add(WebViewConsole1)
+        ClientSize = New Size(863, 578)
+        Controls.Add(WebView21)
         DockAreas = Microsoft.VisualStudio.WinForms.Docking.DockAreas.Float Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.DockLeft Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.DockRight Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.DockTop Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.DockBottom Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.Document
         DoubleBuffered = True
-        Icon = CType(resources.GetObject("$this.Icon"), Icon)
-        Name = "FormConsole"
+        Name = "FormHtmlViewer"
         ShowHint = Microsoft.VisualStudio.WinForms.Docking.DockState.Unknown
-        Text = "Console"
+        TabPageContextMenuStrip = DockContextMenuStrip1
+        Text = "Html Viewer"
+        CType(WebView21, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
     End Sub
 
-    Friend WithEvents WebViewConsole1 As Microsoft.VisualBasic.Windows.Forms.WebViewConsole
+    Friend WithEvents WebView21 As Microsoft.Web.WebView2.WinForms.WebView2
 End Class
