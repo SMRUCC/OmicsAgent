@@ -20,15 +20,7 @@
 	</script>
 
 	<!-- Les styles -->
-	<link href="vendor/css/bootstrap.css" rel="stylesheet" media="screen">
-	<style type="text/css">
-		body {
-			padding-top: 60px;
-			padding-bottom: 40px;
-		}
-	</style>
 	<link href="vendor/css/prettify.css" rel="stylesheet" media="screen">
-	<link href="vendor/css/bootstrap-responsive.css" rel="stylesheet" media="screen">
 	<link href="vendor/css/bootstrap-colorpicker.min.css" rel="stylesheet" media="screen">
 
 	<!-- Project design tokens & viewer style reference -->
@@ -48,11 +40,28 @@
 	<script type="text/javascript" src="vendor/js/jvenn/app.js"></script>
 
 	<style type="text/css">
-		/* ===== jvenn local styles, scoped under .jvenn-app to avoid clashing =====
-		   ===== with kb.css global classes (e.g. .btn). Tokens come from kb.css. */
+		/* =====================================================================
+		   jvenn standalone styles — no Bootstrap CSS. All tokens come from
+		   styles/kb.css. Classes like .btn / .nav-tabs are re-implemented here
+		   so the page no longer depends on bootstrap.css / bootstrap-responsive.
+		   ===================================================================== */
 
+		html,
+		body {
+			height: auto;
+		}
+
+		body {
+			font-family: var(--font-ui);
+			background: var(--ui-background);
+			color: var(--ui-foreground);
+		}
+
+		/* ---- Layout: self-contained flex grid (replaces Bootstrap span*) ---- */
 		.jvenn-app {
-			/* ensure app container picks up token background/foreground */
+			max-width: 1320px;
+			margin: 0 auto;
+			padding: 26px 28px 60px;
 			background: var(--ui-background);
 			color: var(--ui-foreground);
 		}
@@ -61,15 +70,45 @@
 			color: var(--accent);
 		}
 
-		/* Buttons: token-driven VS Code style, scoped so Bootstrap .btn is overridden */
+		.row-fluid {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: flex-start;
+			gap: 20px;
+		}
+
+		.span12 {
+			width: 100%;
+		}
+
+		.span6 {
+			flex: 1 1 44%;
+			min-width: 320px;
+		}
+
+		.span11 {
+			width: 100%;
+			box-sizing: border-box;
+		}
+
+		/* ---- Buttons ---- */
 		.jvenn-app .btn {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			gap: 7px;
+			font-family: var(--font-ui);
+			font-size: 13px;
+			font-weight: 600;
+			line-height: 1;
+			padding: 8px 14px;
+			cursor: pointer;
+			color: var(--ui-foreground);
+			background: var(--ui-background);
 			border: 1px solid var(--ui-border-strong);
 			border-radius: var(--radius-sm);
-			background: var(--ui-background);
-			color: var(--ui-foreground);
 			box-shadow: none;
-			text-shadow: none;
-			transition: border-color .2s, background .2s, box-shadow .2s, transform .15s, color .2s;
+			transition: transform .15s, border-color .2s, background .2s, box-shadow .2s, color .2s;
 		}
 
 		.jvenn-app .btn:hover,
@@ -79,68 +118,93 @@
 			box-shadow: var(--shadow-sm);
 			color: var(--ui-foreground);
 			transform: translateY(-1px);
-			background-position: 0 0;
 		}
 
-		.jvenn-app .btn:active,
+		.jvenn-app .btn:active {
+			transform: translateY(0);
+		}
+
 		.jvenn-app .btn.active {
 			background: var(--accent);
 			border-color: var(--accent);
 			color: #fff;
 			box-shadow: inset 0 1px 2px rgba(0, 0, 0, .12);
-			transform: translateY(0);
 		}
 
 		.jvenn-app .btn-mini {
+			padding: 6px 10px;
+			font-size: 12px;
+			font-weight: 600;
+		}
+
+		.jvenn-app .btn-group {
+			display: inline-flex;
+			flex-wrap: wrap;
+			align-items: center;
+			gap: 6px;
+		}
+
+		.jvenn-app .btn-group .btn {
 			border-radius: var(--radius-sm);
 		}
 
-		/* Configuration card */
-		.jvenn-app .bs-docs-example {
-			position: relative;
-			margin: 0 0 25px 0;
-			padding: 39px 19px 14px;
-			background-color: var(--ui-background);
-			border: 1px solid var(--ui-border);
-			-webkit-border-radius: var(--radius);
-			-moz-border-radius: var(--radius);
-			border-radius: var(--radius);
-			box-shadow: var(--shadow-sm);
+		.jvenn-app .btn svg {
+			width: 14px;
+			height: 14px;
+			flex: none;
 		}
 
-		/* Card corner label */
+		/* ---- Configuration card ---- */
+		.jvenn-app .bs-docs-example {
+			position: relative;
+			margin: 0 0 20px;
+			padding: 46px 22px 20px;
+			background: var(--ui-background);
+			border: 1px solid var(--ui-border);
+			border-radius: var(--radius);
+			box-shadow: var(--shadow-sm);
+			font-size: 13px;
+			line-height: 1.7;
+		}
+
 		.jvenn-app .bs-docs-example:after {
 			content: attr(content-value);
 			position: absolute;
-			top: -1px;
-			left: -1px;
-			padding: 3px 7px;
-			font-size: 12px;
-			font-weight: bold;
-			background-color: var(--ui-background-alt);
-			border: 1px solid var(--ui-border);
-			color: var(--ui-foreground-muted);
-			-webkit-border-radius: var(--radius-sm) 0 var(--radius-sm) 0;
-			-moz-border-radius: var(--radius-sm) 0 var(--radius-sm) 0;
-			border-radius: var(--radius-sm) 0 var(--radius-sm) 0;
+			top: 0;
+			left: 0;
+			padding: 5px 12px;
+			font-size: 11px;
+			font-weight: 700;
+			letter-spacing: .5px;
+			text-transform: uppercase;
+			color: var(--accent);
+			background: var(--accent-soft);
+			border: 1px solid var(--accent-soft-border);
+			border-radius: var(--radius) 0 var(--radius-sm) 0;
 		}
 
-		/* Inline labels (search status) */
-		.jvenn-app .label.label-info {
-			background-color: var(--accent);
+		/* ---- Inline labels (search status / cite) ---- */
+		.jvenn-app .label {
+			display: inline-block;
+			padding: 3px 9px;
+			font-size: 11px;
+			font-weight: 700;
+			letter-spacing: .5px;
+			border-radius: 999px;
 			color: #fff;
-			border-radius: var(--radius-sm);
-			text-shadow: none;
-			padding: 2px 6px;
+			background: var(--accent);
 		}
 
-		/* Inputs & textareas */
+		/* ---- Inputs & textareas ---- */
 		.jvenn-app input[type="text"],
 		.jvenn-app textarea {
+			font-family: var(--font-ui);
+			font-size: 13px;
+			color: var(--ui-foreground);
+			background: var(--ui-background);
 			border: 1px solid var(--ui-border-strong);
 			border-radius: var(--radius-sm);
-			background: var(--ui-background);
-			color: var(--ui-foreground);
+			padding: 8px 10px;
 			box-shadow: none;
 			transition: border-color .2s, box-shadow .2s;
 		}
@@ -152,21 +216,35 @@
 			outline: none;
 		}
 
-		/* Nav tabs */
+		/* ---- Tabs ---- */
 		.jvenn-app .nav-tabs {
-			border-bottom: 1px solid var(--ui-border);
+			display: flex;
+			gap: 4px;
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			border-bottom: 2px solid var(--ui-border);
+		}
+
+		.jvenn-app .nav-tabs > li {
+			margin-bottom: -2px;
 		}
 
 		.jvenn-app .nav-tabs > li > a {
+			display: block;
+			padding: 9px 16px;
+			font-size: 13px;
+			font-weight: 600;
+			color: var(--ui-foreground-muted);
+			background: transparent;
+			text-decoration: none;
 			border: 1px solid transparent;
 			border-bottom: none;
 			border-radius: var(--radius-sm) var(--radius-sm) 0 0;
-			color: var(--ui-foreground-muted);
-			background: transparent;
+			transition: color .2s, background .2s;
 		}
 
 		.jvenn-app .nav-tabs > li > a:hover {
-			border-color: var(--ui-border);
 			color: var(--accent);
 			background: var(--ui-background-hover);
 		}
@@ -177,149 +255,139 @@
 			background: var(--ui-background);
 			border-color: var(--ui-border);
 			border-bottom-color: transparent;
-			font-weight: 600;
 		}
 
 		.jvenn-app .tab-content {
-			border-left: 1px solid var(--ui-border);
-			border-right: 1px solid var(--ui-border);
-			border-bottom: 1px solid var(--ui-border);
-			border-radius: 0 0 var(--radius) var(--radius);
 			background: var(--ui-background);
+			border: 1px solid var(--ui-border);
+			border-top: none;
+			border-radius: 0 0 var(--radius) var(--radius);
 		}
 
-		/* "How to cite" reference card */
+		.jvenn-app .tab-pane {
+			padding: 20px 22px 16px;
+		}
+
+		/* Config list marker dot */
+		.jvenn-app .cfg-dot {
+			display: inline-block;
+			width: 8px;
+			height: 8px;
+			margin-right: 7px;
+			border-radius: 50%;
+			background: var(--accent);
+			vertical-align: 1px;
+		}
+
+		/* ---- Control group (list editor cells) ---- */
+		.jvenn-app .control-group {
+			margin-bottom: 18px;
+		}
+
+		.jvenn-app .control-group > input[type="text"] {
+			width: calc(100% - 210px);
+			font-weight: 700;
+		}
+
+		.jvenn-app .controls {
+			margin-top: 8px;
+		}
+
+		.jvenn-app textarea {
+			width: 100%;
+			box-sizing: border-box;
+			font-family: var(--font-code);
+			font-size: 12px;
+			line-height: 1.5;
+			resize: none;
+		}
+
+		/* ---- Color swatch trigger (colorpicker) ---- */
+		.jvenn-app .input-append {
+			display: inline-flex;
+			align-items: center;
+			vertical-align: middle;
+			margin-left: 8px;
+		}
+
+		.jvenn-app .add-on {
+			display: inline-flex;
+			align-items: center;
+			padding: 6px;
+			cursor: pointer;
+			background: var(--ui-background-alt);
+			border: 1px solid var(--ui-border-strong);
+			border-radius: var(--radius-sm);
+		}
+
+		/* ---- Helper text ---- */
+		.jvenn-app .bodytext,
+		.jvenn-app p {
+			color: var(--ui-foreground-muted);
+			line-height: 1.6;
+		}
+
+		.jvenn-app hr {
+			border: none;
+			border-top: 1px solid var(--ui-border);
+			margin: 16px 0;
+		}
+
+		/* ---- Citation card ---- */
 		.jvenn-app .col-12 {
-			background-color: var(--ui-background);
+			position: relative;
+			margin-top: 24px;
+			padding: 20px 22px;
+			background: var(--ui-background);
 			border: 1px solid var(--ui-border);
 			border-radius: var(--radius);
 			box-shadow: var(--shadow-sm);
 			color: var(--ui-foreground-muted);
+			font-size: 13px;
+			line-height: 1.7;
+			text-align: justify;
 		}
 
 		.jvenn-app .col-12 .label {
-			background-color: var(--accent);
-			color: #fff;
-			text-shadow: none;
+			position: absolute;
+			top: -11px;
+			left: 14px;
 		}
 
 		.jvenn-app .col-12 h6 {
-			color: var(--ui-foreground);
-		}
-
-		/* Body helper text */
-		.jvenn-app .bodytext {
+			margin: 0;
+			font-size: 13px;
+			font-weight: 500;
 			color: var(--ui-foreground-muted);
 		}
 
-		.jvenn-app p {
-			color: var(--ui-foreground-muted);
+		/* ---- Search status inline ---- */
+		.jvenn-app #search-status {
+			vertical-align: 16px;
+			margin-left: 8px;
 		}
 
-		.jvenn-app hr {
-			border-top: 1px solid var(--ui-border);
-		}
+		/* ---- The 6 semantic data colors (focus glow softened with tokens) ---- */
+		.control-group.color1 input, .control-group.color1 textarea { color: #006600; border-color: #006600; }
+		.control-group.color1 input:focus, .control-group.color1 textarea:focus { border-color: #65a265; box-shadow: 0 0 0 2px var(--accent-soft); }
+		.control-group.color2 input, .control-group.color2 textarea { color: #5a9bd4; border-color: #5a9bd4; }
+		.control-group.color2 input:focus, .control-group.color2 textarea:focus { border-color: #5a9bd4; box-shadow: 0 0 0 2px var(--accent-soft); }
+		.control-group.color3 input, .control-group.color3 textarea { color: #f15a60; border-color: #f15a60; }
+		.control-group.color3 input:focus, .control-group.color3 textarea:focus { border-color: #f15a60; box-shadow: 0 0 0 2px var(--accent-soft); }
+		.control-group.color4 input, .control-group.color4 textarea { color: #cfcf1b; border-color: #cfcf1b; }
+		.control-group.color4 input:focus, .control-group.color4 textarea:focus { border-color: #cfcf1b; box-shadow: 0 0 0 2px var(--accent-soft); }
+		.control-group.color5 input, .control-group.color5 textarea { color: #ff7500; border-color: #ff7500; }
+		.control-group.color5 input:focus, .control-group.color5 textarea:focus { border-color: #ff7500; box-shadow: 0 0 0 2px var(--accent-soft); }
+		.control-group.color6 input, .control-group.color6 textarea { color: #c09853; border-color: #c09853; }
+		.control-group.color6 input:focus, .control-group.color6 textarea:focus { border-color: #c09853; box-shadow: 0 0 0 2px var(--accent-soft); }
 
-		.add-on {
-			margin-left: -7px !important;
-		}
-
-		/* ===== Keep the 6 semantic data colors; soften focus glow with tokens ===== */
-		.control-group.color1 input,
-		.control-group.color1 textarea {
-			color: #006600;
-			border-color: #006600;
-		}
-
-		.control-group.color1 input:focus,
-		.control-group.color1 textarea:focus {
-			border-color: #65a265;
-			-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
-			-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
-			box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
-		}
-
-		.control-group.color2 input,
-		.control-group.color2 textarea {
-			color: #5a9bd4;
-			border-color: #5a9bd4;
-		}
-
-		.control-group.color2 input:focus,
-		.control-group.color2 textarea:focus {
-			border-color: #5a9bd4;
-			-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
-			-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
-			box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
-		}
-
-		.control-group.color3 input,
-		.control-group.color3 textarea {
-			color: #f15a60;
-			border-color: #f15a60;
-		}
-
-		.control-group.color3 input:focus,
-		.control-group.color3 textarea:focus {
-			border-color: #f15a60;
-			-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
-			-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
-			box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
-		}
-
-		.control-group.color4 input,
-		.control-group.color4 textarea {
-			color: #cfcf1b;
-			border-color: #cfcf1b;
-		}
-
-		.control-group.color4 input:focus,
-		.control-group.color4 textarea:focus {
-			border-color: #cfcf1b;
-			-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
-			-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
-			box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
-		}
-
-		.control-group.color5 input,
-		.control-group.color5 textarea {
-			color: #ff7500;
-			border-color: #ff7500;
-		}
-
-		.control-group.color5 input:focus,
-		.control-group.color5 textarea:focus {
-			border-color: #ff7500;
-			-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
-			-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
-			box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
-		}
-
-		.control-group.color6 input,
-		.control-group.color6 textarea {
-			color: #c09853;
-			border-color: #c09853;
-		}
-
-		.control-group.color6 input:focus,
-		.control-group.color6 textarea:focus {
-			border-color: #c09853;
-			-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
-			-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
-			box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 2px var(--accent-soft);
-		}
-
-		.colorpicker {
-			min-width: 100px;
-		}
-
-		/* Theme switch button (top-right) */
+		/* ---- Theme switch button (top-right) ---- */
 		.jvenn-app .theme-toggle {
 			position: fixed;
 			top: 14px;
 			right: 18px;
 			z-index: 1050;
-			width: 38px;
+			width: 40px;
 			height: 34px;
 			display: inline-flex;
 			align-items: center;
@@ -342,6 +410,22 @@
 			box-shadow: var(--shadow-md);
 			transform: translateY(-1px);
 		}
+
+		/* ---- Responsive ---- */
+		@media (max-width: 860px) {
+			.jvenn-app {
+				padding: 16px 14px 40px;
+			}
+
+			.span6 {
+				flex: 1 1 100%;
+				min-width: 0;
+			}
+
+			.jvenn-app .control-group > input[type="text"] {
+				width: calc(100% - 150px);
+			}
+		}
 	</style>
 </head>
 
@@ -357,27 +441,25 @@
 						</div>
 						<div class="row-fluid">
 							<div>
-								<p class="bodytext" style="margin-top:15px"> Paste up to <strong>six</strong> lists
-									using one row per
-									element, then click
-									the numbers in the venn to see the results.
+								<p class="bodytext"> Paste up to <strong>six</strong> lists using one row per
+									element, then click the numbers in the venn to see the results.
 								</p>
 
 								<p> Click on a venn diagram figure to display the linked elements: </p>
-								<textarea readonly id="names" style="width: 87%;" wrap="off" rows="10"></textarea>
+								<textarea readonly id="names" wrap="off" rows="10"></textarea>
 							</div>
 						</div>
 					</div>
 
 					<div class="span6">
 						<div class="bs-docs-example" content-value="Venn global configuration">
-							<img src="assets/bullet.png" style="vertical-align:initial;padding-top:10px">
+							<span class="cfg-dot"></span>
 							Display mode:
 							<div class="btn-group" data-toggle="buttons-radio">
 								<button id="dm_classic" type="button" class="btn btn-mini active">Classic</button>
 								<button id="dm_edwards" type="button" class="btn btn-mini">Edwards'</button>
 							</div><br />
-							<img src="assets/bullet.png" style="vertical-align:initial;padding-top:10px">
+							<span class="cfg-dot"></span>
 							Font family:
 							<div class="btn-group" data-toggle="buttons-radio">
 								<button id="ff_arial" type="button" class="btn btn-mini active">Arial</button>
@@ -385,7 +467,7 @@
 								<button id="ff_serif" type="button" class="btn btn-mini">Serif</button>
 								<button id="ff_mono" type="button" class="btn btn-mini">Monospace</button>
 							</div><br />
-							<img src="assets/bullet.png" style="vertical-align:initial;padding-top:10px">
+							<span class="cfg-dot"></span>
 							Font size:
 							<div class="btn-group" data-toggle="buttons-radio">
 								<button id="fs_8" type="button" class="btn btn-mini">8px</button>
@@ -396,50 +478,47 @@
 								<button id="fs_13" type="button" class="btn btn-mini">13px</button>
 								<button id="fs_14" type="button" class="btn btn-mini">14px</button>
 							</div><br />
-							<img src="assets/bullet.png" style="vertical-align:initial;padding-top:10px">
+							<span class="cfg-dot"></span>
 							Display some statistics based on input lists:
 							<div class="btn-group" data-toggle="buttons-radio">
 								<button id="ds_yes" type="button" class="btn btn-mini active">Yes</button>
 								<button id="ds_no" type="button" class="btn btn-mini">No</button>
 							</div><br />
-							<img src="assets/bullet.png" style="vertical-align:initial;padding-top:10px">
+							<span class="cfg-dot"></span>
 							Display the switch button panel (if more than 3 lists are provided):
 							<div class="btn-group" data-toggle="buttons-radio">
 								<button id="dsw_yes" type="button" class="btn btn-mini active">Yes</button>
 								<button id="dsw_no" type="button" class="btn btn-mini">No</button>
 							</div><br />
-							<img src="assets/bullet.png" style="vertical-align:initial;padding-top:10px">
+							<span class="cfg-dot"></span>
 							Substitute intersection count size by a question mark:
 							<div class="btn-group" data-toggle="buttons-radio">
 								<button id="qm_yes" type="button" class="btn btn-mini active">Yes</button>
 								<button id="qm_no" type="button" class="btn btn-mini">No</button>
 							</div>
-							<hr style="margin-bottom:12px;margin-left:50px;margin-right:50px" />
-							<img src="assets/bullet.png" style="vertical-align:initial;">
+							<hr />
+							<span class="cfg-dot"></span>
 							Find an element in list(s):
-							<input id="search-field" type="text" style="margin-top:8px"
-								placeholder="enter an element name..." />
-							<span id="search-status" class="label label-info"
-								style="vertical-align: 16px; margin-left: -35px;"></span>
+							<input id="search-field" type="text" placeholder="enter an element name..." />
+							<span id="search-status" class="label label-info"></span>
 						</div>
 					</div>
 
-					<div class="span6">
+					<div class="span12">
 
-						<ul class="nav nav-tabs" style="margin:0px">
+						<ul class="nav nav-tabs">
 							<li role="presentation" id="paste-tab" class="active"><a data-toggle="tab"
 									href="#paste">Paste lists</a></li>
 
 						</ul>
 
-						<div class="tab-content clearfix"
-							style="margin:0px;padding:20px 0 0 20px;border-left:1px solid #ddd;border-right:1px solid #ddd;border-bottom:1px solid #ddd;border-radius:0 0 4px 4px">
+						<div class="tab-content clearfix">
 							<div class="tab-pane active" id="paste">
 
 								<div class="row-fluid">
 									<div class="span6">
 										<div class="control-group color1">
-											<input class="span6" id="name_pa_1" type="text" style="font-weight: bold;"
+											<input id="name_pa_1" type="text"
 												value="List 1" maxlength="11" />
 											<div id="colorp_pa_1"
 												class="input-append colorpicker-component colorpicker-element">
@@ -447,21 +526,18 @@
 													style="display:none" />
 												<span class="add-on"><i></i></span>
 											</div>
-											<div class="btn-group" style="margin-left:15px">
-												<button id="colord_pa_1" style="margin-bottom:10px"
-													class="btn btn-mini"><i class="icon-refresh"></i></button>
-												<button id="clear_pa_1" style="margin-bottom:10px"
-													class="btn btn-mini"><i class="icon-trash"></i></button>
+											<div class="btn-group list-actions">
+												<button id="colord_pa_1" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8a6 6 0 0 1 10-4.2M13 2v2.4h-2.4M14 8a6 6 0 0 1-10 4.2M3 14v-2.4h2.4"/></svg></button>
+												<button id="clear_pa_1" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 4h11M6 2.5h4M5.5 4l.6 9h3.8l.6-9M6.8 6.5v4M9.2 6.5v4"/></svg></button>
 											</div>
 											<div class="controls controls-row">
-												<textarea class="span11" id="area_pa_1" wrap="off" rows="4"
-													style="resize:none"></textarea>
+												<textarea id="area_pa_1" wrap="off" rows="4"></textarea>
 											</div>
 										</div>
 									</div>
 									<div class="span6">
 										<div class="control-group color2">
-											<input class="span6" id="name_pa_2" type="text" style="font-weight: bold;"
+											<input id="name_pa_2" type="text"
 												value="List 2" maxlength="11" />
 											<div id="colorp_pa_2"
 												class="input-append colorpicker-component colorpicker-element">
@@ -469,15 +545,12 @@
 													style="display:none" />
 												<span class="add-on"><i></i></span>
 											</div>
-											<div class="btn-group" style="margin-left:15px">
-												<button id="colord_pa_2" style="margin-bottom:10px"
-													class="btn btn-mini"><i class="icon-refresh"></i></button>
-												<button id="clear_pa_2" style="margin-bottom:10px"
-													class="btn btn-mini"><i class="icon-trash"></i></button>
+											<div class="btn-group list-actions">
+												<button id="colord_pa_2" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8a6 6 0 0 1 10-4.2M13 2v2.4h-2.4M14 8a6 6 0 0 1-10 4.2M3 14v-2.4h2.4"/></svg></button>
+												<button id="clear_pa_2" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 4h11M6 2.5h4M5.5 4l.6 9h3.8l.6-9M6.8 6.5v4M9.2 6.5v4"/></svg></button>
 											</div>
 											<div class="controls controls-row">
-												<textarea class="span11" id="area_pa_2" wrap="off" rows="4"
-													style="resize:none"></textarea>
+												<textarea id="area_pa_2" wrap="off" rows="4"></textarea>
 											</div>
 										</div>
 									</div>
@@ -486,7 +559,7 @@
 								<div class="row-fluid">
 									<div class="span6">
 										<div class="control-group color3">
-											<input class="span6" id="name_pa_3" type="text" style="font-weight: bold;"
+											<input id="name_pa_3" type="text"
 												value="List 3" maxlength="11" />
 											<div id="colorp_pa_3"
 												class="input-append colorpicker-component colorpicker-element">
@@ -494,21 +567,18 @@
 													style="display:none" />
 												<span class="add-on"><i></i></span>
 											</div>
-											<div class="btn-group" style="margin-left:15px">
-												<button id="colord_pa_3" style="margin-bottom:10px"
-													class="btn btn-mini"><i class="icon-refresh"></i></button>
-												<button id="clear_pa_3" style="margin-bottom:10px"
-													class="btn btn-mini"><i class="icon-trash"></i></button>
+											<div class="btn-group list-actions">
+												<button id="colord_pa_3" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8a6 6 0 0 1 10-4.2M13 2v2.4h-2.4M14 8a6 6 0 0 1-10 4.2M3 14v-2.4h2.4"/></svg></button>
+												<button id="clear_pa_3" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 4h11M6 2.5h4M5.5 4l.6 9h3.8l.6-9M6.8 6.5v4M9.2 6.5v4"/></svg></button>
 											</div>
 											<div class="controls controls-row">
-												<textarea class="span11" id="area_pa_3" wrap="off" rows="4"
-													style="resize:none"></textarea>
+												<textarea id="area_pa_3" wrap="off" rows="4"></textarea>
 											</div>
 										</div>
 									</div>
 									<div class="span6">
 										<div class="control-group color4">
-											<input class="span6" id="name_pa_4" type="text" style="font-weight: bold;"
+											<input id="name_pa_4" type="text"
 												value="List 4" maxlength="11" />
 											<div id="colorp_pa_4"
 												class="input-append colorpicker-component colorpicker-element">
@@ -516,15 +586,12 @@
 													style="display:none" />
 												<span class="add-on"><i></i></span>
 											</div>
-											<div class="btn-group" style="margin-left:15px">
-												<button id="colord_pa_4" style="margin-bottom:10px"
-													class="btn btn-mini"><i class="icon-refresh"></i></button>
-												<button id="clear_pa_4" style="margin-bottom:10px"
-													class="btn btn-mini"><i class="icon-trash"></i></button>
+											<div class="btn-group list-actions">
+												<button id="colord_pa_4" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8a6 6 0 0 1 10-4.2M13 2v2.4h-2.4M14 8a6 6 0 0 1-10 4.2M3 14v-2.4h2.4"/></svg></button>
+												<button id="clear_pa_4" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 4h11M6 2.5h4M5.5 4l.6 9h3.8l.6-9M6.8 6.5v4M9.2 6.5v4"/></svg></button>
 											</div>
 											<div class="controls controls-row">
-												<textarea class="span11" id="area_pa_4" wrap="off" rows="4"
-													style="resize:none"></textarea>
+												<textarea id="area_pa_4" wrap="off" rows="4"></textarea>
 											</div>
 										</div>
 									</div>
@@ -533,7 +600,7 @@
 								<div class="row-fluid">
 									<div class="span6">
 										<div class="control-group color5">
-											<input class="span6" id="name_pa_5" type="text" style="font-weight: bold;"
+											<input id="name_pa_5" type="text"
 												value="List 5" maxlength="11" />
 											<div id="colorp_pa_5"
 												class="input-append colorpicker-component colorpicker-element">
@@ -541,21 +608,18 @@
 													style="display:none" />
 												<span class="add-on"><i></i></span>
 											</div>
-											<div class="btn-group" style="margin-left:15px">
-												<button id="colord_pa_5" style="margin-bottom:10px"
-													class="btn btn-mini"><i class="icon-refresh"></i></button>
-												<button id="clear_pa_5" style="margin-bottom:10px"
-													class="btn btn-mini"><i class="icon-trash"></i></button>
+											<div class="btn-group list-actions">
+												<button id="colord_pa_5" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8a6 6 0 0 1 10-4.2M13 2v2.4h-2.4M14 8a6 6 0 0 1-10 4.2M3 14v-2.4h2.4"/></svg></button>
+												<button id="clear_pa_5" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 4h11M6 2.5h4M5.5 4l.6 9h3.8l.6-9M6.8 6.5v4M9.2 6.5v4"/></svg></button>
 											</div>
 											<div class="controls controls-row">
-												<textarea class="span11" id="area_pa_5" wrap="off" rows="4"
-													style="resize:none"></textarea>
+												<textarea id="area_pa_5" wrap="off" rows="4"></textarea>
 											</div>
 										</div>
 									</div>
 									<div class="span6">
 										<div class="control-group color6">
-											<input class="span6" id="name_pa_6" type="text" style="font-weight: bold;"
+											<input id="name_pa_6" type="text"
 												value="List 6" maxlength="11" />
 											<div id="colorp_pa_6"
 												class="input-append colorpicker-component colorpicker-element">
@@ -563,24 +627,21 @@
 													style="display:none" />
 												<span class="add-on"><i></i></span>
 											</div>
-											<div class="btn-group" style="margin-left:15px">
-												<button id="colord_pa_6" style="margin-bottom:10px"
-													class="btn btn-mini"><i class="icon-refresh"></i></button>
-												<button id="clear_pa_6" style="margin-bottom:10px"
-													class="btn btn-mini"><i class="icon-trash"></i></button>
+											<div class="btn-group list-actions">
+												<button id="colord_pa_6" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8a6 6 0 0 1 10-4.2M13 2v2.4h-2.4M14 8a6 6 0 0 1-10 4.2M3 14v-2.4h2.4"/></svg></button>
+												<button id="clear_pa_6" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 4h11M6 2.5h4M5.5 4l.6 9h3.8l.6-9M6.8 6.5v4M9.2 6.5v4"/></svg></button>
 											</div>
 											<div class="controls controls-row">
-												<textarea class="span11" id="area_pa_6" wrap="off" rows="4"
-													style="resize:none"></textarea>
+												<textarea id="area_pa_6" wrap="off" rows="4"></textarea>
 											</div>
 										</div>
 									</div>
 								</div>
 
 
-								<p style="clear:both;text-align:right">
-									<button id="clear-all" class="btn">Clear all</button>
-								</p>
+							<p class="clear-all-row">
+								<button id="clear-all" class="btn">Clear all</button>
+							</p>
 							</div>
 
 						</div>
@@ -594,11 +655,10 @@
 
 
 
-		<div class="row" padding="padding-left: 20px;">
+		<div class="row">
 
-			<div class="col-12"
-				style="position:relative;padding:14px 16px 14px 16px;text-align:justify">
-				<span class="label label-info" style="position:absolute;top:-10px;left:-10px">How to cite</span>
+			<div class="col-12">
+				<span class="label label-info">How to cite</span>
 				<h6>Philippe Bardou, Jérôme Mariette, Frédéric Escudié, Christophe Djemiel and Christophe Klopp.
 					jvenn: an interactive Venn diagram viewer.
 					BMC Bioinformatics 2014, 15:293 doi:10.1186/1471-2105-15-293 &nbsp; - &nbsp;
