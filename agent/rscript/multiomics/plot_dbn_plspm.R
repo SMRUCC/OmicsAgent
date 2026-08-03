@@ -77,6 +77,102 @@
 }
 
 
+#' Normalise a network layout into a two-column data frame
+#'
+#' @param coords A 2-column numeric matrix/df or NULL.
+#' @param nodes Character vector of node identifiers to keep.
+#'
+#' @return A data frame with columns `node`, `x`, `y`, or NULL when `coords`
+#'   cannot be matched to the nodes.
+#'
+#' @keywords internal
+.dbn_layout_df <- function(coords, nodes) {
+  if (is.null(coords) || length(nodes) == 0) return(NULL)
+  coords <- as.data.frame(coords)
+  if (ncol(coords) < 2) return(NULL)
+  if (nrow(coords) != length(nodes)) {
+    # named layout: reorder / subset to the requested node order
+    if (is.null(rownames(coords)) ||
+        !all(nodes %in% rownames(coords))) return(NULL)
+    coords <- coords[nodes, , drop = FALSE]
+  }
+  out <- data.frame(node = nodes,
+                    x = as.numeric(coords[[1]][seq_len(length(nodes))]),
+                    y = as.numeric(coords[[2]][seq_len(length(nodes))]),
+                    stringsAsFactors = FALSE)
+  rownames(out) <- NULL
+  out
+}
+
+
+#' Compute node coordinates for a network using igraph layouts
+#'
+#' @description Wraps the igraph layout engine so the network figures share a
+#'   single, consistent way of turning an edge list into coordinates. Besides
+#'   the force-directed / spectral layouts it can also reuse a hand-written
+#'   layout handed in through the `layout` argument.
+#'
+#' @param arcs A data frame with `from` and `to` columns.
+#' @param layout Layout selector. One of:
+#'   \itemize{
+#'     \item \code{"fr"} / \code{"force"}: Fruchterman-Reingold force-directed
+#'       (respects a previous layout when one is supplied via \code{old_coords}).
+#'     \item \code{"kk"}: Kamada-Kawai force-directed.
+#'     \item \code{"tree"}: Sugiyama hierarchical layout (useful for upstream ->
+#'       downstream flows).
+#'     \item \code{"circle"}: circular arrangement.
+#'     \item a 2-column matrix / data frame of explicit coordinates (rows must
+#'       be named with the node ids).
+#'   }
+#' @param old_coords Optional previous coordinates (named matrix) used as the
+#'   starting point for the force-directed layouts. Ignored otherwise.
+#'
+#' @return A data frame with columns `node`, `x`, `y`.
+#'
+#' @keywords internal
+.dbn_compute_layout <- function(arcs, layout = "fr", old_coords = NULL) {
+  all_nodes <- unique(c(arcs$from, arcs$to))
+
+  # explicit coordinate matrix passed by the caller
+  if (is.matrix(layout) || is.data.frame(layout)) {
+    return(.dbn_layout_df(layout, all_nodes))
+  }
+
+  lay_key <- tolower(as.character(layout)[1])
+  g <- igraph::graph_from_data_frame(
+    arcs[, c("from", "to"), drop = FALSE],
+    directed = TRUE,
+    vertices = data.frame(name = all_nodes, stringsAsFactors = FALSE))
+
+  coords <- switch(
+    lay_key,
+    fr = , force = {
+      seed <- NULL
+      if (!is.null(old_coords) &&
+          all(all_nodes %in% rownames(old_coords))) {
+        seed <- old_coords[all_nodes, , drop = FALSE]
+      }
+      igraph::layout_with_fr(g, coords = seed, weights = NULL)
+    },
+    kk = {
+      igraph::layout_with_kk(g)
+    },
+    tree = {
+      tryCatch(
+        igraph::layout_as_tree(g, circular = FALSE),
+        error = function(e) igraph::layout_with_kk(g))
+    },
+    circle = {
+      igraph::layout_in_circle(g)
+    },
+    {
+      igraph::layout_nicely(g)
+    })
+
+  .dbn_layout_df(coords, all_nodes)
+}
+
+
 # ------------------------------------------------------------------------------
 # Dynamic Bayesian network figures
 # ------------------------------------------------------------------------------
@@ -92,6 +188,12 @@
 #' @param title Plot title.
 #' @param label_top Maximum number of nodes to label, chosen by degree.
 #'   Default: 30.
+#' @param layout Network layout. \code{"fr"} / \code{"force"} (default) uses
+#'   the Fruchterman-Reingold force-directed placement, \code{"kk"} the
+#'   Kamada-Kawai placement, \code{"tree"} a Sugiyama layered placement, and
+#'   \code{"hier"} the two-column time-slice layout used in earlier versions.
+#'   A 2-column coordinate matrix (rows named with node ids) can also be
+#'   supplied to place the nodes explicitly.
 #'
 #' @return A ggplot object.
 #'
@@ -101,7 +203,8 @@
 #' }
 #'
 #' @export
-plot_dbn_layer <- function(dbn_result, title = NULL, label_top = 30) {
+plot_dbn_layer <- function(dbn_result, title = NULL, label_top = 30,
+                           layout = "fr") {
   if (is.null(dbn_result)) return(.dbn_empty_plot("No DBN result.", title))
   arcs <- dbn_result$arcs
   nd <- dbn_result$nodes_df
@@ -115,13 +218,25 @@ plot_dbn_layer <- function(dbn_result, title = NULL, label_top = 30) {
   nd <- nd[nd$node %in% active, , drop = FALSE]
   if (nrow(nd) == 0) return(.dbn_empty_plot("No connected node.", title))
 
-  pos <- do.call(rbind, lapply(split(nd, nd$time_slice), function(s) {
-    s <- s[order(-s$degree), , drop = FALSE]
-    s$x <- if (s$time_slice[1] == "t0") 0 else 1
-    s$y <- if (nrow(s) == 1) 0.5 else seq(0, 1, length.out = nrow(s))
-    s
-  }))
-  rownames(pos) <- NULL
+  hier_layout <- (is.character(layout) &&
+                    tolower(layout)[1] %in% c("hier", "hierarchical"))
+  if (hier_layout) {
+    pos <- do.call(rbind, lapply(split(nd, nd$time_slice), function(s) {
+      s <- s[order(-s$degree), , drop = FALSE]
+      s$x <- if (s$time_slice[1] == "t0") 0 else 1
+      s$y <- if (nrow(s) == 1) 0.5 else seq(0, 1, length.out = nrow(s))
+      s
+    }))
+    rownames(pos) <- NULL
+  } else {
+    xy <- .dbn_compute_layout(arcs, layout = layout)
+    if (is.null(xy)) {
+      return(.dbn_empty_plot("Could not compute the network layout.", title))
+    }
+    pos <- nd
+    pos$x <- xy$x[match(pos$node, xy$node)]
+    pos$y <- xy$y[match(pos$node, xy$node)]
+  }
 
   ed <- data.frame(
     x = pos$x[match(arcs$from, pos$node)],
