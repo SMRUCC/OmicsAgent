@@ -43,11 +43,31 @@
         <Image MinDPI="192">Icons/icons8-theme-96.png</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdButtonOpenFolder" Id="16" LabelTitle="Open Folder">
+      <Command.SmallImages>
+        <Image MinDPI="192">Icons/icons8-file-explorer-new-96.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Icons/icons8-file-explorer-new-96.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdButtonExit" Id="17" LabelTitle="Exit">
+      <Command.SmallImages>
+        <Image MinDPI="192">Icons/icons8-exit-96.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Icons/icons8-exit-96.png</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <Ribbon>
       <Ribbon.ApplicationMenu>
-        <ApplicationMenu />
+        <ApplicationMenu>
+          <MenuGroup>
+            <Button CommandName="cmdButtonExit" />
+          </MenuGroup>
+        </ApplicationMenu>
       </Ribbon.ApplicationMenu>
       <Ribbon.QuickAccessToolbar>
         <QuickAccessToolbar />
@@ -73,7 +93,8 @@
       </Ribbon.ContextualTabs>
       <Ribbon.Tabs>
         <Tab CommandName="cmdTabMain">
-          <Group CommandName="cmdGroupMain" SizeDefinition="OneButton">
+          <Group CommandName="cmdGroupMain" SizeDefinition="TwoButtons">
+            <Button CommandName="cmdButtonOpenFolder" />
             <Button CommandName="cmdButtonOpenResearch" />
           </Group>
         </Tab>

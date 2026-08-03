@@ -1,4 +1,5 @@
 ﻿Imports Galaxy.Workbench
+Imports Microsoft.VisualStudio.WinForms.Docking
 Imports OmicsWorks.RibbonLib.Controls
 
 Module RibbonMenu
@@ -9,6 +10,15 @@ Module RibbonMenu
         RibbonMenu._Ribbon = ribbon
 
         AddHandler ribbon.ButtonOpenResearch.ExecuteEvent, Sub() Call OpenResearch()
+        AddHandler ribbon.ButtonOpenFolder.ExecuteEvent, Sub() Call OpenFolder()
+    End Sub
+
+    Public Sub OpenFolder()
+        Using dir As New FolderBrowserDialog
+            If dir.ShowDialog = DialogResult.OK Then
+                Call CommonRuntime.RegisterToolWindow(New FormFolderWorkspace With {.Folder = dir.SelectedPath}, DockState.DockRight)
+            End If
+        End Using
     End Sub
 
     Public Sub OpenResearch()

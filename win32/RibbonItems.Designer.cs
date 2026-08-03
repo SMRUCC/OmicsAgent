@@ -18,6 +18,7 @@ namespace RibbonLib.Controls
     {
         private static class Cmd
         {
+            public const uint cmdButtonExit = 17;
             public const uint cmdMenuResearchWork = 3;
             public const uint cmdTabResearchWork = 5;
             public const uint cmdGroupResearchWork = 4;
@@ -30,12 +31,14 @@ namespace RibbonLib.Controls
             public const uint cmdButtonToggleTheme = 15;
             public const uint cmdTabMain = 9;
             public const uint cmdGroupMain = 7;
+            public const uint cmdButtonOpenFolder = 16;
             public const uint cmdButtonOpenResearch = 6;
         }
 
         // ContextPopup CommandName
 
         public Ribbon Ribbon { get; private set; }
+        public RibbonButton ButtonExit { get; private set; }
         public RibbonTabGroup MenuResearchWork { get; private set; }
         public RibbonTab TabResearchWork { get; private set; }
         public RibbonGroup GroupResearchWork { get; private set; }
@@ -48,6 +51,7 @@ namespace RibbonLib.Controls
         public RibbonButton ButtonToggleTheme { get; private set; }
         public RibbonTab TabMain { get; private set; }
         public RibbonGroup GroupMain { get; private set; }
+        public RibbonButton ButtonOpenFolder { get; private set; }
         public RibbonButton ButtonOpenResearch { get; private set; }
 
         public RibbonItems(Ribbon ribbon)
@@ -55,6 +59,7 @@ namespace RibbonLib.Controls
             if (ribbon == null)
                 throw new ArgumentNullException(nameof(ribbon), "Parameter is null");
             this.Ribbon = ribbon;
+            ButtonExit = new RibbonButton(ribbon, Cmd.cmdButtonExit);
             MenuResearchWork = new RibbonTabGroup(ribbon, Cmd.cmdMenuResearchWork);
             TabResearchWork = new RibbonTab(ribbon, Cmd.cmdTabResearchWork);
             GroupResearchWork = new RibbonGroup(ribbon, Cmd.cmdGroupResearchWork);
@@ -67,6 +72,7 @@ namespace RibbonLib.Controls
             ButtonToggleTheme = new RibbonButton(ribbon, Cmd.cmdButtonToggleTheme);
             TabMain = new RibbonTab(ribbon, Cmd.cmdTabMain);
             GroupMain = new RibbonGroup(ribbon, Cmd.cmdGroupMain);
+            ButtonOpenFolder = new RibbonButton(ribbon, Cmd.cmdButtonOpenFolder);
             ButtonOpenResearch = new RibbonButton(ribbon, Cmd.cmdButtonOpenResearch);
         }
 

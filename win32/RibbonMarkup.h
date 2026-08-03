@@ -41,4 +41,12 @@
 #define cmdButtonToggleTheme_LabelTitle_RESID 60020
 #define cmdButtonToggleTheme_SmallImages_192__RESID 60021
 #define cmdButtonToggleTheme_LargeImages_192__RESID 60022
-#define InternalCmd2_LabelTitle_RESID 60023
+#define cmdButtonOpenFolder 16 
+#define cmdButtonOpenFolder_LabelTitle_RESID 60023
+#define cmdButtonOpenFolder_SmallImages_192__RESID 60024
+#define cmdButtonOpenFolder_LargeImages_192__RESID 60025
+#define cmdButtonExit 17 
+#define cmdButtonExit_LabelTitle_RESID 60026
+#define cmdButtonExit_SmallImages_192__RESID 60027
+#define cmdButtonExit_LargeImages_192__RESID 60028
+#define InternalCmd2_LabelTitle_RESID 60029

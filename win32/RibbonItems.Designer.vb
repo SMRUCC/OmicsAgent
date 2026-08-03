@@ -15,6 +15,7 @@ Imports RibbonLib.Controls
 Namespace RibbonLib.Controls
     Partial Class RibbonItems
         Private Class Cmd
+            Public Const cmdButtonExit As UInteger = 17
             Public Const cmdMenuResearchWork As UInteger = 3
             Public Const cmdTabResearchWork As UInteger = 5
             Public Const cmdGroupResearchWork As UInteger = 4
@@ -27,6 +28,7 @@ Namespace RibbonLib.Controls
             Public Const cmdButtonToggleTheme As UInteger = 15
             Public Const cmdTabMain As UInteger = 9
             Public Const cmdGroupMain As UInteger = 7
+            Public Const cmdButtonOpenFolder As UInteger = 16
             Public Const cmdButtonOpenResearch As UInteger = 6
         End Class
 
@@ -36,6 +38,12 @@ Namespace RibbonLib.Controls
         Public ReadOnly Property Ribbon As Ribbon
             Get
                 Return _ribbon
+            End Get
+        End Property
+        Private _ButtonExit As RibbonButton
+        Public ReadOnly Property ButtonExit As RibbonButton
+            Get
+                Return _ButtonExit
             End Get
         End Property
         Private _MenuResearchWork As RibbonTabGroup
@@ -110,6 +118,12 @@ Namespace RibbonLib.Controls
                 Return _GroupMain
             End Get
         End Property
+        Private _ButtonOpenFolder As RibbonButton
+        Public ReadOnly Property ButtonOpenFolder As RibbonButton
+            Get
+                Return _ButtonOpenFolder
+            End Get
+        End Property
         Private _ButtonOpenResearch As RibbonButton
         Public ReadOnly Property ButtonOpenResearch As RibbonButton
             Get
@@ -122,6 +136,7 @@ Namespace RibbonLib.Controls
                 Throw New ArgumentNullException(NameOf(ribbon), "Parameter is Nothing")
             End If
             _ribbon = ribbon
+            _ButtonExit = New RibbonButton(_ribbon, Cmd.cmdButtonExit)
             _MenuResearchWork = New RibbonTabGroup(_ribbon, Cmd.cmdMenuResearchWork)
             _TabResearchWork = New RibbonTab(_ribbon, Cmd.cmdTabResearchWork)
             _GroupResearchWork = New RibbonGroup(_ribbon, Cmd.cmdGroupResearchWork)
@@ -134,6 +149,7 @@ Namespace RibbonLib.Controls
             _ButtonToggleTheme = New RibbonButton(_ribbon, Cmd.cmdButtonToggleTheme)
             _TabMain = New RibbonTab(_ribbon, Cmd.cmdTabMain)
             _GroupMain = New RibbonGroup(_ribbon, Cmd.cmdGroupMain)
+            _ButtonOpenFolder = New RibbonButton(_ribbon, Cmd.cmdButtonOpenFolder)
             _ButtonOpenResearch = New RibbonButton(_ribbon, Cmd.cmdButtonOpenResearch)
         End Sub
 
