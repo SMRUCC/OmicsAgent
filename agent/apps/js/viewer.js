@@ -1217,7 +1217,7 @@ function run(BASE_URL) {
     var state = {
       loadedCount: Math.min(MAX_TABLE_ROWS, body.length),
       sortKeys: [], // [{ col, dir }]，顺序即优先级
-      filters: {}, // { [col]: filter }，多列 AND
+      filters: {}, // { [col]: filter[] }，同列多条件 AND；列头浮层整体覆盖该数组，单元格按钮追加
       sciMode: false, // 4 位有效数字科学计数法
       heatMode: "off", // off | col（列 min/max） | row（行 Z-score）
       palette: "viridis",
@@ -1336,7 +1336,8 @@ function run(BASE_URL) {
           mark.classList.add("on");
           thNodes[i].classList.add("sorted");
         }
-        var active = !!state.filters[i];
+        var arr = state.filters[i];
+        var active = !!(arr && arr.length);
         filterBtns[i].classList.toggle("on", active);
         filterBtns[i].title = active ? "已筛选，点击修改" : "筛选此列";
       }
@@ -1350,15 +1351,18 @@ function run(BASE_URL) {
         return;
       }
       anchor.classList.add("popping");
+      var existing = state.filters[col] || [];
       openFilterPopover({
         anchor: anchor,
         colIndex: col,
         colName: header[col],
         numeric: colMeta[col].numeric,
-        current: state.filters[col] || null,
+        // 浮层只编辑该列的最后一条条件（单条件语义），单元格按钮的快速筛选不在此显示
+        current: existing.length ? existing[existing.length - 1] : null,
         scrollEl: box,
         onApply: function (f) {
-          state.filters[col] = f;
+          // 列头浮层为「整列配置」入口：覆盖该列的整组条件
+          state.filters[col] = [f];
           refresh();
         },
         onClear: function () {
@@ -1369,6 +1373,19 @@ function run(BASE_URL) {
           anchor.classList.remove("popping");
         },
       });
+    }
+
+    /* 单元格快速筛选：按该单元格字符串值做区分大小写的文本「等于」，追加为 AND 条件 */
+    function addQuickFilter(col, value) {
+      if (colMeta[col].numeric) return; // 数值列不提供
+      var arr = state.filters[col] || (state.filters[col] = []);
+      arr.push({
+        mode: "text",
+        op: "equals",
+        value: value,
+        caseSensitive: true,
+      });
+      refresh();
     }
 
     function clearAllFilters() {
@@ -1382,10 +1399,14 @@ function run(BASE_URL) {
       for (var key in state.filters) {
         if (!state.filters.hasOwnProperty(key)) continue;
         var ci = parseInt(key, 10);
-        preds.push({
-          col: ci,
-          fn: makeFilterPredicate(state.filters[key], colMeta[ci]),
-        });
+        // 同列多条条件（单元格快速筛选可追加）也按 AND 组合
+        var arr = state.filters[key];
+        for (var a = 0; a < arr.length; a++) {
+          preds.push({
+            col: ci,
+            fn: makeFilterPredicate(arr[a], colMeta[ci]),
+          });
+        }
       }
 
       var out = [];
@@ -1492,7 +1513,21 @@ function run(BASE_URL) {
               }
             }
           } else {
-            td.textContent = raw == null ? "" : raw;
+            // 非数值列：追加「按此值等于筛选」按钮（区分大小写）
+            var txt = raw == null ? "" : raw;
+            td.textContent = txt;
+            if (txt !== "") {
+              var qf = el("button", "vcell-filter", ICON_FILTER);
+              qf.type = "button";
+              qf.title = "按此值「等于」筛选（区分大小写）";
+              (function (ci2, val) {
+                qf.addEventListener("click", function (e) {
+                  e.stopPropagation();
+                  addQuickFilter(ci2, val);
+                });
+              })(c2, txt);
+              td.appendChild(qf);
+            }
           }
 
           tr.appendChild(td);

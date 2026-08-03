@@ -437,6 +437,42 @@ html[data-theme="dark"] {
   border-color: var(--accent);
 }
 
+/* 单元格「等于筛选」按钮：非数值列才有。
+ * 默认淡出，hover 所在单元格时显现，避免视觉噪声。 */
+.vcell-filter {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  margin: 0 0 0 6px;
+  padding: 0;
+  vertical-align: -3px;
+  cursor: pointer;
+  color: var(--ui-foreground-subtle);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  opacity: 0;
+  transition:
+    opacity 0.15s ease,
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.vtable td:hover .vcell-filter,
+.vcell-filter:focus-visible {
+  opacity: 1;
+}
+
+.vcell-filter:hover {
+  color: var(--accent);
+  background: var(--ui-background);
+  border-color: var(--ui-border-strong);
+}
+
 /* ---- 热图模式 ---- */
 /* 单元格背景由 JS 写内联样式，此处需让出 background 属性：
  * 斑马纹显式置空，hover 改用 inset 遮罩，二者才能与内联色共存。 */
