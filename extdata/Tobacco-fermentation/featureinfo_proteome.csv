@@ -1,0 +1,1001 @@
+﻿gene_id,name,type,kegg,pfam,ec_number,description,category,super_class,family,organism
+NtG_00001,CCD1,protein,K01610,PF04140,EC 1.13.11.71,CCD1 - enzyme for β-Damascenone biosynthesis,Carotenoid degradation product (C13 norisoprenoid),Carotenoid degradation product,Carotenoid degradation product,Nicotiana tabacum
+NtG_00002,CCD4,protein,K01610,PF04140,EC 1.13.11.71,CCD4 - enzyme for β-Damascenone biosynthesis,Carotenoid degradation product (C13 norisoprenoid),Carotenoid degradation product,Carotenoid degradation product,Nicotiana tabacum
+NtG_00003,CCD2,protein,K01610,PF04140,EC 1.13.11.71,CCD2 - enzyme for β-Damascenone biosynthesis,Carotenoid degradation product (C13 norisoprenoid),Carotenoid degradation product,Carotenoid degradation product,Nicotiana tabacum
+NtG_00004,β-carotene_9,protein,K01610,,EC 1.13.11.71,β-carotene_9 - enzyme for β-Ionone biosynthesis,Carotenoid degradation product (C13 norisoprenoid),Carotenoid degradation product,Carotenoid degradation product,Nicotiana tabacum
+NtG_00005,10-dioxygenase,protein,K01610,PF04140;PF03171,EC 1.13.11.71,10-dioxygenase - enzyme for β-Ionone biosynthesis,Carotenoid degradation product (C13 norisoprenoid),Carotenoid degradation product,Carotenoid degradation product,Nicotiana tabacum
+NtG_00006,carotenoid_cleavage_dioxygenase,protein,K01610,PF04140;PF03171,EC 1.13.11.71,carotenoid_cleavage_dioxygenase - enzyme for α-Ionone biosynthesis,Carotenoid degradation product (C13 norisoprenoid),Carotenoid degradation product,Carotenoid degradation product,Nicotiana tabacum
+NtG_00007,CCD,protein,K01610,PF04140,EC 1.13.11.71; EC 1.14.-.-,CCD - enzyme for 3-Hydroxy-β-damascone biosynthesis,Carotenoid degradation product (C13 norisoprenoid),Carotenoid degradation product,Carotenoid degradation product,Nicotiana tabacum
+NtG_00008,cytochrome_P450,protein,K01610,PF00067,EC 1.13.11.71; EC 1.14.-.-,cytochrome_P450 - enzyme for 3-Hydroxy-β-damascone biosynthesis,Carotenoid degradation product (C13 norisoprenoid),Carotenoid degradation product,Carotenoid degradation product,Nicotiana tabacum
+NtG_00009,P450_monooxygenase,protein,K01610,PF04140;PF03171,EC 1.13.11.71; EC 1.14.-.-,P450_monooxygenase - enzyme for 4-Hydroxy-β-damascone biosynthesis,Carotenoid degradation product (C13 norisoprenoid),Carotenoid degradation product,Carotenoid degradation product,Nicotiana tabacum
+NtG_00010,diterpene_synthase,protein,K01610,PF00288;PF00155,EC 1.13.11.71; EC 5.4.99.18,diterpene_synthase - enzyme for Megastigmatrienone biosynthesis,Carotenoid degradation product (C13 norisoprenoid),Carotenoid degradation product,Carotenoid degradation product,Nicotiana tabacum
+NtG_00011,P450,protein,K01610,PF00067,EC 1.13.11.71; EC 5.4.99.18,P450 - enzyme for Megastigmatrienone biosynthesis,Carotenoid degradation product (C13 norisoprenoid),Carotenoid degradation product,Carotenoid degradation product,Nicotiana tabacum
+NtG_00012,isomerase,protein,K01610,PF00154;PF01266,EC 1.13.11.71; EC 5.3.-.-,isomerase - enzyme for Megastigmatrienone B biosynthesis,Carotenoid degradation product (C13 norisoprenoid),Carotenoid degradation product,Carotenoid degradation product,Nicotiana tabacum
+NtG_00013,epoxidase,protein,K01610,,EC 1.13.11.71; EC 1.14.-.-,epoxidase - enzyme for Theaspirone biosynthesis,Carotenoid degradation product (C13 norisoprenoid),Carotenoid degradation product,Carotenoid degradation product,Nicotiana tabacum
+NtG_00014,cyclase,protein,K01610,,EC 1.13.11.71,cyclase - enzyme for Theaspirane A biosynthesis,Carotenoid degradation product (C13 norisoprenoid),Carotenoid degradation product,Carotenoid degradation product,Nicotiana tabacum
+NtG_00015,alcohol_dehydrogenase,protein,K01610,PF00498;PF08640,EC 1.13.11.71; EC 1.1.1.1,alcohol_dehydrogenase - enzyme for 3-Oxo-α-ionol biosynthesis,Carotenoid degradation product (C13 norisoprenoid),Carotenoid degradation product,Carotenoid degradation product,Nicotiana tabacum
+NtG_00016,ene-reductase,protein,K01610,,EC 1.13.11.71; EC 1.3.1.-; EC 1.1.1.1,"ene-reductase - enzyme for 3-Oxo-7,8-dihydro-α-ionol biosynthesis",Carotenoid degradation product (C13 norisoprenoid),Carotenoid degradation product,Carotenoid degradation product,Nicotiana tabacum
+NtG_00017,ADH,protein,K01610,,EC 1.13.11.71; EC 1.3.1.-; EC 1.1.1.1,"ADH - enzyme for 3-Oxo-7,8-dihydro-α-ionol biosynthesis",Carotenoid degradation product (C13 norisoprenoid),Carotenoid degradation product,Carotenoid degradation product,Nicotiana tabacum
+NtG_00018,β-glucosidase,protein,K01188,,EC 3.2.1.21; EC 1.13.11.71,β-glucosidase - enzyme for β-Damascenone glycoside precursor biosynthesis,Carotenoid degradation product (C13 norisoprenoid),Carotenoid degradation product,Carotenoid degradation product,Nicotiana tabacum
+NtG_00019,Baeyer-Villiger_monooxygenase,protein,K01610,PF04140;PF03171,EC 1.13.11.71; EC 1.14.13.22,Baeyer-Villiger_monooxygenase - enzyme for Dihydroactinidiolide biosynthesis,Carotenoid degradation product (C13 norisoprenoid),Carotenoid degradation product,Carotenoid degradation product,Nicotiana tabacum
+NtG_00020,BVMO,protein,K01610,,EC 1.13.11.71; EC 1.14.13.22,BVMO - enzyme for Actinorhodin-related norisoprenoid biosynthesis,Carotenoid degradation product (C13 norisoprenoid),Carotenoid degradation product,Carotenoid degradation product,Nicotiana tabacum
+NtG_00021,dehydrogenase,protein,K01610,PF00498;PF08640,EC 1.13.11.71; EC 1.3.1.-,dehydrogenase - enzyme for Megastigmadienone biosynthesis,Carotenoid degradation product (C13 norisoprenoid),Carotenoid degradation product,Carotenoid degradation product,Nicotiana tabacum
+NtG_00022,P450_epoxidase,protein,K01610,PF00067,EC 1.13.11.71; EC 1.14.-.-,P450_epoxidase - enzyme for β-Ionone epoxide biosynthesis,Carotenoid degradation product (C13 norisoprenoid),Carotenoid degradation product,Carotenoid degradation product,Nicotiana tabacum
+NtG_00023,acetyltransferase,protein,K01610,PF00501;PF00583,EC 1.13.11.71; EC 1.1.1.1; EC 2.3.1.84,acetyltransferase - enzyme for β-Ionyl acetate biosynthesis,Carotenoid degradation product (C13 norisoprenoid),Carotenoid degradation product,Carotenoid degradation product,Nicotiana tabacum
+NtG_00024,cembranoid_oxidase,protein,,,EC 1.14.-.-,cembranoid_oxidase - enzyme for Solanone biosynthesis,Cembranoid degradation product,Cembranoid degradation product,Cembranoid degradation product,Nicotiana tabacum
+NtG_00025,demethylase,protein,,,EC 1.14.-.-; EC 1.14.13.-,demethylase - enzyme for Nor-solanone biosynthesis,Cembranoid degradation product,Cembranoid degradation product,Cembranoid degradation product,Nicotiana tabacum
+NtG_00026,reductase,protein,K00001,,EC 1.1.1.1,reductase - enzyme for Solanol biosynthesis,Cembranoid degradation product,Cembranoid degradation product,Cembranoid degradation product,Nicotiana tabacum
+NtG_00027,cembratriene_synthase,protein,,PF00288;PF00155,EC 4.2.3.-,cembratriene_synthase - enzyme for Cembranatriene biosynthesis,Cembranoid degradation product,Cembranoid degradation product,Cembranoid degradation product,Nicotiana tabacum
+NtG_00028,CBTS,protein,,,EC 4.2.3.-; EC 1.14.-.-,CBTS - enzyme for Cembratriene-diol biosynthesis,Cembranoid degradation product,Cembranoid degradation product,Cembranoid degradation product,Nicotiana tabacum
+NtG_00029,P450_hydroxylase,protein,,PF00067,EC 4.2.3.-; EC 1.14.-.-,P450_hydroxylase - enzyme for Cembratriene-diol biosynthesis,Cembranoid degradation product,Cembranoid degradation product,Cembranoid degradation product,Nicotiana tabacum
+NtG_00030,retro-aldolase,protein,,,EC 1.14.-.-,retro-aldolase - enzyme for Tabanone (α-Cembrenediol derivative) biosynthesis,Cembranoid degradation product,Cembranoid degradation product,Cembranoid degradation product,Nicotiana tabacum
+NtG_00031,aldehyde_dehydrogenase,protein,K00107,PF00498;PF08640,EC 1.14.-.-; EC 1.2.1.3,aldehyde_dehydrogenase - enzyme for Cembranoid acid biosynthesis,Cembranoid degradation product,Cembranoid degradation product,Cembranoid degradation product,Nicotiana tabacum
+NtG_00032,cembrene_synthase,protein,,PF00288;PF00155,EC 4.2.3.-,cembrene_synthase - enzyme for Cembrene A biosynthesis,Cembranoid degradation product,Cembranoid degradation product,Cembranoid degradation product,Nicotiana tabacum
+NtG_00033,phytyl_diphosphate_synthase,protein,,PF00288;PF00155,EC 2.5.1.-; EC 4.2.3.-,phytyl_diphosphate_synthase - enzyme for Neophytadiene (diterpene hydrocarbon) biosynthesis,Cembranoid degradation product / Diterpene,Cembranoid degradation product / Diterpene,Cembranoid degradation product / Diterpene,Nicotiana tabacum
+NtG_00034,neophytadiene_synthase,protein,,PF00288;PF00155,EC 2.5.1.-; EC 4.2.3.-,neophytadiene_synthase - enzyme for Neophytadiene (diterpene hydrocarbon) biosynthesis,Cembranoid degradation product / Diterpene,Cembranoid degradation product / Diterpene,Cembranoid degradation product / Diterpene,Nicotiana tabacum
+NtG_00035,chlorophyllase,protein,K08099,,EC 3.1.1.14; EC 1.1.1.-,chlorophyllase - enzyme for Phytol biosynthesis,Cembranoid degradation product / Diterpene,Cembranoid degradation product / Diterpene,Cembranoid degradation product / Diterpene,Nicotiana tabacum
+NtG_00036,phytol_dehydrogenase,protein,K08099,PF00498;PF08640,EC 3.1.1.14; EC 1.1.1.-,phytol_dehydrogenase - enzyme for Phytol biosynthesis,Cembranoid degradation product / Diterpene,Cembranoid degradation product / Diterpene,Cembranoid degradation product / Diterpene,Nicotiana tabacum
+NtG_00037,amylase,protein,,,NA,amylase - enzyme for 2-Acetylfuran biosynthesis,Maillard reaction product (Furan),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00038,Maillard_pathway,protein,,,NA,Maillard_pathway - enzyme for 2-Acetylfuran biosynthesis,Maillard reaction product (Furan),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00039,furan_synthase,protein,,PF00288;PF00155,NA,furan_synthase - enzyme for 2-Acetylfuran biosynthesis,Maillard reaction product (Furan),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00040,proline_dehydrogenase,protein,,PF00498;PF08640,NA,proline_dehydrogenase - enzyme for 2-Acetylpyrrole biosynthesis,Maillard reaction product (Pyrrole),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00041,rhamnose_isomerase,protein,K01813,PF00154;PF01266,EC 5.3.1.14; EC 4.2.1.-,rhamnose_isomerase - enzyme for 5-Methylfurfural biosynthesis,Maillard reaction product (Furan),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00042,dehydratase,protein,K01813,,EC 5.3.1.14; EC 4.2.1.-,dehydratase - enzyme for 5-Methylfurfural biosynthesis,Maillard reaction product (Furan),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00043,xylose_isomerase,protein,K01805,PF00154;PF01266,EC 5.3.1.5; EC 4.2.1.-,xylose_isomerase - enzyme for Furfural biosynthesis,Maillard reaction product (Furan),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00044,xylose_dehydratase,protein,K01805,,EC 5.3.1.5; EC 4.2.1.-,xylose_dehydratase - enzyme for Furfural biosynthesis,Maillard reaction product (Furan),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00045,furfural_reductase,protein,K00001,,EC 1.1.1.-; EC 1.1.1.1,furfural_reductase - enzyme for 2-Furfuryl alcohol biosynthesis,Maillard reaction product (Furan),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00046,1-pyrroline-5-carboxylate_dehydrogenase,protein,K00318,PF00498;PF08640,EC 1.5.5.2; EC 1.2.1.88,1-pyrroline-5-carboxylate_dehydrogenase - enzyme for 2-Acetyl-1-pyrroline biosynthesis,Maillard reaction product (Pyrroline),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00047,cysteine_desulfurase,protein,K04487,,EC 2.8.1.7,cysteine_desulfurase - enzyme for 2-Acetylthiazole biosynthesis,Maillard reaction product (Thiazole),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00048,cysteine-furfural_conjugate_lyase,protein,K00816,PF00274;PF00682,EC 4.4.1.13,cysteine-furfural_conjugate_lyase - enzyme for Furfuryl thiol (2-Furanmethanethiol) biosynthesis,Maillard reaction product (Furan thiol),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00049,β-lyase,protein,K00816,PF00274;PF00682,EC 4.4.1.13,β-lyase - enzyme for Furfuryl thiol (2-Furanmethanethiol) biosynthesis,Maillard reaction product (Furan thiol),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00050,aminotransferase,protein,K23259,PF00501;PF00583,EC 2.6.1.-; EC 1.1.1.80,aminotransferase - enzyme for Pyrazine biosynthesis,Maillard reaction product (Pyrazine),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00051,threonine_dehydrogenase,protein,K23259,PF00498;PF08640,EC 2.6.1.-; EC 1.1.1.80,threonine_dehydrogenase - enzyme for Pyrazine biosynthesis,Maillard reaction product (Pyrazine),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00052,threonine/alanine_aminotransferase,protein,,PF00501;PF00583,EC 2.6.1.-,"threonine/alanine_aminotransferase - enzyme for 2,3-Dimethylpyrazine biosynthesis",Maillard reaction product (Pyrazine),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00053,threonine/valine_aminotransferase,protein,,PF00501;PF00583,EC 2.6.1.-,"threonine/valine_aminotransferase - enzyme for 2,3,5-Trimethylpyrazine biosynthesis",Maillard reaction product (Pyrazine),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00054,acetoin_aminotransferase,protein,,PF00501;PF00583,EC 2.6.1.-,"acetoin_aminotransferase - enzyme for 2,3,5,6-Tetramethylpyrazine biosynthesis",Maillard reaction product (Pyrazine),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00055,pyrazine_synthase,protein,,PF00288;PF00155,EC 2.6.1.-,"pyrazine_synthase - enzyme for 2,3,5,6-Tetramethylpyrazine biosynthesis",Maillard reaction product (Pyrazine),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00056,threonine/isoleucine_aminotransferase,protein,,PF00501;PF00583,EC 2.6.1.-,"threonine/isoleucine_aminotransferase - enzyme for 2-Ethyl-3,5-dimethylpyrazine biosynthesis",Maillard reaction product (Pyrazine),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00057,pyrazine_acetyltransferase,protein,,PF00501;PF00583,EC 2.3.1.-,pyrazine_acetyltransferase - enzyme for Acetylpyrazine biosynthesis,Maillard reaction product (Pyrazine),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00058,threonine/isoleucine/valine_aminotransferase,protein,,PF00501;PF00583,EC 2.6.1.-,"threonine/isoleucine/valine_aminotransferase - enzyme for 2,3-Diethyl-5-methylpyrazine biosynthesis",Maillard reaction product (Pyrazine),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00059,isoleucine_aminotransferase,protein,,PF00501;PF00583,EC 2.6.1.-,"isoleucine_aminotransferase - enzyme for 2,5-Diethylpyrazine biosynthesis",Maillard reaction product (Pyrazine),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00060,threonine/valine/isoleucine_aminotransferase,protein,,PF00501;PF00583,EC 2.6.1.-,"threonine/valine/isoleucine_aminotransferase - enzyme for 2,3,5-Trimethyl-6-ethylpyrazine biosynthesis",Maillard reaction product (Pyrazine),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00061,O-methyltransferase,protein,,PF00501;PF00583,EC 2.1.1.-,O-methyltransferase - enzyme for Methoxypyrazine biosynthesis,Maillard reaction product (Pyrazine),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00062,valine_aminotransferase,protein,,PF00501;PF00583,EC 2.1.1.-; EC 2.6.1.-,valine_aminotransferase - enzyme for 2-Methoxy-3-isopropylpyrazine biosynthesis,Maillard reaction product (Pyrazine),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00063,leucine_aminotransferase,protein,,PF00501;PF00583,EC 2.1.1.-; EC 2.6.1.-,leucine_aminotransferase - enzyme for 2-Methoxy-3-isobutylpyrazine biosynthesis,Maillard reaction product (Pyrazine),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00064,rhamnose_pathway,protein,,,EC 4.2.1.-,"rhamnose_pathway - enzyme for 4-Hydroxy-2,5-dimethyl-3(2H)-furanone (HDMF, Furaneol) biosynthesis",Maillard reaction product (Furanone),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00065,furanone_synthase,protein,,PF00288;PF00155,EC 4.2.1.-,"furanone_synthase - enzyme for 4-Hydroxy-2,5-dimethyl-3(2H)-furanone (HDMF, Furaneol) biosynthesis",Maillard reaction product (Furanone),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00066,furanone_O-methyltransferase,protein,,PF00501;PF00583,EC 2.1.1.-,"furanone_O-methyltransferase - enzyme for 4-Methoxy-2,5-dimethyl-3(2H)-furanone (DMMF) biosynthesis",Maillard reaction product (Furanone),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00067,aldolase,protein,,,EC 4.2.1.-; EC 4.1.2.-,aldolase - enzyme for 2-Ethyl-4-hydroxy-5-methyl-3(2H)-furanone (Homofuraneol) biosynthesis,Maillard reaction product (Furanone),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00068,α-ketobutyrate_condensation_enzyme,protein,,,EC 4.1.2.-,"α-ketobutyrate_condensation_enzyme - enzyme for Sotolone (3-Hydroxy-4,5-dimethyl-2(5H)-furanone) biosynthesis",Maillard reaction product (Furanone),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00069,maltol_synthase,protein,K01176,PF00288;PF00155,EC 3.2.1.1,maltol_synthase - enzyme for Maltol biosynthesis,Maillard reaction product (Pyranone),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00070,alkylation_enzyme,protein,,,NA,alkylation_enzyme - enzyme for Ethylmaltol biosynthesis,Maillard reaction product (Pyranone),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00071,2-enol_isomerase,protein,,PF00154;PF01266,EC 5.3.3.-,2-enol_isomerase - enzyme for Cyclotene (3-Methyl-2-cyclopenten-2-ol-1-one) biosynthesis,Maillard reaction product (Cyclopentenone),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00072,cysteine-furan_conjugate_lyase,protein,K00816,PF00274;PF00682,EC 4.4.1.13,cysteine-furan_conjugate_lyase - enzyme for 2-Methyl-3-furanthiol biosynthesis,Maillard reaction product (Furan thiol),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00073,methionine_aminotransferase,protein,K01761,PF00501;PF00583,EC 2.6.1.-; EC 4.4.1.11,methionine_aminotransferase - enzyme for Methional (3-(Methylthio)propanal) biosynthesis,Maillard reaction product (Sulfur aldehyde),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00074,methionine-γ-lyase,protein,K01761,PF00274;PF00682,EC 2.6.1.-; EC 4.4.1.11,methionine-γ-lyase - enzyme for Methional (3-(Methylthio)propanal) biosynthesis,Maillard reaction product (Sulfur aldehyde),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00075,phenylalanine_aminotransferase,protein,,PF00501;PF00583,EC 2.6.1.-; EC 4.1.1.43,phenylalanine_aminotransferase - enzyme for Phenylacetaldehyde biosynthesis,Maillard reaction product (Aromatic aldehyde),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00076,phenylpyruvate_decarboxylase,protein,,PF00184;PF02784,EC 2.6.1.-; EC 4.1.1.43,phenylpyruvate_decarboxylase - enzyme for Phenylacetaldehyde biosynthesis,Maillard reaction product (Aromatic aldehyde),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00077,α-ketoisocaproate_decarboxylase,protein,K01568,PF00184;PF02784,EC 2.6.1.-; EC 4.1.1.1,α-ketoisocaproate_decarboxylase - enzyme for 3-Methylbutanal biosynthesis,Maillard reaction product (Aldehyde),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00078,α-keto-3-methylvalerate_decarboxylase,protein,K01568,PF00184;PF02784,EC 2.6.1.-; EC 4.1.1.1,α-keto-3-methylvalerate_decarboxylase - enzyme for 2-Methylbutanal biosynthesis,Maillard reaction product (Aldehyde),Maillard reaction product,Maillard reaction product,Nicotiana tabacum
+NtG_00079,phenylacetaldehyde_reductase,protein,K00001,,EC 2.6.1.-; EC 4.1.1.43; EC 1.1.1.1,phenylacetaldehyde_reductase - enzyme for Phenylethanol (2-Phenylethanol) biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00080,phenylalanine_ammonia-lyase,protein,K08248,PF00274;PF00682,EC 4.3.1.5; EC 4.1.2.10,phenylalanine_ammonia-lyase - enzyme for Benzaldehyde biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00081,mandelonitrile_lyase,protein,K08248,PF00274;PF00682,EC 4.3.1.5; EC 4.1.2.10,mandelonitrile_lyase - enzyme for Benzaldehyde biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00082,benzyl_alcohol_dehydrogenase,protein,K00001,PF00498;PF08640,EC 1.1.1.1; EC 1.1.1.90,benzyl_alcohol_dehydrogenase - enzyme for Benzyl alcohol biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00083,salicylate_O-methyltransferase,protein,K13396,PF00501;PF00583,EC 2.1.1.122,salicylate_O-methyltransferase - enzyme for Methyl salicylate biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00084,PAL,protein,K10775,,EC 4.3.1.5; EC 1.14.13.11; EC 1.1.1.-,PAL - enzyme for Eugenol biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00085,cinnamate_4-hydroxylase,protein,,,EC 4.3.1.5; EC 1.14.13.11; EC 1.1.1.-,cinnamate_4-hydroxylase - enzyme for Eugenol biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00086,eugenol_synthase,protein,,PF00288;PF00155,EC 4.3.1.5; EC 1.14.13.11; EC 1.1.1.-,eugenol_synthase - enzyme for Eugenol biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00087,C4H,protein,K00487,,EC 4.3.1.5; EC 1.14.13.11; EC 1.1.1.-,C4H - enzyme for Isoeugenol biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00088,isoeugenol_synthase,protein,,PF00288;PF00155,EC 4.3.1.5; EC 1.14.13.11; EC 1.1.1.-,isoeugenol_synthase - enzyme for Isoeugenol biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00089,ferulic_acid_decarboxylase,protein,,PF00184;PF02784,EC 4.1.1.-; EC 1.1.1.-; EC 6.2.1.-,ferulic_acid_decarboxylase - enzyme for Vanillin biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00090,vanillin_synthase,protein,,PF00288;PF00155,EC 4.1.1.-; EC 1.1.1.-; EC 6.2.1.-,vanillin_synthase - enzyme for Vanillin biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00091,coenzyme_A_ligase,protein,,PF00561;PF01609,EC 4.1.1.-; EC 1.1.1.-; EC 6.2.1.-,coenzyme_A_ligase - enzyme for Vanillin biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00092,ferulic_acid_pathway,protein,,,EC 1.14.-.-,ferulic_acid_pathway - enzyme for Acetovanillone (Apocynin) biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00093,β-oxidase,protein,,,EC 1.14.-.-,β-oxidase - enzyme for Acetovanillone (Apocynin) biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00094,demethoxylase,protein,,,EC 1.14.-.-,demethoxylase - enzyme for Guaiacol biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00095,vinylphenol_reductase,protein,,,EC 1.3.1.-,vinylphenol_reductase - enzyme for 4-Ethylguaiacol biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00096,cinnamoyl-CoA_reductase,protein,K09753,,EC 4.3.1.5; EC 1.2.1.44,cinnamoyl-CoA_reductase - enzyme for Cinnamaldehyde biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00097,cinnamaldehyde_dehydrogenase,protein,K09753,PF00498;PF08640,EC 4.3.1.5; EC 1.2.1.44,cinnamaldehyde_dehydrogenase - enzyme for Cinnamaldehyde biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00098,cinnamyl_alcohol_dehydrogenase,protein,K00083,PF00498;PF08640,EC 1.1.1.195,cinnamyl_alcohol_dehydrogenase - enzyme for Cinnamyl alcohol biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00099,cinnamate_O-methyltransferase,protein,,PF00501;PF00583,EC 2.1.1.-,cinnamate_O-methyltransferase - enzyme for Methyl cinnamate biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00100,cinnamate_ester_synthase,protein,K00664,PF00288;PF00155,EC 2.3.1.-; EC 2.3.1.84,cinnamate_ester_synthase - enzyme for Ethyl cinnamate biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00101,ethanol_O-acyltransferase,protein,K00664,PF00501;PF00583,EC 2.3.1.-; EC 2.3.1.84,ethanol_O-acyltransferase - enzyme for Ethyl cinnamate biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00102,alcohol_acetyltransferase,protein,K00664,PF00501;PF00583,EC 2.3.1.84,alcohol_acetyltransferase - enzyme for 2-Phenylethyl acetate biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00103,tyrosine_ammonia-lyase,protein,,PF00274;PF00682,EC 4.3.1.5; EC 1.14.-.-,tyrosine_ammonia-lyase - enzyme for 4-Hydroxybenzaldehyde biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00104,p-coumarate_3-hydroxylase,protein,,,EC 4.3.1.5; EC 1.14.-.-,p-coumarate_3-hydroxylase - enzyme for 4-Hydroxybenzaldehyde biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00105,salicylate_reductase,protein,,,EC 1.2.1.-,salicylate_reductase - enzyme for Salicylaldehyde biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00106,tyrosine_phenol-lyase,protein,K01668,PF00274;PF00682,EC 4.1.99.2; EC 4.1.1.65,tyrosine_phenol-lyase - enzyme for Phenol biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00107,benzoate_decarboxylase,protein,K01668,PF00184;PF02784,EC 4.1.99.2; EC 4.1.1.65,benzoate_decarboxylase - enzyme for Phenol biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00108,tyrosine_4-hydroxyphenylpyruvate_pathway,protein,K01612,,EC 4.1.1.61,tyrosine_4-hydroxyphenylpyruvate_pathway - enzyme for Cresol (p-Cresol) biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00109,4-hydroxybenzoate_decarboxylase,protein,K01612,PF00184;PF02784,EC 4.1.1.61,4-hydroxybenzoate_decarboxylase - enzyme for Cresol (p-Cresol) biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00110,p-coumaric_acid_decarboxylase,protein,,PF00184;PF02784,EC 1.3.1.-; EC 4.1.1.-,p-coumaric_acid_decarboxylase - enzyme for 4-Ethylphenol biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00111,TAL,protein,,,EC 4.3.1.5; EC 1.14.13.11; EC 1.14.-.-; EC 2.1.1.-,TAL - enzyme for Ferulic acid biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00112,4-coumarate_3-hydroxylase,protein,,,EC 4.3.1.5; EC 1.14.13.11; EC 1.14.-.-; EC 2.1.1.-,4-coumarate_3-hydroxylase - enzyme for Ferulic acid biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00113,C3H,protein,,,EC 4.3.1.5; EC 1.14.13.11; EC 1.14.-.-; EC 2.1.1.-,C3H - enzyme for Sinapic acid biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00114,OMT,protein,K00599,,EC 4.3.1.5; EC 1.14.13.11; EC 1.14.-.-; EC 2.1.1.-,OMT - enzyme for Sinapic acid biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00115,5-hydroxylase,protein,,,EC 4.3.1.5; EC 1.14.13.11; EC 1.14.-.-; EC 2.1.1.-,5-hydroxylase - enzyme for Sinapic acid biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00116,4-hydroxybenzaldehyde_reductase,protein,K00001,,EC 1.1.1.1,4-hydroxybenzaldehyde_reductase - enzyme for p-Hydroxybenzyl alcohol biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00117,sinapic_acid_β-oxidation_pathway,protein,,,EC 1.14.-.-,sinapic_acid_β-oxidation_pathway - enzyme for Syringaldehyde biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00118,sinapic_acid_degradation_pathway,protein,,,EC 1.14.-.-,sinapic_acid_degradation_pathway - enzyme for Syringol biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00119,sinapic_acid_pathway,protein,,,EC 1.3.1.-,sinapic_acid_pathway - enzyme for 4-Methylsyringol biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00120,sinapic_acid_decarboxylase,protein,,PF00184;PF02784,EC 4.1.1.-,sinapic_acid_decarboxylase - enzyme for 4-Vinylsyringol biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00121,guaiacol_O-methyltransferase,protein,,PF00501;PF00583,EC 2.1.1.-,"guaiacol_O-methyltransferase - enzyme for Veratrole (1,2-Dimethoxybenzene) biosynthesis",Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00122,vanillin_O-methyltransferase,protein,,PF00501;PF00583,EC 2.1.1.-,vanillin_O-methyltransferase - enzyme for Veratraldehyde biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00123,veratraldehyde_reductase,protein,K00001,,EC 1.1.1.1,veratraldehyde_reductase - enzyme for Veratryl alcohol biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00124,ferulic_acid_β-oxidation_pathway,protein,,,EC 1.14.-.-,ferulic_acid_β-oxidation_pathway - enzyme for Homovanillic acid biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00125,p-coumaric_acid/caffeic_acid_degradation_pathway,protein,,,EC 1.14.-.-,p-coumaric_acid/caffeic_acid_degradation_pathway - enzyme for Protocatechuic acid biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00126,ferulic_acid_β-oxidation,protein,,,EC 1.14.-.-; EC 1.2.1.-,ferulic_acid_β-oxidation - enzyme for Vanillic acid biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00127,vanillin_dehydrogenase,protein,,PF00498;PF08640,EC 1.14.-.-; EC 1.2.1.-,vanillin_dehydrogenase - enzyme for Vanillic acid biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00128,sinapic_acid_β-oxidation,protein,,,EC 1.14.-.-; EC 1.2.1.-,sinapic_acid_β-oxidation - enzyme for Syringic acid biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00129,syringaldehyde_dehydrogenase,protein,,PF00498;PF08640,EC 1.14.-.-; EC 1.2.1.-,syringaldehyde_dehydrogenase - enzyme for Syringic acid biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00130,ferulic_acid_reductase,protein,K09753,,EC 1.2.1.44,ferulic_acid_reductase - enzyme for Coniferyl aldehyde biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00131,sinapic_acid_reductase,protein,K09753,,EC 1.2.1.44,sinapic_acid_reductase - enzyme for Sinapyl aldehyde biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00132,p-coumaric_acid_reductase,protein,K09753,,EC 1.2.1.44,p-coumaric_acid_reductase - enzyme for p-Coumaraldehyde biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00133,vanillate_O-methyltransferase,protein,,PF00501;PF00583,EC 2.1.1.-,vanillate_O-methyltransferase - enzyme for Methyl vanillate biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00134,syringate_O-methyltransferase,protein,,PF00501;PF00583,EC 2.1.1.-,syringate_O-methyltransferase - enzyme for Methyl syringate biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00135,vanillate_ester_synthase,protein,,PF00288;PF00155,EC 2.3.1.-,vanillate_ester_synthase - enzyme for Ethyl vanillate biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00136,benzyl_alcohol_benzoyltransferase,protein,,PF00501;PF00583,EC 2.3.1.-,benzyl_alcohol_benzoyltransferase - enzyme for Benzyl benzoate biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00137,phenylethanol_benzoyltransferase,protein,,PF00501;PF00583,EC 2.3.1.-,phenylethanol_benzoyltransferase - enzyme for 2-Phenylethyl benzoate biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00138,cinnamaldehyde_reductase,protein,,,EC 1.3.1.-,cinnamaldehyde_reductase - enzyme for Phenylpropanal (3-Phenylpropanal) biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00139,phenylpropanal_reductase,protein,K00001,,EC 1.1.1.1,phenylpropanal_reductase - enzyme for 3-Phenyl-1-propanol biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00140,phenylacetate_O-methyltransferase,protein,,PF00501;PF00583,EC 2.1.1.-,phenylacetate_O-methyltransferase - enzyme for Methyl phenylacetate biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00141,phenylacetate_ester_synthase,protein,K00664,PF00288;PF00155,EC 2.3.1.-; EC 2.3.1.84,phenylacetate_ester_synthase - enzyme for Ethyl phenylacetate biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00142,phenylacetaldehyde_dehydrogenase,protein,K00146,PF00498;PF08640,EC 1.2.1.39,phenylacetaldehyde_dehydrogenase - enzyme for Phenylacetic acid biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00143,phenylpyruvate_pathway,protein,K00146,,EC 1.2.1.39,phenylpyruvate_pathway - enzyme for Phenylacetic acid biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00144,ferulic_acid_degradation_pathway,protein,,,EC 1.14.-.-,ferulic_acid_degradation_pathway - enzyme for 2-Methoxyphenol (Guaiacol isomer) biosynthesis,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00145,tyrosine/phenylalanine_degradation_pathway,protein,K01668,,EC 4.1.99.2,"tyrosine/phenylalanine_degradation_pathway - enzyme for 2,6-Dimethylphenol biosynthesis",Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00146,protocatechuate_decarboxylase,protein,K00505,PF00184;PF02784,EC 4.1.1.63; EC 1.14.18.1,"protocatechuate_decarboxylase - enzyme for Catechol (1,2-Benzenediol) biosynthesis",Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00147,tyrosinase,protein,K00505,,EC 4.1.1.63; EC 1.14.18.1,"tyrosinase - enzyme for Catechol (1,2-Benzenediol) biosynthesis",Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00148,polyketide_pathway,protein,,,EC 2.3.1.-,"polyketide_pathway - enzyme for Resorcinol (1,3-Benzenediol) biosynthesis",Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00149,linalool_synthase,protein,K15086,PF00288;PF00155,EC 4.2.3.25; EC 2.5.1.1,linalool_synthase - enzyme for Linalool biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00150,GPP_synthase,protein,K15086,PF00288;PF00155,EC 4.2.3.25; EC 2.5.1.1,GPP_synthase - enzyme for Linalool biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00151,linalool_epoxidase,protein,,,EC 1.14.-.-; EC 4.2.1.-,linalool_epoxidase - enzyme for Linalool oxide (furanoid) biosynthesis,Terpenoid (Monoterpenoid oxide),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00152,geraniol_synthase,protein,K14182,PF00288;PF00155,EC 4.2.3.21; EC 2.5.1.1,geraniol_synthase - enzyme for Geraniol biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00153,nerol_synthase,protein,K00787,PF00288;PF00155,EC 4.2.3.-; EC 2.5.1.1; EC 5.3.-.-,nerol_synthase - enzyme for Nerol biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00154,geraniol_reductase,protein,,,EC 1.3.1.-,geraniol_reductase - enzyme for Citronellol biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00155,terpineol_synthase,protein,,PF00288;PF00155,EC 4.2.3.-; EC 4.2.1.-,terpineol_synthase - enzyme for α-Terpineol biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00156,limonene_hydratase,protein,,,EC 4.2.3.-; EC 4.2.1.-,limonene_hydratase - enzyme for α-Terpineol biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00157,citronellol_dehydratase,protein,,,EC 4.2.1.-,citronellol_dehydratase - enzyme for β-Citronellene biosynthesis,Terpenoid (Monoterpenoid hydrocarbon),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00158,limonene_synthase,protein,K15096,PF00288;PF00155,EC 4.2.3.20; EC 2.5.1.1,limonene_synthase - enzyme for Limonene biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00159,α-pinene_synthase,protein,K00787,PF00288;PF00155,EC 4.2.3.14; EC 2.5.1.1,α-pinene_synthase - enzyme for α-Pinene biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00160,β-pinene_synthase,protein,K00787,PF00288;PF00155,EC 4.2.3.14; EC 2.5.1.1,β-pinene_synthase - enzyme for β-Pinene biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00161,camphene_synthase,protein,K14183,PF00288;PF00155,EC 4.2.3.13; EC 5.3.-.-,camphene_synthase - enzyme for Camphene biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00162,α-pinene_isomerase,protein,K14183,PF00154;PF01266,EC 4.2.3.13; EC 5.3.-.-,α-pinene_isomerase - enzyme for Camphene biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00163,myrcene_synthase,protein,K12467,PF00288;PF00155,EC 4.2.3.15; EC 2.5.1.1,myrcene_synthase - enzyme for Myrcene biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00164,ocimene_synthase,protein,K15088,PF00288;PF00155,EC 4.2.3.16; EC 2.5.1.1,ocimene_synthase - enzyme for Ocimene biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00165,terpinene_synthase,protein,K00787,PF00288;PF00155,EC 4.2.3.-; EC 2.5.1.1,terpinene_synthase - enzyme for Terpinene biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00166,γ-terpinene_synthase,protein,K00787,PF00288;PF00155,EC 4.2.3.-; EC 2.5.1.1,γ-terpinene_synthase - enzyme for γ-Terpinene biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00167,terpinolene_synthase,protein,K00787,PF00288;PF00155,EC 4.2.3.-; EC 2.5.1.1,terpinolene_synthase - enzyme for Terpinolene biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00168,limonene_dehydrogenase,protein,,PF00498;PF08640,EC 1.3.-.-,limonene_dehydrogenase - enzyme for p-Cymene biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00169,8-cineole_synthase,protein,,PF00288;PF00155,EC 4.2.3.-; EC 1.14.-.-,"8-cineole_synthase - enzyme for 1,8-Cineole (Eucalyptol) biosynthesis",Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00170,limonene_epoxidase,protein,,,EC 4.2.3.-; EC 1.14.-.-,"limonene_epoxidase - enzyme for 1,8-Cineole (Eucalyptol) biosynthesis",Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00171,citronellol_dehydrogenase,protein,K00001,PF00498;PF08640,EC 1.1.1.1; EC 1.3.1.-,citronellol_dehydrogenase - enzyme for Citronellal biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00172,geraniol_dehydrogenase,protein,K00001,PF00498;PF08640,EC 1.1.1.1,geraniol_dehydrogenase - enzyme for Geranial biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00173,nerol_dehydrogenase,protein,K00001,PF00498;PF08640,EC 1.1.1.1; EC 5.3.-.-,nerol_dehydrogenase - enzyme for Neral biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00174,borneol_synthase,protein,,PF00288;PF00155,EC 4.2.3.-; EC 1.1.1.-,borneol_synthase - enzyme for Borneol biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00175,camphor_reductase,protein,,,EC 4.2.3.-; EC 1.1.1.-,camphor_reductase - enzyme for Borneol biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00176,borneol_dehydrogenase,protein,,PF00498;PF08640,EC 1.1.1.-,borneol_dehydrogenase - enzyme for Camphor biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00177,borneol_isomerase,protein,,PF00154;PF01266,EC 5.3.-.-; EC 1.1.1.-,borneol_isomerase - enzyme for Isoborneol biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00178,carveol_dehydrogenase,protein,K00001,PF00498;PF08640,EC 1.1.1.-; EC 1.1.1.1,carveol_dehydrogenase - enzyme for Carvone biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00179,limonene_hydroxylase,protein,,,EC 1.14.-.-,limonene_hydroxylase - enzyme for Carveol biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00180,carveol_reductase,protein,,,EC 1.3.1.-,carveol_reductase - enzyme for Dihydrocarveol biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00181,menthone_isomerase,protein,,PF00154;PF01266,EC 5.3.-.-; EC 4.2.3.-,menthone_isomerase - enzyme for Pulegone biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00182,pulegone_synthase,protein,,PF00288;PF00155,EC 5.3.-.-; EC 4.2.3.-,pulegone_synthase - enzyme for Pulegone biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00183,menthol_dehydrogenase,protein,K00001,PF00498;PF08640,EC 1.1.1.1,menthol_dehydrogenase - enzyme for Menthone biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00184,pulegone_reductase,protein,,,EC 1.3.1.-; EC 1.1.1.-,pulegone_reductase - enzyme for Menthol biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00185,menthone_reductase,protein,,,EC 1.3.1.-; EC 1.1.1.-,menthone_reductase - enzyme for Menthol biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00186,α-pinene_oxidase,protein,,,EC 1.14.-.-,α-pinene_oxidase - enzyme for Verbenone biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00187,α-pinene_hydroxylase,protein,,,EC 1.14.-.-,α-pinene_hydroxylase - enzyme for Verbenol biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00188,myrtenol_dehydrogenase,protein,K00001,PF00498;PF08640,EC 1.1.1.1,myrtenol_dehydrogenase - enzyme for Myrtenal biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00189,limonene_oxidase,protein,,,EC 1.14.-.-,limonene_oxidase - enzyme for Perillaldehyde biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00190,perillaldehyde_reductase,protein,K00001,,EC 1.14.-.-; EC 1.1.1.1,perillaldehyde_reductase - enzyme for Perillyl alcohol biosynthesis,Terpenoid (Monoterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00191,β-caryophyllene_synthase,protein,K14184,PF00288;PF00155,EC 4.2.3.57; EC 2.5.1.10,β-caryophyllene_synthase - enzyme for β-Caryophyllene biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00192,FPP_synthase,protein,K14184,PF00288;PF00155,EC 4.2.3.57; EC 2.5.1.10,FPP_synthase - enzyme for β-Caryophyllene biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00193,α-humulene_synthase,protein,K14186,PF00288;PF00155,EC 4.2.3.56; EC 2.5.1.10,α-humulene_synthase - enzyme for α-Humulene biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00194,caryophyllene_epoxidase,protein,,,EC 1.14.-.-,caryophyllene_epoxidase - enzyme for Caryophyllene oxide biosynthesis,Terpenoid (Sesquiterpenoid oxide),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00195,nerolidol_synthase,protein,K14186,PF00288;PF00155,EC 4.2.3.56; EC 2.5.1.10,nerolidol_synthase - enzyme for Nerolidol biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00196,farnesyl_diphosphatase,protein,K01761,,EC 3.1.7.1; EC 2.5.1.10,farnesyl_diphosphatase - enzyme for Farnesol biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00197,farnesol_dehydrogenase,protein,K00001,PF00498;PF08640,EC 1.1.1.1,farnesol_dehydrogenase - enzyme for Farnesal biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00198,α-bisabolol_synthase,protein,K01761,PF00288;PF00155,EC 4.2.3.-; EC 2.5.1.10,α-bisabolol_synthase - enzyme for α-Bisabolol biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00199,α-bisabolene_synthase,protein,K01761,PF00288;PF00155,EC 4.2.3.-; EC 2.5.1.10,α-bisabolene_synthase - enzyme for α-Bisabolene biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00200,β-bisabolene_synthase,protein,K01761,PF00288;PF00155,EC 4.2.3.-; EC 2.5.1.10,β-bisabolene_synthase - enzyme for β-Bisabolene biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00201,γ-bisabolene_synthase,protein,K01761,PF00288;PF00155,EC 4.2.3.-; EC 2.5.1.10,γ-bisabolene_synthase - enzyme for γ-Bisabolene biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00202,zingiberene_synthase,protein,K01761,PF00288;PF00155,EC 4.2.3.-; EC 2.5.1.10,zingiberene_synthase - enzyme for Zingiberene biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00203,sesquiphellandrene_synthase,protein,K01761,PF00288;PF00155,EC 4.2.3.-; EC 2.5.1.10,sesquiphellandrene_synthase - enzyme for β-Sesquiphellandrene biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00204,zingiberene_dehydrogenase,protein,,PF00498;PF08640,EC 1.3.-.-,zingiberene_dehydrogenase - enzyme for ar-Curcumene biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00205,valencene_synthase,protein,K01761,PF00288;PF00155,EC 4.2.3.-; EC 2.5.1.10,valencene_synthase - enzyme for Valencene biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00206,valencene_oxidase,protein,,,EC 1.14.-.-,valencene_oxidase - enzyme for Nootkatone biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00207,cadinol_synthase,protein,K01761,PF00288;PF00155,EC 4.2.3.-; EC 2.5.1.10,cadinol_synthase - enzyme for Cadinol biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00208,δ-cadinene_synthase,protein,K01761,PF00288;PF00155,EC 4.2.3.-; EC 2.5.1.10,δ-cadinene_synthase - enzyme for δ-Cadinene biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00209,γ-cadinene_synthase,protein,K01761,PF00288;PF00155,EC 4.2.3.-; EC 2.5.1.10,γ-cadinene_synthase - enzyme for γ-Cadinene biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00210,germacrene_D_synthase,protein,K22057,PF00288;PF00155,EC 4.2.3.77; EC 2.5.1.10,germacrene_D_synthase - enzyme for Germacrene D biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00211,germacrene_A_synthase,protein,K14179,PF00288;PF00155,EC 4.2.3.23; EC 2.5.1.10,germacrene_A_synthase - enzyme for Germacrene A biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00212,germacrene_B_synthase,protein,K15801,PF00288;PF00155,EC 4.2.3.71; EC 2.5.1.10,germacrene_B_synthase - enzyme for Germacrene B biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00213,germacrene_rearrangement,protein,,,EC 5.3.-.-,germacrene_rearrangement - enzyme for β-Elemene biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00214,patchoulol_synthase,protein,K15806,PF00288;PF00155,EC 4.2.3.76; EC 2.5.1.10,patchoulol_synthase - enzyme for Patchoulol biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00215,patchoulene_synthase,protein,K01761,PF00288;PF00155,EC 4.2.3.-; EC 2.5.1.10,patchoulene_synthase - enzyme for Patchoulene biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00216,cedrol_synthase,protein,K01761,PF00288;PF00155,EC 4.2.3.-; EC 2.5.1.10,cedrol_synthase - enzyme for Cedrol biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00217,cedrene_synthase,protein,K01761,PF00288;PF00155,EC 4.2.3.-; EC 2.5.1.10,cedrene_synthase - enzyme for α-Cedrene biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00218,cedrene_isomerase,protein,,PF00154;PF01266,EC 5.3.-.-,cedrene_isomerase - enzyme for β-Cedrene biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00219,thujopsene_synthase,protein,K01761,PF00288;PF00155,EC 4.2.3.-; EC 2.5.1.10,thujopsene_synthase - enzyme for Thujopsene biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00220,widdrol_synthase,protein,K01761,PF00288;PF00155,EC 4.2.3.-; EC 2.5.1.10,widdrol_synthase - enzyme for Widdrol biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00221,longifolene_synthase,protein,K14185,PF00288;PF00155,EC 4.2.3.58; EC 2.5.1.10,longifolene_synthase - enzyme for Longifolene biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00222,longifolene_isomerase,protein,,PF00154;PF01266,EC 5.3.-.-,longifolene_isomerase - enzyme for Isolongifolene biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00223,copaene_synthase,protein,K01761,PF00288;PF00155,EC 4.2.3.-; EC 2.5.1.10,copaene_synthase - enzyme for Copaene biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00224,ylangene_synthase,protein,K01761,PF00288;PF00155,EC 4.2.3.-; EC 2.5.1.10,ylangene_synthase - enzyme for Ylangene biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00225,cubebene_synthase,protein,K01761,PF00288;PF00155,EC 4.2.3.-; EC 2.5.1.10,cubebene_synthase - enzyme for α-Cubebene biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00226,copaene_epoxidase,protein,,,EC 1.14.-.-,copaene_epoxidase - enzyme for α-Copaene oxide biosynthesis,Terpenoid (Sesquiterpenoid oxide),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00227,vetispiradiene_synthase,protein,,PF00288;PF00155,EC 4.2.3.-; EC 1.14.-.-,vetispiradiene_synthase - enzyme for Solavetivone biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00228,vetispiradiene_hydroxylase,protein,,,EC 1.14.-.-,vetispiradiene_hydroxylase - enzyme for Capsidiol biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00229,rishitin_synthase,protein,,PF00288;PF00155,EC 4.2.3.-; EC 1.14.-.-,rishitin_synthase - enzyme for Rishitin biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00230,vetispiradiene_oxidase,protein,,,EC 1.14.-.-,vetispiradiene_oxidase - enzyme for Lubimin biosynthesis,Terpenoid (Sesquiterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00231,GGPP_cleavage_enzyme,protein,K01610,,EC 1.13.11.71,GGPP_cleavage_enzyme - enzyme for Geranylacetone biosynthesis,Terpenoid (Diterpenoid degradation product),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00232,lycopene_cleavage_dioxygenase,protein,K01610,PF04140;PF03171,EC 1.13.11.71,lycopene_cleavage_dioxygenase - enzyme for 6-Methyl-5-hepten-2-one (MHO) biosynthesis,Terpenoid (Diterpenoid degradation product),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00233,MHO_reductase,protein,K00001,,EC 1.1.1.1,MHO_reductase - enzyme for 6-Methyl-5-hepten-2-ol biosynthesis,Terpenoid (Diterpenoid degradation product),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00234,geranylacetone_epoxidase,protein,,,EC 1.14.-.-,geranylacetone_epoxidase - enzyme for Geranylacetone epoxide biosynthesis,Terpenoid (Diterpenoid degradation product),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00235,MHO_dehydrogenase,protein,,PF00498;PF08640,EC 1.3.-.-,"MHO_dehydrogenase - enzyme for 6-Methyl-3,5-heptadien-2-one biosynthesis",Terpenoid (Diterpenoid degradation product),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00236,phytol_β-oxidation_pathway,protein,,,EC 1.1.1.-; EC 1.3.-.-,"phytol_β-oxidation_pathway - enzyme for Phytone (6,10,14-Trimethyl-2-pentadecanone) biosynthesis",Terpenoid (Diterpenoid degradation product),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00237,phytol_dehydratase,protein,,,EC 4.2.1.-,phytol_dehydratase - enzyme for Phytadiene biosynthesis,Terpenoid (Diterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00238,phytol_decarboxylase,protein,,PF00184;PF02784,EC 4.1.1.-; EC 1.3.-.-,phytol_decarboxylase - enzyme for Pristane biosynthesis,Terpenoid (Diterpenoid degradation product),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00239,phytol_oxidase,protein,K00107,,EC 1.14.-.-; EC 1.2.1.3,phytol_oxidase - enzyme for Phytanic acid biosynthesis,Terpenoid (Diterpenoid degradation product),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00240,ALDH,protein,K00107,,EC 1.14.-.-; EC 1.2.1.3,ALDH - enzyme for Phytanic acid biosynthesis,Terpenoid (Diterpenoid degradation product),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00241,squalene_synthase,protein,K00801,PF00288;PF00155,EC 2.5.1.21; EC 2.5.1.10,squalene_synthase - enzyme for Squalene biosynthesis,Terpenoid (Triterpenoid),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00242,squalene_epoxidase,protein,K08242,,EC 1.14.13.132; EC 5.4.99.-; EC 2.1.1.143,squalene_epoxidase - enzyme for β-Sitosterol biosynthesis,Terpenoid (Phytosterol),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00243,oxidosqualene_cyclase,protein,K08242,,EC 1.14.13.132; EC 5.4.99.-; EC 2.1.1.143,oxidosqualene_cyclase - enzyme for β-Sitosterol biosynthesis,Terpenoid (Phytosterol),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00244,C-24_methyltransferase,protein,K08242,PF00501;PF00583,EC 1.14.13.132; EC 5.4.99.-; EC 2.1.1.143,C-24_methyltransferase - enzyme for β-Sitosterol biosynthesis,Terpenoid (Phytosterol),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00245,C-22_desaturase,protein,,,EC 1.14.-.-,C-22_desaturase - enzyme for Stigmasterol biosynthesis,Terpenoid (Phytosterol),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00246,C-24_demethylase,protein,,,EC 1.14.-.-,C-24_demethylase - enzyme for Cholesterol biosynthesis,Terpenoid (Sterol),Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00247,esterase,protein,K00664,PF00561;PF00756,EC 2.3.1.84; EC 3.1.1.1,esterase - enzyme for Ethyl acetate biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00248,alcohol_acyltransferase,protein,K00664,PF00501;PF00583,EC 2.3.1.84; EC 2.3.1.-,alcohol_acyltransferase - enzyme for Ethyl butyrate biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00249,butyryl-CoA_pathway,protein,K00664,,EC 2.3.1.84; EC 2.3.1.-,butyryl-CoA_pathway - enzyme for Ethyl butyrate biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00250,hexanoyl-CoA_pathway,protein,K00664,,EC 2.3.1.84; EC 2.3.1.-,hexanoyl-CoA_pathway - enzyme for Ethyl hexanoate biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00251,octanoyl-CoA_pathway,protein,K00664,,EC 2.3.1.84; EC 2.3.1.-,octanoyl-CoA_pathway - enzyme for Ethyl octanoate biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00252,decanoyl-CoA_pathway,protein,K00664,,EC 2.3.1.84; EC 2.3.1.-,decanoyl-CoA_pathway - enzyme for Ethyl decanoate biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00253,lauroyl-CoA_pathway,protein,K00664,,EC 2.3.1.84; EC 2.3.1.-,lauroyl-CoA_pathway - enzyme for Ethyl dodecanoate biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00254,myristoyl-CoA_pathway,protein,K00664,,EC 2.3.1.84; EC 2.3.1.-,myristoyl-CoA_pathway - enzyme for Ethyl tetradecanoate (Ethyl myristate) biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00255,palmitoyl-CoA_pathway,protein,K00664,,EC 2.3.1.84; EC 2.3.1.-,palmitoyl-CoA_pathway - enzyme for Ethyl hexadecanoate (Ethyl palmitate) biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00256,stearoyl-CoA_pathway,protein,K00664,,EC 2.3.1.84; EC 2.3.1.-,stearoyl-CoA_pathway - enzyme for Ethyl octadecanoate (Ethyl stearate) biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00257,oleoyl-CoA_pathway,protein,K00664,,EC 2.3.1.84; EC 2.3.1.-,oleoyl-CoA_pathway - enzyme for Ethyl oleate biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00258,linoleoyl-CoA_pathway,protein,K00664,,EC 2.3.1.84; EC 2.3.1.-,linoleoyl-CoA_pathway - enzyme for Ethyl linoleate biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00259,lactate_ester_synthase,protein,K00664,PF00288;PF00155,EC 2.3.1.-; EC 2.3.1.84,lactate_ester_synthase - enzyme for Ethyl lactate biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00260,ATF,protein,K00664,,EC 2.3.1.-; EC 2.3.1.84,ATF - enzyme for Ethyl lactate biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00261,3-hydroxybutyryl-CoA_pathway,protein,K00664,,EC 2.3.1.84; EC 2.3.1.-,3-hydroxybutyryl-CoA_pathway - enzyme for Ethyl 3-hydroxybutyrate biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00262,2-methylbutyryl-CoA_pathway,protein,K00664,,EC 2.3.1.84; EC 2.3.1.-,2-methylbutyryl-CoA_pathway - enzyme for Ethyl 2-methylbutyrate biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00263,3-methylbutyryl-CoA_pathway,protein,K00664,,EC 2.3.1.84; EC 2.3.1.-,3-methylbutyryl-CoA_pathway - enzyme for Ethyl 3-methylbutyrate biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00264,isobutyryl-CoA_pathway,protein,K00664,,EC 2.3.1.84; EC 2.3.1.-,isobutyryl-CoA_pathway - enzyme for Ethyl 2-methylpropanoate (Ethyl isobutyrate) biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00265,pyruvate_ester_synthase,protein,,PF00288;PF00155,EC 2.3.1.-,pyruvate_ester_synthase - enzyme for Ethyl pyruvate biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00266,acetoacetyl-CoA_pathway,protein,K00664,,EC 2.3.1.-; EC 2.3.1.84,acetoacetyl-CoA_pathway - enzyme for Ethyl acetoacetate biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00267,leucine_pathway,protein,K00664,,EC 2.3.1.84; EC 2.6.1.-,leucine_pathway - enzyme for Isoamyl acetate biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00268,valine_pathway,protein,K00664,,EC 2.3.1.84; EC 2.6.1.-,valine_pathway - enzyme for Isobutyl acetate biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00269,hexanol_pathway,protein,K00664,,EC 2.3.1.84; EC 1.1.1.1,hexanol_pathway - enzyme for Hexyl acetate biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00270,benzoate_O-methyltransferase,protein,,PF00501;PF00583,EC 2.1.1.-; EC 2.3.1.-,benzoate_O-methyltransferase - enzyme for Methyl benzoate biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00271,benzoate_ester_synthase,protein,,PF00288;PF00155,EC 2.1.1.-; EC 2.3.1.-,benzoate_ester_synthase - enzyme for Methyl benzoate biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00272,anthranilate_O-methyltransferase,protein,,PF00501;PF00583,EC 2.1.1.-,anthranilate_O-methyltransferase - enzyme for Methyl anthranilate biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00273,anthranilate_ester_synthase,protein,,PF00288;PF00155,EC 2.3.1.-,anthranilate_ester_synthase - enzyme for Ethyl anthranilate biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00274,nicotinate_O-methyltransferase,protein,,PF00501;PF00583,EC 2.1.1.-,nicotinate_O-methyltransferase - enzyme for Methyl nicotinate biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00275,nicotinate_ester_synthase,protein,,PF00288;PF00155,EC 2.3.1.-,nicotinate_ester_synthase - enzyme for Ethyl nicotinate biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00276,furoate_O-methyltransferase,protein,,PF00501;PF00583,EC 2.1.1.-,furoate_O-methyltransferase - enzyme for Methyl 2-furoate biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00277,furoate_ester_synthase,protein,,PF00288;PF00155,EC 2.3.1.-,furoate_ester_synthase - enzyme for Ethyl 2-furoate biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00278,phenylpropanoate_ester_synthase,protein,,PF00288;PF00155,EC 2.3.1.-,phenylpropanoate_ester_synthase - enzyme for Ethyl 3-phenylpropanoate (Ethyl hydrocinnamate) biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00279,jasmonate_O-methyltransferase,protein,,PF00501;PF00583,EC 2.1.1.-,jasmonate_O-methyltransferase - enzyme for Methyl jasmonate biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00280,jasmonate_reductase,protein,,,EC 1.3.1.-; EC 2.1.1.-,jasmonate_reductase - enzyme for Methyl dihydrojasmonate (Hedione) biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00281,JMT,protein,,,EC 1.3.1.-; EC 2.1.1.-,JMT - enzyme for Methyl dihydrojasmonate (Hedione) biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00282,phthalate_O-methyltransferase,protein,,PF00501;PF00583,EC 2.1.1.-,phthalate_O-methyltransferase - enzyme for Dimethyl phthalate biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00283,phthalate_ester_synthase,protein,,PF00288;PF00155,EC 2.3.1.-,phthalate_ester_synthase - enzyme for Diethyl phthalate biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00284,salicylate_ester_synthase,protein,,PF00288;PF00155,EC 2.3.1.-,salicylate_ester_synthase - enzyme for Ethyl 2-hydroxybenzoate (Ethyl salicylate) biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00285,methionine_pathway,protein,K00664,,EC 2.3.1.84,methionine_pathway - enzyme for Ethyl 3-(methylthio)propanoate biosynthesis,Ester,Ester,Ester,Nicotiana tabacum
+NtG_00286,thioester_synthase,protein,,PF00288;PF00155,EC 2.3.1.-,thioester_synthase - enzyme for S-Methyl thioacetate biosynthesis,Ester (Thioester),Ester,Ester,Nicotiana tabacum
+NtG_00287,methanethiol_pathway,protein,,,EC 2.3.1.-,methanethiol_pathway - enzyme for S-Methyl thioacetate biosynthesis,Ester (Thioester),Ester,Ester,Nicotiana tabacum
+NtG_00288,acetaldehyde_dehydrogenase,protein,K00107,PF00498;PF08640,EC 1.2.1.3; EC 4.1.1.1,acetaldehyde_dehydrogenase - enzyme for Acetic acid biosynthesis,Acid (Fatty acid),Acid,Acid,Nicotiana tabacum
+NtG_00289,pyruvate_decarboxylase,protein,K00107,PF00184;PF02784,EC 1.2.1.3; EC 4.1.1.1,pyruvate_decarboxylase - enzyme for Acetic acid biosynthesis,Acid (Fatty acid),Acid,Acid,Nicotiana tabacum
+NtG_00290,propionyl-CoA_pathway,protein,K01754,,EC 2.6.1.-; EC 4.3.1.19,propionyl-CoA_pathway - enzyme for Propanoic acid (Propionic acid) biosynthesis,Acid (Fatty acid),Acid,Acid,Nicotiana tabacum
+NtG_00291,threonine_deaminase,protein,K01754,,EC 2.6.1.-; EC 4.3.1.19,threonine_deaminase - enzyme for Propanoic acid (Propionic acid) biosynthesis,Acid (Fatty acid),Acid,Acid,Nicotiana tabacum
+NtG_00292,butyraldehyde_dehydrogenase,protein,,PF00498;PF08640,EC 1.2.1.-; EC 6.2.1.-,butyraldehyde_dehydrogenase - enzyme for Butyric acid (Butanoic acid) biosynthesis,Acid (Fatty acid),Acid,Acid,Nicotiana tabacum
+NtG_00293,pentanoyl-CoA_pathway,protein,,,EC 1.2.1.-; EC 6.2.1.-,pentanoyl-CoA_pathway - enzyme for Pentanoic acid (Valeric acid) biosynthesis,Acid (Fatty acid),Acid,Acid,Nicotiana tabacum
+NtG_00294,lysine_pathway,protein,,,EC 1.2.1.-; EC 6.2.1.-,lysine_pathway - enzyme for Pentanoic acid (Valeric acid) biosynthesis,Acid (Fatty acid),Acid,Acid,Nicotiana tabacum
+NtG_00295,isovaleryl-CoA_pathway,protein,,,EC 2.6.1.-; EC 1.2.1.-,isovaleryl-CoA_pathway - enzyme for 3-Methylbutyric acid (Isovaleric acid) biosynthesis,Acid (Fatty acid),Acid,Acid,Nicotiana tabacum
+NtG_00296,fatty_acid_synthase,protein,,PF00288;PF00155,EC 2.3.1.-; EC 3.1.2.-,fatty_acid_synthase - enzyme for Hexanoic acid (Caproic acid) biosynthesis,Acid (Fatty acid),Acid,Acid,Nicotiana tabacum
+NtG_00297,thioesterase,protein,,PF00561;PF00756,EC 2.3.1.-; EC 3.1.2.-,thioesterase - enzyme for Hexanoic acid (Caproic acid) biosynthesis,Acid (Fatty acid),Acid,Acid,Nicotiana tabacum
+NtG_00298,heptanoyl-CoA_pathway,protein,,,EC 2.3.1.-; EC 3.1.2.-,heptanoyl-CoA_pathway - enzyme for Heptanoic acid (Enanthic acid) biosynthesis,Acid (Fatty acid),Acid,Acid,Nicotiana tabacum
+NtG_00299,FAS,protein,,,EC 2.3.1.-; EC 3.1.2.-,FAS - enzyme for Heptanoic acid (Enanthic acid) biosynthesis,Acid (Fatty acid),Acid,Acid,Nicotiana tabacum
+NtG_00300,nonanoyl-CoA_pathway,protein,,,EC 2.3.1.-; EC 3.1.2.-,nonanoyl-CoA_pathway - enzyme for Nonanoic acid (Pelargonic acid) biosynthesis,Acid (Fatty acid),Acid,Acid,Nicotiana tabacum
+NtG_00301,undecanoyl-CoA_pathway,protein,,,EC 2.3.1.-; EC 3.1.2.-,undecanoyl-CoA_pathway - enzyme for Undecanoic acid biosynthesis,Acid (Fatty acid),Acid,Acid,Nicotiana tabacum
+NtG_00302,stearoyl-CoA_desaturase,protein,K00507,,EC 1.14.19.1; EC 3.1.2.-,stearoyl-CoA_desaturase - enzyme for Oleic acid biosynthesis,Acid (Fatty acid),Acid,Acid,Nicotiana tabacum
+NtG_00303,oleoyl-CoA_desaturase,protein,,,EC 1.14.19.-; EC 3.1.2.-,oleoyl-CoA_desaturase - enzyme for Linoleic acid biosynthesis,Acid (Fatty acid),Acid,Acid,Nicotiana tabacum
+NtG_00304,linoleoyl-CoA_desaturase,protein,,,EC 1.14.19.-; EC 3.1.2.-,linoleoyl-CoA_desaturase - enzyme for Linolenic acid (α-Linolenic acid) biosynthesis,Acid (Fatty acid),Acid,Acid,Nicotiana tabacum
+NtG_00305,benzaldehyde_dehydrogenase,protein,,PF00498;PF08640,EC 1.2.1.-; EC 4.3.1.5,benzaldehyde_dehydrogenase - enzyme for Benzoic acid biosynthesis,Acid (Aromatic acid),Acid,Acid,Nicotiana tabacum
+NtG_00306,phenylalanine_pathway,protein,,,EC 1.2.1.-; EC 4.3.1.5,phenylalanine_pathway - enzyme for Benzoic acid biosynthesis,Acid (Aromatic acid),Acid,Acid,Nicotiana tabacum
+NtG_00307,isochorismate_synthase,protein,K01851,PF00288;PF00155,EC 5.4.4.2; EC 4.1.99.-,isochorismate_synthase - enzyme for Salicylic acid biosynthesis,Acid (Aromatic acid),Acid,Acid,Nicotiana tabacum
+NtG_00308,isochorismate_pyruvate_lyase,protein,K01851,PF00274;PF00682,EC 5.4.4.2; EC 4.1.99.-,isochorismate_pyruvate_lyase - enzyme for Salicylic acid biosynthesis,Acid (Aromatic acid),Acid,Acid,Nicotiana tabacum
+NtG_00309,salicylate_5-hydroxylase,protein,,,EC 1.14.13.-,"salicylate_5-hydroxylase - enzyme for Gentisic acid (2,5-Dihydroxybenzoic acid) biosynthesis",Acid (Aromatic acid),Acid,Acid,Nicotiana tabacum
+NtG_00310,protocatechuate_5-hydroxylase,protein,,,EC 1.14.-.-; EC 4.2.3.-,protocatechuate_5-hydroxylase - enzyme for Gallic acid biosynthesis,Acid (Aromatic acid),Acid,Acid,Nicotiana tabacum
+NtG_00311,shikimate_pathway,protein,,,EC 1.14.-.-; EC 4.2.3.-,shikimate_pathway - enzyme for Gallic acid biosynthesis,Acid (Aromatic acid),Acid,Acid,Nicotiana tabacum
+NtG_00312,pyruvate_kinase,protein,K00890,PF00069;PF00671,EC 2.7.1.40; EC 1.1.1.28,pyruvate_kinase - enzyme for Pyruvic acid biosynthesis,Acid (Keto acid),Acid,Acid,Nicotiana tabacum
+NtG_00313,lactate_dehydrogenase,protein,K00890,PF00498;PF08640,EC 2.7.1.40; EC 1.1.1.28,lactate_dehydrogenase - enzyme for Pyruvic acid biosynthesis,Acid (Keto acid),Acid,Acid,Nicotiana tabacum
+NtG_00314,3-hydroxybutyryl-CoA_dehydrogenase,protein,K00074,PF00498;PF08640,EC 1.1.1.157; EC 3.1.2.-,3-hydroxybutyryl-CoA_dehydrogenase - enzyme for 3-Hydroxybutyric acid biosynthesis,Acid (Hydroxy acid),Acid,Acid,Nicotiana tabacum
+NtG_00315,succinate_dehydrogenase,protein,K00243,PF00498;PF08640,EC 1.3.5.1; EC 4.2.1.2,succinate_dehydrogenase - enzyme for Succinic acid biosynthesis,Acid (Dicarboxylic acid),Acid,Acid,Nicotiana tabacum
+NtG_00316,fumarase,protein,K00243,,EC 1.3.5.1; EC 4.2.1.2,fumarase - enzyme for Succinic acid biosynthesis,Acid (Dicarboxylic acid),Acid,Acid,Nicotiana tabacum
+NtG_00317,malate_dehydrogenase,protein,K00024,PF00498;PF08640,EC 1.1.1.37; EC 4.2.1.2,malate_dehydrogenase - enzyme for Malic acid biosynthesis,Acid (Hydroxy dicarboxylic acid),Acid,Acid,Nicotiana tabacum
+NtG_00318,citrate_synthase,protein,K01647,PF00288;PF00155,EC 2.3.3.1; EC 2.3.3.8,citrate_synthase - enzyme for Citric acid biosynthesis,Acid (Hydroxy tricarboxylic acid),Acid,Acid,Nicotiana tabacum
+NtG_00319,ATP-citrate_lyase,protein,K01647,PF00274;PF00682,EC 2.3.3.1; EC 2.3.3.8,ATP-citrate_lyase - enzyme for Citric acid biosynthesis,Acid (Hydroxy tricarboxylic acid),Acid,Acid,Nicotiana tabacum
+NtG_00320,aconitase,protein,K01695,,EC 4.2.1.3; EC 1.1.1.42,aconitase - enzyme for Isocitric acid biosynthesis,Acid (Hydroxy tricarboxylic acid),Acid,Acid,Nicotiana tabacum
+NtG_00321,isocitrate_dehydrogenase,protein,K01695,PF00498;PF08640,EC 4.2.1.3; EC 1.1.1.42,isocitrate_dehydrogenase - enzyme for Isocitric acid biosynthesis,Acid (Hydroxy tricarboxylic acid),Acid,Acid,Nicotiana tabacum
+NtG_00322,α-ketoglutarate_dehydrogenase,protein,K00036,PF00498;PF08640,EC 1.1.1.42; EC 1.2.4.2,α-ketoglutarate_dehydrogenase - enzyme for α-Ketoglutaric acid biosynthesis,Acid (Keto acid),Acid,Acid,Nicotiana tabacum
+NtG_00323,pyruvate_carboxylase,protein,K01958,,EC 6.4.1.1; EC 4.1.1.31,pyruvate_carboxylase - enzyme for Oxaloacetic acid biosynthesis,Acid (Keto dicarboxylic acid),Acid,Acid,Nicotiana tabacum
+NtG_00324,phosphoenolpyruvate_carboxylase,protein,K01958,,EC 6.4.1.1; EC 4.1.1.31,phosphoenolpyruvate_carboxylase - enzyme for Oxaloacetic acid biosynthesis,Acid (Keto dicarboxylic acid),Acid,Acid,Nicotiana tabacum
+NtG_00325,shikimate_pathway_enzymes,protein,K00891,,EC 4.2.3.-; EC 2.7.1.71,shikimate_pathway_enzymes - enzyme for Shikimic acid biosynthesis,Acid (Hydroxy cyclohexane carboxylic acid),Acid,Acid,Nicotiana tabacum
+NtG_00326,shikimate_dehydrogenase,protein,K00014,PF00498;PF08640,EC 1.1.1.25; EC 1.1.1.24,shikimate_dehydrogenase - enzyme for Quinic acid biosynthesis,Acid (Hydroxy cyclohexane carboxylic acid),Acid,Acid,Nicotiana tabacum
+NtG_00327,quinate_dehydrogenase,protein,K00014,PF00498;PF08640,EC 1.1.1.25; EC 1.1.1.24,quinate_dehydrogenase - enzyme for Quinic acid biosynthesis,Acid (Hydroxy cyclohexane carboxylic acid),Acid,Acid,Nicotiana tabacum
+NtG_00328,hydroxycinnamoyl-CoA_quinate_transferase,protein,,PF00501;PF00583,EC 2.3.1.99,hydroxycinnamoyl-CoA_quinate_transferase - enzyme for Chlorogenic acid (5-Caffeoylquinic acid) biosynthesis,Acid (Phenolic acid ester),Acid,Acid,Nicotiana tabacum
+NtG_00329,quinolinate_phosphoribosyltransferase,protein,K00767,PF00501;PF00583,EC 2.4.2.19; EC 2.4.2.11,"quinolinate_phosphoribosyltransferase - enzyme for Nicotinic acid (Niacin, Vitamin B3) biosynthesis",Acid (Heterocyclic acid),Acid,Acid,Nicotiana tabacum
+NtG_00330,nicotinate-nucleotide_pyrophosphorylase,protein,K00767,,EC 2.4.2.19; EC 2.4.2.11,"nicotinate-nucleotide_pyrophosphorylase - enzyme for Nicotinic acid (Niacin, Vitamin B3) biosynthesis",Acid (Heterocyclic acid),Acid,Acid,Nicotiana tabacum
+NtG_00331,pectin_methylesterase,protein,K01057,PF00561;PF00756,EC 3.1.1.11; EC 1.14.-.-,pectin_methylesterase - enzyme for Methanol biosynthesis,Alcohol,Alcohol,Alcohol,Nicotiana tabacum
+NtG_00332,lignin_demethylase,protein,K01057,,EC 3.1.1.11; EC 1.14.-.-,lignin_demethylase - enzyme for Methanol biosynthesis,Alcohol,Alcohol,Alcohol,Nicotiana tabacum
+NtG_00333,propanal_reductase,protein,K00001,,EC 1.1.1.1; EC 4.3.1.19,propanal_reductase - enzyme for 1-Propanol biosynthesis,Alcohol,Alcohol,Alcohol,Nicotiana tabacum
+NtG_00334,threonine_pathway,protein,K00001,,EC 1.1.1.1; EC 4.3.1.19,threonine_pathway - enzyme for 1-Propanol biosynthesis,Alcohol,Alcohol,Alcohol,Nicotiana tabacum
+NtG_00335,secondary_alcohol_dehydrogenase,protein,K00001,PF00498;PF08640,EC 1.1.1.1,secondary_alcohol_dehydrogenase - enzyme for 2-Propanol (Isopropanol) biosynthesis,Alcohol,Alcohol,Alcohol,Nicotiana tabacum
+NtG_00336,butanal_reductase,protein,K00001,,EC 1.1.1.1; EC 1.2.1.-,butanal_reductase - enzyme for 1-Butanol biosynthesis,Alcohol,Alcohol,Alcohol,Nicotiana tabacum
+NtG_00337,α-ketoisovalerate_decarboxylase,protein,K01568,PF00184;PF02784,EC 2.6.1.-; EC 4.1.1.1; EC 1.1.1.1,α-ketoisovalerate_decarboxylase - enzyme for Isobutanol (2-Methyl-1-propanol) biosynthesis,Alcohol,Alcohol,Alcohol,Nicotiana tabacum
+NtG_00338,pentanal_reductase,protein,K00001,,EC 1.1.1.1; EC 1.2.1.-,pentanal_reductase - enzyme for 1-Pentanol biosynthesis,Alcohol,Alcohol,Alcohol,Nicotiana tabacum
+NtG_00339,3-methyl-2-butanone_reductase,protein,K00001,,EC 1.1.1.1,3-methyl-2-butanone_reductase - enzyme for 3-Methyl-2-butanol biosynthesis,Alcohol,Alcohol,Alcohol,Nicotiana tabacum
+NtG_00340,hexanal_reductase,protein,K00001,,EC 1.1.1.1; EC 1.13.11.12,hexanal_reductase - enzyme for 1-Hexanol biosynthesis,Alcohol,Alcohol,Alcohol,Nicotiana tabacum
+NtG_00341,lipoxygenase_pathway,protein,K00001,PF04140;PF03171,EC 1.1.1.1; EC 1.13.11.12,lipoxygenase_pathway - enzyme for 1-Hexanol biosynthesis,Alcohol,Alcohol,Alcohol,Nicotiana tabacum
+NtG_00342,#NAME?,protein,K00001,,EC 1.1.1.1; EC 1.13.11.12,#NAME?,Alcohol,Alcohol,Alcohol,Nicotiana tabacum
+NtG_00343,#NAME?,protein,K00001,,EC 1.1.1.1; EC 1.13.11.12,#NAME?,Alcohol,Alcohol,Alcohol,Nicotiana tabacum
+NtG_00344,heptanal_reductase,protein,K00001,,EC 1.1.1.1,heptanal_reductase - enzyme for 1-Heptanol biosynthesis,Alcohol,Alcohol,Alcohol,Nicotiana tabacum
+NtG_00345,lipoxygenase,protein,K00454,PF04140;PF03171,EC 1.13.11.12; EC 4.1.2.-; EC 1.1.1.1,lipoxygenase - enzyme for 1-Octen-3-ol biosynthesis,Alcohol,Alcohol,Alcohol,Nicotiana tabacum
+NtG_00346,hydroperoxide_lyase,protein,K00454,PF00274;PF00682,EC 1.13.11.12; EC 4.1.2.-; EC 1.1.1.1,hydroperoxide_lyase - enzyme for 1-Octen-3-ol biosynthesis,Alcohol,Alcohol,Alcohol,Nicotiana tabacum
+NtG_00347,octanal_reductase,protein,K00001,,EC 1.1.1.1,octanal_reductase - enzyme for 1-Octanol biosynthesis,Alcohol,Alcohol,Alcohol,Nicotiana tabacum
+NtG_00348,nonanal_reductase,protein,K00001,,EC 1.1.1.1,nonanal_reductase - enzyme for 1-Nonanol biosynthesis,Alcohol,Alcohol,Alcohol,Nicotiana tabacum
+NtG_00349,decanal_reductase,protein,K00001,,EC 1.1.1.1,decanal_reductase - enzyme for 1-Decanol biosynthesis,Alcohol,Alcohol,Alcohol,Nicotiana tabacum
+NtG_00350,dodecanal_reductase,protein,K00001,,EC 1.1.1.1,dodecanal_reductase - enzyme for 1-Dodecanol (Lauryl alcohol) biosynthesis,Alcohol,Alcohol,Alcohol,Nicotiana tabacum
+NtG_00351,tetradecanal_reductase,protein,K00001,,EC 1.1.1.1,tetradecanal_reductase - enzyme for 1-Tetradecanol (Myristyl alcohol) biosynthesis,Alcohol,Alcohol,Alcohol,Nicotiana tabacum
+NtG_00352,hexadecanal_reductase,protein,K00001,,EC 1.1.1.1,hexadecanal_reductase - enzyme for 1-Hexadecanol (Cetyl alcohol) biosynthesis,Alcohol,Alcohol,Alcohol,Nicotiana tabacum
+NtG_00353,acetoin_reductase,protein,K00004,,EC 1.1.1.4; EC 2.2.1.6,"acetoin_reductase - enzyme for 2,3-Butanediol biosynthesis",Alcohol (Diol),Alcohol,Alcohol,Nicotiana tabacum
+NtG_00354,α-acetolactate_pathway,protein,K00004,,EC 1.1.1.4; EC 2.2.1.6,"α-acetolactate_pathway - enzyme for 2,3-Butanediol biosynthesis",Alcohol (Diol),Alcohol,Alcohol,Nicotiana tabacum
+NtG_00355,3-butanediol_dehydrogenase,protein,,PF00498;PF08640,EC 1.1.1.-,"3-butanediol_dehydrogenase - enzyme for 1,3-Butanediol biosynthesis",Alcohol (Diol),Alcohol,Alcohol,Nicotiana tabacum
+NtG_00356,lactaldehyde_reductase,protein,K00048,,EC 1.1.1.77; EC 4.2.3.-,"lactaldehyde_reductase - enzyme for 1,2-Propanediol (Propylene glycol) biosynthesis",Alcohol (Diol),Alcohol,Alcohol,Nicotiana tabacum
+NtG_00357,methylglyoxal_pathway,protein,K00048,,EC 1.1.1.77; EC 4.2.3.-,"methylglyoxal_pathway - enzyme for 1,2-Propanediol (Propylene glycol) biosynthesis",Alcohol (Diol),Alcohol,Alcohol,Nicotiana tabacum
+NtG_00358,3-propanediol_dehydrogenase,protein,K00088,PF00498;PF08640,EC 1.1.1.202; EC 1.1.1.-,"3-propanediol_dehydrogenase - enzyme for 1,3-Propanediol biosynthesis",Alcohol (Diol),Alcohol,Alcohol,Nicotiana tabacum
+NtG_00359,glycerol_pathway,protein,K00088,,EC 1.1.1.202; EC 1.1.1.-,"glycerol_pathway - enzyme for 1,3-Propanediol biosynthesis",Alcohol (Diol),Alcohol,Alcohol,Nicotiana tabacum
+NtG_00360,glycerol-3-phosphate_dehydrogenase,protein,K00006,PF00498;PF08640,EC 1.1.1.8; EC 2.7.1.30; EC 3.1.1.3,glycerol-3-phosphate_dehydrogenase - enzyme for Glycerol biosynthesis,Alcohol (Polyol),Alcohol,Alcohol,Nicotiana tabacum
+NtG_00361,glycerol_kinase,protein,K00006,PF00069;PF00671,EC 1.1.1.8; EC 2.7.1.30; EC 3.1.1.3,glycerol_kinase - enzyme for Glycerol biosynthesis,Alcohol (Polyol),Alcohol,Alcohol,Nicotiana tabacum
+NtG_00362,lipase,protein,K00006,PF00683;PF01734,EC 1.1.1.8; EC 2.7.1.30; EC 3.1.1.3,lipase - enzyme for Glycerol biosynthesis,Alcohol (Polyol),Alcohol,Alcohol,Nicotiana tabacum
+NtG_00363,erythrose_reductase,protein,,,EC 1.1.1.-; EC 4.1.2.-,erythrose_reductase - enzyme for Erythritol biosynthesis,Alcohol (Polyol),Alcohol,Alcohol,Nicotiana tabacum
+NtG_00364,pentose_phosphate_pathway,protein,,,EC 1.1.1.-; EC 4.1.2.-,pentose_phosphate_pathway - enzyme for Erythritol biosynthesis,Alcohol (Polyol),Alcohol,Alcohol,Nicotiana tabacum
+NtG_00365,mannitol_dehydrogenase,protein,K28607,PF00498;PF08640,EC 1.1.1.138; EC 1.1.1.67,mannitol_dehydrogenase - enzyme for Mannitol biosynthesis,Alcohol (Polyol),Alcohol,Alcohol,Nicotiana tabacum
+NtG_00366,aldose_reductase,protein,K00017,,EC 1.1.1.21; EC 1.1.1.140,aldose_reductase - enzyme for Sorbitol biosynthesis,Alcohol (Polyol),Alcohol,Alcohol,Nicotiana tabacum
+NtG_00367,sorbitol-6-phosphate_dehydrogenase,protein,K00017,PF00498;PF08640,EC 1.1.1.21; EC 1.1.1.140,sorbitol-6-phosphate_dehydrogenase - enzyme for Sorbitol biosynthesis,Alcohol (Polyol),Alcohol,Alcohol,Nicotiana tabacum
+NtG_00368,myo-inositol-1-phosphate_synthase,protein,K01858,PF00288;PF00155,EC 5.5.1.4; EC 3.1.3.25,myo-inositol-1-phosphate_synthase - enzyme for Inositol (myo-Inositol) biosynthesis,Alcohol (Cyclitol),Alcohol,Alcohol,Nicotiana tabacum
+NtG_00369,inositol_monophosphatase,protein,K01858,,EC 5.5.1.4; EC 3.1.3.25,inositol_monophosphatase - enzyme for Inositol (myo-Inositol) biosynthesis,Alcohol (Cyclitol),Alcohol,Alcohol,Nicotiana tabacum
+NtG_00370,tyrosine_aminotransferase,protein,K00001,PF00501;PF00583,EC 2.6.1.-; EC 4.1.1.-; EC 1.1.1.1,tyrosine_aminotransferase - enzyme for Tyrosol (4-Hydroxyphenylethanol) biosynthesis,Alcohol (Aromatic alcohol),Alcohol,Alcohol,Nicotiana tabacum
+NtG_00371,4-hydroxyphenylpyruvate_decarboxylase,protein,K00001,PF00184;PF02784,EC 2.6.1.-; EC 4.1.1.-; EC 1.1.1.1,4-hydroxyphenylpyruvate_decarboxylase - enzyme for Tyrosol (4-Hydroxyphenylethanol) biosynthesis,Alcohol (Aromatic alcohol),Alcohol,Alcohol,Nicotiana tabacum
+NtG_00372,tryptophan_aminotransferase,protein,K00001,PF00501;PF00583,EC 2.6.1.-; EC 4.1.1.-; EC 1.1.1.1,tryptophan_aminotransferase - enzyme for Tryptophol (Indole-3-ethanol) biosynthesis,Alcohol (Aromatic alcohol),Alcohol,Alcohol,Nicotiana tabacum
+NtG_00373,indole-3-pyruvate_decarboxylase,protein,K00001,PF00184;PF02784,EC 2.6.1.-; EC 4.1.1.-; EC 1.1.1.1,indole-3-pyruvate_decarboxylase - enzyme for Tryptophol (Indole-3-ethanol) biosynthesis,Alcohol (Aromatic alcohol),Alcohol,Alcohol,Nicotiana tabacum
+NtG_00374,ethanol_dehydrogenase,protein,K01568,PF00498;PF08640,EC 4.1.1.1; EC 1.1.1.1,ethanol_dehydrogenase - enzyme for Acetaldehyde biosynthesis,Aldehyde,Aldehyde,Aldehyde,Nicotiana tabacum
+NtG_00375,α-ketobutyrate_decarboxylase,protein,K01754,PF00184;PF02784,EC 4.3.1.19; EC 4.1.1.-,α-ketobutyrate_decarboxylase - enzyme for Propanal (Propionaldehyde) biosynthesis,Aldehyde,Aldehyde,Aldehyde,Nicotiana tabacum
+NtG_00376,butyryl-CoA_reductase,protein,K00107,,EC 1.2.1.-; EC 1.2.1.3,butyryl-CoA_reductase - enzyme for Butanal (Butyraldehyde) biosynthesis,Aldehyde,Aldehyde,Aldehyde,Nicotiana tabacum
+NtG_00377,pentanoyl-CoA_reductase,protein,K00454,,EC 1.2.1.-; EC 1.13.11.12,pentanoyl-CoA_reductase - enzyme for Pentanal (Valeraldehyde) biosynthesis,Aldehyde,Aldehyde,Aldehyde,Nicotiana tabacum
+NtG_00378,heptanoyl-CoA_reductase,protein,K00454,,EC 1.2.1.-; EC 1.13.11.12,heptanoyl-CoA_reductase - enzyme for Heptanal biosynthesis,Aldehyde,Aldehyde,Aldehyde,Nicotiana tabacum
+NtG_00379,fatty_acid_oxidation,protein,K00454,,EC 1.13.11.12; EC 1.14.-.-,fatty_acid_oxidation - enzyme for (E)-2-Heptenal biosynthesis,Aldehyde,Aldehyde,Aldehyde,Nicotiana tabacum
+NtG_00380,octanoyl-CoA_reductase,protein,K00454,,EC 1.2.1.-; EC 1.13.11.12,octanoyl-CoA_reductase - enzyme for Octanal biosynthesis,Aldehyde,Aldehyde,Aldehyde,Nicotiana tabacum
+NtG_00381,oleic_acid_oxidase,protein,,,EC 1.14.-.-; EC 1.2.1.-,oleic_acid_oxidase - enzyme for Nonanal biosynthesis,Aldehyde,Aldehyde,Aldehyde,Nicotiana tabacum
+NtG_00382,nonanoyl-CoA_reductase,protein,,,EC 1.14.-.-; EC 1.2.1.-,nonanoyl-CoA_reductase - enzyme for Nonanal biosynthesis,Aldehyde,Aldehyde,Aldehyde,Nicotiana tabacum
+NtG_00383,decanoyl-CoA_reductase,protein,,,EC 1.14.-.-; EC 1.2.1.-,decanoyl-CoA_reductase - enzyme for Decanal biosynthesis,Aldehyde,Aldehyde,Aldehyde,Nicotiana tabacum
+NtG_00384,methanol_dehydrogenase,protein,K00093,PF00498;PF08640,EC 1.1.1.244; EC 1.2.1.46,methanol_dehydrogenase - enzyme for Formaldehyde biosynthesis,Aldehyde,Aldehyde,Aldehyde,Nicotiana tabacum
+NtG_00385,formaldehyde_dehydrogenase,protein,K00093,PF00498;PF08640,EC 1.1.1.244; EC 1.2.1.46,formaldehyde_dehydrogenase - enzyme for Formaldehyde biosynthesis,Aldehyde,Aldehyde,Aldehyde,Nicotiana tabacum
+NtG_00386,acetoacetate_decarboxylase,protein,K01574,PF00184;PF02784,EC 4.1.1.4; EC 1.1.1.1,acetoacetate_decarboxylase - enzyme for Acetone biosynthesis,Ketone,Ketone,Ketone,Nicotiana tabacum
+NtG_00387,secondary_ADH,protein,K01574,,EC 4.1.1.4; EC 1.1.1.1,secondary_ADH - enzyme for Acetone biosynthesis,Ketone,Ketone,Ketone,Nicotiana tabacum
+NtG_00388,β-oxidation_pathway,protein,K00001,,EC 1.1.1.1; EC 1.3.-.-,β-oxidation_pathway - enzyme for 2-Butanone (Methyl ethyl ketone) biosynthesis,Ketone,Ketone,Ketone,Nicotiana tabacum
+NtG_00389,ketone_synthesis,protein,,,EC 1.3.-.-,ketone_synthesis - enzyme for 3-Pentanone (Diethyl ketone) biosynthesis,Ketone,Ketone,Ketone,Nicotiana tabacum
+NtG_00390,α-acetolactate_synthase,protein,K01652,PF00288;PF00155,EC 2.2.1.6; EC 4.1.1.5,"α-acetolactate_synthase - enzyme for Diacetyl (2,3-Butanedione) biosynthesis",Ketone (Diketone),Ketone,Ketone,Nicotiana tabacum
+NtG_00391,α-acetolactate_decarboxylase,protein,K01652,PF00184;PF02784,EC 2.2.1.6; EC 4.1.1.5,"α-acetolactate_decarboxylase - enzyme for Diacetyl (2,3-Butanedione) biosynthesis",Ketone (Diketone),Ketone,Ketone,Nicotiana tabacum
+NtG_00392,diacetyl_reductase,protein,K01575,,EC 4.1.1.5; EC 1.1.1.303,diacetyl_reductase - enzyme for Acetoin (3-Hydroxy-2-butanone) biosynthesis,Ketone (Hydroxy ketone),Ketone,Ketone,Nicotiana tabacum
+NtG_00393,ketone_pathway,protein,,,EC 1.1.1.-,ketone_pathway - enzyme for 3-Hydroxy-2-pentanone biosynthesis,Ketone (Hydroxy ketone),Ketone,Ketone,Nicotiana tabacum
+NtG_00394,hydroxylation,protein,,,EC 1.1.1.-,hydroxylation - enzyme for 3-Hydroxy-2-pentanone biosynthesis,Ketone (Hydroxy ketone),Ketone,Ketone,Nicotiana tabacum
+NtG_00395,aldol_condensation,protein,,,EC 4.1.2.-,aldol_condensation - enzyme for 4-Hydroxy-2-butanone biosynthesis,Ketone (Hydroxy ketone),Ketone,Ketone,Nicotiana tabacum
+NtG_00396,methylglyoxal_reductase,protein,,,EC 1.1.1.-; EC 4.2.3.-,methylglyoxal_reductase - enzyme for 1-Hydroxy-2-propanone (Hydroxyacetone) biosynthesis,Ketone (Hydroxy ketone),Ketone,Ketone,Nicotiana tabacum
+NtG_00397,methylglyoxal_synthase,protein,K01734,PF00288;PF00155,EC 4.2.3.3; EC 5.3.1.1,methylglyoxal_synthase - enzyme for Methylglyoxal (Pyruvaldehyde) biosynthesis,Ketone (Aldehyde-ketone),Ketone,Ketone,Nicotiana tabacum
+NtG_00398,triosephosphate_isomerase,protein,K01734,PF00154;PF01266,EC 4.2.3.3; EC 5.3.1.1,triosephosphate_isomerase - enzyme for Methylglyoxal (Pyruvaldehyde) biosynthesis,Ketone (Aldehyde-ketone),Ketone,Ketone,Nicotiana tabacum
+NtG_00399,glyoxal_synthase,protein,,PF00288;PF00155,EC 1.2.-.-,glyoxal_synthase - enzyme for Glyoxal biosynthesis,Ketone (Dialdehyde),Ketone,Ketone,Nicotiana tabacum
+NtG_00400,acetaldehyde_oxidase,protein,,,EC 1.2.-.-,acetaldehyde_oxidase - enzyme for Glyoxal biosynthesis,Ketone (Dialdehyde),Ketone,Ketone,Nicotiana tabacum
+NtG_00401,4-hydroxybenzaldehyde_O-methyltransferase,protein,,PF00501;PF00583,EC 2.1.1.-,4-hydroxybenzaldehyde_O-methyltransferase - enzyme for p-Anisaldehyde (4-Methoxybenzaldehyde) biosynthesis,Aldehyde (Aromatic aldehyde),Aldehyde,Aldehyde,Nicotiana tabacum
+NtG_00402,toluene_oxidation_pathway,protein,,,EC 1.14.-.-,toluene_oxidation_pathway - enzyme for p-Tolualdehyde (4-Methylbenzaldehyde) biosynthesis,Aldehyde (Aromatic aldehyde),Aldehyde,Aldehyde,Nicotiana tabacum
+NtG_00403,phenylacetaldehyde_pathway,protein,,,EC 4.1.2.-,phenylacetaldehyde_pathway - enzyme for 2-Phenyl-2-butenal biosynthesis,Aldehyde (Aromatic aldehyde),Aldehyde,Aldehyde,Nicotiana tabacum
+NtG_00404,hexose_dehydratase,protein,,,EC 4.2.1.-,hexose_dehydratase - enzyme for 5-Hydroxymethylfurfural (HMF) biosynthesis,Aldehyde (Furan aldehyde),Aldehyde,Aldehyde,Nicotiana tabacum
+NtG_00405,furan_aldehyde_pathway,protein,,,EC 4.2.1.-,furan_aldehyde_pathway - enzyme for 3-Furaldehyde biosynthesis,Aldehyde (Furan aldehyde),Aldehyde,Aldehyde,Nicotiana tabacum
+NtG_00406,sulfite_reductase,protein,K04487,,EC 2.8.1.7; EC 1.8.1.-,sulfite_reductase - enzyme for Hydrogen sulfide (H2S) biosynthesis,Sulfur compound,Sulfur compound,Sulfur compound,Nicotiana tabacum
+NtG_00407,methionine_γ-lyase,protein,K01761,PF00274;PF00682,EC 4.4.1.11; EC 2.6.1.-,methionine_γ-lyase - enzyme for Methanethiol (Methyl mercaptan) biosynthesis,Sulfur compound,Sulfur compound,Sulfur compound,Nicotiana tabacum
+NtG_00408,cysteine_pathway,protein,,,EC 4.4.1.-; EC 1.8.1.-,cysteine_pathway - enzyme for Ethanethiol (Ethyl mercaptan) biosynthesis,Sulfur compound,Sulfur compound,Sulfur compound,Nicotiana tabacum
+NtG_00409,thiol_reductase,protein,,,EC 4.4.1.-; EC 1.8.1.-,thiol_reductase - enzyme for Ethanethiol (Ethyl mercaptan) biosynthesis,Sulfur compound,Sulfur compound,Sulfur compound,Nicotiana tabacum
+NtG_00410,thiol_S-methyltransferase,protein,K01761,PF00501;PF00583,EC 4.4.1.11; EC 2.1.1.9; EC 4.4.1.13,thiol_S-methyltransferase - enzyme for Dimethyl sulfide (DMS) biosynthesis,Sulfur compound,Sulfur compound,Sulfur compound,Nicotiana tabacum
+NtG_00411,S-methylmethionine_lyase,protein,K01761,PF00274;PF00682,EC 4.4.1.11; EC 2.1.1.9; EC 4.4.1.13,S-methylmethionine_lyase - enzyme for Dimethyl sulfide (DMS) biosynthesis,Sulfur compound,Sulfur compound,Sulfur compound,Nicotiana tabacum
+NtG_00412,methanethiol_oxidase,protein,K00387,,EC 1.8.3.1; EC 1.11.1.15,methanethiol_oxidase - enzyme for Dimethyl disulfide (DMDS) biosynthesis,Sulfur compound,Sulfur compound,Sulfur compound,Nicotiana tabacum
+NtG_00413,thiol_peroxidase,protein,K00387,PF00141;PF01334,EC 1.8.3.1; EC 1.11.1.15,thiol_peroxidase - enzyme for Dimethyl disulfide (DMDS) biosynthesis,Sulfur compound,Sulfur compound,Sulfur compound,Nicotiana tabacum
+NtG_00414,sulfur_transferase,protein,,PF00501;PF00583,EC 2.8.1.-,sulfur_transferase - enzyme for Dimethyl trisulfide (DMTS) biosynthesis,Sulfur compound,Sulfur compound,Sulfur compound,Nicotiana tabacum
+NtG_00415,thiol_pathway,protein,,,EC 2.8.1.-,thiol_pathway - enzyme for Dimethyl tetrasulfide biosynthesis,Sulfur compound,Sulfur compound,Sulfur compound,Nicotiana tabacum
+NtG_00416,ethanethiol_pathway,protein,,,EC 2.1.1.-,ethanethiol_pathway - enzyme for Diethyl sulfide biosynthesis,Sulfur compound,Sulfur compound,Sulfur compound,Nicotiana tabacum
+NtG_00417,thiol_S-ethyltransferase,protein,,PF00501;PF00583,EC 2.1.1.-,thiol_S-ethyltransferase - enzyme for Diethyl sulfide biosynthesis,Sulfur compound,Sulfur compound,Sulfur compound,Nicotiana tabacum
+NtG_00418,ethanethiol_oxidase,protein,K00387,,EC 1.8.3.1,ethanethiol_oxidase - enzyme for Diethyl disulfide biosynthesis,Sulfur compound,Sulfur compound,Sulfur compound,Nicotiana tabacum
+NtG_00419,methional_dehydrogenase,protein,,PF00498;PF08640,EC 1.2.1.-,methional_dehydrogenase - enzyme for 3-(Methylthio)propanoic acid biosynthesis,Sulfur compound (Acid),Sulfur compound,Sulfur compound,Nicotiana tabacum
+NtG_00420,methionine_S-methyltransferase,protein,K08247,PF00501;PF00583,EC 2.1.1.12,methionine_S-methyltransferase - enzyme for S-Methyl methionine (Vitamin U) biosynthesis,Sulfur compound (Amino acid derivative),Sulfur compound,Sulfur compound,Nicotiana tabacum
+NtG_00421,cysteine-thiophene_conjugate_lyase,protein,K00816,PF00274;PF00682,EC 4.4.1.13,cysteine-thiophene_conjugate_lyase - enzyme for 2-Thiophenethiol biosynthesis,Sulfur compound (Thiophene thiol),Sulfur compound,Sulfur compound,Nicotiana tabacum
+NtG_00422,cysteine-hexanal_conjugate_lyase,protein,K00816,PF00274;PF00682,EC 4.4.1.13,cysteine-hexanal_conjugate_lyase - enzyme for 3-Mercaptohexan-1-ol (3MH) biosynthesis,Sulfur compound (Thiol alcohol),Sulfur compound,Sulfur compound,Nicotiana tabacum
+NtG_00423,cysteine_conjugate_lyase,protein,K00816,PF00274;PF00682,EC 4.4.1.13,cysteine_conjugate_lyase - enzyme for 4-Mercapto-4-methylpentan-2-one (4MMP) biosynthesis,Sulfur compound (Thiol ketone),Sulfur compound,Sulfur compound,Nicotiana tabacum
+NtG_00424,cysteine-benzaldehyde_conjugate_lyase,protein,K00816,PF00274;PF00682,EC 4.4.1.13,cysteine-benzaldehyde_conjugate_lyase - enzyme for Benzyl mercaptan biosynthesis,Sulfur compound (Aromatic thiol),Sulfur compound,Sulfur compound,Nicotiana tabacum
+NtG_00425,cysteine-phenylacetaldehyde_conjugate_lyase,protein,K00816,PF00274;PF00682,EC 4.4.1.13,cysteine-phenylacetaldehyde_conjugate_lyase - enzyme for 2-Phenylethanethiol biosynthesis,Sulfur compound (Aromatic thiol),Sulfur compound,Sulfur compound,Nicotiana tabacum
+NtG_00426,isoleucine_pathway,protein,,,EC 2.3.1.-,isoleucine_pathway - enzyme for S-Methyl 2-methylbutanethioate biosynthesis,Sulfur compound (Thioester),Sulfur compound,Sulfur compound,Nicotiana tabacum
+NtG_00427,cysteine_degradation,protein,,,NA,cysteine_degradation - enzyme for Thiophene biosynthesis,Sulfur compound (Heterocyclic),Sulfur compound,Sulfur compound,Nicotiana tabacum
+NtG_00428,leucine_+_cysteine,protein,,,NA,leucine_+_cysteine - enzyme for 2-Isobutylthiazole biosynthesis,Sulfur compound (Heterocyclic),Sulfur compound,Sulfur compound,Nicotiana tabacum
+NtG_00429,phenylalanine_+_cysteine,protein,,,NA,phenylalanine_+_cysteine - enzyme for Benzothiazole biosynthesis,Sulfur compound (Heterocyclic),Sulfur compound,Sulfur compound,Nicotiana tabacum
+NtG_00430,amino_acid_degradation,protein,,,NA,amino_acid_degradation - enzyme for Pyridine biosynthesis,Nitrogen compound (Pyridine),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00431,leucine_degradation,protein,,,NA,leucine_degradation - enzyme for 2-Isobutylpyridine biosynthesis,Nitrogen compound (Pyridine),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00432,valine_degradation,protein,,,NA,valine_degradation - enzyme for 2-Isopropylpyridine biosynthesis,Nitrogen compound (Pyridine),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00433,lysine_+_hexanal,protein,,,NA,lysine_+_hexanal - enzyme for 2-Pentylpyridine biosynthesis,Nitrogen compound (Pyridine),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00434,pyridine_pathway,protein,,,NA,pyridine_pathway - enzyme for 2-Vinylpyridine biosynthesis,Nitrogen compound (Pyridine),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00435,pyrrole_acetylation,protein,,,NA,pyrrole_acetylation - enzyme for N-Acetylpyrrole biosynthesis,Nitrogen compound (Pyrrole),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00436,pyrrole_oxidation,protein,,,NA,pyrrole_oxidation - enzyme for 2-Formylpyrrole biosynthesis,Nitrogen compound (Pyrrole),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00437,pyrrole_pathway,protein,,,NA,pyrrole_pathway - enzyme for 5-Methyl-2-formylpyrrole biosynthesis,Nitrogen compound (Pyrrole),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00438,diamine_oxidase,protein,K00318,,EC 1.5.5.2; EC 1.4.3.22,diamine_oxidase - enzyme for 1-Pyrroline biosynthesis,Nitrogen compound (Pyrroline),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00439,proline_reductase,protein,K10793,,EC 1.21.4.1; EC 4.1.1.-,proline_reductase - enzyme for Pyrrolidine biosynthesis,Nitrogen compound (Pyrrolidine),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00440,putrescine_pathway,protein,K10793,,EC 1.21.4.1; EC 4.1.1.-,putrescine_pathway - enzyme for Pyrrolidine biosynthesis,Nitrogen compound (Pyrrolidine),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00441,pyrazine_acetylation,protein,,,NA,pyrazine_acetylation - enzyme for 2-Acetyl-3-methylpyrazine biosynthesis,Nitrogen compound (Pyrazine),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00442,pyrazine_pathway,protein,,,NA,pyrazine_pathway - enzyme for 2-Methyl-5-vinylpyrazine biosynthesis,Nitrogen compound (Pyrazine),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00443,tryptophanase,protein,K01667,,EC 4.1.99.1,tryptophanase - enzyme for Indole biosynthesis,Nitrogen compound (Indole),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00444,tryptophan_indole-lyase,protein,K01667,PF00274;PF00682,EC 4.1.99.1,tryptophan_indole-lyase - enzyme for Indole biosynthesis,Nitrogen compound (Indole),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00445,tryptophan_pathway,protein,K04103,,EC 4.1.1.74; EC 1.2.3.1,tryptophan_pathway - enzyme for Skatole (3-Methylindole) biosynthesis,Nitrogen compound (Indole),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00446,aldehyde_oxidase,protein,K04103,,EC 4.1.1.74; EC 1.2.3.1,aldehyde_oxidase - enzyme for Skatole (3-Methylindole) biosynthesis,Nitrogen compound (Indole),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00447,putrescine_N-methyltransferase,protein,K00767,PF00501;PF00583,EC 2.4.2.19; EC 2.1.1.53; EC 1.4.3.22; EC 1.21.3.3,putrescine_N-methyltransferase - enzyme for Nicotine biosynthesis,Nitrogen compound (Tobacco alkaloid),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00448,N-methylputrescine_oxidase,protein,K00767,,EC 2.4.2.19; EC 2.1.1.53; EC 1.4.3.22; EC 1.21.3.3,N-methylputrescine_oxidase - enzyme for Nicotine biosynthesis,Nitrogen compound (Tobacco alkaloid),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00449,berberine_bridge_enzyme-like,protein,K00767,,EC 2.4.2.19; EC 2.1.1.53; EC 1.4.3.22; EC 1.21.3.3,berberine_bridge_enzyme-like - enzyme for Nicotine biosynthesis,Nitrogen compound (Tobacco alkaloid),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00450,nicotine_N-demethylase,protein,,,EC 1.14.13.-,nicotine_N-demethylase - enzyme for Nornicotine biosynthesis,Nitrogen compound (Tobacco alkaloid),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00451,quinolinate_pathway,protein,K00767,,EC 2.4.2.19,quinolinate_pathway - enzyme for Anatabine biosynthesis,Nitrogen compound (Tobacco alkaloid),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00452,anatabine_synthase,protein,K00767,PF00288;PF00155,EC 2.4.2.19,anatabine_synthase - enzyme for Anatabine biosynthesis,Nitrogen compound (Tobacco alkaloid),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00453,lysine_decarboxylase,protein,K01582,PF00184;PF02784,EC 4.1.1.18; EC 2.4.2.19,lysine_decarboxylase - enzyme for Anabasine biosynthesis,Nitrogen compound (Tobacco alkaloid),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00454,anabasine_synthase,protein,K01582,PF00288;PF00155,EC 4.1.1.18; EC 2.4.2.19,anabasine_synthase - enzyme for Anabasine biosynthesis,Nitrogen compound (Tobacco alkaloid),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00455,nicotine_oxidoreductase,protein,,PF00106;PF00107,EC 1.3.-.-,nicotine_oxidoreductase - enzyme for Myosmine biosynthesis,Nitrogen compound (Tobacco alkaloid),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00456,myosmine_reductase,protein,,,EC 1.3.-.-,myosmine_reductase - enzyme for Myosmine biosynthesis,Nitrogen compound (Tobacco alkaloid),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00457,nicotine_oxidase,protein,,,EC 1.14.13.-,nicotine_oxidase - enzyme for Cotinine biosynthesis,Nitrogen compound (Tobacco alkaloid),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00458,nicotinate_phosphoribosyltransferase,protein,K03462,PF00501;PF00583,EC 2.4.2.12; EC 6.3.1.5; EC 3.5.1.19,nicotinate_phosphoribosyltransferase - enzyme for Nicotinamide biosynthesis,Nitrogen compound (Pyridine amide),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00459,NAD_synthase,protein,K03462,PF00288;PF00155,EC 2.4.2.12; EC 6.3.1.5; EC 3.5.1.19,NAD_synthase - enzyme for Nicotinamide biosynthesis,Nitrogen compound (Pyridine amide),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00460,nicotinamidase,protein,K03462,,EC 2.4.2.12; EC 6.3.1.5; EC 3.5.1.19,nicotinamidase - enzyme for Nicotinamide biosynthesis,Nitrogen compound (Pyridine amide),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00461,anatabinine_synthase,protein,K00767,PF00288;PF00155,EC 2.4.2.19,anatabinine_synthase - enzyme for Anatabinine biosynthesis,Nitrogen compound (Tobacco alkaloid),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00462,nicotine_degradation_pathway,protein,,,EC 1.14.-.-,"nicotine_degradation_pathway - enzyme for 2,3'-Bipyridyl biosynthesis",Nitrogen compound (Bipyridyl),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00463,oxidase,protein,,,EC 1.14.-.-,"oxidase - enzyme for 2,3'-Bipyridyl biosynthesis",Nitrogen compound (Bipyridyl),Nitrogen compound,Nitrogen compound,Nicotiana tabacum
+NtG_00464,4-hydroxybutyrate_dehydrogenase,protein,K00043,PF00498;PF08640,EC 1.1.1.61; EC 4.1.1.15; EC 3.1.1.25,4-hydroxybutyrate_dehydrogenase - enzyme for γ-Butyrolactone (GBL) biosynthesis,Lactone (γ-Lactone),Lactone,Lactone,Nicotiana tabacum
+NtG_00465,GABA_pathway,protein,K00043,,EC 1.1.1.61; EC 4.1.1.15; EC 3.1.1.25,GABA_pathway - enzyme for γ-Butyrolactone (GBL) biosynthesis,Lactone (γ-Lactone),Lactone,Lactone,Nicotiana tabacum
+NtG_00466,lactonase,protein,K00043,,EC 1.1.1.61; EC 4.1.1.15; EC 3.1.1.25,lactonase - enzyme for γ-Butyrolactone (GBL) biosynthesis,Lactone (γ-Lactone),Lactone,Lactone,Nicotiana tabacum
+NtG_00467,4-hydroxyvalerate_dehydrogenase,protein,,PF00498;PF08640,EC 1.1.1.-; EC 3.1.1.25,4-hydroxyvalerate_dehydrogenase - enzyme for γ-Valerolactone biosynthesis,Lactone (γ-Lactone),Lactone,Lactone,Nicotiana tabacum
+NtG_00468,4-hydroxyhexanoate_dehydrogenase,protein,,PF00498;PF08640,EC 1.1.1.-; EC 3.1.1.25,4-hydroxyhexanoate_dehydrogenase - enzyme for γ-Hexalactone biosynthesis,Lactone (γ-Lactone),Lactone,Lactone,Nicotiana tabacum
+NtG_00469,fatty_acid_pathway,protein,,,EC 1.1.1.-; EC 3.1.1.25,fatty_acid_pathway - enzyme for γ-Hexalactone biosynthesis,Lactone (γ-Lactone),Lactone,Lactone,Nicotiana tabacum
+NtG_00470,4-hydroxyheptanoate_dehydrogenase,protein,,PF00498;PF08640,EC 1.1.1.-; EC 3.1.1.25,4-hydroxyheptanoate_dehydrogenase - enzyme for γ-Heptalactone biosynthesis,Lactone (γ-Lactone),Lactone,Lactone,Nicotiana tabacum
+NtG_00471,4-hydroxyoctanoate_dehydrogenase,protein,,PF00498;PF08640,EC 1.1.1.-; EC 3.1.1.25,4-hydroxyoctanoate_dehydrogenase - enzyme for γ-Octalactone biosynthesis,Lactone (γ-Lactone),Lactone,Lactone,Nicotiana tabacum
+NtG_00472,4-hydroxynonanoate_dehydrogenase,protein,,PF00498;PF08640,EC 1.1.1.-; EC 3.1.1.25,4-hydroxynonanoate_dehydrogenase - enzyme for γ-Nonalactone biosynthesis,Lactone (γ-Lactone),Lactone,Lactone,Nicotiana tabacum
+NtG_00473,4-hydroxydecanoate_dehydrogenase,protein,,PF00498;PF08640,EC 1.1.1.-; EC 3.1.1.25; EC 1.3.-.-,4-hydroxydecanoate_dehydrogenase - enzyme for γ-Decalactone biosynthesis,Lactone (γ-Lactone),Lactone,Lactone,Nicotiana tabacum
+NtG_00474,ricinoleic_acid_β-oxidation,protein,,,EC 1.1.1.-; EC 3.1.1.25; EC 1.3.-.-,ricinoleic_acid_β-oxidation - enzyme for γ-Decalactone biosynthesis,Lactone (γ-Lactone),Lactone,Lactone,Nicotiana tabacum
+NtG_00475,4-hydroxyundecanoate_dehydrogenase,protein,,PF00498;PF08640,EC 1.1.1.-; EC 3.1.1.25,4-hydroxyundecanoate_dehydrogenase - enzyme for γ-Undecalactone biosynthesis,Lactone (γ-Lactone),Lactone,Lactone,Nicotiana tabacum
+NtG_00476,4-hydroxydodecanoate_dehydrogenase,protein,,PF00498;PF08640,EC 1.1.1.-; EC 3.1.1.25,4-hydroxydodecanoate_dehydrogenase - enzyme for γ-Dodecalactone biosynthesis,Lactone (γ-Lactone),Lactone,Lactone,Nicotiana tabacum
+NtG_00477,5-hydroxyhexanoate_dehydrogenase,protein,,PF00498;PF08640,EC 1.1.1.-; EC 3.1.1.25,5-hydroxyhexanoate_dehydrogenase - enzyme for δ-Hexalactone biosynthesis,Lactone (δ-Lactone),Lactone,Lactone,Nicotiana tabacum
+NtG_00478,5-hydroxyoctanoate_dehydrogenase,protein,,PF00498;PF08640,EC 1.1.1.-; EC 3.1.1.25,5-hydroxyoctanoate_dehydrogenase - enzyme for δ-Octalactone biosynthesis,Lactone (δ-Lactone),Lactone,Lactone,Nicotiana tabacum
+NtG_00479,5-hydroxydecanoate_dehydrogenase,protein,,PF00498;PF08640,EC 1.1.1.-; EC 3.1.1.25; EC 1.3.-.-,5-hydroxydecanoate_dehydrogenase - enzyme for δ-Decalactone biosynthesis,Lactone (δ-Lactone),Lactone,Lactone,Nicotiana tabacum
+NtG_00480,5-hydroxyundecanoate_dehydrogenase,protein,,PF00498;PF08640,EC 1.1.1.-; EC 3.1.1.25,5-hydroxyundecanoate_dehydrogenase - enzyme for δ-Undecalactone biosynthesis,Lactone (δ-Lactone),Lactone,Lactone,Nicotiana tabacum
+NtG_00481,5-hydroxydodecanoate_dehydrogenase,protein,,PF00498;PF08640,EC 1.1.1.-; EC 3.1.1.25,5-hydroxydodecanoate_dehydrogenase - enzyme for δ-Dodecalactone biosynthesis,Lactone (δ-Lactone),Lactone,Lactone,Nicotiana tabacum
+NtG_00482,cinnamate_2-hydroxylase,protein,K01188,,EC 4.3.1.5; EC 1.14.-.-; EC 3.2.1.21,cinnamate_2-hydroxylase - enzyme for Coumarin biosynthesis,Lactone (Coumarin),Lactone,Lactone,Nicotiana tabacum
+NtG_00483,coumarin_synthase,protein,K01188,PF00288;PF00155,EC 4.3.1.5; EC 1.14.-.-; EC 3.2.1.21,coumarin_synthase - enzyme for Coumarin biosynthesis,Lactone (Coumarin),Lactone,Lactone,Nicotiana tabacum
+NtG_00484,coumarin_reductase,protein,,,EC 1.3.1.-,coumarin_reductase - enzyme for Dihydrocoumarin biosynthesis,Lactone (Coumarin),Lactone,Lactone,Nicotiana tabacum
+NtG_00485,pyranone_synthase,protein,K00454,PF00288;PF00155,EC 1.13.11.12; EC 4.2.1.-,pyranone_synthase - enzyme for 6-Pentyl-2H-pyran-2-one biosynthesis,Lactone (Pyranone),Lactone,Lactone,Nicotiana tabacum
+NtG_00486,β-oxidation,protein,,,EC 1.3.-.-; EC 3.1.1.25,"β-oxidation - enzyme for 6-Pentyl-5,6-dihydro-2H-pyran-2-one (Massoia lactone) biosynthesis",Lactone (Pyranone),Lactone,Lactone,Nicotiana tabacum
+NtG_00487,lignin_degradation,protein,,,EC 1.14.-.-; EC 1.3.-.-; EC 3.1.1.25,lignin_degradation - enzyme for Whiskey lactone (Oak lactone) biosynthesis,Lactone (γ-Lactone),Lactone,Lactone,Nicotiana tabacum
+NtG_00488,pantothenate_pathway,protein,,,EC 2.6.1.-; EC 4.2.1.-,pantothenate_pathway - enzyme for Pantolactone biosynthesis,Lactone (γ-Lactone),Lactone,Lactone,Nicotiana tabacum
+NtG_00489,α-ketoisovalerate_pathway,protein,,,EC 2.6.1.-; EC 4.2.1.-,α-ketoisovalerate_pathway - enzyme for Pantolactone biosynthesis,Lactone (γ-Lactone),Lactone,Lactone,Nicotiana tabacum
+NtG_00490,cembratriene_hydroxylase,protein,,,EC 1.14.-.-,cembratriene_hydroxylase - enzyme for Cembratriene-diol (CBT-diol) biosynthesis,Tobacco-specific compound (Cembranoid),Tobacco-specific compound,Tobacco-specific compound,Nicotiana tabacum
+NtG_00491,cembratriene-diol_oxidase,protein,,,EC 1.14.-.-,"cembratriene-diol_oxidase - enzyme for Tabanone (4,8,13-Duvatriene-1,3-diol) biosynthesis",Tobacco-specific compound (Cembranoid),Tobacco-specific compound,Tobacco-specific compound,Nicotiana tabacum
+NtG_00492,duvatriene_synthase,protein,K00787,PF00288;PF00155,EC 4.2.3.-; EC 2.5.1.1,"duvatriene_synthase - enzyme for Duvantriene (4,8,12,16-Tetramethylheptadeca-1,3,7,11,15-pentaene) biosynthesis",Tobacco-specific compound (Duvatriene),Tobacco-specific compound,Tobacco-specific compound,Nicotiana tabacum
+NtG_00493,GGPP_synthase,protein,K00787,PF00288;PF00155,EC 4.2.3.-; EC 2.5.1.1,"GGPP_synthase - enzyme for Duvantriene (4,8,12,16-Tetramethylheptadeca-1,3,7,11,15-pentaene) biosynthesis",Tobacco-specific compound (Duvatriene),Tobacco-specific compound,Tobacco-specific compound,Nicotiana tabacum
+NtG_00494,duvatriene_hydroxylase,protein,,,EC 1.14.-.-,duvatriene_hydroxylase - enzyme for Duvatrienediol (DVT-diol) biosynthesis,Tobacco-specific compound (Duvatriene),Tobacco-specific compound,Tobacco-specific compound,Nicotiana tabacum
+NtG_00495,loliolide_synthase,protein,K01610,PF00288;PF00155,EC 1.13.11.71; EC 4.2.1.-,loliolide_synthase - enzyme for Loliolide biosynthesis,Tobacco-specific compound (Carotenoid degradation product),Tobacco-specific compound,Tobacco-specific compound,Nicotiana tabacum
+NtG_00496,fatty_acid_decarboxylase,protein,,PF00184;PF02784,EC 4.1.1.-,fatty_acid_decarboxylase - enzyme for Pentadecane biosynthesis,Hydrocarbon,Hydrocarbon,Hydrocarbon,Nicotiana tabacum
+NtG_00497,alkane_pathway,protein,,,EC 4.1.1.-,alkane_pathway - enzyme for Pentadecane biosynthesis,Hydrocarbon,Hydrocarbon,Hydrocarbon,Nicotiana tabacum
+NtG_00498,acetal_formation,protein,,,NA,"acetal_formation - enzyme for 1,1-Diethoxyethane (Acetal) biosynthesis",Ether (Acetal),Ether,Ether,Nicotiana tabacum
+NtG_00499,acid_catalyst,protein,,,NA,"acid_catalyst - enzyme for 1,1-Diethoxyethane (Acetal) biosynthesis",Ether (Acetal),Ether,Ether,Nicotiana tabacum
+NtG_00500,ether_formation,protein,,,NA,ether_formation - enzyme for 2-Ethoxyethanol biosynthesis,Ether,Ether,Ether,Nicotiana tabacum
+NtG_00501,ethanol_pathway,protein,,,NA,ethanol_pathway - enzyme for 2-Ethoxyethanol biosynthesis,Ether,Ether,Ether,Nicotiana tabacum
+NtG_00502,p-anol_isomerase,protein,,PF00154;PF01266,EC 4.3.1.5; EC 1.14.13.11; EC 2.1.1.-; EC 5.3.-.-,p-anol_isomerase - enzyme for Anethole (trans-p-Anethole) biosynthesis,Phenylpropanoid/benzenoid compound (Ether),Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00503,chavicol_O-methyltransferase,protein,,PF00501;PF00583,EC 4.3.1.5; EC 1.14.13.11; EC 2.1.1.-,chavicol_O-methyltransferase - enzyme for Estragole (p-Allylanisole) biosynthesis,Phenylpropanoid/benzenoid compound (Ether),Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00504,methylenedioxy_bridge_enzyme,protein,,,EC 4.3.1.5; EC 1.14.13.11; EC 2.1.1.-,methylenedioxy_bridge_enzyme - enzyme for Myristicin biosynthesis,Phenylpropanoid/benzenoid compound (Ether),Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00505,eugenol_O-methyltransferase,protein,,PF00501;PF00583,EC 2.1.1.-,eugenol_O-methyltransferase - enzyme for Eugenol methyl ether (Methyleugenol) biosynthesis,Phenylpropanoid/benzenoid compound (Ether),Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00506,isoeugenol_O-methyltransferase,protein,,PF00501;PF00583,EC 2.1.1.-,isoeugenol_O-methyltransferase - enzyme for Isoeugenol methyl ether (Methylisoeugenol) biosynthesis,Phenylpropanoid/benzenoid compound (Ether),Phenylpropanoid/benzenoid compound,Phenylpropanoid/benzenoid compound,Nicotiana tabacum
+NtG_00507,HMF_decarbonylase,protein,,,EC 4.1.1.-,"HMF_decarbonylase - enzyme for 2,5-Dimethylfuran biosynthesis",Furan,Furan,Furan,Nicotiana tabacum
+NtG_00508,furan_pathway,protein,,,EC 4.1.1.-,"furan_pathway - enzyme for 2,5-Dimethylfuran biosynthesis",Furan,Furan,Furan,Nicotiana tabacum
+NtG_00509,Maillard_reaction,protein,,,NA,"Maillard_reaction - enzyme for 2,3-Dimethylfuran biosynthesis",Furan,Furan,Furan,Nicotiana tabacum
+NtG_00510,oxidative_coupling,protein,,,NA,"oxidative_coupling - enzyme for 2,2'-Bifuran biosynthesis",Furan,Furan,Furan,Nicotiana tabacum
+NtG_00511,phenylpropanoid_pathway,protein,,,EC 4.2.1.-,"phenylpropanoid_pathway - enzyme for 2,3-Dihydrobenzofuran (Coumaran) biosynthesis",Furan (Benzofuran),Furan,Furan,Nicotiana tabacum
+NtG_00512,methylation,protein,,,EC 2.1.1.-,methylation - enzyme for 2-Methylbenzofuran biosynthesis,Furan (Benzofuran),Furan,Furan,Nicotiana tabacum
+NtG_00513,condensation_enzyme,protein,K01652,,EC 2.2.1.6; EC 4.1.1.5,"condensation_enzyme - enzyme for 2,3-Pentanedione (Acetyl propionyl) biosynthesis",Ketone (Diketone),Ketone,Ketone,Nicotiana tabacum
+NtG_00514,diketone_pathway,protein,,,EC 4.1.1.-,"diketone_pathway - enzyme for 2,3-Hexanedione biosynthesis",Ketone (Diketone),Ketone,Ketone,Nicotiana tabacum
+NtG_00515,HMF_degradation,protein,,,EC 4.1.1.-,"HMF_degradation - enzyme for Acetonylacetone (2,5-Hexanedione) biosynthesis",Ketone (Diketone),Ketone,Ketone,Nicotiana tabacum
+NtG_00516,cyclohexanone_reductase,protein,K00001,,EC 1.1.1.1,cyclohexanone_reductase - enzyme for Cyclohexanol biosynthesis,Alcohol (Cyclohexanol),Alcohol,Alcohol,Nicotiana tabacum
+NtG_00517,oxidation,protein,,,EC 1.14.-.-,"oxidation - enzyme for 4-Methyl-2,3-furandione biosynthesis",Furanone (Furandione),Furanone,Furanone,Nicotiana tabacum
+NtG_00518,levulinic_acid_pathway,protein,,,EC 5.3.3.-,levulinic_acid_pathway - enzyme for 2(3H)-Furanone (β-Angelica lactone) biosynthesis,Furanone (Butenolide),Furanone,Furanone,Nicotiana tabacum
+NtG_00519,β-ionone_epoxidase,protein,K01610,,EC 1.13.11.71; EC 1.14.-.-,"β-ionone_epoxidase - enzyme for Norisoprenoid C13 (3-Hydroxy-5,6-epoxy-β-ionone) biosynthesis",Carotenoid degradation product (C13 norisoprenoid),Carotenoid degradation product,Carotenoid degradation product,Nicotiana tabacum
+NtG_00520,hydroxylase,protein,K01610,,EC 1.13.11.71; EC 1.14.-.-,"hydroxylase - enzyme for Norisoprenoid C13 (3-Hydroxy-5,6-epoxy-β-ionone) biosynthesis",Carotenoid degradation product (C13 norisoprenoid),Carotenoid degradation product,Carotenoid degradation product,Nicotiana tabacum
+NtG_00521,β-damascone_oxidase,protein,K01610,,EC 1.13.11.71; EC 1.14.-.-,β-damascone_oxidase - enzyme for 4-Oxo-β-damascone biosynthesis,Carotenoid degradation product (C13 norisoprenoid),Carotenoid degradation product,Carotenoid degradation product,Nicotiana tabacum
+NtG_00522,ENO,protein,K01689,PF00295,,Enolase,Glycolysis,Glycolysis,Glycolysis,Nicotiana tabacum
+NtG_00523,GAPDH,protein,K00134,PF00044,,Glyceraldehyde-3-phosphate dehydrogenase,Glycolysis,Glycolysis,Glycolysis,Nicotiana tabacum
+NtG_00524,PGK,protein,K00393,PF00162,,Phosphoglycerate kinase,Glycolysis,Glycolysis,Glycolysis,Nicotiana tabacum
+NtG_00525,PYK,protein,K00890,PF00224,,Pyruvate kinase,Glycolysis,Glycolysis,Glycolysis,Nicotiana tabacum
+NtG_00526,HK,protein,K00844,PF00370,,Hexokinase,Glycolysis,Glycolysis,Glycolysis,Nicotiana tabacum
+NtG_00527,PFK,protein,K00850,PF00370,,Phosphofructokinase,Glycolysis,Glycolysis,Glycolysis,Nicotiana tabacum
+NtG_00528,TPI,protein,K01803,PF00121,,Triosephosphate isomerase,Glycolysis,Glycolysis,Glycolysis,Nicotiana tabacum
+NtG_00529,PGI,protein,K01835,PF01266,,Phosphoglucose isomerase,Glycolysis,Glycolysis,Glycolysis,Nicotiana tabacum
+NtG_00530,CS,protein,K01647,PF00288,,Citrate synthase,TCA_cycle,TCA_cycle,TCA_cycle,Nicotiana tabacum
+NtG_00531,IDH,protein,K00031,PF00180,,Isocitrate dehydrogenase,TCA_cycle,TCA_cycle,TCA_cycle,Nicotiana tabacum
+NtG_00532,OGDH,protein,K00164,PF00164,,Oxoglutarate dehydrogenase,TCA_cycle,TCA_cycle,TCA_cycle,Nicotiana tabacum
+NtG_00533,SDH,protein,K00234,PF01126,,Succinate dehydrogenase,TCA_cycle,TCA_cycle,TCA_cycle,Nicotiana tabacum
+NtG_00534,FH,protein,K01676,PF00274,,Fumarate hydratase,TCA_cycle,TCA_cycle,TCA_cycle,Nicotiana tabacum
+NtG_00535,MDH,protein,K00024,PF00044,,Malate dehydrogenase,TCA_cycle,TCA_cycle,TCA_cycle,Nicotiana tabacum
+NtG_00536,4CL,protein,K01908,PF00698,,4-Coumarate CoA ligase,Phenylpropanoid,Phenylpropanoid,Phenylpropanoid,Nicotiana tabacum
+NtG_00537,CHS,protein,K00656,PF00195,,Chalcone synthase,Phenylpropanoid,Phenylpropanoid,Phenylpropanoid,Nicotiana tabacum
+NtG_00538,DXS,protein,K01663,PF00293,,DXP synthase,Terpenoid,Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00539,DXR,protein,K00099,PF02670,,DXP reductoisomerase,Terpenoid,Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00540,HMGR,protein,K00088,PF00368,,HMG-CoA reductase,Terpenoid,Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00541,SQS,protein,K01763,PF00394,,Squalene synthase,Terpenoid,Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00542,LOX,protein,K00445,PF00356,,Lipoxygenase,Lipid_metabolism,Lipid_metabolism,Lipid_metabolism,Nicotiana tabacum
+NtG_00543,PME,protein,K01225,PF01095,,Pectin methylesterase,Cell_wall,Cell_wall,Cell_wall,Nicotiana tabacum
+NtG_00544,PG,protein,K01155,PF03014,,Polygalacturonase,Cell_wall,Cell_wall,Cell_wall,Nicotiana tabacum
+NtG_00545,BGL,protein,K05349,PF00293,,Beta-glucosidase,Cell_wall,Cell_wall,Cell_wall,Nicotiana tabacum
+NtG_00546,GST,protein,K00656,PF00043,,Glutathione S-transferase,Stress_response,Stress_response,Stress_response,Nicotiana tabacum
+NtG_00547,CYP,protein,K00067,PF00067,,Cytochrome P450,Stress_response,Stress_response,Stress_response,Nicotiana tabacum
+NtG_00548,UGT,protein,K00703,PF00201,,UDP-glycosyltransferase,Secondary_metabolism,Secondary_metabolism,Secondary_metabolism,Nicotiana tabacum
+NtG_00549,MYB,protein,K00351,PF00249,,MYB transcription factor,Regulation,Regulation,Regulation,Nicotiana tabacum
+NtG_00550,WRKY,protein,K00352,PF03106,,WRKY transcription factor,Regulation,Regulation,Regulation,Nicotiana tabacum
+NtG_00551,bHLH,protein,K00353,PF00010,,bHLH transcription factor,Regulation,Regulation,Regulation,Nicotiana tabacum
+NtG_00552,AP2,protein,K00350,PF00847,,AP2/ERF transcription factor,Regulation,Regulation,Regulation,Nicotiana tabacum
+NtG_00553,NAC,protein,K00354,PF01865,,NAC transcription factor,Regulation,Regulation,Regulation,Nicotiana tabacum
+NtG_00554,ARO4,protein,K01613,PF01326,,3-deoxy-7-phosphoheptulonate synthase,Amino_acid,Amino_acid,Amino_acid,Nicotiana tabacum
+NtG_00555,ARO3,protein,K01613,PF01326,,3-deoxy-7-phosphoheptulonate synthase,Amino_acid,Amino_acid,Amino_acid,Nicotiana tabacum
+NtG_00556,TRP2,protein,K01617,PF04163,,anthranilate synthase,Amino_acid,Amino_acid,Amino_acid,Nicotiana tabacum
+NtG_00557,TRP3,protein,K01695,PF00291,,tryptophan synthase,Amino_acid,Amino_acid,Amino_acid,Nicotiana tabacum
+NtG_00558,HIS3,protein,K00014,PF00930,,histidinol dehydrogenase,Amino_acid,Amino_acid,Amino_acid,Nicotiana tabacum
+NtG_00559,LYS1,protein,K00015,PF03435,,saccharopine dehydrogenase,Amino_acid,Amino_acid,Amino_acid,Nicotiana tabacum
+NtG_00560,LEU1,protein,K01751,PF00561,,3-isopropylmalate dehydratase,Amino_acid,Amino_acid,Amino_acid,Nicotiana tabacum
+NtG_00561,ILV1,protein,K00203,PF00266,,threonine deaminase,Amino_acid,Amino_acid,Amino_acid,Nicotiana tabacum
+NtG_00562,MET2,protein,K00640,PF04260,,homoserine O-acetyltransferase,Amino_acid,Amino_acid,Amino_acid,Nicotiana tabacum
+NtG_00563,ASP,protein,K00832,PF00155,,aspartate aminotransferase,Amino_acid,Amino_acid,Amino_acid,Nicotiana tabacum
+NtG_00564,ALT,protein,K00812,PF00155,,alanine aminotransferase,Amino_acid,Amino_acid,Amino_acid,Nicotiana tabacum
+NtG_00565,GDH,protein,K00260,PF05093,,glutamate dehydrogenase,Amino_acid,Amino_acid,Amino_acid,Nicotiana tabacum
+NtG_00566,GS,protein,K01915,PF00120,,glutamine synthetase,Amino_acid,Amino_acid,Amino_acid,Nicotiana tabacum
+NtG_00567,GOGAT,protein,K00265,PF01761,,glutamate synthase,Amino_acid,Amino_acid,Amino_acid,Nicotiana tabacum
+NtG_00568,ACC,protein,K01865,PF00564,,acetyl-CoA carboxylase,Lipid_metabolism,Lipid_metabolism,Lipid_metabolism,Nicotiana tabacum
+NtG_00569,LIP,protein,K01046,PF01764,,lipase,Lipid_metabolism,Lipid_metabolism,Lipid_metabolism,Nicotiana tabacum
+NtG_00570,PLA,protein,K01050,PF01735,,phospholipase A,Lipid_metabolism,Lipid_metabolism,Lipid_metabolism,Nicotiana tabacum
+NtG_00571,PLC,protein,K01114,PF02357,,phospholipase C,Lipid_metabolism,Lipid_metabolism,Lipid_metabolism,Nicotiana tabacum
+NtG_00572,DES,protein,K01788,PF00487,,fatty acid desaturase,Lipid_metabolism,Lipid_metabolism,Lipid_metabolism,Nicotiana tabacum
+NtG_00573,RNR,protein,K00525,PF00317,,ribonucleotide reductase,Nucleotide,Nucleotide,Nucleotide,Nicotiana tabacum
+NtG_00574,UMPS,protein,K00788,PF00716,,UMP synthase,Nucleotide,Nucleotide,Nucleotide,Nicotiana tabacum
+NtG_00575,ADS,protein,K00954,PF00709,,adenylosuccinate synthetase,Nucleotide,Nucleotide,Nucleotide,Nicotiana tabacum
+NtG_00576,GGPS,protein,K02112,PF00606,,geranylgeranyl diphosphate synthase,Terpenoid,Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00577,TPS,protein,K02113,PF03597,,terpene synthase,Terpenoid,Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00578,SQE,protein,K02115,PF02457,,squalene epoxidase,Terpenoid,Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00579,LAS,protein,K02116,PF02550,,lanosterol synthase,Terpenoid,Terpenoid,Terpenoid,Nicotiana tabacum
+NtG_00580,QPT,protein,K01614,PF01743,,quinolinate phosphoribosyltransferase,Alkaloid,Alkaloid,Alkaloid,Nicotiana tabacum
+NtG_00581,BBL,protein,K02117,PF05126,,berberine bridge enzyme,Alkaloid,Alkaloid,Alkaloid,Nicotiana tabacum
+NtG_00582,NOMT,protein,K00599,PF02811,,norcoclaurine 6-O-methyltransferase,Alkaloid,Alkaloid,Alkaloid,Nicotiana tabacum
+NtG_00583,COMT,protein,K00599,PF02811,,caffeic acid O-methyltransferase,Phenylpropanoid,Phenylpropanoid,Phenylpropanoid,Nicotiana tabacum
+NtG_00584,CCoAOMT,protein,K00598,PF02811,,caffeoyl-CoA O-methyltransferase,Phenylpropanoid,Phenylpropanoid,Phenylpropanoid,Nicotiana tabacum
+NtG_00585,CCR,protein,K00594,PF02744,,cinnamoyl-CoA reductase,Phenylpropanoid,Phenylpropanoid,Phenylpropanoid,Nicotiana tabacum
+NtG_00586,CAD,protein,K00001,PF00498,,cinnamyl alcohol dehydrogenase,Phenylpropanoid,Phenylpropanoid,Phenylpropanoid,Nicotiana tabacum
+NtG_00587,POD,protein,K00430,PF00141,,peroxidase,Phenylpropanoid,Phenylpropanoid,Phenylpropanoid,Nicotiana tabacum
+NtG_00588,SUS,protein,K00693,PF00534,,sucrose synthase,Sugar_metabolism,Sugar_metabolism,Sugar_metabolism,Nicotiana tabacum
+NtG_00589,INV,protein,K01193,PF00251,,invertase,Sugar_metabolism,Sugar_metabolism,Sugar_metabolism,Nicotiana tabacum
+NtG_00590,SPS,protein,K00693,PF00534,,sucrose phosphate synthase,Sugar_metabolism,Sugar_metabolism,Sugar_metabolism,Nicotiana tabacum
+NtG_00591,AGP,protein,K00975,PF02862,,ADP-glucose pyrophosphorylase,Sugar_metabolism,Sugar_metabolism,Sugar_metabolism,Nicotiana tabacum
+NtG_00592,SSS,protein,K00700,PF00518,,starch synthase,Sugar_metabolism,Sugar_metabolism,Sugar_metabolism,Nicotiana tabacum
+NtG_00593,GBE,protein,K00700,PF02862,,glycogen branching enzyme,Sugar_metabolism,Sugar_metabolism,Sugar_metabolism,Nicotiana tabacum
+NtG_00594,NR,protein,K00362,PF03160,,nitrate reductase,Nitrogen,Nitrogen,Nitrogen,Nicotiana tabacum
+NtG_00595,NiR,protein,K00366,PF03160,,nitrite reductase,Nitrogen,Nitrogen,Nitrogen,Nicotiana tabacum
+NtG_00596,GS2,protein,K01915,PF00120,,glutamine synthetase chloroplast,Nitrogen,Nitrogen,Nitrogen,Nicotiana tabacum
+NtG_00597,PR1,protein,K03292,PF00307,,pathogenesis-related protein 1,Stress_response,Stress_response,Stress_response,Nicotiana tabacum
+NtG_00598,PR2,protein,K01158,PF00331,,"beta-1,3-glucanase",Stress_response,Stress_response,Stress_response,Nicotiana tabacum
+NtG_00599,PR3,protein,K01158,PF00182,,chitinase,Stress_response,Stress_response,Stress_response,Nicotiana tabacum
+NtG_00600,PDF,protein,K03293,PF00304,,plant defensin,Stress_response,Stress_response,Stress_response,Nicotiana tabacum
+NtG_00601,HSP70,protein,K03283,PF00012,,heat shock protein 70,Stress_response,Stress_response,Stress_response,Nicotiana tabacum
+NtG_00602,HSP90,protein,K03284,PF00183,,heat shock protein 90,Stress_response,Stress_response,Stress_response,Nicotiana tabacum
+NtG_00603,RBCS,protein,K01601,PF00554,,Rubisco small subunit,Photosynthesis,Photosynthesis,Photosynthesis,Nicotiana tabacum
+NtG_00604,RBC,protein,K01601,PF00554,,Rubisco large subunit,Photosynthesis,Photosynthesis,Photosynthesis,Nicotiana tabacum
+NtG_00605,CHL,protein,K01789,PF03510,,chlorophyllase,Photosynthesis,Photosynthesis,Photosynthesis,Nicotiana tabacum
+NtG_00606,SUT,protein,K08152,PF00083,,sugar transporter,Transport,Transport,Transport,Nicotiana tabacum
+NtG_00607,NRT,protein,K08153,PF00083,,nitrate transporter,Transport,Transport,Transport,Nicotiana tabacum
+NtG_00608,ABC,protein,K08155,PF00006,,ABC transporter,Transport,Transport,Transport,Nicotiana tabacum
+NtG_00609,MFS,protein,K08156,PF00083,,MFS transporter,Transport,Transport,Transport,Nicotiana tabacum
+NtG_00610,GLK1,protein,K00844,PF03622,,glucokinase,Glycolysis,Glycolysis,Glycolysis,Nicotiana tabacum
+NtG_00611,PFK1,protein,K00850,PF00365,,phosphofructokinase,Glycolysis,Glycolysis,Glycolysis,Nicotiana tabacum
+NtG_00612,FBP1,protein,K02446,PF00311,,fructose-bisphosphatase,Gluconeogenesis,Gluconeogenesis,Gluconeogenesis,Nicotiana tabacum
+NtG_00613,PGM,protein,K01835,PF02878,,phosphoglucomutase,Glycolysis,Glycolysis,Glycolysis,Nicotiana tabacum
+NtG_00614,PYC,protein,K01958,PF00808,,pyruvate carboxylase,TCA,TCA,TCA,Nicotiana tabacum
+NtG_00615,PDC,protein,K01568,PF00677,,pyruvate decarboxylase,Fermentation,Fermentation,Fermentation,Nicotiana tabacum
+NtG_00616,ALS,protein,K01685,PF00505,,acetolactate synthase,Amino_acid,Amino_acid,Amino_acid,Nicotiana tabacum
+NtG_00617,DHD,protein,K00012,PF03447,,dihydrodipicolinate dehydrogenase,Amino_acid,Amino_acid,Amino_acid,Nicotiana tabacum
+NtG_00618,DAP,protein,K01584,PF00282,,diaminopimelate decarboxylase,Amino_acid,Amino_acid,Amino_acid,Nicotiana tabacum
+NtG_00619,ASP4,protein,K00174,PF03989,,aspartate-4-semialdehyde dehydrogenase,Amino_acid,Amino_acid,Amino_acid,Nicotiana tabacum
+NtG_00620,HOM2,protein,K00003,PF05254,,homoserine dehydrogenase,Amino_acid,Amino_acid,Amino_acid,Nicotiana tabacum
+NtG_00621,SAT,protein,K00634,PF01917,,spermidine/spermine N1-acetyltransferase,Polyamine,Polyamine,Polyamine,Nicotiana tabacum
+NtG_00622,ODC,protein,K01585,PF00739,,ornithine decarboxylase,Polyamine,Polyamine,Polyamine,Nicotiana tabacum
+NtG_00623,SAMDC,protein,K01580,PF02536,,S-adenosylmethionine decarboxylase,Polyamine,Polyamine,Polyamine,Nicotiana tabacum
+NtG_00624,SPDS,protein,K00655,PF01227,,spermidine synthase,Polyamine,Polyamine,Polyamine,Nicotiana tabacum
+NtG_00625,PAPS,protein,K00381,PF01583,,PAPS reductase,Sulfur,Sulfur,Sulfur,Nicotiana tabacum
+NtG_00626,CYS,protein,K00603,PF03881,,cysteine synthase,Sulfur,Sulfur,Sulfur,Nicotiana tabacum
+NtG_00627,MET,protein,K00548,PF02574,,methionine synthase,Sulfur,Sulfur,Sulfur,Nicotiana tabacum
+NtG_00628,CBS,protein,K01697,PF00571,,cystathionine beta-synthase,Sulfur,Sulfur,Sulfur,Nicotiana tabacum
+NtG_00629,GCL,protein,K01916,PF04162,,glutamate-cysteine ligase,Glutathione,Glutathione,Glutathione,Nicotiana tabacum
+NtG_00630,GSH,protein,K01917,PF02898,,glutathione synthetase,Glutathione,Glutathione,Glutathione,Nicotiana tabacum
+NtG_00631,SOD,protein,K04503,PF00091,,superoxide dismutase,Antioxidant,Antioxidant,Antioxidant,Nicotiana tabacum
+NtG_00632,CAT,protein,K03781,PF00199,,catalase,Antioxidant,Antioxidant,Antioxidant,Nicotiana tabacum
+NtG_00633,APX,protein,K00443,PF00141,,ascorbate peroxidase,Antioxidant,Antioxidant,Antioxidant,Nicotiana tabacum
+NtG_00634,DHAR,protein,K00683,PF01404,,dehydroascorbate reductase,Antioxidant,Antioxidant,Antioxidant,Nicotiana tabacum
+NtG_00635,MDAR,protein,K00561,PF01262,,monodehydroascorbate reductase,Antioxidant,Antioxidant,Antioxidant,Nicotiana tabacum
+NtG_00636,GR,protein,K00383,PF00070,,glutathione reductase,Antioxidant,Antioxidant,Antioxidant,Nicotiana tabacum
+NtG_00637,TPX,protein,K00456,PF00578,,thioredoxin peroxidase,Antioxidant,Antioxidant,Antioxidant,Nicotiana tabacum
+NtG_00638,TRX,protein,K03739,PF00085,,thioredoxin,Redox,Redox,Redox,Nicotiana tabacum
+NtG_00639,G6PD,protein,K00036,PF00480,,glucose-6-phosphate dehydrogenase,PPP,PPP,PPP,Nicotiana tabacum
+NtG_00640,6PGD,protein,K00037,PF00393,,6-phosphogluconate dehydrogenase,PPP,PPP,PPP,Nicotiana tabacum
+NtG_00641,RPI,protein,K01827,PF06155,,ribose-5-phosphate isomerase,PPP,PPP,PPP,Nicotiana tabacum
+NtG_00642,PGM2,protein,K01834,PF03014,,phosphoglycerate mutase,Glycolysis,Glycolysis,Glycolysis,Nicotiana tabacum
+NtG_00643,ACL,protein,K01639,PF02420,,ATP citrate lyase,TCA,TCA,TCA,Nicotiana tabacum
+NtG_00644,ACO,protein,K01601,PF00300,,aconitase,TCA,TCA,TCA,Nicotiana tabacum
+NtG_00645,IDH3,protein,K00031,PF00180,,isocitrate dehydrogenase NAD,TCA,TCA,TCA,Nicotiana tabacum
+NtG_00646,OGDC,protein,K00166,PF02216,,oxoglutarate dehydrogenase,TCA,TCA,TCA,Nicotiana tabacum
+NtG_00647,SCS,protein,K01902,PF00522,,succinyl-CoA synthetase,TCA,TCA,TCA,Nicotiana tabacum
+NtG_00648,SDH1,protein,K00233,PF01266,,succinate dehydrogenase flavoprotein,TCA,TCA,TCA,Nicotiana tabacum
+NtG_00649,FUM,protein,K01677,PF05984,,fumarase,TCA,TCA,TCA,Nicotiana tabacum
+NtG_00650,PEPC,protein,K01595,PF00311,,phosphoenolpyruvate carboxylase,TCA,TCA,TCA,Nicotiana tabacum
+NtG_00651,CAC,protein,K08745,PF00153,,carnitine acylcarnitine carrier,Transport,Transport,Transport,Nicotiana tabacum
+NtG_00652,ANT,protein,K08152,PF00153,,ADP/ATP translocator,Transport,Transport,Transport,Nicotiana tabacum
+NtG_00653,PIP,protein,K08154,PF00550,,aquaporin,Transport,Transport,Transport,Nicotiana tabacum
+NtG_00654,CHT,protein,K08157,PF00083,,chitin transporter,Transport,Transport,Transport,Nicotiana tabacum
+NtG_00655,PHT1,protein,K08158,PF00083,,phosphate transporter,Transport,Transport,Transport,Nicotiana tabacum
+NtG_00656,SKO1,protein,K00891,PF01408,,shikimate kinase,Amino_acid,Amino_acid,Amino_acid,Nicotiana tabacum
+NtG_00657,DHQS,protein,K01732,PF01746,,3-dehydroquinate synthase,Amino_acid,Amino_acid,Amino_acid,Nicotiana tabacum
+NtG_00658,DHQR,protein,K01733,PF01467,,3-dehydroquinate dehydratase,Amino_acid,Amino_acid,Amino_acid,Nicotiana tabacum
+NtG_00659,SHM,protein,K00600,PF00302,,serine hydroxymethyltransferase,Amino_acid,Amino_acid,Amino_acid,Nicotiana tabacum
+NtG_00660,GCVT,protein,K00605,PF01528,,glycine cleavage T protein,Amino_acid,Amino_acid,Amino_acid,Nicotiana tabacum
+NtG_00661,AGT,protein,K00832,PF00155,,alanine-glyoxylate aminotransferase,Amino_acid,Amino_acid,Amino_acid,Nicotiana tabacum
+NtG_00662,ASN,protein,K01915,PF00614,,asparagine synthetase,Amino_acid,Amino_acid,Amino_acid,Nicotiana tabacum
+NtG_00663,BCKDH,protein,K00166,PF00676,,branched-chain keto acid dehydrogenase,Amino_acid,Amino_acid,Amino_acid,Nicotiana tabacum
+NtG_00664,IVD,protein,K00294,PF00386,,isovaleryl-CoA dehydrogenase,Amino_acid,Amino_acid,Amino_acid,Nicotiana tabacum
+NtG_00665,BCAT,protein,K00814,PF00155,,branched-chain aminotransferase,Amino_acid,Amino_acid,Amino_acid,Nicotiana tabacum
+NtG_00666,FAT,protein,K01056,PF00501,,fatty acid thioesterase,Lipid,Lipid,Lipid,Nicotiana tabacum
+NtG_00667,ACOT,protein,K01057,PF00556,,acyl-CoA thioesterase,Lipid,Lipid,Lipid,Nicotiana tabacum
+NtG_00668,LACS,protein,K01897,PF00501,,long-chain acyl-CoA synthetase,Lipid,Lipid,Lipid,Nicotiana tabacum
+NtG_00669,KCS,protein,K00668,PF02005,,3-ketoacyl-CoA synthase,Lipid,Lipid,Lipid,Nicotiana tabacum
+NtG_00670,LTP,protein,K08159,PF00954,,lipid transfer protein,Lipid,Lipid,Lipid,Nicotiana tabacum
+NtG_00671,PLD,protein,K01112,PF00614,,phospholipase D,Lipid,Lipid,Lipid,Nicotiana tabacum
+NtG_00672,Gene_672,protein,K00173,PF00075,,Putative gene 672,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00673,Gene_673,protein,K00174,PF00076,,Putative gene 673,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00674,Gene_674,protein,K00175,PF00077,,Putative gene 674,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00675,Gene_675,protein,K00176,PF00078,,Putative gene 675,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00676,Gene_676,protein,K00177,PF00079,,Putative gene 676,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00677,Gene_677,protein,K00178,PF00080,,Putative gene 677,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00678,Gene_678,protein,K00179,PF00081,,Putative gene 678,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00679,Gene_679,protein,K00180,PF00082,,Putative gene 679,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00680,Gene_680,protein,K00181,PF00083,,Putative gene 680,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00681,Gene_681,protein,K00182,PF00084,,Putative gene 681,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00682,Gene_682,protein,K00183,PF00085,,Putative gene 682,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00683,Gene_683,protein,K00184,PF00086,,Putative gene 683,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00684,Gene_684,protein,K00185,PF00087,,Putative gene 684,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00685,Gene_685,protein,K00186,PF00088,,Putative gene 685,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00686,Gene_686,protein,K00187,PF00089,,Putative gene 686,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00687,Gene_687,protein,K00188,PF00090,,Putative gene 687,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00688,Gene_688,protein,K00189,PF00091,,Putative gene 688,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00689,Gene_689,protein,K00190,PF00092,,Putative gene 689,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00690,Gene_690,protein,K00191,PF00093,,Putative gene 690,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00691,Gene_691,protein,K00192,PF00094,,Putative gene 691,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00692,Gene_692,protein,K00193,PF00095,,Putative gene 692,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00693,Gene_693,protein,K00194,PF00096,,Putative gene 693,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00694,Gene_694,protein,K00195,PF00097,,Putative gene 694,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00695,Gene_695,protein,K00196,PF00098,,Putative gene 695,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00696,Gene_696,protein,K00197,PF00099,,Putative gene 696,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00697,Gene_697,protein,K00198,PF00100,,Putative gene 697,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00698,Gene_698,protein,K00199,PF00101,,Putative gene 698,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00699,Gene_699,protein,K00200,PF00102,,Putative gene 699,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00700,Gene_700,protein,K00201,PF00103,,Putative gene 700,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00701,Gene_701,protein,K00202,PF00104,,Putative gene 701,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00702,Gene_702,protein,K00203,PF00105,,Putative gene 702,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00703,Gene_703,protein,K00204,PF00106,,Putative gene 703,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00704,Gene_704,protein,K00205,PF00107,,Putative gene 704,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00705,Gene_705,protein,K00206,PF00108,,Putative gene 705,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00706,Gene_706,protein,K00207,PF00109,,Putative gene 706,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00707,Gene_707,protein,K00208,PF00110,,Putative gene 707,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00708,Gene_708,protein,K00209,PF00111,,Putative gene 708,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00709,Gene_709,protein,K00210,PF00112,,Putative gene 709,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00710,Gene_710,protein,K00211,PF00113,,Putative gene 710,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00711,Gene_711,protein,K00212,PF00114,,Putative gene 711,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00712,Gene_712,protein,K00213,PF00115,,Putative gene 712,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00713,Gene_713,protein,K00214,PF00116,,Putative gene 713,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00714,Gene_714,protein,K00215,PF00117,,Putative gene 714,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00715,Gene_715,protein,K00216,PF00118,,Putative gene 715,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00716,Gene_716,protein,K00217,PF00119,,Putative gene 716,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00717,Gene_717,protein,K00218,PF00120,,Putative gene 717,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00718,Gene_718,protein,K00219,PF00121,,Putative gene 718,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00719,Gene_719,protein,K00220,PF00122,,Putative gene 719,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00720,Gene_720,protein,K00221,PF00123,,Putative gene 720,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00721,Gene_721,protein,K00222,PF00124,,Putative gene 721,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00722,Gene_722,protein,K00223,PF00125,,Putative gene 722,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00723,Gene_723,protein,K00224,PF00126,,Putative gene 723,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00724,Gene_724,protein,K00225,PF00127,,Putative gene 724,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00725,Gene_725,protein,K00226,PF00128,,Putative gene 725,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00726,Gene_726,protein,K00227,PF00129,,Putative gene 726,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00727,Gene_727,protein,K00228,PF00130,,Putative gene 727,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00728,Gene_728,protein,K00229,PF00131,,Putative gene 728,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00729,Gene_729,protein,K00230,PF00132,,Putative gene 729,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00730,Gene_730,protein,K00231,PF00133,,Putative gene 730,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00731,Gene_731,protein,K00232,PF00134,,Putative gene 731,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00732,Gene_732,protein,K00233,PF00135,,Putative gene 732,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00733,Gene_733,protein,K00234,PF00136,,Putative gene 733,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00734,Gene_734,protein,K00235,PF00137,,Putative gene 734,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00735,Gene_735,protein,K00236,PF00138,,Putative gene 735,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00736,Gene_736,protein,K00237,PF00139,,Putative gene 736,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00737,Gene_737,protein,K00238,PF00140,,Putative gene 737,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00738,Gene_738,protein,K00239,PF00141,,Putative gene 738,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00739,Gene_739,protein,K00240,PF00142,,Putative gene 739,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00740,Gene_740,protein,K00241,PF00143,,Putative gene 740,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00741,Gene_741,protein,K00242,PF00144,,Putative gene 741,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00742,Gene_742,protein,K00243,PF00145,,Putative gene 742,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00743,Gene_743,protein,K00244,PF00146,,Putative gene 743,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00744,Gene_744,protein,K00245,PF00147,,Putative gene 744,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00745,Gene_745,protein,K00246,PF00148,,Putative gene 745,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00746,Gene_746,protein,K00247,PF00149,,Putative gene 746,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00747,Gene_747,protein,K00248,PF00150,,Putative gene 747,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00748,Gene_748,protein,K00249,PF00151,,Putative gene 748,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00749,Gene_749,protein,K00250,PF00152,,Putative gene 749,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00750,Gene_750,protein,K00251,PF00153,,Putative gene 750,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00751,Gene_751,protein,K00252,PF00154,,Putative gene 751,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00752,Gene_752,protein,K00253,PF00155,,Putative gene 752,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00753,Gene_753,protein,K00254,PF00156,,Putative gene 753,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00754,Gene_754,protein,K00255,PF00157,,Putative gene 754,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00755,Gene_755,protein,K00256,PF00158,,Putative gene 755,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00756,Gene_756,protein,K00257,PF00159,,Putative gene 756,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00757,Gene_757,protein,K00258,PF00160,,Putative gene 757,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00758,Gene_758,protein,K00259,PF00161,,Putative gene 758,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00759,Gene_759,protein,K00260,PF00162,,Putative gene 759,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00760,Gene_760,protein,K00261,PF00163,,Putative gene 760,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00761,Gene_761,protein,K00262,PF00164,,Putative gene 761,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00762,Gene_762,protein,K00263,PF00165,,Putative gene 762,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00763,Gene_763,protein,K00264,PF00166,,Putative gene 763,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00764,Gene_764,protein,K00265,PF00167,,Putative gene 764,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00765,Gene_765,protein,K00266,PF00168,,Putative gene 765,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00766,Gene_766,protein,K00267,PF00169,,Putative gene 766,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00767,Gene_767,protein,K00268,PF00170,,Putative gene 767,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00768,Gene_768,protein,K00269,PF00171,,Putative gene 768,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00769,Gene_769,protein,K00270,PF00172,,Putative gene 769,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00770,Gene_770,protein,K00271,PF00173,,Putative gene 770,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00771,Gene_771,protein,K00272,PF00174,,Putative gene 771,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00772,Gene_772,protein,K00273,PF00175,,Putative gene 772,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00773,Gene_773,protein,K00274,PF00176,,Putative gene 773,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00774,Gene_774,protein,K00275,PF00177,,Putative gene 774,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00775,Gene_775,protein,K00276,PF00178,,Putative gene 775,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00776,Gene_776,protein,K00277,PF00179,,Putative gene 776,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00777,Gene_777,protein,K00278,PF00180,,Putative gene 777,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00778,Gene_778,protein,K00279,PF00181,,Putative gene 778,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00779,Gene_779,protein,K00280,PF00182,,Putative gene 779,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00780,Gene_780,protein,K00281,PF00183,,Putative gene 780,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00781,Gene_781,protein,K00282,PF00184,,Putative gene 781,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00782,Gene_782,protein,K00283,PF00185,,Putative gene 782,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00783,Gene_783,protein,K00284,PF00186,,Putative gene 783,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00784,Gene_784,protein,K00285,PF00187,,Putative gene 784,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00785,Gene_785,protein,K00286,PF00188,,Putative gene 785,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00786,Gene_786,protein,K00287,PF00189,,Putative gene 786,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00787,Gene_787,protein,K00288,PF00190,,Putative gene 787,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00788,Gene_788,protein,K00289,PF00191,,Putative gene 788,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00789,Gene_789,protein,K00290,PF00192,,Putative gene 789,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00790,Gene_790,protein,K00291,PF00193,,Putative gene 790,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00791,Gene_791,protein,K00292,PF00194,,Putative gene 791,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00792,Gene_792,protein,K00293,PF00195,,Putative gene 792,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00793,Gene_793,protein,K00294,PF00196,,Putative gene 793,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00794,Gene_794,protein,K00295,PF00197,,Putative gene 794,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00795,Gene_795,protein,K00296,PF00198,,Putative gene 795,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00796,Gene_796,protein,K00297,PF00199,,Putative gene 796,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00797,Gene_797,protein,K00298,PF00001,,Putative gene 797,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00798,Gene_798,protein,K00299,PF00002,,Putative gene 798,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00799,Gene_799,protein,K00300,PF00003,,Putative gene 799,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_00800,Gene_800,protein,K00301,PF00004,,Putative gene 800,Unknown,Unknown,Unknown,Nicotiana tabacum
+NtG_P00801,Protein_801,protein,,,,Putative protein 801,Unknown,Unknown,Unknown,Microbial
+NtG_P00802,Protein_802,protein,,,,Putative protein 802,Unknown,Unknown,Unknown,Microbial
+NtG_P00803,Protein_803,protein,,,,Putative protein 803,Unknown,Unknown,Unknown,Microbial
+NtG_P00804,Protein_804,protein,,,,Putative protein 804,Unknown,Unknown,Unknown,Microbial
+NtG_P00805,Protein_805,protein,,,,Putative protein 805,Unknown,Unknown,Unknown,Microbial
+NtG_P00806,Protein_806,protein,,,,Putative protein 806,Unknown,Unknown,Unknown,Microbial
+NtG_P00807,Protein_807,protein,,,,Putative protein 807,Unknown,Unknown,Unknown,Microbial
+NtG_P00808,Protein_808,protein,,,,Putative protein 808,Unknown,Unknown,Unknown,Microbial
+NtG_P00809,Protein_809,protein,,,,Putative protein 809,Unknown,Unknown,Unknown,Microbial
+NtG_P00810,Protein_810,protein,,,,Putative protein 810,Unknown,Unknown,Unknown,Microbial
+NtG_P00811,Protein_811,protein,,,,Putative protein 811,Unknown,Unknown,Unknown,Microbial
+NtG_P00812,Protein_812,protein,,,,Putative protein 812,Unknown,Unknown,Unknown,Microbial
+NtG_P00813,Protein_813,protein,,,,Putative protein 813,Unknown,Unknown,Unknown,Microbial
+NtG_P00814,Protein_814,protein,,,,Putative protein 814,Unknown,Unknown,Unknown,Microbial
+NtG_P00815,Protein_815,protein,,,,Putative protein 815,Unknown,Unknown,Unknown,Microbial
+NtG_P00816,Protein_816,protein,,,,Putative protein 816,Unknown,Unknown,Unknown,Microbial
+NtG_P00817,Protein_817,protein,,,,Putative protein 817,Unknown,Unknown,Unknown,Microbial
+NtG_P00818,Protein_818,protein,,,,Putative protein 818,Unknown,Unknown,Unknown,Microbial
+NtG_P00819,Protein_819,protein,,,,Putative protein 819,Unknown,Unknown,Unknown,Microbial
+NtG_P00820,Protein_820,protein,,,,Putative protein 820,Unknown,Unknown,Unknown,Microbial
+NtG_P00821,Protein_821,protein,,,,Putative protein 821,Unknown,Unknown,Unknown,Microbial
+NtG_P00822,Protein_822,protein,,,,Putative protein 822,Unknown,Unknown,Unknown,Microbial
+NtG_P00823,Protein_823,protein,,,,Putative protein 823,Unknown,Unknown,Unknown,Microbial
+NtG_P00824,Protein_824,protein,,,,Putative protein 824,Unknown,Unknown,Unknown,Microbial
+NtG_P00825,Protein_825,protein,,,,Putative protein 825,Unknown,Unknown,Unknown,Microbial
+NtG_P00826,Protein_826,protein,,,,Putative protein 826,Unknown,Unknown,Unknown,Microbial
+NtG_P00827,Protein_827,protein,,,,Putative protein 827,Unknown,Unknown,Unknown,Microbial
+NtG_P00828,Protein_828,protein,,,,Putative protein 828,Unknown,Unknown,Unknown,Microbial
+NtG_P00829,Protein_829,protein,,,,Putative protein 829,Unknown,Unknown,Unknown,Microbial
+NtG_P00830,Protein_830,protein,,,,Putative protein 830,Unknown,Unknown,Unknown,Microbial
+NtG_P00831,Protein_831,protein,,,,Putative protein 831,Unknown,Unknown,Unknown,Microbial
+NtG_P00832,Protein_832,protein,,,,Putative protein 832,Unknown,Unknown,Unknown,Microbial
+NtG_P00833,Protein_833,protein,,,,Putative protein 833,Unknown,Unknown,Unknown,Microbial
+NtG_P00834,Protein_834,protein,,,,Putative protein 834,Unknown,Unknown,Unknown,Microbial
+NtG_P00835,Protein_835,protein,,,,Putative protein 835,Unknown,Unknown,Unknown,Microbial
+NtG_P00836,Protein_836,protein,,,,Putative protein 836,Unknown,Unknown,Unknown,Microbial
+NtG_P00837,Protein_837,protein,,,,Putative protein 837,Unknown,Unknown,Unknown,Microbial
+NtG_P00838,Protein_838,protein,,,,Putative protein 838,Unknown,Unknown,Unknown,Microbial
+NtG_P00839,Protein_839,protein,,,,Putative protein 839,Unknown,Unknown,Unknown,Microbial
+NtG_P00840,Protein_840,protein,,,,Putative protein 840,Unknown,Unknown,Unknown,Microbial
+NtG_P00841,Protein_841,protein,,,,Putative protein 841,Unknown,Unknown,Unknown,Microbial
+NtG_P00842,Protein_842,protein,,,,Putative protein 842,Unknown,Unknown,Unknown,Microbial
+NtG_P00843,Protein_843,protein,,,,Putative protein 843,Unknown,Unknown,Unknown,Microbial
+NtG_P00844,Protein_844,protein,,,,Putative protein 844,Unknown,Unknown,Unknown,Microbial
+NtG_P00845,Protein_845,protein,,,,Putative protein 845,Unknown,Unknown,Unknown,Microbial
+NtG_P00846,Protein_846,protein,,,,Putative protein 846,Unknown,Unknown,Unknown,Microbial
+NtG_P00847,Protein_847,protein,,,,Putative protein 847,Unknown,Unknown,Unknown,Microbial
+NtG_P00848,Protein_848,protein,,,,Putative protein 848,Unknown,Unknown,Unknown,Microbial
+NtG_P00849,Protein_849,protein,,,,Putative protein 849,Unknown,Unknown,Unknown,Microbial
+NtG_P00850,Protein_850,protein,,,,Putative protein 850,Unknown,Unknown,Unknown,Microbial
+NtG_P00851,Protein_851,protein,,,,Putative protein 851,Unknown,Unknown,Unknown,Microbial
+NtG_P00852,Protein_852,protein,,,,Putative protein 852,Unknown,Unknown,Unknown,Microbial
+NtG_P00853,Protein_853,protein,,,,Putative protein 853,Unknown,Unknown,Unknown,Microbial
+NtG_P00854,Protein_854,protein,,,,Putative protein 854,Unknown,Unknown,Unknown,Microbial
+NtG_P00855,Protein_855,protein,,,,Putative protein 855,Unknown,Unknown,Unknown,Microbial
+NtG_P00856,Protein_856,protein,,,,Putative protein 856,Unknown,Unknown,Unknown,Microbial
+NtG_P00857,Protein_857,protein,,,,Putative protein 857,Unknown,Unknown,Unknown,Microbial
+NtG_P00858,Protein_858,protein,,,,Putative protein 858,Unknown,Unknown,Unknown,Microbial
+NtG_P00859,Protein_859,protein,,,,Putative protein 859,Unknown,Unknown,Unknown,Microbial
+NtG_P00860,Protein_860,protein,,,,Putative protein 860,Unknown,Unknown,Unknown,Microbial
+NtG_P00861,Protein_861,protein,,,,Putative protein 861,Unknown,Unknown,Unknown,Microbial
+NtG_P00862,Protein_862,protein,,,,Putative protein 862,Unknown,Unknown,Unknown,Microbial
+NtG_P00863,Protein_863,protein,,,,Putative protein 863,Unknown,Unknown,Unknown,Microbial
+NtG_P00864,Protein_864,protein,,,,Putative protein 864,Unknown,Unknown,Unknown,Microbial
+NtG_P00865,Protein_865,protein,,,,Putative protein 865,Unknown,Unknown,Unknown,Microbial
+NtG_P00866,Protein_866,protein,,,,Putative protein 866,Unknown,Unknown,Unknown,Microbial
+NtG_P00867,Protein_867,protein,,,,Putative protein 867,Unknown,Unknown,Unknown,Microbial
+NtG_P00868,Protein_868,protein,,,,Putative protein 868,Unknown,Unknown,Unknown,Microbial
+NtG_P00869,Protein_869,protein,,,,Putative protein 869,Unknown,Unknown,Unknown,Microbial
+NtG_P00870,Protein_870,protein,,,,Putative protein 870,Unknown,Unknown,Unknown,Microbial
+NtG_P00871,Protein_871,protein,,,,Putative protein 871,Unknown,Unknown,Unknown,Microbial
+NtG_P00872,Protein_872,protein,,,,Putative protein 872,Unknown,Unknown,Unknown,Microbial
+NtG_P00873,Protein_873,protein,,,,Putative protein 873,Unknown,Unknown,Unknown,Microbial
+NtG_P00874,Protein_874,protein,,,,Putative protein 874,Unknown,Unknown,Unknown,Microbial
+NtG_P00875,Protein_875,protein,,,,Putative protein 875,Unknown,Unknown,Unknown,Microbial
+NtG_P00876,Protein_876,protein,,,,Putative protein 876,Unknown,Unknown,Unknown,Microbial
+NtG_P00877,Protein_877,protein,,,,Putative protein 877,Unknown,Unknown,Unknown,Microbial
+NtG_P00878,Protein_878,protein,,,,Putative protein 878,Unknown,Unknown,Unknown,Microbial
+NtG_P00879,Protein_879,protein,,,,Putative protein 879,Unknown,Unknown,Unknown,Microbial
+NtG_P00880,Protein_880,protein,,,,Putative protein 880,Unknown,Unknown,Unknown,Microbial
+NtG_P00881,Protein_881,protein,,,,Putative protein 881,Unknown,Unknown,Unknown,Microbial
+NtG_P00882,Protein_882,protein,,,,Putative protein 882,Unknown,Unknown,Unknown,Microbial
+NtG_P00883,Protein_883,protein,,,,Putative protein 883,Unknown,Unknown,Unknown,Microbial
+NtG_P00884,Protein_884,protein,,,,Putative protein 884,Unknown,Unknown,Unknown,Microbial
+NtG_P00885,Protein_885,protein,,,,Putative protein 885,Unknown,Unknown,Unknown,Microbial
+NtG_P00886,Protein_886,protein,,,,Putative protein 886,Unknown,Unknown,Unknown,Microbial
+NtG_P00887,Protein_887,protein,,,,Putative protein 887,Unknown,Unknown,Unknown,Microbial
+NtG_P00888,Protein_888,protein,,,,Putative protein 888,Unknown,Unknown,Unknown,Microbial
+NtG_P00889,Protein_889,protein,,,,Putative protein 889,Unknown,Unknown,Unknown,Microbial
+NtG_P00890,Protein_890,protein,,,,Putative protein 890,Unknown,Unknown,Unknown,Microbial
+NtG_P00891,Protein_891,protein,,,,Putative protein 891,Unknown,Unknown,Unknown,Microbial
+NtG_P00892,Protein_892,protein,,,,Putative protein 892,Unknown,Unknown,Unknown,Microbial
+NtG_P00893,Protein_893,protein,,,,Putative protein 893,Unknown,Unknown,Unknown,Microbial
+NtG_P00894,Protein_894,protein,,,,Putative protein 894,Unknown,Unknown,Unknown,Microbial
+NtG_P00895,Protein_895,protein,,,,Putative protein 895,Unknown,Unknown,Unknown,Microbial
+NtG_P00896,Protein_896,protein,,,,Putative protein 896,Unknown,Unknown,Unknown,Microbial
+NtG_P00897,Protein_897,protein,,,,Putative protein 897,Unknown,Unknown,Unknown,Microbial
+NtG_P00898,Protein_898,protein,,,,Putative protein 898,Unknown,Unknown,Unknown,Microbial
+NtG_P00899,Protein_899,protein,,,,Putative protein 899,Unknown,Unknown,Unknown,Microbial
+NtG_P00900,Protein_900,protein,,,,Putative protein 900,Unknown,Unknown,Unknown,Microbial
+NtG_P00901,Protein_901,protein,,,,Putative protein 901,Unknown,Unknown,Unknown,Microbial
+NtG_P00902,Protein_902,protein,,,,Putative protein 902,Unknown,Unknown,Unknown,Microbial
+NtG_P00903,Protein_903,protein,,,,Putative protein 903,Unknown,Unknown,Unknown,Microbial
+NtG_P00904,Protein_904,protein,,,,Putative protein 904,Unknown,Unknown,Unknown,Microbial
+NtG_P00905,Protein_905,protein,,,,Putative protein 905,Unknown,Unknown,Unknown,Microbial
+NtG_P00906,Protein_906,protein,,,,Putative protein 906,Unknown,Unknown,Unknown,Microbial
+NtG_P00907,Protein_907,protein,,,,Putative protein 907,Unknown,Unknown,Unknown,Microbial
+NtG_P00908,Protein_908,protein,,,,Putative protein 908,Unknown,Unknown,Unknown,Microbial
+NtG_P00909,Protein_909,protein,,,,Putative protein 909,Unknown,Unknown,Unknown,Microbial
+NtG_P00910,Protein_910,protein,,,,Putative protein 910,Unknown,Unknown,Unknown,Microbial
+NtG_P00911,Protein_911,protein,,,,Putative protein 911,Unknown,Unknown,Unknown,Microbial
+NtG_P00912,Protein_912,protein,,,,Putative protein 912,Unknown,Unknown,Unknown,Microbial
+NtG_P00913,Protein_913,protein,,,,Putative protein 913,Unknown,Unknown,Unknown,Microbial
+NtG_P00914,Protein_914,protein,,,,Putative protein 914,Unknown,Unknown,Unknown,Microbial
+NtG_P00915,Protein_915,protein,,,,Putative protein 915,Unknown,Unknown,Unknown,Microbial
+NtG_P00916,Protein_916,protein,,,,Putative protein 916,Unknown,Unknown,Unknown,Microbial
+NtG_P00917,Protein_917,protein,,,,Putative protein 917,Unknown,Unknown,Unknown,Microbial
+NtG_P00918,Protein_918,protein,,,,Putative protein 918,Unknown,Unknown,Unknown,Microbial
+NtG_P00919,Protein_919,protein,,,,Putative protein 919,Unknown,Unknown,Unknown,Microbial
+NtG_P00920,Protein_920,protein,,,,Putative protein 920,Unknown,Unknown,Unknown,Microbial
+NtG_P00921,Protein_921,protein,,,,Putative protein 921,Unknown,Unknown,Unknown,Microbial
+NtG_P00922,Protein_922,protein,,,,Putative protein 922,Unknown,Unknown,Unknown,Microbial
+NtG_P00923,Protein_923,protein,,,,Putative protein 923,Unknown,Unknown,Unknown,Microbial
+NtG_P00924,Protein_924,protein,,,,Putative protein 924,Unknown,Unknown,Unknown,Microbial
+NtG_P00925,Protein_925,protein,,,,Putative protein 925,Unknown,Unknown,Unknown,Microbial
+NtG_P00926,Protein_926,protein,,,,Putative protein 926,Unknown,Unknown,Unknown,Microbial
+NtG_P00927,Protein_927,protein,,,,Putative protein 927,Unknown,Unknown,Unknown,Microbial
+NtG_P00928,Protein_928,protein,,,,Putative protein 928,Unknown,Unknown,Unknown,Microbial
+NtG_P00929,Protein_929,protein,,,,Putative protein 929,Unknown,Unknown,Unknown,Microbial
+NtG_P00930,Protein_930,protein,,,,Putative protein 930,Unknown,Unknown,Unknown,Microbial
+NtG_P00931,Protein_931,protein,,,,Putative protein 931,Unknown,Unknown,Unknown,Microbial
+NtG_P00932,Protein_932,protein,,,,Putative protein 932,Unknown,Unknown,Unknown,Microbial
+NtG_P00933,Protein_933,protein,,,,Putative protein 933,Unknown,Unknown,Unknown,Microbial
+NtG_P00934,Protein_934,protein,,,,Putative protein 934,Unknown,Unknown,Unknown,Microbial
+NtG_P00935,Protein_935,protein,,,,Putative protein 935,Unknown,Unknown,Unknown,Microbial
+NtG_P00936,Protein_936,protein,,,,Putative protein 936,Unknown,Unknown,Unknown,Microbial
+NtG_P00937,Protein_937,protein,,,,Putative protein 937,Unknown,Unknown,Unknown,Microbial
+NtG_P00938,Protein_938,protein,,,,Putative protein 938,Unknown,Unknown,Unknown,Microbial
+NtG_P00939,Protein_939,protein,,,,Putative protein 939,Unknown,Unknown,Unknown,Microbial
+NtG_P00940,Protein_940,protein,,,,Putative protein 940,Unknown,Unknown,Unknown,Microbial
+NtG_P00941,Protein_941,protein,,,,Putative protein 941,Unknown,Unknown,Unknown,Microbial
+NtG_P00942,Protein_942,protein,,,,Putative protein 942,Unknown,Unknown,Unknown,Microbial
+NtG_P00943,Protein_943,protein,,,,Putative protein 943,Unknown,Unknown,Unknown,Microbial
+NtG_P00944,Protein_944,protein,,,,Putative protein 944,Unknown,Unknown,Unknown,Microbial
+NtG_P00945,Protein_945,protein,,,,Putative protein 945,Unknown,Unknown,Unknown,Microbial
+NtG_P00946,Protein_946,protein,,,,Putative protein 946,Unknown,Unknown,Unknown,Microbial
+NtG_P00947,Protein_947,protein,,,,Putative protein 947,Unknown,Unknown,Unknown,Microbial
+NtG_P00948,Protein_948,protein,,,,Putative protein 948,Unknown,Unknown,Unknown,Microbial
+NtG_P00949,Protein_949,protein,,,,Putative protein 949,Unknown,Unknown,Unknown,Microbial
+NtG_P00950,Protein_950,protein,,,,Putative protein 950,Unknown,Unknown,Unknown,Microbial
+NtG_P00951,Protein_951,protein,,,,Putative protein 951,Unknown,Unknown,Unknown,Microbial
+NtG_P00952,Protein_952,protein,,,,Putative protein 952,Unknown,Unknown,Unknown,Microbial
+NtG_P00953,Protein_953,protein,,,,Putative protein 953,Unknown,Unknown,Unknown,Microbial
+NtG_P00954,Protein_954,protein,,,,Putative protein 954,Unknown,Unknown,Unknown,Microbial
+NtG_P00955,Protein_955,protein,,,,Putative protein 955,Unknown,Unknown,Unknown,Microbial
+NtG_P00956,Protein_956,protein,,,,Putative protein 956,Unknown,Unknown,Unknown,Microbial
+NtG_P00957,Protein_957,protein,,,,Putative protein 957,Unknown,Unknown,Unknown,Microbial
+NtG_P00958,Protein_958,protein,,,,Putative protein 958,Unknown,Unknown,Unknown,Microbial
+NtG_P00959,Protein_959,protein,,,,Putative protein 959,Unknown,Unknown,Unknown,Microbial
+NtG_P00960,Protein_960,protein,,,,Putative protein 960,Unknown,Unknown,Unknown,Microbial
+NtG_P00961,Protein_961,protein,,,,Putative protein 961,Unknown,Unknown,Unknown,Microbial
+NtG_P00962,Protein_962,protein,,,,Putative protein 962,Unknown,Unknown,Unknown,Microbial
+NtG_P00963,Protein_963,protein,,,,Putative protein 963,Unknown,Unknown,Unknown,Microbial
+NtG_P00964,Protein_964,protein,,,,Putative protein 964,Unknown,Unknown,Unknown,Microbial
+NtG_P00965,Protein_965,protein,,,,Putative protein 965,Unknown,Unknown,Unknown,Microbial
+NtG_P00966,Protein_966,protein,,,,Putative protein 966,Unknown,Unknown,Unknown,Microbial
+NtG_P00967,Protein_967,protein,,,,Putative protein 967,Unknown,Unknown,Unknown,Microbial
+NtG_P00968,Protein_968,protein,,,,Putative protein 968,Unknown,Unknown,Unknown,Microbial
+NtG_P00969,Protein_969,protein,,,,Putative protein 969,Unknown,Unknown,Unknown,Microbial
+NtG_P00970,Protein_970,protein,,,,Putative protein 970,Unknown,Unknown,Unknown,Microbial
+NtG_P00971,Protein_971,protein,,,,Putative protein 971,Unknown,Unknown,Unknown,Microbial
+NtG_P00972,Protein_972,protein,,,,Putative protein 972,Unknown,Unknown,Unknown,Microbial
+NtG_P00973,Protein_973,protein,,,,Putative protein 973,Unknown,Unknown,Unknown,Microbial
+NtG_P00974,Protein_974,protein,,,,Putative protein 974,Unknown,Unknown,Unknown,Microbial
+NtG_P00975,Protein_975,protein,,,,Putative protein 975,Unknown,Unknown,Unknown,Microbial
+NtG_P00976,Protein_976,protein,,,,Putative protein 976,Unknown,Unknown,Unknown,Microbial
+NtG_P00977,Protein_977,protein,,,,Putative protein 977,Unknown,Unknown,Unknown,Microbial
+NtG_P00978,Protein_978,protein,,,,Putative protein 978,Unknown,Unknown,Unknown,Microbial
+NtG_P00979,Protein_979,protein,,,,Putative protein 979,Unknown,Unknown,Unknown,Microbial
+NtG_P00980,Protein_980,protein,,,,Putative protein 980,Unknown,Unknown,Unknown,Microbial
+NtG_P00981,Protein_981,protein,,,,Putative protein 981,Unknown,Unknown,Unknown,Microbial
+NtG_P00982,Protein_982,protein,,,,Putative protein 982,Unknown,Unknown,Unknown,Microbial
+NtG_P00983,Protein_983,protein,,,,Putative protein 983,Unknown,Unknown,Unknown,Microbial
+NtG_P00984,Protein_984,protein,,,,Putative protein 984,Unknown,Unknown,Unknown,Microbial
+NtG_P00985,Protein_985,protein,,,,Putative protein 985,Unknown,Unknown,Unknown,Microbial
+NtG_P00986,Protein_986,protein,,,,Putative protein 986,Unknown,Unknown,Unknown,Microbial
+NtG_P00987,Protein_987,protein,,,,Putative protein 987,Unknown,Unknown,Unknown,Microbial
+NtG_P00988,Protein_988,protein,,,,Putative protein 988,Unknown,Unknown,Unknown,Microbial
+NtG_P00989,Protein_989,protein,,,,Putative protein 989,Unknown,Unknown,Unknown,Microbial
+NtG_P00990,Protein_990,protein,,,,Putative protein 990,Unknown,Unknown,Unknown,Microbial
+NtG_P00991,Protein_991,protein,,,,Putative protein 991,Unknown,Unknown,Unknown,Microbial
+NtG_P00992,Protein_992,protein,,,,Putative protein 992,Unknown,Unknown,Unknown,Microbial
+NtG_P00993,Protein_993,protein,,,,Putative protein 993,Unknown,Unknown,Unknown,Microbial
+NtG_P00994,Protein_994,protein,,,,Putative protein 994,Unknown,Unknown,Unknown,Microbial
+NtG_P00995,Protein_995,protein,,,,Putative protein 995,Unknown,Unknown,Unknown,Microbial
+NtG_P00996,Protein_996,protein,,,,Putative protein 996,Unknown,Unknown,Unknown,Microbial
+NtG_P00997,Protein_997,protein,,,,Putative protein 997,Unknown,Unknown,Unknown,Microbial
+NtG_P00998,Protein_998,protein,,,,Putative protein 998,Unknown,Unknown,Unknown,Microbial
+NtG_P00999,Protein_999,protein,,,,Putative protein 999,Unknown,Unknown,Unknown,Microbial
+NtG_P01000,Protein_1000,protein,,,,Putative protein 1000,Unknown,Unknown,Unknown,Microbial
