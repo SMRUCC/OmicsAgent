@@ -49,6 +49,7 @@
 		html,
 		body {
 			height: auto;
+			overflow: auto;
 		}
 
 		body {
@@ -195,6 +196,10 @@
 			background: var(--accent);
 		}
 
+		.jvenn-app .label:empty {
+			display: none;
+		}
+
 		/* ---- Inputs & textareas ---- */
 		.jvenn-app input[type="text"],
 		.jvenn-app textarea {
@@ -281,12 +286,27 @@
 
 		/* ---- Control group (list editor cells) ---- */
 		.jvenn-app .control-group {
-			margin-bottom: 18px;
+			margin-bottom: 16px;
+			padding: 12px;
+			background: var(--ui-background-alt);
+			border: 1px solid var(--ui-border);
+			border-radius: var(--radius-sm);
 		}
 
-		.jvenn-app .control-group > input[type="text"] {
-			width: calc(100% - 210px);
+		.jvenn-app .control-group .list-head {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			flex-wrap: wrap;
+		}
+
+		.jvenn-app .control-group .list-head input[type="text"] {
+			width: 150px;
 			font-weight: 700;
+		}
+
+		.jvenn-app .control-group .list-actions {
+			margin-left: auto;
 		}
 
 		.jvenn-app .controls {
@@ -302,12 +322,17 @@
 			resize: none;
 		}
 
+		.jvenn-app .clear-all-row {
+			clear: both;
+			text-align: right;
+			margin: 14px 0 0;
+		}
+
 		/* ---- Color swatch trigger (colorpicker) ---- */
 		.jvenn-app .input-append {
 			display: inline-flex;
 			align-items: center;
 			vertical-align: middle;
-			margin-left: 8px;
 		}
 
 		.jvenn-app .add-on {
@@ -315,9 +340,15 @@
 			align-items: center;
 			padding: 6px;
 			cursor: pointer;
-			background: var(--ui-background-alt);
+			background: var(--ui-background);
 			border: 1px solid var(--ui-border-strong);
 			border-radius: var(--radius-sm);
+		}
+
+		.clearfix::after {
+			content: "";
+			display: block;
+			clear: both;
 		}
 
 		/* ---- Helper text ---- */
@@ -325,6 +356,10 @@
 		.jvenn-app p {
 			color: var(--ui-foreground-muted);
 			line-height: 1.6;
+		}
+
+		.jvenn-app #search-field {
+			width: 220px;
 		}
 
 		.jvenn-app hr {
@@ -422,8 +457,8 @@
 				min-width: 0;
 			}
 
-			.jvenn-app .control-group > input[type="text"] {
-				width: calc(100% - 150px);
+			.jvenn-app #search-field {
+				width: 100%;
 			}
 		}
 	</style>
@@ -518,17 +553,19 @@
 								<div class="row-fluid">
 									<div class="span6">
 										<div class="control-group color1">
-											<input id="name_pa_1" type="text"
-												value="List 1" maxlength="11" />
-											<div id="colorp_pa_1"
-												class="input-append colorpicker-component colorpicker-element">
-												<input type="text" value="#006600" class="form-control"
-													style="display:none" />
-												<span class="add-on"><i></i></span>
-											</div>
-											<div class="btn-group list-actions">
-												<button id="colord_pa_1" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8a6 6 0 0 1 10-4.2M13 2v2.4h-2.4M14 8a6 6 0 0 1-10 4.2M3 14v-2.4h2.4"/></svg></button>
-												<button id="clear_pa_1" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 4h11M6 2.5h4M5.5 4l.6 9h3.8l.6-9M6.8 6.5v4M9.2 6.5v4"/></svg></button>
+											<div class="list-head">
+												<input id="name_pa_1" type="text"
+													value="List 1" maxlength="11" />
+												<div id="colorp_pa_1"
+													class="input-append colorpicker-component colorpicker-element">
+													<input type="text" value="#006600" class="form-control"
+														style="display:none" />
+													<span class="add-on"><i></i></span>
+												</div>
+												<div class="btn-group list-actions">
+													<button id="colord_pa_1" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8a6 6 0 0 1 10-4.2M13 2v2.4h-2.4M14 8a6 6 0 0 1-10 4.2M3 14v-2.4h2.4"/></svg></button>
+													<button id="clear_pa_1" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 4h11M6 2.5h4M5.5 4l.6 9h3.8l.6-9M6.8 6.5v4M9.2 6.5v4"/></svg></button>
+												</div>
 											</div>
 											<div class="controls controls-row">
 												<textarea id="area_pa_1" wrap="off" rows="4"></textarea>
@@ -537,17 +574,19 @@
 									</div>
 									<div class="span6">
 										<div class="control-group color2">
-											<input id="name_pa_2" type="text"
-												value="List 2" maxlength="11" />
-											<div id="colorp_pa_2"
-												class="input-append colorpicker-component colorpicker-element">
-												<input type="text" value="#5a9bd4" class="form-control"
-													style="display:none" />
-												<span class="add-on"><i></i></span>
-											</div>
-											<div class="btn-group list-actions">
-												<button id="colord_pa_2" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8a6 6 0 0 1 10-4.2M13 2v2.4h-2.4M14 8a6 6 0 0 1-10 4.2M3 14v-2.4h2.4"/></svg></button>
-												<button id="clear_pa_2" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 4h11M6 2.5h4M5.5 4l.6 9h3.8l.6-9M6.8 6.5v4M9.2 6.5v4"/></svg></button>
+											<div class="list-head">
+												<input id="name_pa_2" type="text"
+													value="List 2" maxlength="11" />
+												<div id="colorp_pa_2"
+													class="input-append colorpicker-component colorpicker-element">
+													<input type="text" value="#5a9bd4" class="form-control"
+														style="display:none" />
+													<span class="add-on"><i></i></span>
+												</div>
+												<div class="btn-group list-actions">
+													<button id="colord_pa_2" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8a6 6 0 0 1 10-4.2M13 2v2.4h-2.4M14 8a6 6 0 0 1-10 4.2M3 14v-2.4h2.4"/></svg></button>
+													<button id="clear_pa_2" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 4h11M6 2.5h4M5.5 4l.6 9h3.8l.6-9M6.8 6.5v4M9.2 6.5v4"/></svg></button>
+												</div>
 											</div>
 											<div class="controls controls-row">
 												<textarea id="area_pa_2" wrap="off" rows="4"></textarea>
@@ -559,17 +598,19 @@
 								<div class="row-fluid">
 									<div class="span6">
 										<div class="control-group color3">
-											<input id="name_pa_3" type="text"
-												value="List 3" maxlength="11" />
-											<div id="colorp_pa_3"
-												class="input-append colorpicker-component colorpicker-element">
-												<input type="text" value="#f15a60" class="form-control"
-													style="display:none" />
-												<span class="add-on"><i></i></span>
-											</div>
-											<div class="btn-group list-actions">
-												<button id="colord_pa_3" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8a6 6 0 0 1 10-4.2M13 2v2.4h-2.4M14 8a6 6 0 0 1-10 4.2M3 14v-2.4h2.4"/></svg></button>
-												<button id="clear_pa_3" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 4h11M6 2.5h4M5.5 4l.6 9h3.8l.6-9M6.8 6.5v4M9.2 6.5v4"/></svg></button>
+											<div class="list-head">
+												<input id="name_pa_3" type="text"
+													value="List 3" maxlength="11" />
+												<div id="colorp_pa_3"
+													class="input-append colorpicker-component colorpicker-element">
+													<input type="text" value="#f15a60" class="form-control"
+														style="display:none" />
+													<span class="add-on"><i></i></span>
+												</div>
+												<div class="btn-group list-actions">
+													<button id="colord_pa_3" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8a6 6 0 0 1 10-4.2M13 2v2.4h-2.4M14 8a6 6 0 0 1-10 4.2M3 14v-2.4h2.4"/></svg></button>
+													<button id="clear_pa_3" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 4h11M6 2.5h4M5.5 4l.6 9h3.8l.6-9M6.8 6.5v4M9.2 6.5v4"/></svg></button>
+												</div>
 											</div>
 											<div class="controls controls-row">
 												<textarea id="area_pa_3" wrap="off" rows="4"></textarea>
@@ -578,17 +619,19 @@
 									</div>
 									<div class="span6">
 										<div class="control-group color4">
-											<input id="name_pa_4" type="text"
-												value="List 4" maxlength="11" />
-											<div id="colorp_pa_4"
-												class="input-append colorpicker-component colorpicker-element">
-												<input type="text" value="#cfcf1b" class="form-control"
-													style="display:none" />
-												<span class="add-on"><i></i></span>
-											</div>
-											<div class="btn-group list-actions">
-												<button id="colord_pa_4" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8a6 6 0 0 1 10-4.2M13 2v2.4h-2.4M14 8a6 6 0 0 1-10 4.2M3 14v-2.4h2.4"/></svg></button>
-												<button id="clear_pa_4" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 4h11M6 2.5h4M5.5 4l.6 9h3.8l.6-9M6.8 6.5v4M9.2 6.5v4"/></svg></button>
+											<div class="list-head">
+												<input id="name_pa_4" type="text"
+													value="List 4" maxlength="11" />
+												<div id="colorp_pa_4"
+													class="input-append colorpicker-component colorpicker-element">
+													<input type="text" value="#cfcf1b" class="form-control"
+														style="display:none" />
+													<span class="add-on"><i></i></span>
+												</div>
+												<div class="btn-group list-actions">
+													<button id="colord_pa_4" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8a6 6 0 0 1 10-4.2M13 2v2.4h-2.4M14 8a6 6 0 0 1-10 4.2M3 14v-2.4h2.4"/></svg></button>
+													<button id="clear_pa_4" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 4h11M6 2.5h4M5.5 4l.6 9h3.8l.6-9M6.8 6.5v4M9.2 6.5v4"/></svg></button>
+												</div>
 											</div>
 											<div class="controls controls-row">
 												<textarea id="area_pa_4" wrap="off" rows="4"></textarea>
@@ -600,17 +643,19 @@
 								<div class="row-fluid">
 									<div class="span6">
 										<div class="control-group color5">
-											<input id="name_pa_5" type="text"
-												value="List 5" maxlength="11" />
-											<div id="colorp_pa_5"
-												class="input-append colorpicker-component colorpicker-element">
-												<input type="text" value="#ff7500" class="form-control"
-													style="display:none" />
-												<span class="add-on"><i></i></span>
-											</div>
-											<div class="btn-group list-actions">
-												<button id="colord_pa_5" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8a6 6 0 0 1 10-4.2M13 2v2.4h-2.4M14 8a6 6 0 0 1-10 4.2M3 14v-2.4h2.4"/></svg></button>
-												<button id="clear_pa_5" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 4h11M6 2.5h4M5.5 4l.6 9h3.8l.6-9M6.8 6.5v4M9.2 6.5v4"/></svg></button>
+											<div class="list-head">
+												<input id="name_pa_5" type="text"
+													value="List 5" maxlength="11" />
+												<div id="colorp_pa_5"
+													class="input-append colorpicker-component colorpicker-element">
+													<input type="text" value="#ff7500" class="form-control"
+														style="display:none" />
+													<span class="add-on"><i></i></span>
+												</div>
+												<div class="btn-group list-actions">
+													<button id="colord_pa_5" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8a6 6 0 0 1 10-4.2M13 2v2.4h-2.4M14 8a6 6 0 0 1-10 4.2M3 14v-2.4h2.4"/></svg></button>
+													<button id="clear_pa_5" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 4h11M6 2.5h4M5.5 4l.6 9h3.8l.6-9M6.8 6.5v4M9.2 6.5v4"/></svg></button>
+												</div>
 											</div>
 											<div class="controls controls-row">
 												<textarea id="area_pa_5" wrap="off" rows="4"></textarea>
@@ -619,17 +664,19 @@
 									</div>
 									<div class="span6">
 										<div class="control-group color6">
-											<input id="name_pa_6" type="text"
-												value="List 6" maxlength="11" />
-											<div id="colorp_pa_6"
-												class="input-append colorpicker-component colorpicker-element">
-												<input type="text" value="#c09853" class="form-control"
-													style="display:none" />
-												<span class="add-on"><i></i></span>
-											</div>
-											<div class="btn-group list-actions">
-												<button id="colord_pa_6" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8a6 6 0 0 1 10-4.2M13 2v2.4h-2.4M14 8a6 6 0 0 1-10 4.2M3 14v-2.4h2.4"/></svg></button>
-												<button id="clear_pa_6" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 4h11M6 2.5h4M5.5 4l.6 9h3.8l.6-9M6.8 6.5v4M9.2 6.5v4"/></svg></button>
+											<div class="list-head">
+												<input id="name_pa_6" type="text"
+													value="List 6" maxlength="11" />
+												<div id="colorp_pa_6"
+													class="input-append colorpicker-component colorpicker-element">
+													<input type="text" value="#c09853" class="form-control"
+														style="display:none" />
+													<span class="add-on"><i></i></span>
+												</div>
+												<div class="btn-group list-actions">
+													<button id="colord_pa_6" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 8a6 6 0 0 1 10-4.2M13 2v2.4h-2.4M14 8a6 6 0 0 1-10 4.2M3 14v-2.4h2.4"/></svg></button>
+													<button id="clear_pa_6" class="btn btn-mini"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 4h11M6 2.5h4M5.5 4l.6 9h3.8l.6-9M6.8 6.5v4M9.2 6.5v4"/></svg></button>
+												</div>
 											</div>
 											<div class="controls controls-row">
 												<textarea id="area_pa_6" wrap="off" rows="4"></textarea>
