@@ -44,7 +44,7 @@ Partial Class FormFolderWorkspace
         ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripDropDownButton1, ToolStripSeparator1, ToolStripButton2})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
-        ToolStrip1.Size = New Size(355, 25)
+        ToolStrip1.Size = New Size(420, 25)
         ToolStrip1.TabIndex = 0
         ToolStrip1.Text = "ToolStrip1"
         ' 
@@ -89,20 +89,20 @@ Partial Class FormFolderWorkspace
         TreeView1.Location = New Point(0, 25)
         TreeView1.Name = "TreeView1"
         TreeView1.SelectedImageIndex = 0
-        TreeView1.Size = New Size(355, 649)
+        TreeView1.Size = New Size(420, 637)
         TreeView1.TabIndex = 1
         ' 
         ' ContextMenuStrip1
         ' 
         ContextMenuStrip1.Items.AddRange(New ToolStripItem() {PinToolStripMenuItem})
         ContextMenuStrip1.Name = "ContextMenuStrip1"
-        ContextMenuStrip1.Size = New Size(181, 48)
+        ContextMenuStrip1.Size = New Size(92, 26)
         ' 
         ' PinToolStripMenuItem
         ' 
         PinToolStripMenuItem.Image = CType(resources.GetObject("PinToolStripMenuItem.Image"), Image)
         PinToolStripMenuItem.Name = "PinToolStripMenuItem"
-        PinToolStripMenuItem.Size = New Size(180, 22)
+        PinToolStripMenuItem.Size = New Size(91, 22)
         PinToolStripMenuItem.Text = "Pin"
         ' 
         ' ImageList1
@@ -118,7 +118,7 @@ Partial Class FormFolderWorkspace
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(355, 674)
+        ClientSize = New Size(420, 662)
         Controls.Add(TreeView1)
         Controls.Add(ToolStrip1)
         DockAreas = Microsoft.VisualStudio.WinForms.Docking.DockAreas.Float Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.DockLeft Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.DockRight Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.DockTop Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.DockBottom Or Microsoft.VisualStudio.WinForms.Docking.DockAreas.Document

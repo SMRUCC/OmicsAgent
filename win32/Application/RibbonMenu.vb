@@ -16,7 +16,22 @@ Module RibbonMenu
         AddHandler ribbon.ButtonOpenConsole.ExecuteEvent, Sub() Call OpenConsole()
         AddHandler ribbon.ButtonLicense.ExecuteEvent, Sub() Call OpenLicenseDialog()
         AddHandler ribbon.ButtonVennTool.ExecuteEvent, Sub() Call OpenJVennTool()
+        AddHandler ribbon.ButtonLLMTool.ExecuteEvent, Sub() Call OpenLLmTool()
     End Sub
+
+    Public Function OpenLLmTool() As FormLLMWindow
+        Dim llm As FormLLMWindow = CommonRuntime.TryGetToolWindow("llm_window")
+
+        If llm Is Nothing Then
+            llm = New FormLLMWindow With {
+                .Name = "llm_window"
+            }
+
+            CommonRuntime.RegisterToolWindow(llm, DockState.DockRight)
+        End If
+
+        Return llm
+    End Function
 
     Public Sub OpenJVennTool()
         Call CommonRuntime.ShowDocument(New FormHtmlViewer With {.URL = $"http://127.0.0.1:{Workbench.port}/jvenn.html", .TabText = "jVenn"})
