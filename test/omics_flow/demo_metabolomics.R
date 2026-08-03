@@ -615,6 +615,41 @@ plspm_ok <- tryCatch({
 })
 
 # ==============================================================================
+# Step 26: VIP Manhattan Plot (super_class as x-axis "chromosome")
+# ==============================================================================
+cat("\n=== Step 26: VIP Manhattan Plot ===\n")
+
+vip_manhattan_ok <- tryCatch({
+  # Reuse VIP scores computed in PLS-DA (Step 8)
+  if (!exists("plsda_result") || is.null(plsda_result) || is.null(plsda_result$vip)) {
+    cat("  PLS-DA VIP not available. Skipping VIP Manhattan plot.\n")
+    FALSE
+  } else if (!("super_class" %in% colnames(feat_info))) {
+    cat("  'super_class' column missing in feat_info. Skipping.\n")
+    FALSE
+  } else {
+    vip_manhattan_plot <- plot_vip_manhattan(
+      vip            = plsda_result$vip,
+      feature_info   = feat_info,
+      feature_id_col = "name",
+      category_col   = "super_class",
+      threshold      = 1.0,
+      top_n_labels   = 0,
+      title          = "VIP Manhattan Plot by Metabolite Super Class",
+      x_label        = "Metabolite Super Class",
+      y_label        = "VIP Score"
+    )
+    export_plot(vip_manhattan_plot, fig_dir, "vip_manhattan_superclass",
+                width = 10, height = 6, dpi = 300)
+    cat("  VIP Manhattan plot exported: vip_manhattan_superclass (png/pdf)\n")
+    TRUE
+  }
+}, error=function(e) {
+  cat("  VIP Manhattan plot error:", conditionMessage(e), "\n")
+  FALSE
+})
+
+# ==============================================================================
 # Summary
 # ==============================================================================
 cat("\n")
@@ -643,5 +678,8 @@ if(exists("plspm_ok") && plspm_ok) {
     n_sig <- sum(plspm_res$inner_model$p_value < 0.05, na.rm = TRUE)
     cat("    Significant paths (p<0.05):", n_sig, "\n")
   }
+}
+if(exists("vip_manhattan_ok") && vip_manhattan_ok) {
+  cat("  - VIP Manhattan plot completed (super_class x VIP, png/pdf)\n")
 }
 cat("\nAll output files in:", result_dir, "\n")
