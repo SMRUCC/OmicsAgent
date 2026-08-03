@@ -1,0 +1,106 @@
+"omics","module","n_features"
+"transcriptome","Acid",43
+"transcriptome","Alcohol",42
+"transcriptome","Aldehyde",17
+"transcriptome","Alkaloid",3
+"transcriptome","Amino_acid",29
+"transcriptome","Antioxidant",7
+"transcriptome","Carotenoid degradation product",26
+"transcriptome","Cell_wall",3
+"transcriptome","Cembranoid degradation product",9
+"transcriptome","Cembranoid degradation product / Diterpene",4
+"transcriptome","Ester",41
+"transcriptome","Ether",4
+"transcriptome","Furan",6
+"transcriptome","Glycolysis",12
+"transcriptome","Ketone",18
+"transcriptome","Lactone",26
+"transcriptome","Lipid",6
+"transcriptome","Lipid_metabolism",6
+"transcriptome","Maillard reaction product",42
+"transcriptome","Nitrogen",3
+"transcriptome","Nitrogen compound",34
+"transcriptome","Nucleotide",3
+"transcriptome","Phenylpropanoid",7
+"transcriptome","Phenylpropanoid/benzenoid compound",75
+"transcriptome","Photosynthesis",3
+"transcriptome","Polyamine",4
+"transcriptome","PPP",3
+"transcriptome","Regulation",5
+"transcriptome","Stress_response",8
+"transcriptome","Sugar_metabolism",6
+"transcriptome","Sulfur",4
+"transcriptome","Sulfur compound",24
+"transcriptome","TCA",9
+"transcriptome","TCA_cycle",6
+"transcriptome","Terpenoid",106
+"transcriptome","Tobacco-specific compound",6
+"transcriptome","Transport",9
+"transcriptome","Unknown",1329
+"proteome","Acid",43
+"proteome","Alcohol",42
+"proteome","Aldehyde",17
+"proteome","Alkaloid",3
+"proteome","Amino_acid",29
+"proteome","Antioxidant",7
+"proteome","Carotenoid degradation product",26
+"proteome","Cell_wall",3
+"proteome","Cembranoid degradation product",9
+"proteome","Cembranoid degradation product / Diterpene",4
+"proteome","Ester",41
+"proteome","Ether",4
+"proteome","Furan",6
+"proteome","Glycolysis",12
+"proteome","Ketone",18
+"proteome","Lactone",26
+"proteome","Lipid",6
+"proteome","Lipid_metabolism",6
+"proteome","Maillard reaction product",42
+"proteome","Nitrogen",3
+"proteome","Nitrogen compound",34
+"proteome","Nucleotide",3
+"proteome","Phenylpropanoid",7
+"proteome","Phenylpropanoid/benzenoid compound",75
+"proteome","Photosynthesis",3
+"proteome","Polyamine",4
+"proteome","PPP",3
+"proteome","Regulation",5
+"proteome","Stress_response",8
+"proteome","Sugar_metabolism",6
+"proteome","Sulfur",4
+"proteome","Sulfur compound",24
+"proteome","TCA",9
+"proteome","TCA_cycle",6
+"proteome","Terpenoid",106
+"proteome","Tobacco-specific compound",6
+"proteome","Transport",9
+"proteome","Unknown",329
+"metabolome","Acid",42
+"metabolome","Alcohol",35
+"metabolome","Aldehyde",27
+"metabolome","Amino_acid",10
+"metabolome","Carbohydrate",3
+"metabolome","Carotenoid degradation product",49
+"metabolome","Cembranoid degradation product",20
+"metabolome","Cembranoid degradation product / Diterpene",4
+"metabolome","Ester",56
+"metabolome","Ether",3
+"metabolome","Hydrocarbon",9
+"metabolome","Ketone",20
+"metabolome","Lactone",21
+"metabolome","Maillard reaction product",45
+"metabolome","Nitrogen compound",46
+"metabolome","Nucleotide",3
+"metabolome","Organic_acid",9
+"metabolome","Phenylpropanoid/benzenoid compound",74
+"metabolome","Sulfur compound",36
+"metabolome","Terpenoid",102
+"metabolome","Tobacco-specific compound",11
+"metabolome","Unknown",369
+"volatilome","Carotenoid degradation product",49
+"volatilome","Cembranoid degradation product",20
+"volatilome","Cembranoid degradation product / Diterpene",4
+"volatilome","Ester",14
+"volatilome","Maillard reaction product",45
+"volatilome","Phenylpropanoid/benzenoid compound",66
+"volatilome","Terpenoid",102
