@@ -168,6 +168,110 @@
 			line-height: 1.7;
 		}
 
+		/* Draggable & collapsible Venn global configuration card */
+		.jvenn-app .bs-docs-example.cfg-draggable {
+			position: fixed;
+			top: 80px;
+			right: 24px;
+			width: 360px;
+			max-width: calc(100vw - 32px);
+			margin: 0;
+			z-index: 1050;
+			padding-top: 38px;
+			box-shadow: var(--shadow-md);
+			cursor: default;
+		}
+
+		.jvenn-app .cfg-header {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			height: 30px;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			padding: 0 10px;
+			background: var(--accent-soft);
+			border-bottom: 1px solid var(--accent-soft-border);
+			border-radius: var(--radius) var(--radius) 0 0;
+			cursor: move;
+			user-select: none;
+		}
+
+		.jvenn-app .cfg-header .cfg-title {
+			font-size: 11px;
+			font-weight: 700;
+			letter-spacing: .5px;
+			text-transform: uppercase;
+			color: var(--accent);
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			flex: 1 1 auto;
+		}
+
+		.jvenn-app .cfg-header .cfg-btn {
+			flex: 0 0 auto;
+			width: 22px;
+			height: 22px;
+			line-height: 20px;
+			text-align: center;
+			font-size: 14px;
+			color: var(--accent);
+			background: transparent;
+			border: 1px solid transparent;
+			border-radius: var(--radius-sm);
+			cursor: pointer;
+			padding: 0;
+		}
+
+		.jvenn-app .cfg-header .cfg-btn:hover {
+			background: var(--ui-background);
+			border-color: var(--accent-soft-border);
+		}
+
+		.jvenn-app .bs-docs-example.cfg-draggable.cfg-collapsed {
+			width: auto;
+			padding: 0;
+		}
+
+		.jvenn-app .bs-docs-example.cfg-collapsed .cfg-body {
+			display: none;
+		}
+
+		.jvenn-app .bs-docs-example.cfg-collapsed .cfg-header {
+			position: static;
+			border-radius: var(--radius);
+			border-bottom: none;
+			width: auto;
+		}
+
+		/* Floating restore button shown when card is fully hidden */
+		.jvenn-app .cfg-restore {
+			position: fixed;
+			bottom: 24px;
+			right: 24px;
+			z-index: 1050;
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			padding: 8px 14px;
+			font-size: 12px;
+			font-weight: 700;
+			letter-spacing: .3px;
+			color: #fff;
+			background: var(--accent);
+			border: none;
+			border-radius: 999px;
+			box-shadow: var(--shadow-md);
+			cursor: pointer;
+		}
+
+		.jvenn-app .cfg-restore:hover {
+			filter: brightness(1.08);
+		}
+
 		.jvenn-app .bs-docs-example:after {
 			content: attr(content-value);
 			position: absolute;
@@ -333,6 +437,7 @@
 			display: inline-flex;
 			align-items: center;
 			vertical-align: middle;
+			position: relative;
 		}
 
 		.jvenn-app .add-on {
@@ -462,6 +567,53 @@
 			}
 		}
 	</style>
+
+	<!-- Colorpicker gradient overrides (original PNG assets are missing in vendor) -->
+	<style>
+		/* Restore the saturation/hue gradient palette without binary PNG files.
+		   NOTE: colorpicker popup is appended to <body> by JS, NOT inside .jvenn-app,
+		   so selectors must NOT use .jvenn-app prefix. */
+		.colorpicker-saturation {
+			background-image:
+				radial-gradient(circle at center, #fff 0%, rgba(255, 255, 255, 0) 60%),
+				linear-gradient(to top, #000, transparent),
+				linear-gradient(to right,
+					hsl(0, 100%, 50%),
+					hsl(60, 100%, 50%),
+					hsl(120, 100%, 50%),
+					hsl(180, 100%, 50%),
+					hsl(240, 100%, 50%),
+					hsl(300, 100%, 50%),
+					hsl(360, 100%, 50%)) !important;
+		}
+
+		.colorpicker-hue {
+			background-image: linear-gradient(to bottom,
+				#f00 0%,
+				#ff0 17%,
+				#0f0 33%,
+				#0ff 50%,
+				#00f 67%,
+				#f0f 83%,
+				#f00 100%) !important;
+		}
+
+		.colorpicker-alpha {
+			background-image: linear-gradient(to bottom,
+				#fff 0%,
+				#000 100%) !important;
+		}
+
+		/* Restore dropdown-menu positioning (removed with Bootstrap CSS) */
+		.colorpicker.dropdown-menu {
+			position: absolute !important;
+			top: 0;
+			left: 0;
+			border: 1px solid var(--ui-border);
+			border-radius: var(--radius-sm);
+			box-shadow: var(--shadow-md);
+		}
+	</style>
 </head>
 
 <body>
@@ -487,7 +639,13 @@
 					</div>
 
 					<div class="span6">
-						<div class="bs-docs-example" content-value="Venn global configuration">
+						<div class="bs-docs-example cfg-draggable" id="cfg-card" content-value="Venn global configuration">
+							<div class="cfg-header" id="cfg-header">
+								<span class="cfg-title">Venn global configuration</span>
+								<button type="button" class="cfg-btn" id="cfg-collapse" title="Collapse">&#8722;</button>
+								<button type="button" class="cfg-btn" id="cfg-hide" title="Hide">&#10005;</button>
+							</div>
+							<div class="cfg-body">
 							<span class="cfg-dot"></span>
 							Display mode:
 							<div class="btn-group" data-toggle="buttons-radio">

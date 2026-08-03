@@ -63,37 +63,67 @@ run_cross_omics_regression <- function(x_matrix, y_matrix,
     stop("At least one of the layers has no usable feature after filtering.")
   }
 
-  rows <- list()
-  for (i in seq_len(nrow(X))) {
-    xv <- as.numeric(X[i, ])
-    for (j in seq_len(nrow(Y))) {
-      yv <- as.numeric(Y[j, ])
-      fit <- tryCatch(stats::lm(yv ~ xv), error = function(e) NULL)
-      if (is.null(fit)) next
-      s <- summary(fit)
-      co <- stats::coef(s)
-      rows[[length(rows) + 1L]] <- data.frame(
-        x_feature = rownames(X)[i],
-        y_feature = rownames(Y)[j],
-        x_name = x_name,
-        y_name = y_name,
-        slope = unname(co[2, 1]),
-        intercept = unname(co[1, 1]),
-        se = unname(co[2, 2]),
-        t_stat = unname(co[2, 3]),
-        p_value = unname(co[2, 4]),
-        r_squared = unname(s$r.squared),
-        n_samples = length(common),
-        stringsAsFactors = FALSE
-      )
-    }
-  }
+  # ---------------------------------------------------------------------------
+  # For a univariate model y ~ x the regression statistics follow directly from
+  # the Pearson correlation r and the feature moments:
+  #   slope      = r * sd(y) / sd(x)
+  #   intercept  = mean(y) - slope * mean(x)
+  #   t_stat     = r * sqrt((n - 2) / (1 - r^2))
+  #   p_value    = 2 * pt(-abs(t), df = n - 2)
+  #   r_squared  = r^2
+  #   se_slope   = slope / t_stat
+  # This is exactly equivalent to stats::lm(y ~ x) but avoids the huge overhead
+  # of one lm() call per pair, which makes large x-by-y screens tractable.
+  # ---------------------------------------------------------------------------
+  n <- length(common)
+  df <- n - 2L
 
-  if (length(rows) == 0) {
+  # Centre every feature across samples; the cross product then yields the
+  # feature x feature sum of cross products (n_features_x x n_features_y).
+  Xc <- X - rowMeans(X)             # features x samples
+  Yc <- Y - rowMeans(Y)             # features x samples
+  Sxx <- rowSums(Xc * Xc)
+  Syy <- rowSums(Yc * Yc)
+  Sxy <- Xc %*% t(Yc)               # n_features_x x n_features_y
+
+  r <- Sxy / sqrt(outer(Sxx, Syy))
+  r <- pmax(pmin(r, 1), -1)         # guard against rounding beyond [-1, 1]
+
+  t_val <- r * sqrt(df / pmax(1 - r * r, .Machine$double.eps))
+  p_val <- 2 * stats::pt(-abs(t_val), df = df)
+
+  sx <- sqrt(Sxx / (n - 1))
+  sy <- sqrt(Syy / (n - 1))
+  mx <- rowMeans(X)
+  my <- rowMeans(Y)
+
+  slope <- r * outer(1 / sx, sy)
+  intercept <- outer(rep(1, nrow(X)), my) - t(t(slope) * mx)
+  r2 <- r * r
+  se_slope <- abs(slope) / pmax(abs(t_val), .Machine$double.eps)
+
+  is_finite <- !is.na(r) & is.finite(t_val) & abs(r) < 1
+
+  # expand.grid with x_feature first iterates x fastest, matching the column-
+  # major (as.vector) order of the slope / p-value matrices.
+  pairs <- expand.grid(x_feature = rownames(X), y_feature = rownames(Y),
+                       KEEP.OUT.ATTRS = FALSE, stringsAsFactors = FALSE)
+  pairs$x_name <- x_name
+  pairs$y_name <- y_name
+  pairs$slope <- as.vector(slope)
+  pairs$intercept <- as.vector(intercept)
+  pairs$se <- as.vector(se_slope)
+  pairs$t_stat <- as.vector(t_val)
+  pairs$p_value <- as.vector(p_val)
+  pairs$r_squared <- as.vector(r2)
+  pairs$n_samples <- n
+  pairs <- pairs[is_finite, , drop = FALSE]
+
+  if (nrow(pairs) == 0) {
     cat(sprintf("  [regression] %s -> %s: no valid fit produced.\n", x_name, y_name))
     return(list(pairs = data.frame(), x_summary = data.frame(), y_summary = data.frame()))
   }
-  out <- do.call(rbind, rows)
+  out <- pairs
   out$padj <- stats::p.adjust(out$p_value, method = p_adjust)
   out$significant <- out$padj < 0.05
   out <- out[order(out$padj, -abs(out$slope)), , drop = FALSE]

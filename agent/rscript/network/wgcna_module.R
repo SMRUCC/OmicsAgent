@@ -58,7 +58,9 @@ build_wgcna_modules <- function(expr_matrix, soft_power = NULL,
                                      networkType = network_type,
                                      corFnc = cor_fn_name, verbose = 0)
     soft_power <- sft$power
-    if (is.null(soft_power) || soft_power == 0) soft_power <- 6
+    # pickSoftThreshold returns NA when no tested power reaches the scale-free
+    # topology fit criterion; fall back to a fixed default in that case.
+    if (is.null(soft_power) || is.na(soft_power) || soft_power == 0) soft_power <- 6
   }
 
   # Calculate adjacency
