@@ -31,6 +31,8 @@ Public Class FormFileViewer
 
     Private Async Sub WebView21_NavigationCompleted(sender As Object, e As CoreWebView2NavigationCompletedEventArgs) Handles WebView21.NavigationCompleted
         Await WebView21.ExecuteScriptAsync($"run('http://localhost:{port}/');")
+        Await WebView21.ExecuteScriptAsync("document.getElementById('topbar').style.display = 'none';")
+
         ready = True
     End Sub
 End Class

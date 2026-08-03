@@ -30,12 +30,14 @@ Partial Class FormFolderWorkspace
         ToolStripButton1 = New ToolStripButton()
         TreeView1 = New TreeView()
         ImageList1 = New ImageList(components)
+        ToolStripSeparator1 = New ToolStripSeparator()
+        ToolStripButton2 = New ToolStripButton()
         ToolStrip1.SuspendLayout()
         SuspendLayout()
         ' 
         ' ToolStrip1
         ' 
-        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1})
+        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripSeparator1, ToolStripButton2})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
         ToolStrip1.Size = New Size(424, 25)
@@ -71,6 +73,20 @@ Partial Class FormFolderWorkspace
         ImageList1.Images.SetKeyName(1, "icons8-file-explorer-new-96.png")
         ImageList1.Images.SetKeyName(2, "icons8-books-96.png")
         ' 
+        ' ToolStripSeparator1
+        ' 
+        ToolStripSeparator1.Name = "ToolStripSeparator1"
+        ToolStripSeparator1.Size = New Size(6, 25)
+        ' 
+        ' ToolStripButton2
+        ' 
+        ToolStripButton2.DisplayStyle = ToolStripItemDisplayStyle.Image
+        ToolStripButton2.Image = CType(resources.GetObject("ToolStripButton2.Image"), Image)
+        ToolStripButton2.ImageTransparentColor = Color.Magenta
+        ToolStripButton2.Name = "ToolStripButton2"
+        ToolStripButton2.Size = New Size(23, 22)
+        ToolStripButton2.Text = "Toggle Theme"
+        ' 
         ' FormFolderWorkspace
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -94,4 +110,6 @@ Partial Class FormFolderWorkspace
     Friend WithEvents ToolStripButton1 As ToolStripButton
     Friend WithEvents TreeView1 As TreeView
     Friend WithEvents ImageList1 As ImageList
+    Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
+    Friend WithEvents ToolStripButton2 As ToolStripButton
 End Class

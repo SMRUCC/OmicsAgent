@@ -7,9 +7,11 @@
     <title>文件查看器 · File Viewer</title>
 
     <!-- Markdown 渲染（CDN，锁定版本；离线时 viewer.js 自动降级为纯文本） -->
-    <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js" onerror="window.__markedFailed = true;"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"
+        onerror="window.__markedFailed = true;"></script>
     <!-- PDF 渲染（CDN，锁定版本；离线时 viewer.js 自动降级为内嵌 / 下载） -->
-    <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js" onerror="window.__pdfjsFailed = true;"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"
+        onerror="window.__pdfjsFailed = true;"></script>
 
     <!-- 设计令牌基准：必须在 viewer.css 之前引入 -->
     <link href="styles/kb.css" rel="stylesheet">

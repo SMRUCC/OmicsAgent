@@ -18,7 +18,7 @@ Public Class FormFolderWorkspace
     End Property
 
     Dim WithEvents http As HttpServices
-    Dim viewer As FormFileViewer
+    Dim WithEvents viewer As FormFileViewer
 
     Private Sub RefreshTree() Handles ToolStripButton1.Click
         Dim dir As Directory = Directory.FromLocalFileSystem(Folder)
@@ -71,5 +71,16 @@ Public Class FormFolderWorkspace
                     Call CommonRuntime.Warning($"Sorry, the file type(*.{fsNode.FullName.ExtensionSuffix}) is not yet supported")
             End Select
         End If
+    End Sub
+
+    Private Async Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
+        If Not viewer Is Nothing Then
+            Await viewer.CheckReady
+            Await viewer.WebView21.ExecuteScriptAsync("toggleTheme();")
+        End If
+    End Sub
+
+    Private Sub viewer_FormClosing(sender As Object, e As FormClosingEventArgs) Handles viewer.FormClosing
+        viewer = Nothing
     End Sub
 End Class
