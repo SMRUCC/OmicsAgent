@@ -128,8 +128,11 @@ export_table(
 cat("\n=== Step 3: Preprocessing every layer ===\n")
 # Compositional 16S counts and the four abundance layers all pass through the
 # same chain: missing-value filtering, half-minimum imputation, total-sum
-# normalisation and Pareto scaling.
+# normalisation and Pareto scaling. The unprocessed container is kept so that
+# Step 6 can test absolute intensity differences, which sample-total
+# normalisation would otherwise remove.
 
+mo_raw <- mo
 mo <- preprocess_multiomics(mo, group_col = "condition")
 
 cat("Feature counts after preprocessing:\n")
@@ -180,9 +183,11 @@ for (nm in mo$metadata$omics_names) {
     export_plot(p + ggtitle(sprintf("PLS-DA of %s by region", nm)),
                 fig_dir, sprintf("step05_plsda_%s", nm))
 
-    if (!is.null(pls$vip)) {
-      vip_df <- data.frame(feature = names(pls$vip),
-                           VIP = as.numeric(pls$vip),
+    # run_plsda returns vip as a data.frame with a single 'vip' column and the
+    # feature identifiers held in the rownames.
+    if (!is.null(pls$vip) && nrow(pls$vip) > 0) {
+      vip_df <- data.frame(feature = rownames(pls$vip),
+                           VIP = as.numeric(pls$vip$vip),
                            omics = nm,
                            stringsAsFactors = FALSE)
       vip_df <- vip_df[order(-vip_df$VIP), , drop = FALSE]
@@ -202,36 +207,84 @@ if (length(vip_tables) > 0) {
 
 # ==== Step 6: Regional differential analysis (Q1) =============================
 cat("\n=== Step 6: Differential features between Yunnan and Henan ===\n")
+# Two design facts shape this step.
+#
+# First, the layout is fully crossed: both regions were sampled at all 13 time
+# points with both varieties. Fermentation phase dominates the variance (a
+# per-feature ANOVA gives a median R2 near 0.64 for phase against roughly 0.01
+# for region), so pooling every phase buries the regional contrast in the
+# temporal spread. The test is therefore stratified by phase.
+#
+# Second, the regional effect in this dataset is largely a uniform shift in
+# overall signal intensity. normalize_sample_total() rescales each sample to
+# relative abundance and removes exactly that shift, which is appropriate for
+# the correlation and ordination work of the later steps but erases the very
+# contrast tested here. Differential testing therefore runs on a container that
+# has been filtered and imputed but not normalised or scaled.
+
+mo_de <- preprocess_multiomics(mo_raw, group_col = "condition",
+                               normalize = FALSE, scale = FALSE)
+
+phases <- c("Fresh", "Early_fermentation", "Active_fermentation", "Late_maturation")
+phases <- intersect(phases, unique(as.character(mo_de$sample_info$phase)))
 
 de_tables <- list()
-for (nm in mo$metadata$omics_names) {
-  tryCatch({
-    de <- run_limma(get_omics_matrix(mo, nm), mo$sample_info,
-                    group_col = "location",
-                    control_group = "Henan", case_groups = "Yunnan",
-                    exclude_groups = NULL)
-    tbl <- de$results
-    if (is.null(tbl) || nrow(tbl) == 0) {
-      cat(sprintf("  %-14s no result\n", nm))
-    } else {
-      tbl$omics <- nm
-      de_tables[[nm]] <- tbl
+de_counts <- list()
 
-      n_sig <- sum(tbl$p_adj < 0.05 & abs(tbl$logFC) > 1, na.rm = TRUE)
-      cat(sprintf("  %-14s %d significant features (padj<0.05, |logFC|>1)\n",
-                  nm, n_sig))
+for (nm in mo_de$metadata$omics_names) {
+  mat <- get_omics_matrix(mo_de, nm)
+  layer_hits <- integer(0)
+
+  for (ph in phases) {
+    keep <- rownames(mo_de$sample_info)[
+      as.character(mo_de$sample_info$phase) == ph]
+    if (length(keep) < 6) next
+
+    tbl <- tryCatch({
+      de <- run_limma(mat[, keep, drop = FALSE],
+                      mo_de$sample_info[keep, , drop = FALSE],
+                      group_col = "location",
+                      control_group = "Henan", case_groups = "Yunnan")
+      de$results
+    }, error = function(e) {
+      cat(sprintf("  limma failed for %s / %s: %s\n",
+                  nm, ph, conditionMessage(e)))
+      NULL
+    })
+
+    if (!is.null(tbl) && nrow(tbl) > 0) {
+      tbl$feature <- rownames(tbl)
+      tbl$omics <- nm
+      tbl$phase <- ph
+      rownames(tbl) <- NULL
+      de_tables[[paste(nm, ph, sep = "_")]] <- tbl
+      layer_hits[ph] <- sum(tbl$p_adj < 0.05, na.rm = TRUE)
 
       p <- plot_volcano(tbl, p_threshold = 0.05, logfc_threshold = 1)
-      export_plot(p + ggtitle(sprintf("%s: Yunnan vs Henan", nm)),
-                  fig_dir, sprintf("step06_volcano_%s", nm))
+      export_plot(p + ggtitle(sprintf("%s, %s: Yunnan vs Henan", nm, ph)),
+                  fig_dir, sprintf("step06_volcano_%s_%s", nm, ph))
     }
-  }, error = function(e) {
-    cat(sprintf("  limma failed for %s: %s\n", nm, conditionMessage(e)))
-  })
+  }
+
+  if (length(layer_hits) > 0) {
+    cat(sprintf("  %-14s significant by phase (padj<0.05): %s\n", nm,
+                paste(sprintf("%s=%d", names(layer_hits), layer_hits),
+                      collapse = ", ")))
+    de_counts[[nm]] <- data.frame(
+      omics = nm, phase = names(layer_hits),
+      n_significant = as.integer(layer_hits), stringsAsFactors = FALSE)
+  }
 }
+
 if (length(de_tables) > 0) {
   export_table(do.call(rbind, de_tables), tab_dir,
-               "step06_regional_de_all_layers.csv", use_rownames = FALSE)
+               "step06_regional_de_by_phase.csv", use_rownames = FALSE)
+}
+if (length(de_counts) > 0) {
+  cnt <- do.call(rbind, de_counts)
+  rownames(cnt) <- NULL
+  export_table(cnt, tab_dir, "step06_regional_de_counts.csv",
+               use_rownames = FALSE)
 }
 
 
@@ -322,7 +375,8 @@ if (!is.null(diablo_res)) {
   if (!is.null(p)) export_plot(p, fig_dir, "step09_diablo_scores",
                                width = 11, height = 7)
 
-  n_by_layer <- table(diablo_res$selected_features$omics)
+  # selected_features carries the block name in the 'layer' column.
+  n_by_layer <- table(diablo_res$selected_features$layer)
   cat("  Features selected per block:\n")
   for (nm in names(n_by_layer)) {
     cat(sprintf("    %-14s %d\n", nm, n_by_layer[[nm]]))
@@ -587,6 +641,13 @@ cat(sprintf(" Figures written       : %d  -> %s\n", n_fig, fig_dir))
 cat(sprintf(" Tables written        : %d  -> %s\n", n_tab, tab_dir))
 cat("--------------------------------------------------------------\n")
 
+if (length(de_counts) > 0) {
+  cnt_all <- do.call(rbind, de_counts)
+  cat(sprintf(" Q1 region     : %d region-associated features across phases\n",
+              sum(cnt_all$n_significant)))
+  cat("                 (detected only after stratifying by fermentation phase\n")
+  cat("                  and before sample-total normalisation)\n")
+}
 if (!is.null(mantel_res) && nrow(mantel_res$omics_env) > 0) {
   sig_env <- mantel_res$omics_env[mantel_res$omics_env$p_value < 0.05, ]
   cat(sprintf(" Q1 environment: %d of %d layer-variable pairs significant\n",
