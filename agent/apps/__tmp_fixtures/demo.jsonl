@@ -1,0 +1,3 @@
+{"id":1,"name":"sample A","tags":["a","b"],"meta":{"ok":true,"score":9.5,"deep":{"x":[1,2,3]}}}
+{"id":2,"name":"sample B","tags":[],"meta":{"ok":false,"score":null}}
+{"id":3,"name":"样本 C","tags":["中文"],"meta":{"ok":true,"score":1}}
