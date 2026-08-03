@@ -28,7 +28,7 @@ library(cowplot)
 library(pheatmap)
 
 # Project paths
-data_dir <- "G:/OmicsWorks/extdata"
+data_dir <- "G:/OmicsWorks/extdata/metabolism_demo"
 result_dir <- "G:/OmicsWorks/test/omics_flow"
 fig_dir <- file.path(result_dir, "figures")
 tab_dir <- file.path(result_dir, "tables")
