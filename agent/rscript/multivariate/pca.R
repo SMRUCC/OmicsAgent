@@ -55,9 +55,13 @@ run_pca <- function(expr_matrix, scale = TRUE, center = TRUE,
   # Extract results
   scores <- as.data.frame(pca_result$x[, 1:ncomp, drop = FALSE])
   scores$sample_id <- rownames(scores)
+  scores <- scores[, c("sample_id", setdiff(colnames(scores), "sample_id")), drop = FALSE]
+  rownames(scores) <- NULL
 
   loadings <- as.data.frame(pca_result$rotation[, 1:ncomp, drop = FALSE])
   loadings$feature_id <- rownames(loadings)
+  loadings <- loadings[, c("feature_id", setdiff(colnames(loadings), "feature_id")), drop = FALSE]
+  rownames(loadings) <- NULL
 
   # Variance explained: use total variance (sum of all sdev^2)
   var_explained <- (pca_result$sdev^2 / sum(pca_result$sdev^2) * 100)[1:ncomp]

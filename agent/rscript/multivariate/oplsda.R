@@ -21,6 +21,8 @@
 #' @return A list with:
 #'   \itemize{
 #'     \item \code{scores}: Data.frame with predictive and orthogonal scores.
+#'     \item \code{loadings}: Data.frame of OPLS-DA loadings (features x
+#'       components), with \code{feature_id} as the first column.
 #'     \item \code{vip}: VIP scores data.frame.
 #'     \item \code{model}: OPLS-DA model object.
 #'   }
@@ -50,9 +52,22 @@ run_oplsda <- function(expr_matrix, sample_info, group_col = "sample_info",
   X <- t(expr_matrix)
 
   # Check if mixOmics is available
+  loadings_mat <- NULL
   if (requireNamespace("metaboanalyst", quietly = TRUE)) {
     # Use MetaboAnalyst's OPLS-DA
     model <- metaboanalyst:::oplsda(X, groups, ncomp_pred = ncomp_pred, ncomp_orth = ncomp_orth)
+    scores <- as.data.frame(model$scores)
+    if (is.null(colnames(scores)) || any(colnames(scores) == "")) {
+      colnames(scores) <- c(paste0("t", 1:ncomp_pred), paste0("to", 1:ncomp_orth))
+    }
+    # MetaboAnalyst OPLS-DA exposes loadings via the model matrix
+    if (!is.null(model$loadings)) {
+      loadings_mat <- as.matrix(model$loadings)
+      if (!is.null(colnames(loadings_mat))) {
+        colnames(loadings_mat) <- c(paste0("p", 1:ncomp_pred), paste0("po", 1:ncomp_orth))
+      }
+    }
+    vip_scores <- if (!is.null(model$vip)) model$vip else model$vipVn
   } else if (requireNamespace("mixOmics", quietly = TRUE)) {
     # Use mixOmics - it doesn't have OPLS-DA directly, but we can use PLS-DA
     # and separate predictive/orthogonal components
@@ -61,6 +76,10 @@ run_oplsda <- function(expr_matrix, sample_info, group_col = "sample_info",
     # Extract scores
     scores <- as.data.frame(model$variates$X)
     colnames(scores) <- c(paste0("t", 1:ncomp_pred), paste0("to", 1:ncomp_orth))
+
+    # Loadings
+    loadings_mat <- as.matrix(model$loadings$X)
+    colnames(loadings_mat) <- c(paste0("p", 1:ncomp_pred), paste0("po", 1:ncomp_orth))
 
     # VIP
     vip_scores <- mixOmics::vip(model)
@@ -74,12 +93,15 @@ run_oplsda <- function(expr_matrix, sample_info, group_col = "sample_info",
     model <- result$model
     scores <- as.data.frame(result$scores)
     colnames(scores) <- c(paste0("t", 1:ncomp_pred), paste0("to", 1:ncomp_orth))
+    loadings_mat <- as.matrix(result$loadings)
     vip_scores <- result$vip
   }
 
   # Prepare scores data.frame
   scores$sample_id <- rownames(scores)
   scores$group <- as.character(groups)
+  scores <- scores[, c("sample_id", setdiff(colnames(scores), "sample_id")), drop = FALSE]
+  rownames(scores) <- NULL
 
   # Prepare VIP data.frame
   vip_df <- data.frame(
@@ -91,8 +113,19 @@ run_oplsda <- function(expr_matrix, sample_info, group_col = "sample_info",
   rownames(vip_df) <- vip_df$feature_id
   vip_df$feature_id <- NULL
 
+  # Prepare loadings data.frame (features x components), feature_id as first column
+  loadings_df <- NULL
+  if (!is.null(loadings_mat) && nrow(loadings_mat) > 0) {
+    loadings_df <- as.data.frame(loadings_mat)
+    loadings_df$feature_id <- rownames(loadings_df)
+    loadings_df <- loadings_df[, c("feature_id",
+                                   setdiff(colnames(loadings_df), "feature_id")), drop = FALSE]
+    rownames(loadings_df) <- NULL
+  }
+
   return(list(
     scores = scores,
+    loadings = loadings_df,
     vip = vip_df,
     model = model
   ))

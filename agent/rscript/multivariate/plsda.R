@@ -88,6 +88,17 @@ run_plsda <- function(expr_matrix, sample_info, group_col = "sample_info",
   rownames(vip_df) <- vip_df$feature_id
   vip_df$feature_id <- NULL
 
+  # Reset row names on scores/loadings so export_table does not prepend a
+  # duplicate sample_id/feature_id column; keep id columns as real columns.
+  if ("sample_id" %in% colnames(scores)) {
+    scores <- scores[, c("sample_id", setdiff(colnames(scores), "sample_id")), drop = FALSE]
+  }
+  rownames(scores) <- NULL
+  if (!is.null(loadings)) {
+    loadings <- loadings[, c("feature_id", setdiff(colnames(loadings), "feature_id")), drop = FALSE]
+    rownames(loadings) <- NULL
+  }
+
   return(list(
     scores = scores,
     loadings = loadings,

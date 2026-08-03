@@ -151,6 +151,10 @@ pca_plot <- plot_pca_scores(pca_result, sample_info,
                            show_ellipse=TRUE)
 export_plot(pca_plot, fig_dir, "pca_score_plot")
 
+# Export PCA scores and loadings tables
+export_table(pca_result$scores, tab_dir, "pca_scores")
+export_table(pca_result$loadings, tab_dir, "pca_loadings")
+
 # ==============================================================================
 # Step 8: PLS-DA Analysis
 # ==============================================================================
@@ -170,8 +174,36 @@ if(!is.null(plsda_result$scores)) {
   vip_plot <- plot_vip(plsda_result, top_n=20)
   export_plot(vip_plot, fig_dir, "plsda_vip_plot")
   export_table(plsda_result$vip, tab_dir, "plsda_vip_scores")
+
+  # Export PLS-DA scores and loadings tables
+  export_table(plsda_result$scores, tab_dir, "plsda_scores")
+  export_table(plsda_result$loadings, tab_dir, "plsda_loadings")
 } else {
   cat("  PLS-DA not available (mixOmics not installed)\n")
+}
+
+# ==============================================================================
+# Step 8b: OPLS-DA Analysis
+# ==============================================================================
+cat("\n=== Step 8b: OPLS-DA Analysis ===\n")
+
+oplsda_result <- run_oplsda(scaled_mat, sample_info,
+                            group_col="sample_info",
+                            ncomp_pred=1, ncomp_orth=1,
+                            exclude_groups="QC")
+if(!is.null(oplsda_result$scores)) {
+  cat("  OPLS-DA completed\n")
+  # Export OPLS-DA scores, loadings and VIP tables
+  export_table(oplsda_result$scores, tab_dir, "oplsda_scores")
+  export_table(oplsda_result$loadings, tab_dir, "oplsda_loadings")
+  export_table(oplsda_result$vip, tab_dir, "oplsda_vip_scores")
+  # Score plot
+  if(requireNamespace("ggplot2", quietly=TRUE)) {
+    oplsda_plot <- plot_oplsda_scores(oplsda_result)
+    export_plot(oplsda_plot, fig_dir, "oplsda_score_plot")
+  }
+} else {
+  cat("  OPLS-DA not available\n")
 }
 
 # ==============================================================================
