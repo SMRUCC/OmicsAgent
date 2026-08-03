@@ -234,6 +234,10 @@ for (nm in CFG$layer_order) {
   save_figure(plot_dbn_layer(res, title = sprintf("Dynamic Bayesian network - %s", nm)),
               sprintf("adv_step03_dbn_%s", nm), width = 9, height = 7)
 
+  save_figure(plot_dbn_layer(res, title = sprintf("Dynamic Bayesian network (KK layout) - %s", nm),
+                             layout = "kk"),
+              sprintf("adv_step03_dbn_%s_kk", nm), width = 9, height = 7)
+
   dbn_summaries[[nm]] <- summarise_dbn_network(res, label = nm)
 }
 
@@ -275,8 +279,18 @@ if (!is.null(dbn_all)) {
 
   save_figure(plot_dbn_multiomics(
     dbn_all, title = "Pan-omics dynamic Bayesian network (t -> t+1)",
-    layer_order = CFG$layer_order),
-    "adv_step04_dbn_panomics", width = 11, height = 7.5)
+    layer_order = CFG$layer_order, layout = "fr"),
+    "adv_step04_dbn_panomics_fr", width = 11, height = 7.5)
+
+  save_figure(plot_dbn_multiomics(
+    dbn_all, title = "Pan-omics dynamic Bayesian network (t -> t+1)",
+    layer_order = CFG$layer_order, layout = "kk"),
+    "adv_step04_dbn_panomics_kk", width = 11, height = 7.5)
+
+  save_figure(plot_dbn_multiomics(
+    dbn_all, title = "Pan-omics dynamic Bayesian network (t -> t+1)",
+    layer_order = CFG$layer_order, layout = "hier"),
+    "adv_step04_dbn_panomics_hier", width = 11, height = 7.5)
 
   inter <- dbn_all$edges_df[!is.na(dbn_all$edges_df$edge_type) &
                               dbn_all$edges_df$edge_type == "inter_omics", ,
@@ -453,6 +467,11 @@ if (!is.null(plspm_res)) {
     plspm_res, layer_order = CFG$layer_order, significant_only = TRUE,
     title = "Hierarchical PLS path model (significant paths only)"),
     "adv_step06_plspm_hierarchy_significant", width = 12, height = 8)
+
+  save_figure(plot_plspm_hierarchy(
+    plspm_res, layer_order = CFG$layer_order, layout = "kk",
+    title = "Multi-omics PLS path model (Kamada-Kawai layout)"),
+    "adv_step06_plspm_paths_kk", width = 12, height = 8)
 
   save_figure(plot_plspm_r2(
     plspm_res, title = "Explained variance of endogenous latent variables"),

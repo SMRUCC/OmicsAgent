@@ -280,16 +280,20 @@ plot_dbn_layer <- function(dbn_result, title = NULL, label_top = 30,
     ggplot2::scale_fill_manual(values = c(t0 = "#4a90d9", t1 = "#fe9929"),
                                labels = c(t0 = "time t", t1 = "time t+1"),
                                name = "Time slice") +
-    ggplot2::scale_x_continuous(breaks = c(0, 1),
-                                labels = c("t (past)", "t+1 (future)"),
-                                limits = c(-0.25, 1.25)) +
     ggplot2::labs(title = title, x = NULL, y = NULL) +
     ggplot2::theme_minimal(base_size = 11) +
     ggplot2::theme(
       plot.title = ggplot2::element_text(size = 13, face = "bold"),
       panel.grid = ggplot2::element_blank(),
       axis.text.y = ggplot2::element_blank(),
-      axis.text.x = ggplot2::element_text(face = "bold", size = 10))
+      axis.text.x = ggplot2::element_blank()) +
+    (if (hier_layout) {
+      ggplot2::scale_x_continuous(breaks = c(0, 1),
+                                  labels = c("t (past)", "t+1 (future)"),
+                                  limits = c(-0.25, 1.25))
+    } else {
+      ggplot2::scale_x_continuous(breaks = NULL)
+    })
 }
 
 
@@ -303,8 +307,13 @@ plot_dbn_layer <- function(dbn_result, title = NULL, label_top = 30,
 #' @param dbn_result Result of \code{run_dbn_multiomics()}.
 #' @param title Plot title.
 #' @param layer_order Column ordering of the omics layers. Default: the order
-#'   stored in the result.
+#'   stored in the result. Only used when \code{layout = "hier"}.
 #' @param label_top Maximum number of nodes to label. Default: 30.
+#' @param layout Network layout. \code{"fr"} / \code{"force"} (default) uses
+#'   the Fruchterman-Reingold force-directed placement, \code{"kk"} the
+#'   Kamada-Kawai placement, and \code{"hier"} the one-column-per-omics
+#'   layout used in earlier versions. A 2-column coordinate matrix (rows named
+#'   with node ids) can also be supplied.
 #'
 #' @return A ggplot object.
 #'
@@ -315,7 +324,7 @@ plot_dbn_layer <- function(dbn_result, title = NULL, label_top = 30,
 #'
 #' @export
 plot_dbn_multiomics <- function(dbn_result, title = NULL, layer_order = NULL,
-                                label_top = 30) {
+                                label_top = 30, layout = "fr") {
   if (is.null(dbn_result)) return(.dbn_empty_plot("No DBN result.", title))
   arcs <- dbn_result$arcs
   nd <- dbn_result$nodes_df
@@ -324,12 +333,16 @@ plot_dbn_multiomics <- function(dbn_result, title = NULL, layer_order = NULL,
                            title))
   }
   if (!"omics" %in% colnames(nd)) {
-    return(plot_dbn_layer(dbn_result, title = title, label_top = label_top))
+    return(plot_dbn_layer(dbn_result, title = title, label_top = label_top,
+                          layout = layout))
   }
 
   active <- union(arcs$from, arcs$to)
   nd <- nd[nd$node %in% active, , drop = FALSE]
   if (nrow(nd) == 0) return(.dbn_empty_plot("No connected node.", title))
+
+  hier_layout <- (is.character(layout) &&
+                    tolower(layout)[1] %in% c("hier", "hierarchical"))
 
   if (is.null(layer_order)) {
     layer_order <- dbn_result$layer_order %||% unique(nd$omics)
@@ -338,14 +351,24 @@ plot_dbn_multiomics <- function(dbn_result, title = NULL, layer_order = NULL,
                    setdiff(unique(nd$omics), layer_order))
   nd$omics <- factor(nd$omics, levels = layer_order)
 
-  # one column per omics layer, t0 slightly left of t1 inside the column
-  pos <- do.call(rbind, lapply(split(nd, nd$omics, drop = TRUE), function(s) {
-    s <- s[order(s$time_slice, -s$degree), , drop = FALSE]
-    s$x <- as.numeric(s$omics) + ifelse(s$time_slice == "t0", -0.16, 0.16)
-    s$y <- if (nrow(s) == 1) 0.5 else seq(0, 1, length.out = nrow(s))
-    s
-  }))
-  rownames(pos) <- NULL
+  if (hier_layout) {
+    # one column per omics layer, t0 slightly left of t1 inside the column
+    pos <- do.call(rbind, lapply(split(nd, nd$omics, drop = TRUE), function(s) {
+      s <- s[order(s$time_slice, -s$degree), , drop = FALSE]
+      s$x <- as.numeric(s$omics) + ifelse(s$time_slice == "t0", -0.16, 0.16)
+      s$y <- if (nrow(s) == 1) 0.5 else seq(0, 1, length.out = nrow(s))
+      s
+    }))
+    rownames(pos) <- NULL
+  } else {
+    xy <- .dbn_compute_layout(arcs, layout = layout)
+    if (is.null(xy)) {
+      return(.dbn_empty_plot("Could not compute the network layout.", title))
+    }
+    pos <- nd
+    pos$x <- xy$x[match(pos$node, xy$node)]
+    pos$y <- xy$y[match(pos$node, xy$node)]
+  }
 
   ed <- data.frame(
     x = pos$x[match(arcs$from, pos$node)],
@@ -394,8 +417,12 @@ plot_dbn_multiomics <- function(dbn_result, title = NULL, layer_order = NULL,
                                 labels = c(t0 = "time t", t1 = "time t+1"),
                                 name = "Time slice") +
     ggplot2::scale_fill_manual(values = cols, name = "Omics layer") +
-    ggplot2::scale_x_continuous(breaks = seq_along(levels(nd$omics)),
-                                labels = levels(nd$omics)) +
+    (if (hier_layout) {
+      ggplot2::scale_x_continuous(breaks = seq_along(levels(nd$omics)),
+                                  labels = levels(nd$omics))
+    } else {
+      ggplot2::scale_x_continuous(breaks = NULL)
+    }) +
     ggplot2::guides(fill = ggplot2::guide_legend(
       override.aes = list(shape = 21, size = 4))) +
     ggplot2::labs(title = title, x = NULL, y = NULL) +
@@ -404,8 +431,11 @@ plot_dbn_multiomics <- function(dbn_result, title = NULL, layer_order = NULL,
       plot.title = ggplot2::element_text(size = 13, face = "bold"),
       panel.grid = ggplot2::element_blank(),
       axis.text.y = ggplot2::element_blank(),
-      axis.text.x = ggplot2::element_text(face = "bold", size = 9,
-                                          angle = 20, hjust = 1))
+      axis.text.x = if (hier_layout) {
+        ggplot2::element_text(face = "bold", size = 9, angle = 20, hjust = 1)
+      } else {
+        ggplot2::element_blank()
+      })
 }
 
 
@@ -573,6 +603,11 @@ plot_perturbation_heatmap <- function(pair_details, mode = NULL, top_n = 15,
 #' @param node Name of the perturbed node.
 #' @param title Plot title.
 #' @param max_distance Maximum path length to include. Default: Inf.
+#' @param layout Sub-network layout. \code{"fr"} / \code{"force"} (default)
+#'   uses the Fruchterman-Reingold force-directed placement and \code{"kk"}
+#'   the Kamada-Kawai placement. \code{"ring"} (the default in earlier
+#'   versions) arranges the nodes in concentric rings by path distance from the
+#'   perturbed node. A 2-column coordinate matrix can also be supplied.
 #'
 #' @return A ggplot object.
 #'
@@ -583,7 +618,7 @@ plot_perturbation_heatmap <- function(pair_details, mode = NULL, top_n = 15,
 #'
 #' @export
 plot_perturbation_subnetwork <- function(dbn_result, node, title = NULL,
-                                         max_distance = Inf) {
+                                         max_distance = Inf, layout = "fr") {
   if (is.null(dbn_result) || is.null(node) || length(node) == 0) {
     return(.dbn_empty_plot("No node supplied.", title))
   }
@@ -599,23 +634,37 @@ plot_perturbation_subnetwork <- function(dbn_result, node, title = NULL,
   nd <- dbn_result$nodes_df
   nd <- nd[nd$node %in% keep, , drop = FALSE]
 
-  nd$distance <- 0
-  m <- match(nd$node, desc$node)
-  nd$distance[!is.na(m)] <- desc$distance[m[!is.na(m)]]
+  ring_layout <- (is.character(layout) &&
+                    tolower(layout)[1] %in% c("ring", "radial", "concentric"))
 
-  # concentric rings: the perturbed node in the middle, then one ring per hop
-  pos <- do.call(rbind, lapply(split(nd, nd$distance), function(s) {
-    d <- s$distance[1]
-    if (d == 0) {
-      s$x <- 0; s$y <- 0
-    } else {
-      ang <- seq(0, 2 * pi, length.out = nrow(s) + 1)[seq_len(nrow(s))]
-      s$x <- d * cos(ang)
-      s$y <- d * sin(ang)
+  if (ring_layout) {
+    nd$distance <- 0
+    m <- match(nd$node, desc$node)
+    nd$distance[!is.na(m)] <- desc$distance[m[!is.na(m)]]
+
+    # concentric rings: perturbed node in the middle, one ring per hop
+    pos <- do.call(rbind, lapply(split(nd, nd$distance), function(s) {
+      d <- s$distance[1]
+      if (d == 0) {
+        s$x <- 0; s$y <- 0
+      } else {
+        ang <- seq(0, 2 * pi, length.out = nrow(s) + 1)[seq_len(nrow(s))]
+        s$x <- d * cos(ang)
+        s$y <- d * sin(ang)
+      }
+      s
+    }))
+    rownames(pos) <- NULL
+  } else {
+    xy <- .dbn_compute_layout(arcs, layout = layout)
+    if (is.null(xy)) {
+      return(.dbn_empty_plot("Could not compute the sub-network layout.",
+                             title))
     }
-    s
-  }))
-  rownames(pos) <- NULL
+    pos <- nd
+    pos$x <- xy$x[match(pos$node, xy$node)]
+    pos$y <- xy$y[match(pos$node, xy$node)]
+  }
   pos$role <- ifelse(pos$node == node, "perturbed", "downstream")
 
   ed <- data.frame(
@@ -677,11 +726,17 @@ plot_perturbation_subnetwork <- function(dbn_result, node, title = NULL,
 #'   coefficient, colour its sign, and dashed lines mark non-significant paths.
 #'
 #' @param plspm_result Output of \code{run_multiomics_plspm()}.
-#' @param layer_order Column ordering of the omics layers.
+#' @param layer_order Column ordering of the omics layers. Only used when
+#'   \code{layout = "hier"}.
 #' @param p_threshold Significance threshold for the line type. Default: 0.05.
 #' @param min_abs_coeff Hide paths whose absolute coefficient is below this
 #'   value, which keeps dense models readable. Default: 0.
 #' @param significant_only Draw only significant paths. Default: FALSE.
+#' @param layout Network layout. \code{"hier"} (default) keeps the one-column-
+#'   per-omics layer layout that follows the biological hierarchy. \code{"fr"} /
+#'   \code{"force"} uses the Fruchterman-Reingold force-directed placement and
+#'   \code{"kk"} the Kamada-Kawai placement. A 2-column coordinate matrix (rows
+#'   named with latent variable ids) can also be supplied.
 #' @param title Plot title.
 #'
 #' @return A ggplot object.
@@ -694,7 +749,8 @@ plot_perturbation_subnetwork <- function(dbn_result, node, title = NULL,
 #' @export
 plot_plspm_hierarchy <- function(plspm_result, layer_order = NULL,
                                  p_threshold = 0.05, min_abs_coeff = 0,
-                                 significant_only = FALSE, title = NULL) {
+                                 significant_only = FALSE, layout = "hier",
+                                 title = NULL) {
   if (is.null(plspm_result)) {
     return(.dbn_empty_plot("No PLS-PM result.", title))
   }
@@ -714,6 +770,9 @@ plot_plspm_hierarchy <- function(plspm_result, layer_order = NULL,
     return(.dbn_empty_plot("No path passed the filters.", title))
   }
 
+  hier_layout <- (is.character(layout) &&
+                    tolower(layout)[1] %in% c("hier", "hierarchical"))
+
   if (is.null(layer_order)) layer_order <- unique(defs$layer)
   layer_order <- c(intersect(layer_order, unique(defs$layer)),
                    setdiff(unique(defs$layer), layer_order))
@@ -724,12 +783,23 @@ plot_plspm_hierarchy <- function(plspm_result, layer_order = NULL,
   if (nrow(pos) == 0) return(.dbn_empty_plot("No connected latent variable.",
                                              title))
 
-  pos <- do.call(rbind, lapply(split(pos, pos$layer, drop = TRUE), function(s) {
-    s$x <- as.numeric(s$layer)
-    s$y <- if (nrow(s) == 1) 0.5 else seq(0, 1, length.out = nrow(s))
-    s
-  }))
-  rownames(pos) <- NULL
+  if (hier_layout) {
+    pos <- do.call(rbind, lapply(split(pos, pos$layer, drop = TRUE), function(s) {
+      s$x <- as.numeric(s$layer)
+      s$y <- if (nrow(s) == 1) 0.5 else seq(0, 1, length.out = nrow(s))
+      s
+    }))
+    rownames(pos) <- NULL
+  } else {
+    arcs_pl <- data.frame(from = ip$from, to = ip$to,
+                          stringsAsFactors = FALSE)
+    xy <- .dbn_compute_layout(arcs_pl, layout = layout)
+    if (is.null(xy)) {
+      return(.dbn_empty_plot("Could not compute the path layout.", title))
+    }
+    pos$x <- xy$x[match(pos$latent, xy$node)]
+    pos$y <- xy$y[match(pos$latent, xy$node)]
+  }
 
   ed <- data.frame(
     x = pos$x[match(ip$from, pos$latent)],
@@ -782,9 +852,14 @@ plot_plspm_hierarchy <- function(plspm_result, layer_order = NULL,
                                         name = "|path coeff|") +
     ggplot2::scale_size_continuous(range = c(3, 8), name = expression(R^2)) +
     ggplot2::scale_fill_manual(values = cols, name = "Omics layer") +
-    ggplot2::scale_x_continuous(breaks = seq_along(levels(defs$layer)),
-                                labels = levels(defs$layer),
-                                limits = c(0.6, length(levels(defs$layer)) + 0.4)) +
+    (if (hier_layout) {
+      ggplot2::scale_x_continuous(breaks = seq_along(levels(defs$layer)),
+                                  labels = levels(defs$layer),
+                                  limits = c(0.6,
+                                             length(levels(defs$layer)) + 0.4))
+    } else {
+      ggplot2::scale_x_continuous(breaks = NULL)
+    }) +
     ggplot2::guides(fill = ggplot2::guide_legend(
       override.aes = list(size = 4))) +
     ggplot2::labs(title = title, x = NULL, y = NULL) +
@@ -793,8 +868,11 @@ plot_plspm_hierarchy <- function(plspm_result, layer_order = NULL,
       plot.title = ggplot2::element_text(size = 13, face = "bold"),
       panel.grid = ggplot2::element_blank(),
       axis.text.y = ggplot2::element_blank(),
-      axis.text.x = ggplot2::element_text(face = "bold", size = 9,
-                                          angle = 20, hjust = 1))
+      axis.text.x = if (hier_layout) {
+        ggplot2::element_text(face = "bold", size = 9, angle = 20, hjust = 1)
+      } else {
+        ggplot2::element_blank()
+      })
 }
 
 
