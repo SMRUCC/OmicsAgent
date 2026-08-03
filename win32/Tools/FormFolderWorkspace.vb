@@ -16,4 +16,31 @@ Public Class FormFolderWorkspace
     Private Sub FormFolderWorkspace_Load(sender As Object, e As EventArgs) Handles Me.Load
         Call RefreshTree()
     End Sub
+
+    Private Sub TreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TreeView1.AfterSelect
+        Dim node As TreeNode = e.Node
+
+        ' skip of root node and dir node
+        If node.Parent Is Nothing OrElse DirectCast(node.Tag, FileSystemTree).IsDirectory Then
+            Return
+        Else
+            ' file display
+            Dim fsNode As FileSystemTree = DirectCast(node.Tag, FileSystemTree)
+
+            Select Case fsNode.FullName.ExtensionSuffix
+                Case "csv"
+
+                Case "xlsx"
+                Case "bmp", "jpg", "jpeg", "png", "gif", "tiff"
+                Case "pdf"
+                Case "txt"
+                Case "json"
+                Case "xml"
+                Case "html"
+                Case "md"
+                Case Else
+                    Call CommonRuntime.Warning($"Sorry, the file type(*.{fsNode.FullName.ExtensionSuffix}) is not yet supported")
+            End Select
+        End If
+    End Sub
 End Class
