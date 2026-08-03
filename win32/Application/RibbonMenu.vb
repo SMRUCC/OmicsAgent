@@ -1,7 +1,10 @@
 ﻿Imports Galaxy.Workbench
 Imports Galaxy.Workbench.CommonDialogs
 Imports Microsoft.VisualStudio.WinForms.Docking
+Imports Ollama
 Imports OmicsWorks.RibbonLib.Controls
+Imports OmicsWorks.Settings
+Imports WebView2UI
 
 Module RibbonMenu
 
@@ -16,7 +19,28 @@ Module RibbonMenu
         AddHandler ribbon.ButtonOpenConsole.ExecuteEvent, Sub() Call OpenConsole()
         AddHandler ribbon.ButtonLicense.ExecuteEvent, Sub() Call OpenLicenseDialog()
         AddHandler ribbon.ButtonVennTool.ExecuteEvent, Sub() Call OpenJVennTool()
+        AddHandler ribbon.ButtonLLMTool.ExecuteEvent, Sub() Call OpenLLmTool()
     End Sub
+
+    Public Function OpenLLmTool() As FormLLMWindow
+        Dim llm As FormLLMWindow = CommonRuntime.TryGetToolWindow("llm_window")
+
+        If llm Is Nothing Then
+            Dim config As llm = Workbench.config.llm
+            Dim agent As New LLMClient(LLMUrl.Create(config.endpoint, config.apiKey), config.model)
+
+            llm = New FormLLMWindow With {
+                .Name = "llm_window"
+            }
+
+            Call agent.AddFunction(New FileTool(), "read_file")
+            Call llm.WebView2llmui1.SetHost(agent)
+
+            CommonRuntime.RegisterToolWindow(llm, DockState.DockRight)
+        End If
+
+        Return llm
+    End Function
 
     Public Sub OpenJVennTool()
         Call CommonRuntime.ShowDocument(New FormHtmlViewer With {.URL = $"http://127.0.0.1:{Workbench.port}/jvenn.html", .TabText = "jVenn"})

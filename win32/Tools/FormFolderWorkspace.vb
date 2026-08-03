@@ -62,6 +62,7 @@ Public Class FormFolderWorkspace
 
         Call BuildFilterDropDown()
         Call RefreshTree(selectedExtensions)
+        Call ApplyVsTheme(ContextMenuStrip1, ToolStrip1)
     End Sub
 
     ' 收集当前文件夹下所有文件扩展名，动态生成带 Check 状态的下拉菜单项
@@ -115,10 +116,11 @@ Public Class FormFolderWorkspace
         Else
             ' file display
             Dim fsNode As FileSystemTree = DirectCast(node.Tag, FileSystemTree)
+            Dim filetype As String = fsNode.FullName.ExtensionSuffix
 
-            Select Case fsNode.FullName.ExtensionSuffix
+            Select Case filetype
                 Case "csv", "tsv", "bmp", "jpg", "jpeg", "png", "gif", "tiff", "svg", "pdf", "txt", "log", "json", "jsonl", "xml", "html", "md"
-                    If viewer Is Nothing Then
+                    If viewer Is Nothing OrElse viewer.Pinned Then
                         viewer = New FormFileViewer With {
                             .port = Port
                         }
@@ -131,7 +133,12 @@ Public Class FormFolderWorkspace
                 Case "xlsx"
                     ' Handle Excel files
                 Case Else
-                    Call CommonRuntime.Warning($"Sorry, the file type(*.{fsNode.FullName.ExtensionSuffix}) is not yet supported")
+                    Call CommonRuntime.Warning($"Sorry, the file type(*.{filetype}) is not yet supported")
+            End Select
+
+            Select Case filetype
+                Case "csv", "tsv", "txt", "log", "json", "jsonl", "xml", "html", "md"
+                    Call RibbonMenu.OpenLLmTool.WebView2llmui1.SetFileReference(Folder & "/" & fsNode.FullName)
             End Select
         End If
     End Sub
@@ -145,5 +152,11 @@ Public Class FormFolderWorkspace
 
     Private Sub viewer_FormClosing(sender As Object, e As FormClosingEventArgs) Handles viewer.FormClosing
         viewer = Nothing
+    End Sub
+
+    Private Sub PinToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PinToolStripMenuItem.Click
+        If Not viewer Is Nothing Then
+            viewer.Pinned = True
+        End If
     End Sub
 End Class

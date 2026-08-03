@@ -4,6 +4,7 @@ Imports Microsoft.Web.WebView2.Core
 Public Class FormFileViewer
 
     Public Property port As Integer
+    Public Property Pinned As Boolean = False
 
     Dim ready As Boolean = False
 
@@ -23,6 +24,7 @@ Public Class FormFileViewer
 
     Public Async Function ViewFile(rel As String) As Task
         Await WebView21.ExecuteScriptAsync($"openFile('{rel}');")
+        Me.BringToFront()
     End Function
 
     Private Sub WebView21_CoreWebView2InitializationCompleted(sender As Object, e As CoreWebView2InitializationCompletedEventArgs) Handles WebView21.CoreWebView2InitializationCompleted
