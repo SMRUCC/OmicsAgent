@@ -563,6 +563,58 @@ wgcna_sc <- tryCatch({
 })
 
 # ==============================================================================
+# Step 25: PLS-PM Network (KEGG pathway + super_class latent variables)
+# ==============================================================================
+cat("\n=== Step 25: PLS-PM Network ===\n")
+
+plspm_ok <- tryCatch({
+  # Build latent variables from annotation:
+  #   - KEGG pathways (via kegg_mapping, one compound may span multiple pathways)
+  #   - super_class categories
+  plspm_latent_def <- build_latent_def_from_annotation(
+    expr_matrix  = scaled_mat,
+    feature_info = feat_info,
+    kegg_mapping = if (exists("kegg_mapping")) kegg_mapping else NULL,
+    feature_id_col = "name",
+    kegg_col      = "kegg",
+    category_col  = "super_class",
+    min_size      = 2
+  )
+
+  if (length(plspm_latent_def) == 0) {
+    cat("  No latent variables built (insufficient annotation). Skipping PLS-PM.\n")
+    FALSE
+  } else {
+    cat("  Latent variables built:", length(plspm_latent_def), "\n")
+    cat("    KEGG pathway LVs:", sum(grepl("^KEGG:", names(plspm_latent_def))), "\n")
+    cat("    Super class LVs :", sum(grepl("^SC:",   names(plspm_latent_def))), "\n")
+
+    # Full-connection PLS-PM (inner_model = NULL -> all-to-all path fit)
+    plspm_res <- run_plspm(scaled_mat, feat_info, plspm_latent_def,
+                           inner_model = NULL, feature_id_col = "name")
+
+    # Export path coefficient / significance table
+    if (!is.null(plspm_res$inner_model) && nrow(plspm_res$inner_model) > 0) {
+      export_table(plspm_res$inner_model, tab_dir, "plspm_path_coefficients")
+      n_sig <- sum(plspm_res$inner_model$p_value < 0.05, na.rm = TRUE)
+      cat("  Path pairs tested:", nrow(plspm_res$inner_model),
+          " | significant (p<0.05):", n_sig, "\n")
+
+      # Export path network diagram (significant = solid, others = dashed)
+      plspm_net_plot <- plot_plspm_network(plspm_res, p_threshold = 0.05)
+      export_plot(plspm_net_plot, fig_dir, "plspm_pathway_network")
+      cat("  Path network plot exported: plspm_pathway_network\n")
+    } else {
+      cat("  No path coefficients produced (check latent variable sizes).\n")
+    }
+    TRUE
+  }
+}, error=function(e) {
+  cat("  PLS-PM error:", conditionMessage(e), "\n")
+  FALSE
+})
+
+# ==============================================================================
 # Summary
 # ==============================================================================
 cat("\n")
@@ -582,4 +634,14 @@ if(exists("gsva_kegg") && gsva_kegg) cat("  - KEGG GSVA completed\n")
 if(exists("gsva_sc") && gsva_sc) cat("  - Super class GSVA completed\n")
 if(exists("wgcna_kegg") && wgcna_kegg) cat("  - KEGG WGCNA module-trait completed\n")
 if(exists("wgcna_sc") && wgcna_sc) cat("  - Super class WGCNA module-trait completed\n")
+if(exists("plspm_ok") && plspm_ok) {
+  cat("  - PLS-PM network completed (KEGG pathway + super_class latent variables)\n")
+  if (exists("plspm_latent_def")) {
+    cat("    Latent variables:", length(plspm_latent_def), "\n")
+  }
+  if (exists("plspm_res") && !is.null(plspm_res$inner_model)) {
+    n_sig <- sum(plspm_res$inner_model$p_value < 0.05, na.rm = TRUE)
+    cat("    Significant paths (p<0.05):", n_sig, "\n")
+  }
+}
 cat("\nAll output files in:", result_dir, "\n")

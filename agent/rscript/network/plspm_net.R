@@ -60,10 +60,23 @@ run_plspm <- function(expr_matrix, feature_info, latent_def,
     lv_def <- latent_def[[lv_name]]
 
     if (length(lv_def) == 1 && lv_def %in% colnames(feature_info)) {
-      # Group by column
+      # Column name: each distinct (non-empty) value becomes its own latent
+      # variable. Emit a warning if the caller did not expect multi-group
+      # behaviour, but proceed by building only the first category group.
+      warning(
+        "latent_def element '", lv_name, "' is a column name ('", lv_def,
+        "'). Grouping is ambiguous; use build_latent_def_from_annotation() ",
+        "to expand a column into multiple latent variables."
+      )
       lv_features <- common_features[
-        feature_info[common_features, lv_def] == lv_def[1]
+        !is.na(feature_info[common_features, lv_def]) &
+          feature_info[common_features, lv_def] != "" &
+          feature_info[common_features, lv_def] != lv_def[1]
       ]
+      if (length(lv_features) < 2) {
+        lv_features <- intersect(feature_info[common_features, lv_def],
+                                 common_features)
+      }
     } else {
       lv_features <- intersect(lv_def, common_features)
     }
@@ -166,6 +179,117 @@ run_plspm <- function(expr_matrix, feature_info, latent_def,
 #' p <- plot_plspm_network(result)
 #' print(p)
 #' }
+#' Build latent variable definitions from feature annotation
+#'
+#' @description Constructs a \code{latent_def} list (passed to
+#'   \code{run_plspm()}) by grouping measured features according to either
+#'   their KEGG pathway membership (via a compound->pathway mapping) or their
+#'   \code{super_class} annotation. A single feature may belong to multiple
+#'   KEGG pathways and will therefore be included in several latent variables;
+#'   each latent variable's score is computed independently by PCA inside
+#'   \code{run_plspm()}.
+#'
+#' @param expr_matrix A numeric matrix (features x samples).
+#' @param feature_info Data.frame with feature annotations (rownames or a
+#'   column \code{feature_id_col} identifying features). Must contain
+#'   \code{kegg_col} and \code{category_col} columns.
+#' @param kegg_mapping Data.frame with columns \code{compound_id},
+#'   \code{pathway_id}, \code{pathway_name} (as produced by
+#'   \code{load_kegg_mapping()}). May be NULL to skip KEGG pathways.
+#' @param feature_id_col Column name for feature IDs in \code{feature_info}.
+#'   Default: "name".
+#' @param kegg_col Column name holding the KEGG compound ID. Default: "kegg".
+#' @param category_col Column name holding the super class. Default:
+#'   "super_class".
+#' @param min_size Minimum number of features per latent variable. Groups with
+#'   fewer measured features are dropped. Default: 2.
+#' @param use_kegg Logical; build KEGG pathway latent variables. Default: TRUE.
+#' @param use_super_class Logical; build super_class latent variables.
+#'   Default: TRUE.
+#' @param prefix_kegg Prefix added to KEGG pathway latent variable names.
+#'   Default: "KEGG:".
+#' @param prefix_super Prefix added to super_class latent variable names.
+#'   Default: "SC:".
+#'
+#' @return A named list of character vectors (feature IDs) suitable for
+#'   \code{run_plspm()}.
+#'
+#' @examples
+#' \dontrun{
+#' latent_def <- build_latent_def_from_annotation(scaled_mat, feat_info, kegg_mapping)
+#' result <- run_plspm(scaled_mat, feat_info, latent_def)
+#' }
+#'
+#' @export
+build_latent_def_from_annotation <- function(expr_matrix, feature_info,
+                                             kegg_mapping = NULL,
+                                             feature_id_col = "name",
+                                             kegg_col = "kegg",
+                                             category_col = "super_class",
+                                             min_size = 2,
+                                             use_kegg = TRUE,
+                                             use_super_class = TRUE,
+                                             prefix_kegg = "KEGG:",
+                                             prefix_super = "SC:") {
+  # Identify feature IDs and the intersection with the expression matrix
+  if (feature_id_col %in% colnames(feature_info)) {
+    feat_ids <- feature_info[[feature_id_col]]
+  } else {
+    feat_ids <- rownames(feature_info)
+  }
+  feat_ids <- as.character(feat_ids)
+  avail <- intersect(feat_ids, rownames(expr_matrix))
+  info <- feature_info[match(avail, feat_ids), , drop = FALSE]
+  rownames(info) <- avail
+
+  latent_def <- list()
+
+  # ---- KEGG pathway grouping (compound -> pathway, many-to-many) ----
+  if (use_kegg && !is.null(kegg_mapping) && nrow(kegg_mapping) > 0) {
+    if (!all(c("compound_id", "pathway_name") %in% colnames(kegg_mapping))) {
+      warning("kegg_mapping missing 'compound_id'/'pathway_name'; skipping KEGG LVs.")
+    } else {
+      kegg_vals <- as.character(info[[kegg_col]])
+      names(kegg_vals) <- rownames(info)
+      keep <- kegg_vals != "" & !is.na(kegg_vals)
+      map_sub <- kegg_mapping[
+        kegg_mapping$compound_id %in% kegg_vals[keep],
+        c("compound_id", "pathway_name")
+      ]
+      map_sub$pathway_name <- as.character(map_sub$pathway_name)
+      map_sub$compound_id <- as.character(map_sub$compound_id)
+      for (pid in unique(map_sub$pathway_name)) {
+        members <- map_sub$compound_id[map_sub$pathway_name == pid]
+        lv_features <- intersect(members, rownames(info))
+        lv_features <- lv_features[lv_features %in% rownames(info)]
+        if (length(lv_features) >= min_size) {
+          latent_def[[paste0(prefix_kegg, pid)]] <- lv_features
+        }
+      }
+    }
+  }
+
+  # ---- super_class grouping (single value per feature) ----
+  if (use_super_class && category_col %in% colnames(info)) {
+    sc_vals <- as.character(info[[category_col]])
+    names(sc_vals) <- rownames(info)
+    for (cat in unique(sc_vals)) {
+      if (is.na(cat) || cat == "") next
+      lv_features <- names(sc_vals)[sc_vals == cat]
+      lv_features <- lv_features[lv_features %in% rownames(info)]
+      if (length(lv_features) >= min_size) {
+        latent_def[[paste0(prefix_super, cat)]] <- lv_features
+      }
+    }
+  }
+
+  if (length(latent_def) == 0) {
+    warning("No latent variables built (all groups below min_size or no annotation).")
+  }
+  return(latent_def)
+}
+
+
 #'
 #' @export
 plot_plspm_network <- function(plspm_result, p_threshold = 0.05) {
