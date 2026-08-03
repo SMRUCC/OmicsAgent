@@ -94,27 +94,32 @@ run_cmeans <- function(expr_matrix, n_clusters = 6, m = 2,
 plot_cmeans_profiles <- function(cmeans_result, sample_info,
                                  group_col = "sample_info",
                                  feature_names = NULL) {
+  # Cluster centers: rows = clusters, cols = samples (z-scored expression)
   centers <- cmeans_result$centers
+  if (is.null(centers)) {
+    stop("cmeans_result$centers is NULL; cannot plot profiles.")
+  }
 
-  # Prepare data for plotting
-  plot_data <- data.frame(
-    sample_id = colnames(centers),
-    t(centers),
+  # Build a tidy data frame: one row per (cluster, sample)
+  # centers has samples as columns -> pivot to long format robustly
+  cluster_names <- rownames(centers)
+  sample_ids <- colnames(centers)
+
+  # Matrix of centers (clusters x samples) -> long data frame
+  centers_mat <- as.matrix(centers)
+  plot_data_long <- data.frame(
+    cluster = rep(cluster_names, each = length(sample_ids)),
+    sample_id = rep(sample_ids, times = nrow(centers_mat)),
+    value = as.numeric(t(centers_mat)),
     stringsAsFactors = FALSE
   )
 
-  # Add group
-  plot_data$group <- sample_info[plot_data$sample_id, group_col]
+  # Add group label from sample metadata
+  plot_data_long$group <- sample_info[plot_data_long$sample_id, group_col]
 
-  # Melt
-  plot_data_long <- stats::reshape(plot_data,
-                                    direction = "long",
-                                    varying = 1:nrow(centers),
-                                    v.names = "value",
-                                    timevar = "cluster",
-                                    times = rownames(centers))
+  # Ensure cluster is an ordered factor for consistent faceting
   plot_data_long$cluster <- factor(plot_data_long$cluster,
-                                    levels = rownames(centers))
+                                    levels = cluster_names)
 
   p <- ggplot2::ggplot(plot_data_long,
                        ggplot2::aes(x = group, y = value,
@@ -125,7 +130,7 @@ plot_cmeans_profiles <- function(cmeans_result, sample_info,
     ggplot2::labs(
       title = "CMeans Cluster Profiles",
       x = "Group",
-      y = "Expression (scaled)",
+      y = "Expression (z-score)",
       color = "Cluster"
     ) +
     ggplot2::theme_bw() +
@@ -137,4 +142,52 @@ plot_cmeans_profiles <- function(cmeans_result, sample_info,
     ggplot2::scale_color_discrete(guide = "none")
 
   return(p)
+}
+
+
+#' Export CMeans membership table to CSV
+#'
+#' @description Exports the fuzzy c-means clustering result as a CSV file.
+#'   The output has one row per feature and one column per cluster
+#'   (membership degree / 归属度), plus an additional \code{cluster} column
+#'   recording the hard cluster assignment (the cluster with the highest
+#'   membership for each feature).
+#'
+#' @param cmeans_result Result from \code{run_cmeans()}.
+#' @param output_dir Directory for output.
+#' @param filename Base filename (without extension). Default: "cmeans_membership".
+#' @param id_col_name Name for the feature-id column. Default: "feature_id".
+#'
+#' @return Invisible path to the exported CSV file.
+#'
+#' @examples
+#' \dontrun{
+#' export_cmeans_membership(cm, "results/tables", "cmeans_membership")
+#' }
+#'
+#' @export
+export_cmeans_membership <- function(cmeans_result, output_dir = ".",
+                                      filename = "cmeans_membership",
+                                      id_col_name = "feature_id") {
+  membership <- cmeans_result$membership
+  if (is.null(membership)) {
+    stop("cmeans_result$membership is NULL; nothing to export.")
+  }
+
+  # Build data frame: feature rows, cluster-membership columns
+  out <- as.data.frame(membership)
+  out[[id_col_name]] <- rownames(membership)
+  out$cluster <- cmeans_result$cluster
+
+  # Reorder so feature id and hard-assignment columns come first,
+  # then the per-cluster membership columns
+  member_cols <- setdiff(colnames(out), c(id_col_name, "cluster"))
+  out <- out[, c(id_col_name, member_cols, "cluster")]
+
+  if (!dir.exists(output_dir)) dir.create(output_dir, recursive = TRUE)
+  if (!grepl("\\.csv$", filename)) filename <- paste0(filename, ".csv")
+  file_path <- file.path(output_dir, filename)
+  utils::write.csv(out, file_path, row.names = FALSE)
+
+  invisible(file_path)
 }

@@ -398,6 +398,12 @@ cmeans_plot <- plot_cmeans_profiles(cmeans_result, sample_info,
                                     group_col="sample_info")
 export_plot(cmeans_plot, fig_dir, "cmeans_profiles")
 
+# Export fuzzy c-means membership table (features x cluster 归属度 + 最终 cluster)
+cmeans_csv <- export_cmeans_membership(cmeans_result, tab_dir,
+                                       filename="cmeans_membership",
+                                       id_col_name="feature_id")
+cat("  CMeans membership exported:", cmeans_csv, "\n")
+
 # ==============================================================================
 # Step 19: WGCNA (if available)
 # ==============================================================================
