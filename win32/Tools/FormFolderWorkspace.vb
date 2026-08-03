@@ -28,13 +28,14 @@ Public Class FormFolderWorkspace
             Dim fsNode As FileSystemTree = DirectCast(node.Tag, FileSystemTree)
 
             Select Case fsNode.FullName.ExtensionSuffix
-                Case "csv"
+                Case "csv", "tsv"
 
                 Case "xlsx"
                 Case "bmp", "jpg", "jpeg", "png", "gif", "tiff"
+                Case "svg"
                 Case "pdf"
-                Case "txt"
-                Case "json"
+                Case "txt", "log"
+                Case "json", "jsonl"
                 Case "xml"
                 Case "html"
                 Case "md"
