@@ -11,6 +11,7 @@ Module RibbonMenu
 
         AddHandler ribbon.ButtonOpenResearch.ExecuteEvent, Sub() Call OpenResearch()
         AddHandler ribbon.ButtonOpenFolder.ExecuteEvent, Sub() Call OpenFolder()
+        AddHandler ribbon.ButtonExit.ExecuteEvent, Sub() Call DirectCast(CommonRuntime.AppHost, Form).Close()
     End Sub
 
     Public Sub OpenFolder()
