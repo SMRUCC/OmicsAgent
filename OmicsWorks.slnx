@@ -83,6 +83,9 @@
     <Project Path="../LLMs/src/Ollama/Ollama.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
+    <Project Path="../LLMs/src/WebView2UI/WebView2UI.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
     <Project Path="../pubchem_kb/src/Researcher/Researcher.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
