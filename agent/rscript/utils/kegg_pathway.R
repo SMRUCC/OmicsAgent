@@ -386,7 +386,7 @@ run_kegg_pathway_gsva <- function(expr_matrix, kegg_mapping,
   } else {
     # Fallback: mean z-score per pathway
     if (!use_gsva) {
-      warning("Package 'GSVA' not available. Using mean z-score per pathway.")
+      warning("Package 'GSVA' not available or method not one of c('gsva', 'ssgsea'). Using mean z-score per pathway.")
     }
 
     gsva_matrix <- matrix(NA, nrow = length(pathways), ncol = ncol(expr_matrix))

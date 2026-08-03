@@ -75,8 +75,7 @@ cat(sprintf("[scan] 共发现 %d 个 R 脚本文件。\n", length(all_r_files)))
 # -----------------------------------------------------------------------------
 # 需要排除的文件名（不含路径，大小写不敏感）
 exclude_names <- c(
-  "source_all_scripts.R",
-  "install_packages.R"
+  "source_all_scripts.R"
 )
 
 to_exclude <- function(rel_path) {
