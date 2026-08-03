@@ -1,0 +1,12 @@
+"from","to","strength","direction","from_feature","to_feature","from_label","to_label","lag","self_loop"
+"geraniol_synthase_t0","phenylpropanoate_ester_synthase_t1",0.866666666666667,1,"geraniol_synthase","phenylpropanoate_ester_synthase","geraniol_synthase","phenylpropanoate_ester_synthase",1,FALSE
+"geraniol_synthase_t0","Protein_989_t1",0.866666666666667,1,"geraniol_synthase","Protein_989","geraniol_synthase","Protein_989",1,FALSE
+"farnesyl_diphosphatase_t0","acetolactate_decarboxylase_t1",0.633333333333333,1,"farnesyl_diphosphatase","acetolactate_decarboxylase","farnesyl_diphosphatase","α-acetolactate_decarboxylase",1,FALSE
+"tyrosine_ammonia_lyase_t0","Gene_727_t1",0.6,1,"tyrosine_ammonia_lyase","Gene_727","tyrosine_ammonia-lyase","Gene_727",1,FALSE
+"pyruvate_ester_synthase_t0","tyrosine_ammonia_lyase_t1",0.533333333333333,1,"pyruvate_ester_synthase","tyrosine_ammonia_lyase","pyruvate_ester_synthase","tyrosine_ammonia-lyase",1,FALSE
+"geraniol_synthase_t0","ketone_synthesis_t1",0.5,1,"geraniol_synthase","ketone_synthesis","geraniol_synthase","ketone_synthesis",1,FALSE
+"geraniol_synthase_t0","DHD_t1",0.483333333333333,1,"geraniol_synthase","DHD","geraniol_synthase","DHD",1,FALSE
+"farnesyl_diphosphatase_t0","pyruvate_ester_synthase_t1",0.466666666666667,1,"farnesyl_diphosphatase","pyruvate_ester_synthase","farnesyl_diphosphatase","pyruvate_ester_synthase",1,FALSE
+"phenylpropanoate_ester_synthase_t0","Protein_902_t1",0.45,1,"phenylpropanoate_ester_synthase","Protein_902","phenylpropanoate_ester_synthase","Protein_902",1,FALSE
+"farnesyl_diphosphatase_t0","DHAR_t1",0.45,1,"farnesyl_diphosphatase","DHAR","farnesyl_diphosphatase","DHAR",1,FALSE
+"geraniol_synthase_t0","ADS_t1",0.4,1,"geraniol_synthase","ADS","geraniol_synthase","ADS",1,FALSE

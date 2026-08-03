@@ -1,0 +1,4 @@
+"from","to","strength","direction","from_feature","to_feature","from_label","to_label","lag","self_loop"
+"F_2_Furfuryl_alcohol_t0","F_2_Acetylfuran_t1",0.5,1,"F_2_Furfuryl_alcohol","F_2_Acetylfuran","2-Furfuryl alcohol","2-Acetylfuran",1,FALSE
+"F_2_Furfuryl_alcohol_t0","Methional_3_Methylthio_propanal_t1",0.5,1,"F_2_Furfuryl_alcohol","Methional_3_Methylthio_propanal","2-Furfuryl alcohol","Methional (3-(Methylthio)propanal)",1,FALSE
+"F_2_Furfuryl_alcohol_t0","F_2_Furfuryl_alcohol_t1",0.483333333333333,1,"F_2_Furfuryl_alcohol","F_2_Furfuryl_alcohol","2-Furfuryl alcohol","2-Furfuryl alcohol",1,TRUE

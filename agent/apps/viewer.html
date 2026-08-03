@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>文件查看器 · File Viewer</title>
+
+    <!-- Markdown 渲染（CDN，锁定版本；离线时 viewer.js 自动降级为纯文本） -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"
+        onerror="window.__markedFailed = true;"></script>
+    <!-- PDF 渲染（CDN，锁定版本；离线时 viewer.js 自动降级为内嵌 / 下载） -->
+    <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"
+        onerror="window.__pdfjsFailed = true;"></script>
+
+    <!-- 设计令牌基准：必须在 viewer.css 之前引入 -->
+    <link href="styles/kb.css" rel="stylesheet">
+    <link href="styles/viewer.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app app--viewer">
+        <!-- ============ 顶栏（宿主会将其 display:none） ============ -->
+        <header class="topbar" id="topbar">
+            <div class="brand">
+                <div class="logo">
+                    <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <h1 id="fileName">文件查看器</h1>
+                    <div class="topic" id="filePath">尚未选择文件</div>
+                </div>
+                <span class="file-badge" id="fileBadge" hidden></span>
+            </div>
+
+            <div class="spacer"></div>
+
+            <button class="btn" id="themeBtn" title="切换主题">
+                <span id="themeIcon">🌙</span><span id="themeLabel">暗色</span>
+            </button>
+        </header>
+
+        <!-- ============ 内容区 ============ -->
+        <main class="content" id="content">
+            <!-- 格式专属工具栏：由 viewer.js 按渲染器动态填充 -->
+            <div class="viewer-toolbar" id="toolbar" hidden></div>
+
+            <!-- 视图挂载点 -->
+            <div class="viewer-stage" id="stage">
+                <div class="empty">
+                    <div class="big">📂</div>
+                    <div>请从左侧文件树中选择一个文件</div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/viewer.js" type="text/javascript"></script>
+</body>
+
+</html>

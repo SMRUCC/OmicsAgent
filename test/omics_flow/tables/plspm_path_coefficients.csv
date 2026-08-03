@@ -1,0 +1,307 @@
+"from","to","path_coeff","p_value"
+"SC:Organic oxygen compounds","SC:NULL",-5.63423077375833,0.00184780980880417
+"SC:Organic oxygen compounds","SC:Organic acids",-1.20878694780753,0.124506733973329
+"SC:Organic oxygen compounds","SC:Benzenoids",-1.50861640392329,4.05479536834342e-05
+"SC:Organic oxygen compounds","SC:Alkaloids",-0.8491944311592,0.0993146068258075
+"SC:Organic oxygen compounds","SC:Organoheterocyclic compounds",-0.890872314931151,0.0471558310270049
+"SC:Organic oxygen compounds","SC:Polyketides",-1.09613275706958,0.000864401734612269
+"SC:Organic oxygen compounds","SC:Fatty Acyls",-1.76470647162541,0.00461532828011721
+"SC:Organic oxygen compounds","SC:Carbohydrates",0.766334476662194,0.00523630709784519
+"SC:Organic oxygen compounds","SC:Nucleic acids",0.531222703574551,0.102378000954215
+"SC:Organic oxygen compounds","SC:Organic nitrogen compounds",0.677422579288092,0.000680295535104238
+"SC:Organic oxygen compounds","SC:Sterol Lipids",-0.880755982317582,0.0934833250964602
+"SC:Organic oxygen compounds","SC:Prenol Lipids",0.405830286503864,0.273247373960841
+"SC:Organic oxygen compounds","SC:Sphingolipids",0.746089387309368,0.00021434430094215
+"SC:Organic oxygen compounds","SC:Glycerophospholipids",0.0867878396500369,0.787215876969978
+"SC:Organic oxygen compounds","SC:Organohalogen compounds",-0.143871552213673,0.15489255525019
+"SC:Organic oxygen compounds","SC:Lignans",0.224390490143788,0.101728899061357
+"SC:Organic oxygen compounds","SC:Organosulfur compounds",-0.257338444870673,0.0147751126671419
+"SC:NULL","SC:Organic oxygen compounds",-0.0824005709494982,0.00184780980880417
+"SC:NULL","SC:Organic acids",0.353796708518686,1.75641343410934e-07
+"SC:NULL","SC:Benzenoids",0.215931690493778,1.71233689105643e-10
+"SC:NULL","SC:Alkaloids",0.233897531588854,1.27771965577152e-07
+"SC:NULL","SC:Organoheterocyclic compounds",0.214713884045232,4.25898108668668e-09
+"SC:NULL","SC:Polyketides",0.167475594334455,2.98082890036645e-07
+"SC:NULL","SC:Fatty Acyls",0.319728715911432,1.28117404623884e-09
+"SC:NULL","SC:Carbohydrates",-0.144874116297504,4.99788457633245e-13
+"SC:NULL","SC:Nucleic acids",-0.142079719948965,1.56261756256415e-06
+"SC:NULL","SC:Organic nitrogen compounds",-0.0376595325701041,0.177153374255664
+"SC:NULL","SC:Sterol Lipids",0.231696036547784,1.00836430538199e-06
+"SC:NULL","SC:Prenol Lipids",-0.127209996909206,0.00102682775327647
+"SC:NULL","SC:Sphingolipids",-0.0803349702776933,0.00184413108549321
+"SC:NULL","SC:Glycerophospholipids",0.0113931311272208,0.769466506353428
+"SC:NULL","SC:Organohalogen compounds",0.0277756258407166,0.0160540776450991
+"SC:NULL","SC:Lignans",0.00101530556763472,0.953214566634479
+"SC:NULL","SC:Organosulfur compounds",0.0412466143340305,0.000362810635041835
+"SC:Organic acids","SC:Organic oxygen compounds",-0.116724660296381,0.124506733973328
+"SC:Organic acids","SC:NULL",2.33599040941015,1.75641343410933e-07
+"SC:Organic acids","SC:Benzenoids",0.46033828561203,7.0689595576747e-05
+"SC:Organic acids","SC:Alkaloids",0.654659309709344,5.91081660596725e-17
+"SC:Organic acids","SC:Organoheterocyclic compounds",0.577984152643947,1.37534408813197e-14
+"SC:Organic acids","SC:Polyketides",0.345802672917812,0.000658290097166897
+"SC:Organic acids","SC:Fatty Acyls",0.714195107516159,2.27695403280945e-05
+"SC:Organic acids","SC:Carbohydrates",-0.35925302176359,2.35759479991025e-09
+"SC:Organic acids","SC:Nucleic acids",-0.397423463805557,5.18063336160638e-10
+"SC:Organic acids","SC:Organic nitrogen compounds",-0.00302872862975353,0.967276341527005
+"SC:Organic acids","SC:Sterol Lipids",0.641286308970053,8.46637415382978e-10
+"SC:Organic acids","SC:Prenol Lipids",-0.390719730607543,9.9462860561115e-06
+"SC:Organic acids","SC:Sphingolipids",-0.121122104042011,0.100160452316381
+"SC:Organic acids","SC:Glycerophospholipids",0.100688151684371,0.305966879025105
+"SC:Organic acids","SC:Organohalogen compounds",0.0534387003620767,0.0843353375617891
+"SC:Organic acids","SC:Lignans",0.0408121322431074,0.352023131976051
+"SC:Organic acids","SC:Organosulfur compounds",0.083072339441475,0.0106197002526301
+"SC:Benzenoids","SC:Organic oxygen compounds",-0.438461398929739,4.05479536834343e-05
+"SC:Benzenoids","SC:NULL",4.29114643176166,1.71233689105643e-10
+"SC:Benzenoids","SC:Organic acids",1.38553269578129,7.06895955767471e-05
+"SC:Benzenoids","SC:Alkaloids",0.916895129465603,6.09738384761405e-05
+"SC:Benzenoids","SC:Organoheterocyclic compounds",0.864074224761839,7.23285702278783e-06
+"SC:Benzenoids","SC:Polyketides",0.782478306095641,3.05438831205473e-09
+"SC:Benzenoids","SC:Fatty Acyls",1.39177455652054,2.51108402005685e-08
+"SC:Benzenoids","SC:Carbohydrates",-0.60607656338633,5.57202027137897e-08
+"SC:Benzenoids","SC:Nucleic acids",-0.567837491545825,0.000102496898246335
+"SC:Benzenoids","SC:Organic nitrogen compounds",-0.211249253754697,0.0836545470443211
+"SC:Benzenoids","SC:Sterol Lipids",0.909218522234595,0.000135638560417725
+"SC:Benzenoids","SC:Prenol Lipids",-0.447372429895876,0.0161088663294198
+"SC:Benzenoids","SC:Sphingolipids",-0.417759759304724,8.07298554910389e-05
+"SC:Benzenoids","SC:Glycerophospholipids",-0.0368165028254478,0.831869417371275
+"SC:Benzenoids","SC:Organohalogen compounds",0.122309872974898,0.0176830124004688
+"SC:Benzenoids","SC:Lignans",-0.0123487574917253,0.872778309278711
+"SC:Benzenoids","SC:Organosulfur compounds",0.195169989938145,8.5243810430165e-05
+"SC:Alkaloids","SC:Organic oxygen compounds",-0.189138272599266,0.0993146068258075
+"SC:Alkaloids","SC:NULL",3.56206901652453,1.27771965577152e-07
+"SC:Alkaloids","SC:Organic acids",1.50999243781634,5.91081660596729e-17
+"SC:Alkaloids","SC:Benzenoids",0.702650576833504,6.09738384761402e-05
+"SC:Alkaloids","SC:Organoheterocyclic compounds",0.877556268489326,1.66270494671824e-14
+"SC:Alkaloids","SC:Polyketides",0.522417526840589,0.000725333626446684
+"SC:Alkaloids","SC:Fatty Acyls",1.08247715963316,2.44554725706878e-05
+"SC:Alkaloids","SC:Carbohydrates",-0.546220883451365,2.00577327420042e-09
+"SC:Alkaloids","SC:Nucleic acids",-0.599244665191189,1.65704708225086e-09
+"SC:Alkaloids","SC:Organic nitrogen compounds",-0.0101003679285562,0.928214144512033
+"SC:Alkaloids","SC:Sterol Lipids",0.974028100857741,8.34027768706261e-10
+"SC:Alkaloids","SC:Prenol Lipids",-0.603937568720964,4.61322168420046e-06
+"SC:Alkaloids","SC:Sphingolipids",-0.180654369473519,0.106971962011669
+"SC:Alkaloids","SC:Glycerophospholipids",0.164088342195528,0.270718257780316
+"SC:Alkaloids","SC:Organohalogen compounds",0.0783743263762912,0.0966931979202845
+"SC:Alkaloids","SC:Lignans",0.0573645827120853,0.39002350949979
+"SC:Alkaloids","SC:Organosulfur compounds",0.128229692443607,0.0091239918564085
+"SC:Organoheterocyclic compounds","SC:Organic oxygen compounds",-0.251678179060416,0.0471558310270049
+"SC:Organoheterocyclic compounds","SC:NULL",4.14757873203097,4.2589810866867e-09
+"SC:Organoheterocyclic compounds","SC:Organic acids",1.69095937728451,1.37534408813198e-14
+"SC:Organoheterocyclic compounds","SC:Benzenoids",0.839901991745066,7.23285702278783e-06
+"SC:Organoheterocyclic compounds","SC:Alkaloids",1.11309643602603,1.66270494671824e-14
+"SC:Organoheterocyclic compounds","SC:Polyketides",0.624715268788271,0.000209754358674653
+"SC:Organoheterocyclic compounds","SC:Fatty Acyls",1.26662625480505,5.32294241486572e-06
+"SC:Organoheterocyclic compounds","SC:Carbohydrates",-0.629511624319855,2.31820248098705e-11
+"SC:Organoheterocyclic compounds","SC:Nucleic acids",-0.672371680509813,2.83680276573059e-09
+"SC:Organoheterocyclic compounds","SC:Organic nitrogen compounds",-0.0507557958758562,0.686958188363056
+"SC:Organoheterocyclic compounds","SC:Sterol Lipids",1.11576419777768,2.56055025380565e-11
+"SC:Organoheterocyclic compounds","SC:Prenol Lipids",-0.671943744938894,7.92837609199389e-06
+"SC:Organoheterocyclic compounds","SC:Sphingolipids",-0.241538940755331,0.0511734868478349
+"SC:Organoheterocyclic compounds","SC:Glycerophospholipids",0.159293938636946,0.344906969049027
+"SC:Organoheterocyclic compounds","SC:Organohalogen compounds",0.0985638940942104,0.0604931683167969
+"SC:Organoheterocyclic compounds","SC:Lignans",0.0509184813404363,0.500074488586426
+"SC:Organoheterocyclic compounds","SC:Organosulfur compounds",0.150236394368169,0.00611198903812361
+"SC:Polyketides","SC:Organic oxygen compounds",-0.465671164095441,0.000864401734612268
+"SC:Polyketides","SC:NULL",4.86487994728537,2.98082890036647e-07
+"SC:Polyketides","SC:Organic acids",1.52135889645515,0.000658290097166897
+"SC:Polyketides","SC:Benzenoids",1.14376276905327,3.05438831205472e-09
+"SC:Polyketides","SC:Alkaloids",0.99646407831111,0.000725333626446682
+"SC:Polyketides","SC:Organoheterocyclic compounds",0.939438187202789,0.000209754358674653
+"SC:Polyketides","SC:Fatty Acyls",1.72916998420157,7.37198326726669e-10
+"SC:Polyketides","SC:Carbohydrates",-0.669118886131828,1.19655602066299e-05
+"SC:Polyketides","SC:Nucleic acids",-0.605332297457249,0.00136995535100145
+"SC:Polyketides","SC:Organic nitrogen compounds",-0.183278795302192,0.225585291561676
+"SC:Polyketides","SC:Sterol Lipids",0.957919145846112,0.00192257663610478
+"SC:Polyketides","SC:Prenol Lipids",-0.356037499359355,0.13375190701505
+"SC:Polyketides","SC:Sphingolipids",-0.545763345658115,5.00536031201936e-06
+"SC:Polyketides","SC:Glycerophospholipids",-0.255818251747209,0.211197222934837
+"SC:Polyketides","SC:Organohalogen compounds",0.175811040603535,0.0031379808386201
+"SC:Polyketides","SC:Lignans",0.0264846600394966,0.776168114006927
+"SC:Polyketides","SC:Organosulfur compounds",0.24562223867143,2.42111130713115e-05
+"SC:Fatty Acyls","SC:Organic oxygen compounds",-0.228663609450509,0.0046153282801172
+"SC:Fatty Acyls","SC:NULL",2.83276553633735,1.28117404623885e-09
+"SC:Fatty Acyls","SC:Organic acids",0.9583598044725,2.27695403280945e-05
+"SC:Fatty Acyls","SC:Benzenoids",0.620498776472442,2.51108402005684e-08
+"SC:Fatty Acyls","SC:Alkaloids",0.62975414812556,2.44554725706878e-05
+"SC:Fatty Acyls","SC:Organoheterocyclic compounds",0.580955626075088,5.32294241486573e-06
+"SC:Fatty Acyls","SC:Polyketides",0.5274072251836,7.37198326726664e-10
+"SC:Fatty Acyls","SC:Carbohydrates",-0.401050289388834,1.21087082725801e-07
+"SC:Fatty Acyls","SC:Nucleic acids",-0.376401873825731,0.000124353567699458
+"SC:Fatty Acyls","SC:Organic nitrogen compounds",-0.0800901621732325,0.342007103943866
+"SC:Fatty Acyls","SC:Sterol Lipids",0.60233545517322,0.000165340524784368
+"SC:Fatty Acyls","SC:Prenol Lipids",-0.270733051741161,0.0322589588140911
+"SC:Fatty Acyls","SC:Sphingolipids",-0.276920442012492,9.88014249156365e-05
+"SC:Fatty Acyls","SC:Glycerophospholipids",-0.0905991305769654,0.429648866238828
+"SC:Fatty Acyls","SC:Organohalogen compounds",0.105165163658455,0.000960925263716697
+"SC:Fatty Acyls","SC:Lignans",0.0193158909594673,0.707042681865013
+"SC:Fatty Acyls","SC:Organosulfur compounds",0.122562867369748,0.000376106308136851
+"SC:Carbohydrates","SC:Organic oxygen compounds",0.515049336084635,0.00523630709784518
+"SC:Carbohydrates","SC:NULL",-6.65772231805811,4.99788457633245e-13
+"SC:Carbohydrates","SC:Organic acids",-2.50044922617827,2.35759479991025e-09
+"SC:Carbohydrates","SC:Benzenoids",-1.40153974542048,5.57202027137895e-08
+"SC:Carbohydrates","SC:Alkaloids",-1.64826291257328,2.00577327420042e-09
+"SC:Carbohydrates","SC:Organoheterocyclic compounds",-1.4976285857249,2.31820248098705e-11
+"SC:Carbohydrates","SC:Polyketides",-1.05856508656709,1.19655602066299e-05
+"SC:Carbohydrates","SC:Fatty Acyls",-2.08019824227139,1.210870827258e-07
+"SC:Carbohydrates","SC:Nucleic acids",0.996164771449514,1.74212293687858e-07
+"SC:Carbohydrates","SC:Organic nitrogen compounds",0.192874889241892,0.314157714983401
+"SC:Carbohydrates","SC:Sterol Lipids",-1.62390199038519,9.67966180890667e-08
+"SC:Carbohydrates","SC:Prenol Lipids",0.942768562448088,0.00016748278322578
+"SC:Carbohydrates","SC:Sphingolipids",0.469511028786266,0.0103527407828566
+"SC:Carbohydrates","SC:Glycerophospholipids",-0.156880462626755,0.54989526411732
+"SC:Carbohydrates","SC:Organohalogen compounds",-0.177259870846556,0.0251024065263866
+"SC:Carbohydrates","SC:Lignans",-0.0123322613027043,0.91626783109196
+"SC:Carbohydrates","SC:Organosulfur compounds",-0.250051385108879,0.00242439350664178
+"SC:Nucleic acids","SC:Organic oxygen compounds",0.297414126122264,0.102378000954215
+"SC:Nucleic acids","SC:NULL",-5.43903016244346,1.56261756256415e-06
+"SC:Nucleic acids","SC:Organic acids",-2.3042288602292,5.18063336160637e-10
+"SC:Nucleic acids","SC:Benzenoids",-1.09384676914408,0.000102496898246335
+"SC:Nucleic acids","SC:Alkaloids",-1.50631867332503,1.65704708225086e-09
+"SC:Nucleic acids","SC:Organoheterocyclic compounds",-1.33249097833735,2.8368027657306e-09
+"SC:Nucleic acids","SC:Polyketides",-0.79774230063324,0.00136995535100145
+"SC:Nucleic acids","SC:Fatty Acyls",-1.62634307565353,0.000124353567699458
+"SC:Nucleic acids","SC:Carbohydrates",0.829823398320605,1.74212293687858e-07
+"SC:Nucleic acids","SC:Organic nitrogen compounds",0.0190426470676817,0.914679519398076
+"SC:Nucleic acids","SC:Sterol Lipids",-1.49097676342984,5.75682870471004e-08
+"SC:Nucleic acids","SC:Prenol Lipids",0.905541911712712,3.97957286527776e-05
+"SC:Nucleic acids","SC:Sphingolipids",0.299386288197842,0.0906583309716617
+"SC:Nucleic acids","SC:Glycerophospholipids",-0.316698909003272,0.175699439569215
+"SC:Nucleic acids","SC:Organohalogen compounds",-0.0998825700575704,0.188984836759945
+"SC:Nucleic acids","SC:Lignans",-0.0800506598405616,0.450544796207344
+"SC:Nucleic acids","SC:Organosulfur compounds",-0.193736353379682,0.0140423034452426
+"SC:Organic nitrogen compounds","SC:Organic oxygen compounds",0.773852563474538,0.000680295535104237
+"SC:Organic nitrogen compounds","SC:NULL",-2.94156123234405,0.177153374255664
+"SC:Organic nitrogen compounds","SC:Organic acids",-0.0358299385720265,0.967276341527005
+"SC:Organic nitrogen compounds","SC:Benzenoids",-0.830311783821493,0.0836545470443212
+"SC:Organic nitrogen compounds","SC:Alkaloids",-0.0518040210165469,0.928214144512033
+"SC:Organic nitrogen compounds","SC:Organoheterocyclic compounds",-0.205236263506154,0.686958188363056
+"SC:Organic nitrogen compounds","SC:Polyketides",-0.492827109713439,0.225585291561676
+"SC:Organic nitrogen compounds","SC:Fatty Acyls",-0.706078771321378,0.342007103943866
+"SC:Organic nitrogen compounds","SC:Carbohydrates",0.327826290855451,0.314157714983401
+"SC:Organic nitrogen compounds","SC:Nucleic acids",0.038854463041361,0.914679519398075
+"SC:Organic nitrogen compounds","SC:Sterol Lipids",-0.225344213930429,0.700376232628013
+"SC:Organic nitrogen compounds","SC:Prenol Lipids",0.209693829295802,0.601795872786849
+"SC:Organic nitrogen compounds","SC:Sphingolipids",0.480418253963034,0.0541024404675724
+"SC:Organic nitrogen compounds","SC:Glycerophospholipids",-0.212134981203442,0.534974896395468
+"SC:Organic nitrogen compounds","SC:Organohalogen compounds",-0.0322155583332608,0.772663867791938
+"SC:Organic nitrogen compounds","SC:Lignans",0.388618782866657,0.00383466929773948
+"SC:Organic nitrogen compounds","SC:Organosulfur compounds",-0.129745831012027,0.285936445597455
+"SC:Sterol Lipids","SC:Organic oxygen compounds",-0.188286873129751,0.0934833250964602
+"SC:Sterol Lipids","SC:NULL",3.38678366677338,1.00836430538199e-06
+"SC:Sterol Lipids","SC:Organic acids",1.41972278676866,8.46637415382974e-10
+"SC:Sterol Lipids","SC:Benzenoids",0.668775225466081,0.000135638560417726
+"SC:Sterol Lipids","SC:Alkaloids",0.934896743886612,8.34027768706264e-10
+"SC:Sterol Lipids","SC:Organoheterocyclic compounds",0.844319390020752,2.56055025380567e-11
+"SC:Sterol Lipids","SC:Polyketides",0.482033371437887,0.00192257663610478
+"SC:Sterol Lipids","SC:Fatty Acyls",0.993752634575315,0.000165340524784368
+"SC:Sterol Lipids","SC:Carbohydrates",-0.516527904427065,9.67966180890667e-08
+"SC:Sterol Lipids","SC:Nucleic acids",-0.569312018685831,5.75682870471005e-08
+"SC:Sterol Lipids","SC:Organic nitrogen compounds",-0.0421708442289868,0.700376232628013
+"SC:Sterol Lipids","SC:Prenol Lipids",-0.613729050641038,6.34280667351316e-07
+"SC:Sterol Lipids","SC:Sphingolipids",-0.17843134794215,0.103889225200139
+"SC:Sterol Lipids","SC:Glycerophospholipids",0.190938355547176,0.187093680240828
+"SC:Sterol Lipids","SC:Organohalogen compounds",0.0687125152367668,0.140827227230738
+"SC:Sterol Lipids","SC:Lignans",0.0434936584786381,0.50796189019532
+"SC:Sterol Lipids","SC:Organosulfur compounds",0.123582415105482,0.0106365858888896
+"SC:Prenol Lipids","SC:Organic oxygen compounds",0.183496648587756,0.273247373960841
+"SC:Prenol Lipids","SC:NULL",-3.93286767598369,0.00102682775327647
+"SC:Prenol Lipids","SC:Organic acids",-1.82951581519499,9.9462860561115e-06
+"SC:Prenol Lipids","SC:Benzenoids",-0.695985768021671,0.0161088663294198
+"SC:Prenol Lipids","SC:Alkaloids",-1.22603663503813,4.61322168420043e-06
+"SC:Prenol Lipids","SC:Organoheterocyclic compounds",-1.07544077164646,7.92837609199391e-06
+"SC:Prenol Lipids","SC:Polyketides",-0.37893370377784,0.13375190701505
+"SC:Prenol Lipids","SC:Fatty Acyls",-0.944714072184621,0.0322589588140912
+"SC:Prenol Lipids","SC:Carbohydrates",0.634246832385359,0.00016748278322578
+"SC:Prenol Lipids","SC:Nucleic acids",0.731319701707025,3.97957286527774e-05
+"SC:Prenol Lipids","SC:Organic nitrogen compounds",0.0829986015693586,0.601795872786849
+"SC:Prenol Lipids","SC:Sterol Lipids",-1.29806344975656,6.34280667351316e-07
+"SC:Prenol Lipids","SC:Sphingolipids",0.042958856525018,0.796120649322925
+"SC:Prenol Lipids","SC:Glycerophospholipids",-0.573497928848883,0.0022158144663783
+"SC:Prenol Lipids","SC:Organohalogen compounds",-0.0141964179251943,0.839750981662788
+"SC:Prenol Lipids","SC:Lignans",-0.0323384814939315,0.736355610490302
+"SC:Prenol Lipids","SC:Organosulfur compounds",-0.102149495316105,0.177018576198628
+"SC:Sphingolipids","SC:Organic oxygen compounds",0.785163221161984,0.00021434430094215
+"SC:Sphingolipids","SC:NULL",-5.78066941203508,0.00184413108549321
+"SC:Sphingolipids","SC:Organic acids",-1.32001733733709,0.100160452316382
+"SC:Sphingolipids","SC:Benzenoids",-1.51266636567432,8.07298554910392e-05
+"SC:Sphingolipids","SC:Alkaloids",-0.853582052665191,0.106971962011668
+"SC:Sphingolipids","SC:Organoheterocyclic compounds",-0.899758882611804,0.0511734868478349
+"SC:Sphingolipids","SC:Polyketides",-1.35193951109172,5.00536031201932e-06
+"SC:Sphingolipids","SC:Fatty Acyls",-2.24905214900819,9.88014249156365e-05
+"SC:Sphingolipids","SC:Carbohydrates",0.735164312513275,0.0103527407828566
+"SC:Sphingolipids","SC:Nucleic acids",0.562750678334415,0.0906583309716617
+"SC:Sphingolipids","SC:Organic nitrogen compounds",0.442578210667709,0.0541024404675725
+"SC:Sphingolipids","SC:Sterol Lipids",-0.878366573982743,0.103889225200139
+"SC:Sphingolipids","SC:Prenol Lipids",0.099985751803963,0.796120649322924
+"SC:Sphingolipids","SC:Glycerophospholipids",0.591945549120894,0.0576768222253705
+"SC:Sphingolipids","SC:Organohalogen compounds",-0.249564595480928,0.00975352998720183
+"SC:Sphingolipids","SC:Lignans",0.0456716239377599,0.755347813420143
+"SC:Sphingolipids","SC:Organosulfur compounds",-0.300936763641631,0.00400358521074453
+"SC:Glycerophospholipids","SC:Organic oxygen compounds",0.0540074506112857,0.787215876969978
+"SC:Glycerophospholipids","SC:NULL",0.484777333531824,0.769466506353428
+"SC:Glycerophospholipids","SC:Organic acids",0.648873908258389,0.305966879025105
+"SC:Glycerophospholipids","SC:Benzenoids",-0.0788287777059417,0.831869417371274
+"SC:Glycerophospholipids","SC:Alkaloids",0.458458728663934,0.270718257780316
+"SC:Glycerophospholipids","SC:Organoheterocyclic compounds",0.350884310557132,0.344906969049028
+"SC:Glycerophospholipids","SC:Polyketides",-0.374722815580499,0.211197222934838
+"SC:Glycerophospholipids","SC:Fatty Acyls",-0.435105179444586,0.429648866238828
+"SC:Glycerophospholipids","SC:Carbohydrates",-0.145255703279381,0.54989526411732
+"SC:Glycerophospholipids","SC:Nucleic acids",-0.352011135523605,0.175699439569215
+"SC:Glycerophospholipids","SC:Organic nitrogen compounds",-0.115560265679934,0.534974896395468
+"SC:Glycerophospholipids","SC:Sterol Lipids",0.555806390232101,0.187093680240827
+"SC:Glycerophospholipids","SC:Prenol Lipids",-0.789301578027461,0.0022158144663783
+"SC:Glycerophospholipids","SC:Sphingolipids",0.350031777224852,0.0576768222253705
+"SC:Glycerophospholipids","SC:Organohalogen compounds",-0.18139778701044,0.0159011829680179
+"SC:Glycerophospholipids","SC:Lignans",-0.0546416727220531,0.627049390676728
+"SC:Glycerophospholipids","SC:Organosulfur compounds",-0.0690510275135535,0.445708262189623
+"SC:Organohalogen compounds","SC:Organic oxygen compounds",-0.8499285222899,0.15489255525019
+"SC:Organohalogen compounds","SC:NULL",11.2195577484316,0.0160540776450991
+"SC:Organohalogen compounds","SC:Organic acids",3.26926786257642,0.084335337561789
+"SC:Organohalogen compounds","SC:Benzenoids",2.48608773061524,0.0176830124004688
+"SC:Organohalogen compounds","SC:Alkaloids",2.07878232168605,0.0966931979202844
+"SC:Organohalogen compounds","SC:Organoheterocyclic compounds",2.06108179701424,0.0604931683167968
+"SC:Organohalogen compounds","SC:Polyketides",2.4447667465636,0.0031379808386201
+"SC:Organohalogen compounds","SC:Fatty Acyls",4.79462670957748,0.000960925263716698
+"SC:Organohalogen compounds","SC:Carbohydrates",-1.55807168763582,0.0251024065263866
+"SC:Organohalogen compounds","SC:Nucleic acids",-1.05393109673775,0.188984836759945
+"SC:Organohalogen compounds","SC:Organic nitrogen compounds",-0.166599839871047,0.772663867791938
+"SC:Organohalogen compounds","SC:Sterol Lipids",1.8987984972668,0.140827227230738
+"SC:Organohalogen compounds","SC:Prenol Lipids",-0.185482340990528,0.839750981662788
+"SC:Organohalogen compounds","SC:Sphingolipids",-1.40094589518334,0.00975352998720181
+"SC:Organohalogen compounds","SC:Glycerophospholipids",-1.72204564905886,0.0159011829680179
+"SC:Organohalogen compounds","SC:Lignans",-0.252445737556415,0.464105700413175
+"SC:Organohalogen compounds","SC:Organosulfur compounds",0.576657242940635,0.0269754769527008
+"SC:Lignans","SC:Organic oxygen compounds",0.70654586509455,0.101728899061356
+"SC:Lignans","SC:NULL",0.218593422636757,0.953214566634479
+"SC:Lignans","SC:Organic acids",1.33079861558066,0.352023131976051
+"SC:Lignans","SC:Benzenoids",-0.133784757067739,0.872778309278711
+"SC:Lignans","SC:Alkaloids",0.810975006448024,0.390023509499789
+"SC:Lignans","SC:Organoheterocyclic compounds",0.567520108142663,0.500074488586426
+"SC:Lignans","SC:Polyketides",0.196297209226669,0.776168114006927
+"SC:Lignans","SC:Fatty Acyls",0.469381621393548,0.707042681865013
+"SC:Lignans","SC:Carbohydrates",-0.0577760920404745,0.91626783109196
+"SC:Lignans","SC:Nucleic acids",-0.450210752987623,0.450544796207344
+"SC:Lignans","SC:Organic nitrogen compounds",1.07117675980621,0.00383466929773949
+"SC:Lignans","SC:Sterol Lipids",0.640615452767162,0.50796189019532
+"SC:Lignans","SC:Prenol Lipids",-0.225201797684349,0.736355610490302
+"SC:Lignans","SC:Sphingolipids",0.136651146671603,0.755347813420143
+"SC:Lignans","SC:Glycerophospholipids",-0.276480877013162,0.627049390676728
+"SC:Lignans","SC:Organohalogen compounds",-0.134553958680823,0.464105700413175
+"SC:Lignans","SC:Organosulfur compounds",-0.0534509020680886,0.79466593142227
+"SC:Organosulfur compounds","SC:Organic oxygen compounds",-1.23601409034004,0.0147751126671419
+"SC:Organosulfur compounds","SC:NULL",13.5460123100685,0.000362810635041836
+"SC:Organosulfur compounds","SC:Organic acids",4.13201922812667,0.0106197002526301
+"SC:Organosulfur compounds","SC:Benzenoids",3.22536782884903,8.5243810430165e-05
+"SC:Organosulfur compounds","SC:Alkaloids",2.76525425545403,0.00912399185640853
+"SC:Organosulfur compounds","SC:Organoheterocyclic compounds",2.55425234867225,0.00611198903812361
+"SC:Organosulfur compounds","SC:Polyketides",2.7769639735497,2.42111130713116e-05
+"SC:Organosulfur compounds","SC:Fatty Acyls",4.54310826165426,0.000376106308136853
+"SC:Organosulfur compounds","SC:Carbohydrates",-1.78697117416882,0.00242439350664178
+"SC:Organosulfur compounds","SC:Nucleic acids",-1.66205314364813,0.0140423034452426
+"SC:Organosulfur compounds","SC:Organic nitrogen compounds",-0.545523676151245,0.285936445597455
+"SC:Organosulfur compounds","SC:Sterol Lipids",2.77658508344649,0.0106365858888896
+"SC:Organosulfur compounds","SC:Prenol Lipids",-1.08510382111994,0.177018576198628
+"SC:Organosulfur compounds","SC:Sphingolipids",-1.37348812857557,0.00400358521074453
+"SC:Organosulfur compounds","SC:Glycerophospholipids",-0.532959362366484,0.445708262189623
+"SC:Organosulfur compounds","SC:Organohalogen compounds",0.46884471647866,0.0269754769527008
+"SC:Organosulfur compounds","SC:Lignans",-0.08153383621682,0.79466593142227

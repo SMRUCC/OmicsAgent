@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>组学分析结果浏览器</title>
+  <link rel="stylesheet" href="styles/app.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+</head>
+<body>
+  <div class="app" id="app">
+    <!-- ============ 顶栏 ============ -->
+    <header class="topbar">
+      <button class="icon-btn" id="sidebarToggle" title="折叠侧栏" aria-label="折叠侧栏">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+
+      <div class="brand">
+        <div class="logo">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 15c6.667-6 13.333 0 20-6"/>
+            <path d="M9 22c1.798-1.998 2.518-3.995 2.807-5.993"/>
+            <path d="M15 2c-1.798 1.998-2.518 3.995-2.807 5.993"/>
+            <path d="m17 6-9 12"/>
+            <path d="m17 18-9-12"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>组学分析结果浏览器</h1>
+          <div class="topic" id="currentModule">未选择模块</div>
+        </div>
+      </div>
+
+      <div class="spacer"></div>
+
+      <button class="icon-btn" id="themeToggle" title="切换主题" aria-label="切换主题"></button>
+    </header>
+
+    <!-- ============ 侧边栏 ============ -->
+    <aside class="sidebar" id="sidebar">
+      <h2>分析模块</h2>
+      <input type="text" class="search" id="searchInput" placeholder="搜索模块…" autocomplete="off">
+      <div class="doc-list" id="moduleList">
+        <div class="skeleton" style="width: 80%; height: 14px; margin: 8px 0;"></div>
+        <div class="skeleton" style="width: 65%; height: 14px; margin: 8px 0;"></div>
+        <div class="skeleton" style="width: 75%; height: 14px; margin: 8px 0;"></div>
+      </div>
+    </aside>
+
+    <!-- ============ 侧栏折叠恢复条 ============ -->
+    <button class="sidebar-restore" id="sidebarRestore" title="显示侧栏" aria-label="显示侧栏">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"/>
+      </svg>
+    </button>
+
+    <!-- ============ 内容区 ============ -->
+    <main class="content" id="content">
+      <div class="view" id="view">
+        <div class="empty">
+          <div class="big">📋</div>
+          <p>请从左侧选择一个分析模块</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ============ 移动端遮罩 ============ -->
+  <div class="scrim" id="scrim"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

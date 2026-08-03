@@ -24,6 +24,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <UseApplicationFramework>True</UseApplicationFramework>
+    <ApplicationIcon>ResearchAgent.ico</ApplicationIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -210,6 +211,10 @@
     <Compile Remove="test\**" />
     <EmbeddedResource Remove="test\**" />
     <None Remove="test\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="ResearchAgent.ico" />
   </ItemGroup>
 
   <ItemGroup>

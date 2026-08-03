@@ -1,0 +1,1021 @@
+/* ===================================================================
+ * viewer.css · 文件查看器专属样式
+ * 依赖 styles/kb.css 提供的设计令牌（--accent / --shadow-* / --radius /
+ * --code-* / --card-* / --font-*），本文件不重复定义任何令牌，
+ * 仅新增查看器专属类名，不覆盖 kb.css 既有类的语义。
+ * =================================================================== */
+
+/* ===================== 语法着色令牌（亮色） ===================== */
+:root {
+  --tk-key: #0451a5;
+  --tk-str: #a31515;
+  --tk-num: #098658;
+  --tk-bool: #0000ff;
+  --tk-null: #808080;
+  --tk-tag: #800000;
+  --tk-attr: #e50000;
+  --tk-comment: #008000;
+  --tk-punct: #6a6a6a;
+
+  /* 图像舞台棋盘格 */
+  --checker-a: #ffffff;
+  --checker-b: #eeeeee;
+
+  /* 热图单元格文字对比色（按背景亮度二选一） */
+  --hm-on-dark: #ffffff;
+  --hm-on-light: #101418;
+  --hm-hover-veil: rgba(0, 0, 0, 0.09);
+
+  /* 表单校验错误文字（kb.css 未提供红色卡片令牌） */
+  --vfp-error: #c42b1c;
+}
+
+/* ===================== 语法着色令牌（暗色 · VS Code Dark+） ===================== */
+html[data-theme="dark"] {
+  --tk-key: #9cdcfe;
+  --tk-str: #ce9178;
+  --tk-num: #b5cea8;
+  --tk-bool: #569cd6;
+  --tk-null: #808080;
+  --tk-tag: #569cd6;
+  --tk-attr: #9cdcfe;
+  --tk-comment: #6a9955;
+  --tk-punct: #d4d4d4;
+
+  --checker-a: #2a2a2a;
+  --checker-b: #232323;
+
+  --hm-on-dark: #ffffff;
+  --hm-on-light: #101418;
+  --hm-hover-veil: rgba(255, 255, 255, 0.14);
+
+  --vfp-error: #f0806c;
+}
+
+/* ===================== 布局：单列（无侧栏） ===================== */
+.app--viewer {
+  grid-template-columns: 1fr;
+}
+
+.app--viewer main.content {
+  grid-column: 1;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+  /* 由 .viewer-stage 自己滚动 */
+}
+
+/* 顶栏：文件名与路径 */
+.brand-text {
+  min-width: 0;
+}
+
+.brand-text h1 {
+  font-size: 17px;
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 40vw;
+}
+
+/* ===================== 类型徽标 ===================== */
+.file-badge {
+  flex: none;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-family: var(--font-code);
+  background: var(--card-gray-soft);
+  color: var(--card-gray);
+  border: 1px solid currentColor;
+}
+
+.file-badge[hidden] {
+  display: none;
+}
+
+.file-badge.k-table {
+  background: var(--card-teal-soft);
+  color: var(--card-teal);
+}
+
+.file-badge.k-image {
+  background: var(--card-purple-soft);
+  color: var(--card-purple);
+}
+
+.file-badge.k-pdf {
+  background: var(--card-pink-soft);
+  color: var(--card-pink);
+}
+
+.file-badge.k-text {
+  background: var(--card-gray-soft);
+  color: var(--card-gray);
+}
+
+.file-badge.k-tree {
+  background: var(--card-blue-soft);
+  color: var(--card-blue);
+}
+
+.file-badge.k-web {
+  background: var(--card-orange-soft);
+  color: var(--card-orange);
+}
+
+.file-badge.k-doc {
+  background: var(--card-green-soft);
+  color: var(--card-green);
+}
+
+/* ===================== 格式工具栏 ===================== */
+.viewer-toolbar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: var(--ui-background-alt);
+  border-bottom: 1px solid var(--ui-border);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+}
+
+.viewer-toolbar[hidden] {
+  display: none;
+}
+
+.tool-btn {
+  flex: none;
+  font-family: var(--font-ui);
+  font-size: 12.5px;
+  font-weight: 600;
+  height: 32px;
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  color: var(--ui-foreground);
+  background: transparent;
+  border: 1px solid var(--ui-border-strong);
+  border-radius: var(--radius-sm);
+  transition:
+    transform 0.15s ease,
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease,
+    color 0.2s ease;
+}
+
+.tool-btn:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent);
+  background: var(--ui-background-hover);
+  box-shadow: var(--shadow-sm);
+}
+
+.tool-btn:active {
+  transform: translateY(0);
+}
+
+.tool-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.tool-btn svg {
+  width: 15px;
+  height: 15px;
+  flex: none;
+}
+
+.tool-sep {
+  flex: none;
+  width: 1px;
+  height: 20px;
+  background: var(--ui-border-strong);
+  margin: 0 3px;
+}
+
+.tool-info {
+  flex: none;
+  font-size: 12px;
+  color: var(--ui-foreground-muted);
+  font-family: var(--font-code);
+  padding: 0 6px;
+  white-space: nowrap;
+}
+
+.tool-input {
+  flex: none;
+  width: 54px;
+  height: 32px;
+  text-align: center;
+  font-family: var(--font-code);
+  font-size: 12.5px;
+  color: var(--ui-foreground);
+  background: var(--ui-background);
+  border: 1px solid var(--ui-border-strong);
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.tool-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+}
+
+/* 下拉选择（调色板等） */
+.tool-select {
+  flex: none;
+  height: 32px;
+  max-width: 148px;
+  padding: 0 6px;
+  font-family: var(--font-ui);
+  font-size: 12.5px;
+  color: var(--ui-foreground);
+  background: var(--ui-background);
+  border: 1px solid var(--ui-border-strong);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.tool-select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+}
+
+.tool-select:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* 调色板色带预览条 */
+.pal-swatch {
+  flex: none;
+  width: 34px;
+  height: 18px;
+  border-radius: 3px;
+  border: 1px solid var(--ui-border-strong);
+  transition: opacity 0.2s ease;
+}
+
+/* ===================== 舞台（滚动容器） ===================== */
+.viewer-stage {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  position: relative;
+  animation: fade 0.35s ease;
+}
+
+.viewer-stage>.empty {
+  padding: 80px 20px;
+}
+
+/* 带内边距的常规视图容器 */
+.stage-pad {
+  padding: 20px 22px 50px;
+}
+
+/* ===================== 表格视图（csv / tsv） ===================== */
+.vtable-wrap {
+  overflow: auto;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--radius);
+  background: var(--ui-background);
+  box-shadow: var(--shadow-sm);
+  max-height: 100%;
+}
+
+.vtable {
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 13px;
+  font-family: var(--font-ui);
+  width: max-content;
+  min-width: 100%;
+}
+
+.vtable th,
+.vtable td {
+  border-right: 1px solid var(--ui-border);
+  border-bottom: 1px solid var(--ui-border);
+  padding: 7px 10px;
+  text-align: left;
+  vertical-align: top;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-width: 420px;
+}
+
+.vtable thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--ui-background-alt);
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: inset 0 -1px 0 var(--ui-border-strong);
+}
+
+.vtable tbody tr:nth-child(even) td {
+  background: var(--ui-background-alt);
+}
+
+.vtable tbody tr:hover td {
+  background: var(--ui-background-hover);
+}
+
+/* 数值列：右对齐 + 等宽字体，便于比对位数 */
+.vtable td.num,
+.vtable th.num .vth-label {
+  font-family: var(--font-code);
+}
+
+.vtable td.num {
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* ---- 可排序列头 ---- */
+.vtable th.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.vtable th.sortable:hover {
+  background: var(--ui-background-hover);
+}
+
+.vtable th.sortable.sorted {
+  color: var(--accent);
+}
+
+.vth-inner {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.vth-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 300px;
+}
+
+/* 排序指示器：方向箭头 + 多列排序时的优先级序号 */
+.vth-sort {
+  flex: none;
+  font-size: 9px;
+  line-height: 1;
+  letter-spacing: 0.5px;
+  color: var(--accent);
+  min-width: 0;
+}
+
+.vth-sort.on {
+  min-width: 12px;
+}
+
+/* 筛选漏斗：默认淡出，hover 列头或已激活时显现 */
+.vth-filter {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  margin-left: auto;
+  cursor: pointer;
+  color: var(--ui-foreground-subtle);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  opacity: 0;
+  transition:
+    opacity 0.15s ease,
+    color 0.2s ease,
+    background 0.2s ease;
+}
+
+.vtable th:hover .vth-filter,
+.vth-filter:focus-visible {
+  opacity: 1;
+}
+
+.vth-filter:hover {
+  color: var(--accent);
+  background: var(--ui-background);
+  border-color: var(--ui-border-strong);
+}
+
+/* 已设置筛选：常驻高亮 */
+.vth-filter.on,
+.vth-filter.popping {
+  opacity: 1;
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* 单元格「等于筛选」按钮：非数值列才有。
+ * 默认淡出，hover 所在单元格时显现，避免视觉噪声。 */
+.vcell-filter {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  margin: 0 0 0 6px;
+  padding: 0;
+  vertical-align: -3px;
+  cursor: pointer;
+  color: var(--ui-foreground-subtle);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  opacity: 0;
+  transition:
+    opacity 0.15s ease,
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.vtable td:hover .vcell-filter,
+.vcell-filter:focus-visible {
+  opacity: 1;
+}
+
+.vcell-filter:hover {
+  color: var(--accent);
+  background: var(--ui-background);
+  border-color: var(--ui-border-strong);
+}
+
+/* ---- 热图模式 ---- */
+/* 单元格背景由 JS 写内联样式，此处需让出 background 属性：
+ * 斑马纹显式置空，hover 改用 inset 遮罩，二者才能与内联色共存。 */
+.vtable.heatmap-on tbody tr:nth-child(even) td {
+  background: transparent;
+}
+
+.vtable.heatmap-on tbody tr:hover td {
+  background: transparent;
+  box-shadow: inset 0 0 0 9999px var(--hm-hover-veil);
+}
+
+.vtable.heatmap-on tbody tr:hover td.rownum {
+  background: var(--ui-background-alt);
+}
+
+.vtable td.hm-dark {
+  color: var(--hm-on-dark);
+}
+
+.vtable td.hm-light {
+  color: var(--hm-on-light);
+}
+
+/* 筛选结果为空时的占位提示 */
+.vtable-empty {
+  padding: 26px 16px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--ui-foreground-muted);
+}
+
+/* 行号列 */
+.vtable .rownum {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  width: 1%;
+  text-align: right;
+  font-family: var(--font-code);
+  font-size: 11.5px;
+  color: var(--ui-foreground-subtle);
+  background: var(--ui-background-alt);
+  user-select: none;
+  white-space: nowrap;
+  border-right: 1px solid var(--ui-border-strong);
+}
+
+.vtable thead th.rownum {
+  z-index: 3;
+}
+
+/* ===================== 列筛选浮层 =====================
+ * 挂载在 body 上并用 fixed 定位：.viewer-stage 与 .vtable-wrap 是两层
+ * overflow:auto 容器，absolute 定位会被裁剪。 */
+.vfilter-pop {
+  position: fixed;
+  z-index: 999;
+  width: 268px;
+  padding: 10px;
+  font-family: var(--font-ui);
+  background: var(--ui-background);
+  border: 1px solid var(--ui-border-strong);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  animation: fade 0.12s ease;
+}
+
+.vfp-title {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ui-foreground);
+  margin-bottom: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 模式切换分段按钮组 */
+.vfp-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 9px;
+  border: 1px solid var(--ui-border-strong);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.vfp-tab {
+  flex: 1;
+  height: 27px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ui-foreground-muted);
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--ui-border);
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.vfp-tab:last-child {
+  border-right: none;
+}
+
+.vfp-tab:hover {
+  background: var(--ui-background-hover);
+}
+
+.vfp-tab.active {
+  color: #fff;
+  background: var(--accent);
+}
+
+.vfp-panel[hidden] {
+  display: none;
+}
+
+.vfp-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.vfp-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 浮层内的输入框在 .tool-input 基础上改为左对齐、宽度自适应 */
+.vfilter-pop .tool-input {
+  flex: 1;
+  min-width: 0;
+  width: auto;
+  height: 30px;
+  padding: 0 8px;
+  text-align: left;
+}
+
+.vfp-select {
+  width: 100%;
+  height: 30px;
+  padding: 0 6px;
+  font-family: var(--font-ui);
+  font-size: 12.5px;
+  color: var(--ui-foreground);
+  background: var(--ui-background);
+  border: 1px solid var(--ui-border-strong);
+  border-radius: var(--radius-sm);
+  outline: none;
+  cursor: pointer;
+}
+
+.vfp-select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+}
+
+.vfp-check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--ui-foreground-muted);
+  cursor: pointer;
+  user-select: none;
+}
+
+.vfp-check input {
+  margin: 0;
+  cursor: pointer;
+  accent-color: var(--accent);
+}
+
+.vfp-tilde {
+  flex: none;
+  font-size: 12px;
+  color: var(--ui-foreground-subtle);
+}
+
+.vfp-hint {
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--ui-foreground-subtle);
+}
+
+/* 非法正则等校验提示：不打断视图，仅在此红字提示 */
+.vfp-err {
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--vfp-error);
+  margin-top: 6px;
+  word-break: break-word;
+}
+
+.vfp-err:empty {
+  display: none;
+}
+
+.vfp-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-top: 10px;
+  padding-top: 9px;
+  border-top: 1px solid var(--ui-border);
+}
+
+.vfp-btn {
+  height: 28px;
+  padding: 0 12px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ui-foreground);
+  background: transparent;
+  border: 1px solid var(--ui-border-strong);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.vfp-btn:hover {
+  border-color: var(--accent);
+  background: var(--ui-background-hover);
+}
+
+.vfp-btn.primary {
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.vfp-btn.primary:hover {
+  filter: brightness(1.08);
+  background: var(--accent);
+}
+
+/* ===================== 纯文本视图（txt / log） ===================== */
+.plain-text {
+  margin: 0;
+  border: 1px solid var(--code-border);
+  border-radius: var(--radius);
+  background: var(--code-background);
+  color: var(--code-foreground);
+  font-family: var(--font-code);
+  font-size: 13px;
+  line-height: 1.65;
+  overflow: auto;
+  display: table;
+  width: 100%;
+  box-shadow: var(--shadow-sm);
+}
+
+.pt-line {
+  display: table-row;
+}
+
+.pt-ln,
+.pt-tx {
+  display: table-cell;
+  padding: 0 4px;
+}
+
+.pt-ln {
+  width: 1%;
+  text-align: right;
+  padding-right: 12px;
+  padding-left: 12px;
+  color: var(--ui-foreground-subtle);
+  background: var(--ui-background-alt);
+  user-select: none;
+  white-space: nowrap;
+  border-right: 1px solid var(--code-border);
+  position: sticky;
+  left: 0;
+}
+
+.pt-tx {
+  padding-left: 12px;
+  padding-right: 12px;
+  white-space: pre;
+}
+
+.plain-text.wrap .pt-tx {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ===================== 树形视图（json / xml） ===================== */
+.code-tree {
+  border: 1px solid var(--code-border);
+  border-radius: var(--radius);
+  background: var(--code-background);
+  color: var(--code-foreground);
+  font-family: var(--font-code);
+  font-size: 13px;
+  line-height: 1.65;
+  padding: 12px 14px;
+  overflow: auto;
+  box-shadow: var(--shadow-sm);
+}
+
+.jt-node {
+  position: relative;
+}
+
+.jt-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  border-radius: 3px;
+  padding: 0 2px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.jt-row:hover {
+  background: var(--ui-background-hover);
+}
+
+/* 折叠三角 */
+.jt-toggle {
+  flex: none;
+  width: 14px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--ui-foreground-subtle);
+  user-select: none;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.jt-toggle:hover {
+  color: var(--accent);
+}
+
+.jt-toggle::before {
+  content: "▾";
+  font-size: 10px;
+  line-height: 1;
+}
+
+.jt-node.collapsed>.jt-row>.jt-toggle::before {
+  content: "▸";
+}
+
+/* 占位（叶子节点，保持缩进对齐） */
+.jt-spacer {
+  flex: none;
+  width: 14px;
+}
+
+/* 子级容器：缩进 + 虚线引导线 */
+.jt-children {
+  margin-left: 7px;
+  padding-left: 9px;
+  border-left: 1px dashed var(--ui-border-strong);
+}
+
+.jt-node.collapsed>.jt-children {
+  display: none;
+}
+
+/* 折叠摘要 */
+.jt-summary {
+  color: var(--ui-foreground-subtle);
+  font-style: italic;
+  margin-left: 4px;
+}
+
+.jt-node:not(.collapsed)>.jt-row>.jt-summary {
+  display: none;
+}
+
+/* 语法着色 */
+.tk-key {
+  color: var(--tk-key);
+}
+
+.tk-str {
+  color: var(--tk-str);
+}
+
+.tk-num {
+  color: var(--tk-num);
+}
+
+.tk-bool {
+  color: var(--tk-bool);
+}
+
+.tk-null {
+  color: var(--tk-null);
+}
+
+.tk-tag {
+  color: var(--tk-tag);
+}
+
+.tk-attr {
+  color: var(--tk-attr);
+}
+
+.tk-comment {
+  color: var(--tk-comment);
+  font-style: italic;
+}
+
+.tk-punct {
+  color: var(--tk-punct);
+}
+
+/* ===================== 图像视图 ===================== */
+.image-stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  cursor: grab;
+  background-color: var(--checker-a);
+  background-image:
+    linear-gradient(45deg, var(--checker-b) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--checker-b) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--checker-b) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--checker-b) 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0;
+}
+
+.image-stage.dragging {
+  cursor: grabbing;
+}
+
+.image-stage img {
+  max-width: none;
+  transform-origin: center center;
+  transition: transform 0.18s ease;
+  box-shadow: var(--shadow-md);
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.image-stage.dragging img {
+  transition: none;
+}
+
+/* ===================== PDF 视图 ===================== */
+.pdf-stage {
+  padding: 20px 0 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  background: var(--ui-background-alt);
+  min-height: 100%;
+}
+
+.pdf-page {
+  background: #ffffff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  line-height: 0;
+}
+
+.pdf-page canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ===================== 网页视图（html） ===================== */
+.html-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #ffffff;
+}
+
+/* ===================== Markdown 视图 ===================== */
+.md-view {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+/* ===================== 不支持 / 下载 ===================== */
+.dl-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+/* ===================== 响应式 ===================== */
+@media (max-width: 860px) {
+  .brand-text h1 {
+    max-width: 50vw;
+  }
+
+  .brand-text .topic {
+    display: none;
+  }
+
+  .stage-pad {
+    padding: 16px 14px 40px;
+  }
+
+  .tool-btn .lbl {
+    display: none;
+  }
+
+  .tool-btn {
+    padding: 0 8px;
+  }
+
+  /* 窄屏：调色板下拉收窄，色带条隐藏（下拉项本身已带名称） */
+  .tool-select {
+    max-width: 108px;
+  }
+
+  .pal-swatch {
+    display: none;
+  }
+
+  /* 浮层随视口收缩，避免溢出屏幕 */
+  .vfilter-pop {
+    width: calc(100vw - 24px);
+    max-width: 268px;
+  }
+
+  .vth-label {
+    max-width: 160px;
+  }
+}

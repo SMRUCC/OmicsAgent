@@ -1,0 +1,99 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+  </Configurations>
+  <Folder Name="/framework/">
+    <Project Path="../GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../mini-R/src/console/console/console.NET5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/framework/http/">
+    <Project Path="../GCModeller/src/runtime/httpd/src/Flute/Flute.NET5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../GCModeller/src/runtime/httpd/src/HTTP_SERVER/Fluteway.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/framework/math/">
+    <Project Path="../GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFittings/linear-netcore5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math.Statistics/stats-netcore5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Math.NET5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/framework/mime/">
+    <Project Path="../GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../GCModeller/src/runtime/sciBASIC#/mime/application%json/JSON-netcore5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../GCModeller/src/runtime/sciBASIC#/mime/application%pdf/Pdf.NET5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel/xlsx-netcore5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../GCModeller/src/runtime/sciBASIC#/mime/text%markdown/markdown.NET5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../GCModeller/src/runtime/sciBASIC#/mime/text%yaml/text.yaml.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/galaxy/">
+    <Project Path="../galaxy/src/dockpanelsuite/Themes/ThemeVS2015.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../galaxy/src/dockpanelsuite/VSDockPanel/VSDockPanel.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../galaxy/src/GalaxyData/GalaxyData.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../galaxy/src/GalaxyWorkbench/GalaxyWorkbench.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../galaxy/src/Microsoft.Windows.FeatureAPI/Microsoft.Windows.FeatureAPI.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../galaxy/src/RibbonEventBinding/RibbonEventBinding.shproj" Id="72a4c1ee-5cbf-4f72-9b71-c997d7e33c18" />
+  </Folder>
+  <Folder Name="/gcmodeller/">
+    <Project Path="../GCModeller/src/GCModeller/analysis/HTS_matrix/HTS_matrix-netcore5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../GCModeller/src/workbench/modules/ExperimentDesigner/designer-netcore5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/llms/">
+    <Project Path="../graphQL/src/mysqli/LibMySQL/libmysql.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../LLMs/src/Ollama/Ollama.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../LLMs/src/WebView2UI/WebView2UI.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../pubchem_kb/src/Researcher/Researcher.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Project Path="src/OmicsAgent.vbproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="win32/OmicsWorks.vbproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+</Solution>

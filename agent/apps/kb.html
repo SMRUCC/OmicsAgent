@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>文献知识库 · Knowledge Base Explorer</title>
+    <!-- Markdown 渲染（CDN） -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link href="styles/kb.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app">
+        <header class="topbar" id="topbar">
+            <button class="btn drawer-toggle" id="drawerToggle" title="文献列表">
+                <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="6" x2="21" y2="6" />
+                    <line x1="3" y1="12" x2="21" y2="12" />
+                    <line x1="3" y1="18" x2="21" y2="18" />
+                </svg>
+            </button>
+            <div class="brand">
+                <div class="logo">🧬</div>
+                <div>
+                    <h1>文献知识库</h1>
+                    <div class="topic" id="topicLine">生命科学文献知识库浏览器</div>
+                </div>
+            </div>
+            <div class="spacer"></div>
+            <button class="btn primary" id="summaryBtn">
+                <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 6h16M4 12h16M4 18h10" />
+                </svg>
+                知识库汇总
+            </button>
+            <button class="btn" id="themeBtn" title="切换主题">
+                <span id="themeIcon">🌙</span><span id="themeLabel">暗色</span>
+            </button>
+        </header>
+
+        <aside class="sidebar" id="sidebar">
+            <h2>文献列表</h2>
+            <input class="search" id="searchInput" placeholder="筛选文献 / 文件名…" />
+            <div class="doc-list" id="docList"></div>
+        </aside>
+        <div class="scrim" id="scrim"></div>
+
+        <main class="content" id="content">
+            <div class="empty">
+                <div class="big">🧪</div>
+                <div>从左侧选择一篇文献，或点击右上角「知识库汇总」查看整合知识库。</div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/kb.js" type="text/javascript"></script>
+</body>
+
+</html>

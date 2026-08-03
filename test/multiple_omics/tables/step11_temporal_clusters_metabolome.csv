@@ -1,0 +1,1001 @@
+"feature","cluster","max_membership"
+"β-Damascenone","Cluster_6",0.878321534104856
+"β-Ionone","Cluster_6",0.856781448406545
+"α-Ionone","Cluster_6",0.844865127259266
+"β-Damascone","Cluster_6",0.892553184545117
+"α-Damascone","Cluster_6",0.872767442006982
+"3-Hydroxy-β-damascone","Cluster_6",0.821236281840128
+"4-Hydroxy-β-damascone","Cluster_6",0.868917487206345
+"Megastigmatrienone","Cluster_6",0.840671846259984
+"Megastigmatrienone B","Cluster_6",0.844133703568396
+"Megastigmatrienone C","Cluster_6",0.766871375496796
+"Theaspirone","Cluster_6",0.796866261382082
+"Theaspirane A","Cluster_6",0.890538045395434
+"Theaspirane B","Cluster_6",0.851641495010706
+"3-Oxo-α-ionol","Cluster_6",0.844708796332351
+"3-Oxo-7,8-dihydro-α-ionol","Cluster_6",0.823708139125685
+"Grasshopper ketone","Cluster_6",0.818270997853672
+"Blumenol A","Cluster_6",0.862872469015766
+"Brevicomins","Cluster_6",0.840462280620598
+"Vomifoliol","Cluster_6",0.891452232589729
+"4,4-Dihydroxy-β-ionone","Cluster_6",0.855996138473627
+"3-Hydroxy-β-ionone","Cluster_6",0.846303494247764
+"β-Damascenone glycoside precursor","Cluster_6",0.877613843827103
+"3-Hydroxydamascone","Cluster_6",0.883073200733541
+"3-Oxo-α-ionone","Cluster_6",0.905828296935097
+"3-Oxo-β-ionone","Cluster_6",0.831086457396769
+"4-Hydroxy-β-ionone","Cluster_6",0.784179712933887
+"4-Oxo-β-ionone","Cluster_6",0.865129333703794
+"Dihydroactinidiolide","Cluster_6",0.891543233581929
+"Actinorhodin-related norisoprenoid","Cluster_6",0.889503317754857
+"Megastigmatrienol","Cluster_6",0.835317144986779
+"Megastigmadienone","Cluster_6",0.830766363303863
+"Norisoprenoid C14 (β-Damascone epoxide)","Cluster_6",0.865014474844078
+"β-Ionone epoxide","Cluster_6",0.868552724696753
+"α-Ionol","Cluster_6",0.817953537985351
+"β-Ionol","Cluster_6",0.828712998476619
+"3-Hydroxy-α-ionol","Cluster_6",0.857375059144744
+"3-Hydroxy-β-ionol","Cluster_6",0.867777163220757
+"3-Hydroxy-7,8-dehydro-β-ionol","Cluster_6",0.833434208461471
+"6-Hydroxy-α-ionol","Cluster_6",0.833268488044695
+"6-Hydroxy-α-ionone","Cluster_6",0.84882289511636
+"Blumenol B","Cluster_6",0.85126611293059
+"Blumenol C","Cluster_6",0.816088636750978
+"7,8-Dihydrovomifoliol","Cluster_6",0.878353120763241
+"Dehydrovomifoliol","Cluster_6",0.835083913478653
+"4-Hydroxy-4,5-dihydro-β-ionone","Cluster_6",0.817096141768643
+"3-Hydroxy-5,6-epoxy-β-ionone","Cluster_6",0.885340028481069
+"β-Ionyl acetate","Cluster_6",0.870586635689638
+"Megastigmatrienone D","Cluster_6",0.850396690564067
+"Megastigmatrienone E","Cluster_6",0.896067695755715
+"Solanone","Cluster_1",0.836148150209967
+"Solanone epoxide","Cluster_1",0.503997886500293
+"Nor-solanone","Cluster_1",0.794493438919208
+"Solanol","Cluster_4",0.934471211351674
+"Solanolanone","Cluster_4",0.523475267154718
+"Cembranatriene","Cluster_3",0.981504972345586
+"Cembratriene-diol","Cluster_3",0.96341677438994
+"Cembratriene-triol","Cluster_1",0.530756016122543
+"Cembratrienol","Cluster_2",0.398000543824213
+"Tabanone (α-Cembrenediol derivative)","Cluster_1",0.853026096355963
+"Nor-tabanone","Cluster_1",0.529656869343072
+"Solanone glycoside precursor","Cluster_5",0.997014838708225
+"Cembratriene oxide","Cluster_1",0.466122952985979
+"Cembratriene-diol epoxide","Cluster_1",0.974961367234707
+"Solanone diol","Cluster_1",0.34524861221254
+"Nor-solanol","Cluster_1",0.410789492426405
+"Solanone aldehyde","Cluster_3",0.953562294623886
+"Cembranoid acid","Cluster_1",0.978619075557578
+"Cembrene A","Cluster_2",0.41318496862434
+"Cembrene C","Cluster_3",0.964641822759354
+"Neophytadiene (diterpene hydrocarbon)","Cluster_6",0.71247933679913
+"Phytol","Cluster_6",0.811664838357114
+"Phytol acetate","Cluster_6",0.869533747817608
+"Isophytol","Cluster_6",0.861827760129942
+"2-Acetylfuran","Cluster_5",0.998211339655276
+"2-Acetylpyrrole","Cluster_5",0.980201108475421
+"5-Methylfurfural","Cluster_5",0.988281095823413
+"Furfural","Cluster_5",0.989916961044059
+"2-Furfuryl alcohol","Cluster_5",0.993805414894498
+"2-Acetyl-1-pyrroline","Cluster_5",0.997405303877189
+"2-Acetylthiazole","Cluster_5",0.987446259364685
+"2-Acetyl-2-thiazoline","Cluster_5",0.990573421300397
+"Furfuryl thiol (2-Furanmethanethiol)","Cluster_5",0.996344795063842
+"Pyrazine","Cluster_5",0.990747912688961
+"2-Methylpyrazine","Cluster_5",0.995587445751612
+"2,3-Dimethylpyrazine","Cluster_5",0.992298125247581
+"2,5-Dimethylpyrazine","Cluster_5",0.999328910840993
+"2,6-Dimethylpyrazine","Cluster_5",0.986992762767631
+"2,3,5-Trimethylpyrazine","Cluster_5",0.996183872751949
+"2,3,5,6-Tetramethylpyrazine","Cluster_5",0.995514502146487
+"2-Ethyl-3,5-dimethylpyrazine","Cluster_5",0.991184219504822
+"2-Ethyl-3,6-dimethylpyrazine","Cluster_5",0.992944288237512
+"2-Ethyl-5-methylpyrazine","Cluster_5",0.988562805170028
+"2-Ethyl-6-methylpyrazine","Cluster_5",0.99011333677561
+"2-Ethylpyrazine","Cluster_5",0.974557456685868
+"Acetylpyrazine","Cluster_5",0.98051205033295
+"2,3-Diethylpyrazine","Cluster_5",0.987332058152396
+"2,3-Diethyl-5-methylpyrazine","Cluster_5",0.993489773691478
+"2,5-Diethylpyrazine","Cluster_5",0.995362993420315
+"2,3,5-Trimethyl-6-ethylpyrazine","Cluster_5",0.992181723923637
+"Methoxypyrazine","Cluster_5",0.994057971966566
+"2-Methoxy-3-isopropylpyrazine","Cluster_5",0.987632513956101
+"2-Methoxy-3-isobutylpyrazine","Cluster_5",0.997576557268796
+"2-Methoxy-3-sec-butylpyrazine","Cluster_5",0.992763178337357
+"4-Hydroxy-2,5-dimethyl-3(2H)-furanone (HDMF, Furaneol)","Cluster_5",0.983898200733743
+"4-Methoxy-2,5-dimethyl-3(2H)-furanone (DMMF)","Cluster_5",0.99560115210502
+"2-Ethyl-4-hydroxy-5-methyl-3(2H)-furanone (Homofuraneol)","Cluster_5",0.995624608707761
+"2,5-Dimethyl-4-methoxy-3(2H)-furanone","Cluster_5",0.993008052098901
+"Sotolone (3-Hydroxy-4,5-dimethyl-2(5H)-furanone)","Cluster_5",0.992365456693568
+"Maltol","Cluster_5",0.973061986001561
+"Ethylmaltol","Cluster_5",0.993953924379169
+"Cyclotene (3-Methyl-2-cyclopenten-2-ol-1-one)","Cluster_5",0.995721881758524
+"3-Methyl-2-cyclopenten-2-ol-1-one","Cluster_5",0.990396068109774
+"2-Methyl-3-furanthiol","Cluster_5",0.967768500774768
+"Methional (3-(Methylthio)propanal)","Cluster_5",0.996484975918071
+"Methionol (3-(Methylthio)-1-propanol)","Cluster_5",0.983538943078884
+"Phenylacetaldehyde","Cluster_5",0.997585255517731
+"3-Methylbutanal","Cluster_5",0.940379823269191
+"2-Methylbutanal","Cluster_5",0.992793163404805
+"Phenylethanol (2-Phenylethanol)","Cluster_4",0.944909578153134
+"Benzaldehyde","Cluster_4",0.856845771610382
+"Benzyl alcohol","Cluster_4",0.898803164363375
+"Methyl salicylate","Cluster_4",0.876854783361068
+"Eugenol","Cluster_4",0.940151357649449
+"Isoeugenol","Cluster_4",0.804840265295296
+"Vanillin","Cluster_4",0.954170725861856
+"Acetovanillone (Apocynin)","Cluster_4",0.939106385368149
+"4-Vinylguaiacol","Cluster_4",0.852330119530825
+"Guaiacol","Cluster_4",0.917757492734395
+"4-Ethylguaiacol","Cluster_4",0.895875487858583
+"4-Methylguaiacol (Creosol)","Cluster_4",0.916624289224746
+"Cinnamaldehyde","Cluster_4",0.95685519501001
+"Cinnamyl alcohol","Cluster_4",0.944376920167498
+"Methyl cinnamate","Cluster_4",0.903979291977915
+"Ethyl cinnamate","Cluster_4",0.952382448458579
+"2-Phenylethyl acetate","Cluster_4",0.865498752249886
+"Benzyl acetate","Cluster_4",0.824586384666774
+"4-Hydroxybenzaldehyde","Cluster_4",0.871340173264375
+"Salicylaldehyde","Cluster_4",0.922003020285438
+"Phenol","Cluster_4",0.873057160324269
+"Cresol (p-Cresol)","Cluster_4",0.894615892200412
+"4-Ethylphenol","Cluster_4",0.900113705917359
+"4-Vinylphenol","Cluster_4",0.846562336828207
+"p-Coumaric acid","Cluster_1",0.978073586347182
+"Ferulic acid","Cluster_1",0.984842808946935
+"Sinapic acid","Cluster_1",0.987853196497381
+"Caffeic acid","Cluster_1",0.980257599422635
+"Cinnamic acid","Cluster_1",0.980455894485401
+"p-Hydroxybenzyl alcohol","Cluster_4",0.915544790582771
+"Syringaldehyde","Cluster_4",0.83008845024656
+"Acetosyringone","Cluster_4",0.920625594607419
+"Syringol","Cluster_4",0.903579974933099
+"4-Methylsyringol","Cluster_4",0.923474846190643
+"4-Ethylsyringol","Cluster_4",0.884839301117229
+"4-Vinylsyringol","Cluster_4",0.927307195307188
+"Veratrole (1,2-Dimethoxybenzene)","Cluster_4",0.862827082702463
+"Veratraldehyde","Cluster_4",0.915999721397065
+"Veratryl alcohol","Cluster_4",0.943231133613483
+"Homovanillic acid","Cluster_1",0.972921884023172
+"Protocatechuic acid","Cluster_1",0.968292683765051
+"Vanillic acid","Cluster_1",0.961595115122613
+"Syringic acid","Cluster_1",0.983294216257962
+"Coniferyl aldehyde","Cluster_4",0.843251257383709
+"Coniferyl alcohol","Cluster_4",0.909627923451582
+"Sinapyl aldehyde","Cluster_4",0.94728320928819
+"Sinapyl alcohol","Cluster_4",0.924667569746413
+"p-Coumaryl alcohol","Cluster_4",0.934103734309204
+"p-Coumaraldehyde","Cluster_4",0.888498477799987
+"Methyl vanillate","Cluster_4",0.896189684861603
+"Methyl syringate","Cluster_4",0.891630114348984
+"Ethyl vanillate","Cluster_4",0.863321527655586
+"Benzyl benzoate","Cluster_4",0.947828840600478
+"2-Phenylethyl benzoate","Cluster_4",0.941477573881807
+"Phenylpropanal (3-Phenylpropanal)","Cluster_4",0.942859449952739
+"3-Phenyl-1-propanol","Cluster_4",0.931198032314876
+"Methyl phenylacetate","Cluster_4",0.932793556567437
+"Ethyl phenylacetate","Cluster_4",0.859518728817223
+"Phenylacetic acid","Cluster_1",0.987600444797089
+"2-Methoxyphenol (Guaiacol isomer)","Cluster_4",0.918458592258071
+"2,6-Dimethylphenol","Cluster_4",0.929186919255058
+"2,4-Dimethylphenol","Cluster_4",0.913975776839555
+"2,6-Dimethoxyphenol","Cluster_4",0.908148050761921
+"Catechol (1,2-Benzenediol)","Cluster_4",0.879789661658865
+"Resorcinol (1,3-Benzenediol)","Cluster_4",0.840856934005346
+"Hydroquinone (1,4-Benzenediol)","Cluster_4",0.942585519164609
+"Linalool","Cluster_6",0.879918367829209
+"Linalool oxide (furanoid)","Cluster_6",0.806372402636441
+"Linalool oxide (pyranoid)","Cluster_6",0.910487233085564
+"Geraniol","Cluster_6",0.851284061515129
+"Nerol","Cluster_6",0.821922743414657
+"Citronellol","Cluster_6",0.895391883013881
+"α-Terpineol","Cluster_6",0.866020298337939
+"β-Citronellene","Cluster_6",0.812839509105406
+"Limonene","Cluster_6",0.844844829518635
+"α-Pinene","Cluster_6",0.82379880318265
+"β-Pinene","Cluster_6",0.902572747342654
+"Camphene","Cluster_6",0.883139929798512
+"Myrcene","Cluster_6",0.856420736875715
+"Ocimene","Cluster_6",0.874866482075776
+"Terpinene","Cluster_6",0.883378458452857
+"γ-Terpinene","Cluster_6",0.83768135057629
+"Terpinolene","Cluster_6",0.87627055955653
+"p-Cymene","Cluster_6",0.840850709507915
+"1,8-Cineole (Eucalyptol)","Cluster_6",0.712584336992048
+"Citronellal","Cluster_6",0.869488555028553
+"Geranial","Cluster_6",0.925309260953737
+"Neral","Cluster_6",0.849229468303382
+"Citronellyl acetate","Cluster_6",0.844110385816468
+"Geranyl acetate","Cluster_6",0.875979363613637
+"Neryl acetate","Cluster_6",0.856368459610953
+"Linalyl acetate","Cluster_6",0.922595745642365
+"α-Terpinyl acetate","Cluster_6",0.845539886339682
+"Bornyl acetate","Cluster_6",0.862139989956508
+"Borneol","Cluster_6",0.84961833650393
+"Camphor","Cluster_6",0.861899552019185
+"Isoborneol","Cluster_6",0.941411392992112
+"Carvone","Cluster_6",0.877041423280642
+"Carveol","Cluster_6",0.877765434158702
+"Dihydrocarveol","Cluster_6",0.827691827770999
+"Pulegone","Cluster_6",0.858426497532934
+"Menthone","Cluster_6",0.87635039937412
+"Menthol","Cluster_6",0.78815618648287
+"Menthyl acetate","Cluster_6",0.776722685305245
+"Verbenone","Cluster_6",0.904397051760723
+"Verbenol","Cluster_6",0.847955727517923
+"Myrtenol","Cluster_6",0.84902429875245
+"Myrtenal","Cluster_6",0.775129747674189
+"Perillaldehyde","Cluster_6",0.878057923344397
+"Perillyl alcohol","Cluster_6",0.770218000814173
+"β-Caryophyllene","Cluster_6",0.938690029365437
+"α-Humulene","Cluster_6",0.842983346309196
+"Caryophyllene oxide","Cluster_6",0.88050541910214
+"Nerolidol","Cluster_6",0.898517773448423
+"Farnesol","Cluster_6",0.861837282685264
+"Farnesal","Cluster_6",0.846002501080661
+"α-Bisabolol","Cluster_6",0.843692421580067
+"α-Bisabolene","Cluster_6",0.903727051912841
+"β-Bisabolene","Cluster_6",0.862644976987266
+"γ-Bisabolene","Cluster_6",0.870319524971604
+"Zingiberene","Cluster_6",0.897178847693995
+"β-Sesquiphellandrene","Cluster_6",0.78670202255643
+"ar-Curcumene","Cluster_6",0.875298522625975
+"Valencene","Cluster_6",0.901992160268463
+"Nootkatone","Cluster_6",0.869810632573313
+"Cadinol","Cluster_6",0.910030646672708
+"δ-Cadinene","Cluster_6",0.779173776267756
+"γ-Cadinene","Cluster_6",0.858772652185215
+"Germacrene D","Cluster_6",0.873186377726288
+"Germacrene A","Cluster_6",0.895270110272343
+"Germacrene B","Cluster_6",0.795210771926457
+"β-Elemene","Cluster_6",0.894251117038768
+"δ-Elemene","Cluster_6",0.939547421592576
+"Patchoulol","Cluster_6",0.834236932839187
+"Patchoulene","Cluster_6",0.869192736483975
+"Cedrol","Cluster_6",0.876259331268426
+"α-Cedrene","Cluster_6",0.89885356949844
+"β-Cedrene","Cluster_6",0.858502363389509
+"Thujopsene","Cluster_6",0.904196530652713
+"Widdrol","Cluster_6",0.886179900759497
+"Longifolene","Cluster_6",0.830824866806795
+"Isolongifolene","Cluster_6",0.9284716442361
+"Copaene","Cluster_6",0.861377862608353
+"Ylangene","Cluster_6",0.852863252930529
+"α-Cubebene","Cluster_6",0.852923152618576
+"β-Cubebene","Cluster_6",0.836215645154216
+"α-Copaene oxide","Cluster_6",0.869758012674237
+"Solavetivone","Cluster_6",0.886697800308396
+"Vetispiradiene","Cluster_6",0.815947349697523
+"Capsidiol","Cluster_6",0.878644099282591
+"Rishitin","Cluster_6",0.902361120089812
+"Lubimin","Cluster_6",0.943439255162289
+"Geranylacetone","Cluster_6",0.876376473632653
+"6-Methyl-5-hepten-2-one (MHO)","Cluster_6",0.903825158313162
+"6-Methyl-5-hepten-2-ol","Cluster_6",0.88513741145732
+"Pseudoionone","Cluster_6",0.809337503894416
+"Geranylacetone epoxide","Cluster_6",0.780541244294541
+"6-Methyl-3,5-heptadien-2-one","Cluster_6",0.853626977411707
+"Farnesylacetone","Cluster_6",0.880145299510956
+"Phytone (6,10,14-Trimethyl-2-pentadecanone)","Cluster_6",0.819065399760123
+"Phytadiene","Cluster_6",0.877722848471837
+"Pristane","Cluster_6",0.867818712254639
+"Phytanic acid","Cluster_1",0.986215861294045
+"Squalene","Cluster_6",0.817846984346963
+"β-Sitosterol","Cluster_6",0.851170211220208
+"Stigmasterol","Cluster_6",0.853006189813642
+"Campesterol","Cluster_6",0.919333591200499
+"Cholesterol","Cluster_6",0.848055079965948
+"Ethyl acetate","Cluster_5",0.983832413575437
+"Ethyl butyrate","Cluster_1",0.897166621527681
+"Ethyl hexanoate","Cluster_2",0.853024443986582
+"Ethyl octanoate","Cluster_3",0.985311919011952
+"Ethyl decanoate","Cluster_1",0.966482063714595
+"Ethyl dodecanoate","Cluster_6",0.989424591247398
+"Ethyl tetradecanoate (Ethyl myristate)","Cluster_5",0.99244332962833
+"Ethyl hexadecanoate (Ethyl palmitate)","Cluster_2",0.480289233150682
+"Ethyl octadecanoate (Ethyl stearate)","Cluster_2",0.537181112515803
+"Ethyl oleate","Cluster_5",0.972659688837562
+"Ethyl linoleate","Cluster_2",0.748468932769595
+"Ethyl lactate","Cluster_1",0.779543306787889
+"Ethyl 3-hydroxybutyrate","Cluster_2",0.930793477274376
+"Ethyl 2-methylbutyrate","Cluster_5",0.999200361304419
+"Ethyl 3-methylbutyrate","Cluster_5",0.96606176252176
+"Ethyl 2-methylpropanoate (Ethyl isobutyrate)","Cluster_2",0.827917088162102
+"Ethyl pyruvate","Cluster_1",0.976345850132726
+"Ethyl acetoacetate","Cluster_5",0.979783734909149
+"Isoamyl acetate","Cluster_3",0.937104821784477
+"Isobutyl acetate","Cluster_2",0.707922437770853
+"Hexyl acetate","Cluster_3",0.945925435063008
+"Heptyl acetate","Cluster_1",0.971214977321587
+"Octyl acetate","Cluster_4",0.58020043617196
+"Nonyl acetate","Cluster_2",0.582379982403971
+"Decyl acetate","Cluster_5",0.992353009589198
+"Phenylpropyl acetate","Cluster_1",0.662599351699613
+"Cinnamyl acetate","Cluster_6",0.778407510801393
+"Methyl benzoate","Cluster_5",0.993551907165651
+"Ethyl benzoate","Cluster_1",0.744848361542769
+"Methyl anthranilate","Cluster_6",0.978843903499065
+"Ethyl anthranilate","Cluster_5",0.970193439545782
+"Methyl nicotinate","Cluster_2",0.957420178899886
+"Ethyl nicotinate","Cluster_6",0.741952597589762
+"Methyl 2-furoate","Cluster_4",0.4965704875821
+"Ethyl 2-furoate","Cluster_5",0.9973345021745
+"Isoamyl butyrate","Cluster_5",0.984000208528005
+"Isoamyl hexanoate","Cluster_6",0.67440979359935
+"Isoamyl octanoate","Cluster_6",0.876418932299446
+"Phenylethyl butyrate","Cluster_4",0.348540848200637
+"Phenylethyl hexanoate","Cluster_6",0.602981204750605
+"Benzyl butyrate","Cluster_4",0.744616867813895
+"Hexyl butyrate","Cluster_3",0.928880731334504
+"Ethyl 3-phenylpropanoate (Ethyl hydrocinnamate)","Cluster_2",0.86963817745813
+"Methyl jasmonate","Cluster_5",0.974442270229805
+"Methyl dihydrojasmonate (Hedione)","Cluster_1",0.965196136184529
+"Dimethyl phthalate","Cluster_1",0.654252174980671
+"Diethyl phthalate","Cluster_5",0.981938752241728
+"Ethyl 2-hydroxybenzoate (Ethyl salicylate)","Cluster_3",0.964273462009695
+"Benzyl formate","Cluster_6",0.473304178848559
+"Phenylethyl formate","Cluster_1",0.750267192178349
+"Geranyl formate","Cluster_2",0.868612962425359
+"Linalyl formate","Cluster_4",0.782634851914241
+"Ethyl 3-(methylthio)propanoate","Cluster_4",0.403693510038468
+"S-Methyl thioacetate","Cluster_3",0.975919629198796
+"S-Methyl thiobutyrate","Cluster_1",0.532232521499654
+"S-Ethyl thioacetate","Cluster_3",0.95830844414148
+"Acetic acid","Cluster_1",0.978513245911589
+"Propanoic acid (Propionic acid)","Cluster_1",0.980735280804753
+"Butyric acid (Butanoic acid)","Cluster_1",0.988508312400831
+"Isobutyric acid (2-Methylpropanoic acid)","Cluster_1",0.976993352136357
+"Pentanoic acid (Valeric acid)","Cluster_1",0.976576934794031
+"2-Methylbutyric acid","Cluster_1",0.986289204854557
+"3-Methylbutyric acid (Isovaleric acid)","Cluster_1",0.98173436896207
+"Hexanoic acid (Caproic acid)","Cluster_1",0.970027175677961
+"Heptanoic acid (Enanthic acid)","Cluster_1",0.980451359423783
+"Octanoic acid (Caprylic acid)","Cluster_1",0.979667261407384
+"Nonanoic acid (Pelargonic acid)","Cluster_1",0.985479295720527
+"Decanoic acid (Capric acid)","Cluster_1",0.967851272759018
+"Undecanoic acid","Cluster_1",0.984319717923096
+"Dodecanoic acid (Lauric acid)","Cluster_1",0.98317065726206
+"Tetradecanoic acid (Myristic acid)","Cluster_1",0.986143098968852
+"Hexadecanoic acid (Palmitic acid)","Cluster_1",0.982701605926502
+"Octadecanoic acid (Stearic acid)","Cluster_1",0.961911497435584
+"Oleic acid","Cluster_1",0.980954801137366
+"Linoleic acid","Cluster_1",0.979699501607359
+"Linolenic acid (α-Linolenic acid)","Cluster_1",0.987260705689205
+"Benzoic acid","Cluster_1",0.984258772008856
+"Salicylic acid","Cluster_1",0.986463024611598
+"Gentisic acid (2,5-Dihydroxybenzoic acid)","Cluster_1",0.986049400352193
+"Gallic acid","Cluster_1",0.986053477896312
+"Pyruvic acid","Cluster_1",0.989266705736408
+"Lactic acid","Cluster_1",0.985355334411874
+"3-Hydroxybutyric acid","Cluster_1",0.982012351379615
+"Succinic acid","Cluster_1",0.977272637011881
+"Fumaric acid","Cluster_1",0.958877871978067
+"Malic acid","Cluster_1",0.969900894547231
+"Citric acid","Cluster_1",0.983567721022222
+"Isocitric acid","Cluster_1",0.980971966396534
+"α-Ketoglutaric acid","Cluster_1",0.978529734920586
+"Oxaloacetic acid","Cluster_1",0.986964102427649
+"Shikimic acid","Cluster_1",0.982185390957584
+"Quinic acid","Cluster_1",0.98924898451966
+"Chlorogenic acid (5-Caffeoylquinic acid)","Cluster_1",0.983169438511886
+"Neochlorogenic acid (3-Caffeoylquinic acid)","Cluster_1",0.96681794616421
+"Cryptochlorogenic acid (4-Caffeoylquinic acid)","Cluster_1",0.990651039431257
+"Feruloylquinic acid","Cluster_1",0.99063857517082
+"p-Coumaroylquinic acid","Cluster_1",0.982274584436587
+"Nicotinic acid (Niacin, Vitamin B3)","Cluster_1",0.983611837566274
+"Methanol","Cluster_6",0.813952155220232
+"Ethanol","Cluster_6",0.752182222164288
+"1-Propanol","Cluster_2",0.924950152276355
+"2-Propanol (Isopropanol)","Cluster_4",0.724502341408785
+"1-Butanol","Cluster_5",0.992636304674437
+"2-Butanol","Cluster_4",0.502187746324076
+"Isobutanol (2-Methyl-1-propanol)","Cluster_5",0.991276892206051
+"1-Pentanol","Cluster_1",0.937350746970138
+"2-Pentanol","Cluster_4",0.860988097659772
+"3-Methyl-1-butanol (Isoamyl alcohol)","Cluster_1",0.859032450178044
+"2-Methyl-1-butanol (Active amyl alcohol)","Cluster_2",0.755477108950201
+"3-Methyl-2-butanol","Cluster_4",0.450082967645945
+"1-Hexanol","Cluster_3",0.948155124379493
+"(E)-2-Hexen-1-ol","Cluster_5",0.991206143888331
+"(Z)-3-Hexen-1-ol (Leaf alcohol)","Cluster_2",0.982608449428607
+"1-Heptanol","Cluster_2",0.412816443066486
+"1-Octen-3-ol","Cluster_1",0.976487744028468
+"1-Octanol","Cluster_5",0.991963379935903
+"1-Nonanol","Cluster_3",0.926526320139952
+"1-Decanol","Cluster_1",0.539681244320976
+"1-Dodecanol (Lauryl alcohol)","Cluster_4",0.54682610766573
+"1-Tetradecanol (Myristyl alcohol)","Cluster_1",0.470437996310935
+"1-Hexadecanol (Cetyl alcohol)","Cluster_1",0.95562272493066
+"2,3-Butanediol","Cluster_2",0.962028029615754
+"1,3-Butanediol","Cluster_2",0.447239667241122
+"1,2-Propanediol (Propylene glycol)","Cluster_6",0.474841079884068
+"1,3-Propanediol","Cluster_2",0.694374337628464
+"Glycerol","Cluster_1",0.523985530405792
+"Erythritol","Cluster_5",0.997969347672579
+"Mannitol","Cluster_2",0.771382536784766
+"Sorbitol","Cluster_3",0.972352778807358
+"Inositol (myo-Inositol)","Cluster_1",0.837125071362226
+"2-Phenylethanol","Cluster_1",0.554433348336438
+"Tyrosol (4-Hydroxyphenylethanol)","Cluster_6",0.541699704366443
+"Tryptophol (Indole-3-ethanol)","Cluster_5",0.985583567417101
+"Acetaldehyde","Cluster_3",0.988904005137636
+"Propanal (Propionaldehyde)","Cluster_1",0.891387321946033
+"Butanal (Butyraldehyde)","Cluster_5",0.994576155103985
+"Isobutyraldehyde (2-Methylpropanal)","Cluster_3",0.957436010267148
+"3-Methylbutanal (Isovaleraldehyde)","Cluster_3",0.967577447132972
+"Pentanal (Valeraldehyde)","Cluster_3",0.951981516482901
+"Hexanal","Cluster_6",0.979974613906828
+"(E)-2-Hexenal (Leaf aldehyde)","Cluster_3",0.97113085743829
+"(Z)-3-Hexenal","Cluster_5",0.999235089534705
+"Heptanal","Cluster_2",0.712092709275561
+"(E)-2-Heptenal","Cluster_2",0.977259209510902
+"Octanal","Cluster_2",0.833433731879182
+"(E)-2-Octenal","Cluster_4",0.859874443008391
+"Nonanal","Cluster_3",0.976399770282245
+"(E)-2-Nonenal","Cluster_4",0.889704959593445
+"Decanal","Cluster_5",0.984961295044015
+"(E)-2-Decenal","Cluster_3",0.987575810425162
+"(E,E)-2,4-Decadienal","Cluster_4",0.774877300701973
+"(E,E)-2,4-Heptadienal","Cluster_1",0.358047522997023
+"(E,E)-2,4-Nonadienal","Cluster_4",0.725861907118237
+"Formaldehyde","Cluster_1",0.583266839889328
+"Acetone","Cluster_6",0.938189559703399
+"2-Butanone (Methyl ethyl ketone)","Cluster_2",0.414045096864147
+"2-Pentanone","Cluster_5",0.993068058326923
+"2-Heptanone","Cluster_3",0.965633754868016
+"2-Octanone","Cluster_1",0.746360526055148
+"2-Nonanone","Cluster_2",0.858728114958554
+"2-Decanone","Cluster_2",0.708041548912068
+"2-Undecanone","Cluster_6",0.665376858524652
+"2-Dodecanone","Cluster_1",0.380387742418815
+"3-Pentanone (Diethyl ketone)","Cluster_2",0.907799584016527
+"3-Octanone","Cluster_1",0.466838462869273
+"Diacetyl (2,3-Butanedione)","Cluster_1",0.731195180656525
+"Acetoin (3-Hydroxy-2-butanone)","Cluster_5",0.997572556033755
+"3-Hydroxy-2-pentanone","Cluster_3",0.919903328046571
+"4-Hydroxy-2-butanone","Cluster_3",0.960447454498855
+"1-Hydroxy-2-propanone (Hydroxyacetone)","Cluster_5",0.997996905482139
+"Methylglyoxal (Pyruvaldehyde)","Cluster_5",0.988953475528498
+"Glyoxal","Cluster_2",0.698168181210027
+"2-Cyclopenten-1-one","Cluster_4",0.467680192709618
+"2,5-Dimethyl-4-hydroxy-3(2H)-furanone (HDMF)","Cluster_2",0.876076192741851
+"p-Anisaldehyde (4-Methoxybenzaldehyde)","Cluster_6",0.855413417435767
+"p-Tolualdehyde (4-Methylbenzaldehyde)","Cluster_1",0.899389804483543
+"2-Phenyl-2-butenal","Cluster_1",0.917743764586221
+"5-Hydroxymethylfurfural (HMF)","Cluster_2",0.854851149225147
+"2-Furaldehyde (Furfural isomer)","Cluster_6",0.815132184811339
+"3-Furaldehyde","Cluster_2",0.760481486273347
+"Hydrogen sulfide (H2S)","Cluster_5",0.992795192587737
+"Methanethiol (Methyl mercaptan)","Cluster_5",0.991581209565965
+"Ethanethiol (Ethyl mercaptan)","Cluster_5",0.993553151750494
+"Propanethiol","Cluster_5",0.998278883234976
+"Dimethyl sulfide (DMS)","Cluster_5",0.99628606642098
+"Dimethyl disulfide (DMDS)","Cluster_5",0.998164318921309
+"Dimethyl trisulfide (DMTS)","Cluster_5",0.997681877694795
+"Dimethyl tetrasulfide","Cluster_5",0.986554965020061
+"Diethyl sulfide","Cluster_5",0.997995459184532
+"Diethyl disulfide","Cluster_5",0.99639821230587
+"3-(Methylthio)propanoic acid","Cluster_1",0.984784129595403
+"S-Methyl methionine (Vitamin U)","Cluster_5",0.97957522795531
+"2-Furfurylthiol (2-Furanmethanethiol)","Cluster_5",0.991507767089132
+"2-Thiophenethiol","Cluster_5",0.993248197868146
+"3-Mercaptohexan-1-ol (3MH)","Cluster_5",0.942047055405853
+"3-Mercaptohexyl acetate (3MHA)","Cluster_5",0.998673898606432
+"4-Mercapto-4-methylpentan-2-one (4MMP)","Cluster_5",0.988921743671017
+"Benzyl mercaptan","Cluster_5",0.987116215733877
+"Phenylmethanethiol (Benzyl mercaptan isomer)","Cluster_5",0.967502135755043
+"2-Phenylethanethiol","Cluster_5",0.977839515891793
+"S-Methyl 2-methylbutanethioate","Cluster_5",0.998459024976764
+"S-Methyl 3-methylbutanethioate","Cluster_5",0.995910228491453
+"Thiophene","Cluster_5",0.998409447425271
+"2-Methylthiophene","Cluster_5",0.990896803957028
+"3-Methylthiophene","Cluster_5",0.995966432841601
+"2,5-Dimethylthiophene","Cluster_5",0.997301525491239
+"2-Acetylthiophene","Cluster_5",0.983548493396157
+"3-Acetylthiophene","Cluster_5",0.959846512024953
+"Thiazole","Cluster_5",0.97736797301266
+"2-Methylthiazole","Cluster_5",0.992068958160759
+"4-Methylthiazole","Cluster_5",0.995399760081753
+"2,4-Dimethylthiazole","Cluster_5",0.966462148209781
+"2,5-Dimethylthiazole","Cluster_5",0.987501631053064
+"2-Isobutylthiazole","Cluster_5",0.983795329241784
+"Benzothiazole","Cluster_5",0.993615153036802
+"3-Methyl-2-thiolanyl acetate","Cluster_5",0.992449766273513
+"Pyridine","Cluster_1",0.860269146639318
+"2-Methylpyridine (α-Picoline)","Cluster_3",0.973518454722579
+"3-Methylpyridine (β-Picoline)","Cluster_5",0.978462249081454
+"4-Methylpyridine (γ-Picoline)","Cluster_4",0.684612761940163
+"2,6-Dimethylpyridine (Lutidine)","Cluster_5",0.959462542807812
+"3-Ethylpyridine","Cluster_3",0.976962536032078
+"2-Ethylpyridine","Cluster_5",0.99192855834832
+"4-Ethylpyridine","Cluster_2",0.803753378760588
+"2-Acetylpyridine","Cluster_3",0.911924588964719
+"3-Acetylpyridine","Cluster_5",0.983350810552149
+"4-Acetylpyridine","Cluster_1",0.925979514151986
+"2-Isobutylpyridine","Cluster_3",0.968321678755379
+"2-Isopropylpyridine","Cluster_3",0.979227796547446
+"2-Pentylpyridine","Cluster_1",0.799031943484417
+"Nicotinic acid methyl ester (Methyl nicotinate)","Cluster_1",0.970830096948994
+"2-Vinylpyridine","Cluster_6",0.582625008845848
+"Pyrrole","Cluster_5",0.996083059320576
+"2-Methylpyrrole","Cluster_5",0.982867574133067
+"N-Methylpyrrole","Cluster_5",0.983028845536652
+"N-Acetylpyrrole","Cluster_5",0.966555464175462
+"2-Formylpyrrole","Cluster_5",0.993976035991895
+"5-Methyl-2-formylpyrrole","Cluster_5",0.98676756753307
+"1-Pyrroline","Cluster_2",0.79846630314598
+"Pyrrolidine","Cluster_4",0.711156151202123
+"2-Acetyl-3-methylpyrazine","Cluster_5",0.996065440379748
+"2-Methyl-5-vinylpyrazine","Cluster_5",0.991370003641956
+"2-Methyl-6-vinylpyrazine","Cluster_5",0.977555753424861
+"Indole","Cluster_4",0.57184876955892
+"Skatole (3-Methylindole)","Cluster_6",0.583445934163582
+"Indole-3-acetic acid (IAA)","Cluster_1",0.980989498178721
+"Indole-3-acetaldehyde","Cluster_1",0.966918768425841
+"Quinoline","Cluster_4",0.753108040114125
+"Isoquinoline","Cluster_1",0.348425458570808
+"2-Methylquinoline (Quinaldine)","Cluster_4",0.592109860912234
+"4-Methylquinoline (Lepidine)","Cluster_5",0.995249692069031
+"Nicotine","Cluster_2",0.58059649418872
+"Nornicotine","Cluster_2",0.555964076421488
+"Anatabine","Cluster_2",0.583607237685386
+"Anabasine","Cluster_1",0.439086691346413
+"Myosmine","Cluster_5",0.978141687794874
+"Cotinine","Cluster_4",0.438810463314355
+"Nicotyrine","Cluster_4",0.588663597143021
+"Nicotinic acid (Niacin)","Cluster_1",0.988413068916505
+"Nicotinamide","Cluster_1",0.48343550570231
+"Anatabinine","Cluster_3",0.971744433957664
+"2,3'-Bipyridyl","Cluster_2",0.838425417662255
+"γ-Butyrolactone (GBL)","Cluster_3",0.980087281024614
+"γ-Valerolactone","Cluster_5",0.988482189351926
+"γ-Hexalactone","Cluster_2",0.969611519772354
+"γ-Heptalactone","Cluster_2",0.564533916475726
+"γ-Octalactone","Cluster_5",0.995462452852656
+"γ-Nonalactone","Cluster_2",0.894509553616298
+"γ-Decalactone","Cluster_1",0.907061444549697
+"γ-Undecalactone","Cluster_3",0.959898259031698
+"γ-Dodecalactone","Cluster_5",0.995695174520222
+"δ-Hexalactone","Cluster_2",0.423316857658104
+"δ-Octalactone","Cluster_2",0.865837264382346
+"δ-Decalactone","Cluster_2",0.443502041736741
+"δ-Undecalactone","Cluster_4",0.411700479202081
+"δ-Dodecalactone","Cluster_3",0.940144771082375
+"Coumarin","Cluster_5",0.990142768292773
+"Dihydrocoumarin","Cluster_4",0.969099534562978
+"6-Pentyl-2H-pyran-2-one","Cluster_3",0.936285981500671
+"6-Pentyl-5,6-dihydro-2H-pyran-2-one (Massoia lactone)","Cluster_1",0.650451190077432
+"Whiskey lactone (Oak lactone)","Cluster_5",0.98183586828736
+"Pantolactone","Cluster_3",0.952036742795402
+"Tetrahydro-6-methyl-2H-pyran-2-one","Cluster_5",0.983641388809933
+"Cembratriene-diol (CBT-diol)","Cluster_1",0.982294616430381
+"α-Cembratriene-diol","Cluster_3",0.973671430606965
+"β-Cembratriene-diol","Cluster_3",0.976316174738228
+"Tabanone (4,8,13-Duvatriene-1,3-diol)","Cluster_5",0.988050299971156
+"Duvantriene (4,8,12,16-Tetramethylheptadeca-1,3,7,11,15-pentaene)","Cluster_2",0.924977685941799
+"Duvatrienediol (DVT-diol)","Cluster_5",0.999449843940979
+"α-Duvatrienediol","Cluster_3",0.923102334509097
+"β-Duvatrienediol","Cluster_1",0.960058659897925
+"Loliolide","Cluster_5",0.990381643871061
+"Solanafuran","Cluster_2",0.851019443075718
+"Tobacco lactone","Cluster_5",0.984568420957098
+"Pentadecane","Cluster_2",0.762993995861718
+"Heptadecane","Cluster_4",0.492244021143645
+"Nonadecane","Cluster_5",0.997833758050381
+"Heneicosane","Cluster_5",0.99581524067317
+"Tricosane","Cluster_2",0.742908707952253
+"Pentacosane","Cluster_5",0.978648135108487
+"Heptacosane","Cluster_1",0.536364009010982
+"Nonacosane","Cluster_3",0.977540210559825
+"Hentriacontane","Cluster_3",0.970152455158932
+"1,1-Diethoxyethane (Acetal)","Cluster_1",0.641837777471959
+"1,1-Diethoxypropane","Cluster_1",0.940946563376844
+"2-Ethoxyethanol","Cluster_5",0.995685454402353
+"Anethole (trans-p-Anethole)","Cluster_4",0.913309171864129
+"Estragole (p-Allylanisole)","Cluster_4",0.893392476931966
+"Myristicin","Cluster_4",0.883655155268862
+"Apiol","Cluster_4",0.843334762729091
+"Safrole","Cluster_4",0.84207666604216
+"Asarone","Cluster_4",0.92114851235219
+"Elemicin","Cluster_4",0.910239986589277
+"Eugenol methyl ether (Methyleugenol)","Cluster_4",0.84362677853144
+"Glucose","Cluster_1",0.80654727665145
+"Fructose","Cluster_1",0.765578940303784
+"Sucrose","Cluster_3",0.967697151001615
+"Pyruvate","Cluster_2",0.389302206167835
+"Lactate","Cluster_4",0.46411416663056
+"Acetate","Cluster_3",0.973361880435592
+"Citrate","Cluster_4",0.880671010785493
+"Alpha-ketoglutarate","Cluster_6",0.906636271268622
+"Succinate","Cluster_5",0.993592220302156
+"Fumarate","Cluster_1",0.912771068551307
+"Malate","Cluster_5",0.989869770819301
+"Oxaloacetate","Cluster_3",0.977776704622833
+"Alanine","Cluster_3",0.984129134468126
+"Arginine","Cluster_3",0.969020713366947
+"Aspartate","Cluster_3",0.993658215204485
+"Glutamate","Cluster_3",0.964369677563577
+"Glycine","Cluster_3",0.983523345749044
+"Leucine","Cluster_3",0.983207514128478
+"Lysine","Cluster_3",0.962411195523068
+"Phenylalanine","Cluster_3",0.985229896688541
+"Tyrosine","Cluster_3",0.991987332660751
+"Valine","Cluster_3",0.92938088380511
+"Caffeine","Cluster_2",0.579495984698887
+"Palmitic acid","Cluster_1",0.981007576210616
+"Choline","Cluster_1",0.781901338199498
+"ATP","Cluster_2",0.807288901127018
+"ADP","Cluster_4",0.500910543641554
+"AMP","Cluster_2",0.732334836924653
+"beta-Carotene","Cluster_6",0.772434490784026
+"Lycopene","Cluster_6",0.84851793817769
+"Chlorogenic acid","Cluster_1",0.977310965095103
+"Metabolite_632","Cluster_2",0.845318197356206
+"Metabolite_633","Cluster_2",0.805544240707365
+"Metabolite_634","Cluster_3",0.958652411019403
+"Metabolite_635","Cluster_2",0.394793823085195
+"Metabolite_636","Cluster_1",0.375973594761485
+"Metabolite_637","Cluster_1",0.75757299444659
+"Metabolite_638","Cluster_2",0.963999894045595
+"Metabolite_639","Cluster_2",0.881720277241983
+"Metabolite_640","Cluster_3",0.969500351247393
+"Metabolite_641","Cluster_5",0.984621095974135
+"Metabolite_642","Cluster_3",0.954371912404136
+"Metabolite_643","Cluster_5",0.996045504434049
+"Metabolite_644","Cluster_3",0.986513774061312
+"Metabolite_645","Cluster_6",0.633628112893803
+"Metabolite_646","Cluster_2",0.823301336106726
+"Metabolite_647","Cluster_2",0.896506960878135
+"Metabolite_648","Cluster_2",0.733064898799317
+"Metabolite_649","Cluster_2",0.900340389909075
+"Metabolite_650","Cluster_5",0.990404426345749
+"Metabolite_651","Cluster_4",0.590597543689338
+"Metabolite_652","Cluster_3",0.981010320495421
+"Metabolite_653","Cluster_5",0.969008718074012
+"Metabolite_654","Cluster_6",0.909770511681817
+"Metabolite_655","Cluster_2",0.563734580084267
+"Metabolite_656","Cluster_6",0.531270106288232
+"Metabolite_657","Cluster_3",0.962070055989863
+"Metabolite_658","Cluster_4",0.87374251387849
+"Metabolite_659","Cluster_2",0.673698649077858
+"Metabolite_660","Cluster_3",0.914671177691326
+"Metabolite_661","Cluster_3",0.976738761542075
+"Metabolite_662","Cluster_6",0.626892584610102
+"Metabolite_663","Cluster_4",0.426816444613974
+"Metabolite_664","Cluster_5",0.994628459344224
+"Metabolite_665","Cluster_2",0.754494412163436
+"Metabolite_666","Cluster_6",0.475973441636838
+"Metabolite_667","Cluster_2",0.59076762714975
+"Metabolite_668","Cluster_1",0.694915379963614
+"Metabolite_669","Cluster_5",0.961645391386819
+"Metabolite_670","Cluster_3",0.961129543302961
+"Metabolite_671","Cluster_4",0.416088391603138
+"Metabolite_672","Cluster_2",0.765859736380236
+"Metabolite_673","Cluster_1",0.498165957657365
+"Metabolite_674","Cluster_5",0.990205885930158
+"Metabolite_675","Cluster_5",0.995794830829288
+"Metabolite_676","Cluster_5",0.985969308407481
+"Metabolite_677","Cluster_1",0.776085405708059
+"Metabolite_678","Cluster_6",0.450974057293668
+"Metabolite_679","Cluster_1",0.788129867301309
+"Metabolite_680","Cluster_3",0.926400491587207
+"Metabolite_681","Cluster_3",0.945808395689063
+"Metabolite_682","Cluster_3",0.973526753886953
+"Metabolite_683","Cluster_5",0.997117444407798
+"Metabolite_684","Cluster_1",0.807924345590364
+"Metabolite_685","Cluster_2",0.844538140317064
+"Metabolite_686","Cluster_1",0.710921261126569
+"Metabolite_687","Cluster_2",0.843056383454535
+"Metabolite_688","Cluster_3",0.953270078509201
+"Metabolite_689","Cluster_2",0.439285559686606
+"Metabolite_690","Cluster_2",0.798138758980402
+"Metabolite_691","Cluster_1",0.865997652019522
+"Metabolite_692","Cluster_6",0.655846969269118
+"Metabolite_693","Cluster_5",0.995606997718116
+"Metabolite_694","Cluster_5",0.989340818800757
+"Metabolite_695","Cluster_4",0.695385182858599
+"Metabolite_696","Cluster_4",0.476279489980821
+"Metabolite_697","Cluster_6",0.778753365504051
+"Metabolite_698","Cluster_5",0.995610172667185
+"Metabolite_699","Cluster_2",0.958603965484155
+"Metabolite_700","Cluster_4",0.771637682395425
+"Metabolite_701","Cluster_2",0.576495775432464
+"Metabolite_702","Cluster_5",0.951820223486474
+"Metabolite_703","Cluster_4",0.89199560131523
+"Metabolite_704","Cluster_3",0.971248275330909
+"Metabolite_705","Cluster_3",0.967065610696091
+"Metabolite_706","Cluster_3",0.902226402854484
+"Metabolite_707","Cluster_3",0.982048844836362
+"Metabolite_708","Cluster_1",0.952623448389531
+"Metabolite_709","Cluster_1",0.418844143131168
+"Metabolite_710","Cluster_3",0.977358903211114
+"Metabolite_711","Cluster_2",0.409947196323215
+"Metabolite_712","Cluster_4",0.409815874019557
+"Metabolite_713","Cluster_5",0.989467395413396
+"Metabolite_714","Cluster_2",0.601246998759236
+"Metabolite_715","Cluster_6",0.503193426676964
+"Metabolite_716","Cluster_3",0.964000597599203
+"Metabolite_717","Cluster_5",0.994620938479698
+"Metabolite_718","Cluster_4",0.571733758811005
+"Metabolite_719","Cluster_4",0.516679877380005
+"Metabolite_720","Cluster_2",0.886665268699608
+"Metabolite_721","Cluster_5",0.989537679232615
+"Metabolite_722","Cluster_5",0.983152004618041
+"Metabolite_723","Cluster_1",0.632886063554531
+"Metabolite_724","Cluster_2",0.4042657969522
+"Metabolite_725","Cluster_3",0.986653216393692
+"Metabolite_726","Cluster_5",0.976432784711787
+"Metabolite_727","Cluster_3",0.926881521552645
+"Metabolite_728","Cluster_5",0.979391225510317
+"Metabolite_729","Cluster_2",0.772052522176031
+"Metabolite_730","Cluster_4",0.513026365022915
+"Metabolite_731","Cluster_3",0.90341919555535
+"Metabolite_732","Cluster_5",0.998276899081611
+"Metabolite_733","Cluster_3",0.948905159356845
+"Metabolite_734","Cluster_5",0.99657765864602
+"Metabolite_735","Cluster_3",0.974714012436077
+"Metabolite_736","Cluster_4",0.915789487023059
+"Metabolite_737","Cluster_3",0.964984880502801
+"Metabolite_738","Cluster_3",0.976408696741948
+"Metabolite_739","Cluster_2",0.907557157220812
+"Metabolite_740","Cluster_1",0.394880968469883
+"Metabolite_741","Cluster_5",0.990678154685446
+"Metabolite_742","Cluster_6",0.799347062932098
+"Metabolite_743","Cluster_2",0.916791040032935
+"Metabolite_744","Cluster_6",0.789439665479326
+"Metabolite_745","Cluster_6",0.55301136828162
+"Metabolite_746","Cluster_3",0.918835124300604
+"Metabolite_747","Cluster_3",0.949406749385317
+"Metabolite_748","Cluster_1",0.937975458267367
+"Metabolite_749","Cluster_1",0.618854209389872
+"Metabolite_750","Cluster_1",0.628422233371316
+"Metabolite_751","Cluster_2",0.733698975078485
+"Metabolite_752","Cluster_3",0.953664330043495
+"Metabolite_753","Cluster_3",0.951771437812352
+"Metabolite_754","Cluster_5",0.981907697135703
+"Metabolite_755","Cluster_4",0.49917141303731
+"Metabolite_756","Cluster_3",0.941906661117992
+"Metabolite_757","Cluster_2",0.760070831329158
+"Metabolite_758","Cluster_5",0.968438717587928
+"Metabolite_759","Cluster_3",0.917648744617125
+"Metabolite_760","Cluster_6",0.98085842216451
+"Metabolite_761","Cluster_4",0.554916165117308
+"Metabolite_762","Cluster_1",0.917569689365105
+"Metabolite_763","Cluster_3",0.973983446294285
+"Metabolite_764","Cluster_1",0.96177072051629
+"Metabolite_765","Cluster_4",0.344655839297322
+"Metabolite_766","Cluster_2",0.844350854256975
+"Metabolite_767","Cluster_6",0.711482149014025
+"Metabolite_768","Cluster_3",0.938152940315719
+"Metabolite_769","Cluster_4",0.454431876604913
+"Metabolite_770","Cluster_3",0.920707505880355
+"Metabolite_771","Cluster_3",0.966033916502751
+"Metabolite_772","Cluster_3",0.973703467743981
+"Metabolite_773","Cluster_1",0.968933524832067
+"Metabolite_774","Cluster_3",0.950222167739499
+"Metabolite_775","Cluster_4",0.935106741582216
+"Metabolite_776","Cluster_5",0.992980839517507
+"Metabolite_777","Cluster_5",0.969351390216757
+"Metabolite_778","Cluster_2",0.77427558457287
+"Metabolite_779","Cluster_5",0.973457381288584
+"Metabolite_780","Cluster_2",0.877099447153141
+"Metabolite_781","Cluster_4",0.580512219034331
+"Metabolite_782","Cluster_6",0.982751497585375
+"Metabolite_783","Cluster_3",0.953481104283688
+"Metabolite_784","Cluster_6",0.883613899308943
+"Metabolite_785","Cluster_5",0.996652230253134
+"Metabolite_786","Cluster_3",0.970481539339343
+"Metabolite_787","Cluster_4",0.606722715195664
+"Metabolite_788","Cluster_5",0.9891102193539
+"Metabolite_789","Cluster_5",0.995850784213102
+"Metabolite_790","Cluster_2",0.944786336971205
+"Metabolite_791","Cluster_2",0.758963552520783
+"Metabolite_792","Cluster_3",0.956917266422988
+"Metabolite_793","Cluster_2",0.653000171817825
+"Metabolite_794","Cluster_5",0.985209307390106
+"Metabolite_795","Cluster_4",0.748556040127938
+"Metabolite_796","Cluster_2",0.910535217014642
+"Metabolite_797","Cluster_5",0.97358715764021
+"Metabolite_798","Cluster_2",0.809207176596102
+"Metabolite_799","Cluster_5",0.976844655952461
+"Metabolite_800","Cluster_3",0.978457514056011
+"Metabolite_801","Cluster_2",0.913238313932239
+"Metabolite_802","Cluster_3",0.885492360911867
+"Metabolite_803","Cluster_5",0.996467086269614
+"Metabolite_804","Cluster_5",0.994067831715553
+"Metabolite_805","Cluster_2",0.696481355143952
+"Metabolite_806","Cluster_3",0.966991982555102
+"Metabolite_807","Cluster_3",0.9251463989813
+"Metabolite_808","Cluster_3",0.9759566553992
+"Metabolite_809","Cluster_3",0.958896578745458
+"Metabolite_810","Cluster_1",0.959805600573047
+"Metabolite_811","Cluster_2",0.54587451046726
+"Metabolite_812","Cluster_2",0.585243283930605
+"Metabolite_813","Cluster_1",0.918379152553634
+"Metabolite_814","Cluster_2",0.855629833215659
+"Metabolite_815","Cluster_3",0.969317118998643
+"Metabolite_816","Cluster_4",0.419078519085879
+"Metabolite_817","Cluster_3",0.970982518768743
+"Metabolite_818","Cluster_2",0.819552021007984
+"Metabolite_819","Cluster_5",0.998505516702616
+"Metabolite_820","Cluster_3",0.989584477866552
+"Metabolite_821","Cluster_4",0.737787851865155
+"Metabolite_822","Cluster_3",0.881588604798286
+"Metabolite_823","Cluster_3",0.935567665517884
+"Metabolite_824","Cluster_3",0.963956797110341
+"Metabolite_825","Cluster_5",0.998327115568229
+"Metabolite_826","Cluster_1",0.363186553978982
+"Metabolite_827","Cluster_1",0.494259553405986
+"Metabolite_828","Cluster_4",0.551646002277988
+"Metabolite_829","Cluster_2",0.899897070634908
+"Metabolite_830","Cluster_5",0.987168050038914
+"Metabolite_831","Cluster_5",0.996191939160303
+"Metabolite_832","Cluster_1",0.963690640358018
+"Metabolite_833","Cluster_3",0.942131203574962
+"Metabolite_834","Cluster_3",0.962415609147562
+"Metabolite_835","Cluster_3",0.934788527160288
+"Metabolite_836","Cluster_3",0.958231179436731
+"Metabolite_837","Cluster_3",0.910068212729494
+"Metabolite_838","Cluster_5",0.989740565333385
+"Metabolite_839","Cluster_6",0.761318266044
+"Metabolite_840","Cluster_2",0.422975630239847
+"Metabolite_841","Cluster_6",0.519102729052698
+"Metabolite_842","Cluster_2",0.792280031280678
+"Metabolite_843","Cluster_2",0.432929346015526
+"Metabolite_844","Cluster_1",0.978828345570752
+"Metabolite_845","Cluster_5",0.997655084728568
+"Metabolite_846","Cluster_3",0.978965911507481
+"Metabolite_847","Cluster_1",0.430939651347796
+"Metabolite_848","Cluster_2",0.771756161949648
+"Metabolite_849","Cluster_2",0.925066532112535
+"Metabolite_850","Cluster_3",0.927577641730867
+"Metabolite_851","Cluster_1",0.504942737236035
+"Metabolite_852","Cluster_2",0.747022178929746
+"Metabolite_853","Cluster_2",0.622569901531332
+"Metabolite_854","Cluster_4",0.409652524412905
+"Metabolite_855","Cluster_4",0.883251171633272
+"Metabolite_856","Cluster_4",0.913789517483879
+"Metabolite_857","Cluster_1",0.402541687519239
+"Metabolite_858","Cluster_3",0.942301509981487
+"Metabolite_859","Cluster_5",0.990494955048145
+"Metabolite_860","Cluster_5",0.986295753442158
+"Metabolite_861","Cluster_1",0.568843849036478
+"Metabolite_862","Cluster_1",0.343249155286473
+"Metabolite_863","Cluster_2",0.84443595125897
+"Metabolite_864","Cluster_2",0.904067912452536
+"Metabolite_865","Cluster_2",0.948082764179886
+"Metabolite_866","Cluster_2",0.783835752056248
+"Metabolite_867","Cluster_2",0.706716859232742
+"Metabolite_868","Cluster_3",0.922797374088381
+"Metabolite_869","Cluster_3",0.96770879439327
+"Metabolite_870","Cluster_3",0.950182094150252
+"Metabolite_871","Cluster_2",0.608633513207677
+"Metabolite_872","Cluster_1",0.940537280538437
+"Metabolite_873","Cluster_2",0.883772708684629
+"Metabolite_874","Cluster_3",0.944769487016667
+"Metabolite_875","Cluster_5",0.996310157023808
+"Metabolite_876","Cluster_4",0.559179643762001
+"Metabolite_877","Cluster_5",0.985672301410242
+"Metabolite_878","Cluster_2",0.979896634345256
+"Metabolite_879","Cluster_3",0.915817708041
+"Metabolite_880","Cluster_5",0.984255746515243
+"Metabolite_881","Cluster_5",0.996665295668611
+"Metabolite_882","Cluster_1",0.89371276370301
+"Metabolite_883","Cluster_3",0.960629211147766
+"Metabolite_884","Cluster_3",0.871199196991635
+"Metabolite_885","Cluster_4",0.625723106931711
+"Metabolite_886","Cluster_5",0.985079497929994
+"Metabolite_887","Cluster_3",0.96796651100397
+"Metabolite_888","Cluster_3",0.966555517501971
+"Metabolite_889","Cluster_1",0.550940826604534
+"Metabolite_890","Cluster_5",0.982532697882211
+"Metabolite_891","Cluster_2",0.953631768037839
+"Metabolite_892","Cluster_5",0.984719701633545
+"Metabolite_893","Cluster_4",0.558209018176317
+"Metabolite_894","Cluster_1",0.674814413684388
+"Metabolite_895","Cluster_2",0.968866724196586
+"Metabolite_896","Cluster_4",0.710190259333547
+"Metabolite_897","Cluster_5",0.990516243585947
+"Metabolite_898","Cluster_5",0.993078514151184
+"Metabolite_899","Cluster_1",0.59044818733039
+"Metabolite_900","Cluster_6",0.951656027495007
+"Metabolite_901","Cluster_2",0.66894208761576
+"Metabolite_902","Cluster_2",0.869071730830444
+"Metabolite_903","Cluster_3",0.978226562604549
+"Metabolite_904","Cluster_5",0.996733775392884
+"Metabolite_905","Cluster_1",0.900573545733732
+"Metabolite_906","Cluster_1",0.479399220451267
+"Metabolite_907","Cluster_2",0.862581262545096
+"Metabolite_908","Cluster_5",0.992558264466599
+"Metabolite_909","Cluster_1",0.573147819178195
+"Metabolite_910","Cluster_2",0.70475254064963
+"Metabolite_911","Cluster_1",0.885260854618024
+"Metabolite_912","Cluster_3",0.968189854593768
+"Metabolite_913","Cluster_3",0.937134729968985
+"Metabolite_914","Cluster_4",0.388697844844937
+"Metabolite_915","Cluster_5",0.998217104142255
+"Metabolite_916","Cluster_1",0.624599669535054
+"Metabolite_917","Cluster_1",0.953926594876451
+"Metabolite_918","Cluster_1",0.705708229485434
+"Metabolite_919","Cluster_2",0.845866415201018
+"Metabolite_920","Cluster_5",0.993631819367659
+"Metabolite_921","Cluster_5",0.976923864205562
+"Metabolite_922","Cluster_3",0.969570596861108
+"Metabolite_923","Cluster_3",0.916552924746423
+"Metabolite_924","Cluster_3",0.955247592354057
+"Metabolite_925","Cluster_2",0.443030798177801
+"Metabolite_926","Cluster_4",0.790224173562237
+"Metabolite_927","Cluster_3",0.993840058699587
+"Metabolite_928","Cluster_3",0.925393078058998
+"Metabolite_929","Cluster_6",0.843027893410486
+"Metabolite_930","Cluster_2",0.974267446595965
+"Metabolite_931","Cluster_1",0.706029023283912
+"Metabolite_932","Cluster_6",0.663521238305486
+"Metabolite_933","Cluster_3",0.97349827312073
+"Metabolite_934","Cluster_2",0.864660956481173
+"Metabolite_935","Cluster_1",0.808885387275926
+"Metabolite_936","Cluster_2",0.823277738909305
+"Metabolite_937","Cluster_1",0.733406761522258
+"Metabolite_938","Cluster_2",0.96025432927495
+"Metabolite_939","Cluster_2",0.930163559102944
+"Metabolite_940","Cluster_2",0.898158765219553
+"Metabolite_941","Cluster_4",0.489243417758103
+"Metabolite_942","Cluster_4",0.731045153961181
+"Metabolite_943","Cluster_5",0.996960200384512
+"Metabolite_944","Cluster_1",0.959071658453331
+"Metabolite_945","Cluster_5",0.961802045509621
+"Metabolite_946","Cluster_2",0.521800051199839
+"Metabolite_947","Cluster_2",0.748214711345728
+"Metabolite_948","Cluster_4",0.903276417799992
+"Metabolite_949","Cluster_6",0.50295048961205
+"Metabolite_950","Cluster_6",0.904168319626154
+"Metabolite_951","Cluster_2",0.398519169286174
+"Metabolite_952","Cluster_5",0.98123901737899
+"Metabolite_953","Cluster_2",0.886658446749793
+"Metabolite_954","Cluster_6",0.603501797981378
+"Metabolite_955","Cluster_1",0.803538159831641
+"Metabolite_956","Cluster_6",0.564842357537615
+"Metabolite_957","Cluster_4",0.922799566998538
+"Metabolite_958","Cluster_1",0.952187701530679
+"Metabolite_959","Cluster_3",0.97730253424472
+"Metabolite_960","Cluster_3",0.940126504306649
+"Metabolite_961","Cluster_4",0.431163910055229
+"Metabolite_962","Cluster_5",0.99712025228419
+"Metabolite_963","Cluster_1",0.406584733250101
+"Metabolite_964","Cluster_5",0.960100054397638
+"Metabolite_965","Cluster_2",0.906426168411348
+"Metabolite_966","Cluster_5",0.996798727625253
+"Metabolite_967","Cluster_1",0.410869178515476
+"Metabolite_968","Cluster_2",0.598634889439438
+"Metabolite_969","Cluster_4",0.895466669103432
+"Metabolite_970","Cluster_6",0.82780778862207
+"Metabolite_971","Cluster_4",0.88706378487254
+"Metabolite_972","Cluster_3",0.947793448414877
+"Metabolite_973","Cluster_4",0.375230768541373
+"Metabolite_974","Cluster_1",0.369988523154806
+"Metabolite_975","Cluster_2",0.956857826153874
+"Metabolite_976","Cluster_3",0.991378775852079
+"Metabolite_977","Cluster_3",0.975235536525666
+"Metabolite_978","Cluster_2",0.961618999954394
+"Metabolite_979","Cluster_5",0.990389187992193
+"Metabolite_980","Cluster_3",0.930349856701181
+"Metabolite_981","Cluster_2",0.627055447389238
+"Metabolite_982","Cluster_3",0.945138946777054
+"Metabolite_983","Cluster_1",0.445775335933706
+"Metabolite_984","Cluster_5",0.995574014364504
+"Metabolite_985","Cluster_1",0.517656058523599
+"Metabolite_986","Cluster_2",0.623329207162813
+"Metabolite_987","Cluster_2",0.847439307389106
+"Metabolite_988","Cluster_4",0.940211102654848
+"Metabolite_989","Cluster_2",0.587887861186267
+"Metabolite_990","Cluster_5",0.990014090199611
+"Metabolite_991","Cluster_1",0.584929129983741
+"Metabolite_992","Cluster_1",0.916839894734964
+"Metabolite_993","Cluster_4",0.875515170449089
+"Metabolite_994","Cluster_3",0.969569093061246
+"Metabolite_995","Cluster_2",0.921786304009399
+"Metabolite_996","Cluster_6",0.508647590336066
+"Metabolite_997","Cluster_1",0.616352517532303
+"Metabolite_998","Cluster_5",0.989243314075713
+"Metabolite_999","Cluster_1",0.831945262100061
+"Metabolite_1000","Cluster_2",0.558822174800589
