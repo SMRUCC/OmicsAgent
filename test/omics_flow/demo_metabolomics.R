@@ -426,9 +426,21 @@ cat("\n=== Step 18: CMeans Clustering ===\n")
 
 cmeans_result <- run_cmeans(scaled_mat, n_clusters=6, m=2, seed=42)
 cat("  Clusters:", length(unique(cmeans_result$cluster)), "\n")
+
+# Test 1: default single-colour profiles (no palette)
 cmeans_plot <- plot_cmeans_profiles(cmeans_result, sample_info,
+                                    expr_matrix=scaled_mat, top_n=100,
                                     group_col="sample_info")
 export_plot(cmeans_plot, fig_dir, "cmeans_profiles")
+cat("  [test] Single-colour CMeans profiles saved: cmeans_profiles.png\n")
+
+# Test 2: palette-based profiles (one colour per cluster)
+cmeans_plot_pal <- plot_cmeans_profiles(cmeans_result, sample_info,
+                                        expr_matrix=scaled_mat, top_n=100,
+                                        group_col="sample_info",
+                                        palette="Set1")
+export_plot(cmeans_plot_pal, fig_dir, "cmeans_profiles_palette")
+cat("  [test] Palette (Set1) CMeans profiles saved: cmeans_profiles_palette.png\n")
 
 # Export fuzzy c-means membership table (features x cluster 归属度 + 最终 cluster)
 cmeans_csv <- export_cmeans_membership(cmeans_result, tab_dir,
