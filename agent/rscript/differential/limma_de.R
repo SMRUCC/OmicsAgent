@@ -34,8 +34,11 @@
 #'
 #' @return A list with:
 #'   \itemize{
-#'     \item \code{results}: Combined results data.frame.
-#'     \item \code{significant}: Significant features data.frame.
+#'     \item \code{results}: Combined results data.frame. Rows are identified by
+#'       the pure feature name in the \code{feature_id} column (no comparison
+#'       suffix). Contains a \code{significant} logical column and a
+#'       \code{regulation} column with values "up", "down" or "not sig".
+#'     \item \code{significant}: Significant features data.frame (subset of results).
 #'     \item \code{comparisons}: List of per-comparison results.
 #'     \item \code{strategy}: Strategy used.
 #'   }
@@ -135,13 +138,15 @@ run_limma <- function(expr_matrix, sample_info, group_col = "sample_info",
   colnames(combined)[colnames(combined) == "adj.P.Val"] <- "p_adj"
   colnames(combined)[colnames(combined) == "logFC"] <- "logFC"
 
+  # Normalize strategy to lowercase for case-insensitive matching
+  strategy_norm <- tolower(strategy)
+
   # Apply selection strategy
-  if (strategy == "pvalue_logFC") {
+  if (strategy_norm == "pvalue_logfc") {
     combined$significant <- combined$p_adj < p_threshold &
                             abs(combined$logFC) >= logfc_threshold
-    combined$direction <- ifelse(combined$logFC > 0, "up", "down")
 
-  } else if (strategy == "pvalue_vip") {
+  } else if (strategy_norm == "pvalue_vip") {
     if (is.null(vip_result)) {
       stop("vip_result is required for strategy = 'pvalue_vip'")
     }
@@ -151,11 +156,9 @@ run_limma <- function(expr_matrix, sample_info, group_col = "sample_info",
     combined <- merge(combined, vip_df, by = "feature_id", all.x = TRUE)
     combined$significant <- combined$p_adj < p_threshold &
                             combined$vip >= vip_threshold
-    combined$direction <- ifelse(combined$logFC > 0, "up", "down")
 
-  } else if (strategy == "pvalue_topN") {
+  } else if (strategy_norm == "pvalue_topn") {
     combined$significant <- FALSE
-    combined$direction <- ifelse(combined$logFC > 0, "up", "down")
     for (comp in unique(combined$comparison)) {
       comp_idx <- combined$comparison == comp & combined$p_adj < p_threshold
       comp_data <- combined[comp_idx, ]
@@ -166,15 +169,33 @@ run_limma <- function(expr_matrix, sample_info, group_col = "sample_info",
         combined[top_idx, "significant"] <- TRUE
       }
     }
+
+  } else {
+    # Unknown strategy / fallback: default to p-value + logFC rule
+    warning("Unknown strategy '", strategy, "'. Falling back to 'pvalue_logFC'.")
+    combined$significant <- combined$p_adj < p_threshold &
+                            abs(combined$logFC) >= logfc_threshold
   }
+
+  # Ensure significant column exists (e.g. t-test fallback path)
+  if (is.null(combined$significant)) {
+    combined$significant <- combined$p_adj < p_threshold &
+                            abs(combined$logFC) >= logfc_threshold
+  }
+
+  # Add up/down/not sig regulation marker based on significance + logFC direction
+  combined$regulation <- ifelse(combined$significant & combined$logFC > 0, "up",
+                        ifelse(combined$significant & combined$logFC < 0, "down",
+                               "not sig"))
 
   # Select significant
   sig_results <- combined[combined$significant, , drop = FALSE]
 
-  # Set feature_id as row names (with comparison to ensure uniqueness)
-  rownames(combined) <- make.unique(paste(combined$feature_id,
-                                           combined$comparison, sep = "__"))
-  combined$feature_id <- NULL
+  # Keep feature_id as a real column (pure feature name, no comparison suffix)
+  # and reset row names to default to avoid export_table prepending a duplicate
+  # feature_id column derived from row names.
+  rownames(combined) <- NULL
+  rownames(sig_results) <- NULL
 
   return(list(
     results = combined,

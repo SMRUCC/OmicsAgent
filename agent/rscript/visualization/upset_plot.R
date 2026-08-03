@@ -51,17 +51,31 @@ plot_upset <- function(sets, n_intersections = 30, order_by = "size",
   binary_mat$feature_id <- NULL
 
   # Create UpSet plot
-  p <- UpSetR::upset(
-    as.data.frame(binary_mat),
-    nsets = ncol(binary_mat),
-    nintersects = n_intersections,
-    order.by = order_by,
-    sets.bar.color = fill_color,
-    main.bar.color = fill_color,
-    point.size = 2,
-    line.size = 0.5,
-    text.scale = 1.1
-  )
+  # Note: order_by = "size" can crash in UpSetR for data frames with few sets
+  # and many elements (Counter selects a non-existent column). Fall back to
+  # "degree" in that case.
+  p <- NULL
+  orders <- unique(c(order_by, "size", "degree"))
+  for (ord in orders) {
+    p <- tryCatch(
+      UpSetR::upset(
+        as.data.frame(binary_mat),
+        nsets = ncol(binary_mat),
+        nintersects = n_intersections,
+        order.by = ord,
+        sets.bar.color = fill_color,
+        main.bar.color = fill_color,
+        point.size = 2,
+        line.size = 0.5,
+        text.scale = 1.1
+      ),
+      error = function(e) NULL
+    )
+    if (!is.null(p)) break
+  }
+  if (is.null(p)) {
+    stop("Failed to create UpSet plot with order_by = '", order_by, "'.")
+  }
 
   return(p)
 }

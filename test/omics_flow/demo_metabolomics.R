@@ -276,7 +276,7 @@ cat("\n=== Step 14: Heatmap ===\n")
 
 # Select top differential features (use F-test if Limma has none)
 if(sum(limma_result$results$significant, na.rm=TRUE) > 0) {
-  top_features <- head(rownames(cd_results)[order(cd_results$p_value)], 30)
+  top_features <- head(cd_results$feature_id[order(cd_results$p_value)], 30)
 } else {
   # Use top F-test features
   top_features <- head(rownames(f_test_result)[order(f_test_result$p_value)], 30)
