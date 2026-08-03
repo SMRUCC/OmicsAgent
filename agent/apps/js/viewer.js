@@ -161,12 +161,12 @@ function run(BASE_URL) {
 
   /* ===================== 网络层 ===================== */
   function fetchRes(url, signal) {
-    return fetch(url, { cache: "no-store", signal: signal }).then(function (
-      res,
-    ) {
-      if (!res.ok) throw new Error("HTTP " + res.status + " · " + url);
-      return res;
-    });
+    return fetch(url, { cache: "no-store", signal: signal }).then(
+      function (res) {
+        if (!res.ok) throw new Error("HTTP " + res.status + " · " + url);
+        return res;
+      },
+    );
   }
 
   function fetchText(url, signal) {
@@ -421,9 +421,7 @@ function run(BASE_URL) {
     box.appendChild(table);
     wrap.appendChild(box);
 
-    var bar = [
-      mkInfo(body.length + " 行 × " + colCount + " 列"),
-    ];
+    var bar = [mkInfo(body.length + " 行 × " + colCount + " 列")];
 
     // 超量时提供「加载更多」
     if (body.length > shown) {
@@ -816,8 +814,7 @@ function run(BASE_URL) {
 
     // 叶子元素：单行显示 <tag attr="v">text</tag>
     var onlyText =
-      kids.length === 0 ||
-      (kids.length === 1 && kids[0].nodeType === 3);
+      kids.length === 0 || (kids.length === 1 && kids[0].nodeType === 3);
 
     if (onlyText) {
       row.appendChild(el("span", "jt-spacer"));
@@ -853,7 +850,11 @@ function run(BASE_URL) {
     attrsFrag(row);
     row.appendChild(el("span", "tk-punct", ">"));
     row.appendChild(
-      el("span", "jt-summary", "… " + kids.length + " nodes </" + elem.nodeName + ">"),
+      el(
+        "span",
+        "jt-summary",
+        "… " + kids.length + " nodes </" + elem.nodeName + ">",
+      ),
     );
     node.appendChild(row);
 
@@ -959,16 +960,13 @@ function run(BASE_URL) {
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>',
     zoomOut:
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg>',
-    rotL:
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>',
-    rotR:
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>',
+    rotL: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>',
+    rotR: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>',
     flipH:
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M8 7L3 12l5 5z"/><path d="M16 7l5 5-5 5z"/></svg>',
     flipV:
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/><path d="M7 8L12 3l5 5z"/><path d="M7 16l5 5 5-5z"/></svg>',
-    fit:
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>',
+    fit: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>',
     reset:
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9 9 0 0 0-6.36 2.64L3 8"/><polyline points="3 3 3 8 8 8"/></svg>',
   };
@@ -1014,8 +1012,7 @@ function run(BASE_URL) {
         "," +
         sy +
         ")";
-      if (zoomInfo)
-        zoomInfo.textContent = Math.round(st.scale * 100) + "%";
+      if (zoomInfo) zoomInfo.textContent = Math.round(st.scale * 100) + "%";
     }
 
     function zoom(f) {
@@ -1096,31 +1093,61 @@ function run(BASE_URL) {
     var sizeInfo = mkInfo("");
 
     var bar = [
-      mkBtn("放大", "放大（滚轮上）", function () {
-        zoom(1.25);
-      }, ICON.zoomIn),
-      mkBtn("缩小", "缩小（滚轮下）", function () {
-        zoom(1 / 1.25);
-      }, ICON.zoomOut),
+      mkBtn(
+        "放大",
+        "放大（滚轮上）",
+        function () {
+          zoom(1.25);
+        },
+        ICON.zoomIn,
+      ),
+      mkBtn(
+        "缩小",
+        "缩小（滚轮下）",
+        function () {
+          zoom(1 / 1.25);
+        },
+        ICON.zoomOut,
+      ),
       zoomInfo,
       mkSep(),
-      mkBtn("左旋", "逆时针旋转 90°", function () {
-        st.rotate -= 90;
-        apply();
-      }, ICON.rotL),
-      mkBtn("右旋", "顺时针旋转 90°", function () {
-        st.rotate += 90;
-        apply();
-      }, ICON.rotR),
+      mkBtn(
+        "左旋",
+        "逆时针旋转 90°",
+        function () {
+          st.rotate -= 90;
+          apply();
+        },
+        ICON.rotL,
+      ),
+      mkBtn(
+        "右旋",
+        "顺时针旋转 90°",
+        function () {
+          st.rotate += 90;
+          apply();
+        },
+        ICON.rotR,
+      ),
       mkSep(),
-      mkBtn("水平翻转", "左右镜像", function () {
-        st.flipX = !st.flipX;
-        apply();
-      }, ICON.flipH),
-      mkBtn("垂直翻转", "上下镜像", function () {
-        st.flipY = !st.flipY;
-        apply();
-      }, ICON.flipV),
+      mkBtn(
+        "水平翻转",
+        "左右镜像",
+        function () {
+          st.flipX = !st.flipX;
+          apply();
+        },
+        ICON.flipH,
+      ),
+      mkBtn(
+        "垂直翻转",
+        "上下镜像",
+        function () {
+          st.flipY = !st.flipY;
+          apply();
+        },
+        ICON.flipV,
+      ),
       mkSep(),
       mkBtn("适应窗口", "缩放至完整显示", fit, ICON.fit),
       mkBtn("1:1", "原始尺寸", function () {
@@ -1147,7 +1174,8 @@ function run(BASE_URL) {
       // 降级：交给浏览器内置 PDF 查看器
       console.warn("pdf.js 不可用，降级为浏览器内置查看器");
       var wrap = el("div");
-      wrap.style.cssText = "position:absolute;inset:0;display:flex;flex-direction:column";
+      wrap.style.cssText =
+        "position:absolute;inset:0;display:flex;flex-direction:column";
       var tip = el(
         "div",
         "banner info",
@@ -1159,7 +1187,11 @@ function run(BASE_URL) {
       frame.style.flex = "1";
       wrap.appendChild(tip);
       wrap.appendChild(frame);
-      return { node: wrap, toolbar: [mkOpenExternal(ctx.url, ctx.name)], fullBleed: true };
+      return {
+        node: wrap,
+        toolbar: [mkOpenExternal(ctx.url, ctx.name)],
+        fullBleed: true,
+      };
     }
 
     try {
@@ -1291,14 +1323,24 @@ function run(BASE_URL) {
         gotoPage(current);
       }),
       mkSep(),
-      mkBtn("放大", "放大", function () {
-        scale = Math.min(4, scale * 1.25);
-        reflow();
-      }, ICON.zoomIn),
-      mkBtn("缩小", "缩小", function () {
-        scale = Math.max(0.25, scale / 1.25);
-        reflow();
-      }, ICON.zoomOut),
+      mkBtn(
+        "放大",
+        "放大",
+        function () {
+          scale = Math.min(4, scale * 1.25);
+          reflow();
+        },
+        ICON.zoomIn,
+      ),
+      mkBtn(
+        "缩小",
+        "缩小",
+        function () {
+          scale = Math.max(0.25, scale / 1.25);
+          reflow();
+        },
+        ICON.zoomOut,
+      ),
       zoomInfo,
     ];
 
@@ -1308,7 +1350,8 @@ function run(BASE_URL) {
   /* ===================== ⑧ HTML（沙箱） ===================== */
   function renderHtmlDoc(text, ctx) {
     var host = el("div");
-    host.style.cssText = "position:absolute;inset:0;display:flex;flex-direction:column";
+    host.style.cssText =
+      "position:absolute;inset:0;display:flex;flex-direction:column";
 
     var frame = el("iframe", "html-frame");
     // 不授予 allow-same-origin / allow-scripts：
@@ -1328,8 +1371,7 @@ function run(BASE_URL) {
         frame.style.display = "none";
         if (!srcView) {
           srcView = el("div", "stage-pad");
-          srcView.style.cssText =
-            "flex:1;overflow:auto;position:relative";
+          srcView.style.cssText = "flex:1;overflow:auto;position:relative";
           var r = renderPlainText(text, ctx);
           srcView.appendChild(r.node.firstChild);
           host.appendChild(srcView);
@@ -1343,11 +1385,7 @@ function run(BASE_URL) {
 
     return {
       node: host,
-      toolbar: [
-        toggleBtn,
-        mkSep(),
-        mkInfo("已在沙箱中隔离渲染（禁用脚本）"),
-      ],
+      toolbar: [toggleBtn, mkSep(), mkInfo("已在沙箱中隔离渲染（禁用脚本）")],
       fullBleed: true,
     };
   }
