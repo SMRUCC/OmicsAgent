@@ -20,6 +20,14 @@
   /* 图像舞台棋盘格 */
   --checker-a: #ffffff;
   --checker-b: #eeeeee;
+
+  /* 热图单元格文字对比色（按背景亮度二选一） */
+  --hm-on-dark: #ffffff;
+  --hm-on-light: #101418;
+  --hm-hover-veil: rgba(0, 0, 0, 0.09);
+
+  /* 表单校验错误文字（kb.css 未提供红色卡片令牌） */
+  --vfp-error: #c42b1c;
 }
 
 /* ===================== 语法着色令牌（暗色 · VS Code Dark+） ===================== */
@@ -36,6 +44,12 @@ html[data-theme="dark"] {
 
   --checker-a: #2a2a2a;
   --checker-b: #232323;
+
+  --hm-on-dark: #ffffff;
+  --hm-on-light: #101418;
+  --hm-hover-veil: rgba(255, 255, 255, 0.14);
+
+  --vfp-error: #f0806c;
 }
 
 /* ===================== 布局：单列（无侧栏） ===================== */
@@ -223,6 +237,46 @@ html[data-theme="dark"] {
   box-shadow: 0 0 0 2px var(--accent-soft);
 }
 
+/* 下拉选择（调色板等） */
+.tool-select {
+  flex: none;
+  height: 32px;
+  max-width: 148px;
+  padding: 0 6px;
+  font-family: var(--font-ui);
+  font-size: 12.5px;
+  color: var(--ui-foreground);
+  background: var(--ui-background);
+  border: 1px solid var(--ui-border-strong);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.tool-select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+}
+
+.tool-select:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* 调色板色带预览条 */
+.pal-swatch {
+  flex: none;
+  width: 34px;
+  height: 18px;
+  border-radius: 3px;
+  border: 1px solid var(--ui-border-strong);
+  transition: opacity 0.2s ease;
+}
+
 /* ===================== 舞台（滚动容器） ===================== */
 .viewer-stage {
   flex: 1;
@@ -290,6 +344,131 @@ html[data-theme="dark"] {
   background: var(--ui-background-hover);
 }
 
+/* 数值列：右对齐 + 等宽字体，便于比对位数 */
+.vtable td.num,
+.vtable th.num .vth-label {
+  font-family: var(--font-code);
+}
+
+.vtable td.num {
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* ---- 可排序列头 ---- */
+.vtable th.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.vtable th.sortable:hover {
+  background: var(--ui-background-hover);
+}
+
+.vtable th.sortable.sorted {
+  color: var(--accent);
+}
+
+.vth-inner {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.vth-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 300px;
+}
+
+/* 排序指示器：方向箭头 + 多列排序时的优先级序号 */
+.vth-sort {
+  flex: none;
+  font-size: 9px;
+  line-height: 1;
+  letter-spacing: 0.5px;
+  color: var(--accent);
+  min-width: 0;
+}
+
+.vth-sort.on {
+  min-width: 12px;
+}
+
+/* 筛选漏斗：默认淡出，hover 列头或已激活时显现 */
+.vth-filter {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  margin-left: auto;
+  cursor: pointer;
+  color: var(--ui-foreground-subtle);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  opacity: 0;
+  transition:
+    opacity 0.15s ease,
+    color 0.2s ease,
+    background 0.2s ease;
+}
+
+.vtable th:hover .vth-filter,
+.vth-filter:focus-visible {
+  opacity: 1;
+}
+
+.vth-filter:hover {
+  color: var(--accent);
+  background: var(--ui-background);
+  border-color: var(--ui-border-strong);
+}
+
+/* 已设置筛选：常驻高亮 */
+.vth-filter.on,
+.vth-filter.popping {
+  opacity: 1;
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ---- 热图模式 ---- */
+/* 单元格背景由 JS 写内联样式，此处需让出 background 属性：
+ * 斑马纹显式置空，hover 改用 inset 遮罩，二者才能与内联色共存。 */
+.vtable.heatmap-on tbody tr:nth-child(even) td {
+  background: transparent;
+}
+
+.vtable.heatmap-on tbody tr:hover td {
+  background: transparent;
+  box-shadow: inset 0 0 0 9999px var(--hm-hover-veil);
+}
+
+.vtable.heatmap-on tbody tr:hover td.rownum {
+  background: var(--ui-background-alt);
+}
+
+.vtable td.hm-dark {
+  color: var(--hm-on-dark);
+}
+
+.vtable td.hm-light {
+  color: var(--hm-on-light);
+}
+
+/* 筛选结果为空时的占位提示 */
+.vtable-empty {
+  padding: 26px 16px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--ui-foreground-muted);
+}
+
 /* 行号列 */
 .vtable .rownum {
   position: sticky;
@@ -308,6 +487,198 @@ html[data-theme="dark"] {
 
 .vtable thead th.rownum {
   z-index: 3;
+}
+
+/* ===================== 列筛选浮层 =====================
+ * 挂载在 body 上并用 fixed 定位：.viewer-stage 与 .vtable-wrap 是两层
+ * overflow:auto 容器，absolute 定位会被裁剪。 */
+.vfilter-pop {
+  position: fixed;
+  z-index: 999;
+  width: 268px;
+  padding: 10px;
+  font-family: var(--font-ui);
+  background: var(--ui-background);
+  border: 1px solid var(--ui-border-strong);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  animation: fade 0.12s ease;
+}
+
+.vfp-title {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ui-foreground);
+  margin-bottom: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 模式切换分段按钮组 */
+.vfp-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 9px;
+  border: 1px solid var(--ui-border-strong);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.vfp-tab {
+  flex: 1;
+  height: 27px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ui-foreground-muted);
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--ui-border);
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.vfp-tab:last-child {
+  border-right: none;
+}
+
+.vfp-tab:hover {
+  background: var(--ui-background-hover);
+}
+
+.vfp-tab.active {
+  color: #fff;
+  background: var(--accent);
+}
+
+.vfp-panel[hidden] {
+  display: none;
+}
+
+.vfp-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.vfp-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 浮层内的输入框在 .tool-input 基础上改为左对齐、宽度自适应 */
+.vfilter-pop .tool-input {
+  flex: 1;
+  min-width: 0;
+  width: auto;
+  height: 30px;
+  padding: 0 8px;
+  text-align: left;
+}
+
+.vfp-select {
+  width: 100%;
+  height: 30px;
+  padding: 0 6px;
+  font-family: var(--font-ui);
+  font-size: 12.5px;
+  color: var(--ui-foreground);
+  background: var(--ui-background);
+  border: 1px solid var(--ui-border-strong);
+  border-radius: var(--radius-sm);
+  outline: none;
+  cursor: pointer;
+}
+
+.vfp-select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+}
+
+.vfp-check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--ui-foreground-muted);
+  cursor: pointer;
+  user-select: none;
+}
+
+.vfp-check input {
+  margin: 0;
+  cursor: pointer;
+  accent-color: var(--accent);
+}
+
+.vfp-tilde {
+  flex: none;
+  font-size: 12px;
+  color: var(--ui-foreground-subtle);
+}
+
+.vfp-hint {
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--ui-foreground-subtle);
+}
+
+/* 非法正则等校验提示：不打断视图，仅在此红字提示 */
+.vfp-err {
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--vfp-error);
+  margin-top: 6px;
+  word-break: break-word;
+}
+
+.vfp-err:empty {
+  display: none;
+}
+
+.vfp-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-top: 10px;
+  padding-top: 9px;
+  border-top: 1px solid var(--ui-border);
+}
+
+.vfp-btn {
+  height: 28px;
+  padding: 0 12px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ui-foreground);
+  background: transparent;
+  border: 1px solid var(--ui-border-strong);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.vfp-btn:hover {
+  border-color: var(--accent);
+  background: var(--ui-background-hover);
+}
+
+.vfp-btn.primary {
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.vfp-btn.primary:hover {
+  filter: brightness(1.08);
+  background: var(--accent);
 }
 
 /* ===================== 纯文本视图（txt / log） ===================== */
@@ -590,5 +961,24 @@ html[data-theme="dark"] {
 
   .tool-btn {
     padding: 0 8px;
+  }
+
+  /* 窄屏：调色板下拉收窄，色带条隐藏（下拉项本身已带名称） */
+  .tool-select {
+    max-width: 108px;
+  }
+
+  .pal-swatch {
+    display: none;
+  }
+
+  /* 浮层随视口收缩，避免溢出屏幕 */
+  .vfilter-pop {
+    width: calc(100vw - 24px);
+    max-width: 268px;
+  }
+
+  .vth-label {
+    max-width: 160px;
   }
 }

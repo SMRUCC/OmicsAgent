@@ -28,6 +28,11 @@ function run(BASE_URL) {
   /* ===================== 常量 ===================== */
   var MAX_TABLE_ROWS = 2000; // 表格首批渲染行数
   var TREE_AUTO_EXPAND_DEPTH = 2; // 树形默认展开层级
+  var SCI_DIGITS = 4; // 科学计数法保留有效数字位数
+  var NUM_SAMPLE_LIMIT = 500; // 列类型推断的采样行数上限
+  var NUMERIC_RATIO = 0.8; // 判定为数值列所需的可解析比例
+  var ZSCORE_CLAMP = 2; // 行 Z-score 热图的映射区间 ±N
+  var FILTER_DEBOUNCE = 200; // 筛选输入防抖（毫秒）
   var PDF_WORKER_URL =
     "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
 
@@ -277,6 +282,44 @@ function run(BASE_URL) {
     return s;
   }
 
+  /* 文本输入框（宽度可定制，供表格筛选等场景复用） */
+  function mkInput(placeholder, width, title) {
+    var i = el("input", "tool-input");
+    i.type = "text";
+    if (placeholder) i.placeholder = placeholder;
+    if (width) i.style.width = width;
+    if (title) i.title = title;
+    return i;
+  }
+
+  /**
+   * 下拉选择框。
+   * options 为 [{ value, label, group }]，带 group 时自动生成 optgroup。
+   */
+  function mkSelect(options, title, onChange) {
+    var s = el("select", "tool-select");
+    if (title) s.title = title;
+    var groups = {};
+    for (var i = 0; i < options.length; i++) {
+      var o = options[i];
+      var opt = el("option");
+      opt.value = o.value;
+      opt.textContent = o.label;
+      if (o.group) {
+        if (!groups[o.group]) {
+          groups[o.group] = el("optgroup");
+          groups[o.group].label = o.group;
+          s.appendChild(groups[o.group]);
+        }
+        groups[o.group].appendChild(opt);
+      } else {
+        s.appendChild(opt);
+      }
+    }
+    if (onChange) s.addEventListener("change", onChange);
+    return s;
+  }
+
   /* 下载 / 新窗口打开（降级兜底） */
   function mkOpenExternal(url, name) {
     var a = el("a", "tool-btn");
@@ -362,6 +405,788 @@ function run(BASE_URL) {
     return rows;
   }
 
+  /* ===================== 表格工具：数值解析与列类型推断 ===================== */
+
+  /* 常见缺失值标记（小写比对），一律视为无数值 */
+  var NA_TOKENS = {
+    "": 1,
+    na: 1,
+    "n/a": 1,
+    "#n/a": 1,
+    nan: 1,
+    null: 1,
+    nil: 1,
+    none: 1,
+    "-": 1,
+    "--": 1,
+    ".": 1,
+    "?": 1,
+  };
+
+  /**
+   * 宽松数值解析：可解析返回有限数字，否则返回 NaN。
+   * 支持前后空白、科学计数法、正负号；allowComma 时剥离千分位逗号。
+   */
+  function parseNum(s, allowComma) {
+    if (s == null) return NaN;
+    if (typeof s === "number") return isFinite(s) ? s : NaN;
+    var t = String(s).replace(/^\s+|\s+$/g, "");
+    if (NA_TOKENS[t.toLowerCase()] === 1) return NaN;
+    if (allowComma && t.indexOf(",") >= 0) t = t.replace(/,/g, "");
+    // 严格形状校验：避免 "1abc" / "12%" / "3-4" 被 parseFloat 误判
+    if (!/^[+-]?(\d+\.?\d*|\.\d+)([eE][+-]?\d+)?$/.test(t)) return NaN;
+    var v = parseFloat(t);
+    return isFinite(v) ? v : NaN;
+  }
+
+  /**
+   * 列类型推断：对每列采样统计可解析为数值的非空单元格比例。
+   * 返回 colMeta 数组，数值列附带 Float64Array 缓存与 min/max。
+   * 数值缓存是本模块最重要的性能优化——筛选 / 排序 / 热图三处共享，
+   * 避免对同一单元格重复做字符串解析。
+   */
+  function inferColumnTypes(body, rowCount, colCount, allowComma) {
+    var meta = [];
+    var sampleEnd = Math.min(rowCount, NUM_SAMPLE_LIMIT);
+
+    for (var c = 0; c < colCount; c++) {
+      var candidate = 0; // 参与判定的单元格（排除空值与 NA 等缺失标记）
+      var numeric = 0;
+      for (var r = 0; r < sampleEnd; r++) {
+        var raw = body[r][c];
+        var t = raw == null ? "" : String(raw).replace(/^\s+|\s+$/g, "");
+        // 空值与公认的缺失标记不计入分母，否则含 NA 的数值列会被误判为文本列
+        if (t === "" || NA_TOKENS[t.toLowerCase()] === 1) continue;
+        candidate++;
+        if (!isNaN(parseNum(raw, allowComma))) numeric++;
+      }
+      var isNum = candidate > 0 && numeric / candidate >= NUMERIC_RATIO;
+      meta.push({
+        numeric: isNum,
+        nums: isNum ? new Float64Array(rowCount) : null,
+        min: NaN,
+        max: NaN,
+        filled: 0, // 已填充进 nums 的行数，供「加载更多」增量扩充
+      });
+    }
+
+    fillColumnNums(meta, body, 0, rowCount, colCount, allowComma);
+    return meta;
+  }
+
+  /**
+   * 增量填充数值缓存并更新 min/max。
+   * 「加载更多」时只处理新增区间 [from, to)，不做全量重算。
+   */
+  function fillColumnNums(meta, body, from, to, colCount, allowComma) {
+    for (var c = 0; c < colCount; c++) {
+      var m = meta[c];
+      if (!m.numeric) continue;
+
+      // 扩容：Float64Array 定长，需重建后拷贝已有数据
+      if (m.nums.length < to) {
+        var bigger = new Float64Array(to);
+        bigger.set(m.nums);
+        m.nums = bigger;
+      }
+
+      var min = m.min;
+      var max = m.max;
+      for (var r = from; r < to; r++) {
+        var v = parseNum(body[r][c], allowComma);
+        m.nums[r] = v;
+        if (isNaN(v)) continue;
+        if (isNaN(min) || v < min) min = v;
+        if (isNaN(max) || v > max) max = v;
+      }
+      m.min = min;
+      m.max = max;
+      m.filled = to;
+    }
+  }
+
+  /**
+   * 4 位有效数字的科学计数法。
+   * 0 直接返回 "0"；非有限值原样退回。
+   */
+  function formatSci(v) {
+    if (!isFinite(v)) return String(v);
+    if (v === 0) return "0";
+    var s = v.toExponential(SCI_DIGITS - 1); // toExponential 参数为小数位数
+    // 规整指数：去掉 e+05 这类前导零，统一为 e+5
+    return s.replace(/e([+-])0*(\d)/, "e$1$2");
+  }
+
+  /* ===================== 表格工具：调色板 ===================== */
+
+  /**
+   * 调色板以锚点 RGB 数组定义，运行时分段线性插值。
+   * 相比 256 级查表，常量体积小两个数量级且插值为 O(1)。
+   */
+  var PALETTES = {
+    viridis: {
+      name: "Viridis",
+      group: "连续型",
+      diverging: false,
+      anchors: [
+        [68, 1, 84],
+        [72, 40, 120],
+        [62, 74, 137],
+        [49, 104, 142],
+        [38, 130, 142],
+        [31, 158, 137],
+        [53, 183, 121],
+        [109, 205, 89],
+        [180, 222, 44],
+        [253, 231, 37],
+      ],
+    },
+    magma: {
+      name: "Magma",
+      group: "连续型",
+      diverging: false,
+      anchors: [
+        [0, 0, 4],
+        [28, 16, 68],
+        [79, 18, 123],
+        [129, 37, 129],
+        [181, 54, 122],
+        [229, 80, 100],
+        [251, 135, 97],
+        [254, 194, 135],
+        [252, 253, 191],
+      ],
+    },
+    plasma: {
+      name: "Plasma",
+      group: "连续型",
+      diverging: false,
+      anchors: [
+        [13, 8, 135],
+        [84, 2, 163],
+        [139, 10, 165],
+        [185, 50, 137],
+        [219, 92, 104],
+        [244, 136, 73],
+        [254, 188, 43],
+        [240, 249, 33],
+      ],
+    },
+    rdbu: {
+      name: "RdBu 红-蓝",
+      group: "发散型",
+      diverging: true,
+      anchors: [
+        [103, 0, 31],
+        [178, 24, 43],
+        [214, 96, 77],
+        [244, 165, 130],
+        [253, 219, 199],
+        [247, 247, 247],
+        [209, 229, 240],
+        [146, 197, 222],
+        [67, 147, 195],
+        [33, 102, 172],
+        [5, 48, 97],
+      ],
+    },
+    rdylbu: {
+      name: "RdYlBu 红-黄-蓝",
+      group: "发散型",
+      diverging: true,
+      anchors: [
+        [165, 0, 38],
+        [215, 48, 39],
+        [244, 109, 67],
+        [253, 174, 97],
+        [254, 224, 144],
+        [255, 255, 191],
+        [224, 243, 248],
+        [171, 217, 233],
+        [116, 173, 209],
+        [69, 117, 180],
+        [49, 54, 149],
+      ],
+    },
+    bwr: {
+      name: "蓝-白-红",
+      group: "发散型",
+      diverging: true,
+      anchors: [
+        [5, 48, 97],
+        [67, 147, 195],
+        [247, 247, 247],
+        [214, 96, 77],
+        [103, 0, 31],
+      ],
+    },
+    blues: {
+      name: "Blues 蓝",
+      group: "单色",
+      diverging: false,
+      anchors: [
+        [247, 251, 255],
+        [222, 235, 247],
+        [198, 219, 239],
+        [158, 202, 225],
+        [107, 174, 214],
+        [66, 146, 198],
+        [33, 113, 181],
+        [8, 81, 156],
+        [8, 48, 107],
+      ],
+    },
+    greens: {
+      name: "Greens 绿",
+      group: "单色",
+      diverging: false,
+      anchors: [
+        [247, 252, 245],
+        [229, 245, 224],
+        [199, 233, 192],
+        [161, 217, 155],
+        [116, 196, 118],
+        [65, 171, 93],
+        [35, 139, 69],
+        [0, 109, 44],
+        [0, 68, 27],
+      ],
+    },
+    oranges: {
+      name: "Oranges 橙",
+      group: "单色",
+      diverging: false,
+      anchors: [
+        [255, 245, 235],
+        [254, 230, 206],
+        [253, 208, 162],
+        [253, 174, 107],
+        [253, 141, 60],
+        [241, 105, 19],
+        [217, 72, 1],
+        [166, 54, 3],
+        [127, 39, 4],
+      ],
+    },
+    jet: {
+      name: "Jet",
+      group: "经典",
+      diverging: false,
+      anchors: [
+        [0, 0, 131],
+        [0, 60, 170],
+        [5, 255, 255],
+        [255, 255, 0],
+        [250, 0, 0],
+        [128, 0, 0],
+      ],
+    },
+    rainbow: {
+      name: "Rainbow 彩虹",
+      group: "经典",
+      diverging: false,
+      anchors: [
+        [110, 64, 170],
+        [76, 110, 219],
+        [35, 171, 216],
+        [29, 223, 163],
+        [110, 245, 99],
+        [191, 231, 49],
+        [255, 191, 60],
+        [255, 124, 89],
+        [255, 74, 130],
+      ],
+    },
+    hot: {
+      name: "热力 红-黄",
+      group: "经典",
+      diverging: false,
+      anchors: [
+        [10, 0, 0],
+        [140, 0, 0],
+        [230, 60, 0],
+        [255, 150, 0],
+        [255, 220, 60],
+        [255, 255, 224],
+      ],
+    },
+  };
+
+  var PALETTE_KEYS = [
+    "viridis",
+    "magma",
+    "plasma",
+    "rdbu",
+    "rdylbu",
+    "bwr",
+    "blues",
+    "greens",
+    "oranges",
+    "jet",
+    "rainbow",
+    "hot",
+  ];
+
+  /* 锚点分段线性插值，t 会被 clamp 到 [0,1] */
+  function paletteColor(anchors, t) {
+    if (isNaN(t)) t = 0.5;
+    if (t < 0) t = 0;
+    if (t > 1) t = 1;
+    var last = anchors.length - 1;
+    var pos = t * last;
+    var i = Math.floor(pos);
+    if (i >= last) return [anchors[last][0], anchors[last][1], anchors[last][2]];
+    var f = pos - i;
+    var a = anchors[i];
+    var b = anchors[i + 1];
+    return [
+      Math.round(a[0] + (b[0] - a[0]) * f),
+      Math.round(a[1] + (b[1] - a[1]) * f),
+      Math.round(a[2] + (b[2] - a[2]) * f),
+    ];
+  }
+
+  /* 感知亮度（ITU-R BT.601 加权），用于自动挑选对比文字色 */
+  function luminance(rgb) {
+    return 0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2];
+  }
+
+  function rgbCss(rgb) {
+    return "rgb(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")";
+  }
+
+  /* 生成调色板预览用的 CSS 渐变（下拉选项旁的色带条） */
+  function paletteGradient(key) {
+    var anchors = PALETTES[key].anchors;
+    var stops = [];
+    for (var i = 0; i < anchors.length; i++) {
+      var pct = Math.round((i / (anchors.length - 1)) * 100);
+      stops.push(rgbCss(anchors[i]) + " " + pct + "%");
+    }
+    return "linear-gradient(to right," + stops.join(",") + ")";
+  }
+
+  /* ===================== 表格工具：筛选与排序 ===================== */
+
+  /**
+   * 依据 filter 配置生成谓词。
+   * 正则在设置阶段已预编译并存于 f.re，此处绝不重复 new RegExp。
+   * 返回 function(rowIdx, rawText) -> Boolean。
+   */
+  function makeFilterPredicate(f, meta) {
+    if (f.mode === "num") {
+      var hasMin = f.min != null && !isNaN(f.min);
+      var hasMax = f.max != null && !isNaN(f.max);
+      var nums = meta && meta.nums;
+      return function (idx, raw) {
+        var v = nums ? nums[idx] : parseNum(raw, false);
+        if (isNaN(v)) return false; // 缺失值不落在任何数值区间内
+        if (hasMin && v < f.min) return false;
+        if (hasMax && v > f.max) return false;
+        return true;
+      };
+    }
+
+    if (f.mode === "regex") {
+      var re = f.re;
+      if (!re) {
+        return function () {
+          return true;
+        };
+      }
+      return function (idx, raw) {
+        re.lastIndex = 0; // 防御 g 标志导致的 test 状态残留
+        var hit = re.test(raw == null ? "" : raw);
+        return f.negate ? !hit : hit;
+      };
+    }
+
+    // mode === "text"
+    var needle = f.caseSensitive ? f.value : String(f.value).toLowerCase();
+    var op = f.op;
+    return function (idx, raw) {
+      var s = raw == null ? "" : String(raw);
+      if (!f.caseSensitive) s = s.toLowerCase();
+      switch (op) {
+        case "notContains":
+          return s.indexOf(needle) < 0;
+        case "equals":
+          return s === needle;
+        case "notEquals":
+          return s !== needle;
+        case "startsWith":
+          return s.lastIndexOf(needle, 0) === 0;
+        case "endsWith":
+          return (
+            needle.length <= s.length &&
+            s.indexOf(needle, s.length - needle.length) >= 0
+          );
+        default:
+          return s.indexOf(needle) >= 0;
+      }
+    };
+  }
+
+  /**
+   * 多列比较器。
+   * 全等时回退比较原始行下标，使排序结果确定且稳定
+   * （ES5 不保证 Array.prototype.sort 稳定，显式回退最可靠）。
+   */
+  function makeComparator(sortKeys, colMeta, body) {
+    return function (ia, ib) {
+      for (var k = 0; k < sortKeys.length; k++) {
+        var key = sortKeys[k];
+        var c = key.col;
+        var m = colMeta[c];
+        var d = 0;
+
+        if (m && m.numeric) {
+          var va = m.nums[ia];
+          var vb = m.nums[ib];
+          var na = isNaN(va);
+          var nb = isNaN(vb);
+          // 缺失值恒沉底，与排序方向无关
+          if (na && nb) d = 0;
+          else if (na) return 1;
+          else if (nb) return -1;
+          else d = va < vb ? -1 : va > vb ? 1 : 0;
+        } else {
+          var sa = body[ia][c];
+          var sb = body[ib][c];
+          sa = sa == null ? "" : String(sa);
+          sb = sb == null ? "" : String(sb);
+          if (sa === "" && sb === "") d = 0;
+          else if (sa === "") return 1;
+          else if (sb === "") return -1;
+          else d = sa.localeCompare(sb);
+        }
+
+        if (d !== 0) return d * key.dir;
+      }
+      return ia - ib;
+    };
+  }
+
+  /* ===================== 表格工具：列筛选浮层 ===================== */
+
+  var TEXT_OPS = [
+    { value: "contains", label: "包含" },
+    { value: "notContains", label: "不包含" },
+    { value: "equals", label: "等于" },
+    { value: "notEquals", label: "不等于" },
+    { value: "startsWith", label: "开头是" },
+    { value: "endsWith", label: "结尾是" },
+  ];
+
+  /* 当前打开的浮层（同一时刻只允许一个），关闭函数存于此 */
+  var openPopClose = null;
+
+  function closeFilterPopover() {
+    if (openPopClose) {
+      var fn = openPopClose;
+      openPopClose = null;
+      fn();
+    }
+  }
+
+  /**
+   * 打开列筛选浮层。
+   *
+   * 浮层挂载到 body 并用 fixed 定位——.viewer-stage 与 .vtable-wrap 是两层
+   * overflow:auto 容器，absolute 定位会被裁剪。
+   *
+   * opts: { anchor, colIndex, colName, numeric, current, onApply, onClear, scrollEl }
+   */
+  function openFilterPopover(opts) {
+    closeFilterPopover();
+
+    var cur = opts.current || null;
+    var mode = cur ? cur.mode : opts.numeric ? "num" : "text";
+
+    var pop = el("div", "vfilter-pop");
+    pop.setAttribute("role", "dialog");
+
+    var title = el("div", "vfp-title");
+    title.textContent = opts.colName || "第 " + (opts.colIndex + 1) + " 列";
+    pop.appendChild(title);
+
+    /* — 模式切换分段按钮组 — */
+    var tabs = el("div", "vfp-tabs");
+    var modes = [
+      { key: "text", label: "文本" },
+      { key: "regex", label: "正则" },
+      { key: "num", label: "数值" },
+    ];
+    var tabBtns = {};
+    var panels = {};
+
+    function selectMode(k) {
+      mode = k;
+      for (var mk in tabBtns) {
+        if (!tabBtns.hasOwnProperty(mk)) continue;
+        tabBtns[mk].classList.toggle("active", mk === k);
+        panels[mk].hidden = mk !== k;
+      }
+      err.textContent = "";
+      var first = panels[k].querySelector("input");
+      if (first) first.focus();
+    }
+
+    for (var i = 0; i < modes.length; i++) {
+      (function (m) {
+        var b = el("button", "vfp-tab");
+        b.type = "button";
+        b.textContent = m.label;
+        b.addEventListener("click", function () {
+          selectMode(m.key);
+        });
+        tabBtns[m.key] = b;
+        tabs.appendChild(b);
+      })(modes[i]);
+    }
+    pop.appendChild(tabs);
+
+    var body = el("div", "vfp-body");
+    pop.appendChild(body);
+
+    /* — 文本模式 — */
+    var pText = el("div", "vfp-panel");
+    var opSel = mkSelect(TEXT_OPS, "匹配方式");
+    opSel.className = "vfp-select";
+    var textInput = mkInput("输入关键字", "100%");
+    var csLabel = el("label", "vfp-check");
+    var csBox = el("input");
+    csBox.type = "checkbox";
+    csLabel.appendChild(csBox);
+    csLabel.appendChild(document.createTextNode("区分大小写"));
+    pText.appendChild(opSel);
+    pText.appendChild(textInput);
+    pText.appendChild(csLabel);
+    body.appendChild(pText);
+    panels.text = pText;
+
+    /* — 正则模式 — */
+    var pRe = el("div", "vfp-panel");
+    var reRow = el("div", "vfp-row");
+    var reInput = mkInput("正则表达式，如 ^ENSG", "100%");
+    var reFlags = mkInput("标志", "58px", "正则标志位，如 i / g / m");
+    reRow.appendChild(reInput);
+    reRow.appendChild(reFlags);
+    var reNegLabel = el("label", "vfp-check");
+    var reNeg = el("input");
+    reNeg.type = "checkbox";
+    reNegLabel.appendChild(reNeg);
+    reNegLabel.appendChild(document.createTextNode("反选（排除匹配项）"));
+    pRe.appendChild(reRow);
+    pRe.appendChild(reNegLabel);
+    body.appendChild(pRe);
+    panels.regex = pRe;
+
+    /* — 数值范围模式 — */
+    var pNum = el("div", "vfp-panel");
+    var numRow = el("div", "vfp-row");
+    var minInput = mkInput("最小值", "100%", "留空表示不限下界");
+    var maxInput = mkInput("最大值", "100%", "留空表示不限上界");
+    numRow.appendChild(minInput);
+    numRow.appendChild(el("span", "vfp-tilde", "~"));
+    numRow.appendChild(maxInput);
+    pNum.appendChild(numRow);
+    var numHint = el("div", "vfp-hint");
+    numHint.textContent = opts.numeric
+      ? "仅保留区间内的数值行，缺失值会被过滤"
+      : "该列非数值列，数值筛选可能过滤掉全部行";
+    pNum.appendChild(numHint);
+    body.appendChild(pNum);
+    panels.num = pNum;
+
+    var err = el("div", "vfp-err");
+    pop.appendChild(err);
+
+    /* — 回填当前已有条件 — */
+    if (cur) {
+      if (cur.mode === "text") {
+        opSel.value = cur.op;
+        textInput.value = cur.value;
+        csBox.checked = !!cur.caseSensitive;
+      } else if (cur.mode === "regex") {
+        reInput.value = cur.source;
+        reFlags.value = cur.flags || "";
+        reNeg.checked = !!cur.negate;
+      } else if (cur.mode === "num") {
+        if (cur.min != null && !isNaN(cur.min)) minInput.value = String(cur.min);
+        if (cur.max != null && !isNaN(cur.max)) maxInput.value = String(cur.max);
+      }
+    }
+
+    /* — 底部操作区 — */
+    var actions = el("div", "vfp-actions");
+    var clearBtn = el("button", "vfp-btn");
+    clearBtn.type = "button";
+    clearBtn.textContent = "清除本列";
+    var applyBtn = el("button", "vfp-btn primary");
+    applyBtn.type = "button";
+    applyBtn.textContent = "应用";
+    actions.appendChild(clearBtn);
+    actions.appendChild(applyBtn);
+    pop.appendChild(actions);
+
+    /* 收集表单为 filter 配置；非法输入返回 null 并写入错误提示 */
+    function collect() {
+      err.textContent = "";
+
+      if (mode === "text") {
+        if (textInput.value === "") return null;
+        return {
+          mode: "text",
+          op: opSel.value,
+          value: textInput.value,
+          caseSensitive: csBox.checked,
+        };
+      }
+
+      if (mode === "regex") {
+        var src = reInput.value;
+        if (src === "") return null;
+        var flags = reFlags.value.replace(/[^gimsuy]/g, "");
+        var re;
+        try {
+          re = new RegExp(src, flags);
+        } catch (e) {
+          // 非法正则：提示并保留原有筛选状态，不破坏当前视图
+          console.warn("正则表达式无效", e);
+          err.textContent = "正则无效：" + e.message;
+          return false;
+        }
+        return {
+          mode: "regex",
+          source: src,
+          flags: flags,
+          negate: reNeg.checked,
+          re: re,
+        };
+      }
+
+      var mn = minInput.value.replace(/^\s+|\s+$/g, "");
+      var mx = maxInput.value.replace(/^\s+|\s+$/g, "");
+      if (mn === "" && mx === "") return null;
+      var nmin = mn === "" ? null : parseNum(mn, true);
+      var nmax = mx === "" ? null : parseNum(mx, true);
+      if ((mn !== "" && isNaN(nmin)) || (mx !== "" && isNaN(nmax))) {
+        err.textContent = "请输入合法数字";
+        return false;
+      }
+      if (nmin != null && nmax != null && nmin > nmax) {
+        err.textContent = "最小值不能大于最大值";
+        return false;
+      }
+      return { mode: "num", min: nmin, max: nmax };
+    }
+
+    function apply() {
+      var f = collect();
+      if (f === false) return; // 校验失败，浮层保持打开
+      if (f === null) opts.onClear();
+      else opts.onApply(f);
+      closeFilterPopover();
+    }
+
+    applyBtn.addEventListener("click", apply);
+    clearBtn.addEventListener("click", function () {
+      opts.onClear();
+      closeFilterPopover();
+    });
+
+    // 回车即应用
+    pop.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        apply();
+      }
+    });
+
+    document.body.appendChild(pop);
+    selectMode(mode);
+
+    /* — 定位：跟随列头，越界时翻转 — */
+    function place() {
+      var r = opts.anchor.getBoundingClientRect();
+      var pw = pop.offsetWidth;
+      var ph = pop.offsetHeight;
+      var gap = 4;
+
+      var left = r.left;
+      if (left + pw > window.innerWidth - 8) left = window.innerWidth - pw - 8;
+      if (left < 8) left = 8;
+
+      var top = r.bottom + gap;
+      if (top + ph > window.innerHeight - 8) {
+        var flipped = r.top - ph - gap;
+        top = flipped >= 8 ? flipped : Math.max(8, window.innerHeight - ph - 8);
+      }
+
+      pop.style.left = left + "px";
+      pop.style.top = top + "px";
+    }
+    place();
+
+    /* — 生命周期：所有监听器统一注销，防止 WebView2 长跑泄漏 — */
+    function onDocDown(e) {
+      if (!pop.contains(e.target) && e.target !== opts.anchor)
+        closeFilterPopover();
+    }
+    function onKey(e) {
+      if (e.key === "Escape") closeFilterPopover();
+    }
+    function onScrollOrResize() {
+      closeFilterPopover();
+    }
+
+    // 延后注册，避免触发本次打开的这一次 mousedown
+    var t = setTimeout(function () {
+      document.addEventListener("mousedown", onDocDown, true);
+    }, 0);
+    document.addEventListener("keydown", onKey, true);
+    window.addEventListener("resize", onScrollOrResize);
+    if (opts.scrollEl)
+      opts.scrollEl.addEventListener("scroll", onScrollOrResize);
+
+    var closed = false;
+    function destroy() {
+      if (closed) return;
+      closed = true;
+      clearTimeout(t);
+      document.removeEventListener("mousedown", onDocDown, true);
+      document.removeEventListener("keydown", onKey, true);
+      window.removeEventListener("resize", onScrollOrResize);
+      if (opts.scrollEl)
+        opts.scrollEl.removeEventListener("scroll", onScrollOrResize);
+      if (pop.parentNode) pop.parentNode.removeChild(pop);
+      if (opts.onClose) opts.onClose();
+    }
+
+    openPopClose = destroy;
+    // 切换文件时若浮层仍开着，由 disposeCurrent 兜底清理
+    addDisposer(destroy);
+  }
+
+  /* 列头图标（漏斗 / 排序），16px 线性风格与工具栏保持一致 */
+  var ICON_FILTER =
+    '<svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">' +
+    '<path d="M1.5 2.5h13l-5 5.6v4.6l-3 1.8V8.1z" fill="none" ' +
+    'stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>';
+
+  /**
+   * 表格渲染器（csv / tsv）。
+   *
+   * 采用「数据模型 → 视图状态 → 声明式重绘」三层结构：
+   *   body（原始行） → loadedCount 切片 → filters 过滤 → sortKeys 排序
+   *   → viewIdx（原始行下标数组） → 格式化 + 着色 → 一次性替换 tbody
+   *
+   * 关键决策：始终以 viewIdx 索引数组表达视图，不拷贝行数据。
+   * 既省内存，也让行号列能回溯到原始行号（排序后行号语义仍正确）。
+   *
+   * 约定：排序与筛选只作用于「当前已加载的行」，保持既有分批语义。
+   */
   function renderTable(text, ctx) {
     var delim = ctx.ext === "tsv" ? "\t" : ",";
     var rows = parseDelimited(text, delim);
@@ -379,64 +1204,455 @@ function run(BASE_URL) {
     for (var r = 0; r < body.length; r++)
       if (body[r].length > colCount) colCount = body[r].length;
 
+    // 行长度对齐，省去后续所有取值处的越界判断
+    for (var r2 = 0; r2 < body.length; r2++) {
+      var rowArr = body[r2];
+      for (var pad = rowArr.length; pad < colCount; pad++) rowArr[pad] = "";
+    }
+
+    // 千分位逗号仅在 tsv 中放行；csv 里逗号是分隔符，避免误判
+    var allowComma = delim === "\t";
+
+    /* ---------- 视图状态：唯一数据源，任何变更后调用 refresh() ---------- */
+    var state = {
+      loadedCount: Math.min(MAX_TABLE_ROWS, body.length),
+      sortKeys: [], // [{ col, dir }]，顺序即优先级
+      filters: {}, // { [col]: filter }，多列 AND
+      sciMode: false, // 4 位有效数字科学计数法
+      heatMode: "off", // off | col（列 min/max） | row（行 Z-score）
+      palette: "viridis",
+    };
+
+    var colMeta = inferColumnTypes(
+      body,
+      state.loadedCount,
+      colCount,
+      allowComma,
+    );
+    var rowStats = {}; // 行 Z-score 统计量缓存 { [origIdx]: { mean, sd } }
+    var viewIdx = []; // 当前视图的原始行下标序列
+
+    /* ---------- DOM 骨架 ---------- */
     var box = el("div", "vtable-wrap");
     var table = el("table", "vtable");
-
-    // 表头
     var thead = el("thead");
     var htr = el("tr");
     htr.appendChild(el("th", "rownum", "#"));
+    var thNodes = [];
+    var sortMarks = [];
+    var filterBtns = [];
+
     for (var c = 0; c < colCount; c++) {
-      var th = el("th");
-      th.textContent = header[c] != null ? header[c] : "";
-      htr.appendChild(th);
+      (function (ci) {
+        var th = el("th", "sortable");
+        if (colMeta[ci].numeric) th.className += " num";
+
+        var inner = el("div", "vth-inner");
+        var label = el("span", "vth-label");
+        label.textContent = header[ci] != null ? header[ci] : "";
+        label.title = label.textContent;
+
+        var mark = el("span", "vth-sort");
+        var fbtn = el("button", "vth-filter", ICON_FILTER);
+        fbtn.type = "button";
+        fbtn.title = "筛选此列";
+
+        inner.appendChild(label);
+        inner.appendChild(mark);
+        inner.appendChild(fbtn);
+        th.appendChild(inner);
+
+        // 点击列头排序；Shift 追加为次级排序键
+        th.addEventListener("click", function (e) {
+          if (fbtn.contains(e.target)) return;
+          toggleSort(ci, e.shiftKey);
+        });
+
+        fbtn.addEventListener("click", function (e) {
+          e.stopPropagation();
+          openColumnFilter(ci, fbtn);
+        });
+
+        thNodes.push(th);
+        sortMarks.push(mark);
+        filterBtns.push(fbtn);
+        htr.appendChild(th);
+      })(c);
     }
+
     thead.appendChild(htr);
     table.appendChild(thead);
 
-    // 表体：DocumentFragment 批量插入，避免逐行 reflow
     var tbody = el("tbody");
-    var shown = 0;
-
-    function appendRows(from, to) {
-      var frag = document.createDocumentFragment();
-      for (var k = from; k < to; k++) {
-        var tr = el("tr");
-        var tdn = el("td", "rownum");
-        tdn.textContent = String(k + 1);
-        tr.appendChild(tdn);
-        for (var j = 0; j < colCount; j++) {
-          var td = el("td");
-          td.textContent = body[k][j] != null ? body[k][j] : "";
-          tr.appendChild(td);
-        }
-        frag.appendChild(tr);
-      }
-      tbody.appendChild(frag);
-      shown = to;
-    }
-
-    appendRows(0, Math.min(MAX_TABLE_ROWS, body.length));
     table.appendChild(tbody);
     box.appendChild(table);
     wrap.appendChild(box);
 
-    var bar = [mkInfo(body.length + " 行 × " + colCount + " 列")];
+    var emptyTip = el("div", "vtable-empty");
+    emptyTip.textContent = "没有符合当前筛选条件的行";
+    emptyTip.hidden = true;
+    wrap.appendChild(emptyTip);
 
-    // 超量时提供「加载更多」
-    if (body.length > shown) {
-      var moreInfo = mkInfo("已显示 " + shown + " 行");
-      var moreBtn = mkBtn("加载更多", "继续渲染后续行", function () {
-        appendRows(shown, Math.min(shown + MAX_TABLE_ROWS, body.length));
-        moreInfo.textContent = "已显示 " + shown + " 行";
-        if (shown >= body.length) {
-          moreBtn.disabled = true;
-          moreBtn.style.opacity = "0.5";
-          moreBtn.style.cursor = "default";
-        }
-      });
-      bar.push(mkSep(), moreInfo, moreBtn);
+    /* ---------- 排序 ---------- */
+    function findSortKey(col) {
+      for (var i = 0; i < state.sortKeys.length; i++)
+        if (state.sortKeys[i].col === col) return i;
+      return -1;
     }
+
+    /* 三态循环：升序 → 降序 → 无序 */
+    function toggleSort(col, additive) {
+      var at = findSortKey(col);
+      if (!additive) {
+        if (at >= 0 && state.sortKeys.length === 1) {
+          var d = state.sortKeys[0].dir;
+          state.sortKeys = d === 1 ? [{ col: col, dir: -1 }] : [];
+        } else {
+          state.sortKeys = [{ col: col, dir: 1 }];
+        }
+      } else if (at >= 0) {
+        if (state.sortKeys[at].dir === 1) state.sortKeys[at].dir = -1;
+        else state.sortKeys.splice(at, 1);
+      } else {
+        state.sortKeys.push({ col: col, dir: 1 });
+      }
+      refresh();
+    }
+
+    function syncHeader() {
+      for (var i = 0; i < colCount; i++) {
+        var at = findSortKey(i);
+        var mark = sortMarks[i];
+        if (at < 0) {
+          mark.textContent = "";
+          mark.classList.remove("on");
+          thNodes[i].classList.remove("sorted");
+        } else {
+          var k = state.sortKeys[at];
+          // 多列排序时标注优先级序号
+          mark.textContent =
+            (k.dir === 1 ? "▲" : "▼") +
+            (state.sortKeys.length > 1 ? String(at + 1) : "");
+          mark.classList.add("on");
+          thNodes[i].classList.add("sorted");
+        }
+        var active = !!state.filters[i];
+        filterBtns[i].classList.toggle("on", active);
+        filterBtns[i].title = active ? "已筛选，点击修改" : "筛选此列";
+      }
+    }
+
+    /* ---------- 筛选 ---------- */
+    function openColumnFilter(col, anchor) {
+      // 点同一个按钮时作为关闭操作
+      if (anchor.classList.contains("popping")) {
+        closeFilterPopover();
+        return;
+      }
+      anchor.classList.add("popping");
+      openFilterPopover({
+        anchor: anchor,
+        colIndex: col,
+        colName: header[col],
+        numeric: colMeta[col].numeric,
+        current: state.filters[col] || null,
+        scrollEl: box,
+        onApply: function (f) {
+          state.filters[col] = f;
+          refresh();
+        },
+        onClear: function () {
+          delete state.filters[col];
+          refresh();
+        },
+        onClose: function () {
+          anchor.classList.remove("popping");
+        },
+      });
+    }
+
+    function clearAllFilters() {
+      state.filters = {};
+      refresh();
+    }
+
+    /* ---------- 视图计算：筛选 → 排序 ---------- */
+    function computeView() {
+      var preds = [];
+      for (var key in state.filters) {
+        if (!state.filters.hasOwnProperty(key)) continue;
+        var ci = parseInt(key, 10);
+        preds.push({
+          col: ci,
+          fn: makeFilterPredicate(state.filters[key], colMeta[ci]),
+        });
+      }
+
+      var out = [];
+      var n = state.loadedCount;
+      for (var i = 0; i < n; i++) {
+        var ok = true;
+        for (var p = 0; p < preds.length; p++) {
+          if (!preds[p].fn(i, body[i][preds[p].col])) {
+            ok = false;
+            break;
+          }
+        }
+        if (ok) out.push(i);
+      }
+
+      if (state.sortKeys.length)
+        out.sort(makeComparator(state.sortKeys, colMeta, body));
+
+      viewIdx = out;
+    }
+
+    /* ---------- 热图 ---------- */
+    /* 行 Z-score 统计量（惰性计算并缓存） */
+    function getRowStat(idx) {
+      var s = rowStats[idx];
+      if (s) return s;
+      var sum = 0;
+      var cnt = 0;
+      var i;
+      for (i = 0; i < colCount; i++) {
+        if (!colMeta[i].numeric) continue;
+        var v = colMeta[i].nums[idx];
+        if (isNaN(v)) continue;
+        sum += v;
+        cnt++;
+      }
+      var mean = cnt ? sum / cnt : NaN;
+      var acc = 0;
+      for (i = 0; i < colCount; i++) {
+        if (!colMeta[i].numeric) continue;
+        var v2 = colMeta[i].nums[idx];
+        if (isNaN(v2)) continue;
+        acc += (v2 - mean) * (v2 - mean);
+      }
+      // 总体标准差（非样本），行内全等时为 0
+      var sd = cnt ? Math.sqrt(acc / cnt) : NaN;
+      s = { mean: mean, sd: sd, count: cnt };
+      rowStats[idx] = s;
+      return s;
+    }
+
+    /* 把数值映射为 [0,1]；无法归一化时返回 NaN（不着色） */
+    function heatT(rowIdx, col, v) {
+      if (isNaN(v)) return NaN;
+      if (state.heatMode === "col") {
+        var m = colMeta[col];
+        if (isNaN(m.min) || isNaN(m.max)) return NaN;
+        if (m.max === m.min) return 0.5; // 常数列取中性色
+        return (v - m.min) / (m.max - m.min);
+      }
+      // row：按行 Z-score，clamp 到 ±ZSCORE_CLAMP 后线性映射
+      var st = getRowStat(rowIdx);
+      if (!st.count || isNaN(st.mean)) return NaN;
+      if (!st.sd) return 0.5; // 行内数值全相等
+      var z = (v - st.mean) / st.sd;
+      var t = (z + ZSCORE_CLAMP) / (2 * ZSCORE_CLAMP);
+      return t < 0 ? 0 : t > 1 ? 1 : t;
+    }
+
+    /* ---------- 表体重建 ---------- */
+    function renderBody() {
+      var anchors = PALETTES[state.palette].anchors;
+      var heatOn = state.heatMode !== "off";
+      var frag = document.createDocumentFragment();
+
+      for (var i = 0; i < viewIdx.length; i++) {
+        var idx = viewIdx[i];
+        var row = body[idx];
+        var tr = el("tr");
+
+        var tdn = el("td", "rownum");
+        tdn.textContent = String(idx + 1); // 始终显示原始行号
+        tr.appendChild(tdn);
+
+        for (var c2 = 0; c2 < colCount; c2++) {
+          var m = colMeta[c2];
+          var td = el("td");
+          var raw = row[c2];
+
+          if (m.numeric) {
+            td.className = "num";
+            var v = m.nums[idx];
+            if (state.sciMode && !isNaN(v)) td.textContent = formatSci(v);
+            else td.textContent = raw == null ? "" : raw;
+
+            if (heatOn) {
+              var t = heatT(idx, c2, v);
+              if (!isNaN(t)) {
+                var rgb = paletteColor(anchors, t);
+                td.style.backgroundColor = rgbCss(rgb);
+                // 依背景亮度切换文字色，保证任意配色下可读
+                td.className +=
+                  luminance(rgb) < 140 ? " hm-dark" : " hm-light";
+              }
+            }
+          } else {
+            td.textContent = raw == null ? "" : raw;
+          }
+
+          tr.appendChild(td);
+        }
+        frag.appendChild(tr);
+      }
+
+      // 单次替换，全程只触发一次 reflow
+      var fresh = el("tbody");
+      fresh.appendChild(frag);
+      table.replaceChild(fresh, tbody);
+      tbody = fresh;
+
+      table.classList.toggle("heatmap-on", heatOn);
+      emptyTip.hidden = viewIdx.length > 0;
+    }
+
+    /* ---------- 统一刷新入口（同帧内多次调用自动合并） ---------- */
+    var rafId = 0;
+    function refresh() {
+      if (rafId) return;
+      rafId = window.requestAnimationFrame(function () {
+        rafId = 0;
+        computeView();
+        renderBody();
+        syncHeader();
+        syncInfo();
+      });
+    }
+    addDisposer(function () {
+      if (rafId) window.cancelAnimationFrame(rafId);
+      rafId = 0;
+    });
+
+    /* ---------- 工具栏 ---------- */
+    var totalInfo = mkInfo(body.length + " 行 × " + colCount + " 列");
+    var viewInfo = mkInfo("");
+
+    var sciBtn = mkBtn(
+      "科学计数",
+      "数值列在原始文本与 4 位有效数字科学计数法之间切换",
+      function () {
+        state.sciMode = !state.sciMode;
+        sciBtn.classList.toggle("active", state.sciMode);
+        refresh();
+      },
+    );
+
+    var colHeatBtn = mkBtn(
+      "列热图",
+      "按每列 min / max 归一化，为数值单元格着色",
+      function () {
+        state.heatMode = state.heatMode === "col" ? "off" : "col";
+        syncHeatBtns();
+        refresh();
+      },
+    );
+
+    var rowHeatBtn = mkBtn(
+      "全局热图",
+      "按每行 Z-score 标准化着色，适合跨列比较行内模式",
+      function () {
+        state.heatMode = state.heatMode === "row" ? "off" : "row";
+        syncHeatBtns();
+        refresh();
+      },
+    );
+
+    function syncHeatBtns() {
+      colHeatBtn.classList.toggle("active", state.heatMode === "col");
+      rowHeatBtn.classList.toggle("active", state.heatMode === "row");
+      palSel.disabled = state.heatMode === "off";
+      palSwatch.style.opacity = state.heatMode === "off" ? "0.4" : "1";
+    }
+
+    var palOpts = [];
+    for (var pi = 0; pi < PALETTE_KEYS.length; pi++) {
+      var pk = PALETTE_KEYS[pi];
+      palOpts.push({
+        value: pk,
+        label: PALETTES[pk].name,
+        group: PALETTES[pk].group,
+      });
+    }
+
+    var palSwatch = el("span", "pal-swatch");
+    var palSel = mkSelect(palOpts, "热图调色板", function () {
+      state.palette = palSel.value;
+      palSwatch.style.background = paletteGradient(state.palette);
+      refresh();
+    });
+    palSel.value = state.palette;
+    palSwatch.style.background = paletteGradient(state.palette);
+
+    var clearBtn = mkBtn("清除筛选", "清除所有列的筛选条件", function () {
+      clearAllFilters();
+    });
+    var unsortBtn = mkBtn("清除排序", "恢复为原始行顺序", function () {
+      state.sortKeys = [];
+      refresh();
+    });
+
+    var moreInfo = mkInfo("");
+    var moreBtn = mkBtn("加载更多", "继续加载后续行并套用当前排序 / 筛选", function () {
+      var from = state.loadedCount;
+      var to = Math.min(from + MAX_TABLE_ROWS, body.length);
+      if (to <= from) return;
+      state.loadedCount = to;
+      // 增量扩充数值缓存；min/max 随之更新，行统计缓存无需失效
+      fillColumnNums(colMeta, body, from, to, colCount, allowComma);
+      refresh();
+    });
+
+    function syncInfo() {
+      var loaded = state.loadedCount;
+      var shownRows = viewIdx.length;
+      var hasFilter = false;
+      for (var k in state.filters) {
+        if (state.filters.hasOwnProperty(k)) {
+          hasFilter = true;
+          break;
+        }
+      }
+      viewInfo.textContent = hasFilter
+        ? "筛选后 " + shownRows + " / 已加载 " + loaded + " 行"
+        : "已加载 " + loaded + " 行";
+
+      var done = loaded >= body.length;
+      moreInfo.textContent = done ? "" : "剩余 " + (body.length - loaded) + " 行";
+      moreBtn.disabled = done;
+      moreBtn.style.opacity = done ? "0.5" : "";
+      moreBtn.style.cursor = done ? "default" : "";
+      clearBtn.classList.toggle("active", hasFilter);
+      unsortBtn.classList.toggle("active", state.sortKeys.length > 0);
+    }
+
+    var bar = [
+      totalInfo,
+      mkSep(),
+      viewInfo,
+      mkSep(),
+      sciBtn,
+      colHeatBtn,
+      rowHeatBtn,
+      palSwatch,
+      palSel,
+      mkSep(),
+      unsortBtn,
+      clearBtn,
+    ];
+
+    if (body.length > state.loadedCount) bar.push(mkSep(), moreInfo, moreBtn);
+
+    syncHeatBtns();
+
+    // 首屏同步渲染，避免 rAF 造成一帧空白
+    computeView();
+    renderBody();
+    syncHeader();
+    syncInfo();
 
     return { node: wrap, toolbar: bar };
   }
