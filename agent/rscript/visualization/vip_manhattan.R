@@ -86,9 +86,12 @@ plot_vip_manhattan <- function(vip, feature_info,
 
   plot_df <- merge(vip_df, info_sub, by = "feature_id", all.x = TRUE)
 
-  # Drop missing category
+  # Drop missing / invalid category
   n_before <- nrow(plot_df)
-  plot_df <- plot_df[!is.na(plot_df$category) & plot_df$category != "", ]
+  valid_cat <- !is.na(plot_df$category) &
+               plot_df$category != "" &
+               plot_df$category != "NULL"
+  plot_df <- plot_df[valid_cat, ]
   n_dropped <- n_before - nrow(plot_df)
   if (n_dropped > 0) {
     warning(sprintf("Dropped %d features with missing '%s'.", n_dropped, category_col))
@@ -115,8 +118,7 @@ plot_vip_manhattan <- function(vip, feature_info,
     # Jittered points, colored by importance relative to threshold
     ggplot2::geom_jitter(
       ggplot2::aes(color = vip >= threshold),
-      width = 0.28, height = 0, size = 1.6, alpha = 0.8,
-      position = ggplot2::position_jitter(width = 0.28, height = 0)
+      width = 0.28, height = 0, size = 1.6, alpha = 0.8
     ) +
     ggplot2::scale_color_manual(
       name = "VIP >= threshold",
