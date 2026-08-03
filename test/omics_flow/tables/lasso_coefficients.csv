@@ -1,0 +1,8 @@
+"feature_id","group","coefficient"
+"(Intercept)","Standard (control)",-0.00138302387840538
+"Thiobinupharidine","Standard (control)",0.0101729952521275
+"(Intercept).1","Clostridium difficile infection",0.00378027230595799
+"Arachidonate","Clostridium difficile infection",0.00524106119446698
+"(Intercept).2","high iron diet before",-0.00239724842755261
+"3-((Ethylphenylamino)methyl)benzenesulfonic acid","high iron diet before",0.00359294895141251
+"Pro Phe Val","high iron diet before",0.00349360815667184

@@ -92,7 +92,7 @@ plot_heatmap <- function(expr_matrix, sample_info, feature_info = NULL,
       Group = groups,
       col = list(Group = group_colors),
       show_annotation_name = TRUE,
-      annotation_name_side = "top"
+      annotation_name_side = "left"
     )
 
     # Row annotation (family)
@@ -107,7 +107,8 @@ plot_heatmap <- function(expr_matrix, sample_info, feature_info = NULL,
       row_anno <- ComplexHeatmap::rowAnnotation(
         Family = family_info,
         col = list(Family = family_colors),
-        show_annotation_name = TRUE
+        show_annotation_name = TRUE,
+        annotation_name_side = "top"
       )
     }
 

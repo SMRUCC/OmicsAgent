@@ -1,0 +1,33 @@
+"feature_id","group","coefficient"
+"Clostridium difficile infection","(Intercept)",0.538798231278534
+"high iron diet before","(Intercept)",-1.25627324114875
+"Clostridium difficile infection.1","Pro.Phe.Val",0.427505421726914
+"high iron diet before.1","Pro.Phe.Val",-0.0691368033038137
+"Clostridium difficile infection.2","Methyleugenol",-0.233816414738433
+"high iron diet before.2","Methyleugenol",-0.306332351372799
+"Clostridium difficile infection.3","X3...Ethylphenylamino.methyl.benzenesulfonic.acid",0.0303413592588404
+"high iron diet before.3","X3...Ethylphenylamino.methyl.benzenesulfonic.acid",0.0595062363176207
+"Clostridium difficile infection.4","X.2R.3R.5R..2..S.Pantetheinyl..carbapenam.3.carboxylate",-0.02835274030836
+"high iron diet before.4","X.2R.3R.5R..2..S.Pantetheinyl..carbapenam.3.carboxylate",0.0538809457537017
+"Clostridium difficile infection.5","X3.Ketolactose",-0.816122330330013
+"high iron diet before.5","X3.Ketolactose",0.00878861168000143
+"Clostridium difficile infection.6","Val.Pro.Met.Gln",0.242135133463684
+"high iron diet before.6","Val.Pro.Met.Gln",0.00930324819631183
+"Clostridium difficile infection.7","X5..Deoxyadenosine",-0.101904659602826
+"high iron diet before.7","X5..Deoxyadenosine",0.0933539661394185
+"Clostridium difficile infection.8","Isovalerylglutamic.acid",-0.10405651671674
+"high iron diet before.8","Isovalerylglutamic.acid",0.0460490988263728
+"Clostridium difficile infection.9","Promazine",0.0539273955278341
+"high iron diet before.9","Promazine",-0.0081719746032376
+"Clostridium difficile infection.10","Lactobionic.acid",0.271235498337981
+"high iron diet before.10","Lactobionic.acid",0.18757635128596
+"Clostridium difficile infection.11","X5..Oxoinosine",0.124827223199614
+"high iron diet before.11","X5..Oxoinosine",0.235180833291577
+"Clostridium difficile infection.12","X.4...5.6.Diphenylpyrazin.2.yl..isopropyl.amino.butoxy.acetic.acid",-0.117735545719335
+"high iron diet before.12","X.4...5.6.Diphenylpyrazin.2.yl..isopropyl.amino.butoxy.acetic.acid",-0.0254434915868738
+"Clostridium difficile infection.13","NA.His.6.0",-0.116788177483249
+"high iron diet before.13","NA.His.6.0",0.0397637960583693
+"Clostridium difficile infection.14","alpha.N.Acetylneuraminyl.2.6.beta.D.galactosyl.1.4.N.acetyl.beta.D.glucosamine",-0.0953465792537797
+"high iron diet before.14","alpha.N.Acetylneuraminyl.2.6.beta.D.galactosyl.1.4.N.acetyl.beta.D.glucosamine",-0.0101481359536327
+"Clostridium difficile infection.15","Thiobinupharidine",-0.678512914223625
+"high iron diet before.15","Thiobinupharidine",-0.419432152832194
