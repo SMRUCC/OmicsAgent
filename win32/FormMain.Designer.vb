@@ -32,6 +32,8 @@ Partial Class FormMain
         StatusStrip1 = New StatusStrip()
         ToolStripStatusLabel1 = New ToolStripStatusLabel()
         Ribbon1 = New Ribbon()
+        ToolStripStatusLabel2 = New ToolStripStatusLabel()
+        ToolStripStatusLabel3 = New ToolStripStatusLabel()
         StatusStrip1.SuspendLayout()
         SuspendLayout()
         ' 
@@ -49,7 +51,7 @@ Partial Class FormMain
         ' 
         ' StatusStrip1
         ' 
-        StatusStrip1.Items.AddRange(New ToolStripItem() {ToolStripStatusLabel1})
+        StatusStrip1.Items.AddRange(New ToolStripItem() {ToolStripStatusLabel1, ToolStripStatusLabel2, ToolStripStatusLabel3})
         StatusStrip1.Location = New Point(0, 760)
         StatusStrip1.Name = "StatusStrip1"
         StatusStrip1.Size = New Size(1279, 22)
@@ -71,6 +73,18 @@ Partial Class FormMain
         Ribbon1.ShortcutTableResourceName = Nothing
         Ribbon1.Size = New Size(1279, 116)
         Ribbon1.TabIndex = 2
+        ' 
+        ' ToolStripStatusLabel2
+        ' 
+        ToolStripStatusLabel2.Name = "ToolStripStatusLabel2"
+        ToolStripStatusLabel2.Size = New Size(1077, 17)
+        ToolStripStatusLabel2.Spring = True
+        ' 
+        ' ToolStripStatusLabel3
+        ' 
+        ToolStripStatusLabel3.Name = "ToolStripStatusLabel3"
+        ToolStripStatusLabel3.Size = New Size(114, 17)
+        ToolStripStatusLabel3.Text = "Unlicensed Software"
         ' 
         ' FormMain
         ' 
@@ -95,5 +109,7 @@ Partial Class FormMain
     Friend WithEvents StatusStrip1 As StatusStrip
     Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
     Friend WithEvents Ribbon1 As Ribbon
+    Friend WithEvents ToolStripStatusLabel2 As ToolStripStatusLabel
+    Friend WithEvents ToolStripStatusLabel3 As ToolStripStatusLabel
 
 End Class

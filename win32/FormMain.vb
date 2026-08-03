@@ -1,4 +1,5 @@
 ﻿Imports Galaxy.Workbench
+Imports Galaxy.Workbench.LicenseFramework.[Shared]
 Imports Microsoft.VisualStudio.WinForms.Docking
 Imports OmicsWorks.RibbonLib.Controls
 
@@ -99,5 +100,12 @@ Public Class FormMain : Implements AppHost
         Call StatusMessage("Ready!", Icons8.Information)
         Call CommonRuntime.GetOutputWindow.AddLog("startup", "omics analysis workshop is ready")
         Call RibbonMenu.OpenStartupPage()
+
+        Call License.CheckLicense()
+        Call SetLicenseStatus()
+    End Sub
+
+    Public Sub SetLicenseStatus()
+        Call Me.Invoke(Sub() ToolStripStatusLabel3.Text = LicenseData.SimpleDescription(GetCurrentLicense))
     End Sub
 End Class
