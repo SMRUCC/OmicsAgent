@@ -1,0 +1,163 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - generic [ref=e12]:
+      - heading "数据集定义编辑器" [level=1] [ref=e13]
+      - generic [ref=e14]: 未命名 · 多组学 · 1 个数据集
+    - tablist "组学模式" [ref=e15]:
+      - tab "单组学" [ref=e16] [cursor=pointer]
+      - tab "多组学" [ref=e17] [cursor=pointer]
+    - button "载入" [ref=e18] [cursor=pointer]
+    - button "保存" [disabled] [ref=e22] [cursor=pointer]
+    - button "预览" [ref=e27] [cursor=pointer]
+    - button "🌙 暗色" [ref=e31] [cursor=pointer]:
+      - generic [ref=e32]: 🌙
+      - generic [ref=e33]: 暗色
+  - complementary [ref=e34]:
+    - heading "数据集列表" [level=2] [ref=e35]
+    - textbox "筛选 id / 名称 / 类型…" [ref=e36]
+    - generic [ref=e38] [cursor=pointer]:
+      - generic [ref=e39]: rna
+      - generic [ref=e40]: 未命名数据集
+      - generic [ref=e41]: transcriptome
+      - generic [ref=e42]:
+        - button "上移" [disabled] [ref=e43]
+        - button "下移" [disabled] [ref=e46]
+        - button "复制" [ref=e49]
+        - button "删除" [disabled] [ref=e53]
+    - button "添加数据集" [ref=e56] [cursor=pointer]
+  - main [ref=e58]:
+    - generic [ref=e59]:
+      - generic [ref=e60]:
+        - heading "数据集基本信息" [level=3] [ref=e61]
+        - generic [ref=e63]:
+          - generic [ref=e64]:
+            - text: 多组学模式：每个数据集的
+            - code [ref=e65]: id
+            - text: 必须唯一（大小写不敏感），它同时会作为样本对齐宽表的列名。
+          - generic [ref=e66]:
+            - generic [ref=e67]:
+              - generic [ref=e68]:
+                - text: id
+                - generic [ref=e70]: 组学唯一标识 / 宽表列名
+              - textbox "例如 rna / prot / metab" [ref=e71]: rna
+            - generic [ref=e72]:
+              - generic [ref=e73]:
+                - text: type
+                - generic [ref=e74]: 组学类型
+              - combobox "transcriptome" [ref=e75]
+            - generic [ref=e76]:
+              - generic [ref=e77]:
+                - text: label
+                - generic [ref=e78]: 中文展示名称
+              - textbox "例如 肝脏转录组" [ref=e79]
+            - generic [ref=e80]:
+              - generic [ref=e81]:
+                - text: unit
+                - generic [ref=e82]: 数据单位
+              - textbox "例如 TPM" [ref=e83]
+              - generic [ref=e84]:
+                - generic [ref=e85] [cursor=pointer]: TPM
+                - generic [ref=e86] [cursor=pointer]: FPKM
+                - generic [ref=e87] [cursor=pointer]: RPKM
+                - generic [ref=e88] [cursor=pointer]: counts
+                - generic [ref=e89] [cursor=pointer]: LFQ intensity
+                - generic [ref=e90] [cursor=pointer]: peak area
+                - generic [ref=e91] [cursor=pointer]: log2 ratio
+      - generic [ref=e92]:
+        - heading "数据文件路径" [level=3] [ref=e93]
+        - generic [ref=e95]:
+          - generic [ref=e96]:
+            - generic [ref=e97]:
+              - generic [ref=e98]:
+                - text: expression
+                - generic [ref=e100]: 表达矩阵 CSV（行=分子，列=样本）
+              - generic [ref=e101]:
+                - textbox "请选择或输入 CSV 文件路径" [ref=e102]: ./rna/counts.csv
+                - button "浏览…" [ref=e103] [cursor=pointer]
+                - button "✕" [ref=e104] [cursor=pointer]
+              - generic [ref=e105]: 尚未选择文件
+              - generic [ref=e107]: datasets[0] 缺少必填的 expression 表达矩阵路径。
+            - generic [ref=e108]:
+              - generic [ref=e109]:
+                - text: annotation
+                - generic [ref=e110]: 分子注释表 CSV ['id','type','name','kegg']
+              - generic [ref=e111]:
+                - textbox "请选择或输入 CSV 文件路径" [ref=e112]: ./rna/gene_anno.csv
+                - button "浏览…" [ref=e113] [cursor=pointer]
+                - button "✕" [ref=e114] [cursor=pointer]
+              - generic [ref=e115]: 尚未选择文件
+            - generic [ref=e117]:
+              - generic [ref=e118]:
+                - text: sampleinfo
+                - generic [ref=e119]: 样本元数据 CSV ['id','sample_name','sample_info']
+              - generic [ref=e120]:
+                - textbox "请选择或输入 CSV 文件路径" [ref=e121]: ./meta/sample_rna.csv
+                - button "浏览…" [ref=e122] [cursor=pointer]
+                - button "✕" [ref=e123] [cursor=pointer]
+              - generic [ref=e124]: 尚未选择文件
+          - separator [ref=e126]
+          - generic [ref=e127]:
+            - generic [ref=e128] [cursor=pointer]:
+              - checkbox "输出相对路径" [checked] [ref=e129]
+              - text: 输出相对路径
+            - generic [ref=e130]: 基准目录：
+            - textbox "清单 JSON 文件所在目录" [ref=e131]
+            - button "选择…" [ref=e132] [cursor=pointer]
+            - button "校验文件存在性" [ref=e133] [cursor=pointer]
+      - generic [ref=e134]:
+        - heading "样本对齐 sample_alignment" [level=3] [ref=e135]
+        - generic [ref=e137]:
+          - generic [ref=e229]:
+            - button "省略" [ref=e230] [cursor=pointer]
+            - button "引用 CSV" [ref=e231] [cursor=pointer]
+            - button "内联编辑" [ref=e232] [cursor=pointer]
+            - button "从矩阵提取" [ref=e233] [cursor=pointer]
+          - generic [ref=e234]:
+            - text: 内联宽表将写入
+            - code [ref=e235]: subject_map
+            - text: 。首列
+            - code [ref=e236]: subject_id
+            - text: 为受试者标识，其余列自动跟随各数据集的
+            - code [ref=e237]: id
+            - text: ；单元格填写该组学中对应的样本 ID。
+          - generic [ref=e238]:
+            - button "+ 添加行" [ref=e239] [cursor=pointer]
+            - button "批量粘贴" [ref=e240] [cursor=pointer]
+            - button "按同名自动配对" [ref=e241] [cursor=pointer]
+            - button "清空" [ref=e242] [cursor=pointer]
+            - button "导出 CSV" [ref=e243] [cursor=pointer]
+            - generic [ref=e244]: 1 行 × 2 列
+          - table [ref=e246]:
+            - rowgroup [ref=e247]:
+              - row [ref=e248]:
+                - columnheader "#" [ref=e249]
+                - columnheader "subject_id 🔒 受试者标识" [ref=e250]:
+                  - text: subject_id
+                  - generic [ref=e251]: 🔒 受试者标识
+                - columnheader "rna" [ref=e252]
+                - columnheader [ref=e253]
+            - rowgroup [ref=e254]:
+              - row [ref=e255]:
+                - cell "1" [ref=e256]
+                - cell [ref=e257]:
+                  - textbox [ref=e258]
+                - cell [ref=e259]:
+                  - textbox [ref=e260]
+                - cell [ref=e261]:
+                  - button "删除该行" [ref=e262] [cursor=pointer]
+      - generic [ref=e145]:
+        - heading "校验结果" [level=3] [ref=e146]
+        - generic [ref=e266]:
+          - generic [ref=e267]:
+            - generic [ref=e268] [cursor=pointer]: sample_alignment.subject_map[0]
+            - generic [ref=e269]: subject_map[0] 为空行，请填写或删除。
+          - generic [ref=e270]:
+            - generic [ref=e271] [cursor=pointer]: baseDir
+            - generic [ref=e272]: 已启用相对路径输出，但尚未设置清单文件基准目录，当前将按绝对路径输出。
+  - complementary [ref=e156]:
+    - generic [ref=e157]:
+      - generic [ref=e158]: dataset.json
+      - button [ref=e159] [cursor=pointer]: 复制
+      - button [ref=e160] [cursor=pointer]: 下载
+      - button [ref=e161] [cursor=pointer]: ✕
+    - generic [ref=e163]: 0 字符
