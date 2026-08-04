@@ -72,8 +72,8 @@ Public Class KeggFunctionModule : Inherits AnalysisModuleBase
 - 上游输入：读取模块 4 的差异分析结果（tables/ 目录，前缀 'limma_'）
 - 上游输入：读取 data/ 目录中的 KEGG 背景数据
 - 上游输入：读取模块 3 的比对设计（用于 GSVA 差异分析）
-- 下游输出：GSVA 分析结果将作为模块 6(WGCNA 多组学关联分析) 的表型数据（多组学场景下），结果表供模块 10(表格) 和模块 11(报告) 引用
-
+- 下游输出：GSVA 分析结果将作为模块 6(WGCNA) 的表型性状数据，结果表供模块 {If(_context.IsMultiOmics, "10(跨组学整合)、", "")}11(表格) 和模块 12(报告) 引用
+{MultiOmicsSection()}
 # 实现要求
 - 读取模块 4 的差异分析结果（tables/ 目录）
 - 读取 data/ 目录中的 KEGG 背景数据（XML 或 JSON 文件）
@@ -106,13 +106,21 @@ Public Class KeggFunctionModule : Inherits AnalysisModuleBase
     End Function
 
     Protected Overrides Function GetConclusionItems() As String
-        Return "1. KEGG 富集分析的整体结果（显著富集的通路数量、分类分布）
+        Dim items As String = "1. KEGG 富集分析的整体结果（显著富集的通路数量、分类分布）
 2. 关键富集通路的生物学意义（参考 kb.json 知识库）
 3. GSVA 分析结果（通路得分在不同组别间的差异）
 4. GSVA 差异分析结果（差异显著的通路）
 5. 通路得分热图所展示的样本聚类模式
 6. 生物学通路分析结果如何支持用户的研究主题
 7. 与差异分析结果的关联性"
+
+        If _context.IsMultiOmics Then
+            items &= "
+8. 逐个组学分别报告显著富集的通路（须标明组学来源与所用注释表）
+9. 被两个及以上组学共同富集的通路清单，及其作为多组学共同响应枢纽的生物学解读"
+        End If
+
+        Return items
     End Function
 
 End Class
