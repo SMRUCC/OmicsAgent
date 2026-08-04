@@ -3,7 +3,6 @@ Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Text.Json
 Imports OmicsAgent
-Imports OmicsWorks.CsvUtils
 
 Namespace JavaScript
 
