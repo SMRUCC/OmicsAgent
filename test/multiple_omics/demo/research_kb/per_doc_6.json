@@ -1,0 +1,94 @@
+﻿{
+ "source_file": "fgene-16-1662815.txt",
+ "key_genes_proteins": [
+ "α-amylase",
+ "glucoamylase",
+ "amylases",
+ "proteases",
+ "nicotine-degrading enzymes"
+ ],
+ "key_pathways": [
+ "Amino acid biosynthesis",
+ "Tryptophan metabolism",
+ "Tyrosine metabolism",
+ "Phenylalanine metabolism",
+ "Starch and sucrose metabolism",
+ "Carbon metabolism",
+ "Nicotinate and nicotinamide metabolism"
+ ],
+ "key_metabolites": [
+ "nicotine",
+ "starch",
+ "D-Sucrose",
+ "D-Trehalose",
+ "Gluconic acid",
+ "D-Glucono-1,5-lactone",
+ "L-Asparagine",
+ "Shikimic acid",
+ "3-Hydroxyanthranilic acid",
+ "1-Methylnicotinamide",
+ "nicotinamide",
+ "nicotinic acid",
+ "trigonelline",
+ "phenylacetaldehyde",
+ "benzyl alcohol",
+ "benzyl carbinol",
+ "phenylpyruvic acid",
+ "homogentisic acid",
+ "3,4-dihydroxybenzeneacetic acid",
+ "proline",
+ "tyrosine",
+ "phenylalanine",
+ "leucine",
+ "ornithine",
+ "pyrazine",
+ "furan"
+ ],
+ "biological_mechanisms": [
+ {
+ "mechanism": "Microbial degradation of macromolecules during fermentation",
+ "evidence": "Fermentation decreased starch, total nitrogen, and nicotine levels, while total soluble sugars initially increased and then decreased; these reductions stabilized after the T2 stage (Figures1B–E). Microorganisms gradually degrade total nitrogen and nicotine into smaller molecules such as amino acids, organic acids, and volatile ammonia."
+ },
+ {
+ "mechanism": "Microbial community succession and stabilization",
+ "evidence": "Alpha diversity indices initially increased then reached equilibrium at T2. At phylum level, Proteobacteria increased from38.16% (T0) to57.78% (T2) then declined to25.31% (T3), Firmicutes rose from2.47% (T0) to62.85% (T3), and Ascomycota decreased from50.69% (T0) to4.77% (T3). Dominant genera such as Staphylococcus, Aspergillus, Sphingomonas, and Penicillium persisted with dynamic abundance changes."
+ },
+ {
+ "mechanism": "Starch and carbon metabolism driven by functional bacteria",
+ "evidence": "Staphylococcus and Aspergillus showed significant positive correlations with carbohydrate metabolites D-Glucono-1,5-lactone and D-Trehalose, respectively. The paper suggests these genera drive carbon metabolism and starch/sucrose metabolism through enzymes such as α-amylase and glucoamylase, facilitating starch degradation and formation of these metabolites."
+ },
+ {
+ "mechanism": "Aromatic amino acid metabolism contributes to cigar aroma formation",
+ "evidence": "Eighteen metabolites were enriched in phenylalanine, tryptophan, and tyrosine metabolic pathways. Significant changes were observed in aroma-related metabolites including phenylacetaldehyde, benzyl alcohol, and benzyl carbinol during fermentation, indicating these pathways contribute to cigar aroma."
+ },
+ {
+ "mechanism": "Maillard reaction between amino acids and reducing sugars affects flavor and color",
+ "evidence": "Amino acids and reduced sugars undergo enzyme-catalyzed and non-enzyme-catalyzed reactions to form heterocyclic compounds such as pyrazine and furan, which significantly impact cigar flavor. The darkening of tobacco leaves during fermentation was attributed to non-enzymatic reactions such as the Maillard reaction."
+ },
+ {
+ "mechanism": "Nicotine degradation and nicotinate/nicotinamide metabolism influence sensory quality",
+ "evidence": "Nicotine content decreased from4.76% to3.62% during fermentation. Metabolites from nicotinate and nicotinamide metabolism, including1-Methylnicotinamide, nicotinamide, nicotinic acid, and trigonelline, are thought to affect the taste and flavor of cigar tobacco leaves."
+ },
+ {
+ "mechanism": "Specific microbial genera are associated with quality-related differential metabolites",
+ "evidence": "Inter-group correlation analysis showed that8 dominant genera—Staphylococcus, Aspergillus, Penicillium, Methylobacterium, Escherichia, Aureimonas, Achromobacter, and Enterobacter—were significantly associated with29 quality-related differential metabolites, suggesting these genera may be functional bacteria in flavor metabolism."
+ },
+ {
+ "mechanism": "Optimal fermentation endpoint balances microbial activity and metabolite stability",
+ "evidence": "At T2 (50 days), most chemical components and microbial diversity indices reached a stable state, and metabolite differences between time points decreased. Extending fermentation to T3 offered minimal additional benefits and could risk over-degradation of desirable flavor compounds, as seen in over-fermented tea."
+ }
+ ],
+ "key_findings": [
+ "The T2 stage (50 days) achieves an optimal balance between microbial equilibrium and metabolite stabilization, providing a scientific basis for optimizing cigar tobacco fermentation duration.",
+ "Total soluble sugars initially increased from21.60% (T0) to24.60% (T1), then decreased to22.66% (T3); starch continuously declined from4.79% to3.35%; nicotine decreased from4.76% to3.62%; total nitrogen slightly decreased from3.25% to2.93%.",
+ "Metagenomic sequencing identified Proteobacteria, Firmicutes, and Ascomycota as dominant phyla, and Staphylococcus, Aspergillus, Sphingomonas, and Penicillium as dominant genera during fermentation.",
+ "Alpha diversity indices (Shannon, Simpson, ACE, Pielou’s evenness, Chao-2) reached equilibrium at T2 and remained stable thereafter.",
+ "A total of1,801 metabolites were identified;584 were differentially expressed, with218,377, and419 between T0 vs T1, T0 vs T2, and T0 vs T3, respectively;88 metabolites overlapped across comparisons.",
+ "KEGG analysis identified28 co-enriched metabolic pathways between metagenomics and metabolomics, of which7 are closely linked to cigar quality formation.",
+ "L-Asparagine, Shikimic acid, and3-Hydroxyanthranilic acid were consistently downregulated across all fermentation comparisons, suggesting microbial catabolism of amino acid precursors into volatile aroma compounds.",
+ "LEfSe analysis identified33 microbial biomarkers:10 at T0,3 at T1,6 at T2, and14 at T3, showing a U-shaped trend in biomarker abundance.",
+ "Staphylococcus and Aspergillus positively correlated with carbohydrate metabolites D-Glucono-1,5-lactone and D-Trehalose; Aspergillus also correlated with amino acids such as phenylalanine, leucine, and ornithine.",
+ "Prolonging fermentation from T2 to T3 provides minimal benefit and may risk over-degradation of flavor compounds, analogous to over-fermentation of tea polyphenols."
+ ],
+ "relevance_to_research_topic": "This paper is directly relevant to the proposed multi-omics study of tobacco fermentation. It provides an integrated metagenomics and metabolomics workflow to investigate dynamic changes in microbial communities, chemical components, differential metabolites, KEGG pathways, and microbe–metabolite correlations during cigar tobacco fermentation. It also emphasizes that microbial communities vary by region, variety, and fermentation method, and that environmental/climatic conditions can shape the dominant microbiota and metabolic outcomes. These concepts support the planned comparison between Yunnan and Henan tobacco fermentation samples, especially for identifying environment-driven microbial and metabolic mechanisms underlying flavor formation and for determining optimal fermentation conditions."
+}
