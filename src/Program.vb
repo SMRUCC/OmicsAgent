@@ -39,8 +39,8 @@ Omics Data Analysis LLM Agent
   --help,-h               显示帮助信息
 
 示例:
-  research --research=research.txt --expression=data.csv --annotation=anno.csv --sampleinfo=sample.csv
-  research --research=research.txt --expression=omics_folder/ --annotation=anno.csv --sampleinfo=sample_folder/ --reference=refs/
+  research --research=research.txt --expression=data.csv --annotation=anno.csv --sampleinfo=sample.csv --reference=refs/
+  research --research=research.txt --dataset=input.json --reference=refs/
 
 表格格式：
   
