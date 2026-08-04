@@ -181,7 +181,7 @@ Module WordReport
                 formattedRows(r) = dst
             Next
 
-            Call doc.TableAutoFitContents(preview.headers, formattedRows, center:=True, threeLine:=True)
+            Call doc.TableAutoFitWindow(preview.headers, formattedRows, center:=True, threeLine:=True)
         End If
     End Sub
 
