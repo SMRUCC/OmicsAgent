@@ -2,6 +2,7 @@
 Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Text.Json
+Imports OmicsAgent
 Imports OmicsWorks.CsvUtils
 
 Namespace JavaScript
@@ -15,9 +16,19 @@ Namespace JavaScript
     <ComVisible(True)>
     Public Class StartupPage
 
+        ''' <summary>WinForms FileDialog.Filter 的兜底值。</summary>
+        Private Const AllFilesFilter As String = "所有文件|*.*"
+
+        ''' <summary>宿主窗口，用于把文件对话框调度回 UI 线程并设置其父窗口。</summary>
         Private ReadOnly _owner As Form
-        Private Shared ReadOnly _jsonOptions As New JsonSerializerOptions() With {
-            .PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+
+        ''' <summary>
+        ''' 序列化选项：忽略 Nothing 成员，使成功响应不出现多余的 "error": null。
+        ''' 属性名保持原样（已是小写），以匹配 JS 侧的 { ok, data, error } 契约。
+        ''' </summary>
+        Private Shared ReadOnly _jsonOptions As New JsonSerializerOptions With {
+            .DefaultIgnoreCondition = Serialization.JsonIgnoreCondition.WhenWritingNull,
+            .Encoder = Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
         }
 
         ''' <summary>无参构造：由 FormStartupPage / FormResearchWork 等既有页面使用。</summary>
@@ -43,19 +54,19 @@ Namespace JavaScript
                                Try
                                    Dim opts = ParseOptions(optionsJson)
                                    Using dlg As New OpenFileDialog()
-                                       dlg.Title = If(opts.GetOpt("title", ""), "选择文件")
-                                       SetFilter(dlg, If(opts.GetOpt("filter", ""), "所有文件|*.*"))
-                                       dlg.Multiselect = opts.GetOpt("multiselect", False)
-                                       dlg.InitialDirectory = NormalizeInitialDir(opts.GetOpt("initialDir", ""))
+                                       dlg.Title = OptString(opts, "title", "选择文件")
+                                       dlg.Filter = OptString(opts, "filter", AllFilesFilter)
+                                       dlg.Multiselect = OptBoolean(opts, "multiselect", False)
+                                       dlg.InitialDirectory = NormalizeInitialDir(OptString(opts, "initialDir", ""))
 
                                        If dlg.ShowDialog(_owner) = DialogResult.OK Then
-                                           Return Ok(New With { .paths = dlg.FileNames.ToList() })
+                                           Return Success(New With {.paths = dlg.FileNames.ToList})
                                        Else
-                                           Return Ok(New With { .paths = New List(Of String)() })
+                                           Return Success(New With {.paths = New List(Of String)})
                                        End If
                                    End Using
                                Catch ex As Exception
-                                   Return Err(ex.Message)
+                                   Return Failure(ex.Message)
                                End Try
                            End Function)
         End Function
@@ -70,19 +81,19 @@ Namespace JavaScript
                                Try
                                    Dim opts = ParseOptions(optionsJson)
                                    Using dlg As New SaveFileDialog()
-                                       dlg.Title = If(opts.GetOpt("title", ""), "保存文件")
-                                       SetFilter(dlg, If(opts.GetOpt("filter", ""), "所有文件|*.*"))
-                                       dlg.FileName = If(opts.GetOpt("defaultName", ""), "")
-                                       dlg.InitialDirectory = NormalizeInitialDir(opts.GetOpt("initialDir", ""))
+                                       dlg.Title = OptString(opts, "title", "保存文件")
+                                       dlg.Filter = OptString(opts, "filter", AllFilesFilter)
+                                       dlg.FileName = OptString(opts, "defaultName", "")
+                                       dlg.InitialDirectory = NormalizeInitialDir(OptString(opts, "initialDir", ""))
 
                                        If dlg.ShowDialog(_owner) = DialogResult.OK Then
-                                           Return Ok(New With { .path = dlg.FileName })
+                                           Return Success(New With {.path = dlg.FileName})
                                        Else
-                                           Return Ok(New With { .path = "" })
+                                           Return Success(New With {.path = ""})
                                        End If
                                    End Using
                                Catch ex As Exception
-                                   Return Err(ex.Message)
+                                   Return Failure(ex.Message)
                                End Try
                            End Function)
         End Function
@@ -96,20 +107,28 @@ Namespace JavaScript
             Return RunOnUi(Function()
                                Try
                                    Dim args = ParseOptions(argsJson)
-                                   Dim path As String = args.GetOpt("path", "")
-                                   Dim content As String = args.GetOpt("content", "")
-                                   Dim encodingName As String = args.GetOpt("encoding", "utf-8")
-                                   If String.IsNullOrWhiteSpace(path) Then Throw New ArgumentException("path 不能为空")
-
-                                   Dim encoding As Encoding = Encoding.UTF8
-                                   If Not String.IsNullOrWhiteSpace(encodingName) Then
-                                       encoding = Encoding.GetEncoding(encodingName)
+                                   Dim path As String = OptString(args, "path", "")
+                                   Dim content As String = OptString(args, "content", "")
+                                   Dim encodingName As String = OptString(args, "encoding", "utf-8")
+                                   If String.IsNullOrWhiteSpace(path) Then
+                                       Throw New ArgumentException("path 不能为空")
                                    End If
 
-                                   File.WriteAllText(path, content, encoding)
-                                   Return Ok(New With { .path = path })
+                                   Dim textEncoding As Encoding = Encoding.UTF8
+
+                                   If Not String.IsNullOrWhiteSpace(encodingName) Then
+                                       Try
+                                           textEncoding = Encoding.GetEncoding(encodingName)
+                                       Catch
+                                           textEncoding = Encoding.UTF8
+                                       End Try
+                                   End If
+
+                                   Call File.WriteAllText(path, content, textEncoding)
+
+                                   Return Success(New With {.path = path})
                                Catch ex As Exception
-                                   Return Err(ex.Message)
+                                   Return Failure(ex.Message)
                                End Try
                            End Function)
         End Function
@@ -122,11 +141,15 @@ Namespace JavaScript
         Public Function ReadTextFile(path As String) As String
             Return RunOnUi(Function()
                                Try
-                                   If String.IsNullOrWhiteSpace(path) Then Throw New ArgumentException("path 不能为空")
+                                   If String.IsNullOrWhiteSpace(path) Then
+                                       Throw New ArgumentException("path 不能为空")
+                                   End If
+
                                    Dim content As String = File.ReadAllText(path, Encoding.UTF8)
-                                   Return Ok(New With { .content = content, .path = path })
+
+                                   Return Success(New With {.content = content, .path = path})
                                Catch ex As Exception
-                                   Return Err(ex.Message)
+                                   Return Failure(ex.Message)
                                End Try
                            End Function)
         End Function
@@ -139,11 +162,15 @@ Namespace JavaScript
         Public Function ReadCsvHeader(path As String) As String
             Return RunOnUi(Function()
                                Try
-                                   If String.IsNullOrWhiteSpace(path) Then Throw New ArgumentException("path 不能为空")
+                                   If String.IsNullOrWhiteSpace(path) Then
+                                       Throw New ArgumentException("path 不能为空")
+                                   End If
+
                                    Dim columns As String() = CsvUtils.ReadHeader(path)
-                                   Return Ok(New With { .columns = columns.ToList() })
+
+                                   Return Success(New With {.columns = New List(Of String)(columns)})
                                Catch ex As Exception
-                                   Return Err(ex.Message)
+                                   Return Failure(ex.Message)
                                End Try
                            End Function)
         End Function
@@ -156,9 +183,11 @@ Namespace JavaScript
         Public Function FileExists(path As String) As String
             Return RunOnUi(Function()
                                Try
-                                   Return Ok(New With { .exists = (Not String.IsNullOrWhiteSpace(path) AndAlso File.Exists(path)) })
+                                   Dim exists As Boolean = Not String.IsNullOrWhiteSpace(path) AndAlso File.Exists(path)
+
+                                   Return Success(New With {.exists = exists})
                                Catch ex As Exception
-                                   Return Err(ex.Message)
+                                   Return Failure(ex.Message)
                                End Try
                            End Function)
         End Function
@@ -166,79 +195,113 @@ Namespace JavaScript
 #Region "私有辅助"
 
         ''' <summary>
-        ''' 从 JsonElement 或普通 Object 中取值。System.Text.Json 反序列化
-        ''' Dictionary(Of String, Object) 时，值类型为 JsonElement，因此需要
-        ''' 统一封装转换。
+        ''' 解析 JS 侧传入的参数对象。System.Text.Json 反序列化
+        ''' Dictionary(Of String, Object) 时，值类型为 JsonElement。
         ''' </summary>
-        Private Shared Function GetOpt(Of T)(opts As Dictionary(Of String, Object), key As String, defaultValue As T) As T
-            If opts Is Nothing Then Return defaultValue
-            If Not opts.ContainsKey(key) Then Return defaultValue
-
-            Dim v As Object = opts(key)
-            If TypeOf v Is JsonElement Then
-                Dim e As JsonElement = DirectCast(v, JsonElement)
-                Select Case GetType(T)
-                    Case GetType(String)
-                        If e.ValueKind = JsonValueKind.String Then
-                            Return CType(CType(e.GetString(), Object), T)
-                        End If
-                    Case GetType(Boolean)
-                        If e.ValueKind = JsonValueKind.True Then Return CType(CType(True, Object), T)
-                        If e.ValueKind = JsonValueKind.False Then Return CType(CType(False, Object), T)
-                End Select
-            ElseIf v IsNot Nothing Then
-                Try
-                    Return CType(v, T)
-                Catch
-                End Try
+        Private Shared Function ParseOptions(json As String) As Dictionary(Of String, JsonElement)
+            If String.IsNullOrWhiteSpace(json) Then
+                Return New Dictionary(Of String, JsonElement)
             End If
-            Return defaultValue
-        End Function
 
-        Private Shared Function ParseOptions(json As String) As Dictionary(Of String, Object)
-            If String.IsNullOrWhiteSpace(json) Then Return New Dictionary(Of String, Object)()
             Try
-                Return JsonSerializer.Deserialize(Of Dictionary(Of String, Object))(json, _jsonOptions)
+                Dim parse = JsonSerializer.Deserialize(Of Dictionary(Of String, JsonElement))(json)
+                Return If(parse, New Dictionary(Of String, JsonElement))
             Catch
-                Return New Dictionary(Of String, Object)()
+                ' 入参非法时返回空字典，各调用点会退化为默认值，不使 COM 调用崩溃
+                Return New Dictionary(Of String, JsonElement)
             End Try
         End Function
 
-        Private Shared Sub SetFilter(dlg As FileDialog, filter As String)
-            If String.IsNullOrWhiteSpace(filter) Then
-                dlg.Filter = "所有文件|*.*"
-            Else
-                dlg.Filter = filter
-            End If
-        End Sub
+        ''' <summary>读取字符串型参数，缺失或类型不符时返回 <paramref name="defaultValue"/>。</summary>
+        Private Shared Function OptString(opts As Dictionary(Of String, JsonElement),
+                                          key As String,
+                                          defaultValue As String) As String
 
+            Dim value As JsonElement = Nothing
+
+            If opts Is Nothing OrElse Not opts.TryGetValue(key, value) Then
+                Return defaultValue
+            ElseIf value.ValueKind <> JsonValueKind.String Then
+                Return defaultValue
+            End If
+
+            Dim text As String = value.GetString
+
+            Return If(String.IsNullOrEmpty(text), defaultValue, text)
+        End Function
+
+        ''' <summary>读取布尔型参数，缺失或类型不符时返回 <paramref name="defaultValue"/>。</summary>
+        Private Shared Function OptBoolean(opts As Dictionary(Of String, JsonElement),
+                                           key As String,
+                                           defaultValue As Boolean) As Boolean
+
+            Dim value As JsonElement = Nothing
+
+            If opts Is Nothing OrElse Not opts.TryGetValue(key, value) Then
+                Return defaultValue
+            End If
+
+            Select Case value.ValueKind
+                Case JsonValueKind.True : Return True
+                Case JsonValueKind.False : Return False
+                Case Else : Return defaultValue
+            End Select
+        End Function
+
+        ''' <summary>
+        ''' 规范化对话框初始目录：目录不存在时退回其父目录，仍不存在则返回空串
+        ''' （WinForms 会忽略非法的 InitialDirectory）。
+        ''' </summary>
         Private Shared Function NormalizeInitialDir(dir As String) As String
-            If String.IsNullOrWhiteSpace(dir) Then Return ""
+            If String.IsNullOrWhiteSpace(dir) Then
+                Return ""
+            End If
+
             Try
-                If Directory.Exists(dir) Then Return dir
-                Dim parent = Path.GetDirectoryName(dir)
-                If Directory.Exists(parent) Then Return parent
+                If Directory.Exists(dir) Then
+                    Return dir
+                End If
+
+                Dim parent As String = Path.GetDirectoryName(dir)
+
+                If Not String.IsNullOrEmpty(parent) AndAlso Directory.Exists(parent) Then
+                    Return parent
+                End If
             Catch
-                ' 忽略异常，InitialDirectory 非法时 WinForms 会忽略
+                ' 路径含非法字符时忽略
             End Try
+
             Return ""
         End Function
 
-        Private Shared Function Ok(data As Object) As String
-            Return JsonSerializer.Serialize(New With { .ok = True, .data = data }, _jsonOptions)
+        Private Shared Function Success(data As Object) As String
+            Return JsonSerializer.Serialize(New ApiResult With {.ok = True, .data = data}, _jsonOptions)
         End Function
 
-        Private Shared Function Err(message As String) As String
-            Return JsonSerializer.Serialize(New With { .ok = False, .error = message }, _jsonOptions)
+        Private Shared Function Failure(message As String) As String
+            Return JsonSerializer.Serialize(New ApiResult With {.ok = False, .error = message}, _jsonOptions)
         End Function
 
-        Private Function RunOnUi(Of T)(func As Func(Of T)) As T
-            If _owner IsNot Nothing AndAlso _owner.InvokeRequired Then
-                Return CType(_owner.Invoke(func), T)
+        ''' <summary>
+        ''' 文件对话框必须在 UI 线程上弹出；JS 侧的 COM 异步代理调用可能来自
+        ''' 非 UI 线程，因此统一在此调度。
+        ''' </summary>
+        Private Function RunOnUi(Of T)(task As Func(Of T)) As T
+            If _owner IsNot Nothing AndAlso Not _owner.IsDisposed AndAlso _owner.InvokeRequired Then
+                Return DirectCast(_owner.Invoke(task), T)
             Else
-                Return func()
+                Return task()
             End If
         End Function
+
+        ''' <summary>统一的返回体：{ "ok": ..., "data": ..., "error": ... }。</summary>
+        Private Class ApiResult
+
+            Public Property ok As Boolean
+            Public Property data As Object
+            Public Property [error] As String
+
+        End Class
 
 #End Region
 
