@@ -9,10 +9,10 @@ Public Class ComparisonGroup
     Public Property Name As String = ""
 
     ''' <summary>对照组样本 ID 列表</summary>
-    Public Property ControlSamples As List(Of String) = New List(Of String)()
+    Public Property ControlSamples As String()
 
     ''' <summary>处理组样本 ID 列表</summary>
-    Public Property TreatmentSamples As List(Of String) = New List(Of String)()
+    Public Property TreatmentSamples As String()
 
     ''' <summary>对照组样本分组标签</summary>
     Public Property ControlLabel As String = ""

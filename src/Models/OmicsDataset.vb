@@ -24,10 +24,10 @@ Public Class OmicsDataset
     End Property
 
     ''' <summary>样本 ID 列表（从表达矩阵第一行读取）</summary>
-    Public Property SampleIDs As List(Of String) = New List(Of String)()
+    Public Property SampleIDs As String()
 
     ''' <summary>分子 ID 列表（从表达矩阵第一列读取）</summary>
-    Public Property MoleculeIDs As List(Of String) = New List(Of String)()
+    Public Property MoleculeIDs As String()
 
     Public Function ToJson() As String
         Return Me.GetJson

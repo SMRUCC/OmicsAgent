@@ -215,7 +215,7 @@ Module Workflow
         For Each ds In context.Datasets
             If File.Exists(ds.SampleInfoFile) Then
                 ds.SampleIDs = CsvUtils.ReadSampleIDs(ds.ExpressionFile)
-                ds.MoleculeIDs = CsvUtils.ReadFirstColumn(ds.ExpressionFile)
+                ds.MoleculeIDs = CsvUtils.ReadFirstColumn(ds.ExpressionFile).ToArray
             End If
         Next
 

@@ -131,33 +131,27 @@ Public Module CsvUtils
     End Function
 
     ''' <summary>读取 CSV 文件第一列数据（不含表头）</summary>
-    Public Function ReadFirstColumn(filePath As String) As List(Of String)
-        Dim result As New List(Of String)()
-
+    Public Iterator Function ReadFirstColumn(filePath As String) As IEnumerable(Of String)
         If filePath.FileExists Then
             Using s As Stream = filePath.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
                 Dim rows As IEnumerable(Of RowObject) = RowIterator.RowSolver(s, simple:=True)
 
                 For Each row As RowObject In rows.Skip(1)
                     If Not row.IsNullOrEmpty Then
-                        Call result.Add(row.DirectGet(0))
+                        Yield row.DirectGet(0)
                     End If
                 Next
             End Using
         End If
-
-        Return result
     End Function
 
     ''' <summary>读取 CSV 文件第一行（表头）除第一列外的所有列名</summary>
-    Public Function ReadSampleIDs(filePath As String) As List(Of String)
-        Dim result As New List(Of String)()
-
+    Public Function ReadSampleIDs(filePath As String) As String()
         If filePath.FileExists Then
-            result = New List(Of String)(Tokenizer.CharsParser(filePath.ReadFirstLine).Skip(1))
+            Return Tokenizer.CharsParser(filePath.ReadFirstLine).Skip(1).ToArray
+        Else
+            Return {}
         End If
-
-        Return result
     End Function
 
 End Module

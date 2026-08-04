@@ -36,20 +36,4 @@ Public Class ModulePlan
 
 End Class
 
-Public Class Comparison
 
-    Public Property name As String
-    Public Property treatment As String
-    Public Property control As String
-    Public Property biological_rationale As String
-    Public Property expected_findings As String
-
-End Class
-
-Public Class [Step]
-
-    Public Property action As String
-    Public Property goal As String
-    Public Property rscript_path As String
-
-End Class
