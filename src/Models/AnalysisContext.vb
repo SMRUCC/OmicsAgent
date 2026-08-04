@@ -23,9 +23,16 @@ Public Class AnalysisContext
     ''' <summary>参考文献文件夹路径（可选）</summary>
     Public Property ReferenceDir As String = ""
 
+    ''' <summary>
+    ''' 全局分子注释表路径。单组学时即为用户提供的注释表；
+    ''' 多组学时指向工作区中由各组学注释表合并而成的总表（含 omics_id 来源标识列）。
+    ''' </summary>
     Public Property AnnotationFile As String
     Public Property AnnotationContent As Molecule()
     Public Property SampleInfoInput As String
+
+    ''' <summary>多组学数据集定义文件（--dataset）路径，传统参数模式下为空</summary>
+    Public Property DatasetManifestFile As String = ""
 
     ' ------------------------------------------------------------------
     ' 数据集
@@ -42,6 +49,18 @@ Public Class AnalysisContext
 
     ''' <summary>是否为时间序列数据（根据样本元数据 time 列判断）</summary>
     Public Property IsTimeSeries As Boolean = False
+
+    ' ------------------------------------------------------------------
+    ' 跨组学样本对齐
+    ' ------------------------------------------------------------------
+    ''' <summary>各组学共有的生物学个体标识列表（对齐后所有矩阵的公共列名）</summary>
+    Public Property SubjectIDs As String()
+
+    ''' <summary>工作区中规范化样本对齐宽表的路径（subject_id + 各组学原始样本 ID 列）</summary>
+    Public Property SubjectMapFile As String = ""
+
+    ''' <summary>跨组学样本对齐是否已执行完成</summary>
+    Public Property IsSampleAligned As Boolean = False
 
     ' ------------------------------------------------------------------
     ' 工作区
@@ -66,6 +85,13 @@ Public Class AnalysisContext
     Public ReadOnly Property ScriptsDir As String
         Get
             Return Path.Combine(WorkspaceDir, "scripts").GetDirectoryFullPath
+        End Get
+    End Property
+
+    ''' <summary>跨组学样本对齐产物目录路径（存放对齐后的表达矩阵与样本元数据）</summary>
+    Public ReadOnly Property AlignedDir As String
+        Get
+            Return Path.Combine(WorkspaceDir, "aligned").GetDirectoryFullPath
         End Get
     End Property
 
@@ -137,6 +163,7 @@ Public Class AnalysisContext
         If Not Directory.Exists(TmpDir) Then Directory.CreateDirectory(TmpDir)
         If Not Directory.Exists(ScriptsDir) Then Directory.CreateDirectory(ScriptsDir)
         If Not Directory.Exists(KnowledgeDir) Then Directory.CreateDirectory(KnowledgeDir)
+        If Not Directory.Exists(AlignedDir) Then Directory.CreateDirectory(AlignedDir)
     End Sub
 
     ''' <summary>为指定分析模块创建结果目录</summary>
