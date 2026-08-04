@@ -33,7 +33,22 @@ Public Class PCAAnalysisModule : Inherits AnalysisModuleBase
     End Sub
 
     Protected Overrides Function GeneratePlanPromptText() As String
-        Return "为总体样本分析设计计划，包括以下内容：
+        Dim multiOmicsSection As String = ""
+
+        If _context.IsMultiOmics Then
+            multiOmicsSection = $"
+# 多组学补充分析
+- 上述 PCA/PLSDA/OPLSDA 等分析必须对每个组学**分别独立**执行，各自输出得分表与图形
+- 在此基础上，额外做一次跨组学的样本结构一致性比较：
+  - 各组学矩阵的样本列名已统一为 subject_id（共 {If(_context.SubjectIDs Is Nothing, 0, _context.SubjectIDs.Length)} 个共有个体），可直接按列名对齐
+  - 使用 Procrustes 分析（vegan::procrustes / protest）比较不同组学 PCA 得分空间的一致性
+  - 报告 Procrustes 相关系数与显著性，说明各组学是否呈现一致的样本分群结构
+  - 绘制 Procrustes 叠加图，用连线表示同一个体在两个组学中的位置差异
+- 若某两个组学的样本分群结构差异很大，需在结论中明确指出并分析可能原因
+"
+        End If
+
+        Return $"为总体样本分析设计计划，包括以下内容：
 1. PCA（主成分分析）- 提取 PC1、PC2、PC3 得分
 2. PLSDA（偏最小二乘判别分析）
 3. OPLSDA（正交偏最小二乘判别分析）
@@ -49,12 +64,12 @@ Public Class PCAAnalysisModule : Inherits AnalysisModuleBase
 - 生成阶段性总结文本
 
 # 上下游衔接说明
-- 上游输入：读取模块 1 预处理后的表达矩阵（tmp/ 目录下，文件名以 'preprocessed_' 开头）
+- 上游输入：{PreprocessedInputHint()}
 - 读取样本信息表获取分组标签
-- 下游输出：分析结果供模块 4(LIMMA) 参考数据质量，供模块 11(报告) 引用
-
+- 下游输出：分析结果供模块 4(LIMMA) 参考数据质量，供模块 12(报告) 引用
+{multiOmicsSection}
 # 实现要求
-- 读取 tmp/ 目录中预处理后的表达矩阵（文件名以 'preprocessed_' 开头）
+- 按上方“上游输入”所列路径读取预处理后的表达矩阵
 - 读取样本信息表获取分组标签
 - 使用 prcomp 或 FactoMineR 执行 PCA
 - 使用 mixOmics 执行 PLSDA
@@ -80,7 +95,7 @@ Public Class PCAAnalysisModule : Inherits AnalysisModuleBase
     End Function
 
     Protected Overrides Function GetConclusionItems() As String
-        Return "1. PCA/PLSDA/OPLSDA 分析的整体结果
+        Dim items As String = "1. PCA/PLSDA/OPLSDA 分析的整体结果
 2. 各组别在主成分上的分离情况
 3. 模型解释率（R2X, R2Y, Q2）
 4. 置换检验结果，组内离散度与组间离散度的比较
@@ -88,6 +103,14 @@ Public Class PCAAnalysisModule : Inherits AnalysisModuleBase
 6. F 检验和 ANOVA 检验的总体结果
 7. 与用户研究主题的生物学关联性说明
 8. 若数据质量不佳，给出明确的警告信息"
+
+        If _context.IsMultiOmics Then
+            items &= "
+9. 各组学分别的样本分群表现对比（逐个组学说明）
+10. 跨组学样本结构一致性（Procrustes）结果及其生物学解读"
+        End If
+
+        Return items
     End Function
 
 End Class

@@ -525,6 +525,34 @@ Public MustInherit Class AnalysisModuleBase
     End Function
 
     ''' <summary>
+    ''' 生成描述模块 1 预处理产物输入位置的提示词片段。
+    ''' </summary>
+    ''' <remarks>
+    ''' 多组学场景下每个组学各有一份预处理产物，若只笼统地说「读取 tmp/ 下以
+    ''' preprocessed_ 开头的文件」，LLM 容易只处理其中一个或错误地把多个组学拼成一张表。
+    ''' 因此这里把每个组学对应的具体文件名显式列出。
+    ''' </remarks>
+    Protected Function PreprocessedInputHint() As String
+        Dim datasets = _context.Datasets
+
+        If Not _context.IsMultiOmics Then
+            Dim single_ = datasets.FirstOrDefault
+
+            If single_ Is Nothing Then
+                Return "读取模块 1 预处理后的表达矩阵（tmp/ 目录，文件名以 'preprocessed_' 开头）"
+            End If
+
+            Return $"读取模块 1 预处理后的表达矩阵：tmp/{single_.PreprocessedFileName}"
+        End If
+
+        Dim list As String = datasets _
+            .Select(Function(d) $"  - [{d.Id}] {d.DisplayName}：tmp/{d.PreprocessedFileName}") _
+            .JoinBy(vbLf)
+
+        Return $"读取模块 1 预处理后的各组学表达矩阵，共 {datasets.Count} 个，逐一对应如下：" & vbLf & list
+    End Function
+
+    ''' <summary>
     ''' 生成中间产物文件命名约定的提示词片段。
     ''' </summary>
     ''' <remarks>
