@@ -32,6 +32,9 @@
     <Project Path="../GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel/xlsx-netcore5.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
+    <Project Path="../GCModeller/src/runtime/sciBASIC#/mime/applicationvnd.openxmlformats-officedocument.wordprocessingml.document/docx/WordDocument.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
     <Project Path="../GCModeller/src/runtime/sciBASIC#/mime/text%markdown/markdown.NET5.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
@@ -75,9 +78,6 @@
       <Platform Solution="*|x64" Project="x64" />
     </Project>
   </Folder>
-  <Project Path="OmicsWorks/OmicsWorks.vbproj" Id="653b8274-c74d-4306-88f4-2dc6e9a93998">
-    <Platform Solution="Debug|x64" Project="x64" />
-  </Project>
   <Project Path="src/OmicsAgent.vbproj">
     <Platform Solution="*|x64" Project="x64" />
   </Project>
