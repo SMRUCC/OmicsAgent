@@ -2,7 +2,7 @@
   "profiles": {
     "OmicsAgent": {
       "commandName": "Project",
-      "commandLineArgs": "-r=research.txt -e=expression.csv -a=metabolites.csv -s=sampleinfo.csv -k=./pubmed/ -w=./demo/ -c=config.ini --skip-literature --skip-kb  --make-report --debug-cache",
+      "commandLineArgs": "-r=\"G:\\OmicsWorks\\extdata\\Tobacco-fermentation\\research.txt\" -e=\"G:\\OmicsWorks\\extdata\\Tobacco-fermentation\\expression\" -a=metabolites.csv -s=\"G:\\OmicsWorks\\extdata\\Tobacco-fermentation\\sampleinfo.csv\" -k=\"G:\\OmicsWorks\\extdata\\Tobacco-fermentation\\kb\" -w=\"G:\\OmicsWorks\\test\\multiple_omics\\demo\" -c=\"G:\\OmicsWorks\\test\\metabolism\\config.ini\" --debug-cache",
       "workingDirectory": "G:\\OmicsWorks\\test\\metabolism"
     }
   }
