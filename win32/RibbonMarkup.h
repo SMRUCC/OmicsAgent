@@ -73,4 +73,8 @@
 #define cmdTabMain_LabelTitle_RESID 60043
 #define cmdTabResearchWork 5 
 #define cmdTabResearchWork_LabelTitle_RESID 60044
-#define InternalCmd2_LabelTitle_RESID 60045
+#define cmdButtonDataset 26 
+#define cmdButtonDataset_LabelTitle_RESID 60045
+#define cmdButtonDataset_SmallImages_192__RESID 60046
+#define cmdButtonDataset_LargeImages_192__RESID 60047
+#define InternalCmd2_LabelTitle_RESID 60048

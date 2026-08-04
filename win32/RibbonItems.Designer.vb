@@ -27,6 +27,7 @@ Namespace RibbonLib.Controls
             Public Const cmdTabResearchWork As UInteger = 5
             Public Const cmdGroupResearchWork As UInteger = 4
             Public Const cmdButtonOpenKb As UInteger = 2
+            Public Const cmdButtonDataset As UInteger = 26
             Public Const cmdMenuKBLib As UInteger = 12
             Public Const cmdTabKBLib As UInteger = 11
             Public Const cmdGroupKBLib As UInteger = 13
@@ -120,6 +121,12 @@ Namespace RibbonLib.Controls
                 Return _ButtonOpenKb
             End Get
         End Property
+        Private _ButtonDataset As RibbonButton
+        Public ReadOnly Property ButtonDataset As RibbonButton
+            Get
+                Return _ButtonDataset
+            End Get
+        End Property
         Private _MenuKBLib As RibbonTabGroup
         Public ReadOnly Property MenuKBLib As RibbonTabGroup
             Get
@@ -204,6 +211,7 @@ Namespace RibbonLib.Controls
             _TabResearchWork = New RibbonTab(_ribbon, Cmd.cmdTabResearchWork)
             _GroupResearchWork = New RibbonGroup(_ribbon, Cmd.cmdGroupResearchWork)
             _ButtonOpenKb = New RibbonButton(_ribbon, Cmd.cmdButtonOpenKb)
+            _ButtonDataset = New RibbonButton(_ribbon, Cmd.cmdButtonDataset)
             _MenuKBLib = New RibbonTabGroup(_ribbon, Cmd.cmdMenuKBLib)
             _TabKBLib = New RibbonTab(_ribbon, Cmd.cmdTabKBLib)
             _GroupKBLib = New RibbonGroup(_ribbon, Cmd.cmdGroupKBLib)

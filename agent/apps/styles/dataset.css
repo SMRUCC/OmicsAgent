@@ -270,6 +270,14 @@
 
 /* ---------- 侧栏：数据集列表 ---------- */
 
+/* kb.css 中 aside.sidebar 为 flex column；让列表吃掉剩余高度，
+   使「添加数据集」按钮始终贴在侧栏底部 */
+.app--dataset .doc-list {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+}
+
 .doc-item {
     position: relative;
 }

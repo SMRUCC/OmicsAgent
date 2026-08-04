@@ -49,7 +49,7 @@
         <Image MinDPI="192">Icons/icons8-file-explorer-new-96.png</Image>
       </Command.LargeImages>
     </Command>
-    <Command Name="cmdButtonOpenKb" Id="2" LabelTitle="Open Research KB">
+    <Command Name="cmdButtonOpenKb" Id="2" LabelTitle="Research KB">
       <Command.SmallImages>
         <Image MinDPI="192">Icons/icons8-books-96.png</Image>
       </Command.SmallImages>
@@ -95,6 +95,14 @@
     <Command Name="cmdTabKBLib" Id="11" LabelTitle="Knowledge Base" />
     <Command Name="cmdTabMain" Id="9" LabelTitle="Omics Research" />
     <Command Name="cmdTabResearchWork" Id="5" LabelTitle="Research" />
+    <Command Name="cmdButtonDataset" Id="26" LabelTitle="DataSet Editor">
+      <Command.SmallImages>
+        <Image MinDPI="192">Icons/icons8-excel-96.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Icons/icons8-excel-96.png</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <Ribbon>
@@ -125,8 +133,9 @@
       <Ribbon.ContextualTabs>
         <TabGroup CommandName="cmdMenuResearchWork">
           <Tab CommandName="cmdTabResearchWork">
-            <Group CommandName="cmdGroupResearchWork" SizeDefinition="OneButton">
+            <Group CommandName="cmdGroupResearchWork" SizeDefinition="TwoButtons">
               <Button CommandName="cmdButtonOpenKb" />
+              <Button CommandName="cmdButtonDataset" />
             </Group>
           </Tab>
         </TabGroup>
@@ -147,9 +156,10 @@
             <Button CommandName="cmdButtonOpenFolder" />
             <Button CommandName="cmdButtonOpenResearch" />
           </Group>
-          <Group CommandName="cmdGroupWorkTools" SizeDefinition="TwoButtons">
+          <Group CommandName="cmdGroupWorkTools" SizeDefinition="ThreeButtons">
             <Button CommandName="cmdButtonOpenConsole" />
             <Button CommandName="cmdButtonVennTool" />
+            <Button CommandName="cmdButtonLLMTool" />
           </Group>
         </Tab>
         <Tab CommandName="cmdTabInformation">

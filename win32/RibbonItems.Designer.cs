@@ -30,6 +30,7 @@ namespace RibbonLib.Controls
             public const uint cmdTabResearchWork = 5;
             public const uint cmdGroupResearchWork = 4;
             public const uint cmdButtonOpenKb = 2;
+            public const uint cmdButtonDataset = 26;
             public const uint cmdMenuKBLib = 12;
             public const uint cmdTabKBLib = 11;
             public const uint cmdGroupKBLib = 13;
@@ -58,6 +59,7 @@ namespace RibbonLib.Controls
         public RibbonTab TabResearchWork { get; private set; }
         public RibbonGroup GroupResearchWork { get; private set; }
         public RibbonButton ButtonOpenKb { get; private set; }
+        public RibbonButton ButtonDataset { get; private set; }
         public RibbonTabGroup MenuKBLib { get; private set; }
         public RibbonTab TabKBLib { get; private set; }
         public RibbonGroup GroupKBLib { get; private set; }
@@ -87,6 +89,7 @@ namespace RibbonLib.Controls
             TabResearchWork = new RibbonTab(ribbon, Cmd.cmdTabResearchWork);
             GroupResearchWork = new RibbonGroup(ribbon, Cmd.cmdGroupResearchWork);
             ButtonOpenKb = new RibbonButton(ribbon, Cmd.cmdButtonOpenKb);
+            ButtonDataset = new RibbonButton(ribbon, Cmd.cmdButtonDataset);
             MenuKBLib = new RibbonTabGroup(ribbon, Cmd.cmdMenuKBLib);
             TabKBLib = new RibbonTab(ribbon, Cmd.cmdTabKBLib);
             GroupKBLib = new RibbonGroup(ribbon, Cmd.cmdGroupKBLib);
