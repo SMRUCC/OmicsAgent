@@ -29,8 +29,34 @@ Public Class KeggFunctionModule : Inherits AnalysisModuleBase
         MyBase.New(config, context, logger)
     End Sub
 
+    ''' <summary>多组学场景下的 KEGG 功能分析补充要求</summary>
+    Private Function MultiOmicsSection() As String
+        If Not _context.IsMultiOmics Then
+            Return ""
+        End If
+
+        Dim annoList As String = _context.Datasets _
+            .Select(Function(d) $"  - [{d.Id}] {d.DisplayName}（{d.OmicsType}）：{If(d.AnnotationFile.FileExists, d.AnnotationFile, "(未提供注释表)")}") _
+            .JoinBy(vbLf)
+
+        Return $"
+# 多组学功能分析要求（重要）
+- 每个组学必须使用**自己专属的注释表**做 KEGG 映射，不同组学的分子编号体系不同，
+  绝不能混用其他组学的注释表：
+{annoList}
+- 不同组学映射到 KEGG 的方式不同：基因/蛋白类走 KEGG ORTHOLOGY(K number) 或基因 ID，
+  代谢物类走 KEGG COMPOUND(C number)，请按组学类型分别处理
+- 富集分析与 GSVA 必须对每个组学分别独立执行，结果表带上组学标识（如 'kegg_<组学id>_enrich.csv'）
+- 在各组学分别完成富集后，额外做一次**通路层面的跨组学联合映射**：
+  - 统计每条 KEGG 通路分别被哪些组学显著富集或覆盖
+  - 找出被两个及以上组学共同富集的通路，这些是多组学共同响应的关键通路
+  - 绘制通路 x 组学的对比图（如分面条形图或点图），直观展示各通路在不同组学中的富集强度
+- GSVA 得分矩阵的列名保持为 subject_id，供模块 6(WGCNA) 作为跨组学性状数据使用
+"
+    End Function
+
     Protected Overrides Function GeneratePlanPromptText() As String
-        Return "为 KEGG 生物学功能分析设计计划，包括以下内容：
+        Return $"为 KEGG 生物学功能分析设计计划，包括以下内容：
 1. 基于差异分子（来自模块 4）进行 KEGG 通路富集分析
    - 使用 data/ 目录中的 KEGG 背景 XML/JSON 文件
    - 使用 clusterProfiler 或类似 R 包

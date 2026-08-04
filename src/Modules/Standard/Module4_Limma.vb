@@ -35,6 +35,28 @@ Public Class LimmaDiffModule : Inherits AnalysisModuleBase
         MyBase.New(config, context, logger)
     End Sub
 
+    ''' <summary>多组学场景下的差异分析补充要求</summary>
+    Private Function MultiOmicsSection() As String
+        If Not _context.IsMultiOmics Then
+            Return ""
+        End If
+
+        Dim outputs As String = _context.Datasets _
+            .Select(Function(d) $"  - [{d.Id}] {d.DisplayName} -> 'limma_{d.Id}_<比对名>.csv'") _
+            .JoinBy(vbLf)
+
+        Return $"
+# 多组学差异分析要求（重要）
+- 必须对每个组学**分别独立**执行差异分析，不得把不同组学的分子合并到同一个矩阵里跑 limma
+- 各组学共用模块 3 设计的同一套比对方案，保证不同组学的差异结果可以相互比较
+- 代谢组类组学需要计算 VIP 值，转录组/蛋白组类组学则不需要，请按组学类型分别处理
+- 差异分析结果表必须带上组学标识，逐一对应如下：
+{outputs}
+- 结果表中必须额外包含一列 omics_id 标明该行结果所属的组学，供模块 10 跨组学整合时汇总
+- 分子注释请使用各组学自己的注释表（见上方数据集清单），不要跨组学误用
+"
+    End Function
+
     Protected Overrides Function GeneratePlanPromptText() As String
         Return $"为 LIMMA 差异分析设计计划，包括以下内容：
 1. 表达矩阵多因素 ANOVA 检验
@@ -45,12 +67,12 @@ Public Class LimmaDiffModule : Inherits AnalysisModuleBase
 6. 默认阈值：pvalue < 0.05，不设 logFC 阈值，按 |logFC| 降序取 top {_config.Analysis.DiffTopCount} 个分子
 
 # 上下游衔接说明
-- 上游输入：读取模块 1 预处理后的表达矩阵（tmp/ 目录下，文件名以 'preprocessed_' 开头）
+- 上游输入：{PreprocessedInputHint()}
 - 上游输入：读取模块 3 的比对设计（tables/comparison_design.csv，若缺失则读取 {$"{_context.AnalysisDir}/design.json"} 文件）
-- 下游输出：差异分析结果表（前缀 'limma_'）将作为模块 5(KEGG 富集分析) 的输入分子列表，供模块 10(表格) 和模块 11(报告) 引用
-
+- 下游输出：差异分析结果表（前缀 'limma_'）将作为模块 5(KEGG 富集分析) 的输入分子列表，供模块 {If(_context.IsMultiOmics, "10(跨组学整合)、", "")}11(表格) 和模块 12(报告) 引用
+{MultiOmicsSection()}
 # 实现要求
-- 读取 tmp/ 目录中预处理后的表达矩阵（文件名以 'preprocessed_' 开头）
+- 按上方「上游输入」所列路径读取预处理后的表达矩阵
 - 读取样本信息表和比对设计（tables/comparison_design.csv，若缺失则从 {$"{_context.AnalysisDir}/design.json"} 文件读取）
 - 执行多因素 ANOVA 检验
 - 使用 limma 执行总体 F 检验
@@ -80,13 +102,21 @@ Public Class LimmaDiffModule : Inherits AnalysisModuleBase
     End Function
 
     Protected Overrides Function GetConclusionItems() As String
-        Return "1. 差异分析的整体结果（每个比较组的差异分子数量：上调、下调、总数）
+        Dim items As String = "1. 差异分析的整体结果（每个比较组的差异分子数量：上调、下调、总数）
 2. 不同比较组之间差异分子的重叠情况（文氏图结果）
 3. 关键差异分子的生物学功能（参考 kb.json 知识库和分子注释表）
 4. 差异分子热图所展示的样本聚类模式
 5. 差异分析结果与用户研究主题的生物学机制关联性
 6. 不同比较组之间的规律性发现
 7. 时间序列数据中时间效应的影响"
+
+        If _context.IsMultiOmics Then
+            items &= "
+8. 逐个组学分别报告差异分子数量与关键差异分子（须标明组学来源）
+9. 同一比对在不同组学中的响应强度差异，哪个组学层次的变化最显著"
+        End If
+
+        Return items
     End Function
 
 End Class

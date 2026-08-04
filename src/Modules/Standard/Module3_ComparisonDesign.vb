@@ -54,16 +54,30 @@ Public Class ComparisonDesignModule : Inherits AnalysisModuleBase
     End Function
 
     Protected Overrides Function GeneratePlanPromptText() As String
-        Return "根据用户研究主题和可用样本分组（来自样本信息表中的 sample_info 列），设计差异分析比对组别：
+        Dim multiOmicsSection As String = ""
+
+        If _context.IsMultiOmics Then
+            multiOmicsSection = "
+# 多组学比对设计要求（重要）
+- 各组学的样本已对齐到统一的生物学个体（subject_id），因此分组定义必须建立在 subject_id 层面，
+  而不是各组学各自的原始样本编号上
+- 全部组学必须共用**同一套**比对方案：同一个比对在每个组学中的处理组与对照组，
+  所指向的必须是同一批生物学个体
+- 不要为不同组学设计彼此不一致的分组，否则后续跨组学整合分析将无法比较
+- 若某个组学的样本元数据中缺少设计所需的分组字段，需在计划中明确指出，
+  并说明以哪个组学的样本元数据作为分组定义的权威来源
+"
+        End If
+
+        Return $"根据用户研究主题和可用样本分组（来自样本信息表中的 sample_info 列），设计差异分析比对组别：
 1. 识别所有可用的样本分组
 2. 设计与研究主题契合的、具有生物学意义的比对组对
 3. 对于时间序列数据，设计各组内不同时间点之间的比对
 4. 兼顾两两比对和多组比对
-5. 对于多组学数据，在各组学层面设计一致的比对方案
 
 比对设计应与用户研究主题相关的已知生物学机制深度契合。
 参考 kb.json 知识库获取生物学见解。
-
+{multiOmicsSection}
 # 上下游衔接说明
 - 上游输入：读取样本信息表中的分组信息，参考模块 1 预处理后的数据
 - 下游输出：比对设计结果（design.json + tables/comparison_design.csv）将作为模块 4(LIMMA) 和模块 5(KEGG GSVA 差异分析) 的比对方案依据

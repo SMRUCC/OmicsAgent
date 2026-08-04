@@ -69,7 +69,7 @@ Public Class PCAAnalysisModule : Inherits AnalysisModuleBase
 - 下游输出：分析结果供模块 4(LIMMA) 参考数据质量，供模块 12(报告) 引用
 {multiOmicsSection}
 # 实现要求
-- 按上方“上游输入”所列路径读取预处理后的表达矩阵
+- 按上方「上游输入」所列路径读取预处理后的表达矩阵
 - 读取样本信息表获取分组标签
 - 使用 prcomp 或 FactoMineR 执行 PCA
 - 使用 mixOmics 执行 PLSDA
