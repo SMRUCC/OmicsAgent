@@ -28,12 +28,23 @@ Namespace RibbonLib.Controls
             Public Const cmdGroupResearchWork As UInteger = 4
             Public Const cmdButtonOpenKb As UInteger = 2
             Public Const cmdButtonDataset As UInteger = 26
+            Public Const cmdGroupResearchAgentWork As UInteger = 27
+            Public Const cmdButtonStart As UInteger = 28
             Public Const cmdMenuKBLib As UInteger = 12
             Public Const cmdTabKBLib As UInteger = 11
             Public Const cmdGroupKBLib As UInteger = 13
             Public Const cmdBtnOpenKBLib As UInteger = 10
             Public Const cmdGroupTools As UInteger = 14
             Public Const cmdButtonToggleTheme As UInteger = 15
+            Public Const cmdMenuDataSet As UInteger = 29
+            Public Const cmdTabDataSet As UInteger = 30
+            Public Const cmdGroupDataSet As UInteger = 31
+            Public Const cmdButtonLoadDataSet As UInteger = 32
+            Public Const cmdButtonSaveDataSet As UInteger = 33
+            Public Const cmdButtonSaveAsDataSet As UInteger = 34
+            Public Const cmdButtonDataSetToggleOmics As UInteger = 37
+            Public Const cmdButtonPreviewDataset As UInteger = 35
+            Public Const cmdButtonDataSetEditorToggleTheme As UInteger = 36
             Public Const cmdTabMain As UInteger = 9
             Public Const cmdGroupMain As UInteger = 7
             Public Const cmdGroupWorkTools As UInteger = 21
@@ -127,6 +138,18 @@ Namespace RibbonLib.Controls
                 Return _ButtonDataset
             End Get
         End Property
+        Private _GroupResearchAgentWork As RibbonGroup
+        Public ReadOnly Property GroupResearchAgentWork As RibbonGroup
+            Get
+                Return _GroupResearchAgentWork
+            End Get
+        End Property
+        Private _ButtonStart As RibbonButton
+        Public ReadOnly Property ButtonStart As RibbonButton
+            Get
+                Return _ButtonStart
+            End Get
+        End Property
         Private _MenuKBLib As RibbonTabGroup
         Public ReadOnly Property MenuKBLib As RibbonTabGroup
             Get
@@ -161,6 +184,60 @@ Namespace RibbonLib.Controls
         Public ReadOnly Property ButtonToggleTheme As RibbonButton
             Get
                 Return _ButtonToggleTheme
+            End Get
+        End Property
+        Private _MenuDataSet As RibbonTabGroup
+        Public ReadOnly Property MenuDataSet As RibbonTabGroup
+            Get
+                Return _MenuDataSet
+            End Get
+        End Property
+        Private _TabDataSet As RibbonTab
+        Public ReadOnly Property TabDataSet As RibbonTab
+            Get
+                Return _TabDataSet
+            End Get
+        End Property
+        Private _GroupDataSet As RibbonGroup
+        Public ReadOnly Property GroupDataSet As RibbonGroup
+            Get
+                Return _GroupDataSet
+            End Get
+        End Property
+        Private _ButtonLoadDataSet As RibbonButton
+        Public ReadOnly Property ButtonLoadDataSet As RibbonButton
+            Get
+                Return _ButtonLoadDataSet
+            End Get
+        End Property
+        Private _ButtonSaveDataSet As RibbonButton
+        Public ReadOnly Property ButtonSaveDataSet As RibbonButton
+            Get
+                Return _ButtonSaveDataSet
+            End Get
+        End Property
+        Private _ButtonSaveAsDataSet As RibbonButton
+        Public ReadOnly Property ButtonSaveAsDataSet As RibbonButton
+            Get
+                Return _ButtonSaveAsDataSet
+            End Get
+        End Property
+        Private _ButtonDataSetToggleOmics As RibbonButton
+        Public ReadOnly Property ButtonDataSetToggleOmics As RibbonButton
+            Get
+                Return _ButtonDataSetToggleOmics
+            End Get
+        End Property
+        Private _ButtonPreviewDataset As RibbonButton
+        Public ReadOnly Property ButtonPreviewDataset As RibbonButton
+            Get
+                Return _ButtonPreviewDataset
+            End Get
+        End Property
+        Private _ButtonDataSetEditorToggleTheme As RibbonButton
+        Public ReadOnly Property ButtonDataSetEditorToggleTheme As RibbonButton
+            Get
+                Return _ButtonDataSetEditorToggleTheme
             End Get
         End Property
         Private _TabMain As RibbonTab
@@ -212,12 +289,23 @@ Namespace RibbonLib.Controls
             _GroupResearchWork = New RibbonGroup(_ribbon, Cmd.cmdGroupResearchWork)
             _ButtonOpenKb = New RibbonButton(_ribbon, Cmd.cmdButtonOpenKb)
             _ButtonDataset = New RibbonButton(_ribbon, Cmd.cmdButtonDataset)
+            _GroupResearchAgentWork = New RibbonGroup(_ribbon, Cmd.cmdGroupResearchAgentWork)
+            _ButtonStart = New RibbonButton(_ribbon, Cmd.cmdButtonStart)
             _MenuKBLib = New RibbonTabGroup(_ribbon, Cmd.cmdMenuKBLib)
             _TabKBLib = New RibbonTab(_ribbon, Cmd.cmdTabKBLib)
             _GroupKBLib = New RibbonGroup(_ribbon, Cmd.cmdGroupKBLib)
             _BtnOpenKBLib = New RibbonButton(_ribbon, Cmd.cmdBtnOpenKBLib)
             _GroupTools = New RibbonGroup(_ribbon, Cmd.cmdGroupTools)
             _ButtonToggleTheme = New RibbonButton(_ribbon, Cmd.cmdButtonToggleTheme)
+            _MenuDataSet = New RibbonTabGroup(_ribbon, Cmd.cmdMenuDataSet)
+            _TabDataSet = New RibbonTab(_ribbon, Cmd.cmdTabDataSet)
+            _GroupDataSet = New RibbonGroup(_ribbon, Cmd.cmdGroupDataSet)
+            _ButtonLoadDataSet = New RibbonButton(_ribbon, Cmd.cmdButtonLoadDataSet)
+            _ButtonSaveDataSet = New RibbonButton(_ribbon, Cmd.cmdButtonSaveDataSet)
+            _ButtonSaveAsDataSet = New RibbonButton(_ribbon, Cmd.cmdButtonSaveAsDataSet)
+            _ButtonDataSetToggleOmics = New RibbonButton(_ribbon, Cmd.cmdButtonDataSetToggleOmics)
+            _ButtonPreviewDataset = New RibbonButton(_ribbon, Cmd.cmdButtonPreviewDataset)
+            _ButtonDataSetEditorToggleTheme = New RibbonButton(_ribbon, Cmd.cmdButtonDataSetEditorToggleTheme)
             _TabMain = New RibbonTab(_ribbon, Cmd.cmdTabMain)
             _GroupMain = New RibbonGroup(_ribbon, Cmd.cmdGroupMain)
             _GroupWorkTools = New RibbonGroup(_ribbon, Cmd.cmdGroupWorkTools)

@@ -31,12 +31,23 @@ namespace RibbonLib.Controls
             public const uint cmdGroupResearchWork = 4;
             public const uint cmdButtonOpenKb = 2;
             public const uint cmdButtonDataset = 26;
+            public const uint cmdGroupResearchAgentWork = 27;
+            public const uint cmdButtonStart = 28;
             public const uint cmdMenuKBLib = 12;
             public const uint cmdTabKBLib = 11;
             public const uint cmdGroupKBLib = 13;
             public const uint cmdBtnOpenKBLib = 10;
             public const uint cmdGroupTools = 14;
             public const uint cmdButtonToggleTheme = 15;
+            public const uint cmdMenuDataSet = 29;
+            public const uint cmdTabDataSet = 30;
+            public const uint cmdGroupDataSet = 31;
+            public const uint cmdButtonLoadDataSet = 32;
+            public const uint cmdButtonSaveDataSet = 33;
+            public const uint cmdButtonSaveAsDataSet = 34;
+            public const uint cmdButtonDataSetToggleOmics = 37;
+            public const uint cmdButtonPreviewDataset = 35;
+            public const uint cmdButtonDataSetEditorToggleTheme = 36;
             public const uint cmdTabMain = 9;
             public const uint cmdGroupMain = 7;
             public const uint cmdGroupWorkTools = 21;
@@ -60,12 +71,23 @@ namespace RibbonLib.Controls
         public RibbonGroup GroupResearchWork { get; private set; }
         public RibbonButton ButtonOpenKb { get; private set; }
         public RibbonButton ButtonDataset { get; private set; }
+        public RibbonGroup GroupResearchAgentWork { get; private set; }
+        public RibbonButton ButtonStart { get; private set; }
         public RibbonTabGroup MenuKBLib { get; private set; }
         public RibbonTab TabKBLib { get; private set; }
         public RibbonGroup GroupKBLib { get; private set; }
         public RibbonButton BtnOpenKBLib { get; private set; }
         public RibbonGroup GroupTools { get; private set; }
         public RibbonButton ButtonToggleTheme { get; private set; }
+        public RibbonTabGroup MenuDataSet { get; private set; }
+        public RibbonTab TabDataSet { get; private set; }
+        public RibbonGroup GroupDataSet { get; private set; }
+        public RibbonButton ButtonLoadDataSet { get; private set; }
+        public RibbonButton ButtonSaveDataSet { get; private set; }
+        public RibbonButton ButtonSaveAsDataSet { get; private set; }
+        public RibbonButton ButtonDataSetToggleOmics { get; private set; }
+        public RibbonButton ButtonPreviewDataset { get; private set; }
+        public RibbonButton ButtonDataSetEditorToggleTheme { get; private set; }
         public RibbonTab TabMain { get; private set; }
         public RibbonGroup GroupMain { get; private set; }
         public RibbonGroup GroupWorkTools { get; private set; }
@@ -90,12 +112,23 @@ namespace RibbonLib.Controls
             GroupResearchWork = new RibbonGroup(ribbon, Cmd.cmdGroupResearchWork);
             ButtonOpenKb = new RibbonButton(ribbon, Cmd.cmdButtonOpenKb);
             ButtonDataset = new RibbonButton(ribbon, Cmd.cmdButtonDataset);
+            GroupResearchAgentWork = new RibbonGroup(ribbon, Cmd.cmdGroupResearchAgentWork);
+            ButtonStart = new RibbonButton(ribbon, Cmd.cmdButtonStart);
             MenuKBLib = new RibbonTabGroup(ribbon, Cmd.cmdMenuKBLib);
             TabKBLib = new RibbonTab(ribbon, Cmd.cmdTabKBLib);
             GroupKBLib = new RibbonGroup(ribbon, Cmd.cmdGroupKBLib);
             BtnOpenKBLib = new RibbonButton(ribbon, Cmd.cmdBtnOpenKBLib);
             GroupTools = new RibbonGroup(ribbon, Cmd.cmdGroupTools);
             ButtonToggleTheme = new RibbonButton(ribbon, Cmd.cmdButtonToggleTheme);
+            MenuDataSet = new RibbonTabGroup(ribbon, Cmd.cmdMenuDataSet);
+            TabDataSet = new RibbonTab(ribbon, Cmd.cmdTabDataSet);
+            GroupDataSet = new RibbonGroup(ribbon, Cmd.cmdGroupDataSet);
+            ButtonLoadDataSet = new RibbonButton(ribbon, Cmd.cmdButtonLoadDataSet);
+            ButtonSaveDataSet = new RibbonButton(ribbon, Cmd.cmdButtonSaveDataSet);
+            ButtonSaveAsDataSet = new RibbonButton(ribbon, Cmd.cmdButtonSaveAsDataSet);
+            ButtonDataSetToggleOmics = new RibbonButton(ribbon, Cmd.cmdButtonDataSetToggleOmics);
+            ButtonPreviewDataset = new RibbonButton(ribbon, Cmd.cmdButtonPreviewDataset);
+            ButtonDataSetEditorToggleTheme = new RibbonButton(ribbon, Cmd.cmdButtonDataSetEditorToggleTheme);
             TabMain = new RibbonTab(ribbon, Cmd.cmdTabMain);
             GroupMain = new RibbonGroup(ribbon, Cmd.cmdGroupMain);
             GroupWorkTools = new RibbonGroup(ribbon, Cmd.cmdGroupWorkTools);
