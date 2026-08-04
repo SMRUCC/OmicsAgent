@@ -1,7 +1,7 @@
+Imports System.Globalization
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Office.WordDocument
-Imports Microsoft.VisualBasic.MIME.text.markdown
 Imports OmicsAgent.ReportData
 
 ''' <summary>
@@ -48,6 +48,8 @@ Module WordReport
                 Call doc.Paragraph($"关键词：{String.Join("；", content.keywords)}")
             End If
 
+            Call doc.PageBreak()
+
             ' ---- 目录（Word 原生 TOC 域，打开文档后需手动刷新域以显示页码）----
             Call doc.Toc(maxLevel:=3)
             Call doc.PageBreak()
@@ -82,7 +84,7 @@ Module WordReport
 
             Return True
         Catch ex As Exception
-            Call loginfo($"Failed to generate the word document report: {ex.Message}")
+            Call loginfo($"Failed to generate the word document report: {ex.ToString}")
             Return False
         End Try
     End Function
@@ -172,9 +174,168 @@ Module WordReport
         If preview.headers.IsNullOrEmpty Then
             Call doc.Paragraph($"(表格数据加载失败: {Path.GetFileName(tblPath.filename)})")
         Else
-            Call doc.Table(preview.headers, preview.rows)
+            ' 对数据单元格按数值格式化规则处理（表头保持不变）
+            Dim formattedRows(preview.rows.Length - 1)() As String
+            For r As Integer = 0 To preview.rows.Length - 1
+                Dim src = preview.rows(r)
+                Dim dst(src.Length - 1) As String
+                For c As Integer = 0 To src.Length - 1
+                    dst(c) = FormatCellValue(src(c))
+                Next
+                formattedRows(r) = dst
+            Next
+
+            Call doc.WriteAutoFitTable(preview.headers, formattedRows)
         End If
     End Sub
+
+    ''' <summary>
+    ''' 数值单元格格式化：仅当文本可解析为实数时生效，其他（表头、单位、类别名等）原样返回。
+    ''' 规则：
+    '''   - 绝对值大于 10000 或小于 0.001 的实数，按保留三位小数的科学计数法显示（如 1.234E+04）。
+    '''   - 其余实数按四舍五入保留两位小数显示（如 12.34）。
+    ''' </summary>
+    Private Function FormatCellValue(raw As String) As String
+        If raw.StringEmpty(, True) Then
+            Return ""
+        End If
+
+        Dim x As Double
+        If Double.TryParse(raw, NumberStyles.Float, CultureInfo.InvariantCulture, x) Then
+            If x <> 0 AndAlso (Math.Abs(x) > 10000 OrElse Math.Abs(x) < 0.001) Then
+                Return x.ToString("0.000E+00", CultureInfo.InvariantCulture)
+            Else
+                Return Math.Round(x, 2).ToString("F2", CultureInfo.InvariantCulture)
+            End If
+        End If
+
+        Return raw
+    End Function
+
+    ''' <summary>
+    ''' 写入窗口自适应（auto fit to window）的表格。
+    ''' 复用 <see cref="ApplyReportStyles"/> 中配置的表格视觉样式（深蓝表头、隔行底纹、边框），
+    ''' 仅将列宽策略改为自动：<c>w:tblW w:type="auto"</c> + <c>w:tblLayout w:type="autofit"</c>，
+    ''' 单元格宽度 <c>w:tcW w:w="0" w:type="auto"</c>，由 Word 渲染时按页面窗口折列宽。
+    ''' </summary>
+    <Extension>
+    Private Function WriteAutoFitTable(doc As WordDocument,
+                                       headers As String(),
+                                       rows As String()(),
+                                       Optional alignments As String() = Nothing) As WordDocument
+        Dim nCols As Integer = If(headers?.Length, 0)
+        If nCols = 0 AndAlso rows?.Length > 0 Then
+            nCols = If(rows(0)?.Length, 0)
+        End If
+        If nCols = 0 Then
+            Return doc
+        End If
+
+        ' 与 ApplyReportStyles 中配置的 TableStyle 保持一致
+        Dim headerBack As String = "4472C4"
+        Dim headerFore As String = "FFFFFF"
+        Dim headerBold As Boolean = True
+        Dim borderColor As String = "8EAADB"
+        Dim borderSize As Integer = 4
+        Dim altRowBack As String = "D6E4F0"
+
+        Dim sb As New StringBuilder()
+
+        ' 表格属性：自动宽度 + 自动布局 + 边框
+        sb.Append("<w:tbl><w:tblPr>")
+        sb.Append("<w:tblW w:type=""auto""/>")
+        sb.Append("<w:tblLayout w:type=""autofit""/>")
+        sb.Append("<w:tblBorders>")
+        sb.Append($"<w:top w:val=""single"" w:sz=""{borderSize}"" w:color=""{borderColor}""/>")
+        sb.Append($"<w:left w:val=""single"" w:sz=""{borderSize}"" w:color=""{borderColor}""/>")
+        sb.Append($"<w:bottom w:val=""single"" w:sz=""{borderSize}"" w:color=""{borderColor}""/>")
+        sb.Append($"<w:right w:val=""single"" w:sz=""{borderSize}"" w:color=""{borderColor}""/>")
+        sb.Append($"<w:insideH w:val=""single"" w:sz=""{borderSize}"" w:color=""{borderColor}""/>")
+        sb.Append($"<w:insideV w:val=""single"" w:sz=""{borderSize}"" w:color=""{borderColor}""/>")
+        sb.Append("</w:tblBorders>")
+        sb.Append("</w:tblPr>")
+
+        ' 列定义（自动宽度）
+        sb.Append("<w:tblGrid>")
+        For c As Integer = 0 To nCols - 1
+            sb.Append("<w:gridCol w:w=""0""/>")
+        Next
+        sb.Append("</w:tblGrid>")
+
+        ' 表头行
+        If headers IsNot Nothing AndAlso headers.Length > 0 Then
+            sb.Append("<w:tr><w:trPr><w:tblHeader/></w:trPr>")
+            For c As Integer = 0 To nCols - 1
+                sb.Append("<w:tc><w:tcPr>")
+                sb.Append("<w:tcW w:w=""0"" w:type=""auto""/>")
+                sb.Append($"<w:shd w:val=""clear"" w:color=""auto"" w:fill=""{headerBack}""/>")
+                sb.Append("<w:vAlign w:val=""center""/></w:tcPr>")
+                sb.Append("<w:p><w:pPr>")
+                Dim align As String = GetCellAlign(alignments, c)
+                If align <> "left" Then sb.Append($"<w:jc w:val=""{align}""/>")
+                sb.Append("</w:pPr><w:r><w:rPr>")
+                sb.Append("<w:rFonts w:ascii=""Calibri"" w:eastAsia=""Microsoft YaHei"" w:hAnsi=""Calibri""/>")
+                If headerBold Then sb.Append("<w:b/>")
+                sb.Append($"<w:color w:val=""{headerFore}""/>")
+                sb.Append("<w:sz w:val=""24""/></w:rPr>")
+                sb.Append($"<w:t xml:space=""preserve"">{XmlEscape(If(c < headers.Length, headers(c), ""))}</w:t></w:r></w:p></w:tc>")
+            Next
+            sb.Append("</w:tr>")
+        End If
+
+        ' 数据行
+        For rIdx As Integer = 0 To rows.Length - 1
+            Dim row As String() = rows(rIdx)
+            sb.Append("<w:tr>")
+            Dim rowBg As String = If(rIdx Mod 2 = 1 AndAlso altRowBack <> "", altRowBack, "")
+            For c As Integer = 0 To nCols - 1
+                sb.Append("<w:tc><w:tcPr>")
+                sb.Append("<w:tcW w:w=""0"" w:type=""auto""/>")
+                If rowBg <> "" Then sb.Append($"<w:shd w:val=""clear"" w:color=""auto"" w:fill=""{rowBg}""/>")
+                sb.Append("<w:vAlign w:val=""center""/></w:tcPr>")
+                sb.Append("<w:p><w:pPr>")
+                Dim align As String = GetCellAlign(alignments, c)
+                If align <> "left" Then sb.Append($"<w:jc w:val=""{align}""/>")
+                sb.Append("</w:pPr><w:r><w:rPr>")
+                sb.Append("<w:rFonts w:ascii=""Calibri"" w:eastAsia=""Microsoft YaHei"" w:hAnsi=""Calibri""/>")
+                sb.Append("<w:sz w:val=""24""/></w:rPr>")
+                sb.Append($"<w:t xml:space=""preserve"">{XmlEscape(If(c < If(row?.Length, 0), row(c), ""))}</w:t></w:r></w:p></w:tc>")
+            Next
+            sb.Append("</w:tr>")
+        Next
+
+        sb.Append("</w:tbl>")
+        ' 表格后需要一个空段落
+        sb.Append("<w:p/>")
+
+        ' 通过反射无关方式追加到文档体：WordDocument 提供 Table 等方法，
+        ' 此处直接复用其 StringBuilder 不可访问，故改用公开 API 拼接——
+        ' 由于库未暴露追加原始 OOXML 的接口，采用 AppendRaw 扩展（见下）。
+        Call doc.AppendRaw(sb.ToString())
+
+        Return doc
+    End Function
+
+    ''' <summary>XML 文本转义，避免单元格内容破坏 OOXML 结构。</summary>
+    Private Function XmlEscape(text As String) As String
+        If text Is Nothing Then
+            Return ""
+        End If
+        Return text _
+            .Replace("&", "&amp;") _
+            .Replace("<", "&lt;") _
+            .Replace(">", "&gt;") _
+            .Replace("""", "&quot;") _
+            .Replace("'", "&apos;")
+    End Function
+
+    ''' <summary>根据对齐方式数组取第 c 列的对齐（默认 left）。</summary>
+    Private Function GetCellAlign(alignments As String(), c As Integer) As String
+        If alignments IsNot Nothing AndAlso c < alignments.Length AndAlso Not alignments(c).StringEmpty(, True) Then
+            Return alignments(c)
+        End If
+        Return "left"
+    End Function
 
     ''' <summary>集中配置报告文档的页面与各级样式</summary>
     <Extension>
