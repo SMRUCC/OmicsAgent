@@ -12,12 +12,12 @@
  * NavigationCompleted），故未初始化时先缓存 pendingPath，待 run 完成后补打开。
  * =================================================================== */
 
-var openFile = null;
-var toggleTheme = null;
+let openFile = null;
+let toggleTheme = null;
 
 /* 未初始化时的调用缓存 */
-var __pendingPath = null;
-var __ready = false;
+let __pendingPath = null;
+let __ready = false;
 
 openFile = function (path) {
   // run() 尚未执行：先记下来，初始化后自动打开
@@ -70,18 +70,18 @@ function run(BASE_URL) {
     if (label) label.textContent = dark ? "亮色" : "暗色";
     try {
       localStorage.setItem("kb-theme", theme);
-    } catch (e) {}
+    } catch (e) { }
   }
 
   function initTheme() {
     var t = null;
     try {
       t = localStorage.getItem("kb-theme");
-    } catch (e) {}
+    } catch (e) { }
     if (!t)
       t =
         window.matchMedia &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches
+          window.matchMedia("(prefers-color-scheme: dark)").matches
           ? "dark"
           : "light";
     applyTheme(t);
@@ -1960,8 +1960,8 @@ function run(BASE_URL) {
           "div",
           "banner info",
           "JSON Lines 文档已合并为 JSON 数组显示，共 " +
-            data.length +
-            " 条记录。",
+          data.length +
+          " 条记录。",
         ),
       );
     }
@@ -1989,7 +1989,7 @@ function run(BASE_URL) {
         navigator.clipboard.writeText(s);
         return;
       }
-    } catch (e) {}
+    } catch (e) { }
     try {
       var ta = document.createElement("textarea");
       ta.value = s;
@@ -2523,7 +2523,7 @@ function run(BASE_URL) {
         addDisposer(function () {
           try {
             doc.destroy();
-          } catch (e) {}
+          } catch (e) { }
         });
         pageInfo.textContent = "/ " + doc.numPages;
         return renderAll();
@@ -2731,7 +2731,7 @@ function run(BASE_URL) {
     if (abortController) {
       try {
         abortController.abort();
-      } catch (e) {}
+      } catch (e) { }
     }
     abortController =
       typeof AbortController !== "undefined" ? new AbortController() : null;
