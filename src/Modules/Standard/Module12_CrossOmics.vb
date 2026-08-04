@@ -1,13 +1,13 @@
 Imports OmicsAgent.AppRuntime
 
 ' ============================================================================
-' 模块 10: 跨组学整合分析（仅多组学场景执行）
+' 模块 12: 跨组学整合分析（仅多组学场景执行）
 ' ============================================================================
 
 ''' <summary>
 ''' 跨组学整合分析模块。
 ''' 
-''' 前置模块 1-9 均以「单个组学」为单位开展分析，各组学的结果彼此独立。
+''' 前置模块 1-11 均以「单个组学」为单位开展分析，各组学的结果彼此独立。
 ''' 本模块专门负责把这些相互独立的结果在统一的生物学个体（subject_id）层面
 ''' 打通，回答只有多组学联合才能回答的问题。
 ''' 
@@ -22,7 +22,7 @@ Imports OmicsAgent.AppRuntime
 Public Class CrossOmicsModule : Inherits AnalysisModuleBase
 
     Public Overrides ReadOnly Property ModuleName As String = "Cross Omics Integration"
-    Public Overrides ReadOnly Property ModuleIndex As Integer = 10
+    Public Overrides ReadOnly Property ModuleIndex As Integer = 12
 
     Public Overrides ReadOnly Property CsvFileNamePrefix As String
         Get

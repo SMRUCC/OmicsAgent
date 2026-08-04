@@ -8,7 +8,7 @@ Imports OmicsAgent.AppRuntime
 Imports OmicsAgent.ReportData
 
 ' ============================================================================
-' 模块 11: 撰写论文初稿（生成 HTML 报告并转换为 PDF）
+' 模块 14: 撰写论文初稿（生成 HTML 报告并转换为 PDF）
 ' ============================================================================
 
 ''' <summary>
@@ -27,7 +27,7 @@ Imports OmicsAgent.ReportData
 Public Class ReportModule : Inherits AnalysisModuleBase
 
     Public Overrides ReadOnly Property ModuleName As String = "Paper Draft Report"
-    Public Overrides ReadOnly Property ModuleIndex As Integer = 12
+    Public Overrides ReadOnly Property ModuleIndex As Integer = 14
 
     Public Property debugCache As Boolean = False
 
@@ -57,7 +57,7 @@ Public Class ReportModule : Inherits AnalysisModuleBase
                 .JoinBy("、")
 
             crossOmicsSection = "
-   - 4.10 跨组学整合分析"
+   - 4.12 跨组学整合分析"
 
             multiOmicsGuide = $"
 
@@ -87,7 +87,9 @@ Public Class ReportModule : Inherits AnalysisModuleBase
    - 4.6 WGCNA 性状关联分析
    - 4.7 CMeans 模糊聚类分析
    - 4.8 动态贝叶斯网络分析
-   - 4.9 PLS-PM 因果路径分析{crossOmicsSection}
+   - 4.9 PLS-PM 因果路径分析
+   - 4.10 随机森林分组预测分析
+   - 4.11 回归分析（逻辑回归与线性回归）{crossOmicsSection}
 5. 讨论（生物学机制解读）
 6. 结论
 7. 图表（图注同时提供中英文）{multiOmicsGuide}"
@@ -183,11 +185,17 @@ Public Class ReportModule : Inherits AnalysisModuleBase
     Private Function CollectModuleConclusions() As Dictionary(Of Integer, String)
         Dim results As New Dictionary(Of Integer, String)()
 
+        ' 20260805
+        ' 结果表格与报告模块已改为「主循环之后强制执行」，当用户通过 --module 只运行
+        ' 部分模块时，未执行模块的产出目录并不存在，故此处必须做存在性判断，
+        ' 否则会直接抛出 FileNotFoundException 导致整个报告生成中断
         For Each result As ModuleResult In _context.ModuleResults
             Dim conclusionFile = Path.Combine(result.OutputDir, "conclusion.md")
             Dim idx As Integer = result.ModuleIndex
 
-            results(idx) = conclusionFile.ReadAllText(Encoding.UTF8)
+            If conclusionFile.FileExists Then
+                results(idx) = conclusionFile.ReadAllText(Encoding.UTF8)
+            End If
         Next
 
         Return results
@@ -198,6 +206,11 @@ Public Class ReportModule : Inherits AnalysisModuleBase
         For Each result As ModuleResult In _context.ModuleResults
             Dim figuresDir As String = Path.Combine(result.OutputDir, "figures")
             Dim idx As Integer = result.ModuleIndex
+
+            ' 未执行的模块没有 figures 目录，跳过而不是抛异常
+            If Not Directory.Exists(figuresDir) Then
+                Continue For
+            End If
 
             For Each f In Directory.GetFiles(figuresDir, "*.png")
                 Yield New ResourceFile(idx, f)
@@ -210,6 +223,11 @@ Public Class ReportModule : Inherits AnalysisModuleBase
         For Each result As ModuleResult In _context.ModuleResults
             Dim tablesDir = result.Workdir
             Dim idx As Integer = result.ModuleIndex
+
+            ' 未执行的模块没有工作目录，跳过而不是抛异常
+            If String.IsNullOrEmpty(tablesDir) OrElse Not Directory.Exists(tablesDir) Then
+                Continue For
+            End If
 
             For Each f In Directory.GetFiles(tablesDir, "*.csv")
                 Yield New ResourceFile(idx, f)

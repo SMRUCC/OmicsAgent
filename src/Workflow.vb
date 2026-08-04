@@ -73,22 +73,16 @@ Module Workflow
         Dim customModuleDir = GetCustomModulesDir(opts)
         _customModules = LoadCustomModules(customModuleDir)
 
-        ' 若执行列表包含结果汇总(11)或报告(12)模块，则在其之前插入自定义模块索引，
-        ' 确保自定义模块在 ResultTablesModule 和 ReportModule 之前执行，
-        ' 这样自定义模块的结论才能被结果表与最终报告收录。
+        ' 自定义模块索引紧随标准分析模块之后追加到循环末尾。
+        ' 结果表格(13)与报告(14)已不在循环内，而是在循环结束后强制执行，
+        ' 因此自定义模块只需追加到列表尾部，即可自然地在二者之前完成，
+        ' 保证自定义模块的结论能够被结果表与最终报告收录。
         If _customModules.Count > 0 Then
-            Dim firstReportIdx = -1
-            For i = 0 To modulesToRun.Count - 1
-                If modulesToRun(i) = 11 OrElse modulesToRun(i) = 12 Then
-                    firstReportIdx = i
-                    Exit For
-                End If
-            Next
+            Dim customIndices = Enumerable.Range(0, _customModules.Count) _
+                .Select(Function(i) FinalizeModules.CustomModuleStartIndex + i) _
+                .ToList()
 
-            If firstReportIdx >= 0 Then
-                Dim customIndices = Enumerable.Range(0, _customModules.Count).Select(Function(i) 13 + i).ToList()
-                modulesToRun.InsertRange(firstReportIdx, customIndices)
-            End If
+            modulesToRun.AddRange(customIndices)
         End If
 
         For Each moduleIdx As Integer In modulesToRun
@@ -96,45 +90,76 @@ Module Workflow
                 Exit For
             End If
 
-            Dim [module] As AnalysisModuleBase = CreateModule(moduleIdx)
-
-            ' CreateModule 返回 Nothing 表示该模块在当前数据场景下不适用
-            ' （例如单组学时的跨组学整合模块），直接跳过
-            If [module] Is Nothing Then
-                Continue For
-            End If
-
-            If opts.make_report Then
-                If TypeOf [module] Is ReportModule Then
-                    DirectCast([module], ReportModule).debugCache = opts.debug_cache
-                    Await [module].RunAsync(cancellationToken)
-                Else
-                    _context.ModuleConclusions.Add($"{[module].ConclusionFile}")
-                    _context.ModuleResults.Add($"{[module].Workspace}/result.json".ReadAllText.LoadJSON(Of ModuleResult))
-                End If
-            Else
-                Try
-                    If [module] IsNot Nothing Then
-                        Dim checkCache = $"{[module].ConclusionFile}".FileExists AndAlso $"{[module].Workspace}/result.json".FileExists
-
-                        If checkCache AndAlso opts.debug_cache Then
-                            ' skip
-                            _context.ModuleConclusions.Add($"{[module].ConclusionFile}")
-                            _context.ModuleResults.Add($"{[module].Workspace}/result.json".ReadAllText.LoadJSON(Of ModuleResult))
-                        Else
-                            Console.WriteLine($"========== Module {moduleIdx}: {[module].ModuleName} ==========")
-                            Await [module].RunAsync(cancellationToken)
-                            Console.WriteLine()
-                        End If
-                    End If
-                Catch ex As Exception
-                    _logger($"ERROR in module {moduleIdx}: {ex.Message}")
-                    Console.Error.WriteLine(ex.StackTrace)
-                    Console.WriteLine("Continuing to next module...")
-                End Try
-            End If
+            Await RunModuleAsync(moduleIdx, opts, cancellationToken)
         Next
 
+        ' 5. 收尾模块：结果表格整理与论文报告撰写
+        '
+        ' 这两个模块不再受 --module 参数控制，而是在分析模块循环结束后必定执行。
+        ' 原因在于二者并非「可选的分析方法」，而是对前序所有分析产出的汇总与呈现，
+        ' 是每一次完整分析流程都应当交付的成果。
+        '
+        ' 执行顺序不可调换：报告模块需要引用结果表格模块整理出的表格产出。
+        Await RunFinalizeModulesAsync(opts, cancellationToken)
+    End Function
+
+    ''' <summary>
+    ''' 主循环结束后强制执行的收尾模块（结果表格整理 -> 论文报告撰写）。
+    ''' </summary>
+    ''' <remarks>
+    ''' 即便用户通过 --module 只运行了部分分析模块，收尾模块同样会执行；
+    ''' 此时前序模块的产出并不完整，收尾模块内部已针对缺失产出做了容错处理。
+    ''' </remarks>
+    Private Async Function RunFinalizeModulesAsync(opts As Opts, cancellationToken As CancellationToken) As Task
+        For Each moduleIdx As Integer In FinalizeModules.Indices
+            If cancellationToken.IsCancellationRequested Then
+                Exit For
+            End If
+
+            Await RunModuleAsync(moduleIdx, opts, cancellationToken)
+        Next
+    End Function
+
+    ''' <summary>
+    ''' 执行单个分析模块。主循环与收尾阶段共用此方法，确保两者在缓存复用、
+    ''' 异常处理与日志输出等方面的行为完全一致。
+    ''' </summary>
+    Private Async Function RunModuleAsync(moduleIdx As Integer, opts As Opts, cancellationToken As CancellationToken) As Task
+        Dim [module] As AnalysisModuleBase = CreateModule(moduleIdx)
+
+        ' CreateModule 返回 Nothing 表示该模块在当前数据场景下不适用
+        ' （例如单组学时的跨组学整合模块），直接跳过
+        If [module] Is Nothing Then
+            Return
+        End If
+
+        If opts.make_report Then
+            If TypeOf [module] Is ReportModule Then
+                DirectCast([module], ReportModule).debugCache = opts.debug_cache
+                Await [module].RunAsync(cancellationToken)
+            Else
+                _context.ModuleConclusions.Add($"{[module].ConclusionFile}")
+                _context.ModuleResults.Add($"{[module].Workspace}/result.json".ReadAllText.LoadJSON(Of ModuleResult))
+            End If
+        Else
+            Try
+                Dim checkCache = $"{[module].ConclusionFile}".FileExists AndAlso $"{[module].Workspace}/result.json".FileExists
+
+                If checkCache AndAlso opts.debug_cache Then
+                    ' skip
+                    _context.ModuleConclusions.Add($"{[module].ConclusionFile}")
+                    _context.ModuleResults.Add($"{[module].Workspace}/result.json".ReadAllText.LoadJSON(Of ModuleResult))
+                Else
+                    Console.WriteLine($"========== Module {moduleIdx}: {[module].ModuleName} ==========")
+                    Await [module].RunAsync(cancellationToken)
+                    Console.WriteLine()
+                End If
+            Catch ex As Exception
+                _logger($"ERROR in module {moduleIdx}: {ex.Message}")
+                Console.Error.WriteLine(ex.StackTrace)
+                Console.WriteLine("Continuing to next module...")
+            End Try
+        End If
     End Function
 
     ''' <summary>初始化分析上下文</summary>
@@ -300,18 +325,20 @@ Module Workflow
             Case 7 : Return New CMeansAnalysisModule(_config, _context, _logger)
             Case 8 : Return New BayesianNetworkModule(_config, _context, _logger)
             Case 9 : Return New PLSPMAnalysisModule(_config, _context, _logger)
-            Case 10
+            Case 10 : Return New RandomForestModule(_config, _context, _logger)
+            Case 11 : Return New RegressionModule(_config, _context, _logger)
+            Case 12
                 ' 跨组学整合分析：仅在多组学场景下有意义，单组学时静默跳过
                 If Not _context.IsMultiOmics Then
                     Return Nothing
                 End If
 
                 Return New CrossOmicsModule(_config, _context, _logger)
-            Case 11 : Return New ResultTablesModule(_config, _context, _logger)
-            Case 12 : Return New ReportModule(_config, _context, _logger)
-            Case Is >= 13
-                ' 自定义模块：索引从 13 开始，映射到 _customModules 列表
-                Dim customIdx = index - 13
+            Case FinalizeModules.ResultTablesIndex : Return New ResultTablesModule(_config, _context, _logger)
+            Case FinalizeModules.ReportIndex : Return New ReportModule(_config, _context, _logger)
+            Case Is >= FinalizeModules.CustomModuleStartIndex
+                ' 自定义模块：索引从 CustomModuleStartIndex 开始，映射到 _customModules 列表
+                Dim customIdx = index - FinalizeModules.CustomModuleStartIndex
                 If customIdx < _customModules.Count Then
                     Dim def = _customModules(customIdx)
                     Return New JsonDefinedModule(_config, _context, _logger, def, index)

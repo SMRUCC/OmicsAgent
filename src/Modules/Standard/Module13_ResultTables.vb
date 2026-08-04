@@ -3,7 +3,7 @@ Imports Ollama
 Imports OmicsAgent.AppRuntime
 
 ' ============================================================================
-' 模块 11: 整理结果文件（生成 xlsx 表格）
+' 模块 13: 整理结果文件（生成 xlsx 表格）
 ' ============================================================================
 
 ''' <summary>
@@ -31,7 +31,7 @@ Imports OmicsAgent.AppRuntime
 Public Class ResultTablesModule : Inherits AnalysisModuleBase
 
     Public Overrides ReadOnly Property ModuleName As String = "Result Tables Compilation"
-    Public Overrides ReadOnly Property ModuleIndex As Integer = 11
+    Public Overrides ReadOnly Property ModuleIndex As Integer = 13
 
     Public Overrides ReadOnly Property CsvFileNamePrefix As String
         Get
@@ -402,7 +402,7 @@ Public Class ResultTablesModule : Inherits AnalysisModuleBase
 - 脚本须可端到端运行，无需额外输入。
 
 # 执行说明
-- 使用 write_file 工具将 R 脚本写入工作区文件（如 'module_11_result_tables_{MODULE_INDEX}.R'）
+- 使用 write_file 工具将 R 脚本写入工作区文件（如 'module_13_result_tables_{MODULE_INDEX}.R'）
 - 使用 run_rscript 工具执行该 R 脚本
 - 验证 XLSX 文件已在输出目录中成功生成
 ]]></root>.Value
