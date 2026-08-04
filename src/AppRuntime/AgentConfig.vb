@@ -43,6 +43,9 @@ Namespace AppRuntime
         ''' <summary>分析流程参数</summary>
         <DataFrameColumn("analysis")> Public Property Analysis As New AnalysisConfig()
 
+        ''' <summary>最终报告输出格式配置</summary>
+        <DataFrameColumn("report")> Public Property Report As New ReportConfig()
+
         ' ------------------------------------------------------------------
         ' 共享 / 计算属性（不参与 INI 序列化，故必须为 Shared 或非属性）
         ' ------------------------------------------------------------------
@@ -197,6 +200,13 @@ Namespace AppRuntime
             Call sb.AppendLine("wgcna_top_mad = 20000")
             Call sb.AppendLine("; 差异分析中所保留的 Top 差异特征数量")
             Call sb.AppendLine("diff_top_count = 200")
+            Call sb.AppendLine()
+            Call sb.AppendLine("[report]")
+            Call sb.AppendLine("; 最终研究报告的输出格式：")
+            Call sb.AppendLine(";   pdf  = 仅生成 HTML 并由 wkhtmltopdf 转换为 PDF 文件（默认值）")
+            Call sb.AppendLine(";   docx = 仅生成 Word 文档")
+            Call sb.AppendLine(";   both = PDF 与 Word 文档均生成")
+            Call sb.AppendLine("format = pdf")
 
             Call File.WriteAllText(iniPath, sb.ToString(), Encoding.UTF8)
         End Sub

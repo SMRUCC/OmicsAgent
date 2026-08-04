@@ -31,6 +31,12 @@ Namespace AppRuntime
 
         <Opt("--make-report")> Public Property make_report As Boolean
 
+        ''' <summary>
+        ''' 报告输出格式，取值 pdf / docx / both。
+        ''' 该命令行参数的优先级高于 config.ini 中的 [report] format 配置项。
+        ''' </summary>
+        <Opt("--report-format")> Public Property report_format As String
+
         <Opt("--help", "-h")> Public Property help As Boolean = False
 
         ''' <summary>验证必需参数</summary>
@@ -55,7 +61,26 @@ Namespace AppRuntime
         End Function
 
         Public Function LoadConfig() As AgentConfig
-            Return AgentConfig.Load(If(config, "config.ini"))
+            Dim cfg As AgentConfig = AgentConfig.Load(If(config, "config.ini"))
+
+            If cfg Is Nothing Then
+                Return Nothing
+            End If
+
+            ' 命令行 --report-format 覆盖 INI 中的取值，非法取值回退到默认的 pdf
+            If Not report_format.StringEmpty(, True) Then
+                If ReportOutputFormats.IsValid(report_format) Then
+                    cfg.Report.OutputFormat = LCase(Trim(report_format))
+                Else
+                    Call VBDebugger.EchoLine($"[warning] invalid --report-format value '{report_format}', fallback to '{ReportOutputFormats.Pdf}'.")
+                    cfg.Report.OutputFormat = ReportOutputFormats.Pdf
+                End If
+            ElseIf Not ReportOutputFormats.IsValid(cfg.Report.OutputFormat) Then
+                Call VBDebugger.EchoLine($"[warning] invalid [report] format value '{cfg.Report.OutputFormat}' in config file, fallback to '{ReportOutputFormats.Pdf}'.")
+                cfg.Report.OutputFormat = ReportOutputFormats.Pdf
+            End If
+
+            Return cfg
         End Function
 
         ''' <summary>解析要执行的模块</summary>

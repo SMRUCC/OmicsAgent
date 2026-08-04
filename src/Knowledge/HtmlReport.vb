@@ -1,44 +1,10 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.Framework.IO
-Imports Microsoft.VisualBasic.Data.Framework.StorageProvider
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.text.markdown
 Imports Microsoft.VisualBasic.Net.Http
 Imports OmicsAgent.ReportData
 
 Module HtmlReport
-
-    Friend Class ReportResource
-
-        Public figures As ResourceFile()
-        Public tables As ResourceFile()
-
-    End Class
-
-    Friend Class ResourceFile
-
-        Public module_index As Integer
-        Public filename As String
-
-        Sub New(index As Integer, file As String)
-            module_index = index
-            filename = file
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return $"[{module_index}] {filename}"
-        End Function
-
-    End Class
-
-    ''' <summary>
-    ''' 图/表自动编号计数器。以引用类型在章节间共享，
-    ''' BuildFigure/BuildTable 调用时自增，实现全文档连续编号。
-    ''' </summary>
-    Friend Class ReportCounters
-        Public figureNo As Integer = 0
-        Public tableNo As Integer = 0
-    End Class
 
     ''' <summary>构建 HTML 报告（编排函数，仅负责按顺序拼接各语义块）</summary>
     <Extension>
@@ -52,13 +18,13 @@ Module HtmlReport
         sb.Append(BuildAbstractSection(content))
 
         ' 标准章节：引言 / 材料与方法 / 讨论 / 结论
-        sb.Append(BuildStandardSection("1", "sec-intro", "引言", content.introduction))
-        sb.Append(BuildStandardSection("2", "sec-methods", "材料与方法", content.materials_methods))
+        sb.Append(BuildStandardSection("1", "sec-intro", "引言", content.introduction, loginfo))
+        sb.Append(BuildStandardSection("2", "sec-methods", "材料与方法", content.materials_methods, loginfo))
         sb.AppendLine("<div style='page-break-after: always;'></div>")
         sb.Append(BuildResultsSection(content, res, counters, loginfo))
         sb.AppendLine("<div style='page-break-after: always;'></div>")
-        sb.Append(BuildStandardSection("4", "sec-discussion", "讨论", content.discussion))
-        sb.Append(BuildStandardSection("5", "sec-conclusion", "结论", content.conclusion))
+        sb.Append(BuildStandardSection("4", "sec-discussion", "讨论", content.discussion, loginfo))
+        sb.Append(BuildStandardSection("5", "sec-conclusion", "结论", content.conclusion, loginfo))
 
         sb.AppendLine("</body>")
         sb.AppendLine("</html>")
@@ -140,7 +106,7 @@ Module HtmlReport
         Dim sb As New StringBuilder()
         sb.AppendLine("<section class='abstract-section'>")
         sb.AppendLine("<h2>摘要</h2>")
-        sb.AppendLine($"<div class='abstract'>{EscapeHtml(content.abstract)}</div>")
+        sb.AppendLine($"<div class='abstract'><p>{EscapeText(content.abstract)}</p></div>")
         If content.keywords IsNot Nothing AndAlso content.keywords.Count > 0 Then
             sb.AppendLine($"<p class='keywords'><strong>关键词：</strong>{String.Join("；", content.keywords)}</p>")
         End If
@@ -148,12 +114,16 @@ Module HtmlReport
         Return sb.ToString()
     End Function
 
-    ''' <summary>通用标准章节（引言/材料与方法/讨论/结论）</summary>
-    Private Function BuildStandardSection(sectionNumber As String, anchorId As String, heading As String, body As String) As String
+    ''' <summary>通用标准章节（引言/材料与方法/讨论/结论），正文由内容块数组渲染</summary>
+    Private Function BuildStandardSection(sectionNumber As String,
+                                          anchorId As String,
+                                          heading As String,
+                                          body As JSONSchema.Block(),
+                                          loginfo As Action(Of String)) As String
         Dim sb As New StringBuilder()
         sb.AppendLine($"<section id='{anchorId}' class='section'>")
         sb.AppendLine($"<h2>{sectionNumber}. {EscapeText(heading)}</h2>")
-        sb.AppendLine(EscapeHtml(body))
+        sb.AppendLine(body.RenderBlocks(loginfo))
         sb.AppendLine("</section>")
         Return sb.ToString()
     End Function
@@ -169,16 +139,14 @@ Module HtmlReport
             For Each section In content.results_sections
                 sb.AppendLine($"<section id='sec-result-{subNo}' class='result-subsection'>")
                 sb.AppendLine($"<h3>3.{subNo} {EscapeText(section.title)}</h3>")
-                sb.AppendLine(EscapeHtml(section.content))
+                sb.AppendLine(section.content.RenderBlocks(loginfo))
 
                 ' 先渲染图（在 res.figures 中按文件名精确匹配），再渲染表（在 res.tables 中匹配）
                 ' 各自按 JSON 声明顺序，避免原逻辑按文件名排序导致的图文错位
                 If section.figures IsNot Nothing Then
                     For Each fig In section.figures
-                        Dim figPath = res.figures.FirstOrDefault(Function(f) Path.GetFileName(f.filename).TextEquals(fig.file))
-                        If figPath Is Nothing AndAlso fig.file.FileExists Then
-                            figPath = New ResourceFile(0, fig.file)
-                        End If
+                        Dim figPath As ResourceFile = ResolveResource(fig, res.figures)
+
                         If figPath IsNot Nothing Then
                             sb.Append(BuildFigure(fig, figPath, counters))
                         End If
@@ -187,10 +155,8 @@ Module HtmlReport
 
                 If section.tables IsNot Nothing Then
                     For Each tbl In section.tables
-                        Dim tblPath = res.tables.FirstOrDefault(Function(t) Path.GetFileName(t.filename).TextEquals(tbl.file))
-                        If tblPath Is Nothing AndAlso tbl.file.FileExists Then
-                            tblPath = New ResourceFile(0, tbl.file)
-                        End If
+                        Dim tblPath As ResourceFile = ResolveResource(tbl, res.tables)
+
                         If tblPath IsNot Nothing Then
                             sb.Append(BuildTable(tbl, tblPath, counters, loginfo))
                         End If
@@ -213,7 +179,7 @@ Module HtmlReport
         Dim sb As New StringBuilder()
         sb.AppendLine("<figure>")
         sb.AppendLine($"<img src='{New DataURI(figPath.filename).ToString}' alt='{EscapeText(dataRep.caption_en)}' onerror=""this.style.display='none'"">")
-        sb.AppendLine($"<figcaption><strong>图 {no}：</strong>{EscapeHtml(dataRep.caption_cn)}<br><strong>Figure {no}:</strong> {EscapeHtml(dataRep.caption_en)}</figcaption>")
+        sb.AppendLine($"<figcaption><strong>图 {no}：</strong>{EscapeText(dataRep.caption_cn)}<br><strong>Figure {no}:</strong> {EscapeText(dataRep.caption_en)}</figcaption>")
         sb.AppendLine("</figure>")
         Return sb.ToString()
     End Function
@@ -225,59 +191,34 @@ Module HtmlReport
         Dim sb As New StringBuilder()
 
         sb.AppendLine("<div class='table-block'>")
-        sb.AppendLine($"<p class='table-caption'><strong>表 {no}：</strong>{EscapeHtml(dataRep.caption_cn)}<br><strong>Table {no}:</strong> {EscapeHtml(dataRep.caption_en)}</p>")
+        sb.AppendLine($"<p class='table-caption'><strong>表 {no}：</strong>{EscapeText(dataRep.caption_cn)}<br><strong>Table {no}:</strong> {EscapeText(dataRep.caption_en)}</p>")
 
-        Try
-            Dim csvDf As DataFrameResolver = DataFrameResolver.Load(tblPath.filename)
+        Dim preview = LoadTablePreview(tblPath.filename, dataRep.fields, loginfo:=loginfo)
 
-            ' 确定需要显示的列名及其在 CSV 中的列索引
-            ' fields 为空/Nothing 时显示全部列；非空时仅保留 CSV 中实际存在的字段
-            Dim displayColumns As New List(Of String)()
-            Dim columnOrdinals As New List(Of Integer)()
+        If preview.headers.IsNullOrEmpty Then
+            sb.AppendLine($"<p><em>(表格数据加载失败: {EscapeText(Path.GetFileName(tblPath.filename))})</em></p>")
+        Else
+            sb.AppendLine("<table>")
+            sb.AppendLine("<thead>")
+            sb.AppendLine("<tr>")
+            For Each colName As String In preview.headers
+                sb.AppendLine($"<th>{EscapeText(colName)}</th>")
+            Next
+            sb.AppendLine("</tr>")
+            sb.AppendLine("</thead>")
+            sb.AppendLine("<tbody>")
 
-            If dataRep.fields.IsNullOrEmpty() Then
-                For Each header As String In csvDf.HeadTitles
-                    displayColumns.Add(header)
-                    columnOrdinals.Add(csvDf.GetOrdinal(header))
-                Next
-            Else
-                For Each fieldName As String In dataRep.fields
-                    Dim ordinal As Integer = csvDf.GetOrdinal(fieldName)
-                    If ordinal >= 0 Then
-                        displayColumns.Add(fieldName)
-                        columnOrdinals.Add(ordinal)
-                    End If
-                Next
-            End If
-
-            ' 仅当存在有效列时才生成表格
-            If displayColumns.Count > 0 Then
-                sb.AppendLine("<table>")
-                sb.AppendLine("<thead>")
+            For Each row As String() In preview.rows
                 sb.AppendLine("<tr>")
-                For Each colName As String In displayColumns
-                    sb.AppendLine($"<th>{EscapeHtml(colName)}</th>")
+                For Each cell As String In row
+                    sb.AppendLine($"<td>{EscapeText(cell)}</td>")
                 Next
                 sb.AppendLine("</tr>")
-                sb.AppendLine("</thead>")
-                sb.AppendLine("<tbody>")
+            Next
 
-                ' 提取前 9 行数据行（不含表头）
-                For Each row As RowObject In csvDf.Rows.Take(9)
-                    sb.AppendLine("<tr>")
-                    For Each ordinal As Integer In columnOrdinals
-                        sb.AppendLine($"<td>{EscapeHtml(row(ordinal))}</td>")
-                    Next
-                    sb.AppendLine("</tr>")
-                Next
-
-                sb.AppendLine("</tbody>")
-                sb.AppendLine("</table>")
-            End If
-        Catch ex As Exception
-            loginfo($"Failed to load csv table for report: {tblPath.filename} -> {ex.Message}")
-            sb.AppendLine($"<p><em>(表格数据加载失败: {EscapeText(Path.GetFileName(tblPath.filename))})</em></p>")
-        End Try
+            sb.AppendLine("</tbody>")
+            sb.AppendLine("</table>")
+        End If
 
         sb.AppendLine("</div>")
         Return sb.ToString()
@@ -286,19 +227,6 @@ Module HtmlReport
     ' ------------------------------------------------------------------
     ' 工具函数
     ' ------------------------------------------------------------------
-
-    ''' <summary>
-    ''' 将 markdown 文本转换为 HTML（由 MarkdownRender 负责块级/内联排版）。
-    ''' 注意：不再对换行做 blanket 的 &lt;br&gt; 替换，避免块级元素间产生多余空行。
-    ''' </summary>
-    Private Function EscapeHtml(text As String) As String
-        If String.IsNullOrEmpty(text) Then
-            Return ""
-        Else
-            Static markdown As New MarkdownRender
-            Return markdown.Transform(text)
-        End If
-    End Function
 
     ''' <summary>对纯文本（标题、图注文字等）做 HTML 特殊字符转义，防止标签注入</summary>
     Private Function EscapeText(text As String) As String

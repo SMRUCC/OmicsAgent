@@ -30,6 +30,7 @@ Omics Data Analysis LLM Agent
   --skip-kb               跳过知识库构建步骤
   --module=<n>            仅执行指定模块（1-11），多个模块用逗号分隔
   --custom-modules=<path> 自定义分析模块 JSON 文件夹路径（默认为程序根目录下的 custom_modules/ 文件夹）
+  --report-format=<fmt>   报告输出格式：pdf（默认）/ docx / both，优先级高于配置文件中的 [report] format
  
   --check_r               [调试用] 用于测试R脚本调用
   --debug-cache           [调试用] 程序会跳过已经存在result.json结果文件的模块的执行
