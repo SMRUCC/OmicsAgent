@@ -195,12 +195,12 @@ Public Module CsvUtils
                 $"Column index count ({keepColumnIndex.Length}) does not match the new header count ({newHeader.Length}).")
         End If
 
-        Call destFile.ParentPath.MkDIR()
+        Call EnsureParentDirectory(destFile)
 
         Dim nrows As Integer = 0
         Dim isFirstRow As Boolean = True
 
-        Using writer As StreamWriter = destFile.OpenWriter(Encoding.UTF8),
+        Using writer As New StreamWriter(destFile, append:=False, encoding:=New UTF8Encoding(False)),
               s As Stream = sourceFile.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
 
             For Each row As RowObject In RowIterator.RowSolver(s, simple:=True)
@@ -214,7 +214,7 @@ Public Module CsvUtils
                     Dim headerLine As New List(Of String) From {firstCol}
 
                     headerLine.AddRange(newHeader)
-                    writer.WriteLine(RowObject.RowLine(headerLine))
+                    writer.WriteLine(ToCsvLine(headerLine))
 
                     isFirstRow = False
                 Else
@@ -224,7 +224,7 @@ Public Module CsvUtils
                         line.Add(If(colIndex < row.Count, row.DirectGet(colIndex), ""))
                     Next
 
-                    writer.WriteLine(RowObject.RowLine(line))
+                    writer.WriteLine(ToCsvLine(line))
                     nrows += 1
                 End If
             Next
@@ -251,7 +251,7 @@ Public Module CsvUtils
             Throw New FileNotFoundException($"Sample info file not found: {sourceFile}")
         End If
 
-        Call destFile.ParentPath.MkDIR()
+        Call EnsureParentDirectory(destFile)
 
         Dim header As String() = Nothing
         Dim idColumn As Integer = -1
@@ -296,14 +296,14 @@ Public Module CsvUtils
 
         Dim nrows As Integer = 0
 
-        Using writer As StreamWriter = destFile.OpenWriter(Encoding.UTF8)
-            writer.WriteLine(RowObject.RowLine(header))
+        Using writer As New StreamWriter(destFile, append:=False, encoding:=New UTF8Encoding(False))
+            writer.WriteLine(ToCsvLine(header))
 
             For Each subjectId As String In orderedSubjects
                 Dim line As List(Of String) = Nothing
 
                 If rowsBySubject.TryGetValue(subjectId, line) Then
-                    writer.WriteLine(RowObject.RowLine(line))
+                    writer.WriteLine(ToCsvLine(line))
                     nrows += 1
                 End If
             Next
@@ -311,5 +311,30 @@ Public Module CsvUtils
 
         Return nrows
     End Function
+
+    ''' <summary>把一行字段序列化为 CSV 文本行，按需为字段补上双引号转义</summary>
+    Public Function ToCsvLine(fields As IEnumerable(Of String)) As String
+        Return String.Join(",", fields.Select(AddressOf EscapeCsvField))
+    End Function
+
+    ''' <summary>对单个 CSV 字段做必要的转义处理</summary>
+    Private Function EscapeCsvField(field As String) As String
+        Dim value As String = If(field, "")
+
+        If value.IndexOfAny({","c, """"c, ControlChars.Cr, ControlChars.Lf}) >= 0 Then
+            Return """" & value.Replace("""", """""") & """"
+        End If
+
+        Return value
+    End Function
+
+    ''' <summary>确保目标文件所在的目录已存在</summary>
+    Private Sub EnsureParentDirectory(filePath As String)
+        Dim dir As String = Path.GetDirectoryName(Path.GetFullPath(filePath))
+
+        If Not dir.StringEmpty(, True) AndAlso Not Directory.Exists(dir) Then
+            Call Directory.CreateDirectory(dir)
+        End If
+    End Sub
 
 End Module

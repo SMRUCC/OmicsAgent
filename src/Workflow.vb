@@ -141,44 +141,18 @@ Module Workflow
         ' 研究主题文件
         context.ResearchFile = parsed.research
 
-        ' 表达矩阵文件/文件夹
-        Dim exprPath = parsed.expression
-        If Directory.Exists(exprPath) Then
-            ' 多组学：文件夹
-            For Each csv In Directory.GetFiles(exprPath, "*.csv")
-                Dim ds As New OmicsDataset() With {
-                    .ExpressionFile = csv,
-                    .OmicsType = InferOmicsType(Path.GetFileName(csv))
-                }
-                context.Datasets.Add(ds)
-            Next
-        ElseIf File.Exists(exprPath) Then
-            ' 单组学：单个 CSV 文件
-            Dim ds As New OmicsDataset() With {
-                .ExpressionFile = exprPath,
-                .OmicsType = InferOmicsType(Path.GetFileName(exprPath))
-            }
-            context.Datasets.Add(ds)
-        End If
+        ' 解析组学数据输入。--dataset 定义文件模式与 -e/-a/-s 传统参数模式
+        ' 在此归一为结构一致的数据集集合，下游流程无需感知输入来源。
+        Dim resolver As New OmicsInputResolver(_logger)
 
-        ' 分子注释表
-        context.AnnotationFile = parsed.annotation.GetFullPath
+        Call resolver.Resolve(parsed)
 
-        ' 样本元数据文件/文件夹
-        context.SampleInfoInput = parsed.sampleinfo
-        If File.Exists(context.SampleInfoInput) Then
-            ' 单个文件：所有组学共用
-            For Each ds In context.Datasets
-                ds.SampleInfoFile = context.SampleInfoInput
-            Next
-        ElseIf Directory.Exists(context.SampleInfoInput) Then
-            ' 文件夹：按文件名匹配
-            For Each ds In context.Datasets
-                Dim matchedSampleInfo = Path.Combine(context.SampleInfoInput, ds.MatrixName & ".csv")
-                If File.Exists(matchedSampleInfo) Then
-                    ds.SampleInfoFile = matchedSampleInfo
-                End If
-            Next
+        context.Datasets.AddRange(resolver.Datasets)
+        context.AnnotationFile = resolver.GlobalAnnotationFile
+        context.SampleInfoInput = resolver.SampleInfoInput
+
+        If resolver.Manifest IsNot Nothing Then
+            context.DatasetManifestFile = resolver.Manifest.ManifestFile
         End If
 
         ' 参考文献文件夹
@@ -205,34 +179,36 @@ Module Workflow
         Call Path.Combine(context.WorkspaceDir, "tmp").MakeDir
         Call Path.Combine(context.WorkspaceDir, "scripts").MakeDir
         Call Path.Combine(context.WorkspaceDir, "analysis").MakeDir
+        Call Path.Combine(context.WorkspaceDir, "aligned").MakeDir
 
         ' 读取研究主题文本
         context.ResearchTopic = context.ResearchFile.ReadAllText
-        ' 读取分子注释表
-        context.AnnotationContent = Molecule.ReadCsv(context.AnnotationFile).ToArray
 
-        ' 读取样本元数据
+        ' 多组学：先把各组学样本对齐到统一的生物学个体，并生成对齐后的新矩阵。
+        ' 该步骤必须在读取样本 ID / 分子 ID 之前完成，因为它会重定向表达矩阵路径。
+        If context.IsMultiOmics Then
+            Dim aligner As New SampleAligner(context, _logger)
+
+            Call aligner.Align(resolver.Manifest?.sample_alignment)
+        End If
+
+        ' 整理分子注释表：单组学直接沿用原表，多组学合并为带来源标识的全局总表
+        Dim merger As New AnnotationMerger(context, _logger)
+
+        Call merger.Merge()
+
+        ' 读取各组学的样本 ID 与分子 ID。
+        ' 注意：此处不能依赖样本元数据是否存在——缺失样本元数据时同样需要这些 ID
+        ' 用于输入校验与提示词上下文构建。
         For Each ds In context.Datasets
-            If File.Exists(ds.SampleInfoFile) Then
-                ds.SampleIDs = CsvUtils.ReadSampleIDs(ds.ExpressionFile)
-                ds.MoleculeIDs = CsvUtils.ReadFirstColumn(ds.ExpressionFile).ToArray
-            End If
+            ds.SampleIDs = CsvUtils.ReadSampleIDs(ds.ExpressionFile)
+            ds.MoleculeIDs = CsvUtils.ReadFirstColumn(ds.ExpressionFile).ToArray
         Next
 
         ' 检测是否为时间序列数据
         DetectTimeSeries(context)
 
         Return context
-    End Function
-
-    ''' <summary>从文件名推断组学类型</summary>
-    Private Function InferOmicsType(fileName As String) As String
-        Dim name = fileName.ToLower()
-        If name.Contains("rna") OrElse name.Contains("transcript") OrElse name.Contains("gene") Then Return "rna"
-        If name.Contains("protein") OrElse name.Contains("proteom") Then Return "protein"
-        If name.Contains("metabol") Then Return "metabolite"
-        If name.Contains("lipid") Then Return "lipid"
-        Return "unknown"
     End Function
 
     ''' <summary>检测时间序列数据</summary>
@@ -263,14 +239,35 @@ Module Workflow
             _logger($"  [OK] Expression matrix: {ds.ExpressionFile} ({ds.MoleculeIDs.Count} molecules x {ds.SampleIDs.Count} samples)")
         Next
 
-        ' 验证注释表格式
-        Dim annoErr As String = ""
-        If Not CsvUtils.ValidateAnnotation(_context.AnnotationFile, annoErr) Then
-            _logger($"  [X] Annotation table validation failed: {_context.AnnotationFile}")
-            _logger($"      {annoErr}")
-            Return False
+        ' 验证注释表格式：每个组学都有各自的注释表，需逐一校验
+        Dim validatedAnnotation As New HashSet(Of String)(StringComparer.OrdinalIgnoreCase)
+
+        For Each ds In _context.Datasets
+            If ds.AnnotationFile.StringEmpty(, True) Then
+                _logger($"  [!] Dataset [{ds.Id}] has no annotation table, related analysis will be limited.")
+                Continue For
+            End If
+
+            ' 传统参数模式下各组学共用同一张注释表，避免重复校验与重复日志
+            If Not validatedAnnotation.Add(ds.AnnotationFile) Then
+                Continue For
+            End If
+
+            Dim annoErr As String = ""
+
+            If Not CsvUtils.ValidateAnnotation(ds.AnnotationFile, annoErr) Then
+                _logger($"  [X] Annotation table validation failed for dataset [{ds.Id}]: {ds.AnnotationFile}")
+                _logger($"      {annoErr}")
+                Return False
+            End If
+
+            _logger($"  [OK] Annotation table [{ds.Id}]: {ds.AnnotationFile}")
+        Next
+
+        ' 多组学场景下另有一张合并生成的全局注释总表
+        If _context.IsMultiOmics AndAlso _context.AnnotationFile.FileExists Then
+            _logger($"  [OK] Merged annotation table: {_context.AnnotationFile}")
         End If
-        _logger($"  [OK] Annotation table: {_context.AnnotationFile}")
 
         ' 验证样本元数据格式
         For Each ds In _context.Datasets
