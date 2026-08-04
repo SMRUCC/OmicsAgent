@@ -98,6 +98,12 @@ Module Workflow
 
             Dim [module] As AnalysisModuleBase = CreateModule(moduleIdx)
 
+            ' CreateModule 返回 Nothing 表示该模块在当前数据场景下不适用
+            ' （例如单组学时的跨组学整合模块），直接跳过
+            If [module] Is Nothing Then
+                Continue For
+            End If
+
             If opts.make_report Then
                 If TypeOf [module] Is ReportModule Then
                     DirectCast([module], ReportModule).debugCache = opts.debug_cache
