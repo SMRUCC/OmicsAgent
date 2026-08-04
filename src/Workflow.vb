@@ -73,19 +73,20 @@ Module Workflow
         Dim customModuleDir = GetCustomModulesDir(opts)
         _customModules = LoadCustomModules(customModuleDir)
 
-        ' 若执行列表包含报告模块(10/11)，则在第一个报告模块之前插入自定义模块索引
-        ' 确保自定义模块在 ResultTablesModule 和 ReportModule 之前执行
+        ' 若执行列表包含结果汇总(11)或报告(12)模块，则在其之前插入自定义模块索引，
+        ' 确保自定义模块在 ResultTablesModule 和 ReportModule 之前执行，
+        ' 这样自定义模块的结论才能被结果表与最终报告收录。
         If _customModules.Count > 0 Then
             Dim firstReportIdx = -1
             For i = 0 To modulesToRun.Count - 1
-                If modulesToRun(i) = 10 OrElse modulesToRun(i) = 11 Then
+                If modulesToRun(i) = 11 OrElse modulesToRun(i) = 12 Then
                     firstReportIdx = i
                     Exit For
                 End If
             Next
 
             If firstReportIdx >= 0 Then
-                Dim customIndices = Enumerable.Range(0, _customModules.Count).Select(Function(i) 12 + i).ToList()
+                Dim customIndices = Enumerable.Range(0, _customModules.Count).Select(Function(i) 13 + i).ToList()
                 modulesToRun.InsertRange(firstReportIdx, customIndices)
             End If
         End If
@@ -128,10 +129,6 @@ Module Workflow
             End If
         Next
 
-        ' 5. 生成最终报告（如果模块 11 未在指定列表中，也强制执行）
-        If Not modulesToRun.Contains(11) AndAlso Not modulesToRun.Contains(0) Then
-            ' 如果用户指定了具体模块，则不强制执行报告模块
-        End If
     End Function
 
     ''' <summary>初始化分析上下文</summary>
@@ -297,11 +294,18 @@ Module Workflow
             Case 7 : Return New CMeansAnalysisModule(_config, _context, _logger)
             Case 8 : Return New BayesianNetworkModule(_config, _context, _logger)
             Case 9 : Return New PLSPMAnalysisModule(_config, _context, _logger)
-            Case 10 : Return New ResultTablesModule(_config, _context, _logger)
-            Case 11 : Return New ReportModule(_config, _context, _logger)
-            Case Is >= 12
-                ' 自定义模块：索引从 12 开始，映射到 _customModules 列表
-                Dim customIdx = index - 12
+            Case 10
+                ' 跨组学整合分析：仅在多组学场景下有意义，单组学时静默跳过
+                If Not _context.IsMultiOmics Then
+                    Return Nothing
+                End If
+
+                Return New CrossOmicsModule(_config, _context, _logger)
+            Case 11 : Return New ResultTablesModule(_config, _context, _logger)
+            Case 12 : Return New ReportModule(_config, _context, _logger)
+            Case Is >= 13
+                ' 自定义模块：索引从 13 开始，映射到 _customModules 列表
+                Dim customIdx = index - 13
                 If customIdx < _customModules.Count Then
                     Dim def = _customModules(customIdx)
                     Return New JsonDefinedModule(_config, _context, _logger, def, index)
