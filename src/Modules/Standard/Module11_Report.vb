@@ -48,7 +48,32 @@ Public Class ReportModule : Inherits AnalysisModuleBase
     End Sub
 
     Protected Overrides Function GeneratePlanPromptText() As String
-        Return "为撰写综合性研究论文初稿设计计划，基于分析结果撰写报告。
+        Dim crossOmicsSection As String = ""
+        Dim multiOmicsGuide As String = ""
+
+        If _context.IsMultiOmics Then
+            Dim omicsList As String = _context.Datasets _
+                .Select(Function(d) $"[{d.Id}] {d.DisplayName}（{d.OmicsType}）") _
+                .JoinBy("、")
+
+            crossOmicsSection = "
+   - 4.10 跨组学整合分析"
+
+            multiOmicsGuide = $"
+
+# 多组学报告撰写要求（重要）
+本次研究为多组学分析，共涉及 {_context.Datasets.Count} 个组学：{omicsList}。
+- 材料与方法部分需分别交代每个组学的数据来源、测定平台、数据单位与预处理方式，
+  并说明各组学样本是如何对齐到同一生物学个体的（共有个体 {If(_context.SubjectIDs Is Nothing, 0, _context.SubjectIDs.Length)} 个）
+- 结果部分的每个小节，凡涉及单组学分析的，都必须明确标注该结果来自哪个组学，
+  不要把不同组学的结果混在一起叙述而不加区分
+- 必须包含独立的「跨组学整合分析」小节，这是多组学研究区别于单组学研究的核心章节
+- 讨论部分需要重点论述多组学证据之间的相互印证关系：
+  不同组学层次的发现是否指向一致的生物学机制，何处相互支持，何处存在矛盾及其可能原因
+- 结论部分应当给出贯穿多个组学层次的整体性结论，而不是各组学结论的简单罗列"
+        End If
+
+        Return $"为撰写综合性研究论文初稿设计计划，基于分析结果撰写报告。
 报告应包含：
 1. 标题和摘要（中文）
 2. 引言（研究背景、目标）
@@ -62,10 +87,10 @@ Public Class ReportModule : Inherits AnalysisModuleBase
    - 4.6 WGCNA 性状关联分析
    - 4.7 CMeans 模糊聚类分析
    - 4.8 动态贝叶斯网络分析
-   - 4.9 PLS-PM 因果路径分析
+   - 4.9 PLS-PM 因果路径分析{crossOmicsSection}
 5. 讨论（生物学机制解读）
 6. 结论
-7. 图表（图注同时提供中英文）"
+7. 图表（图注同时提供中英文）{multiOmicsGuide}"
     End Function
 
     ''' <summary>调用 LLM 生成分析计划</summary>

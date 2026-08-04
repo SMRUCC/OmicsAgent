@@ -204,6 +204,24 @@ Public Class ResultTablesModule : Inherits AnalysisModuleBase
         Return $"{mr.ModuleIndex}_{safeName}.xlsx"
     End Function
 
+    ''' <summary>
+    ''' 多组学场景下，结果表往往按组学拆分为多个文件，
+    ''' 注释文本需要说明该表属于哪个组学，否则用户在 XLSX 中无法分辨。
+    ''' </summary>
+    Private Function OmicsScopeAnnotationHint() As String
+        If Not _context.IsMultiOmics Then
+            Return ""
+        End If
+
+        Dim omicsList As String = _context.Datasets _
+            .Select(Function(d) $"{d.Id} = {d.DisplayName} ({d.OmicsType})") _
+            .JoinBy("; ")
+
+        Return $"- This study is a multi-omics analysis involving: {omicsList}. " &
+               "Many result tables are split per omics and carry the omics id in their file name or in an omics_id column. " &
+               "When a table belongs to a specific omics layer, the annotation MUST state explicitly which omics it comes from."
+    End Function
+
     ''' <summary>读取 CSV 文件的第一行表头</summary>
     Private Function GetCsvHeader(csvPath As String) As List(Of String)
         Dim result As New List(Of String)()
@@ -295,6 +313,7 @@ Public Class ResultTablesModule : Inherits AnalysisModuleBase
 - 解释每一列的含义（使用上方提供的该 CSV 的列列表）
 - 将表格内容与本模块的目标和结论关联，并在适用时关联知识库中的相关生物学知识（如关键基因/通路/机制）
 - 说明用户可从该表获得的生物学知识/见解
+{OMICS_SCOPE}
 保持信息丰富但简洁（通常 2-5 句）。你还可以优化 'sheet_name' 为更清晰的英文名称（<=31 字符，不含 : \ / ? * [ ] 字符），但你必须保持 'csv' 绝对路径与给定值完全一致。
 
 仅返回填写完成的 JSON（不要额外解释，不要 markdown 代码围栏）。
@@ -306,7 +325,8 @@ Public Class ResultTablesModule : Inherits AnalysisModuleBase
                            .Replace("{MODULE_CONCLUSION}", If(mr.Conclusion, "(未提供)")) _
                            .Replace("{KB_CONTENT}", kbContent) _
                            .Replace("{HEADERS}", headersInfo.ToString()) _
-                           .Replace("{SKELETON}", skeleton)
+                           .Replace("{SKELETON}", skeleton) _
+                           .Replace("{OMICS_SCOPE}", OmicsScopeAnnotationHint())
 
             Dim resp = Await llm.Chat(prompt, cancellationToken)
             Dim json = resp.ExtractJsonFromResponse
