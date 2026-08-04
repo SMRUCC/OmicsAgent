@@ -229,6 +229,9 @@ Public MustInherit Class AnalysisModuleBase
 
 {BuildContextInfo()}
 
+# 组学范围
+{OmicsScopeHint()}
+
 # 你的任务
 {GeneratePlanPromptText()}
 
@@ -299,12 +302,17 @@ Public MustInherit Class AnalysisModuleBase
 所有 PDF/PNG 图片文件保存到图片目录：{FiguresDir.GetDirectoryFullPath}
 所有生成的 CSV 文件名以 '{CsvFileNamePrefix}' 为前缀
 
+# 组学范围
+{OmicsScopeHint()}
+
+# 输出文件命名
+{PerOmicsOutputConvention(CsvFileNamePrefix)}
+
 # 重要注意事项
 - 需要时使用 source() 函数从 rscript/ 目录加载辅助脚本
 - 所有可视化均使用 ggplot2
 - 所有输出文件使用绝对路径保存
 - 脚本须自包含，可通过 Rscript 直接运行
-- 同时兼容单组学和多组学数据
 - 将进度信息输出到 stdout
 "
         Await llm.Chat(prompt, cancellationToken)
@@ -346,22 +354,79 @@ Public MustInherit Class AnalysisModuleBase
         sb.AppendLine($"- R-sharp 脚本工具目录(只读): {AgentConfig.RsharpScriptsDir}")
         sb.AppendLine($"- Python 脚本工具目录(只读): {AgentConfig.PythonScriptsDir}")
         sb.AppendLine($"- KEGG 背景数据目录(只读): {AgentConfig.KeggDataDir}")
-        sb.AppendLine($"- 分子生物学注释表(只读): {_context.AnnotationFile} ({StringFormats.Lanudry(_context.AnnotationFile.FileLength)})")
+
+        If _context.IsMultiOmics Then
+            sb.AppendLine($"- 分子生物学注释总表(只读): {_context.AnnotationFile} ({StringFormats.Lanudry(_context.AnnotationFile.FileLength)})")
+            sb.AppendLine($"  该表由各组学的注释表合并而成，含 omics_id / omics_label 列标识注释来源；")
+            sb.AppendLine($"  针对某一组学做注释映射时，请优先使用下方该组学各自的注释表。")
+
+            If _context.IsSampleAligned Then
+                sb.AppendLine($"- 样本对齐产物目录(只读): {_context.AlignedDir}")
+                sb.AppendLine($"- 样本对齐宽表(只读): {_context.SubjectMapFile}")
+            End If
+        Else
+            sb.AppendLine($"- 分子生物学注释表(只读): {_context.AnnotationFile} ({StringFormats.Lanudry(_context.AnnotationFile.FileLength)})")
+        End If
+
         sb.AppendLine()
         sb.AppendLine($"# 研究主题")
         sb.AppendLine(_context.ResearchTopic)
         sb.AppendLine()
-        sb.AppendLine($"# 组学数据集 ({_context.Datasets.Count})")
+
+        If _context.IsMultiOmics Then
+            sb.AppendLine($"# 组学数据集（多组学分析，共 {_context.Datasets.Count} 个组学）")
+        Else
+            sb.AppendLine($"# 组学数据集（单组学分析）")
+        End If
+
         For i = 0 To _context.Datasets.Count - 1
             Dim d = _context.Datasets(i)
-            sb.AppendLine($"## 数据集 {i + 1}: {d.OmicsType}")
+
+            sb.AppendLine($"## 数据集 {i + 1}: [{d.Id}] {d.DisplayName}")
+            sb.AppendLine($"- 组学类型: {d.OmicsType}")
+
+            If Not d.Unit.StringEmpty(, True) Then
+                sb.AppendLine($"- 数据单位: {d.Unit}")
+            End If
+
             sb.AppendLine($"- 表达矩阵文件: {d.ExpressionFile.GetFullPath} ({StringFormats.Lanudry(d.ExpressionFile.FileLength)})")
-            sb.AppendLine($"- 样本信息表文件: {d.SampleInfoFile.GetFullPath} ({StringFormats.Lanudry(d.SampleInfoFile.FileLength)})")
+
+            If d.SampleInfoFile.FileExists Then
+                sb.AppendLine($"- 样本信息表文件: {d.SampleInfoFile.GetFullPath} ({StringFormats.Lanudry(d.SampleInfoFile.FileLength)})")
+            Else
+                sb.AppendLine($"- 样本信息表文件: (未提供)")
+            End If
+
+            If _context.IsMultiOmics AndAlso d.AnnotationFile.FileExists Then
+                sb.AppendLine($"- 该组学专属注释表: {d.AnnotationFile.GetFullPath} ({StringFormats.Lanudry(d.AnnotationFile.FileLength)})")
+            End If
+
             sb.AppendLine($"- 样本数量: {d.SampleIDs.Count}")
             sb.AppendLine($"- 分子数量: {d.MoleculeIDs.Count}")
-            sb.AppendLine($"- 样本ID: { d.SampleIDs.Concatenate(", ")}")
+            sb.AppendLine($"- 样本ID: {TruncateIDs(d.SampleIDs)}")
+            sb.AppendLine($"- 本模块之前，模块 1 预处理产物应位于: tmp/{d.PreprocessedFileName}")
+
+            If d.IsAligned Then
+                sb.AppendLine($"- 该矩阵已完成跨组学样本对齐，列名即为统一的 subject_id")
+            End If
         Next
+
         sb.AppendLine()
+
+        ' 多组学场景下补充跨组学样本对齐信息，明确告知 LLM 各组学可直接按列名合并
+        If _context.IsMultiOmics AndAlso _context.IsSampleAligned Then
+            Dim subjects As String() = If(_context.SubjectIDs, New String() {})
+
+            sb.AppendLine($"# 跨组学样本对齐")
+            sb.AppendLine($"- 全部 {_context.Datasets.Count} 个组学的表达矩阵已完成样本对齐。")
+            sb.AppendLine($"- 各矩阵的样本列名已统一替换为生物学个体标识 subject_id，且仅保留全部组学共有的个体。")
+            sb.AppendLine($"- 共有个体数量: {subjects.Length}")
+            sb.AppendLine($"- 共有个体ID: {TruncateIDs(subjects)}")
+            sb.AppendLine($"- 因此跨组学合并数据时可直接按列名（subject_id）对齐，无需再做任何样本 ID 转换。")
+            sb.AppendLine($"- 原始样本 ID 与 subject_id 的对应关系见: {_context.SubjectMapFile}")
+            sb.AppendLine()
+        End If
+
         sb.AppendLine($"# 知识库")
         If File.Exists(_context.KnowledgeBaseFile) Then
             Dim kbContent = File.ReadAllText(_context.KnowledgeBaseFile, Encoding.UTF8)
@@ -391,6 +456,95 @@ Public MustInherit Class AnalysisModuleBase
             sb.AppendLine()
         Next
         Return sb.ToString()
+    End Function
+
+    ''' <summary>
+    ''' 样本/分子 ID 列表在提示词中的最大展示条数。
+    ''' 组学数据的样本数可能很多，全量列出会占用大量 token 且对 LLM 决策无益。
+    ''' </summary>
+    Private Const MaxDisplayIDs As Integer = 60
+
+    ''' <summary>把 ID 列表格式化为提示词文本，超长时截断并标注剩余数量</summary>
+    Private Shared Function TruncateIDs(ids As IEnumerable(Of String)) As String
+        If ids Is Nothing Then
+            Return "(无)"
+        End If
+
+        Dim all As String() = ids.ToArray
+
+        If all.Length = 0 Then
+            Return "(无)"
+        End If
+
+        If all.Length <= MaxDisplayIDs Then
+            Return all.JoinBy(", ")
+        End If
+
+        Return all.Take(MaxDisplayIDs).JoinBy(", ") & $", ...（共 {all.Length} 个，此处仅列出前 {MaxDisplayIDs} 个）"
+    End Function
+
+    ''' <summary>
+    ''' 生成描述本次分析组学范围的提示词片段。
+    ''' </summary>
+    ''' <remarks>
+    ''' 单组学与多组学在分析策略上存在实质差异，但两者共用同一套提示词模板。
+    ''' 若在模板里直接写「若为多组学则……」这类条件句，会迫使 LLM 在单组学场景下
+    ''' 也去做无谓的分支判断，反而容易产生错误的分支代码。
+    ''' 因此这里根据实际场景直接给出确定性的指令，模板中按需插值即可。
+    ''' </remarks>
+    Protected Function OmicsScopeHint() As String
+        Dim datasets = _context.Datasets
+
+        If Not _context.IsMultiOmics Then
+            Dim single_ = datasets.FirstOrDefault
+
+            If single_ Is Nothing Then
+                Return "本次为单组学分析。"
+            End If
+
+            Return $"本次为**单组学**分析，只有一个组学数据集：[{single_.Id}] {single_.DisplayName}" &
+                   $"（组学类型 {single_.OmicsType}{If(single_.Unit.StringEmpty(, True), "", $"，数据单位 {single_.Unit}")}）。" &
+                   "请直接针对该组学开展分析，不需要考虑任何跨组学整合的处理。"
+        End If
+
+        Dim list As String = datasets _
+            .Select(Function(d) $"[{d.Id}] {d.DisplayName}（{d.OmicsType}{If(d.Unit.StringEmpty(, True), "", $"，{d.Unit}")}）") _
+            .JoinBy("、")
+
+        Dim hint As String =
+            $"本次为**多组学**分析，共 {datasets.Count} 个组学数据集：{list}。" &
+            "请对每个组学分别独立完成本模块的分析，各组学的结果需要分开保存并带上组学标识，" &
+            "不要把不同组学的数据混在同一个矩阵里直接分析。"
+
+        If _context.IsSampleAligned Then
+            hint &= $"各组学矩阵的样本列名已统一为 subject_id（共有个体 {If(_context.SubjectIDs Is Nothing, 0, _context.SubjectIDs.Length)} 个），" &
+                    "需要跨组学取用同一批个体时可直接按列名对齐。"
+        End If
+
+        Return hint
+    End Function
+
+    ''' <summary>
+    ''' 生成中间产物文件命名约定的提示词片段。
+    ''' </summary>
+    ''' <remarks>
+    ''' 多组学场景下若沿用统一的文件名前缀，多个组学的产物会互相覆盖，
+    ''' 因此必须要求 LLM 在文件名中带上组学标识加以区分。
+    ''' </remarks>
+    Protected Function PerOmicsOutputConvention(filePrefix As String) As String
+        Dim datasets = _context.Datasets
+
+        If Not _context.IsMultiOmics Then
+            Dim single_ = datasets.FirstOrDefault
+            Dim id As String = If(single_ Is Nothing, "omics", single_.Id)
+
+            Return $"输出文件统一命名为 '{filePrefix}{id}.csv' 形式（前缀 '{filePrefix}' + 组学标识）。"
+        End If
+
+        Dim examples As String = datasets.Select(Function(d) $"'{filePrefix}{d.Id}.csv'").JoinBy("、")
+
+        Return $"每个组学的输出文件必须带上各自的组学标识以避免互相覆盖，" &
+               $"依次命名为：{examples}。组学标识必须与上方数据集清单中的方括号内 id 完全一致。"
     End Function
 
     Protected Sub RegisterFileTools(llm As LLMClient, allowWriteFile As Boolean)
