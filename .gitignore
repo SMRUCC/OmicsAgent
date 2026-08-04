@@ -238,3 +238,4 @@ _Pvt_Extensions
 *.pdf
 test/config.ini
 test/metabolism/config.ini
+test/multiple_omics/demo/tmp/.llm_agent_logs/llm_184045_extract_pdf_text.jsonl

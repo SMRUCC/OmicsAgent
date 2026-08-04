@@ -1,4 +1,4 @@
-﻿ID,name,type,kegg,taxonomy_phylum,taxonomy_class,family
+﻿id,name,type,kegg,taxonomy_phylum,taxonomy_class,family
 MIC_00001,Acetobacter aceti,organism,,Proteobacteria,Alphaproteobacteria,Acetobacter
 MIC_00002,Acetobacter estunensis,organism,,Proteobacteria,Alphaproteobacteria,Acetobacter
 MIC_00003,Acetobacter lovaniensis,organism,,Proteobacteria,Alphaproteobacteria,Acetobacter
