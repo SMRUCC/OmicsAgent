@@ -52,7 +52,7 @@ Public Class LimmaDiffModule : Inherits AnalysisModuleBase
 - 代谢组类组学需要计算 VIP 值，转录组/蛋白组类组学则不需要，请按组学类型分别处理
 - 差异分析结果表必须带上组学标识，逐一对应如下：
 {outputs}
-- 结果表中必须额外包含一列 omics_id 标明该行结果所属的组学，供模块 10 跨组学整合时汇总
+- 结果表中必须额外包含一列 omics_id 标明该行结果所属的组学，供模块 12 跨组学整合时汇总
 - 分子注释请使用各组学自己的注释表（见上方数据集清单），不要跨组学误用
 "
     End Function
@@ -69,7 +69,7 @@ Public Class LimmaDiffModule : Inherits AnalysisModuleBase
 # 上下游衔接说明
 - 上游输入：{PreprocessedInputHint()}
 - 上游输入：读取模块 3 的比对设计（tables/comparison_design.csv，若缺失则读取 {$"{_context.AnalysisDir}/design.json"} 文件）
-- 下游输出：差异分析结果表（前缀 'limma_'）将作为模块 5(KEGG 富集分析) 的输入分子列表，供模块 {If(_context.IsMultiOmics, "10(跨组学整合)、", "")}11(表格) 和模块 12(报告) 引用
+- 下游输出：差异分析结果表（前缀 'limma_'）将作为模块 5(KEGG 富集分析) 的输入分子列表，同时作为模块 10(随机森林) 与模块 11(回归分析) 的候选特征初筛来源，供模块 {If(_context.IsMultiOmics, "12(跨组学整合)、", "")}13(表格) 和模块 14(报告) 引用
 {MultiOmicsSection()}
 # 实现要求
 - 按上方「上游输入」所列路径读取预处理后的表达矩阵

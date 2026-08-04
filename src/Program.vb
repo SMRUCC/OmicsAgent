@@ -35,10 +35,12 @@ Omics Data Analysis LLM Agent
   --config,-c=<path>      INI 配置文件路径（默认为 ./config.ini）
   --skip-literature       跳过文献检索步骤
   --skip-kb               跳过知识库构建步骤
-  --module=<n>            仅执行指定模块（1-12），多个模块用逗号分隔
+  --module=<n>            仅执行指定分析模块（1-12），多个模块用逗号分隔
                           1=预处理 2=PCA 3=比较组设计 4=差异分析 5=KEGG功能
                           6=WGCNA 7=CMeans 8=贝叶斯网络 9=PLS-PM
-                          10=跨组学整合（仅多组学） 11=结果表 12=报告
+                          10=随机森林 11=回归分析 12=跨组学整合（仅多组学）
+                          注：结果表(13)与报告(14)为必要的收尾模块，
+                          每次分析结束后必定执行，不受本参数影响
   --custom-modules=<path> 自定义分析模块 JSON 文件夹路径（默认为程序根目录下的 custom_modules/ 文件夹）
   --report-format=<fmt>   报告输出格式：pdf（默认）/ docx / both，优先级高于配置文件中的 [report] format
  

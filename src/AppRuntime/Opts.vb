@@ -3,6 +3,37 @@
 Namespace AppRuntime
 
     ''' <summary>
+    ''' 收尾模块的索引常量定义。
+    ''' 
+    ''' 结果表格整理与论文报告撰写这两个模块并非「可选的分析方法」，
+    ''' 而是对前序所有分析产出的汇总与呈现，因此不参与 --module 参数的调度，
+    ''' 而是在分析模块循环结束之后必定执行。
+    ''' </summary>
+    Public NotInheritable Class FinalizeModules
+
+        Private Sub New()
+        End Sub
+
+        ''' <summary>结果表格整理模块索引</summary>
+        Public Const ResultTablesIndex As Integer = 13
+        ''' <summary>论文报告撰写模块索引</summary>
+        Public Const ReportIndex As Integer = 14
+        ''' <summary>自定义 JSON 模块的起始索引，须大于全部标准模块索引</summary>
+        Public Const CustomModuleStartIndex As Integer = 15
+
+        ''' <summary>
+        ''' 收尾模块的执行顺序。顺序不可调换：
+        ''' 报告模块需要引用结果表格模块整理出的表格产出。
+        ''' </summary>
+        Public Shared ReadOnly Property Indices As Integer() = {ResultTablesIndex, ReportIndex}
+
+        ''' <summary>判断给定索引是否属于收尾模块</summary>
+        Public Shared Function IsFinalizeModule(index As Integer) As Boolean
+            Return index = ResultTablesIndex OrElse index = ReportIndex
+        End Function
+    End Class
+
+    ''' <summary>
     ''' The commandline argument options
     ''' </summary>
     Public Class Opts
@@ -142,12 +173,25 @@ Namespace AppRuntime
             Return cfg
         End Function
 
-        ''' <summary>解析要执行的模块</summary>
+        ''' <summary>
+        ''' 解析要执行的分析模块列表。
+        ''' </summary>
+        ''' <returns>
+        ''' 仅包含主循环内执行的分析模块索引。结果表格(13)与报告(14)属于收尾模块，
+        ''' 由主循环结束后强制执行，故一律不会出现在返回结果中。
+        ''' </returns>
         Public Function ParseModulesToRun() As List(Of Integer)
             If Not modules.StringEmpty(, True) Then
-                Return modules.Split(","c).Select(Function(s) Integer.Parse(s.Trim())).ToList()
+                ' 收尾模块必定在主循环之后执行，若用户在 --module 中误传 13/14，
+                ' 此处必须过滤掉，否则这两个模块会被重复执行两次
+                Return modules.Split(","c) _
+                    .Select(Function(s) Integer.Parse(s.Trim())) _
+                    .Where(Function(i) Not FinalizeModules.IsFinalizeModule(i)) _
+                    .ToList()
             End If
-            ' 默认执行所有模块（10 = 跨组学整合，仅在多组学场景下实际执行）
+
+            ' 默认执行全部标准分析模块
+            ' （12 = 跨组学整合，仅在多组学场景下实际执行）
             Return {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}.ToList()
         End Function
     End Class

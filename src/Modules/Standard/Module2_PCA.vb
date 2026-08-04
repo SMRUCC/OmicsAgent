@@ -66,7 +66,7 @@ Public Class PCAAnalysisModule : Inherits AnalysisModuleBase
 # 上下游衔接说明
 - 上游输入：{PreprocessedInputHint()}
 - 读取样本信息表获取分组标签
-- 下游输出：分析结果供模块 4(LIMMA) 参考数据质量，供模块 12(报告) 引用
+- 下游输出：分析结果供模块 4(LIMMA) 参考数据质量，供模块 14(报告) 引用
 {multiOmicsSection}
 # 实现要求
 - 按上方「上游输入」所列路径读取预处理后的表达矩阵

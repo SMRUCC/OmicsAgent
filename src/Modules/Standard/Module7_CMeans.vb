@@ -58,7 +58,7 @@ Public Class CMeansAnalysisModule : Inherits AnalysisModuleBase
 # 上下游衔接说明
 - 上游输入：{PreprocessedInputHint()}
 - 上游输入：读取模块 6 的 WGCNA 模块划分结果（用于关联对比）
-- 下游输出：聚类结果供模块 {If(_context.IsMultiOmics, "10(跨组学整合)、", "")}11(表格) 和模块 12(报告) 引用
+- 下游输出：聚类结果供模块 {If(_context.IsMultiOmics, "12(跨组学整合)、", "")}13(表格) 和模块 14(报告) 引用
 
 # 实现要求
 - CMeans 模糊聚类：
