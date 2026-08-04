@@ -90,7 +90,7 @@ var toggleTheme = null;
       rows: [],              // [{ subject_id: 'P001', rna: 'S1_R', ... }]
     },
     baseDir: "",
-    useRelativePath: true,
+    useRelativePath: false,
     manifestPath: "",
     filter: "",
     errors: [],
@@ -405,7 +405,7 @@ var toggleTheme = null;
 
   /* ===================== 序列化：state -> DatasetManifest ===================== */
 
-  /** 输出路径形态转换 */
+  /** 输出路径形态转换：默认保持绝对路径；仅显式勾选相对路径且提供基准目录时相对化 */
   function outPath(p) {
     p = trim(p);
     if (!p) return "";
@@ -749,8 +749,8 @@ var toggleTheme = null;
 
     html +=
       `<div class="switch-row">` +
-      `<label><input type="checkbox" id="relPathChk" ${state.useRelativePath ? "checked" : ""} />输出相对路径</label>` +
-      `<span class="dim">基准目录：</span>` +
+      `<label><input type="checkbox" id="relPathChk" ${state.useRelativePath ? "checked" : ""} />使用相对路径（基于基准目录）</label>` +
+      `<span class="dim">${state.useRelativePath ? "基准目录：" : "当前输出绝对路径"}</span>` +
       `<input type="text" class="input mono" id="baseDirInput" style="flex:1 1 240px;min-width:180px" value="${esc(state.baseDir)}" placeholder="清单 JSON 文件所在目录" spellcheck="false" />` +
       `<button type="button" class="btn btn-mini" id="pickBaseDirBtn">选择…</button>` +
       `<button type="button" class="btn btn-mini" id="verifyFilesBtn">校验文件存在性</button>` +
@@ -982,7 +982,7 @@ var toggleTheme = null;
       state.datasets = d.datasets.map((x) => newEntry(x));
       state.alignment = Object.assign({ kind: "none", mappingFile: "", rows: [] }, d.alignment || {});
       state.baseDir = d.baseDir || "";
-      state.useRelativePath = d.useRelativePath !== false;
+      state.useRelativePath = d.useRelativePath === true;
       state.manifestPath = d.manifestPath || "";
       state.activeIndex = Math.min(d.activeIndex || 0, state.datasets.length - 1);
       return true;
@@ -997,7 +997,6 @@ var toggleTheme = null;
     if (!obj.datasets.length) throw new Error("datasets 数组为空。");
 
     const baseDir = srcPath ? PathUtil.dirName(srcPath) : state.baseDir;
-    let sawRelative = false;
 
     const datasets = obj.datasets.map((raw) => {
       const e = newEntry();
@@ -1009,7 +1008,6 @@ var toggleTheme = null;
         const p = trim(raw && raw[k]);
         if (!p) { e[k] = ""; return; }
         if (!PathUtil.isAbsolute(p)) {
-          sawRelative = true;
           e[k] = baseDir ? PathUtil.toAbsolute(p, baseDir) : p;
         } else {
           e[k] = PathUtil.normalizeSlash(p);
@@ -1031,7 +1029,6 @@ var toggleTheme = null;
         alignment.mappingFile = PathUtil.isAbsolute(mf)
           ? PathUtil.normalizeSlash(mf)
           : (baseDir ? PathUtil.toAbsolute(mf, baseDir) : mf);
-        if (!PathUtil.isAbsolute(mf)) sawRelative = true;
       } else if (Array.isArray(sm) && sm.length) {
         alignment.kind = "inline";
         alignment.rows = sm.map((r) => {
@@ -1052,7 +1049,6 @@ var toggleTheme = null;
     state.activeIndex = 0;
     state.mode = datasets.length > 1 ? "multi" : "single";
     if (srcPath) { state.manifestPath = srcPath; state.baseDir = baseDir; }
-    if (sawRelative) state.useRelativePath = true;
 
     setState(null, { scope: "all" });
     return datasets.length;
