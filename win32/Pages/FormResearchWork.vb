@@ -7,9 +7,11 @@ Imports RibbonLib.Interop
 Public Class FormResearchWork
 
     Shared ReadOnly btnOpenKb As RibbonEventBinding
+    Shared ReadOnly btnDataset As RibbonEventBinding
 
     Shared Sub New()
         btnOpenKb = New RibbonEventBinding(Ribbon.ButtonOpenKb)
+        btnDataset = New RibbonEventBinding(Ribbon.ButtonDataset)
     End Sub
 
     Public ReadOnly Property port As Integer
@@ -30,10 +32,15 @@ Public Class FormResearchWork
         Call RibbonMenu.OpenKbPage(dir:=$"{Workspace}/research_kb/", Me)
     End Sub
 
+    Private Sub OpenDatasetPage()
+        Call CommonRuntime.ShowDocument(New FormDataSetEditor With {.workspace = Workspace})
+    End Sub
+
     Private Sub ActiveRibbonMenu()
         Ribbon.MenuResearchWork.ContextAvailable = ContextAvailability.Available
 
         Call btnOpenKb.Addhandler(AddressOf OpenKBPage)
+        Call btnDataset.Addhandler(AddressOf OpenDatasetPage)
     End Sub
 
     Private Async Sub FormResearchWork_Load(sender As Object, e As EventArgs) Handles Me.Load
