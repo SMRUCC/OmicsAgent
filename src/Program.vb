@@ -151,7 +151,12 @@ Omics Data Analysis LLM Agent [OmicsWorks]
             ]")>
     <Argument("--dirs", False, CLITypes.File, Description:="A plain text file that provides a list of target data folders. Each line in this file represents a folder path containing the result data pending collation.")>
     <Argument("--reference", True, CLITypes.File, Description:="A directory path to a knowledge base that stores reference materials for data analysis. This directory contains a number of scientific literature PDF files used for knowledge reference.")>
-    <Argument("--research", False, CLITypes.File, Description:="A plain text file that outlines the user’s scientific research background, research objectives, data sample content, and research project description.")>
+    <Argument("--research", False, CLITypes.File, Description:="A plain text file that outlines the user's scientific research background, research objectives, data sample content, and research project description.")>
+    <Argument("--workspace", True, CLITypes.File, Description:="A directory path to the workspace directory. Default is the current directory ('./').")>
+    <Argument("--config", True, CLITypes.File, Description:="Path to the INI configuration file. Default is './config.ini'.")>
+    <Argument("--skip-literature", True, CLITypes.Boolean, Description:="Skip the literature search step.")>
+    <Argument("--skip-kb", True, CLITypes.Boolean, Description:="Skip the knowledge base construction step.")>
+    <Argument("--report-format", True, CLITypes.String, Description:="Report output format: pdf (default) / docx / both. The priority of this parameter is higher than the [report] format setting in the configuration file.")>
     Public Async Function MakeReport(args As CommandLine) As Task(Of Integer)
         ' 解析命令行参数
         Return Await Reporter.Run(args.CreateOpts(Of Opts))
@@ -173,9 +178,21 @@ Omics Data Analysis LLM Agent [OmicsWorks]
                 --make-report
             ]")>
     <Argument("--dataset", True, CLITypes.File, Description:="The --dataset parameter is mutually exclusive with the --expression, --annotation, and --sampleinfo parameters. The dataset for analysis must be specified either by using --dataset alone, or by providing the combination of --expression, --annotation, and --sampleinfo. Specifying both sets of parameters simultaneously will cause the program to throw an error.")>
-    <Argument("--research", False, CLITypes.File, Description:="A plain text file that outlines the user’s scientific research background, research objectives, data sample content, and research project description.")>
+    <Argument("--research", False, CLITypes.File, Description:="A plain text file that outlines the user's scientific research background, research objectives, data sample content, and research project description.")>
     <Argument("--reference", True, CLITypes.File, Description:="A directory path to a knowledge base that stores reference materials for data analysis. This directory contains a number of scientific literature PDF files used for knowledge reference.")>
-    Public Async Function AgentMode(args As CommandLine) As Task(Of Integer)
+    <Argument("--expression", True, CLITypes.File, Description:="Path to the expression matrix CSV file, or a directory containing multi-omics matrices. This parameter is mutually exclusive with --dataset.")>
+    <Argument("--annotation", True, CLITypes.File, Description:="Path to the molecular annotation CSV file. This parameter is mutually exclusive with --dataset.")>
+    <Argument("--sampleinfo", True, CLITypes.File, Description:="Path to the sample metadata CSV file, or a directory containing multi-omics metadata files. This parameter is mutually exclusive with --dataset.")>
+    <Argument("--workspace", True, CLITypes.File, Description:="A directory path to the workspace directory. Default is to create an 'analysis' directory at the location of the expression matrix.")>
+    <Argument("--config", True, CLITypes.File, Description:="Path to the INI configuration file. Default is './config.ini'.")>
+    <Argument("--skip-literature", True, CLITypes.Boolean, Description:="Skip the literature search step.")>
+    <Argument("--skip-kb", True, CLITypes.Boolean, Description:="Skip the knowledge base construction step.")>
+    <Argument("--module", True, CLITypes.String, Description:="Specify which analysis modules to execute, multiple modules separated by commas. 1=Preprocessing 2=PCA 3=ComparisonGroup 4=DifferentialAnalysis 5=KEGG 6=WGCNA 7=CMeans 8=BayesianNetwork 9=PLS-PM 10=RandomForest 11=Regression 12=MultiOmicsIntegration.\nNote: ResultTables(13) and Report(14) are finalize modules that always execute regardless of this parameter.")>
+    <Argument("--custom-modules", True, CLITypes.File, Description:="Path to a directory containing custom analysis module JSON files. Default is the 'custom_modules/' directory under the program root.")>
+    <Argument("--report-format", True, CLITypes.String, Description:="Report output format: pdf (default) / docx / both. The priority of this parameter is higher than the [report] format setting in the configuration file.")>
+    <Argument("--debug-cache", True, CLITypes.Boolean, Description:="[Agent debugging] Skip modules that already have result.json output files.")>
+    <Argument("--make-report", True, CLITypes.Boolean, Description:="[Agent debugging] Used for debugging the report module.")>
+    Public Async Function AgentWorkflow(args As CommandLine) As Task(Of Integer)
         ' 解析命令行参数
         Dim parsed As Opts = args.CreateOpts(Of Opts)
 
