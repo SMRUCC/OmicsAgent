@@ -116,6 +116,7 @@ Omics Data Analysis LLM Agent [OmicsWorks]
     <ExportAPI("--check")>
     <Description("For debugging purposes, used to check if the GNU R script runtime environment is available.")>
     <Usage("--check --R=""C:\Program Files\R\R-4.5.0\bin\x64\Rscript.exe""")>
+    <Argument("--R", False, CLITypes.File, Description:="This parameter specifies the file path to the GNU R Rscript executable, used for running the test.")>
     Public Function CheckInterop(R As String, args As CommandLine) As Integer
         Dim assert As String = "Hello World!"
         Dim rscript As String = $"message('{assert}');"
@@ -138,10 +139,22 @@ Omics Data Analysis LLM Agent [OmicsWorks]
     End Function
 
     <ExportAPI("/report")>
-    <Description("")>
-    <Usage("")>
-    Public Async Function Reporter(args As CommandLine) As Task(Of Integer)
-
+    <Description("Collate the results from existing analysis data in the target folders. Optionally, a research agent can be used to regenerate plots based on these results. Ultimately, a data analysis report is generated as a draft paper based on the existing results.")>
+    <Usage("/report --research=research.txt --dirs=dirs.txt 
+            [
+                 --reference <pdf reference folder, default=null>
+                 --workspace <workspace directory, default=./>
+                 --config <runtime config, default=./config.ini>
+                 --skip-literature
+                 --skip-kb
+                 --report-format <report file format, pdf|docx|both, default=pdf>
+            ]")>
+    <Argument("--dirs", False, CLITypes.File, Description:="A plain text file that provides a list of target data folders. Each line in this file represents a folder path containing the result data pending collation.")>
+    <Argument("--reference", True, CLITypes.File, Description:="A directory path to a knowledge base that stores reference materials for data analysis. This directory contains a number of scientific literature PDF files used for knowledge reference.")>
+    <Argument("--research", False, CLITypes.File, Description:="A plain text file that outlines the user’s scientific research background, research objectives, data sample content, and research project description.")>
+    Public Async Function MakeReport(args As CommandLine) As Task(Of Integer)
+        ' 解析命令行参数
+        Return Await Reporter.Run(args.CreateOpts(Of Opts))
     End Function
 
     <ExportAPI("/agent")>
@@ -160,6 +173,8 @@ Omics Data Analysis LLM Agent [OmicsWorks]
                 --make-report
             ]")>
     <Argument("--dataset", True, CLITypes.File, Description:="The --dataset parameter is mutually exclusive with the --expression, --annotation, and --sampleinfo parameters. The dataset for analysis must be specified either by using --dataset alone, or by providing the combination of --expression, --annotation, and --sampleinfo. Specifying both sets of parameters simultaneously will cause the program to throw an error.")>
+    <Argument("--research", False, CLITypes.File, Description:="A plain text file that outlines the user’s scientific research background, research objectives, data sample content, and research project description.")>
+    <Argument("--reference", True, CLITypes.File, Description:="A directory path to a knowledge base that stores reference materials for data analysis. This directory contains a number of scientific literature PDF files used for knowledge reference.")>
     Public Async Function AgentMode(args As CommandLine) As Task(Of Integer)
         ' 解析命令行参数
         Dim parsed As Opts = args.CreateOpts(Of Opts)
