@@ -149,7 +149,7 @@ Omics Data Analysis LLM Agent [OmicsWorks]
                  --skip-kb
                  --report-format <report file format, pdf|docx|both, default=pdf>
             ]")>
-    <Argument("--dirs", False, CLITypes.File, Description:="A plain text file that provides a list of target data folders. Each line in this file represents a folder path containing the result data pending collation.")>
+    <Argument("--dirs", False, CLITypes.File, Description:="A plain text file that provides a list of user data folders. Each line in this file represents a folder path containing the result data pending collation.")>
     <Argument("--reference", True, CLITypes.File, Description:="A directory path to a knowledge base that stores reference materials for data analysis. This directory contains a number of scientific literature PDF files used for knowledge reference.")>
     <Argument("--research", False, CLITypes.File, Description:="A plain text file that outlines the user's scientific research background, research objectives, data sample content, and research project description.")>
     <Argument("--workspace", True, CLITypes.File, Description:="A directory path to the workspace directory. Default is the current directory ('./').")>
