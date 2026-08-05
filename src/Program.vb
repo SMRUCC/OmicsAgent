@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.InteropService.SharedORM
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports OmicsAgent.AppRuntime
+Imports OmicsAgent.AppRuntime.Ini
 
 ' ============================================================================
 ' 主程序入口 - 命令行参数解析与主流程编排

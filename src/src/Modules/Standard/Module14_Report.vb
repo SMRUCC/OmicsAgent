@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.MIME.application.json.LenientJson
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Ollama
 Imports OmicsAgent.AppRuntime
+Imports OmicsAgent.AppRuntime.Ini
 Imports OmicsAgent.ReportData
 
 ' ============================================================================
