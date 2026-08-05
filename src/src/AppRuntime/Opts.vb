@@ -38,6 +38,12 @@ Namespace AppRuntime
         ''' </summary>
         <Opt("--report-format")> Public Property report_format As String
 
+        ''' <summary>
+        ''' /report 模式专用。一个纯文本文件，每行指定一个用户数据文件夹路径，
+        ''' 文件夹内存放用户自行分析产生的 CSV 结果表格文件。
+        ''' </summary>
+        <Opt("--dirs")> Public Property dirs As String
+
         <Opt("--help", "-h")> Public Property help As Boolean = False
 
         ''' <summary>

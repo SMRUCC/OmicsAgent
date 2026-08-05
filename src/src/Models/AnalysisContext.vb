@@ -149,6 +149,12 @@ Public Class AnalysisContext
     Public Property FigureCaptionsEn As New Dictionary(Of String, String)()
 
     ' ------------------------------------------------------------------
+    ' /report 模式
+    ' ------------------------------------------------------------------
+    ''' <summary>用户数据文件夹列表文件路径（/report 模式专用）</summary>
+    Public Property UserDataDirsFile As String = ""
+
+    ' ------------------------------------------------------------------
     ' 配置
     ' ------------------------------------------------------------------
     Public Property Config As AgentConfig
