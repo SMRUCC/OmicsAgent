@@ -1,3 +1,5 @@
+Imports Microsoft.VisualBasic.MIME.application.json
+Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.MIME.application.json.LenientJson
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Ollama
@@ -383,7 +385,7 @@ Public Class UserDataTablesModule : Inherits AnalysisModuleBase
     ''' </remarks>
     Private Function ExtractGoalFromJson(json As String, fallbackName As String) As String
         Try
-            Dim parsed = LenientJsonParser.ParseJSON(json)
+            Dim parsed As JsonElement = LenientJsonParser.ParseJSON(json)
             Dim brief = parsed.CreateObject(Of GoalAnnotationBrief)
             If brief IsNot Nothing AndAlso Not brief.goal.StringEmpty(, True) Then
                 Return brief.goal
