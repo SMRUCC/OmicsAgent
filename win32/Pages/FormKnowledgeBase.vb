@@ -19,7 +19,7 @@ Public Class FormKnowledgeBase
         Await WebViewLoader.Init(WebView21)
         Call AvtivateRibbon()
 
-        Dim jsons = kb_dir.EnumerateFiles("*.json").Where(Function(file) file.BaseName.IsPattern("per_doc_\d+")).Select(Function(file) file.BaseName).ToArray
+        Dim jsons = kb_dir.EnumerateFiles("*.json").Where(Function(file) file.BaseName.IsPattern("per_doc_\d+")).Select(Function(file) file.FileName).ToArray
         Call jsons.SaveTo($"{kb_dir}/files.txt")
     End Sub
 
