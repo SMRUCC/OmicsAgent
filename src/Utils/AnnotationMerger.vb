@@ -1,5 +1,6 @@
 Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Data.Framework.IO.CSVFile
+Imports OmicsAgent.Dataset
 
 ''' <summary>
 ''' 多组学分子注释表合并器。

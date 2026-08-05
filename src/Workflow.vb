@@ -2,6 +2,8 @@
 Imports Microsoft.VisualBasic.Data.Framework.IO.CSVFile
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports OmicsAgent.AppRuntime
+Imports OmicsAgent.AppRuntime.Manifest
+Imports OmicsAgent.Dataset
 
 Module Workflow
 

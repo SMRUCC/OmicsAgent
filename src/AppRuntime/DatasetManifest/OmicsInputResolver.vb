@@ -1,4 +1,6 @@
 
+Imports OmicsAgent.Dataset
+
 Namespace AppRuntime.Manifest
 
     ''' <summary>

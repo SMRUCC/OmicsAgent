@@ -3,6 +3,7 @@
 ' ============================================================================
 
 Imports OmicsAgent.AppRuntime
+Imports OmicsAgent.Dataset
 
 ''' <summary>
 ''' 表示整个分析流程的上下文，包含用户研究主题、所有组学数据集、

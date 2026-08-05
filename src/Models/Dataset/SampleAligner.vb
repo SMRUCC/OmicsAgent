@@ -1,5 +1,5 @@
 Imports Microsoft.VisualBasic.Data.Framework.StorageProvider
-Imports OmicsAgent.AppRuntime
+Imports OmicsAgent.AppRuntime.Manifest
 
 Namespace Dataset
 
