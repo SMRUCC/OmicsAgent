@@ -1,3 +1,4 @@
+Imports Microsoft.VisualBasic.MIME.application.json.LenientJson
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Ollama
 Imports OmicsAgent.AppRuntime
@@ -115,7 +116,7 @@ Public Class UserDataTablesModule : Inherits AnalysisModuleBase
         End If
 
         ' 解析 dirs 文件，每行一个文件夹路径，跳过空行和 # 注释行
-        Dim userFolders = ParseDirsFile(dirsFile)
+        Dim userFolders = ParseDirsFile(dirsFile).ToArray
         If userFolders.Count = 0 Then
             LogInfo("No valid folder paths found in dirs file.")
             Return
@@ -135,7 +136,7 @@ Public Class UserDataTablesModule : Inherits AnalysisModuleBase
             groupIndex += 1
 
             Try
-                Await ProcessUserDataGroupAsync(folderPath, groupIndex, kbContent, researchTopic, cancellationToken)
+                Await ProcessUserDataGroupAsync(folderPath, groupIndex, kbContent, researchTopic, plan, [step], cancellationToken)
             Catch ex As Exception
                 LogInfo($"[警告] 用户数据文件夹 {groupIndex} ({folderPath}) 处理失败：{ex.Message}")
                 LogInfo(ex.StackTrace)
@@ -146,7 +147,7 @@ Public Class UserDataTablesModule : Inherits AnalysisModuleBase
     End Function
 
     ''' <summary>处理单个用户数据文件夹组</summary>
-    Private Async Function ProcessUserDataGroupAsync(folderPath As String, groupIndex As Integer, kbContent As String, researchTopic As String, cancellationToken As CancellationToken) As Task
+    Private Async Function ProcessUserDataGroupAsync(folderPath As String, groupIndex As Integer, kbContent As String, researchTopic As String, plan As ModulePlan, [step] As [Step], cancellationToken As CancellationToken) As Task
         ' 1. 验证文件夹是否存在
         If Not Directory.Exists(folderPath) Then
             LogInfo($"[跳过] 文件夹不存在：{folderPath}")
@@ -377,16 +378,25 @@ Public Class UserDataTablesModule : Inherits AnalysisModuleBase
     End Function
 
     ''' <summary>从 LLM 返回的 JSON 中提取 goal 字段</summary>
+    ''' <remarks>
+    ''' 使用 LenientJsonParser 解析 JSON，兼容 LLM 返回的各种格式变体。
+    ''' </remarks>
     Private Function ExtractGoalFromJson(json As String, fallbackName As String) As String
         Try
-            Dim goal As String = json.JSONValue("goal")
-            If Not goal.StringEmpty(, True) Then
-                Return goal
+            Dim parsed = LenientJsonParser.ParseJSON(json)
+            Dim brief = parsed.CreateObject(Of GoalAnnotationBrief)
+            If brief IsNot Nothing AndAlso Not brief.goal.StringEmpty(, True) Then
+                Return brief.goal
             End If
         Catch
         End Try
         Return $"用户数据组: {fallbackName}"
     End Function
+
+    ''' <summary>LLM 返回的 goal + annotations JSON 的轻量解析类</summary>
+    Private Class GoalAnnotationBrief
+        Public Property goal As String
+    End Class
 
     ''' <summary>
     ''' 构建第二次 LLM 调用的提示词：要求 LLM 编写基于 openxlsx 的 R 脚本，
