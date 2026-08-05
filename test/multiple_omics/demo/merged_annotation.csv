@@ -1,4 +1,4 @@
-﻿omics_id,omics_label,gene_id,id,name,type,kegg,pfam,ec_number,description,category,super_class,family,organism,formula,class,sub_class,importance,taxonomy_phylum,taxonomy_class,odor_info,source
+omics_id,omics_label,gene_id,id,name,type,kegg,pfam,ec_number,description,category,super_class,family,organism,formula,class,sub_class,importance,taxonomy_phylum,taxonomy_class,odor_info,source
 rna,烟叶发酵dual转录组数据,NtG_00001,CCD1,CCD1,gene,K01610,PF04140,EC 1.13.11.71,CCD1 - enzyme for β-Damascenone biosynthesis,Carotenoid degradation product (C13 norisoprenoid),Carotenoid degradation product,Carotenoid degradation product,Nicotiana tabacum,,,,,,,,
 rna,烟叶发酵dual转录组数据,NtG_00002,CCD4,CCD4,gene,K01610,PF04140,EC 1.13.11.71,CCD4 - enzyme for β-Damascenone biosynthesis,Carotenoid degradation product (C13 norisoprenoid),Carotenoid degradation product,Carotenoid degradation product,Nicotiana tabacum,,,,,,,,
 rna,烟叶发酵dual转录组数据,NtG_00003,CCD2,CCD2,gene,K01610,PF04140,EC 1.13.11.71,CCD2 - enzyme for β-Damascenone biosynthesis,Carotenoid degradation product (C13 norisoprenoid),Carotenoid degradation product,Carotenoid degradation product,Nicotiana tabacum,,,,,,,,
