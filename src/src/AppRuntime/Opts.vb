@@ -8,6 +8,10 @@ Namespace AppRuntime
     ''' </summary>
     Public Class Opts
 
+        ''' <summary>
+        ''' 一个纯文本文件用于提供用户的研究主题，研究背景相关信息
+        ''' </summary>
+        ''' <returns></returns>
         <Opt("--research", "-r")> Public Property research As String
         <Opt("--expression", "-e")> Public Property expression As String
         <Opt("--annotation", "-a")> Public Property annotation As String
