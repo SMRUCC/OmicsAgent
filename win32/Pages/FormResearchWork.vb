@@ -49,6 +49,10 @@ Public Class FormResearchWork
             Call ActiveRibbonMenu()
             http = New HttpServices(Workspace)
             http.StartHttp()
+
+            Dim dirs = $"{Workspace}/analysis".ListDirectory.Select(Function(d) d.BaseName).ToArray
+
+            Call dirs.SaveTo($"{Workspace}/tmp/modules.txt")
         Else
             Call CommonRuntime.Warning("Unlicensed software, please apply a valid license file and then start your research work.")
             Call Me.Close()

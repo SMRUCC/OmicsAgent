@@ -18,6 +18,9 @@ Public Class FormKnowledgeBase
     Private Async Sub FormKnowledgeBase_Load(sender As Object, e As EventArgs) Handles Me.Load
         Await WebViewLoader.Init(WebView21)
         Call AvtivateRibbon()
+
+        Dim jsons = kb_dir.EnumerateFiles("*.json").Where(Function(file) file.BaseName.IsPattern("per_doc_\d+")).Select(Function(file) file.BaseName).ToArray
+        Call jsons.SaveTo($"{kb_dir}/files.txt")
     End Sub
 
     Private Async Function openKBLib() As Task

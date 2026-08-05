@@ -1,0 +1,120 @@
+﻿{
+ "source_file": "spectrum.01029-24.txt",
+ "key_genes_proteins": [
+ "16S rRNA",
+ "ITS",
+ "cellulase"
+ ],
+ "key_pathways": [
+ "synthesis and degradation metabolism of various amino acids",
+ "alanine, aspartate and glutamate metabolism",
+ "arginine biosynthesis",
+ "phenylalanine, tyrosine and tryptophan biosynthesis",
+ "beta-alanine metabolism",
+ "valine, leucine and isoleucine metabolism",
+ "nitrogen metabolism",
+ "biosynthesis of various alkaloids",
+ "carbon metabolism",
+ "flavonoid biosynthesis",
+ "glycolysis",
+ "pentose phosphate pathway",
+ "galactose metabolism",
+ "metabolism of cofactors and vitamins",
+ "protein families",
+ "carbohydrate metabolism",
+ "amino acid metabolism",
+ "energy metabolism"
+ ],
+ "key_metabolites": [
+ "menatetrenone (vitamin K2)",
+ "solanidine",
+ "γ-glutamylphenylalanine",
+ "carotol",
+ "phenol,4-(1,1,3,3-tetramethylbutyl)",
+ "methoxyindoleacetic acid",
+ "N-benzoyl-2-aminoethyl-β-D-glucopyranoside",
+ "L-tryptophan,4-methyl-5-thiazoleethanol",
+ "LysoPE18:1 (2n isomer)",
+ "3-pyridine-methanol-O-β-D-glucopyranosyl",
+ "N,N,N-p-coumaroyl-cinnamoyl-caffeoyl spermidine",
+ "LysoPC14:0",
+ "γ-glutamyltyrosine",
+ "1,4-methanoazulen-9-ol, decahydro-1,5,5,8a-tetramethyl",
+ "amino acids and derivatives",
+ "lipids",
+ "organic acids",
+ "phenolic acids",
+ "alkaloids",
+ "flavonoids",
+ "terpenes",
+ "ketones",
+ "hydrocarbons",
+ "heterocyclic compounds",
+ "cinnamate",
+ "vanillin",
+ "benzoate",
+ "L-tyrosine",
+ "quercetin",
+ "isoguercitrin",
+ "rutin",
+ "glucose",
+ "CO2",
+ "H2O",
+ "NH3",
+ "pyridine",
+ "pyrazine",
+ "amines",
+ "nitriles",
+ "esters",
+ "phenols",
+ "free fatty acids",
+ "lignans"
+ ],
+ "biological_mechanisms": [
+ {
+ "mechanism": "Cigar tobacco leaf fermentation is a microbially mediated carbon–nitrogen coupling metabolism.",
+ "evidence": "Carbohydrates in tobacco leaves are largely decomposed and consumed, providing energy sources for microorganisms and the carbon skeleton required for cell construction; nitrogen-containing macromolecular compounds are degraded to form volatile compounds or flavor precursors with typical flavor."
+ },
+ {
+ "mechanism": "Core microbial succession drives fermentation.",
+ "evidence": "Core bacterial communities were Cyanobacteria, Pseudomonas, and Staphylococcus; the most metabolically active fungi were Aspergillus, Penicillium, and Inocybe."
+ },
+ {
+ "mechanism": "Specific culturable microorganisms degrade macromolecular substrates including protein, starch, lignin, and nicotine.",
+ "evidence": "Bacillus subtilis degraded all four substances; Pseudomonas fulva degraded protein, lignin, and nicotine; Stenotrophomonas rhizophila strongly degraded protein; Staphylococcus nepalensis degraded protein and nicotine; Alternaria alternata degraded nicotine most strongly and weakly degraded starch and lignin; Aspergillus cristatus weakly degraded starch and lignin."
+ },
+ {
+ "mechanism": "Amino acid, alkaloid, and flavonoid metabolisms are key pathways for characteristic flavor development.",
+ "evidence": "Differential metabolites before and after fermentation were significantly enriched in the synthesis and metabolism of various amino acids, nitrogen metabolism, biosynthesis of various alkaloids, carbon metabolism, and flavonoid biosynthesis."
+ },
+ {
+ "mechanism": "Microbial communities are significantly correlated with volatile flavor compounds.",
+ "evidence": "Co-occurrence and interaction analysis showed that seven bacteria and twelve fungi were strictly linearly positively or negatively correlated with72 and55 volatile compounds, respectively."
+ },
+ {
+ "mechanism": "Carbohydrate oxidation during fermentation releases energy and increases pile temperature.",
+ "evidence": "Starch, sugar, and pectin are oxidized and decomposed into glucose, further metabolized through glycolysis to CO2 and H2O with energy release, explaining why the temperature in the pile core can rise to45–55°C after stacking."
+ },
+ {
+ "mechanism": "Bacteria and fungi have distinct functional roles in flavor formation.",
+ "evidence": "Staphylococcus, Pseudomonas, and Cyanobacteria mainly participate in amino acid and alkaloid metabolism, triggering phenylalanine, tyrosine, and tryptophan biosynthesis, while Aspergillus, Penicillium, and Inocybe mainly degrade polysaccharides to form carbon skeletons, promoting flavonoid transformation such as increased quercetin and decreased isoguercitrin and rutin."
+ },
+ {
+ "mechanism": "Inocybe was newly identified as an abundant fermentative fungal genus associated with terpenoid and aromatic metabolism.",
+ "evidence": "Inocybe had a large relative abundance during CTL fermentation and was closely related to the metabolism of terpenoids and aromatics, though its exact functional role requires further verification."
+ }
+ ],
+ "key_findings": [
+ "Core bacterial communities during cigar tobacco leaf fermentation were Cyanobacteria, Pseudomonas, and Staphylococcus; core fungi were Aspergillus, Penicillium, and Inocybe.",
+ "A total of531 primary metabolites,560 secondary metabolites, and14 other metabolites were detected, along with613 volatile metabolites.",
+ "Twelve common non-volatile differential metabolites and three common volatile differential metabolites were shared across all four producing regions before and after fermentation.",
+ "Menatetrenone, solanidine, γ-glutamylphenylalanine, carotol, and phenol,4-(1,1,3,3-tetramethylbutyl) were significantly different before and after fermentation.",
+ "Cigar tobacco leaf fermentation is a microbially mediated carbon–nitrogen coupling metabolism.",
+ "Synthesis and degradation of amino acids, alkaloids, and flavonoids are key metabolic pathways for characteristic flavor development.",
+ "Specific culturable microorganisms, including Bacillus subtilis, Pseudomonas fulva, Staphylococcus nepalensis, Alternaria alternata, and Aspergillus cristatus, can degrade carbon and nitrogen compounds such as protein, starch, lignin, and nicotine.",
+ "Seven bacteria and twelve fungi showed strict linear correlations with72 and55 volatile compounds, respectively.",
+ "Inocybe was reported for the first time as a highly abundant fungal genus in cigar tobacco fermentation, closely related to terpenoid and aromatic metabolism.",
+ "Carbon source consumption is significantly higher than nitrogen source consumption during fermentation, and controlling the carbon–nitrogen balance is important for fermentation quality."
+ ],
+ "relevance_to_research_topic": "This paper directly supports the design of differential and multi-omics association analyses for tobacco flavor fermentation research. It demonstrates an integrated microbiology and metabolomics approach to characterize microbial succession, metabolite dynamics, and microbe–volatile flavor correlations across different geographic origins. The analytical strategy—comparing pre- and post-fermentation samples, screening common differential metabolites, performing Spearman correlations between core microbes and volatile compounds, and constructing carbon–nitrogen coupled metabolic pathways—provides a practical framework for interpreting the user's multi-omics dataset comparing Yunnan and Henan tobacco fermentation samples. It also highlights core functional microorganisms and flavor-related metabolic pathways that can be used as targeted candidates in the user's differential and integrative analyses."
+}
