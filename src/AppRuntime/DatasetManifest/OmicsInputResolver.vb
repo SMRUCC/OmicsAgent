@@ -1,4 +1,5 @@
-Namespace AppRuntime
+
+Namespace AppRuntime.Manifest
 
     ''' <summary>
     ''' 组学数据输入适配层。
