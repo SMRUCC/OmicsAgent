@@ -146,7 +146,20 @@ Omics Data Analysis LLM Agent [OmicsWorks]
 
     <ExportAPI("/agent")>
     <Description("Run omics data analysis LLM agent workflow.")>
-    <Usage("")>
+    <Usage("/agent --research=research.txt --expression=data.csv --annotation=anno.csv --sampleinfo=sample.csv [--dataset <dataset manifest json, default=null>]
+            [
+                --reference <pdf reference folder, default=null>
+                --workspace <workspace directory, default=./>
+                --config <runtime config, default=./config.ini>
+                --skip-literature
+                --skip-kb 
+                --module <module index, default=1,2,3,4,5,6,7,8,9,10,11,12>
+                --custom-modules <folder path for custom module json files, default=null>
+                --report-format <report file format, pdf|docx|both, default=pdf>
+                --debug-cache
+                --make-report
+            ]")>
+    <Argument("--dataset", True, CLITypes.File, Description:="The --dataset parameter is mutually exclusive with the --expression, --annotation, and --sampleinfo parameters. The dataset for analysis must be specified either by using --dataset alone, or by providing the combination of --expression, --annotation, and --sampleinfo. Specifying both sets of parameters simultaneously will cause the program to throw an error.")>
     Public Async Function AgentMode(args As CommandLine) As Task(Of Integer)
         ' 解析命令行参数
         Dim parsed As Opts = args.CreateOpts(Of Opts)
