@@ -1,16 +1,19 @@
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine
+Imports Microsoft.VisualBasic.CommandLine.InteropService.SharedORM
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports OmicsAgent.AppRuntime
 
 ' ============================================================================
 ' 主程序入口 - 命令行参数解析与主流程编排
 ' ============================================================================
 
-Module Program
+<CLI> Module Program
 
     ''' <summary>命令行参数帮助文本</summary>
     Friend Const HelpText As String = "
-Omics Data Analysis LLM Agent
-============================
+Omics Data Analysis LLM Agent [OmicsWorks]
+==========================================
 基于 Ollama 大语言模型的组学数据分析 Agent
 
 用法:
@@ -44,15 +47,17 @@ Omics Data Analysis LLM Agent
   --custom-modules=<path> 自定义分析模块 JSON 文件夹路径（默认为程序根目录下的 custom_modules/ 文件夹）
   --report-format=<fmt>   报告输出格式：pdf（默认）/ docx / both，优先级高于配置文件中的 [report] format
  
-  --check_r               [调试用] 用于测试R脚本调用
-  --debug-cache           [调试用] 程序会跳过已经存在result.json结果文件的模块的执行
-  --make-report           [调试用] 用于调试程序的报告模块 
+  --debug-cache           [agent调试用] 程序会跳过已经存在result.json结果文件的模块的执行
+  --make-report           [agent调试用] 用于调试程序的报告模块 
+
+  --check                 [调试用] 用于测试R脚本调用
 
   --help,-h               显示帮助信息
 
 示例:
-  research --research=research.txt --expression=data.csv --annotation=anno.csv --sampleinfo=sample.csv --reference=refs/
-  research --research=research.txt --dataset=input.json --reference=refs/ -w=./workspace/
+  research /agent --research=research.txt --expression=data.csv --annotation=anno.csv --sampleinfo=sample.csv --reference=refs/
+  research /agent --research=research.txt --dataset=input.json --reference=refs/ -w=./workspace/
+  research --help
 
 表格格式：
   
@@ -88,50 +93,76 @@ Omics Data Analysis LLM Agent
 
   * JSON 内的相对路径均相对该 JSON 文件所在目录解析。
   * sample_alignment 用于把不同组学的样本 ID 对齐到同一生物学个体，支持三种写法：
-      1) 省略该节点     —— 认为各组学样本 ID 已一致，按同名直接一一匹配；
+      1) <missing>      —— 在默认缺省的情况下认为各组学样本 ID 已一致，按同名直接一一匹配；
       2) mapping_file   —— 指定一张宽表 CSV，首列为 subject_id，其余列名与各 dataset 的 id 对应：
                              subject_id,rna,metab
                              P001,S1_R,M_001
                              P002,S2_R,M_002
       3) subject_map    —— 以内联 JSON 对象数组直接给出映射：
-                             ""subject_map"": [
-                               { ""subject_id"": ""P001"", ""rna"": ""S1_R"", ""metab"": ""M_001"" }
-                             ]
+
+         ""subject_map"": [
+             { ""subject_id"": ""P001"", ""rna"": ""S1_R"", ""metab"": ""M_001"" }
+         ]
+
   * 对齐后，程序会把各组学矩阵的样本列名统一替换为 subject_id、仅保留各组学共有的个体，
     并将新矩阵写入工作区的 aligned/ 目录，后续所有分析模块均引用这些对齐后的文件。
-
 "
 
     ''' <summary>程序主入口</summary>
     Public Function Main(args As String()) As Integer
-        ' 解析命令行参数
-        Dim parsed As Opts = CommandLine.BuildFromArguments(args, NoSubCommand:=True).CreateOpts(Of Opts)
+        Return GetType(Program).RunCLI(App.CommandLine, executeEmpty:=AddressOf Help)
+    End Function
 
-        If parsed.help Then
-            Console.WriteLine(HelpText)
-            Return 0
-        ElseIf parsed.check_interop Then
-            Dim interop As New ShellTool(parsed.LoadConfig, workspaceRoot:=App.SysTemp)
-            Dim test As String = $"{AgentConfig.RScriptsDir}/__agent_check.R"
-            Dim stdout As String = interop.run_rscript(test)
+    <ExportAPI("--check")>
+    <Description("For debugging purposes, used to check if the GNU R script runtime environment is available.")>
+    <Usage("--check --R=""C:\Program Files\R\R-4.5.0\bin\x64\Rscript.exe""")>
+    Public Function CheckInterop(R As String, args As CommandLine) As Integer
+        Dim assert As String = "Hello World!"
+        Dim rscript As String = $"message('{assert}');"
+        Dim testfile As String = TempFileSystem.GetAppSysTempFile(".R")
+        Dim interop As New ShellTool(New AgentConfig With {.Tools = New ToolConfig With {.RscriptPath = R}}, workspaceRoot:=App.SysTemp)
+        Dim stdout As String = interop.run_rscript(testfile)
 
-            Call Console.WriteLine("Rscript output:")
-            Call Console.WriteLine(stdout)
+        Call rscript.SaveTo(testfile)
 
-            Return 0
+        Call Console.WriteLine("Rscript output:")
+        Call Console.WriteLine(stdout)
+
+        If assert = stdout Then
+            Call Console.WriteLine("Check success!")
+        Else
+            Call Console.WriteLine("Check failure!")
         End If
+
+        Return 0
+    End Function
+
+    <ExportAPI("/report")>
+    <Description("")>
+    <Usage("")>
+    Public Async Function Reporter(args As CommandLine) As Task(Of Integer)
+
+    End Function
+
+    <ExportAPI("/agent")>
+    <Description("Run omics data analysis LLM agent workflow.")>
+    <Usage("")>
+    Public Async Function AgentMode(args As CommandLine) As Task(Of Integer)
+        ' 解析命令行参数
+        Dim parsed As Opts = args.CreateOpts(Of Opts)
 
         ' 验证必需参数
         If Not parsed.ValidateRequiredArgs() Then
             Return 1
+        Else
+            Return Await Workflow.Run(parsed)
         End If
+    End Function
 
-        Try
-            Return Workflow.Run(parsed).GetAwaiter.GetResult
-        Catch ex As Exception
-            Console.Error.WriteLine($"FATAL ERROR: {ex.Message}")
-            Console.Error.WriteLine(ex.StackTrace)
-            Return -1
-        End Try
+    <ExportAPI("--help")>
+    <Description("Show help information about this commandline omics analysis LLM agent tool.")>
+    Public Function Help() As Integer
+        Console.WriteLine(HelpText)
+        Return 0
     End Function
 End Module
