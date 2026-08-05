@@ -153,27 +153,28 @@ Namespace AppRuntime
             LogInfo("----- 检查大语言模型服务可用性 -----")
 
             ' 取得 LLMClient：优先使用注入的工厂，未注入时基于配置直接构造
-            Dim client As LLMClient = _config.CreateLLMClient("check_llm", App.AppSystemTemp)
-
-            Try
+            Using client As LLMClient = _config.CreateLLMClient("check_llm", App.AppSystemTemp)
                 LogInfo($"  正在连接：{_config.LLM.LLMServiceUrl}")
                 LogInfo($"  目标模型：{_config.LLM.LLMModelName}")
-                Dim info As ModelInfo = Await client.GetModelInformation(timeout:=15, verbose:=True)
 
-                If info Is Nothing OrElse String.IsNullOrEmpty(info.Id) Then
-                    LogInfo("  [X] LLM 服务返回了空的模型信息（ModelInfo 为空）")
+                Try
+                    Dim info As ModelInfo = Await client.GetModelInformation(timeout:=15, verbose:=True)
+
+                    If info Is Nothing OrElse String.IsNullOrEmpty(info.Id) Then
+                        LogInfo("  [X] LLM 服务返回了空的模型信息（ModelInfo 为空）")
+                        Return False
+                    End If
+
+                    LogInfo($"  [OK] LLM 服务可用，模型：{info.Id}（后端：{info.Provider}）")
+                    Return True
+                Catch ex As Exception
+                    LogInfo($"  [X] 无法连接到 LLM 服务或获取模型信息失败：{ex.Message}")
+                    LogInfo("  请确认 LLM 服务已启动，并检查 INI 配置文件中的 url / apikey / model 字段。")
                     Return False
-                End If
+                Finally
 
-                LogInfo($"  [OK] LLM 服务可用，模型：{info.Id}（后端：{info.Provider}）")
-                Return True
-            Catch ex As Exception
-                LogInfo($"  [X] 无法连接到 LLM 服务或获取模型信息失败：{ex.Message}")
-                LogInfo("  请确认 LLM 服务已启动，并检查 INI 配置文件中的 url / apikey / model 字段。")
-                Return False
-            Finally
-                If client IsNot Nothing Then client.Dispose()
-            End Try
+                End Try
+            End Using
         End Function
 
         Private Sub LogInfo(msg As String)

@@ -2,7 +2,7 @@
   "profiles": {
     "OmicsAgent": {
       "commandName": "Project",
-      "commandLineArgs": "--research=\"G:\\OmicsWorks\\extdata\\Tobacco-fermentation\\research.txt\" --dataset=\"G:\\OmicsWorks\\extdata\\Tobacco-fermentation\\dataset.json\" --reference=\"G:\\OmicsWorks\\extdata\\Tobacco-fermentation\\kb\" -w=G:\\OmicsWorks\\test\\multiple_omics\\demo --config \"G:\\OmicsWorks\\test\\metabolism\\config.ini\"",
+      "commandLineArgs": "/report --research=\"F:\\datapool\\20260715-spatial\\analysis_2\\limma\\research.txt\" --dirs=\"F:\\datapool\\20260715-spatial\\analysis_2\\limma\\dirs.txt\" --workspace \"F:\\datapool\\20260715-spatial\\analysis_2\\limma\\result\" --config \"F:\\datapool\\config.ini\"  --report-format docx",
       "workingDirectory": "G:\\OmicsWorks\\test\\multiple_omics\\demo"
     }
   }
