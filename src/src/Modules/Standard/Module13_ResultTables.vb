@@ -141,7 +141,7 @@ Public Class ResultTablesModule : Inherits AnalysisModuleBase
         Dim xlsxFileName = GetModuleXlsxFileName(mr)
 
         ' 2. 第一次 LLM 调用：生成该模块每张 sheet 第一行的英文注释说明，保存为 JSON
-        Dim descJson = Await GenerateAnnotationsForModuleAsync(mr, csvFiles, kbContent, cancellationToken)
+        Dim descJson As SheetAnnotations = Await GenerateAnnotationsForModuleAsync(mr, csvFiles, kbContent, cancellationToken)
         Dim descPath = Path.Combine(mr.OutputDir, "table_descriptions.json")
         Call descJson.ToString.SaveTo(descPath)
         LogInfo($"模块 {mr.ModuleIndex} 注释 JSON 已保存：{descPath}")
