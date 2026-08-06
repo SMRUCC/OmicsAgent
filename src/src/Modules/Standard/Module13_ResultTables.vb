@@ -15,17 +15,14 @@ Imports OmicsAgent.AppRuntime
 ''' 2. 列举当前循环模块中位于 ModuleResult.Workdir 下的 csv 表格文件；
 ''' 3. 提示 LLM 结合当前模块的 ModuleResult.Goal、ModuleResult.Conclusion 与 kb.json
 '''    知识库内容，为每张 sheet 第一行编写英文注释（讲解分析结果内容 + 每一列含义）；
-''' 4. 提示 LLM 编写基于 openxlsx 的 R 脚本，按规定的样式读取 CSV 并生成 xlsx 结果文件；
-''' 5. 由 ShellTool 执行该 R 脚本，所生成的 xlsx 保存到当前循环模块的 OutputDir。
+''' 4. 调用 <see cref="XlsxReportBuilder.BuildWorkbook"/>，在 VB.NET 端直接读取 CSV 并
+'''    写出带样式的 xlsx 结果文件，保存到当前循环模块的 OutputDir。
 '''
-''' xlsx 表格样式要求（写入 LLM 提示词）：
-''' - 全局采用 Cambria Math 11 号字体
-''' - 表格缩放 90%
-''' - 背景色为默认的白色
-''' - 第一列（id 列）：浅灰色背景色，斜体，黑色字体颜色
-''' - 第一行（注释说明文本行）：默认背景色，草绿色字体颜色
-''' - 第二行（列标题行）：深蓝色背景色，白色字体颜色，加粗字体
-''' - 第一列 + 第二行进行 freeze panes 冻结
+''' xlsx 表格样式由 <see cref="ReportHelper.WriteReportSheet"/> 统一实现：
+''' - 第 1 行（注释说明文本行）：白底、草绿色斜体字，跨列合并、左对齐
+''' - 第 2 行（列标题行）：深蓝色背景，白色加粗字体
+''' - 第 3 行起（正文）：Cambria 11 号字体，首列为深灰色斜体行标题
+''' - 冻结窗格锚定于 B2
 ''' - 所有文本信息（文件名、注释、标题、列标题）均为英文
 ''' </summary>
 Public Class ResultTablesModule : Inherits AnalysisModuleBase
@@ -55,13 +52,12 @@ Public Class ResultTablesModule : Inherits AnalysisModuleBase
 2. 对每个 ModuleResult，递归列出 ModuleResult.Workdir 下的所有 CSV 文件
 3. 跳过未产生 CSV 文件的模块
 4. 对每个模块生成一个 XLSX 文件，每个 CSV 对应一个工作表：
-   - 第 1 行：描述/注释文本（草绿色字体），使用英文
+   - 第 1 行：描述/注释文本（草绿色斜体字），使用英文
    - 第 2 行：列标题（深蓝色背景，白色加粗字体）
-   - 第 3 行起：数据
-   - 第 1 列：浅灰色背景，斜体，黑色字体
-   - 在 B3 处冻结窗格
+   - 第 3 行起：数据，首列为深灰色斜体行标题
+   - 在 B2 处冻结窗格
 5. 每个工作表第 1 行的注释文本须由 LLM 结合当前模块的 Goal、Conclusion 和 kb.json 知识库内容生成
-6. XLSX 文件由 LLM 编写的 R 脚本（基于 openxlsx）生成，保存到当前模块的 ModuleResult.OutputDir"
+6. XLSX 文件在 VB.NET 端直接读取 CSV 生成（无需编写脚本），保存到当前模块的 ModuleResult.OutputDir"
     End Function
 
     Protected Overrides Function GetConclusionItems() As String
