@@ -205,8 +205,8 @@ compile_csv_to_xlsx <- function(csv_paths, output_xlsx, json_path) {
     setRowHeights(wb, sheet_name, rows = 2, heights = 22)
 
     # Freeze panes and zoom
-    freezePane(wb, sheet_name, firstRow = 3, firstCol = 2)
-    setZoom(wb, sheet_name, zoom = 90)
+    freezePane(wb, sheet_name, firstRow = TRUE, firstCol = TRUE)
+    # setZoom(wb, sheet_name, zoom = 90)
 
     processed <- processed + 1L
     cat(sprintf("  -> Sheet '%s' completed.\n", sheet_name))
