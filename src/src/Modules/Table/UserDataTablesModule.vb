@@ -187,16 +187,15 @@ Public Class UserDataTablesModule : Inherits AnalysisModuleBase
         }
 
         ' 4. 第一次 LLM 调用：结合研究主题和知识库，生成该组数据的分析目标（Goal）和每张 sheet 的英文注释 JSON
+        Dim descPath = Path.Combine(outputDir, "table_descriptions.json")
         Dim goalJson As SheetAnnotations = Await GenerateGoalAndAnnotationsForGroupAsync(folderPath, csvFiles, xlsxFileName, researchTopic, kbContent, cancellationToken)
-
         ' 提取 Goal
         Dim goal As String = ExtractGoalFromJson(goalJson, folderName)
         moduleResult.Goal = goal
 
         ' 保存完整注释 JSON（含 goal 和 sheets）
-        Dim descPath = Path.Combine(outputDir, "table_descriptions.json")
         Call goalJson.ToString.SaveTo(descPath)
-        LogInfo($"组 {groupIndex} 目标与注释 JSON 已保存：{descPath}")
+        Call LogInfo($"组 {groupIndex} 目标与注释 JSON 已保存：{descPath}")
 
         ' 5. 在 VB.NET 端直接读取 CSV 并生成带样式的 xlsx（不再走 LLM + R 脚本路线）
         Dim xlsxPath As String = Path.Combine(outputDir, xlsxFileName)
