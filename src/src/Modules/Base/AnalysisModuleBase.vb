@@ -575,8 +575,8 @@ Public MustInherit Class AnalysisModuleBase
                $"依次命名为：{examples}。组学标识必须与上方数据集清单中的方括号内 id 完全一致。"
     End Function
 
-    Protected Sub RegisterFileTools(llm As LLMClient, allowWriteFile As Boolean)
-        Dim fileTool As New FileTool(_context.WorkspaceDir, _logger)
+    Protected Sub RegisterFileTools(llm As LLMClient, allowWriteFile As Boolean, Optional wsDir As String = Nothing)
+        Dim fileTool As New FileTool(If(wsDir, _context.WorkspaceDir), _logger)
 
         ' 注册写入类文件操作工具（受 allowWriteFile 控制）
         If allowWriteFile Then
@@ -614,10 +614,10 @@ Public MustInherit Class AnalysisModuleBase
     ''' <param name="allowWriteFile">
     ''' 是否允许LLM agent写文件
     ''' </param>
-    Protected Sub RegisterTools(llm As LLMClient, allowWriteFile As Boolean)
+    Protected Sub RegisterTools(llm As LLMClient, allowWriteFile As Boolean, Optional fileWsDir As String = Nothing)
         Dim shellTool As New ShellTool(_config, _context.WorkspaceDir, _logger)
 
-        Call RegisterFileTools(llm, allowWriteFile)
+        Call RegisterFileTools(llm, allowWriteFile, wsDir:=fileWsDir)
 
         ' 注册命令行执行工具
         llm.AddFunction(shellTool, "run_rscript")

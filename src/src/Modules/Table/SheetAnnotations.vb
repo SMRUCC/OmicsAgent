@@ -1,0 +1,34 @@
+﻿Imports Microsoft.VisualBasic.MIME.application.json
+Imports Microsoft.VisualBasic.MIME.application.json.Javascript
+Imports Microsoft.VisualBasic.MIME.application.json.LenientJson
+
+Public Class SheetAnnotations
+
+    Public Property goal As String
+    Public Property folder_name As String
+    Public Property xlsx_file As String
+    Public Property sheets As Sheet()
+
+    Public Class Sheet
+
+        Public Property csv As String
+        Public Property sheet_name As String
+        Public Property annotation As String
+
+    End Class
+
+    Public Overrides Function ToString() As String
+        Return Me.GetJson
+    End Function
+
+    Public Shared Function ParseJSON(jsonstr As String) As SheetAnnotations
+        Dim json As JsonElement = LenientJsonParser.ParseJSON(jsonstr)
+
+        If Not TypeOf json Is JsonObject Then
+            Return Nothing
+        Else
+            Return json.CreateObject(Of SheetAnnotations)(decodeMetachar:=False)
+        End If
+    End Function
+
+End Class

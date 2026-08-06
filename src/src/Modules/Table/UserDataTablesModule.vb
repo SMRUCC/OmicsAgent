@@ -191,7 +191,7 @@ Public Class UserDataTablesModule : Inherits AnalysisModuleBase
         }
 
         ' 4. 第一次 LLM 调用：结合研究主题和知识库，生成该组数据的分析目标（Goal）和每张 sheet 的英文注释 JSON
-        Dim goalJson = Await GenerateGoalAndAnnotationsForGroupAsync(folderName, csvFiles, researchTopic, kbContent, cancellationToken)
+        Dim goalJson = Await GenerateGoalAndAnnotationsForGroupAsync(folderPath, csvFiles, xlsxFileName, researchTopic, kbContent, cancellationToken)
 
         ' 提取 Goal
         Dim goal As String = ExtractGoalFromJson(goalJson, folderName)
@@ -297,13 +297,13 @@ Public Class UserDataTablesModule : Inherits AnalysisModuleBase
     ''' 生成该组数据的分析目标（Goal）和每张 sheet 的英文注释说明。
     ''' 返回包含 goal 和 sheets 字段的 JSON 字符串。
     ''' </summary>
-    Private Async Function GenerateGoalAndAnnotationsForGroupAsync(folderName As String, csvFiles As List(Of String), researchTopic As String, kbContent As String, cancellationToken As CancellationToken) As Task(Of String)
+    Private Async Function GenerateGoalAndAnnotationsForGroupAsync(folderName As String, csvFiles As List(Of String), xlsxfile$, researchTopic As String, kbContent As String, cancellationToken As CancellationToken) As Task(Of SheetAnnotations)
         ' 构建骨架 JSON
         Dim sk As New Text.StringBuilder()
         sk.AppendLine("{")
         sk.AppendLine($"  ""goal"": """",")
-        sk.AppendLine($"  ""folder_name"": ""{folderName}"",")
-        sk.AppendLine($"  ""xlsx_file"": ""user_data_{folderName.NormalizePathString(alphabetOnly:=True).Replace(" ", "_").ToLower}.xlsx"",")
+        sk.AppendLine($"  ""folder_name"": ""{folderName.BaseName}"",")
+        sk.AppendLine($"  ""xlsx_file"": ""{xlsxfile}"",")
         sk.AppendLine("  ""sheets"": [")
         Dim firstSheet = True
         For Each csv In csvFiles
@@ -330,7 +330,7 @@ Public Class UserDataTablesModule : Inherits AnalysisModuleBase
         Next
 
         Using llm As LLMClient = _config.CreateLLMClient(FolderBaseName & "-goal_comment_group", _context.TmpDir)
-            Call RegisterTools(llm, True)
+            Call RegisterFileTools(llm, allowWriteFile:=False, wsDir:=folderName)
 
             Dim prompt As String = <root><![CDATA[
 你是一位生物信息学数据分析师。你的任务有两个：
