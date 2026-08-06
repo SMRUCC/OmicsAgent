@@ -337,7 +337,8 @@ Public Class UserDataTablesModule : Inherits AnalysisModuleBase
             Dim prompt As String = <root><![CDATA[
 你是一位生物信息学数据分析师。你的任务有两个：
 1. 为用户提供的一组 CSV 结果数据推断分析目标（Goal）
-2. 为每个工作表的第一行编写英文注释文本
+2. 假若文件夹中存在R语言脚本，可以根据R语言脚本的代码理解用户的分析目的
+3. 为每个工作表的第一行编写英文注释文本
 
 # 用户研究主题
 {RESEARCH_TOPIC}
@@ -424,7 +425,7 @@ Public Class UserDataTablesModule : Inherits AnalysisModuleBase
         Next
 
         Using llm As LLMClient = _config.CreateLLMClient(FolderBaseName & "-conclusion_group", _context.TmpDir)
-            Call RegisterTools(llm, False)
+            Call RegisterFileTools(llm, allowWriteFile:=False, wsDir:=folderName)
 
             Dim prompt As String = <root><![CDATA[
 你是一位生物医学研究专家。请基于以下用户自行分析得到的结果数据，撰写中文阶段性总结。
@@ -442,11 +443,12 @@ Public Class UserDataTablesModule : Inherits AnalysisModuleBase
 {CSV_OVERVIEW}
 
 # 你的任务
-使用 list_tree、peek_csv 等工具查看 CSV 文件的实际内容，然后撰写中文总结，涵盖以下内容：
+使用 list_tree、peek_csv、read_file 等工具查看R脚本代码或者 CSV 文件的实际内容，然后撰写中文总结，涵盖以下内容：
 1. 该组数据包含了哪些类型的结果数据
 2. 数据的主要特征和关键发现（如有）
 3. 该组数据与用户研究主题的关联性
 4. 从该组数据可以得出哪些生物学见解
+5. 必要时可以根据用户编写的数据分析用的R脚本的代码来理解用户的研究工作
 
 不要写入任何文件，仅以 Markdown 格式生成总结文本并返回。总结应为 400-800 字中文。内容须具体严谨，不得编造数据。
 ]]></root>.Value
