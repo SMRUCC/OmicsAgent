@@ -327,6 +327,7 @@ function loadFromText(text) {
 
 /* ===================== 复制 / 下载 ===================== */
 async function copyJson() {
+  generateJson();
   const text = $("#jsonOut").textContent;
   if (!text || text.startsWith("点击")) {
     showBanner("请先生成 JSON 再复制。", "err");

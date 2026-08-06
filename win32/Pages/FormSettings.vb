@@ -19,7 +19,7 @@ Public Class FormSettings
         Await WebView21.ExecuteScriptAsync($"loadFromText({Workbench.config.ToJSON.GetJson})")
     End Sub
 
-    Private Async Sub FormSettings_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+    Private Async Sub FormSettings_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         Dim json As String = Await WebView21.ExecuteScriptAsync("generateJson()")
         json = json.LoadJSON(Of String)
         Dim config As AppConfig = AppConfig.FromJSON(json)
