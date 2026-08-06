@@ -48,8 +48,6 @@ Namespace Settings
 
             If config.LLM Is Nothing Then config.LLM = New LLMConfig
 
-            Call config.GetJson.SaveTo("Z:/config.json")
-
             Return config
         End Function
 
