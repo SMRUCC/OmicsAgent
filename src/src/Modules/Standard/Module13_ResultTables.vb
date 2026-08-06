@@ -93,7 +93,7 @@ Public Class ResultTablesModule : Inherits AnalysisModuleBase
     ''' 为每个模块独立生成注释 JSON 与 xlsx 文件。
     ''' </summary>
     Protected Overrides Async Function GenerateAndRunScriptAsync(llm As LLMClient, plan As ModulePlan, [step] As [Step], cancellationToken As CancellationToken) As Task
-        LogInfo("Compiling result tables into XLSX files via LLM-generated R script (per-module iteration)...")
+        LogInfo("Compiling result tables into XLSX files (per-module iteration)...")
 
         If _context.ModuleResults.IsNullOrEmpty Then
             LogInfo("No module results available. Skipping XLSX generation.")
@@ -108,7 +108,7 @@ Public Class ResultTablesModule : Inherits AnalysisModuleBase
             If cancellationToken.IsCancellationRequested Then Exit For
 
             Try
-                Await ProcessModuleAsync(mr, kbContent, plan, [step], cancellationToken)
+                Await ProcessModuleAsync(mr, kbContent, cancellationToken)
             Catch ex As Exception
                 LogInfo($"[警告] 模块 {mr.ModuleIndex} ({mr.ModuleName}) 的 xlsx 生成失败：{ex.Message}")
                 LogInfo(ex.StackTrace)
@@ -118,8 +118,8 @@ Public Class ResultTablesModule : Inherits AnalysisModuleBase
         Next
     End Function
 
-    ''' <summary>处理单个模块：收集 CSV → 生成注释 → 生成并执行 R 脚本</summary>
-    Private Async Function ProcessModuleAsync(mr As ModuleResult, kbContent As String, plan As ModulePlan, [step] As [Step], cancellationToken As CancellationToken) As Task
+    ''' <summary>处理单个模块：收集 CSV → 生成注释 → 直接在 VB.NET 端生成 xlsx</summary>
+    Private Async Function ProcessModuleAsync(mr As ModuleResult, kbContent As String, cancellationToken As CancellationToken) As Task
         ' 1. 列举当前模块 Workdir 下的所有 CSV 文件
         Dim csvFiles = CollectModuleCsvFiles(mr.Workdir)
 
@@ -333,91 +333,4 @@ Public Class ResultTablesModule : Inherits AnalysisModuleBase
         Return sk
     End Function
 
-    ''' <summary>
-    ''' 构建第二次 LLM 调用的提示词：要求 LLM 编写基于 openxlsx 的 R 脚本，
-    ''' 按规定的样式读取 CSV 与注释 JSON，生成单个 xlsx 结果文件并保存到模块 OutputDir。
-    ''' </summary>
-    Private Function BuildRScriptPrompt(descPath As String, outputDir As String, xlsxFileName As String, mr As ModuleResult, plan As ModulePlan, [step] As [Step]) As String
-        Dim prompt As String = <root><![CDATA[
-你是一位生物信息学 R 脚本专家。请编写一个完整的 R 脚本，使用 openxlsx 包将某个分析模块的 CSV 结果表编译为一个结构化、带样式的 XLSX 文件。
-
-# 输入
-- JSON 文件路径: {DESC_PATH}
-  描述了要创建的模块 XLSX 文件、包含的 CSV 文件（工作表），以及每个工作表第一行的英文注释文本。
-- XLSX 文件输出目录: {OUT_DIR}
-- XLSX 文件名: {XLSX_FILE}
-
-# 计划执行上下文
-- 模块: 结果表格整理（正在处理模块 {MODULE_INDEX}: {MODULE_NAME}）
-- 计划目标: {PLAN_GOAL}
-- 当前执行步骤: {STEP}
-- 所有脚本和生成的文件放置在指定临时工作区目录: {WORKSPACE}
-
-# JSON 结构 (table_descriptions.json)
-{
-  'module_index': <整数>,
-  'module_name': '<模块名称>',
-  'xlsx_file': '<xlsx文件名>',
-  'output_dir': '<绝对输出目录路径>',
-  'sheets': [
-    { 'csv': '<CSV绝对路径>', 'sheet_name': '<英文工作表名>', 'annotation': '<第1行英文注释文本>' }
-  ]
-}
-
-# 你的任务
-编写一个 R 脚本，完成以下操作：
-1. 确保 openxlsx 包可用（使用: if (!require(openxlsx)) install.packages('openxlsx'); library(openxlsx)）。同样确保 jsonlite 可用。
-2. 使用 jsonlite::fromJSON('{DESC_PATH}', simplifyVector = TRUE) 读取 JSON。
-3. 创建新工作簿: wb <- createWorkbook()
-4. 对 desc$sheets 中的每个工作表条目：
-   a. 读取 CSV: df <- read.csv(sh$csv, stringsAsFactors = FALSE, check.names = FALSE)
-   b. 添加工作表，使用合法的英文工作表名（<=31 字符，不含 : \ / ? * [ ] 字符）: addWorksheet(wb, sheetName = sh$sheet_name)
-   c. 将注释文本写入 A1 单元格（第 1 行）: writeData(wb, sh$sheet_name, x = sh$annotation, startRow = 1, startCol = 1, colNames = FALSE, rowNames = FALSE)
-   d. 将 CSV 列标题写入第 2 行: writeData(wb, sh$sheet_name, x = as.data.frame(t(colnames(df))), startRow = 2, startCol = 1, colNames = FALSE, rowNames = FALSE)
-   e. 将 CSV 数据（不含表头）从第 3 行第 1 列开始写入: writeData(wb, sh$sheet_name, x = df, startRow = 3, startCol = 1, colNames = FALSE, rowNames = FALSE)
-5. 定义并应用以下样式（全部使用字体 'Cambria Math'，字号 11）：
-   - defaultStyle: Cambria Math 11，默认白色背景。首先应用到整个已用范围。
-   - annotStyle: 默认背景，草绿色字体 '#228B22'。应用到第 1 行（所有已用列）。
-   - headerStyle: 深蓝色背景 '#1F4E79'，白色字体 '#FFFFFF'，加粗 textDecoration = 'bold'。应用到第 2 行（所有已用列）。
-   - idStyle: 浅灰色背景 '#D9D9D9'，斜体 textDecoration = 'italic'，黑色字体 '#000000'。应用到第 1 列（A 列），第 3 行至最后一数据行。
-   先应用 defaultStyle，再叠加 annotStyle / headerStyle / idStyle，使特定样式优先生效。
-6. 冻结第 1 列和前两行（左上角单元格 = B3）。在 openxlsx 中: freezePane(wb, sh$sheet_name, firstRow = 3, firstCol = 2)
-7. 设置工作表缩放为 90%: setZoom(wb, sh$sheet_name, zoom = 90)
-8. 保存工作簿: saveWorkbook(wb, file.path('{OUT_DIR}', '{XLSX_FILE}'), overwrite = TRUE)
-9. 输出进度信息，并优雅处理缺失文件（跳过并警告，不要停止）。
-10. 重要：所有文本（XLSX 文件名、工作表名、注释、列标题）必须使用英文。
-
-# 参考模板（根据需要调整）
-读取并修改这个R脚本：{R_TEMPLATE}/xlsxTable.R
-
-# 重要注意事项
-- 使用绝对路径。
-- 确保数值列保持数值类型（不要作为文本处理）。
-- 脚本须可端到端运行，无需额外输入。
-
-# 执行说明
-- 使用 write_file 工具将 R 脚本写入工作区文件（如 'module_13_result_tables_{MODULE_INDEX}.R'）
-- 使用 run_rscript 工具执行该 R 脚本
-- 验证 XLSX 文件已在输出目录中成功生成
-]]></root>.Value
-
-        prompt = prompt.Replace("{DESC_PATH}", descPath) _
-                       .Replace("{OUT_DIR}", outputDir) _
-                       .Replace("{XLSX_FILE}", xlsxFileName) _
-                       .Replace("{MODULE_INDEX}", mr.ModuleIndex.ToString()) _
-                       .Replace("{MODULE_NAME}", mr.ModuleName) _
-                       .Replace("{PLAN_GOAL}", plan.goal) _
-                       .Replace("{STEP}", JsonContract.GetJson([step])) _
-                       .Replace("{WORKSPACE}", Workspace.GetDirectoryFullPath) _
-                       .Replace("{R_TEMPLATE}", AgentConfig.RScriptsDir)
-        Return prompt
-    End Function
-
-    Public Class TableAnnotation
-
-        Public Property csv As String
-        Public Property sheet_name As String
-        Public Property annotation As String
-
-    End Class
 End Class
