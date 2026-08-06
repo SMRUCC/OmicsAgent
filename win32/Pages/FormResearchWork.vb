@@ -7,10 +7,13 @@ Public Class FormResearchWork
 
     Shared ReadOnly btnOpenKb As RibbonEventBinding
     Shared ReadOnly btnDataset As RibbonEventBinding
+    Shared ReadOnly btnRun As RibbonEventBinding
 
     Shared Sub New()
         btnOpenKb = New RibbonEventBinding(Ribbon.ButtonOpenKb)
         btnDataset = New RibbonEventBinding(Ribbon.ButtonDataset)
+
+        btnRun = New RibbonEventBinding(Ribbon.ButtonStart)
     End Sub
 
     Public ReadOnly Property port As Integer
@@ -26,6 +29,7 @@ Public Class FormResearchWork
     Public Property Workspace As String
 
     Dim WithEvents http As HttpServices
+    Dim WithEvents agentContainer As FormOmicsAgent
 
     Private Sub OpenKBPage()
         Call RibbonMenu.OpenKbPage(dir:=$"{Workspace}/research_kb/", Me)
@@ -35,11 +39,20 @@ Public Class FormResearchWork
         Call CommonRuntime.ShowDocument(New FormDataSetEditor With {.workspace = Workspace})
     End Sub
 
+    Private Sub RunAgentTask()
+        If agentContainer Is Nothing Then
+            agentContainer = New FormOmicsAgent
+        End If
+
+        Call CommonRuntime.ShowDocument(agentContainer)
+    End Sub
+
     Private Sub ActiveRibbonMenu()
         Ribbon.MenuResearchWork.ContextAvailable = ContextAvailability.Active
 
         Call btnOpenKb.Addhandler(AddressOf OpenKBPage)
         Call btnDataset.Addhandler(AddressOf OpenDatasetPage)
+        Call btnRun.Addhandler(AddressOf RunAgentTask)
     End Sub
 
     Private Async Sub FormResearchWork_Load(sender As Object, e As EventArgs) Handles Me.Load

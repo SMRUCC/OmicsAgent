@@ -1993,6 +1993,16 @@ var toggleTheme = null;
     return state.mode;
   }
 
+  window.toggleMode = function () {
+    let m = state.mode || "single";
+
+    if (m == "single") {
+      setMode("multi");
+    } else {
+      setMode("single");
+    }
+  };
+
   window.setMode = setMode;
 
   window.setBaseDir = function (dir) {
