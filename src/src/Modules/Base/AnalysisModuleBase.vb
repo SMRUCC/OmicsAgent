@@ -575,6 +575,12 @@ Public MustInherit Class AnalysisModuleBase
                $"依次命名为：{examples}。组学标识必须与上方数据集清单中的方括号内 id 完全一致。"
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="llm"></param>
+    ''' <param name="allowWriteFile"></param>
+    ''' <param name="wsDir"></param>
     Protected Sub RegisterFileTools(llm As LLMClient, allowWriteFile As Boolean, Optional wsDir As String = Nothing)
         Dim fileTool As New FileTool(If(wsDir, _context.WorkspaceDir), _logger)
 
