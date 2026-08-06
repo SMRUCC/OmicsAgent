@@ -20,11 +20,11 @@
 var toggleTheme = null;
 
 (function () {
-
   /* ===================== 小工具 ===================== */
 
   const $ = (sel) => document.querySelector(sel);
-  const $$ = (sel) => Array.prototype.slice.call(document.querySelectorAll(sel));
+  const $$ = (sel) =>
+    Array.prototype.slice.call(document.querySelectorAll(sel));
 
   const el = (tag, cls, html) => {
     const n = document.createElement(tag);
@@ -34,9 +34,17 @@ var toggleTheme = null;
   };
 
   const esc = (s) =>
-    String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({
-      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
-    })[c]);
+    String(s == null ? "" : s).replace(
+      /[&<>"']/g,
+      (c) =>
+        ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;",
+        })[c],
+    );
 
   const trim = (s) => String(s == null ? "" : s).trim();
 
@@ -61,22 +69,38 @@ var toggleTheme = null;
     { value: "microbiome", label: "微生物组 microbiome" },
   ];
 
-  const UNIT_SUGGESTIONS = ["TPM", "FPKM", "RPKM", "counts", "LFQ intensity", "peak area", "log2 ratio"];
+  const UNIT_SUGGESTIONS = [
+    "TPM",
+    "FPKM",
+    "RPKM",
+    "counts",
+    "LFQ intensity",
+    "peak area",
+    "log2 ratio",
+  ];
 
-  const SUBJECT_ID = "subject_id";     // SampleAlignment.SubjectIdColumn
-  const THEME_KEY = "kb-theme";        // 与 kb.html / viewer.html 保持一致
+  const SUBJECT_ID = "subject_id"; // SampleAlignment.SubjectIdColumn
+  const THEME_KEY = "kb-theme"; // 与 kb.html / viewer.html 保持一致
   const DRAFT_KEY = "dataset-editor-draft";
   const MAX_INLINE_ROWS = 500;
 
   /* ===================== 状态：唯一数据源 ===================== */
 
   function newEntry(seed) {
-    return Object.assign({
-      id: "", type: "", label: "",
-      expression: "", annotation: "", sampleinfo: "", unit: "",
-      sampleNames: [],          // 由宿主读取 expression 表头得到，不参与序列化
-      fileState: {},            // path -> 'ok' | 'miss'，不参与序列化
-    }, seed || {});
+    return Object.assign(
+      {
+        id: "",
+        type: "",
+        label: "",
+        expression: "",
+        annotation: "",
+        sampleinfo: "",
+        unit: "",
+        sampleNames: [], // 由宿主读取 expression 表头得到，不参与序列化
+        fileState: {}, // path -> 'ok' | 'miss'，不参与序列化
+      },
+      seed || {},
+    );
   }
 
   /** @type {{mode:string,datasets:Array,activeIndex:number,alignment:Object,baseDir:string,useRelativePath:boolean,manifestPath:string,filter:string,errors:Array}} */
@@ -85,9 +109,9 @@ var toggleTheme = null;
     datasets: [newEntry({ id: "rna", type: "transcriptome" })],
     activeIndex: 0,
     alignment: {
-      kind: "none",          // none | file | inline | extract
+      kind: "none", // none | file | inline | extract
       mappingFile: "",
-      rows: [],              // [{ subject_id: 'P001', rna: 'S1_R', ... }]
+      rows: [], // [{ subject_id: 'P001', rna: 'S1_R', ... }]
     },
     baseDir: "",
     useRelativePath: false,
@@ -101,18 +125,26 @@ var toggleTheme = null;
   function applyTheme(theme) {
     document.documentElement.setAttribute("data-theme", theme);
     const dark = theme === "dark";
-    const i = $("#themeIcon"), l = $("#themeLabel");
+    const i = $("#themeIcon"),
+      l = $("#themeLabel");
     if (i) i.textContent = dark ? "☀️" : "🌙";
     if (l) l.textContent = dark ? "亮色" : "暗色";
-    try { localStorage.setItem(THEME_KEY, theme); } catch (e) { }
+    try {
+      localStorage.setItem(THEME_KEY, theme);
+    } catch (e) {}
   }
 
   function initTheme() {
     let t = null;
-    try { t = localStorage.getItem(THEME_KEY); } catch (e) { }
+    try {
+      t = localStorage.getItem(THEME_KEY);
+    } catch (e) {}
     if (!t) {
-      t = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark" : "light";
+      t =
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
     }
     applyTheme(t);
   }
@@ -163,7 +195,9 @@ var toggleTheme = null;
     },
 
     splitParts(p) {
-      return PathUtil.normalizeSlash(p).split("\\").filter((s) => s.length > 0);
+      return PathUtil.normalizeSlash(p)
+        .split("\\")
+        .filter((s) => s.length > 0);
     },
 
     /**
@@ -183,7 +217,12 @@ var toggleTheme = null;
       if (a[0].toLowerCase() !== b[0].toLowerCase()) return abs;
 
       let i = 0;
-      while (i < a.length && i < b.length && a[i].toLowerCase() === b[i].toLowerCase()) i++;
+      while (
+        i < a.length &&
+        i < b.length &&
+        a[i].toLowerCase() === b[i].toLowerCase()
+      )
+        i++;
 
       const up = new Array(b.length - i).fill("..");
       const rest = a.slice(i);
@@ -200,7 +239,9 @@ var toggleTheme = null;
       if (!rel || PathUtil.isAbsolute(rel) || !baseDir) return rel;
 
       const b = PathUtil.splitParts(baseDir);
-      const r = PathUtil.normalizeSlash(rel).split("\\").filter((s) => s.length > 0);
+      const r = PathUtil.normalizeSlash(rel)
+        .split("\\")
+        .filter((s) => s.length > 0);
       for (const seg of r) {
         if (seg === ".") continue;
         else if (seg === "..") b.pop();
@@ -218,10 +259,15 @@ var toggleTheme = null;
 
     init() {
       try {
-        const h = window.chrome && window.chrome.webview
-          && window.chrome.webview.hostObjects
-          && window.chrome.webview.hostObjects.win32;
-        if (h) { HostBridge._host = h; HostBridge.available = true; }
+        const h =
+          window.chrome &&
+          window.chrome.webview &&
+          window.chrome.webview.hostObjects &&
+          window.chrome.webview.hostObjects.win32;
+        if (h) {
+          HostBridge._host = h;
+          HostBridge.available = true;
+        }
       } catch (e) {
         HostBridge._host = null;
         HostBridge.available = false;
@@ -239,7 +285,9 @@ var toggleTheme = null;
       try {
         const fn = HostBridge._host[method];
         if (!fn) return null;
-        const raw = await HostBridge._host[method](payload == null ? "" : String(payload));
+        const raw = await HostBridge._host[method](
+          payload == null ? "" : String(payload),
+        );
         if (raw == null || raw === "") return null;
         const res = typeof raw === "string" ? JSON.parse(raw) : raw;
         if (!res || res.ok !== true) {
@@ -254,26 +302,50 @@ var toggleTheme = null;
     },
 
     async openFile(opts) {
-      const data = await HostBridge.call("OpenFileDialog", JSON.stringify(Object.assign({
-        title: "选择文件", filter: "所有文件|*.*", multiselect: false, initialDir: state.baseDir,
-      }, opts || {})));
+      const data = await HostBridge.call(
+        "OpenFileDialog",
+        JSON.stringify(
+          Object.assign(
+            {
+              title: "选择文件",
+              filter: "所有文件|*.*",
+              multiselect: false,
+              initialDir: state.baseDir,
+            },
+            opts || {},
+          ),
+        ),
+      );
       if (!data) return null;
       const paths = data.paths || (data.path ? [data.path] : []);
       return paths.length ? paths : null;
     },
 
     async saveFile(opts) {
-      const data = await HostBridge.call("SaveFileDialog", JSON.stringify(Object.assign({
-        title: "保存文件", filter: "所有文件|*.*", defaultName: "", initialDir: state.baseDir,
-      }, opts || {})));
+      const data = await HostBridge.call(
+        "SaveFileDialog",
+        JSON.stringify(
+          Object.assign(
+            {
+              title: "保存文件",
+              filter: "所有文件|*.*",
+              defaultName: "",
+              initialDir: state.baseDir,
+            },
+            opts || {},
+          ),
+        ),
+      );
       if (!data || !data.path) return null;
       return data.path;
     },
 
     async writeText(path, content) {
-      const data = await HostBridge.call("WriteTextFile",
-        JSON.stringify({ path: path, content: content, encoding: "utf-8" }));
-      return data ? (data.path || path) : null;
+      const data = await HostBridge.call(
+        "WriteTextFile",
+        JSON.stringify({ path: path, content: content, encoding: "utf-8" }),
+      );
+      return data ? data.path || path : null;
     },
 
     async readText(path) {
@@ -323,14 +395,19 @@ var toggleTheme = null;
 
   function downloadText(name, content, mime) {
     try {
-      const blob = new Blob(["\ufeff" + content], { type: (mime || "text/plain") + ";charset=utf-8" });
+      const blob = new Blob(["\ufeff" + content], {
+        type: (mime || "text/plain") + ";charset=utf-8",
+      });
       const url = URL.createObjectURL(blob);
       const a = el("a");
       a.href = url;
       a.download = name;
       document.body.appendChild(a);
       a.click();
-      setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 0);
+      setTimeout(() => {
+        URL.revokeObjectURL(url);
+        a.remove();
+      }, 0);
       return true;
     } catch (e) {
       console.warn("下载失败", e);
@@ -344,7 +421,9 @@ var toggleTheme = null;
         await navigator.clipboard.writeText(content);
         return true;
       }
-    } catch (e) { /* 继续走 execCommand 兜底 */ }
+    } catch (e) {
+      /* 继续走 execCommand 兜底 */
+    }
     try {
       const ta = el("textarea");
       ta.value = content;
@@ -365,31 +444,43 @@ var toggleTheme = null;
   /** 解析 CSV 文本为二维数组，支持双引号包裹、内嵌逗号与转义引号 */
   function parseCsv(text) {
     const rows = [];
-    let row = [], cell = "", inQuote = false;
+    let row = [],
+      cell = "",
+      inQuote = false;
     const s = String(text || "").replace(/^\ufeff/, "");
 
     for (let i = 0; i < s.length; i++) {
       const c = s[i];
       if (inQuote) {
         if (c === '"') {
-          if (s[i + 1] === '"') { cell += '"'; i++; }
-          else inQuote = false;
+          if (s[i + 1] === '"') {
+            cell += '"';
+            i++;
+          } else inQuote = false;
         } else cell += c;
       } else if (c === '"') {
         inQuote = true;
       } else if (c === ",") {
-        row.push(cell); cell = "";
+        row.push(cell);
+        cell = "";
       } else if (c === "\n") {
-        row.push(cell); cell = "";
-        rows.push(row); row = [];
+        row.push(cell);
+        cell = "";
+        rows.push(row);
+        row = [];
       } else if (c === "\r") {
         /* 忽略，等待 \n */
       } else {
         cell += c;
       }
     }
-    if (cell.length > 0 || row.length > 0) { row.push(cell); rows.push(row); }
-    return rows.filter((r) => r.length && !(r.length === 1 && trim(r[0]) === ""));
+    if (cell.length > 0 || row.length > 0) {
+      row.push(cell);
+      rows.push(row);
+    }
+    return rows.filter(
+      (r) => r.length && !(r.length === 1 && trim(r[0]) === ""),
+    );
   }
 
   function csvCell(v) {
@@ -399,7 +490,8 @@ var toggleTheme = null;
 
   function buildCsv(header, rows) {
     const lines = [header.map(csvCell).join(",")];
-    for (const r of rows) lines.push(header.map((h) => csvCell(r[h])).join(","));
+    for (const r of rows)
+      lines.push(header.map((h) => csvCell(r[h])).join(","));
     return lines.join("\r\n");
   }
 
@@ -409,13 +501,16 @@ var toggleTheme = null;
   function outPath(p) {
     p = trim(p);
     if (!p) return "";
-    if (state.useRelativePath && state.baseDir) return PathUtil.toRelative(p, state.baseDir);
+    if (state.useRelativePath && state.baseDir)
+      return PathUtil.toRelative(p, state.baseDir);
     return p;
   }
 
   /** 当前参与序列化的数据集（单组学模式只取第一条） */
   function effectiveDatasets() {
-    return state.mode === "single" ? state.datasets.slice(0, 1) : state.datasets;
+    return state.mode === "single"
+      ? state.datasets.slice(0, 1)
+      : state.datasets;
   }
 
   /** 宽表列定义：始终派生自 datasets[].id，不冗余存储 */
@@ -424,7 +519,10 @@ var toggleTheme = null;
     const cols = [];
     for (const d of effectiveDatasets()) {
       const id = trim(d.id);
-      if (id && !seen.has(id.toLowerCase())) { seen.add(id.toLowerCase()); cols.push(id); }
+      if (id && !seen.has(id.toLowerCase())) {
+        seen.add(id.toLowerCase());
+        cols.push(id);
+      }
     }
     return cols;
   }
@@ -486,20 +584,29 @@ var toggleTheme = null;
     const list = effectiveDatasets();
 
     if (!list.length) {
-      issues.push({ path: "datasets", level: "error", message: "清单未声明任何数据集（datasets 数组为空）。" });
+      issues.push({
+        path: "datasets",
+        level: "error",
+        message: "清单未声明任何数据集（datasets 数组为空）。",
+      });
       return issues;
     }
 
-    const seen = new Map();   // lower(id) -> 首次出现的索引
+    const seen = new Map(); // lower(id) -> 首次出现的索引
     list.forEach((d, i) => {
       const id = trim(d.id);
       if (!id) {
-        issues.push({ path: `datasets[${i}].id`, level: "error", message: `datasets[${i}] 缺少必填的 id 字段。` });
+        issues.push({
+          path: `datasets[${i}].id`,
+          level: "error",
+          message: `datasets[${i}] 缺少必填的 id 字段。`,
+        });
       } else {
-        const key = id.toLowerCase();     // StringComparer.OrdinalIgnoreCase
+        const key = id.toLowerCase(); // StringComparer.OrdinalIgnoreCase
         if (seen.has(key)) {
           issues.push({
-            path: `datasets[${i}].id`, level: "error",
+            path: `datasets[${i}].id`,
+            level: "error",
             message: `datasets[${i}] 使用了重复的 id '${id}'，该 id 已由 datasets[${seen.get(key)}] 声明。`,
           });
         } else {
@@ -508,15 +615,27 @@ var toggleTheme = null;
       }
 
       if (!trim(d.expression)) {
-        issues.push({ path: `datasets[${i}].expression`, level: "error", message: `datasets[${i}] 缺少必填的 expression 表达矩阵路径。` });
+        issues.push({
+          path: `datasets[${i}].expression`,
+          level: "error",
+          message: `datasets[${i}] 缺少必填的 expression 表达矩阵路径。`,
+        });
       } else if (d.fileState[trim(d.expression)] === "miss") {
-        issues.push({ path: `datasets[${i}].expression`, level: "warn", message: `datasets[${i}] 的 expression 文件在本地未找到。` });
+        issues.push({
+          path: `datasets[${i}].expression`,
+          level: "warn",
+          message: `datasets[${i}] 的 expression 文件在本地未找到。`,
+        });
       }
 
       ["annotation", "sampleinfo"].forEach((k) => {
         const p = trim(d[k]);
         if (p && d.fileState[p] === "miss") {
-          issues.push({ path: `datasets[${i}].${k}`, level: "warn", message: `datasets[${i}] 的 ${k} 文件在本地未找到。` });
+          issues.push({
+            path: `datasets[${i}].${k}`,
+            level: "warn",
+            message: `datasets[${i}] 的 ${k} 文件在本地未找到。`,
+          });
         }
       });
     });
@@ -525,32 +644,57 @@ var toggleTheme = null;
     const a = state.alignment;
     if (a.kind === "file") {
       if (!trim(a.mappingFile)) {
-        issues.push({ path: "sample_alignment.mapping_file", level: "error", message: "已选择「引用 CSV」但未指定 mapping_file 路径。" });
+        issues.push({
+          path: "sample_alignment.mapping_file",
+          level: "error",
+          message: "已选择「引用 CSV」但未指定 mapping_file 路径。",
+        });
       }
     } else if (a.kind === "inline" || a.kind === "extract") {
       const cols = alignColumns();
       a.rows.forEach((r, i) => {
         const has = Object.keys(r).some((k) => trim(r[k]) !== "");
         if (!has) {
-          issues.push({ path: `sample_alignment.subject_map[${i}]`, level: "error", message: `subject_map[${i}] 为空行，请填写或删除。` });
+          issues.push({
+            path: `sample_alignment.subject_map[${i}]`,
+            level: "error",
+            message: `subject_map[${i}] 为空行，请填写或删除。`,
+          });
           return;
         }
         if (!trim(r[SUBJECT_ID])) {
-          issues.push({ path: `sample_alignment.subject_map[${i}].${SUBJECT_ID}`, level: "error", message: `subject_map[${i}] 缺少必需的 ${SUBJECT_ID} 键。` });
+          issues.push({
+            path: `sample_alignment.subject_map[${i}].${SUBJECT_ID}`,
+            level: "error",
+            message: `subject_map[${i}] 缺少必需的 ${SUBJECT_ID} 键。`,
+          });
         }
         cols.forEach((c) => {
           if (!trim(r[c])) {
-            issues.push({ path: `sample_alignment.subject_map[${i}].${c}`, level: "warn", message: `subject_map[${i}] 的 '${c}' 列为空，该组学在此受试者上将无法配对。` });
+            issues.push({
+              path: `sample_alignment.subject_map[${i}].${c}`,
+              level: "warn",
+              message: `subject_map[${i}] 的 '${c}' 列为空，该组学在此受试者上将无法配对。`,
+            });
           }
         });
       });
       if (a.rows.length > MAX_INLINE_ROWS) {
-        issues.push({ path: "sample_alignment.subject_map", level: "warn", message: `内联行数为 ${a.rows.length}，超过 ${MAX_INLINE_ROWS} 行建议改用 mapping_file 引用外部 CSV。` });
+        issues.push({
+          path: "sample_alignment.subject_map",
+          level: "warn",
+          message: `内联行数为 ${a.rows.length}，超过 ${MAX_INLINE_ROWS} 行建议改用 mapping_file 引用外部 CSV。`,
+        });
       }
     }
 
     if (state.useRelativePath && !trim(state.baseDir)) {
-      issues.push({ path: "baseDir", level: "warn", message: "已启用相对路径输出，但尚未设置清单文件基准目录，当前将按绝对路径输出。" });
+      issues.push({
+        path: "baseDir",
+        level: "warn",
+        message:
+          "已启用相对路径输出，但尚未设置清单文件基准目录，当前将按绝对路径输出。",
+      });
     }
 
     return issues;
@@ -583,17 +727,27 @@ var toggleTheme = null;
 
   function activeEntry() {
     if (!state.datasets.length) return null;
-    const i = Math.min(Math.max(state.activeIndex, 0), state.datasets.length - 1);
+    const i = Math.min(
+      Math.max(state.activeIndex, 0),
+      state.datasets.length - 1,
+    );
     state.activeIndex = i;
     return state.datasets[i];
   }
 
   function render(scope) {
-    document.getElementById("app").classList.toggle("mode-single", state.mode === "single");
-    $$("#modeSwitch button").forEach((b) => b.classList.toggle("active", b.dataset.mode === state.mode));
+    document
+      .getElementById("app")
+      .classList.toggle("mode-single", state.mode === "single");
+    $$("#modeSwitch button").forEach((b) =>
+      b.classList.toggle("active", b.dataset.mode === state.mode),
+    );
 
     if (!scope || scope === "all" || scope === "sidebar") renderSidebar();
-    if (!scope || scope === "all" || scope === "form") { renderBasic(); renderPaths(); }
+    if (!scope || scope === "all" || scope === "form") {
+      renderBasic();
+      renderPaths();
+    }
     if (!scope || scope === "all" || scope === "align") renderAlignment();
     renderValidation();
     renderTopic();
@@ -602,7 +756,8 @@ var toggleTheme = null;
   function renderTopic() {
     const n = PathUtil.fileName(state.manifestPath) || "未命名";
     const count = effectiveDatasets().length;
-    $("#topicLine").textContent = `${n} · ${state.mode === "single" ? "单组学" : "多组学"} · ${count} 个数据集`;
+    $("#topicLine").textContent =
+      `${n} · ${state.mode === "single" ? "单组学" : "多组学"} · ${count} 个数据集`;
   }
 
   /* ---------- 侧栏 ---------- */
@@ -618,7 +773,10 @@ var toggleTheme = null;
       if (kw && hay.indexOf(kw) < 0) return;
       shown++;
 
-      const item = el("div", "doc-item" + (i === state.activeIndex ? " active" : ""));
+      const item = el(
+        "div",
+        "doc-item" + (i === state.activeIndex ? " active" : ""),
+      );
       item.dataset.index = String(i);
       item.innerHTML =
         `<div class="fname">${esc(d.id || "(未命名 id)")}</div>` +
@@ -626,14 +784,31 @@ var toggleTheme = null;
         `<div class="src">${esc(d.type || "未指定类型")}</div>`;
 
       const ops = el("div", "row-ops");
-      ops.appendChild(iconBtn("up", "上移", i === 0,
-        '<polyline points="18 15 12 9 6 15"/>'));
-      ops.appendChild(iconBtn("down", "下移", i === state.datasets.length - 1,
-        '<polyline points="6 9 12 15 18 9"/>'));
-      ops.appendChild(iconBtn("dup", "复制", false,
-        '<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>'));
-      const del = iconBtn("del", "删除", state.datasets.length <= 1,
-        '<polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>');
+      ops.appendChild(
+        iconBtn("up", "上移", i === 0, '<polyline points="18 15 12 9 6 15"/>'),
+      );
+      ops.appendChild(
+        iconBtn(
+          "down",
+          "下移",
+          i === state.datasets.length - 1,
+          '<polyline points="6 9 12 15 18 9"/>',
+        ),
+      );
+      ops.appendChild(
+        iconBtn(
+          "dup",
+          "复制",
+          false,
+          '<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
+        ),
+      );
+      const del = iconBtn(
+        "del",
+        "删除",
+        state.datasets.length <= 1,
+        '<polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',
+      );
       del.classList.add("danger");
       ops.appendChild(del);
       item.appendChild(ops);
@@ -642,14 +817,22 @@ var toggleTheme = null;
     });
 
     if (!shown) {
-      host.appendChild(el("div", "empty",
-        `<div class="big">🔍</div><div>${kw ? "没有匹配的数据集" : "尚未添加数据集"}</div>`));
+      host.appendChild(
+        el(
+          "div",
+          "empty",
+          `<div class="big">🔍</div><div>${kw ? "没有匹配的数据集" : "尚未添加数据集"}</div>`,
+        ),
+      );
     }
   }
 
   function iconBtn(act, title, disabled, svgInner) {
-    const b = el("button", "icon-btn",
-      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${svgInner}</svg>`);
+    const b = el(
+      "button",
+      "icon-btn",
+      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${svgInner}</svg>`,
+    );
     b.type = "button";
     b.title = title;
     b.dataset.act = act;
@@ -666,7 +849,10 @@ var toggleTheme = null;
   function renderBasic() {
     const d = activeEntry();
     const host = $("#basicBody");
-    if (!d) { host.innerHTML = `<div class="empty"><div class="big">📦</div><div>请先添加一个数据集</div></div>`; return; }
+    if (!d) {
+      host.innerHTML = `<div class="empty"><div class="big">📦</div><div>请先添加一个数据集</div></div>`;
+      return;
+    }
 
     const i = state.activeIndex;
     const idErr = errFor(`datasets[${i}].id`);
@@ -678,58 +864,81 @@ var toggleTheme = null;
         : `多组学模式：每个数据集的 <code>id</code> 必须唯一（大小写不敏感），它同时会作为样本对齐宽表的列名。`) +
       `</div>` +
       `<div class="grid-2">` +
-
       `<div class="field${idErr ? " has-error" : ""}">` +
       `<label><span class="req"></span>id<span class="hint">组学唯一标识 / 宽表列名</span></label>` +
       `<input type="text" class="input mono" data-fld="id" value="${esc(d.id)}" placeholder="例如 rna / prot / metab" spellcheck="false" />` +
       (idErr ? `<div class="field-err">${esc(idErr.message)}</div>` : "") +
       `</div>` +
-
       `<div class="field">` +
       `<label>type<span class="hint">组学类型</span></label>` +
       `<input type="text" class="input" data-fld="type" value="${esc(d.type)}" list="omicsTypeList" placeholder="transcriptome" spellcheck="false" />` +
       `</div>` +
-
       `<div class="field">` +
       `<label>label<span class="hint">中文展示名称</span></label>` +
       `<input type="text" class="input" data-fld="label" value="${esc(d.label)}" placeholder="例如 肝脏转录组" />` +
       `</div>` +
-
       `<div class="field">` +
       `<label>unit<span class="hint">数据单位</span></label>` +
       `<input type="text" class="input" data-fld="unit" value="${esc(d.unit)}" placeholder="例如 TPM" spellcheck="false" />` +
       `<div class="suggest-row">` +
-      UNIT_SUGGESTIONS.map((u) => `<span class="tag" data-unit="${esc(u)}">${esc(u)}</span>`).join("") +
+      UNIT_SUGGESTIONS.map(
+        (u) => `<span class="tag" data-unit="${esc(u)}">${esc(u)}</span>`,
+      ).join("") +
       `</div>` +
       `</div>` +
-
       `</div>` +
       `<datalist id="omicsTypeList">` +
-      OMICS_TYPES.map((t) => `<option value="${esc(t.value)}">${esc(t.label)}</option>`).join("") +
+      OMICS_TYPES.map(
+        (t) => `<option value="${esc(t.value)}">${esc(t.label)}</option>`,
+      ).join("") +
       `</datalist>`;
   }
 
   /* ---------- 文件路径卡 ---------- */
 
   const PATH_FIELDS = [
-    { key: "expression", label: "expression", hint: "表达矩阵 CSV（行=分子，列=样本）", required: true },
-    { key: "annotation", label: "annotation", hint: "分子注释表 CSV ['id','type','name','kegg']", required: false },
-    { key: "sampleinfo", label: "sampleinfo", hint: "样本元数据 CSV ['id','sample_name','sample_info']", required: false },
+    {
+      key: "expression",
+      label: "expression",
+      hint: "表达矩阵 CSV（行=分子，列=样本）",
+      required: true,
+    },
+    {
+      key: "annotation",
+      label: "annotation",
+      hint: "分子注释表 CSV ['id','type','name','kegg']",
+      required: false,
+    },
+    {
+      key: "sampleinfo",
+      label: "sampleinfo",
+      hint: "样本元数据 CSV ['id','sample_name','sample_info']",
+      required: false,
+    },
   ];
 
   function renderPaths() {
     const d = activeEntry();
     const host = $("#pathBody");
-    if (!d) { host.innerHTML = ""; return; }
+    if (!d) {
+      host.innerHTML = "";
+      return;
+    }
     const i = state.activeIndex;
 
     let html = `<div class="stack">`;
     for (const f of PATH_FIELDS) {
       const val = d[f.key] || "";
       const e = errFor(`datasets[${i}].${f.key}`);
-      const st = val ? (d.fileState[trim(val)] || "") : "";
-      const stCls = st === "ok" ? "ok" : (st === "miss" ? "miss" : "");
-      const stTxt = !val ? "" : (st === "ok" ? "文件存在" : (st === "miss" ? "文件未找到" : "未验证"));
+      const st = val ? d.fileState[trim(val)] || "" : "";
+      const stCls = st === "ok" ? "ok" : st === "miss" ? "miss" : "";
+      const stTxt = !val
+        ? ""
+        : st === "ok"
+          ? "文件存在"
+          : st === "miss"
+            ? "文件未找到"
+            : "未验证";
 
       html +=
         `<div class="field${e ? " has-error" : ""}" data-pathfield="${f.key}">` +
@@ -740,7 +949,9 @@ var toggleTheme = null;
         `<button type="button" class="btn btn-mini" data-clear="${f.key}" title="清除">✕</button>` +
         `</div>` +
         `<div class="path-meta">` +
-        (val ? `<span class="state-dot ${stCls}"></span><span>${esc(stTxt)}</span><span class="fname">${esc(PathUtil.fileName(val))}</span>` : `<span class="dim">尚未选择文件</span>`) +
+        (val
+          ? `<span class="state-dot ${stCls}"></span><span>${esc(stTxt)}</span><span class="fname">${esc(PathUtil.fileName(val))}</span>`
+          : `<span class="dim">尚未选择文件</span>`) +
         `</div>` +
         (e ? `<div class="field-err">${esc(e.message)}</div>` : "") +
         `</div>`;
@@ -774,7 +985,10 @@ var toggleTheme = null;
 
     let html =
       `<div class="segmented segmented--block" id="alignSwitch" style="margin-bottom:14px">` +
-      ALIGN_KINDS.map((x) => `<button type="button" data-kind="${x.k}"${a.kind === x.k ? ' class="active"' : ""}>${x.t}</button>`).join("") +
+      ALIGN_KINDS.map(
+        (x) =>
+          `<button type="button" data-kind="${x.k}"${a.kind === x.k ? ' class="active"' : ""}>${x.t}</button>`,
+      ).join("") +
       `</div>`;
 
     if (a.kind === "none") {
@@ -792,7 +1006,9 @@ var toggleTheme = null;
         `<button type="button" class="btn btn-mini" id="browseMappingBtn">浏览…</button>` +
         `<button type="button" class="btn btn-mini" id="importMappingBtn" title="读取该 CSV 并转为内联编辑">导入为内联</button>` +
         `</div>` +
-        (a.mappingFile ? `<div class="path-meta"><span class="fname">${esc(PathUtil.fileName(a.mappingFile))}</span></div>` : "") +
+        (a.mappingFile
+          ? `<div class="path-meta"><span class="fname">${esc(PathUtil.fileName(a.mappingFile))}</span></div>`
+          : "") +
         (e ? `<div class="field-err">${esc(e.message)}</div>` : "") +
         `</div>`;
     } else if (a.kind === "extract") {
@@ -837,7 +1053,9 @@ var toggleTheme = null;
     return html;
   }
 
-  function a_rowCount() { return state.alignment.rows.length; }
+  function a_rowCount() {
+    return state.alignment.rows.length;
+  }
 
   function renderInlineTable() {
     const cols = alignColumns();
@@ -857,17 +1075,22 @@ var toggleTheme = null;
       `</div>`;
 
     if (!cols.length) {
-      return html + `<div class="empty"><div class="big">🧬</div><div>请先为数据集填写 id，宽表列会自动生成。</div></div>`;
+      return (
+        html +
+        `<div class="empty"><div class="big">🧬</div><div>请先为数据集填写 id，宽表列会自动生成。</div></div>`
+      );
     }
 
     html +=
       `<div class="align-wrap"><table class="align-table" id="alignTable"><thead><tr>` +
       `<th class="rownum">#</th>` +
       `<th class="locked"><span class="col-id">${esc(SUBJECT_ID)}</span><span class="col-sub">🔒 受试者标识</span></th>` +
-      cols.map((c) => {
-        const d = effectiveDatasets().find((x) => trim(x.id) === c);
-        return `<th><span class="col-id">${esc(c)}</span><span class="col-sub">${esc((d && d.label) || "")}</span></th>`;
-      }).join("") +
+      cols
+        .map((c) => {
+          const d = effectiveDatasets().find((x) => trim(x.id) === c);
+          return `<th><span class="col-id">${esc(c)}</span><span class="col-sub">${esc((d && d.label) || "")}</span></th>`;
+        })
+        .join("") +
       `<th class="ops"></th>` +
       `</tr></thead><tbody>`;
 
@@ -877,14 +1100,17 @@ var toggleTheme = null;
       rows.forEach((r, ri) => {
         html += `<tr data-row="${ri}">` + `<td class="rownum">${ri + 1}</td>`;
         const sv = trim(r[SUBJECT_ID]);
-        html += `<td class="cell locked-col${sv ? "" : " cell-empty"}">` +
+        html +=
+          `<td class="cell locked-col${sv ? "" : " cell-empty"}">` +
           `<input class="cell-input" data-row="${ri}" data-col="${esc(SUBJECT_ID)}" value="${esc(r[SUBJECT_ID] || "")}" spellcheck="false" /></td>`;
         for (const c of cols) {
           const v = trim(r[c]);
-          html += `<td class="cell${v ? "" : " cell-empty"}">` +
+          html +=
+            `<td class="cell${v ? "" : " cell-empty"}">` +
             `<input class="cell-input" data-row="${ri}" data-col="${esc(c)}" value="${esc(r[c] || "")}" spellcheck="false" list="pool-${esc(c)}" /></td>`;
         }
-        html += `<td class="ops"><button type="button" class="icon-btn danger" data-delrow="${ri}" title="删除该行">` +
+        html +=
+          `<td class="ops"><button type="button" class="icon-btn danger" data-delrow="${ri}" title="删除该行">` +
           `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>` +
           `</button></td></tr>`;
       });
@@ -897,7 +1123,10 @@ var toggleTheme = null;
       const d = effectiveDatasets().find((x) => trim(x.id) === c);
       const names = (d && d.sampleNames) || [];
       if (names.length) {
-        html += `<datalist id="pool-${esc(c)}">` + names.map((n) => `<option value="${esc(n)}"></option>`).join("") + `</datalist>`;
+        html +=
+          `<datalist id="pool-${esc(c)}">` +
+          names.map((n) => `<option value="${esc(n)}"></option>`).join("") +
+          `</datalist>`;
       }
     }
     return html;
@@ -911,7 +1140,13 @@ var toggleTheme = null;
     const errs = state.errors.filter((e) => e.level === "error");
     const warns = state.errors.filter((e) => e.level === "warn");
 
-    card.className = "card " + (errs.length ? "card--orange" : (warns.length ? "card--teal" : "card--green"));
+    card.className =
+      "card " +
+      (errs.length
+        ? "card--orange"
+        : warns.length
+          ? "card--teal"
+          : "card--green");
 
     let html = "";
     if (!errs.length) {
@@ -924,11 +1159,16 @@ var toggleTheme = null;
 
     const all = errs.concat(warns);
     if (all.length) {
-      html += `<div class="issue-list" ${errs.length ? "" : 'style="margin-top:12px"'}>` +
-        all.map((e) =>
-          `<div class="issue ${e.level}">` +
-          `<span class="ipath" data-goto="${esc(e.path)}">${esc(e.path)}</span>` +
-          `<span>${esc(e.message)}</span></div>`).join("") +
+      html +=
+        `<div class="issue-list" ${errs.length ? "" : 'style="margin-top:12px"'}>` +
+        all
+          .map(
+            (e) =>
+              `<div class="issue ${e.level}">` +
+              `<span class="ipath" data-goto="${esc(e.path)}">${esc(e.path)}</span>` +
+              `<span>${esc(e.message)}</span></div>`,
+          )
+          .join("") +
         `</div>`;
     }
 
@@ -947,7 +1187,8 @@ var toggleTheme = null;
         else if (/true|false/.test(m)) cls = "tok-bool";
         else if (/null/.test(m)) cls = "tok-null";
         return `<span class="${cls}">${m}</span>`;
-      });
+      },
+    );
   }
 
   function renderPreview() {
@@ -955,7 +1196,8 @@ var toggleTheme = null;
     if (!panel.classList.contains("open")) return;
     const json = manifestJson();
     $("#previewCode").innerHTML = highlightJson(json);
-    $("#previewStat").textContent = `${json.length} 字符 · ${json.split("\n").length} 行`;
+    $("#previewStat").textContent =
+      `${json.length} 字符 · ${json.split("\n").length} 行`;
   }
 
   const schedulePreview = debounce(renderPreview, 150);
@@ -964,12 +1206,21 @@ var toggleTheme = null;
 
   const saveDraft = debounce(function () {
     try {
-      localStorage.setItem(DRAFT_KEY, JSON.stringify({
-        mode: state.mode, datasets: state.datasets, alignment: state.alignment,
-        baseDir: state.baseDir, useRelativePath: state.useRelativePath,
-        manifestPath: state.manifestPath, activeIndex: state.activeIndex,
-      }));
-    } catch (e) { /* 容量超限静默失败，不影响主流程 */ }
+      localStorage.setItem(
+        DRAFT_KEY,
+        JSON.stringify({
+          mode: state.mode,
+          datasets: state.datasets,
+          alignment: state.alignment,
+          baseDir: state.baseDir,
+          useRelativePath: state.useRelativePath,
+          manifestPath: state.manifestPath,
+          activeIndex: state.activeIndex,
+        }),
+      );
+    } catch (e) {
+      /* 容量超限静默失败，不影响主流程 */
+    }
   }, 400);
 
   function loadDraft() {
@@ -980,19 +1231,28 @@ var toggleTheme = null;
       if (!d || !Array.isArray(d.datasets) || !d.datasets.length) return false;
       state.mode = d.mode === "single" ? "single" : "multi";
       state.datasets = d.datasets.map((x) => newEntry(x));
-      state.alignment = Object.assign({ kind: "none", mappingFile: "", rows: [] }, d.alignment || {});
+      state.alignment = Object.assign(
+        { kind: "none", mappingFile: "", rows: [] },
+        d.alignment || {},
+      );
       state.baseDir = d.baseDir || "";
       state.useRelativePath = d.useRelativePath === true;
       state.manifestPath = d.manifestPath || "";
-      state.activeIndex = Math.min(d.activeIndex || 0, state.datasets.length - 1);
+      state.activeIndex = Math.min(
+        d.activeIndex || 0,
+        state.datasets.length - 1,
+      );
       return true;
-    } catch (e) { return false; }
+    } catch (e) {
+      return false;
+    }
   }
 
   /* ===================== 载入已有 JSON ===================== */
 
   function loadManifestObject(obj, srcPath) {
-    if (!obj || typeof obj !== "object") throw new Error("JSON 根节点不是对象。");
+    if (!obj || typeof obj !== "object")
+      throw new Error("JSON 根节点不是对象。");
     if (!Array.isArray(obj.datasets)) throw new Error("缺少 datasets 数组。");
     if (!obj.datasets.length) throw new Error("datasets 数组为空。");
 
@@ -1006,7 +1266,10 @@ var toggleTheme = null;
       e.unit = trim(raw && raw.unit);
       ["expression", "annotation", "sampleinfo"].forEach((k) => {
         const p = trim(raw && raw[k]);
-        if (!p) { e[k] = ""; return; }
+        if (!p) {
+          e[k] = "";
+          return;
+        }
         if (!PathUtil.isAbsolute(p)) {
           e[k] = baseDir ? PathUtil.toAbsolute(p, baseDir) : p;
         } else {
@@ -1022,13 +1285,17 @@ var toggleTheme = null;
       const mf = trim(sa.mapping_file);
       const sm = sa.subject_map;
       if (mf && Array.isArray(sm) && sm.length) {
-        throw new Error("sample_alignment 同时声明了 mapping_file 与 subject_map，请只保留其中一个。");
+        throw new Error(
+          "sample_alignment 同时声明了 mapping_file 与 subject_map，请只保留其中一个。",
+        );
       }
       if (mf) {
         alignment.kind = "file";
         alignment.mappingFile = PathUtil.isAbsolute(mf)
           ? PathUtil.normalizeSlash(mf)
-          : (baseDir ? PathUtil.toAbsolute(mf, baseDir) : mf);
+          : baseDir
+            ? PathUtil.toAbsolute(mf, baseDir)
+            : mf;
       } else if (Array.isArray(sm) && sm.length) {
         alignment.kind = "inline";
         alignment.rows = sm.map((r) => {
@@ -1036,7 +1303,9 @@ var toggleTheme = null;
           if (r && typeof r === "object") {
             for (const k of Object.keys(r)) {
               // subject_id 键大小写不敏感，统一规范化
-              o[k.toLowerCase() === SUBJECT_ID ? SUBJECT_ID : k] = String(r[k] == null ? "" : r[k]);
+              o[k.toLowerCase() === SUBJECT_ID ? SUBJECT_ID : k] = String(
+                r[k] == null ? "" : r[k],
+              );
             }
           }
           return o;
@@ -1048,7 +1317,10 @@ var toggleTheme = null;
     state.alignment = alignment;
     state.activeIndex = 0;
     state.mode = datasets.length > 1 ? "multi" : "single";
-    if (srcPath) { state.manifestPath = srcPath; state.baseDir = baseDir; }
+    if (srcPath) {
+      state.manifestPath = srcPath;
+      state.baseDir = baseDir;
+    }
 
     setState(null, { scope: "all" });
     return datasets.length;
@@ -1057,7 +1329,10 @@ var toggleTheme = null;
   /* ===================== 保存与导出 ===================== */
 
   async function doSaveManifest() {
-    if (hasError()) { toast("存在校验错误，请先修正后再保存。", "err"); return false; }
+    if (hasError()) {
+      toast("存在校验错误，请先修正后再保存。", "err");
+      return false;
+    }
     const json = manifestJson();
 
     if (HostBridge.available) {
@@ -1079,7 +1354,7 @@ var toggleTheme = null;
         }
         toast("宿主写入失败，已改为浏览器下载。", "err");
       } else {
-        return false;   // 用户取消
+        return false; // 用户取消
       }
     }
 
@@ -1088,14 +1363,20 @@ var toggleTheme = null;
       return true;
     }
     const ok = await copyText(json);
-    toast(ok ? "已复制 JSON 到剪贴板" : "保存失败，请手动复制预览内容", ok ? "ok" : "err");
+    toast(
+      ok ? "已复制 JSON 到剪贴板" : "保存失败，请手动复制预览内容",
+      ok ? "ok" : "err",
+    );
     return ok;
   }
 
   async function doExportAlignCsv() {
     const cols = alignColumns();
     const rows = state.alignment.rows;
-    if (!rows.length) { toast("宽表为空，无可导出内容。", "err"); return; }
+    if (!rows.length) {
+      toast("宽表为空，无可导出内容。", "err");
+      return;
+    }
 
     const header = [SUBJECT_ID].concat(cols);
     const csv = buildCsv(header, rows);
@@ -1103,7 +1384,9 @@ var toggleTheme = null;
 
     if (HostBridge.available) {
       const p = await HostBridge.saveFile({
-        title: "导出样本对齐宽表", filter: "CSV 文件|*.csv|所有文件|*.*", defaultName: defName,
+        title: "导出样本对齐宽表",
+        filter: "CSV 文件|*.csv|所有文件|*.*",
+        defaultName: defName,
       });
       if (!p) return;
       const written = await HostBridge.writeText(p, csv);
@@ -1125,7 +1408,10 @@ var toggleTheme = null;
 
   async function extractHeader(entry) {
     const p = trim(entry.expression);
-    if (!p) { toast(`数据集 '${entry.id || "?"}' 尚未设置 expression 路径。`, "err"); return; }
+    if (!p) {
+      toast(`数据集 '${entry.id || "?"}' 尚未设置 expression 路径。`, "err");
+      return;
+    }
 
     let cols = null;
     if (HostBridge.available) cols = await HostBridge.readCsvHeader(p);
@@ -1149,10 +1435,19 @@ var toggleTheme = null;
   /** 按同名自动配对：以样本名交集/并集生成宽表行 */
   function autoPair() {
     const list = effectiveDatasets().filter((d) => trim(d.id));
-    if (!list.length) { toast("请先为数据集填写 id。", "err"); return; }
+    if (!list.length) {
+      toast("请先为数据集填写 id。", "err");
+      return;
+    }
 
-    const pools = list.map((d) => ({ id: trim(d.id), names: (d.sampleNames || []).slice() }));
-    if (!pools.some((p) => p.names.length)) { toast("尚无样本名，请先读取表头。", "err"); return; }
+    const pools = list.map((d) => ({
+      id: trim(d.id),
+      names: (d.sampleNames || []).slice(),
+    }));
+    if (!pools.some((p) => p.names.length)) {
+      toast("尚无样本名，请先读取表头。", "err");
+      return;
+    }
 
     // 以样本名（大小写不敏感）为受试者键做并集
     const order = [];
@@ -1160,7 +1455,10 @@ var toggleTheme = null;
     for (const p of pools) {
       for (const n of p.names) {
         const k = n.toLowerCase();
-        if (!index.has(k)) { index.set(k, { subject: n, hit: {} }); order.push(k); }
+        if (!index.has(k)) {
+          index.set(k, { subject: n, hit: {} });
+          order.push(k);
+        }
         index.get(k).hit[p.id] = n;
       }
     }
@@ -1181,15 +1479,19 @@ var toggleTheme = null;
 
   function pasteRows() {
     const text = window.prompt(
-      `粘贴宽表文本（支持制表符 / 逗号分隔，首行可为表头）：\n列顺序为 ${[SUBJECT_ID].concat(alignColumns()).join(", ")}`);
+      `粘贴宽表文本（支持制表符 / 逗号分隔，首行可为表头）：\n列顺序为 ${[SUBJECT_ID].concat(alignColumns()).join(", ")}`,
+    );
     if (!text) return;
 
     const cols = alignColumns();
     const header = [SUBJECT_ID].concat(cols);
-    const lines = String(text).split(/\r?\n/).filter((l) => trim(l) !== "");
+    const lines = String(text)
+      .split(/\r?\n/)
+      .filter((l) => trim(l) !== "");
     if (!lines.length) return;
 
-    const split = (l) => (l.indexOf("\t") >= 0 ? l.split("\t") : parseCsv(l)[0] || []);
+    const split = (l) =>
+      l.indexOf("\t") >= 0 ? l.split("\t") : parseCsv(l)[0] || [];
 
     // 首行若与表头高度重合则视为表头跳过
     const first = split(lines[0]).map((s) => trim(s).toLowerCase());
@@ -1199,7 +1501,9 @@ var toggleTheme = null;
     const rows = body.map((l) => {
       const cells = split(l);
       const r = {};
-      header.forEach((h, i) => { r[h] = trim(cells[i] || ""); });
+      header.forEach((h, i) => {
+        r[h] = trim(cells[i] || "");
+      });
       return r;
     });
 
@@ -1212,28 +1516,38 @@ var toggleTheme = null;
   /* ===================== 文件存在性探测 ===================== */
 
   async function verifyFiles() {
-    if (!HostBridge.available) { toast("宿主不可用，无法校验文件存在性。", "err"); return; }
-    let checked = 0, missing = 0;
+    if (!HostBridge.available) {
+      toast("宿主不可用，无法校验文件存在性。", "err");
+      return;
+    }
+    let checked = 0,
+      missing = 0;
     for (const d of state.datasets) {
       for (const k of ["expression", "annotation", "sampleinfo"]) {
         const p = trim(d[k]);
         if (!p) continue;
-        const abs = PathUtil.isAbsolute(p) ? p : PathUtil.toAbsolute(p, state.baseDir);
+        const abs = PathUtil.isAbsolute(p)
+          ? p
+          : PathUtil.toAbsolute(p, state.baseDir);
         const ex = await HostBridge.fileExists(abs);
-        if (ex === null) continue;      // 宿主未实现该方法，保持「未验证」
+        if (ex === null) continue; // 宿主未实现该方法，保持「未验证」
         d.fileState[p] = ex ? "ok" : "miss";
         checked++;
         if (!ex) missing++;
       }
     }
     setState(null, { scope: "form" });
-    toast(checked ? `已校验 ${checked} 个文件，${missing} 个未找到` : "没有可校验的路径", missing ? "err" : "ok");
+    toast(
+      checked
+        ? `已校验 ${checked} 个文件，${missing} 个未找到`
+        : "没有可校验的路径",
+      missing ? "err" : "ok",
+    );
   }
 
   /* ===================== 事件绑定 ===================== */
 
   function bindEvents() {
-
     $("#themeBtn").addEventListener("click", () => toggleTheme());
 
     // 模式切换
@@ -1267,10 +1581,14 @@ var toggleTheme = null;
         ev.stopPropagation();
         const act = opBtn.dataset.act;
         if (act === "up" && i > 0) {
-          const t = state.datasets[i - 1]; state.datasets[i - 1] = state.datasets[i]; state.datasets[i] = t;
+          const t = state.datasets[i - 1];
+          state.datasets[i - 1] = state.datasets[i];
+          state.datasets[i] = t;
           state.activeIndex = i - 1;
         } else if (act === "down" && i < state.datasets.length - 1) {
-          const t = state.datasets[i + 1]; state.datasets[i + 1] = state.datasets[i]; state.datasets[i] = t;
+          const t = state.datasets[i + 1];
+          state.datasets[i + 1] = state.datasets[i];
+          state.datasets[i] = t;
           state.activeIndex = i + 1;
         } else if (act === "dup") {
           const c = newEntry(JSON.parse(JSON.stringify(state.datasets[i])));
@@ -1279,7 +1597,8 @@ var toggleTheme = null;
           state.activeIndex = i + 1;
         } else if (act === "del" && state.datasets.length > 1) {
           state.datasets.splice(i, 1);
-          if (state.activeIndex >= state.datasets.length) state.activeIndex = state.datasets.length - 1;
+          if (state.activeIndex >= state.datasets.length)
+            state.activeIndex = state.datasets.length - 1;
         }
         setState(null, { scope: "all" });
         return;
@@ -1303,14 +1622,22 @@ var toggleTheme = null;
 
         if (key === "id") {
           // 数据集改名：宽表列键迁移，旧键值搬到新键
-          const from = trim(oldId), to = trim(t.value);
+          const from = trim(oldId),
+            to = trim(t.value);
           if (from && to && from !== to) {
             for (const r of state.alignment.rows) {
-              if (Object.prototype.hasOwnProperty.call(r, from)) { r[to] = r[from]; delete r[from]; }
+              if (Object.prototype.hasOwnProperty.call(r, from)) {
+                r[to] = r[from];
+                delete r[from];
+              }
             }
           }
           setState(null, { scope: "all" });
-        } else if (key === "expression" || key === "annotation" || key === "sampleinfo") {
+        } else if (
+          key === "expression" ||
+          key === "annotation" ||
+          key === "sampleinfo"
+        ) {
           // 路径手工编辑：只做静默校验，避免每次按键都重绘输入框导致光标跳动
           setState(null, { silent: true });
           renderValidation();
@@ -1374,14 +1701,19 @@ var toggleTheme = null;
 
       // 单位快捷标签
       const tag = t.closest(".suggest-row .tag");
-      if (tag && d) { d.unit = tag.dataset.unit; setState(null, { scope: "form" }); return; }
+      if (tag && d) {
+        d.unit = tag.dataset.unit;
+        setState(null, { scope: "form" });
+        return;
+      }
 
       // 路径浏览 / 清除
       const br = t.closest("[data-browse]");
       if (br && d) {
         const key = br.dataset.browse;
         const paths = await HostBridge.openFile({
-          title: "选择 " + key + " CSV 文件", filter: "CSV 文件|*.csv|文本文件|*.txt;*.tsv|所有文件|*.*",
+          title: "选择 " + key + " CSV 文件",
+          filter: "CSV 文件|*.csv|文本文件|*.txt;*.tsv|所有文件|*.*",
         });
         if (paths && paths[0]) {
           d[key] = PathUtil.normalizeSlash(paths[0]);
@@ -1393,63 +1725,108 @@ var toggleTheme = null;
         return;
       }
       const cl = t.closest("[data-clear]");
-      if (cl && d) { d[cl.dataset.clear] = ""; setState(null, { scope: "form" }); return; }
+      if (cl && d) {
+        d[cl.dataset.clear] = "";
+        setState(null, { scope: "form" });
+        return;
+      }
 
       if (t.id === "pickBaseDirBtn") {
         const paths = await HostBridge.openFile({
-          title: "选择清单文件所在目录（选中该目录下任意文件即可）", filter: "所有文件|*.*",
+          title: "选择清单文件所在目录（选中该目录下任意文件即可）",
+          filter: "所有文件|*.*",
         });
-        if (paths && paths[0]) { state.baseDir = PathUtil.dirName(PathUtil.normalizeSlash(paths[0])); setState(null, { scope: "form" }); }
-        else if (!HostBridge.available) toast("宿主不可用，请手工填写基准目录。", "err");
+        if (paths && paths[0]) {
+          state.baseDir = PathUtil.dirName(PathUtil.normalizeSlash(paths[0]));
+          setState(null, { scope: "form" });
+        } else if (!HostBridge.available)
+          toast("宿主不可用，请手工填写基准目录。", "err");
         return;
       }
 
-      if (t.id === "verifyFilesBtn") { await verifyFiles(); return; }
+      if (t.id === "verifyFilesBtn") {
+        await verifyFiles();
+        return;
+      }
 
       // 样本对齐模式切换
       const kindBtn = t.closest("#alignSwitch button[data-kind]");
-      if (kindBtn) { state.alignment.kind = kindBtn.dataset.kind; setState(null, { scope: "align" }); return; }
-
-      if (t.id === "browseMappingBtn") {
-        const paths = await HostBridge.openFile({ title: "选择样本对齐宽表 CSV", filter: "CSV 文件|*.csv|所有文件|*.*" });
-        if (paths && paths[0]) { state.alignment.mappingFile = PathUtil.normalizeSlash(paths[0]); setState(null, { scope: "align" }); }
-        else if (!HostBridge.available) toast("宿主不可用，请手工填写 CSV 路径。", "err");
+      if (kindBtn) {
+        state.alignment.kind = kindBtn.dataset.kind;
+        setState(null, { scope: "align" });
         return;
       }
 
-      if (t.id === "importMappingBtn") { await importMappingCsv(); return; }
+      if (t.id === "browseMappingBtn") {
+        const paths = await HostBridge.openFile({
+          title: "选择样本对齐宽表 CSV",
+          filter: "CSV 文件|*.csv|所有文件|*.*",
+        });
+        if (paths && paths[0]) {
+          state.alignment.mappingFile = PathUtil.normalizeSlash(paths[0]);
+          setState(null, { scope: "align" });
+        } else if (!HostBridge.available)
+          toast("宿主不可用，请手工填写 CSV 路径。", "err");
+        return;
+      }
+
+      if (t.id === "importMappingBtn") {
+        await importMappingCsv();
+        return;
+      }
 
       // 提取面板
       const ex = t.closest("[data-extract]");
       if (ex) {
-        const entry = effectiveDatasets().find((x) => trim(x.id) === ex.dataset.extract);
+        const entry = effectiveDatasets().find(
+          (x) => trim(x.id) === ex.dataset.extract,
+        );
         if (entry) await extractHeader(entry);
         return;
       }
       if (t.id === "extractAllBtn") {
-        for (const e of effectiveDatasets()) { if (trim(e.expression)) await extractHeader(e); }
+        for (const e of effectiveDatasets()) {
+          if (trim(e.expression)) await extractHeader(e);
+        }
         return;
       }
-      if (t.id === "autoPairBtn" || t.id === "autoPairBtn2") { autoPair(); return; }
-      if (t.id === "gotoInlineBtn") { state.alignment.kind = "inline"; setState(null, { scope: "align" }); return; }
+      if (t.id === "autoPairBtn" || t.id === "autoPairBtn2") {
+        autoPair();
+        return;
+      }
+      if (t.id === "gotoInlineBtn") {
+        state.alignment.kind = "inline";
+        setState(null, { scope: "align" });
+        return;
+      }
 
       // 宽表工具条
       if (t.id === "addRowBtn") {
-        const r = {}; r[SUBJECT_ID] = "";
+        const r = {};
+        r[SUBJECT_ID] = "";
         for (const c of alignColumns()) r[c] = "";
         state.alignment.rows.push(r);
         setState(null, { scope: "align" });
         return;
       }
-      if (t.id === "pasteRowsBtn") { pasteRows(); return; }
+      if (t.id === "pasteRowsBtn") {
+        pasteRows();
+        return;
+      }
       if (t.id === "clearRowsBtn") {
-        if (state.alignment.rows.length && window.confirm("确定清空全部对齐行？")) {
+        if (
+          state.alignment.rows.length &&
+          window.confirm("确定清空全部对齐行？")
+        ) {
           state.alignment.rows = [];
           setState(null, { scope: "align" });
         }
         return;
       }
-      if (t.id === "exportCsvBtn") { await doExportAlignCsv(); return; }
+      if (t.id === "exportCsvBtn") {
+        await doExportAlignCsv();
+        return;
+      }
 
       const dr = t.closest("[data-delrow]");
       if (dr) {
@@ -1460,12 +1837,17 @@ var toggleTheme = null;
 
       // 校验项定位
       const gt = t.closest("[data-goto]");
-      if (gt) { gotoPath(gt.dataset.goto); return; }
+      if (gt) {
+        gotoPath(gt.dataset.goto);
+        return;
+      }
     });
 
     // 顶栏按钮
     $("#loadBtn").addEventListener("click", doLoad);
-    $("#saveBtn").addEventListener("click", () => { doSaveManifest(); });
+    $("#saveBtn").addEventListener("click", () => {
+      doSaveManifest();
+    });
 
     $("#previewBtn").addEventListener("click", () => {
       const p = $("#previewPanel");
@@ -1506,28 +1888,39 @@ var toggleTheme = null;
       setState(null, { scope: "all" });
       setTimeout(() => {
         const inp = $(`#content [data-fld="${m[2]}"]`);
-        if (inp) { inp.focus(); inp.select && inp.select(); }
+        if (inp) {
+          inp.focus();
+          inp.select && inp.select();
+        }
       }, 60);
       return;
     }
     if (path.indexOf("sample_alignment") === 0) {
-      $("#alignmentCard").scrollIntoView({ behavior: "smooth", block: "start" });
+      $("#alignmentCard").scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
       return;
     }
     if (path === "baseDir") {
       const i = $("#baseDirInput");
-      if (i) { i.focus(); i.scrollIntoView({ behavior: "smooth", block: "center" }); }
+      if (i) {
+        i.focus();
+        i.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
     }
   }
 
   /* ---------- 载入 ---------- */
 
   async function doLoad() {
-    let text = null, srcPath = "";
+    let text = null,
+      srcPath = "";
 
     if (HostBridge.available) {
       const paths = await HostBridge.openFile({
-        title: "选择数据集定义文件", filter: "JSON 文件|*.json|所有文件|*.*",
+        title: "选择数据集定义文件",
+        filter: "JSON 文件|*.json|所有文件|*.*",
       });
       if (paths && paths[0]) {
         srcPath = PathUtil.normalizeSlash(paths[0]);
@@ -1539,7 +1932,10 @@ var toggleTheme = null;
 
     if (text == null) {
       const f = await pickLocalFile(".json,application/json");
-      if (f) { text = await readFileText(f); srcPath = ""; }
+      if (f) {
+        text = await readFileText(f);
+        srcPath = "";
+      }
     }
     if (text == null) {
       text = window.prompt("粘贴 dataset.json 内容：");
@@ -1565,7 +1961,10 @@ var toggleTheme = null;
     }
 
     const rows = parseCsv(text);
-    if (rows.length < 2) { toast("CSV 内容为空或只有表头。", "err"); return; }
+    if (rows.length < 2) {
+      toast("CSV 内容为空或只有表头。", "err");
+      return;
+    }
 
     const header = rows[0].map(trim);
     const si = header.findIndex((h) => h.toLowerCase() === SUBJECT_ID);
@@ -1574,7 +1973,7 @@ var toggleTheme = null;
       header.forEach((h, i) => {
         r[i === si ? SUBJECT_ID : h] = trim(cells[i] || "");
       });
-      if (si < 0) r[SUBJECT_ID] = trim(cells[0] || "");   // 首列兜底为 subject_id
+      if (si < 0) r[SUBJECT_ID] = trim(cells[0] || ""); // 首列兜底为 subject_id
       return r;
     });
 
@@ -1604,6 +2003,7 @@ var toggleTheme = null;
 
   window.loadManifestJson = function (text) {
     try {
+      console.log(text);
       loadManifestObject(JSON.parse(String(text)), "");
       return true;
     } catch (e) {
@@ -1612,9 +2012,13 @@ var toggleTheme = null;
     }
   };
 
-  window.getManifestJson = function () { return manifestJson(); };
+  window.getManifestJson = function () {
+    return manifestJson();
+  };
 
-  window.saveManifest = function () { return doSaveManifest(); };
+  window.saveManifest = function () {
+    return doSaveManifest();
+  };
 
   window.run = function (baseUrl) {
     // 与现有页面保持一致的初始化入口；本页面无需远端数据，仅作占位与重绘
@@ -1632,7 +2036,9 @@ var toggleTheme = null;
     setState(null, { scope: "all" });
 
     if (!HostBridge.available) {
-      console.info("[dataset] 未检测到 WebView2 宿主对象 win32，已启用浏览器降级模式。");
+      console.info(
+        "[dataset] 未检测到 WebView2 宿主对象 win32，已启用浏览器降级模式。",
+      );
     }
   }
 
@@ -1641,5 +2047,15 @@ var toggleTheme = null;
   } else {
     boot();
   }
-
 })();
+
+window.addEventListener("DOMContentLoaded", () => {
+  window.chrome.webview.addEventListener("message", function (event) {
+    const message = event.data;
+
+    if (message.type === "loadFile") {
+      // 直接使用传递过来的 text 和 filename
+      window.loadManifestJson(message.text);
+    }
+  });
+});

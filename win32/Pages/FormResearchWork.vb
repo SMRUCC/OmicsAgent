@@ -36,7 +36,7 @@ Public Class FormResearchWork
     End Sub
 
     Private Sub ActiveRibbonMenu()
-        Ribbon.MenuResearchWork.ContextAvailable = ContextAvailability.Available
+        Ribbon.MenuResearchWork.ContextAvailable = ContextAvailability.Active
 
         Call btnOpenKb.Addhandler(AddressOf OpenKBPage)
         Call btnDataset.Addhandler(AddressOf OpenDatasetPage)
