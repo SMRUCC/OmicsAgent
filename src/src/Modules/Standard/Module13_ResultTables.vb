@@ -325,7 +325,7 @@ Public Class ResultTablesModule : Inherits AnalysisModuleBase
             End If
         End Using
 
-        ' LLM 调用失败时回退到骨架（注释为空），保证 R 脚本仍可运行
+        ' LLM 调用失败时回退到骨架（注释为空），保证 xlsx 仍可正常生成
         Return sk
     End Function
 
