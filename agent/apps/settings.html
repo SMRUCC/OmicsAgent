@@ -210,23 +210,25 @@
                 </div>
             </div>
             <div class="spacer"></div>
-            <button class="btn" id="loadBtn" title="加载 JSON 配置">
-                <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 3v12m0 0l-4-4m4 4l4-4" />
-                    <path d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" />
-                </svg>
-                加载配置
-            </button>
-            <button class="btn primary" id="genBtn" title="生成 JSON 字符串">
-                <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 4h16v16H4z" />
-                    <path d="M9 9l-2 3 2 3M15 9l2 3-2 3" />
-                </svg>
-                生成 JSON
-            </button>
-            <button class="btn" id="themeBtn" title="切换主题">
-                <span id="themeIcon">🌙</span><span id="themeLabel">暗色</span>
-            </button>
+			<div id="btn-group">
+				<button class="btn" id="loadBtn" title="加载 JSON 配置">
+					<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M12 3v12m0 0l-4-4m4 4l4-4" />
+						<path d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" />
+					</svg>
+					加载配置
+				</button>
+				<button class="btn primary" id="genBtn" title="生成 JSON 字符串">
+					<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M4 4h16v16H4z" />
+						<path d="M9 9l-2 3 2 3M15 9l2 3-2 3" />
+					</svg>
+					生成 JSON
+				</button>
+				<button class="btn" id="themeBtn" title="切换主题">
+					<span id="themeIcon">🌙</span><span id="themeLabel">暗色</span>
+				</button>
+			</div>
         </header>
 
         <aside class="sidebar" id="sidebar">
@@ -285,7 +287,7 @@
                 title: "文献检索", cardClass: "card--green", dot: "var(--card-green)",
                 fields: [
                     { key: "AutoSearchLiterature", type: "bool", label: "自动检索文献" },
-                    { key: "LiteratureSearchStrategy", type: "enum", options: ["none", "auto", "custom"], label: "检索策略" },
+                    { key: "LiteratureSearchStrategy", type: "enum", options: ["none", "mysql", "ncbi"], label: "检索策略" },
                     { key: "MaxLiteratureCount", type: "number", step: "1", label: "最大文献数量" }
                 ]
             },
@@ -302,7 +304,7 @@
             Report: {
                 title: "报告输出", cardClass: "card--teal", dot: "var(--card-teal)",
                 fields: [
-                    { key: "OutputFormat", type: "enum", options: ["pdf", "html", "markdown"], label: "输出格式" }
+                    { key: "OutputFormat", type: "enum", options: ["pdf", "docx", "both"], label: "输出格式" }
                 ]
             },
             Tools: {
