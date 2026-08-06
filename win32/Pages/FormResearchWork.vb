@@ -41,12 +41,16 @@ Public Class FormResearchWork
 
     Private Sub RunAgentTask()
         If agentContainer Is Nothing Then
-            agentContainer = New FormOmicsAgent With {
-                .workspace = Workspace
-            }
+            If MessageBox.Show("Start to run a long time omics analysis task by agent?", "Run Task", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk) = DialogResult.OK Then
+                agentContainer = New FormOmicsAgent With {
+                    .workspace = Workspace
+                }
+            End If
         End If
 
-        Call CommonRuntime.ShowDocument(agentContainer)
+        If Not agentContainer Is Nothing Then
+            Call CommonRuntime.ShowDocument(agentContainer)
+        End If
     End Sub
 
     Private Sub ActiveRibbonMenu()
