@@ -31,18 +31,36 @@ Public Class PLSPMAnalysisModule : Inherits AnalysisModuleBase
         ' 单组学场景下不具备建模前提，此处直接给出明确的跳过指令，
         ' 而不是让 LLM 自行判断——后者容易勉强构造出没有生物学意义的路径模型。
         If Not _context.IsMultiOmics Then
-            Return $"本次为**单组学**分析，只有一个组学数据集：{_context.Datasets.FirstOrDefault?.DisplayName}。
+            Return $"你是一个顶级的生物信息学数据分析专家和R语言程序员。你的当前任务是：基于用户提供的单组学表达矩阵、WGCNA分析结果以及KEGG通路注释结果，构建 Partial Least Squares Path Modeling (PLS-PM) 因果网络模型。
+你需要通过编写R脚本，构建模块与通路之间的调控关系路径，执行分析，生成可视化图表，并从结果中提炼生物学机制。
 
-PLS-PM（偏最小二乘路径建模）的建模对象是不同组学层次之间的因果路径，
-需要至少两个组学层次才能构建有意义的路径模型，因此本模块在单组学场景下不适用。
+## 数据输入规范
+在执行任务前，确认以下数据对象已在R环境中可用：
 
-# 你的任务
-请直接跳过本模块的分析，生成一个不做任何实质计算的最简计划，并在结论中说明：
-本次分析为单组学数据，不具备构建跨组学层次因果路径模型的前提条件，故跳过 PLS-PM 分析。
++ expr_data: 标准化后的表达矩阵（行为分子/基因，列为样本）。
++ wgcna_modules: WGCNA模块归属数据框（至少包含两列：molecule 和 module_color 或 module_name）。
++ kegg_annotation: KEGG通路注释数据框（至少包含两列：molecule 和 pathway_id 或 pathway_name）。
++ me_matrix (可选): WGCNA计算出的模块特征基因矩阵，样本为行，模块为列。若无，需在脚本中计算。
 
-不要为了执行本模块而把单个组学人为拆分成多个伪层次，那样得到的路径系数没有生物学意义。"
+## 核心执行步骤与规则
+步骤 1：构建 PLS-PM 数据模型（潜变量与显变量定义）
+请LLM根据输入数据，遵循以下规则构建PLS-PM所需的blocks（显变量列表）和path_matrix（路径矩阵）：
+
+潜变量定义：将WGCNA模块（如""MEblue"", ""MEbrown""）和KEGG通路（如""hsa04910"", ""hsa04210""）均定义为潜变量。
+显变量选择：
+为避免显变量重叠导致的多重共线性问题，严禁将同一个分子同时分配给模块和通路。
+对于模块潜变量：选取该模块内连通性或模块隶属度最高的Top 5-10个分子作为显变量；或者直接使用模块特征基因作为单一显变量（推荐，以提高模型稳定性）。
+对于通路潜变量：选取该通路内表达方差最大或差异最显著的Top 5-10个分子作为显变量。确保这些分子不属于上述任何模块的显变量集。
+路径矩阵设定：
+基于先验生物学知识设定路径方向。通常设定为：KEGG通路 -> WGCNA模块（即通路调控模块共表达），或 WGCNA模块 -> KEGG通路。
+路径矩阵必须为下三角矩阵，符合plspm包的输入要求。不得存在循环路径。
+"
+        Else
+            Return MultipleOmicsPrompt()
         End If
+    End Function
 
+    Private Function MultipleOmicsPrompt() As String
         Dim datasets = _context.Datasets
         Dim blocks As String = datasets _
             .Select(Function(d) $"  - [{d.Id}] {d.DisplayName}（{d.OmicsType}）：tmp/{d.PreprocessedFileName}") _
@@ -50,7 +68,7 @@ PLS-PM（偏最小二乘路径建模）的建模对象是不同组学层次之�
 
         Dim pathOrder As String = datasets.Select(Function(d) $"[{d.Id}]").JoinBy(" -> ")
 
-        Return $"为 PLS-PM（偏最小二乘路径建模）因果路径分析设计计划。
+        Return $"你是一个顶级的生物信息学数据分析专家和R语言程序员。你的当前任务是为 PLS-PM（偏最小二乘路径建模）因果路径分析设计计划。
 本次为多组学分析，共 {datasets.Count} 个组学层次，具备构建跨组学因果路径模型的前提。
 
 # 潜变量分块（每个组学对应一个潜变量块）
