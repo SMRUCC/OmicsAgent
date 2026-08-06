@@ -17,6 +17,10 @@ Public Class SheetAnnotations
 
     End Class
 
+    ''' <summary>
+    ''' get json string of this data model, the <see cref="UserDataTablesModule.GenerateGoalAndAnnotationsForGroupAsync"/> is relay on this method
+    ''' </summary>
+    ''' <returns></returns>
     Public Overrides Function ToString() As String
         Return Me.GetJson
     End Function

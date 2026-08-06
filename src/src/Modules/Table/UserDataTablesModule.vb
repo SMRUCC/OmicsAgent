@@ -199,7 +199,7 @@ Public Class UserDataTablesModule : Inherits AnalysisModuleBase
 
         ' 保存完整注释 JSON（含 goal 和 sheets）
         Dim descPath = Path.Combine(outputDir, "table_descriptions.json")
-        Call goalJson.SaveTo(descPath)
+        Call goalJson.ToString.SaveTo(descPath)
         LogInfo($"组 {groupIndex} 目标与注释 JSON 已保存：{descPath}")
 
         ' 5. 第二次 LLM 调用：编写并执行生成 xlsx 的 R 脚本
@@ -299,24 +299,20 @@ Public Class UserDataTablesModule : Inherits AnalysisModuleBase
     ''' </summary>
     Private Async Function GenerateGoalAndAnnotationsForGroupAsync(folderName As String, csvFiles As List(Of String), xlsxfile$, researchTopic As String, kbContent As String, cancellationToken As CancellationToken) As Task(Of SheetAnnotations)
         ' 构建骨架 JSON
-        Dim sk As New Text.StringBuilder()
-        sk.AppendLine("{")
-        sk.AppendLine($"  ""goal"": """",")
-        sk.AppendLine($"  ""folder_name"": ""{folderName.BaseName}"",")
-        sk.AppendLine($"  ""xlsx_file"": ""{xlsxfile}"",")
-        sk.AppendLine("  ""sheets"": [")
-        Dim firstSheet = True
-        For Each csv In csvFiles
-            If Not firstSheet Then sk.AppendLine("    },")
-            firstSheet = False
-            sk.AppendLine("    {")
-            sk.AppendLine($"      ""csv"": ""{csv}"",")
-            sk.AppendLine($"      ""sheet_name"": ""{SanitizeSheetName(csv)}"",")
-            sk.AppendLine("      ""annotation"": """"")
-        Next
-        If csvFiles.Count > 0 Then sk.AppendLine("    }")
-        sk.AppendLine("  ]")
-        sk.AppendLine("}")
+        Dim sk As New SheetAnnotations With {
+            .goal = "<write the goal at here>",
+            .folder_name = folderName.BaseName,
+            .xlsx_file = xlsxfile,
+            .sheets = csvFiles _
+                .Select(Function(path)
+                            Return New SheetAnnotations.Sheet With {
+                                .annotation = "",
+                                .csv = path,
+                                .sheet_name = SanitizeSheetName(path)
+                            }
+                        End Function) _
+                .ToArray
+        }
         Dim skeleton = sk.ToString()
 
         ' 构建每个 sheet 的表头信息
@@ -374,28 +370,25 @@ Public Class UserDataTablesModule : Inherits AnalysisModuleBase
 
             Dim resp = Await llm.Chat(prompt, cancellationToken)
             Dim json = resp.ExtractJsonFromResponse
-            If Not String.IsNullOrEmpty(json) Then
-                Return json
+            Dim result As SheetAnnotations = SheetAnnotations.ParseJSON(json)
+
+            If Not result Is Nothing Then
+                Return result
             End If
         End Using
 
         ' LLM 调用失败时回退到骨架
-        Return skeleton
+        Return sk
     End Function
 
     ''' <summary>从 LLM 返回的 JSON 中提取 goal 字段</summary>
     ''' <remarks>
     ''' 使用 LenientJsonParser 解析 JSON，兼容 LLM 返回的各种格式变体。
     ''' </remarks>
-    Private Function ExtractGoalFromJson(json As String, fallbackName As String) As String
-        Try
-            Dim parsed As JsonElement = LenientJsonParser.ParseJSON(json)
-            Dim brief = parsed.CreateObject(Of GoalAnnotationBrief)
-            If brief IsNot Nothing AndAlso Not brief.goal.StringEmpty(, True) Then
-                Return brief.goal
-            End If
-        Catch
-        End Try
+    Private Function ExtractGoalFromJson(json As SheetAnnotations, fallbackName As String) As String
+        If Not json.goal.StringEmpty(, True) Then
+            Return json.goal
+        End If
         Return $"用户数据组: {fallbackName}"
     End Function
 
