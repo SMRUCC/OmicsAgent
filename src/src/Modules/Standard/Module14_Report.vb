@@ -44,6 +44,8 @@ Public Class ReportModule : Inherits AnalysisModuleBase
         End Get
     End Property
 
+    Public Property CustomReport As Boolean = False
+
     Public Sub New(config As AgentConfig, context As AnalysisContext, Optional logger As Action(Of String) = Nothing)
         MyBase.New(config, context, logger)
     End Sub
@@ -210,12 +212,16 @@ Public Class ReportModule : Inherits AnalysisModuleBase
 
             ' 未执行的模块没有 figures 目录，跳过而不是抛异常
             If Not Directory.Exists(figuresDir) Then
-                Continue For
+                If CustomReport Then
+                    For Each file As String In result.OutputDir.ListFiles("*.bmp", "*.jpg", "*.png")
+                        Yield New ResourceFile(idx, file)
+                    Next
+                End If
+            Else
+                For Each f In figuresDir.ListFiles("*.bmp", "*.jpg", "*.png")
+                    Yield New ResourceFile(idx, f)
+                Next
             End If
-
-            For Each f In Directory.GetFiles(figuresDir, "*.png")
-                Yield New ResourceFile(idx, f)
-            Next
         Next
     End Function
 

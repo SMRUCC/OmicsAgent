@@ -155,7 +155,9 @@ Module Reporter
         Console.WriteLine("========== Phase 2: Paper Draft Report Generation ==========")
         Console.WriteLine()
 
-        Dim reportModule As New ReportModule(_config, _context, _logger)
+        Dim reportModule As New ReportModule(_config, _context, _logger) With {
+            .CustomReport = True
+        }
 
         Try
             Await reportModule.RunAsync(cancellationToken)
