@@ -115,34 +115,7 @@ Public Class FormFolderWorkspace
             Return
         Else
             ' file display
-            Dim fsNode As FileSystemTree = DirectCast(node.Tag, FileSystemTree)
-            Dim filetype As String = fsNode.FullName.ExtensionSuffix
-
-            Select Case filetype
-                Case "csv", "tsv", "bmp", "jpg", "jpeg", "png", "gif", "tiff", "svg", "pdf", "txt", "log", "json", "jsonl", "xml", "html", "md"
-                    If viewer Is Nothing OrElse viewer.Pinned Then
-                        viewer = New FormFileViewer With {
-                            .port = Port
-                        }
-                        Call CommonRuntime.ShowDocument(viewer)
-                    End If
-
-                    Await viewer.CheckReady
-                    Await viewer.ViewFile(fsNode.FullName)
-
-                Case "xlsx"
-                    ' Handle Excel files
-                Case Else
-                    Call CommonRuntime.Warning($"Sorry, the file type(*.{filetype}) is not yet supported")
-            End Select
-
-            Select Case filetype
-                Case "csv", "tsv", "txt", "log", "json", "jsonl", "xml", "html", "md"
-                    Dim llm = RibbonMenu.OpenLLmTool.WebView2llmui1
-
-                    Await llm.ClearFileReference
-                    Await llm.SetFileReference(Folder & "/" & fsNode.FullName)
-            End Select
+            Await ViewFile(fsNode:=DirectCast(node.Tag, FileSystemTree), as_text:=False)
         End If
     End Sub
 
@@ -160,6 +133,57 @@ Public Class FormFolderWorkspace
     Private Sub PinToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PinToolStripMenuItem.Click
         If Not viewer Is Nothing Then
             viewer.Pinned = True
+        End If
+    End Sub
+
+    Private Async Function ViewFile(fsNode As FileSystemTree, as_text As Boolean) As Task
+        Dim filetype As String = fsNode.FullName.ExtensionSuffix
+
+        Select Case filetype
+            Case "csv", "tsv", "svg", "txt", "log", "json", "jsonl", "xml", "html", "md"
+
+                Await ShowFile(fsNode, as_text)
+
+            Case "bmp", "jpg", "jpeg", "png", "gif", "tiff", "pdf"
+
+                Await ShowFile(fsNode, as_text:=False)
+
+            Case "xlsx"
+                ' Handle Excel files
+            Case Else
+                Call CommonRuntime.Warning($"Sorry, the file type(*.{filetype}) is not yet supported")
+        End Select
+
+        Select Case filetype
+            Case "csv", "tsv", "txt", "log", "json", "jsonl", "xml", "html", "md", "r", "py"
+                Dim llm = RibbonMenu.OpenLLmTool.WebView2llmui1
+
+                Await llm.ClearFileReference
+                Await llm.SetFileReference(Folder & "/" & fsNode.FullName)
+        End Select
+    End Function
+
+    Private Async Function ShowFile(fsNode As FileSystemTree, as_text As Boolean) As Task
+        If viewer Is Nothing OrElse viewer.Pinned Then
+            viewer = New FormFileViewer With {
+                .port = Port
+            }
+            Call CommonRuntime.ShowDocument(viewer)
+        End If
+
+        Await viewer.CheckReady
+        Await viewer.ViewFile(fsNode.FullName, as_text)
+    End Function
+
+    Private Async Sub ViewAsTextFileToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ViewAsTextFileToolStripMenuItem.Click
+        Dim node As TreeNode = TreeView1.SelectedNode
+
+        ' skip of root node and dir node
+        If node.Parent Is Nothing OrElse DirectCast(node.Tag, FileSystemTree).IsDirectory Then
+            Return
+        Else
+            ' file display
+            Await ViewFile(fsNode:=DirectCast(node.Tag, FileSystemTree), as_text:=True)
         End If
     End Sub
 End Class
