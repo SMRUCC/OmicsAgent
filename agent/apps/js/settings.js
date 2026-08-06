@@ -340,20 +340,34 @@ async function copyJson() {
     toast("请先生成 JSON 再复制。", "err");
     return;
   }
-  try {
-    if (navigator.clipboard && window.isSecureContext) {
-      await navigator.clipboard.writeText(text);
-    } else {
-      const ta = document.createElement("textarea");
-      ta.value = text;
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand("copy");
-      ta.remove();
+
+  const h =
+    window.chrome &&
+    window.chrome.webview &&
+    window.chrome.webview.hostObjects &&
+    window.chrome.webview.hostObjects.win32;
+
+  if (h) {
+    h.Save(text);
+    toast("已经保存参数配置到文件。", "ok");
+  } else {
+    toast("无法保存配置为文件，将会复制到剪切板！", "err");
+
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        ta.remove();
+      }
+      toast("已复制到剪贴板。", "ok");
+    } catch (e) {
+      toast("复制失败：" + e.message, "err");
     }
-    toast("已复制到剪贴板。", "ok");
-  } catch (e) {
-    toast("复制失败：" + e.message, "err");
   }
 }
 
