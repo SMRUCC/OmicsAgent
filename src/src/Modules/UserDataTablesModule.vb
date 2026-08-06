@@ -85,24 +85,13 @@ Public Class UserDataTablesModule : Inherits AnalysisModuleBase
     ''' <summary>调用 LLM 生成分析计划</summary>
     Protected Overrides Async Function GeneratePlanAsync(llm As LLMClient, cancellationToken As CancellationToken) As Task(Of ModulePlan)
         Return Await Task.FromResult(New ModulePlan With {
-            .execution_steps = {
-                New [Step] With {.action = "整理用户数据表格并生成xlsx文件", .goal = "整理用户数据表格并生成xlsx文件"}
-            },
-            .goal = "整理用户数据表格并生成xlsx文件",
+            .execution_steps = GetFolderSteps.ToArray,
+            .goal = "理解用户的结果数据，然后按照用户的研究背景研究目的对用户的结果数据做出科学性的总结，最后整理用户数据表格并生成xlsx文件",
             .module_name = ModuleName
         })
     End Function
 
-    ''' <summary>生成总结，由基类在 GenerateConclusionAsync 中调用</summary>
-    Protected Overrides Async Function GenerateConclusionAsync(llm As LLMClient, plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)
-        Return Await Task.FromResult(GetConclusionItems)
-    End Function
-
-    ''' <summary>
-    ''' 核心逻辑：扫描用户数据文件夹，为每组数据生成注释并创建 xlsx，
-    ''' 同时构造 ModuleResult 对象填充 _context.ModuleResults。
-    ''' </summary>
-    Protected Overrides Async Function GenerateAndRunScriptAsync(llm As LLMClient, plan As ModulePlan, [step] As [Step], cancellationToken As CancellationToken) As Task
+    Private Iterator Function GetFolderSteps() As IEnumerable(Of [Step])
         LogInfo("Scanning user data folders and compiling result tables into XLSX files...")
 
         Dim dirsFile As String = _context.UserDataDirsFile
@@ -119,33 +108,49 @@ Public Class UserDataTablesModule : Inherits AnalysisModuleBase
 
         ' 解析 dirs 文件，每行一个文件夹路径，跳过空行和 # 注释行
         Dim userFolders = ParseDirsFile(dirsFile).ToArray
-        If userFolders.Count = 0 Then
+        If userFolders.Length = 0 Then
             LogInfo("No valid folder paths found in dirs file.")
             Return
         End If
 
-        LogInfo($"Found {userFolders.Count} folder(s) in dirs file")
+        LogInfo($"Found {userFolders.Length} folder(s) in dirs file")
 
+        Dim index As Integer = 1
+
+        For Each path As String In userFolders
+            Yield New [Step] With {
+                .rscript_path = index & ":" & path,
+                .action = $"理解用户在文件夹{path}中的结果数据，然后按照用户的研究背景研究目的对用户的结果数据做出科学性的总结，最后整理用户数据表格并生成xlsx文件",
+                .goal = "整理用户数据表格并生成xlsx文件"
+            }
+        Next
+    End Function
+
+    ''' <summary>生成总结，由基类在 GenerateConclusionAsync 中调用</summary>
+    Protected Overrides Async Function GenerateConclusionAsync(llm As LLMClient, plan As ModulePlan, cancellationToken As CancellationToken) As Task(Of String)
+        Return Await Task.FromResult(GetConclusionItems)
+    End Function
+
+    ''' <summary>
+    ''' 核心逻辑：扫描用户数据文件夹，为每组数据生成注释并创建 xlsx，
+    ''' 同时构造 ModuleResult 对象填充 _context.ModuleResults。
+    ''' </summary>
+    Protected Overrides Async Function GenerateAndRunScriptAsync(llm As LLMClient, plan As ModulePlan, [step] As [Step], cancellationToken As CancellationToken) As Task
         ' 在循环外一次性读取 kb.json 知识库内容，复用于每个数据组的注释提示词
         Dim kbContent = ReadKnowledgeBaseContent()
         ' 读取研究主题
         Dim researchTopic As String = If(Not _context.ResearchTopic.StringEmpty(, True), _context.ResearchTopic, "(未提供)")
+        Dim data = [step].rscript_path.GetTagValue(":")
+        Dim groupIndex As Integer = Integer.Parse(data.Name)
+        Dim folderPath As String = data.Value
 
-        Dim groupIndex As Integer = 0
-
-        For Each folderPath As String In userFolders
-            If cancellationToken.IsCancellationRequested Then Exit For
-            groupIndex += 1
-
-            Try
-                Await ProcessUserDataGroupAsync(folderPath, groupIndex, kbContent, researchTopic, plan, [step], cancellationToken)
-            Catch ex As Exception
-                LogInfo($"[警告] 用户数据文件夹 {groupIndex} ({folderPath}) 处理失败：{ex.Message}")
-                LogInfo(ex.StackTrace)
-                ' 单个文件夹失败不影响其他文件夹
-                Continue For
-            End Try
-        Next
+        Try
+            Await ProcessUserDataGroupAsync(folderPath, groupIndex, kbContent, researchTopic, plan, [step], cancellationToken)
+        Catch ex As Exception
+            ' 单个文件夹失败不影响其他文件夹
+            LogInfo($"[警告] 用户数据文件夹 {groupIndex} ({folderPath}) 处理失败：{ex.Message}")
+            LogInfo(ex.StackTrace)
+        End Try
     End Function
 
     ''' <summary>处理单个用户数据文件夹组</summary>
@@ -171,10 +176,10 @@ Public Class UserDataTablesModule : Inherits AnalysisModuleBase
         LogInfo($"正在处理用户数据组 {groupIndex} ({folderName})：发现 {csvFiles.Count} 个 CSV 文件")
 
         ' 3. 创建该组的输出目录并预构造 ModuleResult
-        Dim outputDir As String = Path.Combine(_context.AnalysisDir, $"user_data_{groupIndex}")
+        Dim outputDir As String = Path.Combine(_context.AnalysisDir, $"{groupIndex}_{folderPath.BaseName}")
         Call outputDir.MakeDir
 
-        Dim xlsxFileName As String = $"user_data_{groupIndex}_{folderName.NormalizePathString(alphabetOnly:=True).Replace(" ", "_").ToLower}.xlsx"
+        Dim xlsxFileName As String = $"{groupIndex}_{folderName.NormalizePathString(alphabetOnly:=False).Replace(" ", "_").ToLower}.xlsx"
 
         Dim moduleResult As New ModuleResult With {
             .ModuleName = folderName,
@@ -218,8 +223,7 @@ Public Class UserDataTablesModule : Inherits AnalysisModuleBase
     End Function
 
     ''' <summary>解析 dirs 文件，返回有效文件夹路径列表</summary>
-    Private Function ParseDirsFile(dirsFile As String) As List(Of String)
-        Dim result As New List(Of String)()
+    Private Iterator Function ParseDirsFile(dirsFile As String) As IEnumerable(Of String)
         Try
             For Each line As String In File.ReadLines(dirsFile, Encoding.UTF8)
                 Dim trimmed = line.Trim()
@@ -227,12 +231,12 @@ Public Class UserDataTablesModule : Inherits AnalysisModuleBase
                 If trimmed.StringEmpty(, True) OrElse trimmed.StartsWith("#") Then
                     Continue For
                 End If
-                result.Add(trimmed)
+
+                Yield trimmed.Trim(""""c)
             Next
         Catch ex As Exception
             LogInfo($"[错误] 读取 dirs 文件失败 ({dirsFile})：{ex.Message}")
         End Try
-        Return result
     End Function
 
     ''' <summary>递归收集指定文件夹下的所有 CSV 文件</summary>
