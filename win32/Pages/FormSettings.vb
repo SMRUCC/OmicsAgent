@@ -1,7 +1,7 @@
-﻿Imports System.ComponentModel
-Imports Galaxy.Workbench
+﻿Imports Galaxy.Workbench
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.Web.WebView2.Core
+Imports OmicsWorks.JavaScript
 Imports OmicsWorks.Settings
 
 Public Class FormSettings
@@ -11,6 +11,7 @@ Public Class FormSettings
     End Sub
 
     Private Sub WebView21_CoreWebView2InitializationCompleted(sender As Object, e As CoreWebView2InitializationCompletedEventArgs) Handles WebView21.CoreWebView2InitializationCompleted
+        WebView21.CoreWebView2.AddHostObjectToScript(BasePage.HostObject, New SettingsPage(Me))
         WebView21.CoreWebView2.Navigate($"http://127.0.0.1:{Workbench.port}/settings.html")
     End Sub
 
@@ -19,11 +20,9 @@ Public Class FormSettings
         Await WebView21.ExecuteScriptAsync($"loadFromText({Workbench.config.ToJSON.GetJson})")
     End Sub
 
-    Private Async Sub FormSettings_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-        Dim json As String = Await WebView21.ExecuteScriptAsync("generateJson()")
-        json = json.LoadJSON(Of String)
-        Dim config As AppConfig = AppConfig.FromJSON(json)
+    Friend Async Function SaveSettings(json As String) As Task
+        Dim config As AppConfig = Await Task.FromResult(AppConfig.FromJSON(json))
         Call config.Save()
         Call Workbench.LoadConfig()
-    End Sub
+    End Function
 End Class
