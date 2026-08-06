@@ -20,6 +20,7 @@ Module RibbonMenu
         AddHandler ribbon.ButtonLicense.ExecuteEvent, Sub() Call OpenLicenseDialog()
         AddHandler ribbon.ButtonVennTool.ExecuteEvent, Sub() Call OpenJVennTool()
         AddHandler ribbon.ButtonLLMTool.ExecuteEvent, Sub() Call OpenLLmTool()
+        AddHandler ribbon.ButtonSettings.ExecuteEvent, Sub() Call CommonRuntime.ShowDocument(Of FormSettings)()
     End Sub
 
     Public Function OpenLLmTool() As FormLLMWindow
