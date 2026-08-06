@@ -113,6 +113,10 @@
 #define cmdButtonDataSetToggleOmics_LabelTitle_RESID 60070
 #define cmdButtonDataSetToggleOmics_SmallImages_192__RESID 60071
 #define cmdButtonDataSetToggleOmics_LargeImages_192__RESID 60072
-#define InternalCmd2_LabelTitle_RESID 60073
-#define InternalCmd6_LabelTitle_RESID 60074
-#define InternalCmd8_LabelTitle_RESID 60075
+#define cmdButtonSettings 38 
+#define cmdButtonSettings_LabelTitle_RESID 60073
+#define cmdButtonSettings_SmallImages_192__RESID 60074
+#define cmdButtonSettings_LargeImages_192__RESID 60075
+#define InternalCmd2_LabelTitle_RESID 60076
+#define InternalCmd6_LabelTitle_RESID 60077
+#define InternalCmd8_LabelTitle_RESID 60078

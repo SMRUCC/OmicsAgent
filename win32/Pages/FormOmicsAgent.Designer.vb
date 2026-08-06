@@ -31,6 +31,7 @@ Partial Class FormOmicsAgent
         ' WebViewConsole1
         ' 
         WebViewConsole1.Dock = DockStyle.Fill
+        WebViewConsole1.Font = New Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
         WebViewConsole1.Location = New Point(0, 0)
         WebViewConsole1.Name = "WebViewConsole1"
         WebViewConsole1.Size = New Size(800, 450)
@@ -38,7 +39,7 @@ Partial Class FormOmicsAgent
         ' 
         ' FormOmicsAgent
         ' 
-        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(800, 450)
         Controls.Add(WebViewConsole1)

@@ -163,6 +163,14 @@
         <Image MinDPI="192">Icons/icons8-analytics-96.png</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdButtonSettings" Id="38" LabelTitle="Settings">
+      <Command.SmallImages>
+        <Image MinDPI="192">Icons/icons8-settings-96.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Icons/icons8-settings-96.png</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <Ribbon>
@@ -180,6 +188,7 @@
             </DropDownButton>
           </MenuGroup>
           <MenuGroup>
+            <Button CommandName="cmdButtonSettings" />
             <Button CommandName="cmdButtonLicense" />
           </MenuGroup>
           <MenuGroup>
