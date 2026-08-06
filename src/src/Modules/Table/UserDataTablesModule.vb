@@ -119,6 +119,8 @@ Public Class UserDataTablesModule : Inherits AnalysisModuleBase
                 .action = $"理解用户在文件夹{path}中的结果数据，然后按照用户的研究背景研究目的对用户的结果数据做出科学性的总结，最后整理用户数据表格并生成xlsx文件",
                 .goal = "整理用户数据表格并生成xlsx文件"
             }
+
+            index += 1
         Next
     End Function
 
