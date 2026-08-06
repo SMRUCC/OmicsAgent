@@ -135,17 +135,24 @@ const DEFAULT_CONFIG = {
 /* ===================== 工具函数 ===================== */
 const $ = (sel, root = document) => root.querySelector(sel);
 
-function showBanner(message, kind) {
-  const host = $("#bannerHost");
-  const el = document.createElement("div");
-  el.className = "banner " + (kind || "info");
-  el.textContent = message;
-  host.prepend(el);
+function esc(s) {
+  return String(s).replace(/[&<>"]/g, (c) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"
+  }[c]));
+}
+
+function toast(message, kind) {
+  const host = $("#toastHost");
+  if (!host) return;
+  const t = document.createElement("div");
+  t.className = "toast" + (kind ? " " + kind : "");
+  t.innerHTML = esc(message);
+  host.appendChild(t);
   setTimeout(() => {
-    el.style.transition = "opacity 0.4s ease";
-    el.style.opacity = "0";
-    setTimeout(() => el.remove(), 400);
-  }, 3600);
+    t.classList.add("leaving");
+    setTimeout(() => t.remove(), 320);
+  }, 2600);
+  return t;
 }
 
 function coerceValue(field, raw) {
@@ -319,9 +326,9 @@ function loadFromText(text) {
     const cfg = JSON.parse(text);
     applyConfig(cfg);
     generateJson();
-    showBanner("配置已成功加载并回填。", "info");
+    toast("配置已成功加载并回填。", "ok");
   } catch (e) {
-    showBanner("JSON 解析失败：" + e.message, "err");
+    toast("JSON 解析失败：" + e.message, "err");
   }
 }
 
@@ -330,7 +337,7 @@ async function copyJson() {
   generateJson();
   const text = $("#jsonOut").textContent;
   if (!text || text.startsWith("点击")) {
-    showBanner("请先生成 JSON 再复制。", "err");
+    toast("请先生成 JSON 再复制。", "err");
     return;
   }
   try {
@@ -344,16 +351,16 @@ async function copyJson() {
       document.execCommand("copy");
       ta.remove();
     }
-    showBanner("已复制到剪贴板。", "info");
+    toast("已复制到剪贴板。", "ok");
   } catch (e) {
-    showBanner("复制失败：" + e.message, "err");
+    toast("复制失败：" + e.message, "err");
   }
 }
 
 function downloadJson() {
   const text = $("#jsonOut").textContent;
   if (!text || text.startsWith("点击")) {
-    showBanner("请先生成 JSON 再下载。", "err");
+    toast("请先生成 JSON 再下载。", "err");
     return;
   }
   const blob = new Blob([text], { type: "application/json" });
@@ -365,7 +372,7 @@ function downloadJson() {
   a.click();
   a.remove();
   URL.revokeObjectURL(url);
-  showBanner("已导出 app-config.json。", "info");
+  toast("已导出 app-config.json。", "ok");
 }
 
 /* ===================== 主题切换 ===================== */
@@ -415,7 +422,7 @@ function init() {
     if (!file) return;
     const reader = new FileReader();
     reader.onload = () => loadFromText(String(reader.result));
-    reader.onerror = () => showBanner("文件读取失败。", "err");
+    reader.onerror = () => toast("文件读取失败。", "err");
     reader.readAsText(file);
     e.target.value = "";
   });

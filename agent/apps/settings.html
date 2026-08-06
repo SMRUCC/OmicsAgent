@@ -52,7 +52,6 @@
 
         <main class="content" id="content">
             <div class="view">
-                <div id="bannerHost"></div>
                 <div id="cards"></div>
 
                 <div class="card" id="jsonCard">
@@ -71,6 +70,9 @@
 
     <!-- 隐藏的文件选择器 -->
     <input type="file" id="fileInput" accept=".json,application/json" class="hidden" />
+
+    <!-- 吐司提示容器（右下角） -->
+    <div class="toast-host" id="toastHost" aria-live="polite"></div>
 
     <script src="js/settings.js" type="text/javascript"></script>
 </body>
