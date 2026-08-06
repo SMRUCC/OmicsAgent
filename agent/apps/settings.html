@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>应用参数配置 · Settings</title>
+    <link href="styles/kb.css" rel="stylesheet">
+    <style>
+        /* 仅在 kb.css 布局之上的少量辅助样式，不定义新设计令牌 */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px 22px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            min-width: 0;
+        }
+
+        .field>label {
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--ui-foreground-muted);
+            letter-spacing: 0.3px;
+        }
+
+        .field>label .code-key {
+            font-family: var(--font-code);
+            font-size: 11px;
+            color: var(--ui-foreground-subtle);
+            font-weight: 400;
+            margin-left: 6px;
+        }
+
+        /* 复用 .search 外观，将其扩展为通用控件样式 */
+        .ctrl {
+            width: 100%;
+            padding: 9px 12px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--ui-border-strong);
+            background: var(--ui-background);
+            color: var(--ui-foreground);
+            font-family: var(--font-ui);
+            font-size: 13px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+        }
+
+        .ctrl:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px var(--accent-soft);
+        }
+
+        select.ctrl {
+            appearance: none;
+            background-image: linear-gradient(45deg, transparent 50%, var(--ui-foreground-muted) 50%),
+                linear-gradient(135deg, var(--ui-foreground-muted) 50%, transparent 50%);
+            background-position:
+                calc(100% - 18px) calc(1em + 1px),
+                calc(100% - 13px) calc(1em + 1px);
+            background-size: 5px 5px, 5px 5px;
+            background-repeat: no-repeat;
+            padding-right: 34px;
+            cursor: pointer;
+        }
+
+        /* 布尔开关 */
+        .switch {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            user-select: none;
+            font-size: 13px;
+            color: var(--ui-foreground);
+        }
+
+        .switch input {
+            appearance: none;
+            -webkit-appearance: none;
+            position: relative;
+            width: 40px;
+            height: 22px;
+            border-radius: 999px;
+            background: var(--ui-border-strong);
+            border: 1px solid var(--ui-border-strong);
+            cursor: pointer;
+            transition: background 0.2s ease, border-color 0.2s ease;
+            flex: none;
+        }
+
+        .switch input:checked {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .switch input::after {
+            content: "";
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #fff;
+            transition: transform 0.2s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .switch input:checked::after {
+            transform: translateX(18px);
+        }
+
+        .switch .state {
+            font-family: var(--font-code);
+            font-size: 12px;
+            color: var(--ui-foreground-muted);
+            min-width: 30px;
+        }
+
+        /* JSON 输出区 */
+        .json-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        pre.json-out {
+            background: var(--code-background);
+            border: 1px solid var(--code-border);
+            border-radius: var(--radius-sm);
+            padding: 16px 18px;
+            margin: 0;
+            max-height: 360px;
+            overflow: auto;
+            font-family: var(--font-code);
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--code-foreground);
+            white-space: pre;
+        }
+
+        /* 侧栏导航项 */
+        .nav-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .nav-item {
+            text-align: left;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-radius: var(--radius-sm);
+            background: var(--ui-background);
+            padding: 10px 12px;
+            color: var(--ui-foreground);
+            transition: transform 0.15s ease, border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-item:hover {
+            transform: translateX(3px);
+            border-color: var(--ui-border-strong);
+            background: var(--ui-background-hover);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-item .dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            flex: none;
+        }
+
+        .nav-item .t {
+            font-size: 13.5px;
+            font-weight: 600;
+        }
+
+        .nav-item .k {
+            font-family: var(--font-code);
+            font-size: 11px;
+            color: var(--ui-foreground-muted);
+            margin-left: auto;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <header class="topbar" id="topbar">
+            <div class="brand">
+                <div class="logo">⚙️</div>
+                <div>
+                    <h1>应用参数配置</h1>
+                    <div class="topic" id="topicLine">Application Settings</div>
+                </div>
+            </div>
+            <div class="spacer"></div>
+            <button class="btn" id="loadBtn" title="加载 JSON 配置">
+                <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 3v12m0 0l-4-4m4 4l4-4" />
+                    <path d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" />
+                </svg>
+                加载配置
+            </button>
+            <button class="btn primary" id="genBtn" title="生成 JSON 字符串">
+                <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16v16H4z" />
+                    <path d="M9 9l-2 3 2 3M15 9l2 3-2 3" />
+                </svg>
+                生成 JSON
+            </button>
+            <button class="btn" id="themeBtn" title="切换主题">
+                <span id="themeIcon">🌙</span><span id="themeLabel">暗色</span>
+            </button>
+        </header>
+
+        <aside class="sidebar" id="sidebar">
+            <h2>配置分组</h2>
+            <input class="search" id="navSearch" placeholder="筛选分组…" />
+            <div class="nav-list" id="navList"></div>
+            <div class="hidden" id="navEmpty" style="color:var(--ui-foreground-muted);font-size:12.5px;padding:6px;">无匹配分组</div>
+        </aside>
+        <div class="scrim" id="scrim"></div>
+
+        <main class="content" id="content">
+            <div class="view">
+                <div id="bannerHost"></div>
+                <div id="cards"></div>
+
+                <div class="card" id="jsonCard">
+                    <h3><span class="dot"></span>生成的 JSON 配置</h3>
+                    <div class="json-toolbar">
+                        <button class="btn" id="copyBtn">复制 JSON</button>
+                        <button class="btn" id="downloadBtn">下载 app-config.json</button>
+                        <span id="jsonMeta" style="font-size:12px;color:var(--ui-foreground-muted);margin-left:auto;"></span>
+                    </div>
+                    <pre class="json-out" id="jsonOut">点击「生成 JSON」以生成当前配置字符串…</pre>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 隐藏的文件选择器 -->
+    <input type="file" id="fileInput" accept=".json,application/json" class="hidden" />
+
+    <script>
+        "use strict";
+
+        /* ===================== 配置元数据（驱动渲染） ===================== */
+        const CONFIG_SCHEMA = {
+            Analysis: {
+                title: "分析参数", cardClass: "card--blue", dot: "var(--card-blue)",
+                fields: [
+                    { key: "DiffPvalueCutoff", type: "number", step: "any", label: "差异检验 P 值阈值" },
+                    { key: "DiffTopCount", type: "number", step: "1", label: "差异条目上限" },
+                    { key: "MetaboliteVipCutoff", type: "number", step: "any", label: "代谢物 VIP 阈值" },
+                    { key: "WgcnaTopMAD", type: "number", step: "1", label: "WGCNA 高 MAD 上限" }
+                ]
+            },
+            LLM: {
+                title: "大模型", cardClass: "card--purple", dot: "var(--card-purple)",
+                fields: [
+                    { key: "LLMApiKey", type: "password", label: "API Key" },
+                    { key: "LLMMaxRounds", type: "number", step: "1", label: "最大对话轮数" },
+                    { key: "LLMModelName", type: "text", label: "模型名称" },
+                    { key: "LLMServiceUrl", type: "text", label: "服务地址" }
+                ]
+            },
+            Literature: {
+                title: "文献检索", cardClass: "card--green", dot: "var(--card-green)",
+                fields: [
+                    { key: "AutoSearchLiterature", type: "bool", label: "自动检索文献" },
+                    { key: "LiteratureSearchStrategy", type: "enum", options: ["none", "auto", "custom"], label: "检索策略" },
+                    { key: "MaxLiteratureCount", type: "number", step: "1", label: "最大文献数量" }
+                ]
+            },
+            MySql: {
+                title: "MySQL 数据库", cardClass: "card--orange", dot: "var(--card-orange)",
+                fields: [
+                    { key: "MySqlDatabase", type: "text", label: "数据库名" },
+                    { key: "MySqlHost", type: "text", label: "主机地址" },
+                    { key: "MySqlPassword", type: "password", label: "密码" },
+                    { key: "MySqlPort", type: "number", step: "1", label: "端口" },
+                    { key: "MySqlUser", type: "text", label: "用户名" }
+                ]
+            },
+            Report: {
+                title: "报告输出", cardClass: "card--teal", dot: "var(--card-teal)",
+                fields: [
+                    { key: "OutputFormat", type: "enum", options: ["pdf", "html", "markdown"], label: "输出格式" }
+                ]
+            },
+            Tools: {
+                title: "外部工具", cardClass: "card--pink", dot: "var(--card-pink)",
+                fields: [
+                    { key: "PythonPath", type: "text", label: "Python 路径" },
+                    { key: "RscriptPath", type: "text", label: "Rscript 路径" },
+                    { key: "RsharpPath", type: "text", label: "R# 路径" },
+                    { key: "WkHtmlToPdfPath", type: "text", label: "wkhtmltopdf 路径" }
+                ]
+            }
+        };
+
+        /* 默认值（与用户给定 JSON 完全一致） */
+        const DEFAULT_CONFIG = {
+            Analysis: { DiffPvalueCutoff: 0.05, DiffTopCount: 200, MetaboliteVipCutoff: 1, WgcnaTopMAD: 20000 },
+            LLM: { LLMApiKey: "", LLMMaxRounds: 100, LLMModelName: "", LLMServiceUrl: "http://localhost:11434" },
+            Literature: { AutoSearchLiterature: true, LiteratureSearchStrategy: "none", MaxLiteratureCount: 20 },
+            MySql: { MySqlDatabase: "pubmed", MySqlHost: "localhost", MySqlPassword: "", MySqlPort: 3306, MySqlUser: "root" },
+            Report: { OutputFormat: "pdf" },
+            Tools: { PythonPath: "", RscriptPath: "", RsharpPath: "", WkHtmlToPdfPath: "" }
+        };
+
+        /* ===================== 工具函数 ===================== */
+        const $ = (sel, root = document) => root.querySelector(sel);
+
+        function showBanner(message, kind) {
+            const host = $("#bannerHost");
+            const el = document.createElement("div");
+            el.className = "banner " + (kind || "info");
+            el.textContent = message;
+            host.prepend(el);
+            setTimeout(() => {
+                el.style.transition = "opacity 0.4s ease";
+                el.style.opacity = "0";
+                setTimeout(() => el.remove(), 400);
+            }, 3600);
+        }
+
+        function coerceValue(field, raw) {
+            if (raw === undefined || raw === null) return raw;
+            if (field.type === "number") {
+                const n = Number(raw);
+                return Number.isNaN(n) ? raw : n;
+            }
+            if (field.type === "bool") return Boolean(raw);
+            return raw;
+        }
+
+        /* ===================== 渲染卡片与控件 ===================== */
+        function renderCards() {
+            const cardsHost = $("#cards");
+            const navHost = $("#navList");
+            cardsHost.innerHTML = "";
+            navHost.innerHTML = "";
+
+            Object.entries(CONFIG_SCHEMA).forEach(([group, def]) => {
+                // 主区卡片
+                const card = document.createElement("section");
+                card.className = "card " + def.cardClass;
+                card.id = "card-" + group;
+
+                const h3 = document.createElement("h3");
+                h3.innerHTML = '<span class="dot"></span>' + def.title;
+                card.appendChild(h3);
+
+                const grid = document.createElement("div");
+                grid.className = "form-grid";
+
+                def.fields.forEach((field) => {
+                    const wrap = document.createElement("div");
+                    wrap.className = "field";
+
+                    const label = document.createElement("label");
+                    label.setAttribute("for", "f-" + group + "-" + field.key);
+                    label.innerHTML = field.label +
+                        '<span class="code-key">' + field.key + '</span>';
+                    wrap.appendChild(label);
+
+                    let ctrl;
+                    if (field.type === "bool") {
+                        const sw = document.createElement("label");
+                        sw.className = "switch";
+                        ctrl = document.createElement("input");
+                        ctrl.type = "checkbox";
+                        ctrl.id = "f-" + group + "-" + field.key;
+                        const state = document.createElement("span");
+                        state.className = "state";
+                        state.textContent = "false";
+                        ctrl.addEventListener("change", () => { state.textContent = ctrl.checked ? "true" : "false"; });
+                        sw.appendChild(ctrl);
+                        sw.appendChild(state);
+                        wrap.appendChild(sw);
+                    } else if (field.type === "enum") {
+                        ctrl = document.createElement("select");
+                        ctrl.className = "ctrl";
+                        ctrl.id = "f-" + group + "-" + field.key;
+                        (field.options || []).forEach((opt) => {
+                            const o = document.createElement("option");
+                            o.value = opt; o.textContent = opt;
+                            ctrl.appendChild(o);
+                        });
+                        wrap.appendChild(ctrl);
+                    } else if (field.type === "number") {
+                        ctrl = document.createElement("input");
+                        ctrl.type = "number";
+                        ctrl.className = "ctrl";
+                        ctrl.id = "f-" + group + "-" + field.key;
+                        if (field.step) ctrl.step = field.step;
+                        wrap.appendChild(ctrl);
+                    } else {
+                        ctrl = document.createElement("input");
+                        ctrl.type = field.type === "password" ? "password" : "text";
+                        ctrl.className = "ctrl";
+                        ctrl.id = "f-" + group + "-" + field.key;
+                        wrap.appendChild(ctrl);
+                    }
+                    ctrl.dataset.group = group;
+                    ctrl.dataset.key = field.key;
+                    ctrl.dataset.ftype = field.type;
+
+                    grid.appendChild(wrap);
+                });
+
+                card.appendChild(grid);
+                cardsHost.appendChild(card);
+
+                // 侧栏导航
+                const nav = document.createElement("button");
+                nav.className = "nav-item";
+                nav.dataset.group = group;
+                nav.innerHTML = '<span class="dot" style="background:' + def.dot + '"></span>' +
+                    '<span class="t">' + def.title + '</span>' +
+                    '<span class="k">' + group + '</span>';
+                nav.addEventListener("click", () => {
+                    const target = $("#card-" + group);
+                    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+                });
+                navHost.appendChild(nav);
+            });
+        }
+
+        /* ===================== 读取 / 写入控件值 ===================== */
+        function readConfig() {
+            const out = {};
+            Object.keys(CONFIG_SCHEMA).forEach((group) => {
+                out[group] = {};
+                CONFIG_SCHEMA[group].fields.forEach((field) => {
+                    const ctrl = $("#f-" + group + "-" + field.key);
+                    if (!ctrl) return;
+                    if (field.type === "bool") {
+                        out[group][field.key] = ctrl.checked;
+                    } else if (field.type === "number") {
+                        const v = ctrl.value === "" ? "" : Number(ctrl.value);
+                        out[group][field.key] = v;
+                    } else {
+                        out[group][field.key] = ctrl.value;
+                    }
+                });
+            });
+            return out;
+        }
+
+        function applyConfig(cfg) {
+            if (!cfg || typeof cfg !== "object") throw new Error("配置不是有效的对象");
+            Object.keys(CONFIG_SCHEMA).forEach((group) => {
+                const grp = cfg[group];
+                if (!grp) return;
+                CONFIG_SCHEMA[group].fields.forEach((field) => {
+                    const ctrl = $("#f-" + group + "-" + field.key);
+                    if (!ctrl || !(field.key in grp)) return;
+                    const val = coerceValue(field, grp[field.key]);
+                    if (field.type === "bool") {
+                        ctrl.checked = Boolean(val);
+                        const st = ctrl.parentElement.querySelector(".state");
+                        if (st) st.textContent = ctrl.checked ? "true" : "false";
+                    } else if (field.type === "enum") {
+                        ctrl.value = String(val);
+                    } else {
+                        ctrl.value = (val === undefined || val === null) ? "" : val;
+                    }
+                });
+            });
+        }
+
+        /* ===================== 生成 JSON ===================== */
+        function generateJson() {
+            const cfg = readConfig();
+            const text = JSON.stringify(cfg, null, 2);
+            $("#jsonOut").textContent = text;
+            $("#jsonMeta").textContent = text.length + " 字符";
+            return text;
+        }
+
+        /* ===================== 加载 JSON（文本/文件） ===================== */
+        function loadFromText(text) {
+            try {
+                const cfg = JSON.parse(text);
+                applyConfig(cfg);
+                generateJson();
+                showBanner("配置已成功加载并回填。", "info");
+            } catch (e) {
+                showBanner("JSON 解析失败：" + e.message, "err");
+            }
+        }
+
+        /* ===================== 复制 / 下载 ===================== */
+        async function copyJson() {
+            const text = $("#jsonOut").textContent;
+            if (!text || text.startsWith("点击")) {
+                showBanner("请先生成 JSON 再复制。", "err");
+                return;
+            }
+            try {
+                if (navigator.clipboard && window.isSecureContext) {
+                    await navigator.clipboard.writeText(text);
+                } else {
+                    const ta = document.createElement("textarea");
+                    ta.value = text;
+                    document.body.appendChild(ta);
+                    ta.select();
+                    document.execCommand("copy");
+                    ta.remove();
+                }
+                showBanner("已复制到剪贴板。", "info");
+            } catch (e) {
+                showBanner("复制失败：" + e.message, "err");
+            }
+        }
+
+        function downloadJson() {
+            const text = $("#jsonOut").textContent;
+            if (!text || text.startsWith("点击")) {
+                showBanner("请先生成 JSON 再下载。", "err");
+                return;
+            }
+            const blob = new Blob([text], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "app-config.json";
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(url);
+            showBanner("已导出 app-config.json。", "info");
+        }
+
+        /* ===================== 主题切换 ===================== */
+        function toggleTheme() {
+            const html = document.documentElement;
+            const next = html.getAttribute("data-theme") === "dark" ? "light" : "dark";
+            html.setAttribute("data-theme", next);
+            $("#themeIcon").textContent = next === "dark" ? "☀️" : "🌙";
+            $("#themeLabel").textContent = next === "dark" ? "亮色" : "暗色";
+        }
+
+        /* ===================== 侧栏筛选 ===================== */
+        function bindNavFilter() {
+            const search = $("#navSearch");
+            search.addEventListener("input", () => {
+                const q = search.value.trim().toLowerCase();
+                let shown = 0;
+                document.querySelectorAll(".nav-item").forEach((it) => {
+                    const hay = (it.dataset.group + " " + it.querySelector(".t").textContent).toLowerCase();
+                    const ok = !q || hay.includes(q);
+                    it.classList.toggle("hidden", !ok);
+                    if (ok) shown++;
+                });
+                $("#navEmpty").classList.toggle("hidden", shown > 0);
+            });
+        }
+
+        /* ===================== 初始化 ===================== */
+        function init() {
+            renderCards();
+            bindNavFilter();
+            applyConfig(DEFAULT_CONFIG);
+            generateJson();
+
+            $("#genBtn").addEventListener("click", generateJson);
+            $("#copyBtn").addEventListener("click", copyJson);
+            $("#downloadBtn").addEventListener("click", downloadJson);
+            $("#themeBtn").addEventListener("click", toggleTheme);
+
+            $("#loadBtn").addEventListener("click", () => $("#fileInput").click());
+            $("#fileInput").addEventListener("change", (e) => {
+                const file = e.target.files && e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = () => loadFromText(String(reader.result));
+                reader.onerror = () => showBanner("文件读取失败。", "err");
+                reader.readAsText(file);
+                e.target.value = "";
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", init);
+    </script>
+</body>
+
+</html>
