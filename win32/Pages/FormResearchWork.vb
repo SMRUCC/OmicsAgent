@@ -41,7 +41,9 @@ Public Class FormResearchWork
 
     Private Sub RunAgentTask()
         If agentContainer Is Nothing Then
-            agentContainer = New FormOmicsAgent
+            agentContainer = New FormOmicsAgent With {
+                .workspace = Workspace
+            }
         End If
 
         Call CommonRuntime.ShowDocument(agentContainer)
@@ -53,6 +55,8 @@ Public Class FormResearchWork
         Call btnOpenKb.Addhandler(AddressOf OpenKBPage)
         Call btnDataset.Addhandler(AddressOf OpenDatasetPage)
         Call btnRun.Addhandler(AddressOf RunAgentTask)
+
+        Call RibbonMenu.OpenFolder(Workspace)
     End Sub
 
     Private Async Sub FormResearchWork_Load(sender As Object, e As EventArgs) Handles Me.Load

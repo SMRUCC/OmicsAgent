@@ -57,9 +57,20 @@ Module RibbonMenu
     Public Sub OpenFolder()
         Using dir As New FolderBrowserDialog
             If dir.ShowDialog = DialogResult.OK Then
-                Call CommonRuntime.RegisterToolWindow(New FormFolderWorkspace With {.Folder = dir.SelectedPath}, DockState.DockRight)
+                Call OpenFolder(dir.SelectedPath)
             End If
         End Using
+    End Sub
+
+    Public Sub OpenFolder(folder As String)
+        Dim ws As FormFolderWorkspace = CommonRuntime.TryGetToolWindow("agent_folder")
+
+        If ws Is Nothing Then
+            ws = New FormFolderWorkspace With {.Folder = folder, .Name = "agent_folder"}
+        End If
+
+        Call CommonRuntime.RegisterToolWindow(ws, DockState.DockRight)
+        Call ws.LoadFolder(folder)
     End Sub
 
     Public Sub OpenResearch()

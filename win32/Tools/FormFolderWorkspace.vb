@@ -56,12 +56,23 @@ Public Class FormFolderWorkspace
         End If
     End Sub
 
-    Private Sub FormFolderWorkspace_Load(sender As Object, e As EventArgs) Handles Me.Load
-        http = New HttpServices(Folder)
+    Public Sub LoadFolder(folder As String)
+        Try
+            If Not http Is Nothing Then
+                Call http.Dispose()
+            End If
+        Catch ex As Exception
+
+        End Try
+
+        http = New HttpServices(folder)
         http.StartHttp()
 
         Call BuildFilterDropDown()
         Call RefreshTree(selectedExtensions)
+    End Sub
+
+    Private Sub FormFolderWorkspace_Load(sender As Object, e As EventArgs) Handles Me.Load
         Call ApplyVsTheme(ContextMenuStrip1, ToolStrip1)
     End Sub
 
