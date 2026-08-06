@@ -65,9 +65,11 @@ Module RibbonMenu
     Public Sub OpenResearch()
         Using dir As New FolderBrowserDialog With {.ShowNewFolderButton = True}
             If dir.ShowDialog = DialogResult.OK Then
-                Dim page As New FormResearchWork With {.Workspace = dir.SelectedPath}
-
-                Call CommonRuntime.ShowDocument(page)
+                If License.CheckLicense Then
+                    Call CommonRuntime.ShowDocument(New FormResearchWork With {.Workspace = dir.SelectedPath})
+                Else
+                    Call CommonRuntime.Warning("Unlicensed software, please apply a valid license file and then start your research work.")
+                End If
             End If
         End Using
     End Sub

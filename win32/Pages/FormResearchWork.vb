@@ -1,7 +1,6 @@
 ﻿Imports Fluteway
 Imports Galaxy.Workbench
 Imports Microsoft.Web.WebView2.Core
-Imports OmicsWorks.JavaScript
 Imports RibbonLib.Interop
 
 Public Class FormResearchWork
@@ -44,19 +43,14 @@ Public Class FormResearchWork
     End Sub
 
     Private Async Sub FormResearchWork_Load(sender As Object, e As EventArgs) Handles Me.Load
-        If License.CheckLicense Then
-            Await WebViewLoader.Init(WebView21)
-            Call ActiveRibbonMenu()
-            http = New HttpServices(Workspace)
-            http.StartHttp()
+        Await WebViewLoader.Init(WebView21)
+        Call ActiveRibbonMenu()
+        http = New HttpServices(Workspace)
+        http.StartHttp()
 
-            Dim dirs = $"{Workspace}/analysis".ListDirectory.Select(Function(d) d.BaseName).ToArray
+        Dim dirs = $"{Workspace}/analysis".ListDirectory.Select(Function(d) d.BaseName).ToArray
 
-            Call dirs.SaveTo($"{Workspace}/tmp/modules.txt")
-        Else
-            Call CommonRuntime.Warning("Unlicensed software, please apply a valid license file and then start your research work.")
-            Call Me.Close()
-        End If
+        Call dirs.SaveTo($"{Workspace}/tmp/modules.txt")
     End Sub
 
     Private Sub WebView21_CoreWebView2InitializationCompleted(sender As Object, e As CoreWebView2InitializationCompletedEventArgs) Handles WebView21.CoreWebView2InitializationCompleted
