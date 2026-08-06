@@ -191,7 +191,7 @@ Public Class UserDataTablesModule : Inherits AnalysisModuleBase
         }
 
         ' 4. 第一次 LLM 调用：结合研究主题和知识库，生成该组数据的分析目标（Goal）和每张 sheet 的英文注释 JSON
-        Dim goalJson = Await GenerateGoalAndAnnotationsForGroupAsync(folderPath, csvFiles, xlsxFileName, researchTopic, kbContent, cancellationToken)
+        Dim goalJson As SheetAnnotations = Await GenerateGoalAndAnnotationsForGroupAsync(folderPath, csvFiles, xlsxFileName, researchTopic, kbContent, cancellationToken)
 
         ' 提取 Goal
         Dim goal As String = ExtractGoalFromJson(goalJson, folderName)

@@ -4,8 +4,10 @@ Imports Microsoft.VisualBasic.MIME.application.json.LenientJson
 
 Public Class SheetAnnotations
 
+    Public Property module_index As Integer
+    Public Property module_name As String
+    Public Property output_dir As String
     Public Property goal As String
-    Public Property folder_name As String
     Public Property xlsx_file As String
     Public Property sheets As Sheet()
 

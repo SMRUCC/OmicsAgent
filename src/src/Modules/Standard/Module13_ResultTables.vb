@@ -143,7 +143,7 @@ Public Class ResultTablesModule : Inherits AnalysisModuleBase
         ' 2. 第一次 LLM 调用：生成该模块每张 sheet 第一行的英文注释说明，保存为 JSON
         Dim descJson = Await GenerateAnnotationsForModuleAsync(mr, csvFiles, kbContent, cancellationToken)
         Dim descPath = Path.Combine(mr.OutputDir, "table_descriptions.json")
-        Call descJson.SaveTo(descPath)
+        Call descJson.ToString.SaveTo(descPath)
         LogInfo($"模块 {mr.ModuleIndex} 注释 JSON 已保存：{descPath}")
 
         ' 3. 第二次 LLM 调用：通过函数调用工具编写并执行生成 xlsx 的 R 脚本
@@ -248,30 +248,22 @@ Public Class ResultTablesModule : Inherits AnalysisModuleBase
     ''' 为该模块每张 sheet 第一行生成英文注释（讲解分析结果内容 + 每一列含义），
     ''' 并保存为结构化 JSON。
     ''' </summary>
-    Private Async Function GenerateAnnotationsForModuleAsync(mr As ModuleResult, csvFiles As List(Of String), kbContent As String, cancellationToken As CancellationToken) As Task(Of String)
+    Private Async Function GenerateAnnotationsForModuleAsync(mr As ModuleResult, csvFiles As List(Of String), kbContent As String, cancellationToken As CancellationToken) As Task(Of SheetAnnotations)
         ' 构建单模块骨架 JSON（含 csv 绝对路径、英文 sheet 名、空注释）
-        Dim sk As New StringBuilder()
-        sk.AppendLine("{")
-        sk.AppendLine($"  ""module_index"": {mr.ModuleIndex},")
-        sk.AppendLine($"  ""module_name"": ""{mr.ModuleName}"",")
-        sk.AppendLine($"  ""xlsx_file"": ""{GetModuleXlsxFileName(mr)}"",")
-        sk.AppendLine($"  ""output_dir"": ""{mr.OutputDir}"",")
-        sk.AppendLine("  ""sheets"": [")
-        Dim firstSheet = True
-        For Each csv In csvFiles
-            If Not firstSheet Then sk.AppendLine("    },")
-            firstSheet = False
-            sk.AppendLine("    {")
-            sk.AppendLine($"      ""csv"": ""{csv}"",")
-            sk.AppendLine($"      ""sheet_name"": ""{SanitizeSheetName(csv)}"",")
-            sk.AppendLine("      ""annotation"": """"")
-        Next
-        If csvFiles.Count > 0 Then sk.AppendLine("    }")
-        sk.AppendLine("  ]")
-        sk.AppendLine("}")
-
+        Dim sk As New SheetAnnotations With {
+            .module_index = mr.ModuleIndex,
+            .module_name = mr.ModuleName,
+            .xlsx_file = GetModuleXlsxFileName(mr),
+            .output_dir = mr.OutputDir,
+            .sheets = csvFiles.Select(Function(csv)
+                                          Return New SheetAnnotations.Sheet With {
+                                              .annotation = "",
+                                              .csv = csv,
+                                              .sheet_name = SanitizeSheetName(csv)
+                                          }
+                                      End Function)
+        }
         Dim skeleton = sk.ToString()
-
         ' 构建每个 sheet 的表头信息，供 LLM 编写注释
         Dim headersInfo As New StringBuilder()
         headersInfo.AppendLine($"## 模块 {mr.ModuleIndex}: {mr.ModuleName}")
@@ -330,13 +322,15 @@ Public Class ResultTablesModule : Inherits AnalysisModuleBase
 
             Dim resp = Await llm.Chat(prompt, cancellationToken)
             Dim json = resp.ExtractJsonFromResponse
-            If Not String.IsNullOrEmpty(json) Then
-                Return json
+            Dim result As SheetAnnotations = SheetAnnotations.ParseJSON(json)
+
+            If Not result Is Nothing Then
+                Return result
             End If
         End Using
 
         ' LLM 调用失败时回退到骨架（注释为空），保证 R 脚本仍可运行
-        Return skeleton
+        Return sk
     End Function
 
     ''' <summary>
