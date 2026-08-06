@@ -301,7 +301,7 @@ Public Class UserDataTablesModule : Inherits AnalysisModuleBase
         ' 构建骨架 JSON
         Dim sk As New SheetAnnotations With {
             .goal = "<write the goal at here>",
-            .folder_name = folderName.BaseName,
+            .module_name = folderName.BaseName,
             .xlsx_file = xlsxfile,
             .sheets = csvFiles _
                 .Select(Function(path)

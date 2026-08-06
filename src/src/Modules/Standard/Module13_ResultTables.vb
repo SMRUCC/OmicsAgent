@@ -146,15 +146,15 @@ Public Class ResultTablesModule : Inherits AnalysisModuleBase
         Call descJson.ToString.SaveTo(descPath)
         LogInfo($"模块 {mr.ModuleIndex} 注释 JSON 已保存：{descPath}")
 
-        ' 3. 第二次 LLM 调用：通过函数调用工具编写并执行生成 xlsx 的 R 脚本
-        Dim prompt = BuildRScriptPrompt(descPath, mr.OutputDir, xlsxFileName, mr, plan, [step])
+        ' 3. 在 VB.NET 端直接读取 CSV 并生成带样式的 xlsx（不再走 LLM + R 脚本路线）
+        Dim xlsxPath As String = Path.Combine(mr.OutputDir, xlsxFileName)
+        Dim nsheets As Integer = XlsxReportBuilder.BuildWorkbook(descJson, xlsxPath, AddressOf LogInfo)
 
-        Using llmRscript As LLMClient = _config.CreateLLMClient(FolderBaseName & "-xlsx_" & mr.ModuleIndex, _context.TmpDir)
-            Call RegisterTools(llmRscript, True)
-            Await llmRscript.Chat(prompt, cancellationToken)
-        End Using
-
-        LogInfo($"模块 {mr.ModuleIndex} ({mr.ModuleName}) 的 xlsx 已生成：{Path.Combine(mr.OutputDir, xlsxFileName)}")
+        If nsheets = 0 Then
+            LogInfo($"[警告] 模块 {mr.ModuleIndex} ({mr.ModuleName}) 未生成任何工作表，xlsx 未输出。")
+        Else
+            LogInfo($"模块 {mr.ModuleIndex} ({mr.ModuleName}) 的 xlsx 已生成：{xlsxPath}")
+        End If
     End Function
 
     ''' <summary>递归收集指定 Workdir 下的所有 CSV 文件</summary>
