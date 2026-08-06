@@ -188,7 +188,7 @@ Public Class UserDataTablesModule : Inherits AnalysisModuleBase
 
         ' 4. 第一次 LLM 调用：结合研究主题和知识库，生成该组数据的分析目标（Goal）和每张 sheet 的英文注释 JSON
         Dim descPath = Path.Combine(outputDir, "table_descriptions.json")
-        Dim goalJson As SheetAnnotations = Await GenerateGoalAndAnnotationsForGroupAsync(folderPath, csvFiles, xlsxFileName, researchTopic, kbContent, cancellationToken)
+        Dim goalJson As SheetAnnotations = Await GenerateGoalAndAnnotationsForGroupAsync(folderPath, csvFiles, xlsxFileName, groupIndex, researchTopic, kbContent, cancellationToken)
         ' 提取 Goal
         Dim goal As String = ExtractGoalFromJson(goalJson, folderName)
         moduleResult.Goal = goal
@@ -208,7 +208,7 @@ Public Class UserDataTablesModule : Inherits AnalysisModuleBase
         End If
 
         ' 6. 第三次 LLM 调用：生成该组数据的阶段性中文总结
-        Dim conclusion = Await GenerateConclusionForGroupAsync(folderName, csvFiles, goal, researchTopic, kbContent, cancellationToken)
+        Dim conclusion = Await GenerateConclusionForGroupAsync(folderPath, csvFiles, goal, researchTopic, kbContent, cancellationToken)
         Dim conclusionPath = Path.Combine(outputDir, "conclusion.md")
         Call conclusion.SaveTo(conclusionPath)
         moduleResult.Conclusion = conclusion
@@ -294,7 +294,13 @@ Public Class UserDataTablesModule : Inherits AnalysisModuleBase
     ''' 生成该组数据的分析目标（Goal）和每张 sheet 的英文注释说明。
     ''' 返回包含 goal 和 sheets 字段的 JSON 字符串。
     ''' </summary>
-    Private Async Function GenerateGoalAndAnnotationsForGroupAsync(folderName As String, csvFiles As List(Of String), xlsxfile$, researchTopic As String, kbContent As String, cancellationToken As CancellationToken) As Task(Of SheetAnnotations)
+    Private Async Function GenerateGoalAndAnnotationsForGroupAsync(folderName As String,
+                                                                   csvFiles As List(Of String),
+                                                                   xlsxfile$,
+                                                                   index As Integer,
+                                                                   researchTopic As String,
+                                                                   kbContent As String,
+                                                                   cancellationToken As CancellationToken) As Task(Of SheetAnnotations)
         ' 构建骨架 JSON
         Dim sk As New SheetAnnotations With {
             .goal = "<write the goal at here>",
@@ -308,7 +314,8 @@ Public Class UserDataTablesModule : Inherits AnalysisModuleBase
                                 .sheet_name = SanitizeSheetName(path)
                             }
                         End Function) _
-                .ToArray
+                .ToArray,
+            .module_index = index
         }
         Dim skeleton = sk.ToString()
 
