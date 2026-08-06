@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.ComponentModel.Settings.Inf
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports OmicsAgent.AppRuntime.Ini
 
 Namespace Settings
@@ -29,6 +30,14 @@ Namespace Settings
 
         Shared ReadOnly Property defaultFile As String = App.ProductProgramData & "/omics-works-config.ini"
 
+        Public Function ToJSON() As String
+            Return Me.GetJson
+        End Function
+
+        Public Shared Function FromJSON(jsonstr As String) As AppConfig
+            Return jsonstr.LoadJSON(Of AppConfig)
+        End Function
+
         Public Shared Function Load() As AppConfig
             Dim config As AppConfig = IOProvider.LoadProfile(Of AppConfig)(defaultFile)
 
@@ -38,6 +47,8 @@ Namespace Settings
             End If
 
             If config.LLM Is Nothing Then config.LLM = New LLMConfig
+
+            Call config.GetJson.SaveTo("Z:/config.json")
 
             Return config
         End Function

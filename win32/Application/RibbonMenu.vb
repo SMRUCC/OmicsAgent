@@ -2,8 +2,8 @@
 Imports Galaxy.Workbench.CommonDialogs
 Imports Microsoft.VisualStudio.WinForms.Docking
 Imports Ollama
+Imports OmicsAgent.AppRuntime.Ini
 Imports OmicsWorks.RibbonLib.Controls
-Imports OmicsWorks.Settings
 Imports WebView2UI
 
 Module RibbonMenu
@@ -26,8 +26,8 @@ Module RibbonMenu
         Dim llm As FormLLMWindow = CommonRuntime.TryGetToolWindow("llm_window")
 
         If llm Is Nothing Then
-            Dim config As llm = Workbench.config.llm
-            Dim agent As New LLMClient(LLMUrl.Create(config.endpoint, config.apiKey), config.model)
+            Dim config As LLMConfig = Workbench.config.LLM
+            Dim agent As New LLMClient(LLMUrl.Create(config.LLMServiceUrl, config.LLMApiKey), config.LLMModelName)
 
             llm = New FormLLMWindow With {
                 .Name = "llm_window"
