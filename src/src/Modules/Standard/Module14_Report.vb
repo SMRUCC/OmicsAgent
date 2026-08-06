@@ -216,6 +216,9 @@ Public Class ReportModule : Inherits AnalysisModuleBase
                     For Each file As String In result.OutputDir.ListFiles("*.bmp", "*.jpg", "*.png")
                         Yield New ResourceFile(idx, file)
                     Next
+                    For Each file As String In result.Workdir.ListFiles("*.bmp", "*.jpg", "*.png")
+                        Yield New ResourceFile(idx, file)
+                    Next
                 End If
             Else
                 For Each f In figuresDir.ListFiles("*.bmp", "*.jpg", "*.png")
