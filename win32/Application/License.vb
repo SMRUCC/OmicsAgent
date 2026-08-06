@@ -77,11 +77,7 @@ Module License
                                 "授权验证失败", MessageBoxButtons.OK, MessageBoxIcon.Warning)
 
                 Return SetLicenseStatus(False)
-            Else
-                Call DirectCast(CommonRuntime.AppHost, FormMain).SetLicenseStatus()
             End If
-        Else
-            Call DirectCast(CommonRuntime.AppHost, FormMain).SetLicenseStatus()
         End If
 
         Return SetLicenseStatus(True)

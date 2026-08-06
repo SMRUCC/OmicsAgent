@@ -106,6 +106,19 @@ Public Class FormMain : Implements AppHost
     End Sub
 
     Public Sub SetLicenseStatus()
-        Call Me.Invoke(Sub() ToolStripStatusLabel3.Text = LicenseData.SimpleDescription(GetCurrentLicense))
+        Call Me.Invoke(
+            Sub()
+                Dim lic = GetCurrentLicense()
+
+                ToolStripStatusLabel3.Text = LicenseData.SimpleDescription(lic)
+
+                If lic Is Nothing Then
+                    ToolStripStatusLabel3.Image = Icons8.Warning
+                ElseIf lic.IsValid AndAlso Not lic.IsExpired Then
+                    ToolStripStatusLabel3.Image = Icons8.JobDone
+                Else
+                    ToolStripStatusLabel3.Image = Icons8.Warning
+                End If
+            End Sub)
     End Sub
 End Class
