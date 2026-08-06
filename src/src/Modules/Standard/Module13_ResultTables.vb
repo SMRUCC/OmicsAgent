@@ -18,7 +18,7 @@ Imports OmicsAgent.AppRuntime
 ''' 4. 调用 <see cref="XlsxReportBuilder.BuildWorkbook"/>，在 VB.NET 端直接读取 CSV 并
 '''    写出带样式的 xlsx 结果文件，保存到当前循环模块的 OutputDir。
 '''
-''' xlsx 表格样式由 <see cref="ReportHelper.WriteReportSheet"/> 统一实现：
+''' xlsx 表格样式由 ReportHelper.WriteReportSheet 统一实现：
 ''' - 第 1 行（注释说明文本行）：白底、草绿色斜体字，跨列合并、左对齐
 ''' - 第 2 行（列标题行）：深蓝色背景，白色加粗字体
 ''' - 第 3 行起（正文）：Cambria 11 号字体，首列为深灰色斜体行标题

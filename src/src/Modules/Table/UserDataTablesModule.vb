@@ -26,14 +26,11 @@ Imports OmicsAgent.AppRuntime
 '''   3. LLM 生成数据总结（Conclusion） → 保存 conclusion.md
 '''   4. 将各组 ModuleResult 添加到 _context.ModuleResults
 '''
-''' xlsx 表格样式要求（写入 LLM 提示词，与 Module13 一致）：
-''' - 全局采用 Cambria Math 11 号字体
-''' - 表格缩放 90%
-''' - 背景色为默认的白色
-''' - 第一列（id 列）：浅灰色背景色，斜体，黑色字体颜色
-''' - 第一行（注释说明文本行）：默认背景色，草绿色字体颜色
-''' - 第二行（列标题行）：深蓝色背景色，白色字体颜色，加粗字体
-''' - 第一列 + 第二行进行 freeze panes 冻结
+''' xlsx 表格样式由 ReportHelper.WriteReportSheet 统一实现（与 Module13 一致）：
+''' - 第 1 行（注释说明文本行）：白底、草绿色斜体字，跨列合并、左对齐
+''' - 第 2 行（列标题行）：深蓝色背景，白色加粗字体
+''' - 第 3 行起（正文）：Cambria 11 号字体，首列为深灰色斜体行标题
+''' - 冻结窗格锚定于 B2
 ''' - 所有文本信息（文件名、注释、标题、列标题）均为英文
 ''' </summary>
 Public Class UserDataTablesModule : Inherits AnalysisModuleBase
@@ -63,10 +60,9 @@ Public Class UserDataTablesModule : Inherits AnalysisModuleBase
 2. 递归扫描每个文件夹下的所有 CSV 文件
 3. 跳过没有任何 CSV 文件的文件夹
 4. 对每个文件夹生成一个 XLSX 文件，每个 CSV 对应一个工作表：
-   - 第 1 行：描述/注释文本（草绿色字体），使用英文
+   - 第 1 行：描述/注释文本（草绿色斜体字），使用英文
    - 第 2 行：列标题（深蓝色背景，白色加粗字体）
-   - 第 3 行起：数据
-   - 第 1 列：浅灰色背景，斜体，黑色字体
+   - 第 3 行起：数据，首列为深灰色斜体行标题
    - 在 B2 处冻结窗格
 5. 每个工作表第 1 行的注释文本须由 LLM 结合用户研究主题和知识库内容生成
 6. 对每个文件夹，由 LLM 推断该组数据的研究目标（Goal）并生成阶段性总结（Conclusion）
