@@ -31,7 +31,14 @@ Public Class PLSPMAnalysisModule : Inherits AnalysisModuleBase
         ' 单组学场景下不具备建模前提，此处直接给出明确的跳过指令，
         ' 而不是让 LLM 自行判断——后者容易勉强构造出没有生物学意义的路径模型。
         If Not _context.IsMultiOmics Then
-            Return $"你是一个顶级的生物信息学数据分析专家和R语言程序员。你的当前任务是：基于用户提供的单组学表达矩阵、WGCNA分析结果以及KEGG通路注释结果，构建 Partial Least Squares Path Modeling (PLS-PM) 因果网络模型。
+            Return SingleOmicsPrompt()
+        Else
+            Return MultipleOmicsPrompt()
+        End If
+    End Function
+
+    Private Function SingleOmicsPrompt() As String
+        Return $"你是一个顶级的生物信息学数据分析专家和R语言程序员。你的当前任务是：基于用户提供的单组学表达矩阵、WGCNA分析结果以及KEGG通路注释结果，构建 Partial Least Squares Path Modeling (PLS-PM) 因果网络模型。
 你需要通过编写R脚本，构建模块与通路之间的调控关系路径，执行分析，生成可视化图表，并从结果中提炼生物学机制。
 
 ## 数据输入规范
@@ -54,10 +61,13 @@ Public Class PLSPMAnalysisModule : Inherits AnalysisModuleBase
 路径矩阵设定：
 基于先验生物学知识设定路径方向。通常设定为：KEGG通路 -> WGCNA模块（即通路调控模块共表达），或 WGCNA模块 -> KEGG通路。
 路径矩阵必须为下三角矩阵，符合plspm包的输入要求。不得存在循环路径。
+
+# 绘图要求
+- 使用 plspm、igraph、ggplot2
+- 出版级质量主题
+- 所有文字标签使用英文
+- 同时保存 PNG（300 dpi）和 PDF 两种格式
 "
-        Else
-            Return MultipleOmicsPrompt()
-        End If
     End Function
 
     Private Function MultipleOmicsPrompt() As String
@@ -86,7 +96,7 @@ Public Class PLSPMAnalysisModule : Inherits AnalysisModuleBase
 
 # 实现要求
 - 为每个组学层次构建潜变量块
-  - 直接使用分子表达量作为观测变量时，需先做变量筛选（如差异分子或高变分子）以控制块内变量数
+  - 直接使用KEGG数据库注释结果构建潜变量
   - 也可使用 WGCNA 模块特征基因或 GSVA 通路得分作为观测变量，通常更稳健
 - 依据中心法则设定层间路径方向，建议顺序：{pathOrder}
   若该顺序不符合实际生物学背景，请在计划中说明并给出更合理的路径设定
@@ -109,7 +119,10 @@ Public Class PLSPMAnalysisModule : Inherits AnalysisModuleBase
 
     Protected Overrides Function GetConclusionItems() As String
         If Not _context.IsMultiOmics Then
-            Return "1. 说明本次为单组学分析，不具备构建跨组学因果路径模型的前提，本模块已跳过"
+            Return "1. PLS-PM 因果路径分析结果
+2. 各WGCNA模块，KEGG通路层次潜变量的构建情况及路径系数
+3. 分析结果是否支持用户的研究主题，生物学机制的关联性是否存在强相关
+4. 与前面模块分析结果的一致性和补充性"
         End If
 
         Return "1. PLS-PM 因果路径分析结果（各组学层次之间的因果路径及其方向）
