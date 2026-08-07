@@ -938,6 +938,7 @@ html[data-theme="dark"] .banner code {
   border: 1px solid var(--ui-border);
   border-radius: var(--radius-sm);
   background: var(--ui-background);
+  max-height: 600px;
 }
 
 .jv-comp-table {
