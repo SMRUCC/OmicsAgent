@@ -32,23 +32,23 @@ aggregate_by_taxonomy <- function(expr_matrix, feature_info, level) {
     stop(sprintf("Level '%s' not found in feature_info. Available columns: %s",
                  level, paste(colnames(feature_info), collapse = ", ")))
   }
-
+  
   # 获取分类层级
   taxa_levels <- feature_info[[level]]
   taxa_levels[is.na(taxa_levels) | taxa_levels == ""] <- "Unclassified"
-
+  
   # 按分类层级聚合（求和）
   agg <- stats::aggregate(expr_matrix, list(taxa = taxa_levels), sum)
   rownames(agg) <- agg$taxa
   agg$taxa <- NULL
   agg <- as.matrix(agg)
-
+  
   # 按总丰度排序
   row_order <- order(rowSums(agg), decreasing = TRUE)
   agg <- agg[row_order, , drop = FALSE]
-
+  
   cat(sprintf("[taxa-comp] Aggregated to %s level: %d taxa\n", level, nrow(agg)))
-
+  
   return(list(
     matrix = agg,
     level = level
@@ -118,7 +118,7 @@ plot_taxa_barplot <- function(expr_matrix, sample_info,
     mat <- as.matrix(expr_matrix)
     level_label <- "Feature"
   }
-
+  
   # 转换
   if (transform == "relative") {
     mat <- calc_relative_abundance(mat) * 100
@@ -127,29 +127,29 @@ plot_taxa_barplot <- function(expr_matrix, sample_info,
     mat <- log10(mat + 1)
     y_label <- "log10(Abundance + 1)"
   }
-
+  
   # 按分组聚合
   common <- intersect(colnames(mat), rownames(sample_info))
   mat <- mat[, common, drop = FALSE]
   groups <- sample_info[common, group_col]
-
+  
   group_mat <- t(stats::aggregate(t(mat), list(groups), mean))
   colnames(group_mat) <- group_mat[1, ]
   group_mat <- group_mat[-1, , drop = FALSE]
   group_mat <- apply(group_mat, 2, as.numeric)
   rownames(group_mat) <- rownames(mat)
-
+  
   # Top N + Others
   total_abund <- rowSums(group_mat, na.rm = TRUE)
   top_taxa <- names(sort(total_abund, decreasing = TRUE))[1:min(top_n, nrow(group_mat))]
   others <- setdiff(rownames(group_mat), top_taxa)
-
+  
   if (length(others) > 0) {
     others_row <- colSums(group_mat[others, , drop = FALSE], na.rm = TRUE)
     group_mat <- group_mat[top_taxa, , drop = FALSE]
     group_mat <- rbind(group_mat, Others = others_row)
   }
-
+  
   # 转长格式
   plot_df <- data.frame(
     taxa = rep(rownames(group_mat), ncol(group_mat)),
@@ -159,7 +159,7 @@ plot_taxa_barplot <- function(expr_matrix, sample_info,
   )
   plot_df$group <- factor(plot_df$group, levels = colnames(group_mat))
   plot_df$taxa <- factor(plot_df$taxa, levels = rownames(group_mat))
-
+  
   # 调色板
   n_taxa <- nrow(group_mat)
   if (n_taxa <= 12) {
@@ -169,7 +169,7 @@ plot_taxa_barplot <- function(expr_matrix, sample_info,
       RColorBrewer::brewer.pal(12, palette_name)
     )(n_taxa)
   }
-
+  
   p <- ggplot2::ggplot(plot_df, ggplot2::aes(x = group, y = abundance, fill = taxa)) +
     ggplot2::geom_bar(stat = "identity", width = 0.7) +
     ggplot2::scale_fill_manual(values = colors, name = level_label) +
@@ -185,7 +185,7 @@ plot_taxa_barplot <- function(expr_matrix, sample_info,
       legend.position = "right",
       legend.text = ggplot2::element_text(size = 8)
     )
-
+  
   return(p)
 }
 
@@ -213,12 +213,12 @@ plot_taxa_barplot <- function(expr_matrix, sample_info,
 #'
 #' @export
 plot_taxa_pie <- function(expr_matrix, sample_info = NULL,
-                         feature_info = NULL,
-                         tax_level = NULL,
-                         group_col = "sample_info",
-                         group_name = NULL,
-                         top_n = 10,
-                         palette_name = "Set3") {
+                          feature_info = NULL,
+                          tax_level = NULL,
+                          group_col = "sample_info",
+                          group_name = NULL,
+                          top_n = 10,
+                          palette_name = "Set3") {
   # 按层级聚合
   if (!is.null(tax_level) && !is.null(feature_info)) {
     agg <- aggregate_by_taxonomy(expr_matrix, feature_info, tax_level)
@@ -228,7 +228,7 @@ plot_taxa_pie <- function(expr_matrix, sample_info = NULL,
     mat <- as.matrix(expr_matrix)
     level_label <- "Feature"
   }
-
+  
   # 按分组取均值
   if (!is.null(sample_info) && !is.null(group_name) && group_col %in% colnames(sample_info)) {
     common <- intersect(colnames(mat), rownames(sample_info))
@@ -239,16 +239,16 @@ plot_taxa_pie <- function(expr_matrix, sample_info = NULL,
   } else {
     title_suffix <- " - All samples"
   }
-
+  
   abundances <- rowMeans(mat, na.rm = TRUE)
   total <- sum(abundances)
   percentages <- abundances / total * 100
-
+  
   # Top N + Others
   ord <- order(percentages, decreasing = TRUE)
   top_idx <- ord[1:min(top_n, length(ord))]
   others_idx <- setdiff(seq_along(percentages), top_idx)
-
+  
   plot_df <- data.frame(
     taxa = names(percentages)[top_idx],
     percentage = percentages[top_idx],
@@ -261,10 +261,10 @@ plot_taxa_pie <- function(expr_matrix, sample_info = NULL,
       stringsAsFactors = FALSE
     ))
   }
-
+  
   plot_df$taxa <- factor(plot_df$taxa, levels = plot_df$taxa)
   plot_df$label <- sprintf("%s (%.1f%%)", plot_df$taxa, plot_df$percentage)
-
+  
   n_taxa <- nrow(plot_df)
   if (n_taxa <= 12) {
     colors <- RColorBrewer::brewer.pal(max(3, n_taxa), palette_name)[1:n_taxa]
@@ -273,7 +273,7 @@ plot_taxa_pie <- function(expr_matrix, sample_info = NULL,
       RColorBrewer::brewer.pal(12, palette_name)
     )(n_taxa)
   }
-
+  
   p <- ggplot2::ggplot(plot_df, ggplot2::aes(x = "", y = percentage, fill = taxa)) +
     ggplot2::geom_bar(stat = "identity", width = 1) +
     ggplot2::coord_polar("y", start = 0) +
@@ -289,6 +289,6 @@ plot_taxa_pie <- function(expr_matrix, sample_info = NULL,
       legend.position = "right",
       legend.text = ggplot2::element_text(size = 9)
     )
-
+  
   return(p)
 }

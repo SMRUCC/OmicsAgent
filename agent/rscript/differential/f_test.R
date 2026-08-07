@@ -32,21 +32,21 @@
 #'
 #' @export
 run_f_test <- function(expr_matrix, sample_info, group_col = "sample_info",
-                      exclude_groups = "QC", p_adj_method = "BH") {
+                       exclude_groups = "QC", p_adj_method = "BH") {
   # 对齐样本
   common_samples <- intersect(colnames(expr_matrix), rownames(sample_info))
   expr_matrix <- expr_matrix[, common_samples, drop = FALSE]
   sample_info <- sample_info[common_samples, , drop = FALSE]
-
+  
   # 排除分组
   if (!is.null(exclude_groups)) {
     keep_samples <- rownames(sample_info)[!(sample_info[[group_col]] %in% exclude_groups)]
     expr_matrix <- expr_matrix[, keep_samples, drop = FALSE]
     sample_info <- sample_info[keep_samples, , drop = FALSE]
   }
-
+  
   groups <- factor(sample_info[[group_col]])
-
+  
   # 对每个Feature运行 F 检验
   n_features <- nrow(expr_matrix)
   results <- data.frame(
@@ -55,21 +55,21 @@ run_f_test <- function(expr_matrix, sample_info, group_col = "sample_info",
     p_value = numeric(n_features),
     stringsAsFactors = FALSE
   )
-
+  
   for (i in 1:n_features) {
     fit <- stats::aov(expr_matrix[i, ] ~ groups)
     f_summary <- summary(fit)[[1]]
     results$F_stat[i] <- f_summary$`F value`[1]
     results$p_value[i] <- f_summary$`Pr(>F)`[1]
   }
-
+  
   # 校正 p 值
   results$p_adj <- stats::p.adjust(results$p_value, method = p_adj_method)
   results$significant <- results$p_adj < 0.05
-
+  
   # 将 feature_id 设为行名
   rownames(results) <- results$feature_id
   results$feature_id <- NULL
-
+  
   return(results)
 }

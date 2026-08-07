@@ -51,10 +51,10 @@ create_multiomics_data <- function(expr_list, sample_info,
   if (is.null(sample_info) || nrow(sample_info) == 0) {
     stop("sample_info must be a non-empty data.frame.")
   }
-
+  
   layer_names <- names(expr_list)
   n_layers <- length(layer_names)
-
+  
   # 解析每层的匹配列 -------------------------------------------
   if (length(match_cols) == 1 && is.null(names(match_cols))) {
     match_cols <- stats::setNames(rep(match_cols, n_layers), layer_names)
@@ -71,7 +71,7 @@ create_multiomics_data <- function(expr_list, sample_info,
   } else {
     stop("match_cols must be length 1, length(expr_list), or a named vector.")
   }
-
+  
   # 确定每层与元数据表共享的样本 --------
   common_samples <- rownames(sample_info)
   for (nm in layer_names) {
@@ -81,31 +81,31 @@ create_multiomics_data <- function(expr_list, sample_info,
     }
     common_samples <- intersect(common_samples, colnames(mat))
   }
-
+  
   if (length(common_samples) == 0) {
     stop("No samples are shared by all omics layers and the sample metadata.")
   }
-
+  
   dropped <- nrow(sample_info) - length(common_samples)
   if (dropped > 0) {
     cat(sprintf("[multiomics] %d sample(s) dropped, not present in all layers.\n",
                 dropped))
   }
-
+  
   aligned_info <- sample_info[common_samples, , drop = FALSE]
-
+  
   # 在对齐的样本集上为每个层构建一个 OmicsData -------------------
   omics <- vector("list", n_layers)
   names(omics) <- layer_names
-
+  
   for (nm in layer_names) {
     mat <- expr_list[[nm]][, common_samples, drop = FALSE]
-
+    
     finfo <- NULL
     if (!is.null(feature_info_list) && nm %in% names(feature_info_list)) {
       finfo <- feature_info_list[[nm]]
     }
-
+    
     if (is.null(finfo)) {
       finfo <- data.frame(
         ID = rownames(mat),
@@ -119,14 +119,14 @@ create_multiomics_data <- function(expr_list, sample_info,
     } else {
       this_match <- match_cols[[nm]]
     }
-
+    
     omics[[nm]] <- create_omics_data(
       expr_matrix = mat,
       sample_info = aligned_info,
       feature_info = finfo,
       match_col = this_match
     )
-
+    
     kept <- omics[[nm]]$metadata$n_features
     lost <- nrow(mat) - kept
     if (lost > 0) {
@@ -134,9 +134,9 @@ create_multiomics_data <- function(expr_list, sample_info,
                   nm, kept, nrow(mat), lost))
     }
   }
-
+  
   n_features <- vapply(omics, function(x) nrow(x$expression), integer(1))
-
+  
   mo <- list(
     omics = omics,
     sample_info = aligned_info,
@@ -148,7 +148,7 @@ create_multiomics_data <- function(expr_list, sample_info,
       n_features_per_omics = n_features
     )
   )
-
+  
   class(mo) <- "MultiOmicsData"
   return(mo)
 }
@@ -299,18 +299,18 @@ preprocess_multiomics <- function(mo,
   if (!inherits(mo, "MultiOmicsData")) {
     stop("mo must be a MultiOmicsData object.")
   }
-
+  
   report <- data.frame(
     omics = character(0),
     n_features_before = integer(0),
     n_features_after = integer(0),
     stringsAsFactors = FALSE
   )
-
+  
   for (nm in names(mo$omics)) {
     mat <- mo$omics[[nm]]$expression
     n_before <- nrow(mat)
-
+    
     if (isTRUE(filter)) {
       flt <- tryCatch({
         filter_missing_values(
@@ -327,52 +327,52 @@ preprocess_multiomics <- function(mo,
       })
       if (!is.null(flt)) mat <- flt$filtered_matrix
     }
-
+    
     if (nrow(mat) == 0) {
       cat(sprintf("[multiomics] layer '%s': all features removed by filtering.\n", nm))
     }
-
+    
     if (isTRUE(impute) && nrow(mat) > 0) {
       mat <- impute_min_half(mat)
     }
-
+    
     if (isTRUE(normalize) && nrow(mat) > 0 && !(nm %in% skip_normalize)) {
       mat <- normalize_sample_total(mat)
     }
-
+    
     if (isTRUE(log_transform) && nrow(mat) > 0) {
       mat <- log2(mat + 1)
     }
-
+    
     if (isTRUE(scale) && nrow(mat) > 0) {
       mat <- scale_pareto(mat)
     }
-
+    
     # 使Feature注释与保留下来的Feature保持一致
     finfo <- mo$omics[[nm]]$feature_info
     keep <- intersect(rownames(mat), rownames(finfo))
     if (length(keep) == nrow(mat)) {
       finfo <- finfo[rownames(mat), , drop = FALSE]
     }
-
+    
     mo$omics[[nm]]$expression <- mat
     mo$omics[[nm]]$feature_info <- finfo
     mo$omics[[nm]]$metadata$n_features <- nrow(mat)
-
+    
     report <- rbind(report, data.frame(
       omics = nm,
       n_features_before = n_before,
       n_features_after = nrow(mat),
       stringsAsFactors = FALSE
     ))
-
+    
     cat(sprintf("[multiomics] layer '%s' preprocessed: %d -> %d features\n",
                 nm, n_before, nrow(mat)))
   }
-
+  
   mo$metadata$n_features_per_omics <-
     vapply(mo$omics, function(x) nrow(x$expression), integer(1))
-
+  
   mo$preprocessing <- list(
     steps = c(
       if (isTRUE(filter)) "filter_missing_values",
@@ -383,7 +383,7 @@ preprocess_multiomics <- function(mo,
     ),
     report = report
   )
-
+  
   return(mo)
 }
 
@@ -411,7 +411,7 @@ subset_multiomics <- function(mo, samples = NULL, subset_col = NULL,
   if (!inherits(mo, "MultiOmicsData")) {
     stop("mo must be a MultiOmicsData object.")
   }
-
+  
   if (!is.null(subset_col)) {
     if (!subset_col %in% colnames(mo$sample_info)) {
       stop(sprintf("Column '%s' not found in sample_info.", subset_col))
@@ -426,11 +426,11 @@ subset_multiomics <- function(mo, samples = NULL, subset_col = NULL,
     if (is.null(samples)) stop("Either samples or subset_col must be supplied.")
     keep <- intersect(samples, mo$common_samples)
   }
-
+  
   if (length(keep) == 0) {
     stop("No samples left after subsetting.")
   }
-
+  
   mo$sample_info <- mo$sample_info[keep, , drop = FALSE]
   mo$common_samples <- keep
   for (nm in names(mo$omics)) {
@@ -439,7 +439,7 @@ subset_multiomics <- function(mo, samples = NULL, subset_col = NULL,
     mo$omics[[nm]]$metadata$n_samples <- length(keep)
   }
   mo$metadata$n_samples <- length(keep)
-
+  
   return(mo)
 }
 

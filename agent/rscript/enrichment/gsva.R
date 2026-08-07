@@ -39,25 +39,25 @@ run_gsva <- function(expr_matrix, feature_info, feature_id_col = "ID",
   if (feature_id_col %in% colnames(feature_info)) {
     rownames(feature_info) <- feature_info[[feature_id_col]]
   }
-
+  
   # 获取公共Feature
   common_features <- intersect(rownames(expr_matrix), rownames(feature_info))
   feature_info_subset <- feature_info[common_features, , drop = FALSE]
-
+  
   # 构建基因集
   pathways <- split(rownames(feature_info_subset),
                     feature_info_subset[[pathway_col]])
   pathways <- pathways[names(pathways) != "" & !is.na(names(pathways))]
-
+  
   # 按规模过滤
   pathway_sizes <- sapply(pathways, length)
   pathways <- pathways[pathway_sizes >= min_size & pathway_sizes <= max_size]
-
+  
   if (length(pathways) == 0) {
     warning("No pathways met the size criteria. Try adjusting min_size/max_size.")
     return(list(gsva_matrix = NULL, pathways = list(), n_pathways = 0))
   }
-
+  
   # 运行 GSVA
   if (requireNamespace("GSVA", quietly = TRUE)) {
     gsva_result <- GSVA::gsva(
@@ -80,7 +80,7 @@ run_gsva <- function(expr_matrix, feature_info, feature_id_col = "ID",
     })
     gsva_matrix <- t(gsva_matrix)
   }
-
+  
   return(list(
     gsva_matrix = gsva_matrix,
     pathways = pathways,
@@ -110,7 +110,7 @@ plot_gsva_heatmap <- function(gsva_result, sample_info,
                               group_col = "sample_info") {
   gsva_matrix <- gsva_result$gsva_matrix
   if (is.null(gsva_matrix)) stop("No GSVA matrix available for plotting.")
-
+  
   # 使用 plot_heatmap 函数
   hm <- plot_heatmap(gsva_matrix, sample_info, feature_info = NULL,
                      group_col = group_col, scale = "row",

@@ -46,7 +46,7 @@ build_cross_omics_network <- function(pairs_list,
   if (is.data.frame(pairs_list)) {
     pairs_list <- list(pair = pairs_list)
   }
-
+  
   collected <- list()
   for (nm in names(pairs_list)) {
     df <- pairs_list[[nm]]
@@ -62,12 +62,12 @@ build_cross_omics_network <- function(pairs_list,
     }
     df <- df[keep, , drop = FALSE]
     if (nrow(df) == 0) next
-
+    
     # 从 "a_vs_b" 的元素名中还原层名称。
     parts <- strsplit(nm, "_vs_", fixed = TRUE)[[1]]
     layer_x <- if (length(parts) == 2) parts[1] else "layer_x"
     layer_y <- if (length(parts) == 2) parts[2] else "layer_y"
-
+    
     collected[[nm]] <- data.frame(
       from = as.character(df$feature_x),
       to = as.character(df$feature_y),
@@ -79,7 +79,7 @@ build_cross_omics_network <- function(pairs_list,
       stringsAsFactors = FALSE
     )
   }
-
+  
   if (length(collected) == 0) {
     if (verbose) {
       cat(sprintf("  No edge passes |r| >= %.2f and padj <= %.3f.\n",
@@ -87,10 +87,10 @@ build_cross_omics_network <- function(pairs_list,
     }
     return(NULL)
   }
-
+  
   edges <- do.call(rbind, collected)
   rownames(edges) <- NULL
-
+  
   if (nrow(edges) > max_edges) {
     if (verbose) {
       cat(sprintf("  %d edges exceed max_edges=%d; keeping the strongest.\n",
@@ -98,10 +98,10 @@ build_cross_omics_network <- function(pairs_list,
     }
     edges <- edges[order(-abs(edges$r)), , drop = FALSE][seq_len(max_edges), , drop = FALSE]
   }
-
+  
   edges$direction <- ifelse(edges$r >= 0, "positive", "negative")
   edges$weight <- abs(edges$r)
-
+  
   # 节点表：一个Feature保留其首次出现的层。
   node_names <- unique(c(edges$from, edges$to))
   node_layer <- c(
@@ -114,21 +114,21 @@ build_cross_omics_network <- function(pairs_list,
     omics = unname(node_layer[node_names]),
     stringsAsFactors = FALSE
   )
-
+  
   graph <- igraph::graph_from_data_frame(
     d = edges[, c("from", "to", "r", "padj", "weight", "direction", "comparison")],
     directed = FALSE,
     vertices = nodes
   )
   nodes$degree <- as.integer(igraph::degree(graph)[nodes$name])
-
+  
   if (verbose) {
     cat(sprintf("  Network: %d nodes, %d edges (%d positive, %d negative).\n",
                 nrow(nodes), nrow(edges),
                 sum(edges$direction == "positive"),
                 sum(edges$direction == "negative")))
   }
-
+  
   list(graph = graph, edges = edges, nodes = nodes)
 }
 
@@ -158,23 +158,23 @@ get_network_hubs <- function(network, top_n = 20, by = "degree",
     stop("Package 'igraph' is required. Install it with install.packages('igraph').")
   }
   by <- match.arg(by, c("degree", "betweenness"))
-
+  
   graph <- if (inherits(network, "igraph")) network else network$graph
   if (is.null(graph) || igraph::vcount(graph) == 0) {
     stop("The network contains no node.")
   }
-
+  
   deg <- igraph::degree(graph)
   btw <- igraph::betweenness(graph, normalized = TRUE)
   clo <- suppressWarnings(igraph::closeness(graph, normalized = TRUE))
-
+  
   vnames <- igraph::V(graph)$name
   omics <- if (!is.null(igraph::V(graph)$omics)) {
     igraph::V(graph)$omics
   } else {
     rep(NA_character_, length(vnames))
   }
-
+  
   # 每个节点关联边上的平均绝对相关Coefficient。
   ew <- igraph::E(graph)$weight
   mean_r <- vapply(seq_along(vnames), function(i) {
@@ -182,7 +182,7 @@ get_network_hubs <- function(network, top_n = 20, by = "degree",
     if (length(inc) == 0) return(NA_real_)
     mean(ew[as.integer(inc)], na.rm = TRUE)
   }, numeric(1))
-
+  
   hubs <- data.frame(
     name = vnames,
     omics = omics,
@@ -192,7 +192,7 @@ get_network_hubs <- function(network, top_n = 20, by = "degree",
     mean_abs_r = mean_r,
     stringsAsFactors = FALSE
   )
-
+  
   ord <- if (by == "degree") {
     order(-hubs$degree, -hubs$betweenness)
   } else {
@@ -201,7 +201,7 @@ get_network_hubs <- function(network, top_n = 20, by = "degree",
   hubs <- hubs[ord, , drop = FALSE]
   rownames(hubs) <- NULL
   if (top_n < nrow(hubs)) hubs <- hubs[seq_len(top_n), , drop = FALSE]
-
+  
   if (verbose) {
     cat(sprintf("  Top hub: %s (%s), degree = %d.\n",
                 hubs$name[1], hubs$omics[1], hubs$degree[1]))

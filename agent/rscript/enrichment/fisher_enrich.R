@@ -50,28 +50,28 @@ run_fisher_enrich <- function(significant_features, all_features,
   if (feature_id_col %in% colnames(feature_info)) {
     rownames(feature_info) <- feature_info[[feature_id_col]]
   }
-
+  
   # 获取显著Feature与背景Feature的类别
   sig_categories <- feature_info[intersect(significant_features,
-                                            rownames(feature_info)), category_col]
+                                           rownames(feature_info)), category_col]
   bg_categories <- feature_info[intersect(all_features,
                                           rownames(feature_info)), category_col]
-
+  
   # 移除 NA 与空字符串
   sig_categories <- sig_categories[!is.na(sig_categories) & sig_categories != ""]
   bg_categories <- bg_categories[!is.na(bg_categories) & bg_categories != ""]
-
+  
   # 统计类别数量
   sig_counts <- table(sig_categories)
   bg_counts <- table(bg_categories)
-
+  
   # 获取所有唯一类别
   all_categories <- unique(c(names(sig_counts), names(bg_counts)))
-
+  
   # 为每个类别构建列联表
   n_sig <- length(sig_categories)
   n_bg <- length(bg_categories)
-
+  
   results <- data.frame(
     category = character(),
     sig_count = integer(),
@@ -82,27 +82,27 @@ run_fisher_enrich <- function(significant_features, all_features,
     fold_enrichment = numeric(),
     stringsAsFactors = FALSE
   )
-
+  
   for (cat in all_categories) {
     cat_sig <- as.numeric(sig_counts[cat])
     if (is.na(cat_sig)) cat_sig <- 0
     cat_bg <- as.numeric(bg_counts[cat])
     if (is.na(cat_bg)) cat_bg <- 0
-
+    
     # 规模过小则跳过
     if (cat_sig < min_size) next
-
+    
     not_cat_sig <- n_sig - cat_sig
     not_cat_bg <- n_bg - cat_bg
-
+    
     # Fisher 精确检验
     contingency <- matrix(c(cat_sig, not_cat_sig, cat_bg, not_cat_bg), nrow = 2)
     ft <- stats::fisher.test(contingency, alternative = "greater")
-
+    
     # 富集倍数
     expected <- (cat_sig + cat_bg) * n_sig / (n_sig + n_bg)
     fold <- if (expected > 0) cat_sig / expected else 0
-
+    
     results <- rbind(results, data.frame(
       category = cat,
       sig_count = cat_sig,
@@ -114,15 +114,15 @@ run_fisher_enrich <- function(significant_features, all_features,
       stringsAsFactors = FALSE
     ))
   }
-
+  
   # 校正 p 值
   results$p_adj <- stats::p.adjust(results$p_value, method = p_adj_method)
-
+  
   # 按 p 值排序
   results <- results[order(results$p_value), ]
   rownames(results) <- make.unique(as.character(results$category))
   results$category <- NULL
-
+  
   return(results)
 }
 
@@ -148,14 +148,14 @@ run_fisher_enrich <- function(significant_features, all_features,
 plot_enrichment <- function(enrich_result, top_n = 20, p_threshold = 0.05) {
   top_df <- head(enrich_result, top_n)
   top_df$category <- factor(rownames(top_df), levels = rownames(top_df))
-
+  
   p <- ggplot2::ggplot(top_df, ggplot2::aes(x = category, y = fold_enrichment,
                                             fill = p_adj < p_threshold)) +
     ggplot2::geom_bar(stat = "identity") +
     ggplot2::coord_flip() +
     ggplot2::scale_fill_manual(values = c("FALSE" = "grey70", "TRUE" = "#e74c3c"),
-                                name = "Significant",
-                                labels = c("Not Sig", paste0("p_adj < ", p_threshold))) +
+                               name = "Significant",
+                               labels = c("Not Sig", paste0("p_adj < ", p_threshold))) +
     ggplot2::labs(
       title = "Enrichment Analysis",
       x = "Category",
@@ -168,6 +168,6 @@ plot_enrichment <- function(enrich_result, top_n = 20, p_threshold = 0.05) {
       axis.title = ggplot2::element_text(size = 12),
       legend.position = "right"
     )
-
+  
   return(p)
 }

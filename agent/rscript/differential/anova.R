@@ -34,12 +34,12 @@
 #'
 #' @export
 run_anova <- function(expr_matrix, sample_info, factors = "sample_info",
-                     exclude_groups = NULL, p_adj_method = "BH") {
+                      exclude_groups = NULL, p_adj_method = "BH") {
   # 对齐样本
   common_samples <- intersect(colnames(expr_matrix), rownames(sample_info))
   expr_matrix <- expr_matrix[, common_samples, drop = FALSE]
   sample_info <- sample_info[common_samples, , drop = FALSE]
-
+  
   # 排除分组
   if (!is.null(exclude_groups)) {
     for (fac in names(exclude_groups)) {
@@ -51,34 +51,34 @@ run_anova <- function(expr_matrix, sample_info, factors = "sample_info",
       }
     }
   }
-
+  
   # 确保因素为因子类型
   for (f in factors) {
     if (f %in% colnames(sample_info)) {
       sample_info[[f]] <- factor(sample_info[[f]])
     }
   }
-
+  
   # 构建公式
   formula_str <- paste0("value ~ ", paste(factors, collapse = " * "))
   formula_obj <- as.formula(formula_str)
-
+  
   n_features <- nrow(expr_matrix)
   n_factors <- length(factors)
-
+  
   # 结果存储
   factor_results <- list()
-
+  
   for (i in 1:n_features) {
     data_tmp <- data.frame(
       value = expr_matrix[i, ],
       sample_info,
       stringsAsFactors = FALSE
     )
-
+    
     fit <- stats::aov(formula_obj, data = data_tmp)
     anova_summary <- summary(fit)[[1]]
-
+    
     for (j in 1:n_factors) {
       fac <- factors[j]
       if (fac %in% rownames(anova_summary)) {
@@ -96,26 +96,26 @@ run_anova <- function(expr_matrix, sample_info, factors = "sample_info",
       }
     }
   }
-
+  
   # 校正 P 值
   for (fac in names(factor_results)) {
     factor_results[[fac]]$p_adj <- stats::p.adjust(factor_results[[fac]]$p_value,
-                                                     method = p_adj_method)
+                                                   method = p_adj_method)
     factor_results[[fac]]$significant <- factor_results[[fac]]$p_adj < 0.05
   }
-
+  
   # 合并结果
   combined <- do.call(rbind, lapply(names(factor_results), function(fac) {
     df <- factor_results[[fac]]
     df$factor <- fac
     return(df)
   }))
-
+  
   # 将 feature_id 设为行名（多个因素可能产生重复，
   # 因此创建唯一行名）
   rownames(combined) <- make.unique(combined$feature_id)
   combined$feature_id <- NULL
-
+  
   return(list(
     results = combined,
     factor_results = factor_results

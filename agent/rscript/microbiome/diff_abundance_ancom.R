@@ -25,7 +25,7 @@
 #'
 #' @export
 log_transform_compositional <- function(expr_matrix, pseudo_count = 1,
-                                       base = exp(1)) {
+                                        base = exp(1)) {
   if (!is.matrix(expr_matrix)) expr_matrix <- as.matrix(expr_matrix)
   log(expr_matrix + pseudo_count, base = base)
 }
@@ -62,42 +62,42 @@ log_transform_compositional <- function(expr_matrix, pseudo_count = 1,
 #'
 #' @export
 run_ancom_bc <- function(expr_matrix, sample_info,
-                        group_col = "sample_info",
-                        p_adjust = "BH",
-                        p_threshold = 0.05,
-                        w_threshold = 0.7) {
+                         group_col = "sample_info",
+                         p_adjust = "BH",
+                         p_threshold = 0.05,
+                         w_threshold = 0.7) {
   if (!is.matrix(expr_matrix)) expr_matrix <- as.matrix(expr_matrix)
-
+  
   common <- intersect(colnames(expr_matrix), rownames(sample_info))
   expr_matrix <- expr_matrix[, common, drop = FALSE]
   sample_info <- sample_info[common, , drop = FALSE]
   groups <- sample_info[[group_col]]
   group_levels <- unique(groups)
   n_groups <- length(group_levels)
-
+  
   if (n_groups < 2) {
     stop("At least 2 groups are required for differential abundance analysis.")
   }
-
+  
   n_features <- nrow(expr_matrix)
   feature_names <- rownames(expr_matrix)
-
+  
   # 对数变换
   log_mat <- log_transform_compositional(expr_matrix, pseudo_count = 1)
-
+  
   # 计算每个 feature 的组间差异
   log_fold_change <- numeric(n_features)
   p_values <- numeric(n_features)
   test_statistic <- numeric(n_features)
-
+  
   if (n_groups == 2) {
     g1_samples <- colnames(expr_matrix)[groups == group_levels[1]]
     g2_samples <- colnames(expr_matrix)[groups == group_levels[2]]
-
+    
     for (i in seq_len(n_features)) {
       v1 <- log_mat[i, g1_samples]
       v2 <- log_mat[i, g2_samples]
-
+      
       # Welch's t 检验
       tt <- stats::t.test(v1, v2)
       p_values[i] <- tt$p.value
@@ -116,9 +116,9 @@ run_ancom_bc <- function(expr_matrix, sample_info,
       log_fold_change[i] <- diffs[which.max(abs(diffs))]
     }
   }
-
+  
   p_adj <- stats::p.adjust(p_values, method = p_adjust)
-
+  
   # W 统计量：该 feature 与其他所有 feature 的差异比例
   # 简化实现：对于每个 feature，计算有多少比例的其他 feature 与其显著不同
   w_stat <- numeric(n_features)
@@ -140,7 +140,7 @@ run_ancom_bc <- function(expr_matrix, sample_info,
     # 多组 W 统计量使用 ANOVA p 值的排名比例
     w_stat <- 1 - rank(p_values, ties.method = "average") / n_features
   }
-
+  
   results <- data.frame(
     feature = feature_names,
     log_fold_change = log_fold_change,
@@ -150,16 +150,16 @@ run_ancom_bc <- function(expr_matrix, sample_info,
     w_stat = w_stat,
     significant = p_adj < p_threshold & w_stat >= w_threshold,
     direction = ifelse(log_fold_change > 0, group_levels[1],
-                      ifelse(log_fold_change < 0, group_levels[n_groups], "NS")),
+                       ifelse(log_fold_change < 0, group_levels[n_groups], "NS")),
     stringsAsFactors = FALSE
   )
-
+  
   significant <- results[results$significant, , drop = FALSE]
   significant <- significant[order(-abs(significant$log_fold_change)), ]
-
+  
   cat(sprintf("[ancom-bc] %d / %d taxa significantly different (p_adj < %.2f, W >= %.1f)\n",
               nrow(significant), n_features, p_threshold, w_threshold))
-
+  
   # 火山图数据
   volcano_data <- data.frame(
     feature = feature_names,
@@ -169,7 +169,7 @@ run_ancom_bc <- function(expr_matrix, sample_info,
     direction = results$direction,
     stringsAsFactors = FALSE
   )
-
+  
   return(list(
     results = results,
     significant = significant,
@@ -208,9 +208,9 @@ plot_ancom_volcano <- function(ancom_result, top_n = 15,
   vd <- ancom_result$volcano_data
   group_levels <- ancom_result$params$group_levels
   group_colors <- make_group_colors(group_levels)
-
+  
   p <- ggplot2::ggplot(vd, ggplot2::aes(x = logFC, y = neg_log10_p,
-                                          color = direction)) +
+                                        color = direction)) +
     ggplot2::geom_point(size = 2, alpha = 0.6) +
     ggplot2::scale_color_manual(values = group_colors, name = "Enriched in") +
     ggplot2::geom_vline(xintercept = 0, linetype = "dotted", color = "grey50") +
@@ -226,7 +226,7 @@ plot_ancom_volcano <- function(ancom_result, top_n = 15,
       axis.title = ggplot2::element_text(size = 12),
       legend.position = "right"
     )
-
+  
   # 标注显著 taxa
   sig <- vd[vd$significant, , drop = FALSE]
   if (nrow(sig) > 0) {
@@ -244,6 +244,6 @@ plot_ancom_volcano <- function(ancom_result, top_n = 15,
       size = 2.5, max.overlaps = 15
     )
   }
-
+  
   return(p)
 }

@@ -39,16 +39,16 @@
 #'
 #' @export
 run_sparcc <- function(expr_matrix, n_iterations = 20,
-                      n_permutations = 100,
-                      filter_threshold = 0.3,
-                      p_adjust = "BH",
-                      p_threshold = 0.05,
-                      verbose = TRUE) {
+                       n_permutations = 100,
+                       filter_threshold = 0.3,
+                       p_adjust = "BH",
+                       p_threshold = 0.05,
+                       verbose = TRUE) {
   if (!is.matrix(expr_matrix)) expr_matrix <- as.matrix(expr_matrix)
-
+  
   # 转换为相对丰度
   rel_abund <- calc_relative_abundance(expr_matrix)
-
+  
   # 过滤低频 taxa
   prevalence <- rowMeans(rel_abund > 0)
   keep <- prevalence >= 0.1  # 至少在 10% 样本中出现
@@ -58,13 +58,13 @@ run_sparcc <- function(expr_matrix, n_iterations = 20,
   rel_abund <- rel_abund[keep, , drop = FALSE]
   n_features <- nrow(rel_abund)
   feature_names <- rownames(rel_abund)
-
+  
   if (verbose) cat(sprintf("[sparcc] %d taxa, %d samples\n",
-                          n_features, ncol(rel_abund)))
-
+                           n_features, ncol(rel_abund)))
+  
   # 第一步：计算观测相关矩阵
   obs_cor <- .sparcc_core(rel_abund, n_iterations, verbose)
-
+  
   # 第二步：排列检验
   p_matrix <- matrix(NA_real_, n_features, n_features)
   if (n_permutations > 0) {
@@ -75,7 +75,7 @@ run_sparcc <- function(expr_matrix, n_iterations = 20,
       rownames(perm_mat) <- feature_names
       perm_cor[[p]] <- .sparcc_core(perm_mat, n_iterations = 5, verbose = FALSE)
     }
-
+    
     # 计算 p 值
     for (i in 1:(n_features - 1)) {
       for (j in (i + 1):n_features) {
@@ -90,7 +90,7 @@ run_sparcc <- function(expr_matrix, n_iterations = 20,
     }
     diag(p_matrix) <- 0
   }
-
+  
   # 提取上三角边表
   ut <- which(upper.tri(obs_cor), arr.ind = TRUE)
   edges <- data.frame(
@@ -100,20 +100,20 @@ run_sparcc <- function(expr_matrix, n_iterations = 20,
     p_value = p_matrix[ut],
     stringsAsFactors = FALSE
   )
-
+  
   # p 值校正
   if (n_permutations > 0) {
     edges$p_adj <- stats::p.adjust(edges$p_value, method = p_adjust)
   } else {
     edges$p_adj <- NA
   }
-
+  
   # 过滤
   edges <- edges[abs(edges$correlation) >= filter_threshold, , drop = FALSE]
   if (n_permutations > 0) {
     edges <- edges[!is.na(edges$p_adj) & edges$p_adj < p_threshold, , drop = FALSE]
   }
-
+  
   # 节点表
   node_names <- unique(c(edges$source, edges$target))
   degree <- table(c(edges$source, edges$target))
@@ -122,10 +122,10 @@ run_sparcc <- function(expr_matrix, n_iterations = 20,
     degree = as.integer(degree),
     stringsAsFactors = FALSE
   )
-
+  
   if (verbose) cat(sprintf("[sparcc] %d edges, %d nodes\n",
-                          nrow(edges), nrow(nodes)))
-
+                           nrow(edges), nrow(nodes)))
+  
   return(list(
     cor_matrix = obs_cor,
     p_matrix = p_matrix,
@@ -155,41 +155,41 @@ run_sparcc <- function(expr_matrix, n_iterations = 20,
 .sparcc_core <- function(rel_abund, n_iterations = 20, verbose = TRUE) {
   n_features <- nrow(rel_abund)
   feature_names <- rownames(rel_abund)
-
+  
   # 对数变换（添加伪计数）
   log_mat <- log(rel_abund + 1e-6)
-
+  
   # 初始相关矩阵
   cor_mat <- stats::cor(t(log_mat), method = "pearson")
   cor_mat[is.na(cor_mat)] <- 0
-
+  
   # 迭代剔除强关联
   for (iter in seq_len(n_iterations)) {
     # 找最强关联对
     diag(cor_mat) <- 0
     max_cor <- which(abs(cor_mat) == max(abs(cor_mat)), arr.ind = TRUE)
     if (length(max_cor) == 0 || nrow(max_cor) == 0) break
-
+    
     # 剔除最强的关联对
     i <- max_cor[1, 1]
     j <- max_cor[1, 2]
-
+    
     # 重新估计这两个 taxa 的基础值
     # 使用剩余 taxa 的信息
     remaining <- setdiff(seq_len(n_features), c(i, j))
     if (length(remaining) < 2) break
-
+    
     # 简化：用 CLR (centered log-ratio) 变换后的相关
     clr_mat <- log_mat - matrixStats::rowMedians(log_mat)
     cor_mat <- stats::cor(t(clr_mat), method = "pearson")
     cor_mat[is.na(cor_mat)] <- 0
   }
-
+  
   # 对称化
   cor_mat[lower.tri(cor_mat)] <- t(cor_mat)[lower.tri(cor_mat)]
   diag(cor_mat) <- 1
   rownames(cor_mat) <- colnames(cor_mat) <- feature_names
-
+  
   return(cor_mat)
 }
 
@@ -218,13 +218,13 @@ plot_sparcc_network <- function(sparcc_result, layout = "fr",
   if (!requireNamespace("igraph", quietly = TRUE)) {
     stop("Package 'igraph' is required for network visualization.")
   }
-
+  
   edges <- sparcc_result$edges
   edges <- edges[abs(edges$correlation) >= edge_threshold, , drop = FALSE]
   if (nrow(edges) == 0) {
     stop("No edges met the threshold.")
   }
-
+  
   # 构建图
   g <- igraph::graph_from_data_frame(edges, directed = FALSE)
   if (nrow(sparcc_result$nodes) > 0) {
@@ -233,7 +233,7 @@ plot_sparcc_network <- function(sparcc_result, layout = "fr",
     ]
     igraph::V(g)$degree[is.na(igraph::V(g)$degree)] <- 0
   }
-
+  
   # 布局
   if (layout == "fr") {
     coords <- igraph::layout_with_fr(g)
@@ -242,7 +242,7 @@ plot_sparcc_network <- function(sparcc_result, layout = "fr",
   } else {
     coords <- igraph::layout_nicely(g)
   }
-
+  
   # 绘图
   if (requireNamespace("ggraph", quietly = TRUE)) {
     p <- ggraph::ggraph(g, layout = "fr") +
@@ -255,14 +255,14 @@ plot_sparcc_network <- function(sparcc_result, layout = "fr",
         color = "#4a90d9"
       ) +
       ggraph::geom_node_text(ggplot2::aes(label = name),
-                              repel = TRUE, size = 3) +
+                             repel = TRUE, size = 3) +
       ggplot2::scale_edge_color_gradient2(
         low = "#2c7bb6", mid = "grey80", high = "#d7191c",
         name = "Correlation"
       ) +
       ggplot2::theme_void() +
       ggplot2::labs(title = "SparCC Network")
-
+    
     return(p)
   } else {
     # 基础 igraph 绘图

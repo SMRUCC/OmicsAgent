@@ -56,9 +56,9 @@ run_diablo <- function(mo, group_col = "sample_info",
   if (!group_col %in% colnames(mo$sample_info)) {
     stop(sprintf("Column '%s' not found in sample_info.", group_col))
   }
-
+  
   if (is.null(layers)) layers <- names(mo$omics)
-
+  
   sinfo <- mo$sample_info
   y_raw <- as.character(sinfo[[group_col]])
   keep_samples <- !is.na(y_raw)
@@ -68,14 +68,14 @@ run_diablo <- function(mo, group_col = "sample_info",
   if (sum(keep_samples) < 6) {
     stop("Not enough samples remain for DIABLO after filtering.")
   }
-
+  
   sample_ids <- rownames(sinfo)[keep_samples]
   y <- factor(y_raw[keep_samples])
-
+  
   if (nlevels(y) < 2) {
     stop(sprintf("Column '%s' must contain at least two classes.", group_col))
   }
-
+  
   # 数据块：样本 x Feature，遵循 mixOmics 约定
   X <- lapply(layers, function(nm) {
     mat <- get_omics_matrix(mo, nm)[, sample_ids, drop = FALSE]
@@ -83,7 +83,7 @@ run_diablo <- function(mo, group_col = "sample_info",
     t(mat)
   })
   names(X) <- layers
-
+  
   # 自适应 keepX ------------------------------------------------------------
   if (is.null(keepX)) {
     keepX <- lapply(X, function(blk) {
@@ -95,13 +95,13 @@ run_diablo <- function(mo, group_col = "sample_info",
     keepX <- lapply(X, function(blk) rep(min(keepX, ncol(blk)), ncomp))
   }
   names(keepX) <- names(X)
-
+  
   # 设计矩阵 -------------------------------------------------------------
   n_blocks <- length(X)
   design_mat <- matrix(design, nrow = n_blocks, ncol = n_blocks,
                        dimnames = list(names(X), names(X)))
   diag(design_mat) <- 0
-
+  
   if (verbose) {
     cat(sprintf("[diablo] %d blocks, %d samples, %d classes (%s), ncomp = %d\n",
                 n_blocks, length(sample_ids), nlevels(y),
@@ -111,7 +111,7 @@ run_diablo <- function(mo, group_col = "sample_info",
                   nm, ncol(X[[nm]]), paste(keepX[[nm]], collapse = "/")))
     }
   }
-
+  
   model <- tryCatch({
     mixOmics::block.splsda(X = X, Y = y, ncomp = ncomp,
                            keepX = keepX, design = design_mat)
@@ -119,9 +119,9 @@ run_diablo <- function(mo, group_col = "sample_info",
     cat(sprintf("[diablo] model fitting failed: %s\n", conditionMessage(e)))
     NULL
   })
-
+  
   if (is.null(model)) return(NULL)
-
+  
   # 分数 --------------------------------------------------------------------
   scores <- list()
   for (nm in names(model$variates)) {
@@ -132,7 +132,7 @@ run_diablo <- function(mo, group_col = "sample_info",
     v$group <- as.character(y)[match(rownames(v), sample_ids)]
     scores[[nm]] <- v
   }
-
+  
   # Loading与选中Feature -------------------------------------------
   loadings <- list()
   selected <- NULL
@@ -142,7 +142,7 @@ run_diablo <- function(mo, group_col = "sample_info",
     colnames(ld) <- paste0("comp", seq_len(ncol(ld)))
     ld$feature <- rownames(ld)
     loadings[[nm]] <- ld
-
+    
     for (ci in seq_len(ncol(ld) - 1)) {
       cname <- paste0("comp", ci)
       nz <- ld[ld[[cname]] != 0, c("feature", cname), drop = FALSE]
@@ -157,19 +157,19 @@ run_diablo <- function(mo, group_col = "sample_info",
       ))
     }
   }
-
+  
   if (is.null(selected)) {
     selected <- data.frame(layer = character(0), component = integer(0),
                            feature = character(0), loading = numeric(0),
                            stringsAsFactors = FALSE)
   }
   rownames(selected) <- NULL
-
+  
   if (verbose) {
     cat(sprintf("[diablo] %d selected feature entries across blocks\n",
                 nrow(selected)))
   }
-
+  
   return(list(
     model = model,
     scores = scores,
@@ -207,7 +207,7 @@ diablo_block_correlation <- function(diablo_result, comp = 1) {
     stop("At least two blocks are required.")
   }
   cname <- paste0("comp", comp)
-
+  
   out <- NULL
   combos <- utils::combn(layers, 2, simplify = FALSE)
   for (cb in combos) {
@@ -222,7 +222,7 @@ diablo_block_correlation <- function(diablo_result, comp = 1) {
       correlation = r, stringsAsFactors = FALSE
     ))
   }
-
+  
   if (is.null(out)) {
     out <- data.frame(layer_x = character(0), layer_y = character(0),
                       component = integer(0), correlation = numeric(0),
@@ -260,7 +260,7 @@ run_layerwise_plsda <- function(mo, group_col = "sample_info",
     stop("mo must be a MultiOmicsData object.")
   }
   if (is.null(layers)) layers <- names(mo$omics)
-
+  
   out <- list()
   for (nm in layers) {
     res <- tryCatch({

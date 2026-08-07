@@ -79,7 +79,7 @@ select_top_features <- function(mat, top_n = NULL, label = "matrix",
   }
   rx <- t(apply(mat_x, 1, rank))
   ry <- if (identical(mat_x, mat_y)) rx else t(apply(mat_y, 1, rank))
-
+  
   .row_standardise <- function(m) {
     mu <- rowMeans(m, na.rm = TRUE)
     s  <- sqrt(rowSums((m - mu)^2, na.rm = TRUE))
@@ -91,14 +91,14 @@ select_top_features <- function(mat, top_n = NULL, label = "matrix",
   rho <- tcrossprod(sx, sy)          # 等价于 Pearson(rank) = Spearman
   rho[rho > 1]  <- 1
   rho[rho < -1] <- -1
-
+  
   n  <- ncol(mat_x)
   df <- n - 2
   # t 统计量：t = r * sqrt(df) / sqrt(1 - r^2)
   tstat <- rho * sqrt(df) / sqrt(pmax(1 - rho^2, 0))
   pval  <- 2 * stats::pt(abs(tstat), df = df, lower.tail = FALSE)
   pval[is.na(pval)] <- 1
-
+  
   list(rho = rho, pval = pval)
 }
 
@@ -199,7 +199,7 @@ select_top_features <- function(mat, top_n = NULL, label = "matrix",
   stopifnot(length(src) == length(tgt), length(src) == length(rho),
             length(src) == length(rho_p))
   n <- length(src)
-
+  
   # ---- score（综合关联强度）----
   # combined  : score = w*|rho| + (1-w)*MIC   （两者皆强时最高，直觉清晰）
   # nonlinear : score = MIC - rho^2           （经典 MIC-R^2，突出非线性关联）
@@ -210,7 +210,7 @@ select_top_features <- function(mat, top_n = NULL, label = "matrix",
     mic_safe <- if (is.null(mic) || all(is.na(mic))) rep(0, n) else mic
     score <- w * abs(rho) + (1 - w) * mic_safe
   }
-
+  
   # ---- pvalue（Fisher 合并 Spearman 与 MIC 两个 p 值）----
   # X^2 = -2 * (ln p_rho + ln p_MIC) ~ chi-square(df=4)
   #   MIC p 缺失时退化为 Spearman p 值。
@@ -223,17 +223,17 @@ select_top_features <- function(mat, top_n = NULL, label = "matrix",
   }
   merged_p <- stats::pchisq(chisq, df = 4, lower.tail = FALSE)
   merged_p[is.na(merged_p)] <- 1
-
+  
   # BH 校正
   padj <- stats::p.adjust(merged_p, method = p_adjust)
-
+  
   # ---- association 分类 ----
   sig <- padj < p_threshold
   assoc <- rep("not_significant", n)
   assoc[sig & rho >= 0]  <- "positive"
   assoc[sig & rho < 0]   <- "negative"
   assoc[sig & abs(rho) < rho_linear_min] <- "nonlinear"
-
+  
   df <- data.frame(
     source        = src,
     target        = tgt,
@@ -310,26 +310,26 @@ run_cross_omics_association <- function(mat_x, mat_y,
                                         verbose = TRUE) {
   mic_pvalue_method <- match.arg(mic_pvalue_method)
   score_method      <- match.arg(score_method)
-
+  
   if (!is.matrix(mat_x)) mat_x <- as.matrix(mat_x)
   if (!is.matrix(mat_y)) mat_y <- as.matrix(mat_y)
   if (verbose) cat(sprintf("\n[assoc] === Cross-omics: %s x %s ===\n", name_x, name_y))
-
+  
   common <- intersect(colnames(mat_x), colnames(mat_y))
   if (length(common) < 8) {
     stop("At least 8 shared samples are required for association analysis.")
   }
   mat_x <- mat_x[, common, drop = FALSE]
   mat_y <- mat_y[, common, drop = FALSE]
-
+  
   mat_x <- drop_zero_variance(mat_x, label = name_x, verbose = verbose)
   mat_y <- drop_zero_variance(mat_y, label = name_y, verbose = verbose)
   mat_x <- select_top_features(mat_x, top_n, label = name_x, verbose = verbose)
   mat_y <- select_top_features(mat_y, top_n, label = name_y, verbose = verbose)
-
+  
   fx <- rownames(mat_x); if (is.null(fx)) fx <- sprintf("%s.f%d", name_x, seq_len(nrow(mat_x)))
   fy <- rownames(mat_y); if (is.null(fy)) fy <- sprintf("%s.f%d", name_y, seq_len(nrow(mat_y)))
-
+  
   sp <- .spearman_matrix(mat_x, mat_y)
   rho  <- as.vector(sp$rho)
   rp   <- as.vector(sp$pval)
@@ -337,21 +337,21 @@ run_cross_omics_association <- function(mat_x, mat_y,
   src_y <- rep(fy, each  = nrow(mat_x))
   n_pairs <- length(rho)
   if (verbose) cat(sprintf("[assoc] Spearman computed for %d feature pairs.\n", n_pairs))
-
+  
   # 候选对：按 |rho| 取 Top K
   ord <- order(abs(rho), decreasing = TRUE)
   k <- min(max_pairs_for_mic, n_pairs)
   cand <- ord[seq_len(k)]
   if (verbose) cat(sprintf("[assoc] Selected %d candidate pairs for MIC.\n", k))
-
+  
   pairs_idx <- cbind(match(src_x[cand], fx), match(src_y[cand], fy))
   mic  <- rep(NA_real_, n_pairs)
   mic_p <- rep(NA_real_, n_pairs)
-
+  
   mic_calc <- .compute_mic_for_pairs(mat_x, mat_y, pairs_idx, verbose = FALSE)
   mic[cand]  <- mic_calc
   if (verbose) cat(sprintf("[assoc] MIC computed for %d candidate pairs (minerva).\n", k))
-
+  
   # MIC p 值：shared null distribution
   if (mic_pvalue_method == "permutation" && any(!is.na(mic))) {
     null_dist <- .mic_null_distribution(mat_x, n_perm = n_perm,
@@ -367,7 +367,7 @@ run_cross_omics_association <- function(mat_x, mat_y,
       }
     }
   }
-
+  
   edges <- .assemble_edge_table(
     src = src_x, tgt = src_y, rho = rho, rho_p = rp,
     mic = mic, mic_p = mic_p,
@@ -375,11 +375,11 @@ run_cross_omics_association <- function(mat_x, mat_y,
     p_adjust = p_adjust, p_threshold = p_threshold,
     rho_linear_min = rho_linear_min
   )
-
+  
   nodes <- .build_node_table(c(src_x, src_y),
                              c(rep(name_x, length(fx)), rep(name_y, length(fy))),
                              edges)
-
+  
   list(
     edges  = edges,
     nodes  = nodes,
@@ -445,16 +445,16 @@ run_intra_omics_association <- function(mat, name = "omics",
                                         verbose = TRUE) {
   mic_pvalue_method <- match.arg(mic_pvalue_method)
   score_method      <- match.arg(score_method)
-
+  
   if (!is.matrix(mat)) mat <- as.matrix(mat)
   if (verbose) cat(sprintf("\n[assoc] === Intra-omics: %s ===\n", name))
-
+  
   if (ncol(mat) < 8) stop("At least 8 samples are required for association analysis.")
   mat <- drop_zero_variance(mat, label = name, verbose = verbose)
   mat <- select_top_features(mat, top_n, label = name, verbose = verbose)
-
+  
   f <- rownames(mat); if (is.null(f)) f <- sprintf("%s.f%d", name, seq_len(nrow(mat)))
-
+  
   sp <- .spearman_matrix(mat, mat)
   p <- nrow(mat)
   ut <- which(upper.tri(sp$rho), arr.ind = TRUE)   # 严格上三角，避免自配对与重复
@@ -464,20 +464,20 @@ run_intra_omics_association <- function(mat, name = "omics",
   tgt <- f[ut[, 2]]
   n_pairs <- length(rho)
   if (verbose) cat(sprintf("[assoc] Spearman computed for %d intra-layer pairs.\n", n_pairs))
-
+  
   ord <- order(abs(rho), decreasing = TRUE)
   k <- min(max_pairs_for_mic, n_pairs)
   cand <- ord[seq_len(k)]
   if (verbose) cat(sprintf("[assoc] Selected %d candidate pairs for MIC.\n", k))
-
+  
   pairs_idx <- ut[cand, , drop = FALSE]
   mic  <- rep(NA_real_, n_pairs)
   mic_p <- rep(NA_real_, n_pairs)
-
+  
   mic_calc <- .compute_mic_for_pairs(mat, mat, pairs_idx, verbose = FALSE)
   mic[cand] <- mic_calc
   if (verbose) cat(sprintf("[assoc] MIC computed for %d candidate pairs (minerva).\n", k))
-
+  
   if (mic_pvalue_method == "permutation" && any(!is.na(mic))) {
     null_dist <- .mic_null_distribution(mat, n_perm = n_perm,
                                         n_sample = ncol(mat), verbose = verbose)
@@ -492,7 +492,7 @@ run_intra_omics_association <- function(mat, name = "omics",
       }
     }
   }
-
+  
   edges <- .assemble_edge_table(
     src = src, tgt = tgt, rho = rho, rho_p = rp,
     mic = mic, mic_p = mic_p,
@@ -500,9 +500,9 @@ run_intra_omics_association <- function(mat, name = "omics",
     p_adjust = p_adjust, p_threshold = p_threshold,
     rho_linear_min = rho_linear_min
   )
-
+  
   nodes <- .build_node_table(c(src, tgt), rep(name, 2 * n_pairs), edges)
-
+  
   list(
     edges  = edges,
     nodes  = nodes,
@@ -593,10 +593,10 @@ run_all_omics_associations <- function(mo,
   if (is.null(layers)) layers <- names(mo$omics)
   missing <- setdiff(layers, names(mo$omics))
   if (length(missing) > 0) stop(sprintf("Unknown layer(s): %s", paste(missing, collapse = ", ")))
-
+  
   mats <- lapply(layers, function(nm) get_omics_matrix(mo, nm))
   names(mats) <- layers
-
+  
   # 跨层两两组合
   cross <- list(); intra <- list(); summ <- list()
   for (i in seq_along(layers)) {
@@ -636,7 +636,7 @@ run_all_omics_associations <- function(mo,
       n_features = res$params$n_features,
       stringsAsFactors = FALSE)
   }
-
+  
   list(
     cross  = cross,
     intra  = intra,

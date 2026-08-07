@@ -40,12 +40,12 @@ calc_alpha_diversity <- function(expr_matrix, method = "count",
                                  digits = 4) {
   if (!is.matrix(expr_matrix)) expr_matrix <- as.matrix(expr_matrix)
   method <- match.arg(method, c("count", "abundance"))
-
+  
   # 如果是相对丰度数据，转换为伪计数
   if (method == "abundance") {
     expr_matrix <- expr_matrix * 1e5
   }
-
+  
   # 去除全零样本
   sample_sums <- colSums(expr_matrix, na.rm = TRUE)
   valid_samples <- names(sample_sums)[sample_sums > 0]
@@ -53,7 +53,7 @@ calc_alpha_diversity <- function(expr_matrix, method = "count",
     stop("All samples have zero total count, cannot calculate alpha diversity.")
   }
   expr_matrix <- expr_matrix[, valid_samples, drop = FALSE]
-
+  
   n_samples <- ncol(expr_matrix)
   results <- data.frame(
     sample = valid_samples,
@@ -67,36 +67,36 @@ calc_alpha_diversity <- function(expr_matrix, method = "count",
     goods_coverage = numeric(n_samples),
     stringsAsFactors = FALSE
   )
-
+  
   for (i in seq_len(n_samples)) {
     x <- expr_matrix[, i]
     x <- x[x > 0]  # 只保留非零 taxa
-
+    
     if (length(x) == 0) next
-
+    
     n <- sum(x)
     p <- x / n
-
+    
     # Observed species
     results$observed_species[i] <- length(x)
-
+    
     # Shannon: H = -sum(p * log(p))
     results$shannon[i] <- -sum(p * log(p))
-
+    
     # Simpson: D = 1 - sum(p^2)  (Gini-Simpson)
     results$simpson[i] <- 1 - sum(p^2)
-
+    
     # Inverse Simpson: 1 / sum(p^2)
     results$inv_simpson[i] <- 1 / sum(p^2)
-
+    
     # Pielou evenness: H / log(S)
     s <- length(x)
     results$pielou[i] <- if (s > 1) results$shannon[i] / log(s) else 1
-
+    
     # Goods coverage: 1 - (n1 / N)，其中 n1 是 singletons 数量
     n1 <- sum(x == 1)
     results$goods_coverage[i] <- 1 - n1 / n
-
+    
     # Chao1 丰富度估计
     s_obs <- s
     f1 <- sum(x == 1)  # singletons
@@ -106,7 +106,7 @@ calc_alpha_diversity <- function(expr_matrix, method = "count",
     } else {
       results$chao1[i] <- s_obs + f1 * (f1 - 1) / 2
     }
-
+    
     # ACE 丰富度估计
     threshold <- max(10, ceiling(n * 0.01))  # rare 的阈值
     rare <- x[x <= threshold]
@@ -124,7 +124,7 @@ calc_alpha_diversity <- function(expr_matrix, method = "count",
       results$ace[i] <- s_obs
     }
   }
-
+  
   # 四舍五入
   numeric_cols <- c("observed_species", "shannon", "simpson", "inv_simpson",
                     "chao1", "ace", "pielou", "goods_coverage")
@@ -165,25 +165,25 @@ test_alpha_diversity <- function(diversity_result, sample_info,
                                  method = "kruskal",
                                  p_adjust = "BH") {
   method <- match.arg(method, c("kruskal", "wilcoxon"))
-
+  
   common <- intersect(diversity_result$sample, rownames(sample_info))
   if (length(common) == 0) {
     stop("Sample names do not match, cannot perform statistical test.")
   }
-
+  
   diversity_result <- diversity_result[common, , drop = FALSE]
   groups <- sample_info[common, group_col]
   n_groups <- length(unique(groups))
-
+  
   # 如果只有两组，强制使用 wilcoxon
   if (n_groups == 2 && method == "kruskal") {
     method <- "wilcoxon"
     cat("[alpha-div] 2 groups detected, switching to Wilcoxon test.\n")
   }
-
+  
   indices <- c("observed_species", "shannon", "simpson", "inv_simpson",
                "chao1", "ace", "pielou", "goods_coverage")
-
+  
   results <- data.frame(
     index = character(length(indices)),
     statistic = numeric(length(indices)),
@@ -191,7 +191,7 @@ test_alpha_diversity <- function(diversity_result, sample_info,
     method = method,
     stringsAsFactors = FALSE
   )
-
+  
   for (i in seq_along(indices)) {
     idx <- indices[i]
     vals <- diversity_result[[idx]]
@@ -208,7 +208,7 @@ test_alpha_diversity <- function(diversity_result, sample_info,
     results$statistic[i] <- test$statistic
     results$p_value[i] <- test$p.value
   }
-
+  
   results$p_adj <- stats::p.adjust(results$p_value, method = p_adjust)
   results <- results[order(results$p_value), ]
   rownames(results) <- NULL
@@ -237,29 +237,29 @@ test_alpha_diversity <- function(diversity_result, sample_info,
 #'
 #' @export
 plot_alpha_diversity <- function(diversity_result, sample_info,
-                                group_col = "sample_info",
-                                indices = NULL,
-                                show_pvalue = TRUE,
-                                test_result = NULL) {
+                                 group_col = "sample_info",
+                                 indices = NULL,
+                                 show_pvalue = TRUE,
+                                 test_result = NULL) {
   common <- intersect(diversity_result$sample, rownames(sample_info))
   if (length(common) == 0) {
     stop("Sample names do not match.")
   }
-
+  
   diversity_result <- diversity_result[common, , drop = FALSE]
   groups <- sample_info[common, group_col]
   group_colors <- make_group_colors(unique(groups))
-
+  
   if (is.null(indices)) {
     indices <- c("shannon", "simpson", "chao1", "pielou",
                  "observed_species", "goods_coverage")
     indices <- intersect(indices, colnames(diversity_result))
   }
-
+  
   if (isTRUE(show_pvalue) && is.null(test_result)) {
     test_result <- test_alpha_diversity(diversity_result, sample_info, group_col)
   }
-
+  
   plots <- list()
   for (idx in indices) {
     plot_df <- data.frame(
@@ -267,7 +267,7 @@ plot_alpha_diversity <- function(diversity_result, sample_info,
       group = groups,
       stringsAsFactors = FALSE
     )
-
+    
     p <- ggplot2::ggplot(plot_df, ggplot2::aes(x = group, y = value, fill = group)) +
       ggplot2::geom_boxplot(alpha = 0.7, outlier.size = 1, outlier.colour = "grey40") +
       ggplot2::geom_jitter(width = 0.15, size = 1.5, alpha = 0.6) +
@@ -284,7 +284,7 @@ plot_alpha_diversity <- function(diversity_result, sample_info,
         axis.text.y = ggplot2::element_text(size = 10),
         legend.position = "none"
       )
-
+    
     # 添加 p 值标注
     if (isTRUE(show_pvalue) && !is.null(test_result)) {
       p_row <- test_result[test_result$index == idx, ]
@@ -296,9 +296,9 @@ plot_alpha_diversity <- function(diversity_result, sample_info,
                                    vjust = 1.5)
       }
     }
-
+    
     plots[[idx]] <- p
   }
-
+  
   return(plots)
 }

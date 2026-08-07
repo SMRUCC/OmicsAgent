@@ -46,12 +46,12 @@ calc_relative_abundance <- function(expr_matrix, multiply_by = 1) {
 rarefy_matrix <- function(expr_matrix, depth = NULL, n_iter = 10, seed = 42) {
   if (!is.matrix(expr_matrix)) expr_matrix <- as.matrix(expr_matrix)
   set.seed(seed)
-
+  
   if (is.null(depth)) {
     depth <- min(colSums(expr_matrix, na.rm = TRUE))
   }
   cat(sprintf("[rarefy] Rarefaction depth: %d\n", depth))
-
+  
   # 过滤深度不足的样本
   sample_depths <- colSums(expr_matrix, na.rm = TRUE)
   keep_samples <- names(sample_depths)[sample_depths >= depth]
@@ -60,12 +60,12 @@ rarefy_matrix <- function(expr_matrix, depth = NULL, n_iter = 10, seed = 42) {
                 ncol(expr_matrix) - length(keep_samples)))
   }
   expr_matrix <- expr_matrix[, keep_samples, drop = FALSE]
-
+  
   # 稀疏化
   result <- matrix(0, nrow = nrow(expr_matrix), ncol = ncol(expr_matrix))
   rownames(result) <- rownames(expr_matrix)
   colnames(result) <- colnames(expr_matrix)
-
+  
   for (iter in seq_len(n_iter)) {
     for (j in seq_len(ncol(expr_matrix))) {
       counts <- expr_matrix[, j]
@@ -77,7 +77,7 @@ rarefy_matrix <- function(expr_matrix, depth = NULL, n_iter = 10, seed = 42) {
     }
   }
   result <- result / n_iter
-
+  
   return(result)
 }
 

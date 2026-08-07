@@ -55,24 +55,24 @@ run_cross_correlation <- function(mat_x, mat_y,
                                   name_y = "y",
                                   verbose = TRUE) {
   method <- match.arg(method, c("pearson", "spearman"))
-
+  
   if (!is.matrix(mat_x)) mat_x <- as.matrix(mat_x)
   if (!is.matrix(mat_y)) mat_y <- as.matrix(mat_y)
-
+  
   common <- intersect(colnames(mat_x), colnames(mat_y))
   if (length(common) < 4) {
     stop("At least 4 shared samples are required for correlation analysis.")
   }
   mat_x <- mat_x[, common, drop = FALSE]
   mat_y <- mat_y[, common, drop = FALSE]
-
+  
   mat_x <- drop_zero_variance(mat_x, label = name_x, verbose = verbose)
   mat_y <- drop_zero_variance(mat_y, label = name_y, verbose = verbose)
-
+  
   if (nrow(mat_x) == 0 || nrow(mat_y) == 0) {
     stop("No informative features left after removing zero-variance rows.")
   }
-
+  
   # Spearman 即秩上的 Pearson
   if (method == "spearman") {
     mat_x <- t(apply(mat_x, 1, rank))
@@ -82,22 +82,22 @@ run_cross_correlation <- function(mat_x, mat_y,
     mat_y <- drop_zero_variance(mat_y, label = paste0(name_y, " (ranked)"),
                                 verbose = FALSE)
   }
-
+  
   n <- length(common)
-
+  
   if (verbose) {
     cat(sprintf("[cross-cor] %s (%d features) vs %s (%d features), n = %d samples, method = %s\n",
                 name_x, nrow(mat_x), name_y, nrow(mat_y), n, method))
   }
-
+  
   # 按行标准化 -> 相关Coefficient即为简单的叉积 ---------
   zx <- .row_standardise(mat_x)
   zy <- .row_standardise(mat_y)
-
+  
   cor_matrix <- (zx %*% t(zy)) / (n - 1)
   cor_matrix[cor_matrix > 1] <- 1
   cor_matrix[cor_matrix < -1] <- -1
-
+  
   # 由 t 分布解析得到 p 值 ---------------------------------
   df <- n - 2
   denom <- 1 - cor_matrix^2
@@ -105,15 +105,15 @@ run_cross_correlation <- function(mat_x, mat_y,
   t_stat <- cor_matrix * sqrt(df / denom)
   p_matrix <- 2 * stats::pt(-abs(t_stat), df = df)
   dimnames(p_matrix) <- dimnames(cor_matrix)
-
+  
   padj_vec <- stats::p.adjust(as.vector(p_matrix), method = p_adjust)
   padj_matrix <- matrix(padj_vec, nrow = nrow(p_matrix),
                         dimnames = dimnames(p_matrix))
-
+  
   # 显著Feature对的稀疏表 -----------------------------------------
   sel <- which(abs(cor_matrix) >= r_threshold & padj_matrix <= p_threshold,
                arr.ind = TRUE)
-
+  
   if (nrow(sel) == 0) {
     if (verbose) {
       cat(sprintf("[cross-cor] no pair passed |r| >= %.2f and padj <= %.3f\n",
@@ -137,7 +137,7 @@ run_cross_correlation <- function(mat_x, mat_y,
       stringsAsFactors = FALSE
     )
     pairs <- pairs[order(-abs(pairs$r)), , drop = FALSE]
-
+    
     if (nrow(pairs) > max_pairs) {
       if (verbose) {
         cat(sprintf("[cross-cor] %d significant pairs truncated to the top %d by |r|\n",
@@ -146,13 +146,13 @@ run_cross_correlation <- function(mat_x, mat_y,
       pairs <- pairs[seq_len(max_pairs), , drop = FALSE]
     }
     rownames(pairs) <- NULL
-
+    
     if (verbose) {
       cat(sprintf("[cross-cor] %d significant pair(s) retained (%d positive, %d negative)\n",
                   nrow(pairs), sum(pairs$r > 0), sum(pairs$r < 0)))
     }
   }
-
+  
   return(list(
     cor_matrix = cor_matrix,
     p_matrix = p_matrix,
@@ -217,17 +217,17 @@ run_all_pairwise_correlation <- function(mo, layer_pairs,
   if (!is.list(layer_pairs) || length(layer_pairs) == 0) {
     stop("layer_pairs must be a non-empty list of length-2 character vectors.")
   }
-
+  
   results <- list()
   all_pairs <- NULL
-
+  
   for (lp in layer_pairs) {
     if (length(lp) != 2) {
       warning("Each element of layer_pairs must have exactly two layer names.")
       next
     }
     key <- paste(lp[1], lp[2], sep = "__")
-
+    
     res <- tryCatch({
       run_cross_correlation(
         mat_x = get_omics_matrix(mo, lp[1]),
@@ -244,7 +244,7 @@ run_all_pairwise_correlation <- function(mo, layer_pairs,
       cat(sprintf("[cross-cor] pair %s failed: %s\n", key, conditionMessage(e)))
       NULL
     })
-
+    
     if (!is.null(res)) {
       results[[key]] <- res
       if (nrow(res$pairs) > 0) {
@@ -252,7 +252,7 @@ run_all_pairwise_correlation <- function(mo, layer_pairs,
       }
     }
   }
-
+  
   if (is.null(all_pairs)) {
     all_pairs <- data.frame(
       feature_x = character(0), feature_y = character(0),
@@ -261,7 +261,7 @@ run_all_pairwise_correlation <- function(mo, layer_pairs,
       stringsAsFactors = FALSE
     )
   }
-
+  
   results$all_pairs <- all_pairs
   return(results)
 }
@@ -288,14 +288,14 @@ run_all_pairwise_correlation <- function(mo, layer_pairs,
 #' @export
 summarise_correlation_partners <- function(pairs, side = "both", top_n = 50) {
   side <- match.arg(side, c("both", "x", "y"))
-
+  
   if (is.null(pairs) || nrow(pairs) == 0) {
     return(data.frame(feature = character(0), omics = character(0),
                       n_partners = integer(0), n_positive = integer(0),
                       n_negative = integer(0), mean_abs_r = numeric(0),
                       max_abs_r = numeric(0), stringsAsFactors = FALSE))
   }
-
+  
   parts <- list()
   if (side %in% c("both", "x")) {
     parts[[length(parts) + 1]] <- data.frame(
@@ -308,10 +308,10 @@ summarise_correlation_partners <- function(pairs, side = "both", top_n = 50) {
       r = pairs$r, stringsAsFactors = FALSE)
   }
   long <- do.call(rbind, parts)
-
+  
   key <- paste(long$omics, long$feature, sep = "\r")
   split_r <- split(long$r, key)
-
+  
   out <- data.frame(
     feature = vapply(strsplit(names(split_r), "\r", fixed = TRUE),
                      function(x) x[2], character(1)),
@@ -326,7 +326,7 @@ summarise_correlation_partners <- function(pairs, side = "both", top_n = 50) {
   )
   rownames(out) <- NULL
   out <- out[order(-out$n_partners, -out$max_abs_r), , drop = FALSE]
-
+  
   if (nrow(out) > top_n) out <- out[seq_len(top_n), , drop = FALSE]
   rownames(out) <- NULL
   return(out)

@@ -25,13 +25,13 @@
 #'
 #' @export
 calc_beta_diversity <- function(expr_matrix, method = "bray",
-                               method_type = "count") {
+                                method_type = "count") {
   if (!is.matrix(expr_matrix)) expr_matrix <- as.matrix(expr_matrix)
   method <- match.arg(method, c("bray", "jaccard", "sorensen", "euclidean"))
-
+  
   # 转置：样本 × features
   mat_t <- t(expr_matrix)
-
+  
   if (method == "bray") {
     # 如果有负值（标准化后），先平移
     if (any(mat_t < 0, na.rm = TRUE)) {
@@ -152,15 +152,15 @@ run_permanova <- function(dist_mat, sample_info,
     stop("Package 'vegan' is required for PERMANOVA. ",
          "Install it with install.packages('vegan').")
   }
-
+  
   common <- intersect(attr(dist_mat, "Labels"), rownames(sample_info))
   if (length(common) < 4) {
     stop("At least 4 shared samples are required.")
   }
-
+  
   dist_mat <- as.dist(as.matrix(dist_mat)[common, common])
   sub_info <- sample_info[common, , drop = FALSE]
-
+  
   # 构建公式
   if (!is.null(strata_col) && strata_col %in% colnames(sub_info)) {
     strata <- sub_info[[strata_col]]
@@ -170,7 +170,7 @@ run_permanova <- function(dist_mat, sample_info,
     res <- vegan::adonis2(dist_mat ~ sub_info[[group_col]],
                           permutations = permutations)
   }
-
+  
   cat(sprintf("[permanova] %s: R2 = %.3f, F = %.2f, p = %.3f\n",
               group_col, res$R2[1], res$F[1], res$`Pr(>F)`[1]))
   return(res)
@@ -199,21 +199,21 @@ run_permanova <- function(dist_mat, sample_info,
 #' @export
 run_pcoa <- function(dist_mat, ncomp = 2) {
   dist_mat <- as.dist(dist_mat)
-
+  
   # 处理负Feature值（对欧氏距离不会出现，但 Bray-Curtis 可能）
   pcoa <- stats::cmdscale(dist_mat, k = ncomp, eig = TRUE)
-
+  
   # 计算方差解释率
   eig <- pcoa$eig
   eig_pos <- eig[eig > 0]
   var_explained <- eig_pos / sum(eig_pos) * 100
-
+  
   n_axes <- min(ncomp, ncol(pcoa$points))
   var_explained <- var_explained[1:n_axes]
-
+  
   points <- pcoa$points[, 1:n_axes, drop = FALSE]
   colnames(points) <- paste0("PCoA", 1:n_axes)
-
+  
   return(list(
     points = points,
     variance_explained = var_explained,
@@ -248,16 +248,16 @@ run_nmds <- function(dist_mat, ncomp = 2, maxit = 500, try_n = 20) {
     stop("Package 'vegan' is required for NMDS. ",
          "Install it with install.packages('vegan').")
   }
-
+  
   dist_mat <- as.dist(dist_mat)
   nmds <- vegan::metaMDS(dist_mat, k = ncomp, trace = 0,
-                        maxit = maxit, try = try_n)
-
+                         maxit = maxit, try = try_n)
+  
   points <- nmds$points
   colnames(points) <- paste0("NMDS", 1:ncomp)
-
+  
   cat(sprintf("[nmds] Stress = %.4f\n", nmds$stress))
-
+  
   return(list(
     points = points,
     stress = nmds$stress
@@ -287,20 +287,20 @@ run_nmds <- function(dist_mat, ncomp = 2, maxit = 500, try_n = 20) {
 #'
 #' @export
 plot_ordination <- function(ordination_result, sample_info,
-                           group_col = "sample_info",
-                           shape_col = NULL,
-                           title = "PCoA",
-                           show_ellipses = TRUE,
-                           show_centroids = FALSE) {
+                            group_col = "sample_info",
+                            shape_col = NULL,
+                            title = "PCoA",
+                            show_ellipses = TRUE,
+                            show_centroids = FALSE) {
   points <- ordination_result$points
   common <- intersect(rownames(points), rownames(sample_info))
   if (length(common) == 0) {
     stop("Sample names do not match.")
   }
-
+  
   points <- points[common, , drop = FALSE]
   sub_info <- sample_info[common, , drop = FALSE]
-
+  
   plot_df <- data.frame(
     axis1 = points[, 1],
     axis2 = points[, 2],
@@ -308,30 +308,30 @@ plot_ordination <- function(ordination_result, sample_info,
     stringsAsFactors = FALSE
   )
   rownames(plot_df) <- common
-
+  
   if (!is.null(shape_col) && shape_col %in% colnames(sub_info)) {
     plot_df$shape <- sub_info[[shape_col]]
   }
-
+  
   group_colors <- make_group_colors(unique(plot_df$group))
-
+  
   # 方差解释率（仅 PCoA）
   var_label <- ""
   if (!is.null(ordination_result$variance_explained)) {
     ve <- ordination_result$variance_explained
     var_label <- sprintf(" (%.1f%% / %.1f%%)", ve[1], ve[2])
   }
-
+  
   p <- ggplot2::ggplot(plot_df, ggplot2::aes(x = axis1, y = axis2,
-                                              color = group)) +
+                                             color = group)) +
     ggplot2::geom_point(size = 3, alpha = 0.7)
-
+  
   if (!is.null(shape_col) && "shape" %in% colnames(plot_df)) {
     p <- p + ggplot2::geom_point(ggplot2::aes(shape = shape), size = 3, alpha = 0.7)
     n_shapes <- length(unique(plot_df$shape))
     p <- p + ggplot2::scale_shape_manual(values = 0:(n_shapes - 1) %% 25 + 1)
   }
-
+  
   p <- p +
     ggplot2::scale_color_manual(values = group_colors) +
     ggplot2::labs(
@@ -346,14 +346,14 @@ plot_ordination <- function(ordination_result, sample_info,
       axis.title = ggplot2::element_text(size = 12),
       legend.position = "right"
     )
-
+  
   # 置信椭圆
   if (isTRUE(show_ellipses)) {
     p <- p + ggplot2::stat_ellipse(ggplot2::aes(group = group),
                                    type = "t", level = 0.68,
                                    show.legend = FALSE)
   }
-
+  
   # 各组中心
   if (isTRUE(show_centroids)) {
     centroids <- stats::aggregate(plot_df[, c("axis1", "axis2")],
@@ -362,6 +362,6 @@ plot_ordination <- function(ordination_result, sample_info,
                                  ggplot2::aes(x = axis1, y = axis2),
                                  size = 5, shape = 3, stroke = 1.5)
   }
-
+  
   return(p)
 }

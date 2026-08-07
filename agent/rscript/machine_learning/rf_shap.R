@@ -35,39 +35,39 @@
 #'
 #' @export
 run_rf_shap <- function(expr_matrix, sample_info, group_col = "sample_info",
-                       exclude_groups = "QC", n_trees = 500,
-                       cv_folds = 5, n_top_features = 20, seed = 42) {
+                        exclude_groups = "QC", n_trees = 500,
+                        cv_folds = 5, n_top_features = 20, seed = 42) {
   if (!requireNamespace("randomForest", quietly = TRUE)) {
     stop("Package 'randomForest' is required. Please install it.")
   }
-
+  
   set.seed(seed)
-
+  
   # 对齐样本
   common_samples <- intersect(colnames(expr_matrix), rownames(sample_info))
   expr_matrix <- expr_matrix[, common_samples, drop = FALSE]
   sample_info <- sample_info[common_samples, , drop = FALSE]
-
+  
   # 排除分组
   if (!is.null(exclude_groups)) {
     keep_samples <- rownames(sample_info)[!(sample_info[[group_col]] %in% exclude_groups)]
     expr_matrix <- expr_matrix[, keep_samples, drop = FALSE]
     sample_info <- sample_info[keep_samples, , drop = FALSE]
   }
-
+  
   groups <- factor(sample_info[[group_col]])
   X <- t(as.matrix(expr_matrix))
-
+  
   # 构建随机森林
   rf_model <- randomForest::randomForest(
     x = X, y = groups, ntree = n_trees, importance = TRUE
   )
-
+  
   # 准确率
   predictions <- predict(rf_model)
   accuracy <- mean(predictions == groups)
   conf_mat <- as.matrix(table(Predicted = predictions, Actual = groups))
-
+  
   # Feature重要性
   imp <- randomForest::importance(rf_model)
   imp_df <- data.frame(
@@ -79,15 +79,15 @@ run_rf_shap <- function(expr_matrix, sample_info, group_col = "sample_info",
   imp_df <- imp_df[order(imp_df$MeanDecreaseGini, decreasing = TRUE), ]
   rownames(imp_df) <- imp_df$feature_id
   imp_df$feature_id <- NULL
-
+  
   # SHAP 值（使用置换重要性近似）
   # 选取前 N 个Feature
   top_features <- head(rownames(imp_df), n_top_features)
-
+  
   # 使用Feature重要性的简化 SHAP 近似
   shap_values <- NULL
   shap_summary <- NULL
-
+  
   if (requireNamespace("fastshap", quietly = TRUE)) {
     # 使用 fastshap 计算真实 SHAP
     # 注意：需要 explain() 函数
@@ -102,14 +102,14 @@ run_rf_shap <- function(expr_matrix, sample_info, group_col = "sample_info",
       shap_vals
     }, error = function(e) NULL)
   }
-
+  
   # 若 fastshap 失败，则使用重要性作为替代
   if (is.null(shap_values)) {
     shap_summary <- imp_df[rownames(imp_df) %in% top_features, ]
     shap_summary$feature_id <- factor(rownames(shap_summary),
-                                       levels = rownames(shap_summary))
+                                      levels = rownames(shap_summary))
   }
-
+  
   return(list(
     model = rf_model,
     accuracy = accuracy,
@@ -142,8 +142,8 @@ run_rf_shap <- function(expr_matrix, sample_info, group_col = "sample_info",
 plot_rf_importance <- function(rf_result, top_n = 20) {
   imp_df <- head(rf_result$importance, top_n)
   imp_df$feature_id <- factor(rownames(imp_df),
-                               levels = rownames(imp_df)[nrow(imp_df):1])
-
+                              levels = rownames(imp_df)[nrow(imp_df):1])
+  
   p <- ggplot2::ggplot(imp_df, ggplot2::aes(x = feature_id,
                                             y = MeanDecreaseGini)) +
     ggplot2::geom_bar(stat = "identity", fill = "#4a90d9") +
@@ -159,7 +159,7 @@ plot_rf_importance <- function(rf_result, top_n = 20) {
       axis.text = ggplot2::element_text(size = 9),
       axis.title = ggplot2::element_text(size = 12)
     )
-
+  
   return(p)
 }
 
@@ -175,20 +175,20 @@ plot_rf_importance <- function(rf_result, top_n = 20) {
 #' @export
 plot_confusion_matrix <- function(rf_result) {
   conf_mat <- rf_result$confusion_matrix
-
+  
   plot_data <- expand.grid(
     Predicted = rownames(conf_mat),
     Actual = colnames(conf_mat),
     stringsAsFactors = FALSE
   )
   plot_data$Count <- as.vector(conf_mat)
-
+  
   p <- ggplot2::ggplot(plot_data, ggplot2::aes(x = Actual, y = Predicted,
                                                fill = Count)) +
     ggplot2::geom_tile() +
     ggplot2::geom_text(ggplot2::aes(label = Count), size = 4) +
     ggplot2::scale_fill_gradient(low = "white", high = "#4a90d9",
-                                  name = "Count") +
+                                 name = "Count") +
     ggplot2::labs(
       title = sprintf("Confusion Matrix (Accuracy: %.1f%%)",
                       rf_result$accuracy * 100),
@@ -201,6 +201,6 @@ plot_confusion_matrix <- function(rf_result) {
       axis.text = ggplot2::element_text(size = 10),
       axis.title = ggplot2::element_text(size = 12)
     )
-
+  
   return(p)
 }

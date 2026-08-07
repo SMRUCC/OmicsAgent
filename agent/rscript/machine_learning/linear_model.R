@@ -55,39 +55,39 @@
 #'
 #' @export
 run_linear_model <- function(expr_matrix, sample_info,
-                            group_col = "sample_info",
-                            exclude_groups = "QC", control_group = NULL,
-                            top_features = NULL, cv_folds = 5, seed = 42) {
+                             group_col = "sample_info",
+                             exclude_groups = "QC", control_group = NULL,
+                             top_features = NULL, cv_folds = 5, seed = 42) {
   set.seed(seed)
-
+  
   # 对齐样本
   common_samples <- intersect(colnames(expr_matrix), rownames(sample_info))
   expr_matrix <- expr_matrix[, common_samples, drop = FALSE]
   sample_info <- sample_info[common_samples, , drop = FALSE]
-
+  
   # 排除分组
   if (!is.null(exclude_groups)) {
     keep_samples <- rownames(sample_info)[!(sample_info[[group_col]] %in% exclude_groups)]
     expr_matrix <- expr_matrix[, keep_samples, drop = FALSE]
     sample_info <- sample_info[keep_samples, , drop = FALSE]
   }
-
+  
   groups <- factor(sample_info[[group_col]])
   if (!is.null(control_group)) {
     groups <- stats::relevel(groups, ref = control_group)
   }
-
+  
   X <- t(as.matrix(expr_matrix))
-
+  
   # 若指定则筛选前 N 个Feature
   if (!is.null(top_features)) {
     top_features <- intersect(top_features, colnames(X))
     X <- X[, top_features, drop = FALSE]
   }
-
+  
   # 在 make.names 之前保留原始Feature名（以便输出时还原）
   orig_feat_names <- colnames(X)
-
+  
   # 构建数据框
   X <- as.matrix(X)
   colnames(X) <- make.names(colnames(X), unique = TRUE)
@@ -95,10 +95,10 @@ run_linear_model <- function(expr_matrix, sample_info,
   feat_name_map <- stats::setNames(orig_feat_names, safe_feat_names)
   data_df <- as.data.frame(X)
   data_df$group <- groups
-
+  
   # 确定模型类型
   n_groups <- nlevels(groups)
-
+  
   if (n_groups == 2) {
     # 二分类：逻辑回归
     formula_str <- "group ~ ."
@@ -113,7 +113,7 @@ run_linear_model <- function(expr_matrix, sample_info,
     if (requireNamespace("nnet", quietly = TRUE)) {
       formula_str <- "group ~ ."
       model <- nnet::multinom(as.formula(formula_str), data = data_df,
-                               trace = FALSE)
+                              trace = FALSE)
       predictions <- stats::predict(model, type = "class")
       predicted_class <- factor(predictions, levels = levels(groups))
     } else {
@@ -127,11 +127,11 @@ run_linear_model <- function(expr_matrix, sample_info,
       }
     }
   }
-
+  
   # 准确率
   accuracy <- mean(predicted_class == groups)
   conf_mat <- as.matrix(table(Predicted = predicted_class, Actual = groups))
-
+  
   # 分类Coefficient（保留以兼容旧版本）
   class_coefs <- stats::coef(model)
   if (is.list(class_coefs)) {
@@ -167,7 +167,7 @@ run_linear_model <- function(expr_matrix, sample_info,
     )
     rownames(class_coef_df) <- NULL
   }
-
+  
   # ============================================================================
   # 逐Feature单变量线性回归：
   #   y = 0/1 分组编码（对照组 a=0，其余各组 b=1）
@@ -176,7 +176,7 @@ run_linear_model <- function(expr_matrix, sample_info,
   # ============================================================================
   ref_group <- levels(groups)[1]
   case_groups <- levels(groups)[-1]
-
+  
   lm_parts <- list()
   for (cg in case_groups) {
     # 仅保留该比较中两个分组的样本
@@ -190,7 +190,7 @@ run_linear_model <- function(expr_matrix, sample_info,
       next
     }
     comparison_label <- paste0(ref_group, "(a=0) vs ", cg, "(b=1)")
-
+    
     comp_rows <- lapply(seq_len(ncol(x_sub)), function(j) {
       safe_name <- colnames(x_sub)[j]
       feat_id <- if (safe_name %in% names(feat_name_map)) {
@@ -199,7 +199,7 @@ run_linear_model <- function(expr_matrix, sample_info,
         safe_name
       }
       x <- x_sub[, j]
-
+      
       fit <- tryCatch(stats::lm(y ~ x), error = function(e) NULL)
       if (is.null(fit)) {
         warning("Feature '", feat_id, "' in comparison '", comparison_label,
@@ -213,7 +213,7 @@ run_linear_model <- function(expr_matrix, sample_info,
           stringsAsFactors = FALSE
         ))
       }
-
+      
       s <- summary(fit)
       slope <- unname(stats::coef(fit)[2])
       intercept <- unname(stats::coef(fit)[1])
@@ -225,7 +225,7 @@ run_linear_model <- function(expr_matrix, sample_info,
       eq_intercept <- formatC(abs(intercept), format = "g", digits = 4)
       eq_sign <- ifelse(intercept < 0, "-", "+")
       equation <- paste0("y = ", eq_slope, "*x ", eq_sign, " ", eq_intercept)
-
+      
       data.frame(
         feature_id = feat_id, comparison = comparison_label,
         slope = slope, intercept = intercept,
@@ -235,7 +235,7 @@ run_linear_model <- function(expr_matrix, sample_info,
         stringsAsFactors = FALSE
       )
     })
-
+    
     comp_df <- do.call(rbind, comp_rows)
     # 在该比较内对 p 值进行 BH 校正
     non_na <- !is.na(comp_df$p_value)
@@ -245,7 +245,7 @@ run_linear_model <- function(expr_matrix, sample_info,
     }
     lm_parts[[cg]] <- comp_df
   }
-
+  
   if (length(lm_parts) == 0) {
     coef_df <- data.frame(
       feature_id = character(0), comparison = character(0),
@@ -259,7 +259,7 @@ run_linear_model <- function(expr_matrix, sample_info,
     coef_df <- do.call(rbind, lm_parts)
     rownames(coef_df) <- NULL
   }
-
+  
   return(list(
     model = model,
     coefficients = coef_df,

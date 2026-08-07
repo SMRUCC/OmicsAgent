@@ -39,28 +39,28 @@ identify_core_microbiome <- function(expr_matrix, sample_info = NULL,
                                      abundance_threshold = 1e-4,
                                      detection_limit = 0) {
   if (!is.matrix(expr_matrix)) expr_matrix <- as.matrix(expr_matrix)
-
+  
   # 计算相对丰度
   rel_abund <- calc_relative_abundance(expr_matrix)
-
+  
   # 检出/未检出
   presence <- ifelse(expr_matrix > detection_limit, 1, 0)
-
+  
   # 全局出现频率
   prevalence <- rowSums(presence) / ncol(presence)
-
+  
   # 平均相对丰度
   mean_abund <- rowMeans(rel_abund, na.rm = TRUE)
-
+  
   # 全局Core
   core_idx <- which(prevalence >= prevalence_threshold &
                       mean_abund >= abundance_threshold)
   core_features <- rownames(expr_matrix)[core_idx]
-
+  
   cat(sprintf("[core] Global core taxa: %d / %d (prevalence >= %.0f%%, abund >= %.1e)\n",
               length(core_features), nrow(expr_matrix),
               prevalence_threshold * 100, abundance_threshold))
-
+  
   # 出现频率数据框
   prev_df <- data.frame(
     feature = rownames(expr_matrix),
@@ -71,7 +71,7 @@ identify_core_microbiome <- function(expr_matrix, sample_info = NULL,
   )
   prev_df <- prev_df[order(-prev_df$prevalence, -prev_df$mean_abundance), ]
   rownames(prev_df) <- NULL
-
+  
   # 按分组的Core
   core_by_group <- NULL
   if (!is.null(sample_info) && group_col %in% colnames(sample_info)) {
@@ -79,12 +79,12 @@ identify_core_microbiome <- function(expr_matrix, sample_info = NULL,
     rel_abund_sub <- rel_abund[, common, drop = FALSE]
     presence_sub <- presence[, common, drop = FALSE]
     groups <- sample_info[common, group_col]
-
+    
     core_by_group <- list()
     for (g in unique(groups)) {
       g_samples <- common[groups == g]
       if (length(g_samples) < 2) next
-
+      
       prev_g <- rowSums(presence_sub[, g_samples, drop = FALSE]) / length(g_samples)
       abund_g <- rowMeans(rel_abund_sub[, g_samples, drop = FALSE], na.rm = TRUE)
       core_g <- rownames(expr_matrix)[prev_g >= prevalence_threshold &
@@ -93,14 +93,14 @@ identify_core_microbiome <- function(expr_matrix, sample_info = NULL,
       cat(sprintf("[core] %s group core taxa: %d / %d\n",
                   g, length(core_g), nrow(expr_matrix)))
     }
-
+    
     # 识别共有Core（所有组中都Core）
     if (length(core_by_group) > 1) {
       shared_core <- Reduce(intersect, core_by_group)
       cat(sprintf("[core] Shared core taxa across groups: %d\n", length(shared_core)))
     }
   }
-
+  
   return(list(
     core_features = core_features,
     prevalence = prev_df,
@@ -132,10 +132,10 @@ identify_core_microbiome <- function(expr_matrix, sample_info = NULL,
 #' @export
 plot_prevalence <- function(core_result, top_n = 20) {
   prev_df <- core_result$prevalence
-
+  
   p <- ggplot2::ggplot(prev_df, ggplot2::aes(x = prevalence,
-                                               y = mean_abundance,
-                                               color = is_core)) +
+                                             y = mean_abundance,
+                                             color = is_core)) +
     ggplot2::geom_point(size = 2, alpha = 0.6) +
     ggplot2::scale_y_log10() +
     ggplot2::scale_color_manual(
@@ -159,7 +159,7 @@ plot_prevalence <- function(core_result, top_n = 20) {
       axis.title = ggplot2::element_text(size = 12),
       legend.position = "right"
     )
-
+  
   # 标注Core taxa 名称
   if (sum(prev_df$is_core) > 0) {
     core_taxa <- prev_df[prev_df$is_core, , drop = FALSE]
@@ -172,7 +172,7 @@ plot_prevalence <- function(core_result, top_n = 20) {
       size = 2.5, max.overlaps = 15
     )
   }
-
+  
   return(p)
 }
 
@@ -196,32 +196,32 @@ plot_prevalence <- function(core_result, top_n = 20) {
 #'
 #' @export
 plot_core_heatmap <- function(expr_matrix, core_result, sample_info,
-                             group_col = "sample_info",
-                             scale = TRUE) {
+                              group_col = "sample_info",
+                              scale = TRUE) {
   core_features <- core_result$core_features
   if (length(core_features) == 0) {
     stop("No core taxa to plot.")
   }
-
+  
   # 提取Core taxa
   core_mat <- expr_matrix[core_features, , drop = FALSE]
-
+  
   # 转为相对丰度
   core_mat <- calc_relative_abundance(core_mat)
-
+  
   # 对数变换
   core_mat <- log10(core_mat + 1e-6)
-
+  
   # 行标准化
   if (scale) {
     core_mat <- t(scale(t(core_mat)))
   }
-
+  
   # 使用现有的 heatmap_plot 函数
   hm <- plot_heatmap(core_mat, sample_info,
-                    feature_info = NULL,
-                    group_col = group_col,
-                    scale = "none",  # 已经做了
-                    n_features = nrow(core_mat))
+                     feature_info = NULL,
+                     group_col = group_col,
+                     scale = "none",  # 已经做了
+                     n_features = nrow(core_mat))
   return(hm)
 }

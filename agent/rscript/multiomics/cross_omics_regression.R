@@ -43,22 +43,22 @@ run_cross_omics_regression <- function(x_matrix, y_matrix,
                                        verbose = TRUE) {
   if (!is.matrix(x_matrix)) x_matrix <- as.matrix(x_matrix)
   if (!is.matrix(y_matrix)) y_matrix <- as.matrix(y_matrix)
-
+  
   common <- intersect(colnames(x_matrix), colnames(y_matrix))
   if (length(common) < min_samples) {
     stop(sprintf("Only %d shared samples; need at least %d.", length(common), min_samples))
   }
   X <- x_matrix[, common, drop = FALSE]
   Y <- y_matrix[, common, drop = FALSE]
-
+  
   # 去除任一层中零方差的Feature。
   X <- drop_zero_variance(X, label = x_name, verbose = verbose)
   Y <- drop_zero_variance(Y, label = y_name, verbose = verbose)
-
+  
   if (nrow(X) == 0 || nrow(Y) == 0) {
     stop("At least one of the layers has no usable feature after filtering.")
   }
-
+  
   # ---------------------------------------------------------------------------
   # 对于单变量模型 y ~ x，回归统计量可直接由 Pearson 相关Coefficient r 与Feature矩得出：
   #   slope      = r * sd(y) / sd(x)
@@ -72,7 +72,7 @@ run_cross_omics_regression <- function(x_matrix, y_matrix,
   # ---------------------------------------------------------------------------
   n <- length(common)
   df <- n - 2L
-
+  
   # 对每个Feature在样本方向上中心化；其叉积即给出
   # Feature间交叉乘积之和（n_features_x x n_features_y）。
   Xc <- X - rowMeans(X)             # features x samples
@@ -80,25 +80,25 @@ run_cross_omics_regression <- function(x_matrix, y_matrix,
   Sxx <- rowSums(Xc * Xc)
   Syy <- rowSums(Yc * Yc)
   Sxy <- Xc %*% t(Yc)               # n_features_x x n_features_y
-
+  
   r <- Sxy / sqrt(outer(Sxx, Syy))
   r <- pmax(pmin(r, 1), -1)         # guard against rounding beyond [-1, 1]
-
+  
   t_val <- r * sqrt(df / pmax(1 - r * r, .Machine$double.eps))
   p_val <- 2 * stats::pt(-abs(t_val), df = df)
-
+  
   sx <- sqrt(Sxx / (n - 1))
   sy <- sqrt(Syy / (n - 1))
   mx <- rowMeans(X)
   my <- rowMeans(Y)
-
+  
   slope <- r * outer(1 / sx, sy)
   intercept <- outer(rep(1, nrow(X)), my) - t(t(slope) * mx)
   r2 <- r * r
   se_slope <- abs(slope) / pmax(abs(t_val), .Machine$double.eps)
-
+  
   is_finite <- !is.na(r) & is.finite(t_val) & abs(r) < 1
-
+  
   # 以 x_feature 在前的 expand.grid 让 x 变化最快，从而与斜率 / p 值矩阵
   # 的按列（as.vector）存储顺序一致。
   pairs <- expand.grid(x_feature = rownames(X), y_feature = rownames(Y),
@@ -113,7 +113,7 @@ run_cross_omics_regression <- function(x_matrix, y_matrix,
   pairs$r_squared <- as.vector(r2)
   pairs$n_samples <- n
   pairs <- pairs[is_finite, , drop = FALSE]
-
+  
   if (nrow(pairs) == 0) {
     cat(sprintf("  [regression] %s -> %s: no valid fit produced.\n", x_name, y_name))
     return(list(pairs = data.frame(), x_summary = data.frame(), y_summary = data.frame()))
@@ -123,7 +123,7 @@ run_cross_omics_regression <- function(x_matrix, y_matrix,
   out$significant <- out$padj < 0.05
   out <- out[order(out$padj, -abs(out$slope)), , drop = FALSE]
   rownames(out) <- NULL
-
+  
   x_summary <- do.call(rbind, lapply(split(out, out$x_feature), function(sub) {
     data.frame(
       x_feature = sub$x_feature[1],
@@ -138,7 +138,7 @@ run_cross_omics_regression <- function(x_matrix, y_matrix,
   }))
   x_summary <- x_summary[order(-x_summary$n_significant, -x_summary$best_r2), , drop = FALSE]
   rownames(x_summary) <- NULL
-
+  
   y_summary <- do.call(rbind, lapply(split(out, out$y_feature), function(sub) {
     data.frame(
       y_feature = sub$y_feature[1],
@@ -153,12 +153,12 @@ run_cross_omics_regression <- function(x_matrix, y_matrix,
   }))
   y_summary <- y_summary[order(-y_summary$n_significant, -y_summary$best_r2), , drop = FALSE]
   rownames(y_summary) <- NULL
-
+  
   if (verbose) {
     cat(sprintf("  [regression] %s -> %s: %d pairs tested, %d significant (padj<0.05)\n",
                 x_name, y_name, nrow(out), sum(out$significant)))
   }
-
+  
   list(pairs = out, x_summary = x_summary, y_summary = y_summary)
 }
 

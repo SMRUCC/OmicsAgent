@@ -36,60 +36,60 @@
 #'
 #' @export
 run_lasso <- function(expr_matrix, sample_info, group_col = "sample_info",
-                     exclude_groups = "QC", control_group = NULL,
-                     n_folds = 10, alpha = 1, seed = 42) {
+                      exclude_groups = "QC", control_group = NULL,
+                      n_folds = 10, alpha = 1, seed = 42) {
   if (!requireNamespace("glmnet", quietly = TRUE)) {
     stop("Package 'glmnet' is required. Please install it.")
   }
-
+  
   set.seed(seed)
-
+  
   # 对齐样本
   common_samples <- intersect(colnames(expr_matrix), rownames(sample_info))
   expr_matrix <- expr_matrix[, common_samples, drop = FALSE]
   sample_info <- sample_info[common_samples, , drop = FALSE]
-
+  
   # 排除分组
   if (!is.null(exclude_groups)) {
     keep_samples <- rownames(sample_info)[!(sample_info[[group_col]] %in% exclude_groups)]
     expr_matrix <- expr_matrix[, keep_samples, drop = FALSE]
     sample_info <- sample_info[keep_samples, , drop = FALSE]
   }
-
+  
   groups <- factor(sample_info[[group_col]])
   if (!is.null(control_group)) {
     groups <- stats::relevel(groups, ref = control_group)
   }
-
+  
   X <- t(as.matrix(expr_matrix))
   n_groups <- nlevels(groups)
-
+  
   # 模型族
   if (n_groups == 2) {
     family <- "binomial"
   } else {
     family <- "multinomial"
   }
-
+  
   # 交叉验证 Lasso
   cv_model <- glmnet::cv.glmnet(
     x = X, y = groups, family = family,
     alpha = alpha, nfolds = n_folds, type.measure = "class"
   )
-
+  
   # 最佳 lambda
   best_lambda <- cv_model$lambda.min
-
+  
   # 预测
   predictions <- stats::predict(cv_model, newx = X, s = "lambda.min",
-                                  type = "class")
+                                type = "class")
   predicted_class <- factor(predictions, levels = levels(groups))
   accuracy <- mean(predicted_class == groups)
   conf_mat <- as.matrix(table(Predicted = predicted_class, Actual = groups))
-
+  
   # 提取非零Coefficient
   coefs <- stats::coef(cv_model, s = "lambda.min")
-
+  
   if (is.list(coefs)) {
     # 多分类：Coefficient矩阵列表
     coef_df <- do.call(rbind, lapply(names(coefs), function(g) {
@@ -117,11 +117,11 @@ run_lasso <- function(expr_matrix, sample_info, group_col = "sample_info",
     selected_features <- rownames(coefs_mat)[nz_idx]
     selected_features <- setdiff(selected_features, "(Intercept)")
   }
-
+  
   # 将Feature设为行名（多个分组可能产生重复）
   rownames(coef_df) <- make.unique(coef_df$feature)
   coef_df$feature <- NULL
-
+  
   return(list(
     model = cv_model,
     selected_features = selected_features,
@@ -152,14 +152,14 @@ run_lasso <- function(expr_matrix, sample_info, group_col = "sample_info",
 plot_lasso_path <- function(lasso_result) {
   model <- lasso_result$model
   all_coefs <- stats::coef(model, s = model$lambda)
-
+  
   # 构建用于绘图的数据
   lambda_seq <- model$lambda
   coef_mat <- stats::coef(model, s = lambda_seq)
   if (is.list(coef_mat)) {
     coef_mat <- coef_mat[[1]]
   }
-
+  
   plot_data <- data.frame()
   for (i in 1:ncol(coef_mat)) {
     nonzero_idx <- which(coef_mat[, i] != 0)
@@ -173,7 +173,7 @@ plot_lasso_path <- function(lasso_result) {
       ))
     }
   }
-
+  
   p <- ggplot2::ggplot(plot_data, ggplot2::aes(x = log(lambda), y = coefficient,
                                                color = feature)) +
     ggplot2::geom_line(linewidth = 0.6) +
@@ -194,6 +194,6 @@ plot_lasso_path <- function(lasso_result) {
       legend.text = ggplot2::element_text(size = 7)
     ) +
     ggplot2::guides(color = ggplot2::guide_legend(ncol = 1))
-
+  
   return(p)
 }

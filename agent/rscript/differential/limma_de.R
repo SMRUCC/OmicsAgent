@@ -59,25 +59,25 @@
 #'
 #' @export
 run_limma <- function(expr_matrix, sample_info, group_col = "sample_info",
-                     control_group = NULL, case_groups = NULL,
-                     exclude_groups = "QC", strategy = "pvalue_logFC",
-                     p_threshold = 0.05, logfc_threshold = 1,
-                     vip_threshold = 1.0, top_n = 20,
-                     p_adj_method = "BH", vip_result = NULL) {
+                      control_group = NULL, case_groups = NULL,
+                      exclude_groups = "QC", strategy = "pvalue_logFC",
+                      p_threshold = 0.05, logfc_threshold = 1,
+                      vip_threshold = 1.0, top_n = 20,
+                      p_adj_method = "BH", vip_result = NULL) {
   # 对齐样本
   common_samples <- intersect(colnames(expr_matrix), rownames(sample_info))
   expr_matrix <- expr_matrix[, common_samples, drop = FALSE]
   sample_info <- sample_info[common_samples, , drop = FALSE]
-
+  
   # 排除分组
   if (!is.null(exclude_groups)) {
     keep_samples <- rownames(sample_info)[!(sample_info[[group_col]] %in% exclude_groups)]
     expr_matrix <- expr_matrix[, keep_samples, drop = FALSE]
     sample_info <- sample_info[keep_samples, , drop = FALSE]
   }
-
+  
   groups <- factor(sample_info[[group_col]])
-
+  
   # 确定对照组与处理组
   if (is.null(control_group)) {
     control_group <- levels(groups)[1]
@@ -85,33 +85,33 @@ run_limma <- function(expr_matrix, sample_info, group_col = "sample_info",
   if (is.null(case_groups)) {
     case_groups <- setdiff(levels(groups), control_group)
   }
-
+  
   # 清洗分组名以用于 makeContrasts
   orig_levels <- levels(groups)
   safe_levels <- make.names(orig_levels)
   names(safe_levels) <- orig_levels
   groups_safe <- factor(groups, levels = orig_levels, labels = safe_levels)
-
+  
   # 检查 limma 是否可用
   if (requireNamespace("limma", quietly = TRUE)) {
     # 设计矩阵
     design <- stats::model.matrix(~ 0 + groups_safe)
     colnames(design) <- safe_levels
-
+    
     # 拟合模型
     fit <- limma::lmFit(expr_matrix, design)
-
+    
     # 对比矩阵
     safe_case <- safe_levels[orig_levels %in% case_groups]
     safe_control <- safe_levels[orig_levels == control_group]
     contrast_strs <- paste0(safe_case, " - ", safe_control)
     contrast_mat <- limma::makeContrasts(contrasts = contrast_strs,
-                                          levels = design)
+                                         levels = design)
     colnames(contrast_mat) <- case_groups
-
+    
     fit2 <- limma::contrasts.fit(fit, contrast_mat)
     fit2 <- limma::eBayes(fit2)
-
+    
     # 提取结果
     all_results <- list()
     for (cg in case_groups) {
@@ -122,26 +122,26 @@ run_limma <- function(expr_matrix, sample_info, group_col = "sample_info",
     }
     combined <- do.call(rbind, all_results)
     rownames(combined) <- NULL
-
+    
   } else {
     # 回退方案：使用基础 R 的 t 检验
     warning("Package 'limma' not installed, falling back to simple t-test.")
     combined <- .t_test_de(expr_matrix, groups, control_group, case_groups)
   }
-
+  
   # 必要时重命名列
   colnames(combined)[colnames(combined) == "P.Value"] <- "p_value"
   colnames(combined)[colnames(combined) == "adj.P.Val"] <- "p_adj"
   colnames(combined)[colnames(combined) == "logFC"] <- "logFC"
-
+  
   # 将策略名统一为小写以便不区分大小写匹配
   strategy_norm <- tolower(strategy)
-
+  
   # 应用筛选策略
   if (strategy_norm == "pvalue_logfc") {
     combined$significant <- combined$p_adj < p_threshold &
-                            abs(combined$logFC) >= logfc_threshold
-
+      abs(combined$logFC) >= logfc_threshold
+    
   } else if (strategy_norm == "pvalue_vip") {
     if (is.null(vip_result)) {
       stop("vip_result must be provided when strategy = 'pvalue_vip'")
@@ -151,8 +151,8 @@ run_limma <- function(expr_matrix, sample_info, group_col = "sample_info",
     colnames(vip_df)[2] <- "vip"
     combined <- merge(combined, vip_df, by = "feature_id", all.x = TRUE)
     combined$significant <- combined$p_adj < p_threshold &
-                            combined$vip >= vip_threshold
-
+      combined$vip >= vip_threshold
+    
   } else if (strategy_norm == "pvalue_topn") {
     combined$significant <- FALSE
     for (comp in unique(combined$comparison)) {
@@ -165,34 +165,34 @@ run_limma <- function(expr_matrix, sample_info, group_col = "sample_info",
         combined[top_idx, "significant"] <- TRUE
       }
     }
-
+    
   } else {
     # 未知策略 / 回退：默认采用 p 值 + logFC 规则
     warning("Unknown strategy '", strategy, "', falling back to 'pvalue_logFC'.")
     combined$significant <- combined$p_adj < p_threshold &
-                            abs(combined$logFC) >= logfc_threshold
+      abs(combined$logFC) >= logfc_threshold
   }
-
+  
   # 确保存在 significant 列（例如 t 检验回退路径）
   if (is.null(combined$significant)) {
     combined$significant <- combined$p_adj < p_threshold &
-                            abs(combined$logFC) >= logfc_threshold
+      abs(combined$logFC) >= logfc_threshold
   }
-
+  
   # 根据显著性与 logFC 方向添加 up/down/not sig 调节方向标记
   combined$regulation <- ifelse(combined$significant & combined$logFC > 0, "up",
-                        ifelse(combined$significant & combined$logFC < 0, "down",
-                               "not sig"))
-
+                                ifelse(combined$significant & combined$logFC < 0, "down",
+                                       "not sig"))
+  
   # 筛选显著结果
   sig_results <- combined[combined$significant, , drop = FALSE]
-
+  
   # 保留 feature_id 作为真实列（纯Feature名，无比较后缀），
   # 并将行名重置为默认，避免 export_table 将行名派生出的重复
   # feature_id 列前置。
   rownames(combined) <- NULL
   rownames(sig_results) <- NULL
-
+  
   # 将 feature_id 移到首列，以获得清晰一致的导出顺序。
   if ("feature_id" %in% colnames(combined)) {
     combined <- combined[, c("feature_id",
@@ -202,7 +202,7 @@ run_limma <- function(expr_matrix, sample_info, group_col = "sample_info",
     sig_results <- sig_results[, c("feature_id",
                                    setdiff(colnames(sig_results), "feature_id")), drop = FALSE]
   }
-
+  
   return(list(
     results = combined,
     significant = sig_results,
@@ -219,16 +219,16 @@ run_limma <- function(expr_matrix, sample_info, group_col = "sample_info",
 .t_test_de <- function(expr_matrix, groups, control_group, case_groups) {
   control_samples <- colnames(expr_matrix)[groups == control_group]
   results_list <- list()
-
+  
   for (cg in case_groups) {
     case_samples <- colnames(expr_matrix)[groups == cg]
     for (i in 1:nrow(expr_matrix)) {
       control_vals <- expr_matrix[i, control_samples]
       case_vals <- expr_matrix[i, case_samples]
-
+      
       tt <- stats::t.test(case_vals, control_vals)
       logfc <- log2(mean(case_vals) / mean(control_vals))
-
+      
       results_list[[length(results_list) + 1]] <- data.frame(
         feature_id = rownames(expr_matrix)[i],
         logFC = logfc,
@@ -238,7 +238,7 @@ run_limma <- function(expr_matrix, sample_info, group_col = "sample_info",
       )
     }
   }
-
+  
   combined <- do.call(rbind, results_list)
   combined$p_adj <- stats::p.adjust(combined$p_value, method = "BH")
   return(combined)

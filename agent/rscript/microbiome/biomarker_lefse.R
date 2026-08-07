@@ -38,21 +38,21 @@ run_lefse_analysis <- function(expr_matrix, sample_info,
                                lda_threshold = 2.0,
                                p_adjust = "BH") {
   if (!is.matrix(expr_matrix)) expr_matrix <- as.matrix(expr_matrix)
-
+  
   common <- intersect(colnames(expr_matrix), rownames(sample_info))
   expr_matrix <- expr_matrix[, common, drop = FALSE]
   sample_info <- sample_info[common, , drop = FALSE]
   groups <- sample_info[[group_col]]
   group_levels <- unique(groups)
   n_groups <- length(group_levels)
-
+  
   if (n_groups < 2) {
     stop("At least 2 groups are required for LEfSe analysis.")
   }
-
+  
   n_features <- nrow(expr_matrix)
   feature_names <- rownames(expr_matrix)
-
+  
   # 第一步：Kruskal-Wallis 检验
   kw_p <- numeric(n_features)
   for (i in seq_len(n_features)) {
@@ -60,19 +60,19 @@ run_lefse_analysis <- function(expr_matrix, sample_info,
   }
   kw_p[is.na(kw_p)] <- 1
   kw_padj <- stats::p.adjust(kw_p, method = p_adjust)
-
+  
   # 第二步：LDA 分析
   # 使用 MASS::lda 进行线性判别分析
   expr_t <- t(expr_matrix)  # samples × features
   expr_t <- as.data.frame(expr_t)
-
+  
   lda_scores <- rep(NA_real_, n_features)
   lda_group <- rep(NA_character_, n_features)
   lda_direction <- rep(NA_real_, n_features)
-
+  
   # 对通过 KW 检验的 taxa 进行 LDA
   significant_idx <- which(kw_padj < kw_p_threshold)
-
+  
   if (length(significant_idx) > 0) {
     if (n_groups == 2) {
       # 两组：直接计算 effect size（类似于 LEfSe 的 LDA score）
@@ -80,15 +80,15 @@ run_lefse_analysis <- function(expr_matrix, sample_info,
         v <- expr_matrix[idx, ]
         g1 <- v[groups == group_levels[1]]
         g2 <- v[groups == group_levels[2]]
-
+        
         # 标准化到相对丰度
         if (sum(g1) > 0) g1_rel <- g1 / sum(g1) * 100 else g1_rel <- rep(0, length(g1))
         if (sum(g2) > 0) g2_rel <- g2 / sum(g2) * 100 else g2_rel <- rep(0, length(g2))
-
+        
         # log10 变换（加伪计数）
         g1_log <- log10(g1_rel + 1)
         g2_log <- log10(g2_rel + 1)
-
+        
         # LDA score: 组间差 / 组内标准差
         mean_diff <- mean(g1_log) - mean(g2_log)
         pooled_sd <- sqrt((var(g1_log) + var(g2_log)) / 2)
@@ -120,7 +120,7 @@ run_lefse_analysis <- function(expr_matrix, sample_info,
       }
     }
   }
-
+  
   # 组装结果
   full_results <- data.frame(
     feature = feature_names,
@@ -131,15 +131,15 @@ run_lefse_analysis <- function(expr_matrix, sample_info,
     enriched_group = lda_group,
     stringsAsFactors = FALSE
   )
-
+  
   # 筛选显著 biomarker
   significant <- full_results[
     !is.na(full_results$lda_score) &
-    full_results$kw_padj < kw_p_threshold &
-    abs(full_results$lda_score) >= lda_threshold, , drop = FALSE
+      full_results$kw_padj < kw_p_threshold &
+      abs(full_results$lda_score) >= lda_threshold, , drop = FALSE
   ]
   significant <- significant[order(-abs(significant$lda_score)), ]
-
+  
   # LDA score 数据框（用于绘图）
   lda_scores_df <- significant[, c("feature", "lda_score", "enriched_group")]
   lda_scores_df$lda_score <- ifelse(
@@ -147,12 +147,12 @@ run_lefse_analysis <- function(expr_matrix, sample_info,
     -abs(lda_scores_df$lda_score),
     abs(lda_scores_df$lda_score)
   )
-
+  
   cat(sprintf("[lefse] %d taxa passed KW test (p_adj < %.2f)\n",
               length(significant_idx), kw_p_threshold))
   cat(sprintf("[lefse] %d biomarkers passed LDA threshold (|score| >= %.1f)\n",
               nrow(significant), lda_threshold))
-
+  
   return(list(
     full_results = full_results,
     significant = significant,
@@ -190,20 +190,20 @@ plot_lefse_lda <- function(lefse_result, top_n = 30, color_by_group = TRUE) {
   if (nrow(lda_df) == 0) {
     stop("No significant biomarkers to plot.")
   }
-
+  
   # Top N
   if (nrow(lda_df) > top_n) {
     lda_df <- lda_df[order(-abs(lda_df$lda_score))[1:top_n], , drop = FALSE]
   }
-
+  
   lda_df <- lda_df[order(lda_df$lda_score), , drop = FALSE]
   lda_df$feature <- factor(lda_df$feature, levels = lda_df$feature)
-
+  
   group_levels <- lefse_result$params$group_levels
   group_colors <- make_group_colors(group_levels)
-
+  
   p <- ggplot2::ggplot(lda_df, ggplot2::aes(x = feature, y = lda_score,
-                                             fill = enriched_group)) +
+                                            fill = enriched_group)) +
     ggplot2::geom_bar(stat = "identity") +
     ggplot2::coord_flip() +
     ggplot2::scale_fill_manual(values = group_colors, name = "Enriched in") +
@@ -219,7 +219,7 @@ plot_lefse_lda <- function(lefse_result, top_n = 30, color_by_group = TRUE) {
       axis.text.x = ggplot2::element_text(size = 10),
       legend.position = "right"
     )
-
+  
   return(p)
 }
 
@@ -242,16 +242,16 @@ plot_lefse_lda <- function(lefse_result, top_n = 30, color_by_group = TRUE) {
 #'
 #' @export
 plot_lefse_cladogram <- function(lefse_result, feature_info,
-                                levels = c("phylum", "class", "order",
-                                           "family", "genus")) {
+                                 levels = c("phylum", "class", "order",
+                                            "family", "genus")) {
   sig <- lefse_result$significant
   if (nrow(sig) == 0) {
     stop("No significant biomarkers for cladogram.")
   }
-
+  
   group_levels <- lefse_result$params$group_levels
   group_colors <- make_group_colors(group_levels)
-
+  
   # 为每个层级收集显著 taxa
   all_nodes <- list()
   for (lvl in levels) {
@@ -273,15 +273,15 @@ plot_lefse_cladogram <- function(lefse_result, feature_info,
       }
     }
   }
-
+  
   if (length(all_nodes) == 0) {
     stop("Cannot match significant biomarkers to taxonomic levels.")
   }
-
+  
   node_df <- do.call(rbind, all_nodes)
   node_df$level <- factor(node_df$level, levels = levels)
   node_df <- node_df[!duplicated(node_df$taxa), ]
-
+  
   # 简化版：用水平条表示各层级
   p <- ggplot2::ggplot(node_df, ggplot2::aes(x = level, y = taxa, fill = enriched)) +
     ggplot2::geom_point(size = 5, shape = 21, color = "grey30") +
@@ -297,6 +297,6 @@ plot_lefse_cladogram <- function(lefse_result, feature_info,
       axis.text.y = ggplot2::element_text(size = 9),
       legend.position = "right"
     )
-
+  
   return(p)
 }
