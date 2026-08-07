@@ -80,17 +80,17 @@ load_sample_info <- function(file) {
 }
 
 
-#' Load feature annotation from CSV file
+#' 从 CSV 文件加载特征注释
 #'
-#' @description Loads feature annotation from a CSV file. Required columns are
-#'   \code{ID} (matching expression matrix feature IDs), \code{name} (common
-#'   name), \code{type} (feature category), and \code{kegg} (KEGG pathway ID).
-#'   Optional columns include \code{pfam} and \code{family}.
+#' @description 从 CSV 文件加载特征注释。必需列包括
+#'   \code{ID}（与表达矩阵的特征 ID 对应）、\code{name}（常用名）、
+#'   \code{type}（特征类别）和 \code{kegg}（KEGG 通路 ID）。
+#'   可选列包括 \code{pfam} 和 \code{family}。
 #'
-#' @param file Path to the feature annotation CSV file.
-#' @param id_col Column name to use as feature ID. Default: "ID".
+#' @param file 特征注释 CSV 文件的路径。
+#' @param id_col 用作特征 ID 的列名。默认："ID"。
 #'
-#' @return A data.frame with feature annotation. Row names are set to feature IDs.
+#' @return 含有特征注释的数据框。行名设为特征 ID。
 #'
 #' @examples
 #' \dontrun{
