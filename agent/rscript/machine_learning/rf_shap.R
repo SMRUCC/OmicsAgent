@@ -1,20 +1,20 @@
 # ==============================================================================
 # OmicsFlow: 随机森林 + SHAP
 # ==============================================================================
-# 带特征重要性的样本分类
+# 带Feature重要性的样本分类
 # ==============================================================================
 
 #' 运行带 SHAP 的随机森林分类
 #'
-#' @description 构建随机森林分类模型以预测样本分组，并使用 SHAP 值解释特征重要性。
+#' @description 构建随机森林分类模型以预测样本分组，并使用 SHAP 值解释Feature重要性。
 #'
-#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param expr_matrix 数值矩阵（Feature x 样本）。
 #' @param sample_info 含有样本元数据的数据框。
 #' @param group_col 分组标签所在的列名。默认："sample_info"。
 #' @param exclude_groups 要排除的可选分组。默认："QC"。
 #' @param n_trees 树的数量。默认：500。
 #' @param cv_folds 交叉验证折数。默认：5。
-#' @param n_top_features 用于 SHAP 的前 N 个特征数量。默认：20。
+#' @param n_top_features 用于 SHAP 的前 N 个Feature数量。默认：20。
 #' @param seed 随机种子。默认：42。
 #'
 #' @return 一个列表，包含：
@@ -22,8 +22,8 @@
 #'     \item \code{model}：随机森林模型。
 #'     \item \code{accuracy}：分类准确率。
 #'     \item \code{confusion_matrix}：混淆矩阵。
-#'     \item \code{importance}：特征重要性（MeanDecreaseGini）。
-#'     \item \code{shap_values}：SHAP 值矩阵（样本 x 特征）。
+#'     \item \code{importance}：Feature重要性（MeanDecreaseGini）。
+#'     \item \code{shap_values}：SHAP 值矩阵（样本 x Feature）。
 #'     \item \code{shap_summary}：用于绘图的汇总数据框。
 #'   }
 #'
@@ -68,7 +68,7 @@ run_rf_shap <- function(expr_matrix, sample_info, group_col = "sample_info",
   accuracy <- mean(predictions == groups)
   conf_mat <- as.matrix(table(Predicted = predictions, Actual = groups))
 
-  # 特征重要性
+  # Feature重要性
   imp <- randomForest::importance(rf_model)
   imp_df <- data.frame(
     feature_id = rownames(imp),
@@ -81,10 +81,10 @@ run_rf_shap <- function(expr_matrix, sample_info, group_col = "sample_info",
   imp_df$feature_id <- NULL
 
   # SHAP 值（使用置换重要性近似）
-  # 选取前 N 个特征
+  # 选取前 N 个Feature
   top_features <- head(rownames(imp_df), n_top_features)
 
-  # 使用特征重要性的简化 SHAP 近似
+  # 使用Feature重要性的简化 SHAP 近似
   shap_values <- NULL
   shap_summary <- NULL
 
@@ -92,7 +92,7 @@ run_rf_shap <- function(expr_matrix, sample_info, group_col = "sample_info",
     # 使用 fastshap 计算真实 SHAP
     # 注意：需要 explain() 函数
     shap_result <- tryCatch({
-      # 计算前 N 个特征的 SHAP
+      # 计算前 N 个Feature的 SHAP
       shap_vals <- fastshap:::explain(
         rf_model, X = X[, top_features, drop = FALSE],
         nsim = 50, pred_wrapper = function(m, X) {
@@ -122,12 +122,12 @@ run_rf_shap <- function(expr_matrix, sample_info, group_col = "sample_info",
 }
 
 
-#' 绘制特征重要性（SHAP）
+#' 绘制Feature重要性（SHAP）
 #'
-#' @description 创建 SHAP 汇总图或特征重要性条形图。
+#' @description 创建 SHAP 汇总图或Feature重要性条形图。
 #'
 #' @param rf_result 来自 \code{run_rf_shap()} 的结果。
-#' @param top_n 展示的前 N 个特征数量。默认：20。
+#' @param top_n 展示的前 N 个Feature数量。默认：20。
 #'
 #' @return 一个 ggplot 对象。
 #'
@@ -149,8 +149,8 @@ plot_rf_importance <- function(rf_result, top_n = 20) {
     ggplot2::geom_bar(stat = "identity", fill = "#4a90d9") +
     ggplot2::coord_flip() +
     ggplot2::labs(
-      title = "随机森林特征重要性",
-      x = "特征",
+      title = "Random Forest Feature Importance",
+      x = "Feature",
       y = "Mean Decrease Gini"
     ) +
     ggplot2::theme_bw() +

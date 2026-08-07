@@ -10,10 +10,10 @@
 #'   都用 \code{create_omics_data()} 包装，且所有层都被对齐到每个层中都存在的样本
 #'   集合，以便下游跨组学函数可以假定各层样本顺序完全一致。
 #'
-#' @param expr_list 数值矩阵的有名列表（特征 x 样本）。名称用作组学层名。
+#' @param expr_list 数值矩阵的有名列表（Feature x 样本）。名称用作组学层名。
 #' @param sample_info 含样本元数据的 data.frame，行名为样本 ID（由
 #'   \code{load_sample_info()} 返回）。
-#' @param feature_info_list 特征注释 data.frame 的有名列表，名称与 \code{expr_list}
+#' @param feature_info_list Feature注释 data.frame 的有名列表，名称与 \code{expr_list}
 #'   相同。该列表中缺失的层会获得自动生成的最小注释。
 #' @param match_cols 字符向量，给出传给每层 \code{create_omics_data()} 的
 #'   \code{match_col}。可为长度 1（循环使用）或每层一个条目的有名向量。默认："name"。
@@ -186,7 +186,7 @@ print.MultiOmicsData <- function(x, ...) {
 #' @param mo 一个 MultiOmicsData 对象。
 #' @param name 组学层的名称。
 #'
-#' @return 一个数值矩阵（特征 x 样本）。
+#' @return 一个数值矩阵（Feature x 样本）。
 #'
 #' @examples
 #' \dontrun{
@@ -211,7 +211,7 @@ get_omics_matrix <- function(mo, name) {
 #' @param mo 一个 MultiOmicsData 对象。
 #' @param layers 可选字符向量，限定返回的层。默认：NULL（所有层）。
 #'
-#' @return 数值矩阵的有名列表（特征 x 样本）。
+#' @return 数值矩阵的有名列表（Feature x 样本）。
 #'
 #' @examples
 #' \dontrun{
@@ -235,12 +235,12 @@ get_omics_list <- function(mo, layers = NULL) {
 }
 
 
-#' 提取某个组学层的特征注释
+#' 提取某个组学层的Feature注释
 #'
 #' @param mo 一个 MultiOmicsData 对象。
 #' @param name 组学层的名称。
 #'
-#' @return 含特征注释的 data.frame。
+#' @return 含Feature注释的 data.frame。
 #'
 #' @examples
 #' \dontrun{
@@ -267,7 +267,7 @@ get_feature_info <- function(mo, name) {
 #'
 #' @param mo 一个 MultiOmicsData 对象。
 #' @param filter 逻辑值，是否执行 \code{filter_missing_values()}。默认：TRUE。
-#' @param filter_threshold 保留某一特征所需的有效值最小比例。默认：0.5。
+#' @param filter_threshold 保留某一Feature所需的有效值最小比例。默认：0.5。
 #' @param filter_method 过滤策略，"group" 或 "overall"。默认："group"。
 #' @param group_col 组过滤所用的 sample_info 分组列。默认："sample_info"。
 #' @param impute 逻辑值，是否执行 \code{impute_min_half()}。默认：TRUE。
@@ -278,7 +278,7 @@ get_feature_info <- function(mo, name) {
 #'   （例如已归一化的层）。默认：NULL。
 #'
 #' @return 一个携带预处理后表达矩阵的 MultiOmicsData 对象。\code{preprocessing}
-#'   元素记录了所执行的步骤及各层保留的特征数。
+#'   元素记录了所执行的步骤及各层保留的Feature数。
 #'
 #' @examples
 #' \dontrun{
@@ -348,7 +348,7 @@ preprocess_multiomics <- function(mo,
       mat <- scale_pareto(mat)
     }
 
-    # 使特征注释与保留下来的特征保持一致
+    # 使Feature注释与保留下来的Feature保持一致
     finfo <- mo$omics[[nm]]$feature_info
     keep <- intersect(rownames(mat), rownames(finfo))
     if (length(keep) == nrow(mat)) {
@@ -444,16 +444,16 @@ subset_multiomics <- function(mo, samples = NULL, subset_col = NULL,
 }
 
 
-#' 从矩阵中移除零方差特征
+#' 从矩阵中移除零方差Feature
 #'
-#' @description 跨组学相关与整合函数使用的工具。零方差或方差未定义的特征会产生
+#' @description 跨组学相关与整合函数使用的工具。零方差或方差未定义的Feature会产生
 #'   NaN 相关，必须在分析前剔除。
 #'
-#' @param mat 数值矩阵（特征 x 样本）。
+#' @param mat 数值矩阵（Feature x 样本）。
 #' @param label 报告信息中使用的可选标签。默认："matrix"。
-#' @param verbose 逻辑值，是否报告移除的特征数。默认：TRUE。
+#' @param verbose 逻辑值，是否报告移除的Feature数。默认：TRUE。
 #'
-#' @return 不含零方差特征的数值矩阵。
+#' @return 不含零方差Feature的数值矩阵。
 #'
 #' @examples
 #' \dontrun{

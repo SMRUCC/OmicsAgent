@@ -9,9 +9,9 @@
 #' @description 执行基因集变异分析（GSVA），为每个样本计算通路层面的得分。
 #'   支持代谢相关的基因集。
 #'
-#' @param expr_matrix 数值矩阵（特征 x 样本）。
-#' @param feature_info 含有特征注释的数据框。
-#' @param feature_id_col 特征 ID 的列名。默认："ID"。
+#' @param expr_matrix 数值矩阵（Feature x 样本）。
+#' @param feature_info 含有Feature注释的数据框。
+#' @param feature_id_col Feature ID 的列名。默认："ID"。
 #' @param pathway_col 通路/类别所在的列名。默认："kegg"。
 #' @param method GSVA 方法："gsva"、"ssgsea"、"zscore" 或 "plage"。
 #'   默认："gsva"。
@@ -21,7 +21,7 @@
 #' @return 一个列表，包含：
 #'   \itemize{
 #'     \item \code{gsva_matrix}：数值矩阵（通路 x 样本）。
-#'     \item \code{pathways}：各通路的基因集特征列表。
+#'     \item \code{pathways}：各通路的基因集Feature列表。
 #'     \item \code{n_pathways}：通路数量。
 #'   }
 #'
@@ -40,7 +40,7 @@ run_gsva <- function(expr_matrix, feature_info, feature_id_col = "ID",
     rownames(feature_info) <- feature_info[[feature_id_col]]
   }
 
-  # 获取公共特征
+  # 获取公共Feature
   common_features <- intersect(rownames(expr_matrix), rownames(feature_info))
   feature_info_subset <- feature_info[common_features, , drop = FALSE]
 
@@ -54,7 +54,7 @@ run_gsva <- function(expr_matrix, feature_info, feature_id_col = "ID",
   pathways <- pathways[pathway_sizes >= min_size & pathway_sizes <= max_size]
 
   if (length(pathways) == 0) {
-    warning("没有满足规模标准的通路。请尝试调整 min_size/max_size。")
+    warning("No pathways met the size criteria. Try adjusting min_size/max_size.")
     return(list(gsva_matrix = NULL, pathways = list(), n_pathways = 0))
   }
 
@@ -71,7 +71,7 @@ run_gsva <- function(expr_matrix, feature_info, feature_id_col = "ID",
     gsva_matrix <- gsva_result
   } else {
     # 回退方案：每条通路使用简单的平均 z-score
-    warning("未安装 'GSVA' 包，改用简单的平均 z-score。")
+    warning("Package 'GSVA' not installed, using simple mean z-score instead.")
     gsva_matrix <- sapply(names(pathways), function(pw) {
       pw_features <- intersect(pathways[[pw]], rownames(expr_matrix))
       if (length(pw_features) == 0) return(rep(NA, ncol(expr_matrix)))
@@ -109,7 +109,7 @@ run_gsva <- function(expr_matrix, feature_info, feature_id_col = "ID",
 plot_gsva_heatmap <- function(gsva_result, sample_info,
                               group_col = "sample_info") {
   gsva_matrix <- gsva_result$gsva_matrix
-  if (is.null(gsva_matrix)) stop("没有可供绘制的 GSVA 矩阵。")
+  if (is.null(gsva_matrix)) stop("No GSVA matrix available for plotting.")
 
   # 使用 plot_heatmap 函数
   hm <- plot_heatmap(gsva_matrix, sample_info, feature_info = NULL,

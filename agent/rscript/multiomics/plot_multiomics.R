@@ -8,11 +8,11 @@
 
 #' 跨组学相关矩阵的热力图
 #'
-#' @description 将最强的跨层相关以热力图展示，仅保留参与最显著关联的特征，
+#' @description 将最强的跨层相关以热力图展示，仅保留参与最显著关联的Feature，
 #'   从而即使层规模很大也能保持图形清晰可读。
 #'
 #' @param cor_result \code{run_cross_correlation()} 的结果。
-#' @param top_n 每轴保留的特征数，按最强绝对相关选取。默认：30。
+#' @param top_n 每轴保留的Feature数，按最强绝对相关选取。默认：30。
 #' @param title 图标题。默认："Cross-omics correlation"。
 #' @param cluster 逻辑值，是否对行与列聚类。默认：TRUE。
 #'
@@ -37,7 +37,7 @@ plot_cross_correlation_heatmap <- function(cor_result, top_n = 30,
     return(NULL)
   }
 
-  # 保留承载最强关联的特征。
+  # 保留承载最强关联的Feature。
   row_score <- apply(abs(cm), 1, max, na.rm = TRUE)
   col_score <- apply(abs(cm), 2, max, na.rm = TRUE)
   row_score[!is.finite(row_score)] <- 0

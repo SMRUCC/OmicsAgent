@@ -37,7 +37,7 @@ log_transform_compositional <- function(expr_matrix, pseudo_count = 1,
 #'   组间差异丰度分析。步骤包括：
 #'   1. 对数变换（添加伪计数）
 #'   2. 计算每个 feature 的组间均值差和组内方差
-#'   3. 使用 Welch's t 检验（两组）或 ANOVA（多组）计算 p 值
+#'   3. Using Welch's t 检验（两组）或 ANOVA（多组）计算 p 值
 #'   4. 计算 W 统计量（基于该 feature 与所有其他 feature 的差异比例）
 #'   5. 多重检验校正
 #'
@@ -76,7 +76,7 @@ run_ancom_bc <- function(expr_matrix, sample_info,
   n_groups <- length(group_levels)
 
   if (n_groups < 2) {
-    stop("至少需要 2 组进行差异丰度分析。")
+    stop("At least 2 groups are required for differential abundance analysis.")
   }
 
   n_features <- nrow(expr_matrix)
@@ -157,7 +157,7 @@ run_ancom_bc <- function(expr_matrix, sample_info,
   significant <- results[results$significant, , drop = FALSE]
   significant <- significant[order(-abs(significant$log_fold_change)), ]
 
-  cat(sprintf("[ancom-bc] %d / %d taxa 显著差异 (p_adj < %.2f, W >= %.1f)\n",
+  cat(sprintf("[ancom-bc] %d / %d taxa significantly different (p_adj < %.2f, W >= %.1f)\n",
               nrow(significant), n_features, p_threshold, w_threshold))
 
   # 火山图数据
@@ -191,7 +191,7 @@ run_ancom_bc <- function(expr_matrix, sample_info,
 #'
 #' @param ancom_result \code{run_ancom_bc()} 的返回结果。
 #' @param top_n 标注前 N 个显著 taxa。默认 15。
-#' @param feature_info 特征注释 data.frame（可选，用于显示 taxa 名称）。
+#' @param feature_info Feature注释 data.frame（可选，用于显示 taxa 名称）。
 #' @param name_col 注释中的名称列。默认 "name"。
 #'
 #' @return ggplot 对象。

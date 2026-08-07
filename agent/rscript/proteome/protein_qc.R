@@ -1,7 +1,7 @@
 # ==============================================================================
 # OmicsFlow: Protein Quality Control Analysis
 # ==============================================================================
-# 蛋白质组学数据质量控制：覆盖率、变异系数、缺失率、动态范围
+# 蛋白质组学数据质量控制：覆盖率、变异Coefficient、缺失率、动态范围
 # 肽段统计、样本相关性、PCA 异常值检测
 # ==============================================================================
 
@@ -10,7 +10,7 @@
 #' @description 对蛋白质组学表达矩阵进行全面的质控分析，包括：
 #'   1. 蛋白鉴定数量和样本覆盖度
 #'   2. 缺失率统计（样本和蛋白两个维度）
-#'   3. 变异系数（CV）分布
+#'   3. 变异Coefficient（CV）分布
 #'   4. 动态范围分析（丰度分布跨度）
 #'   5. 样本相关性矩阵
 #'   6. PCA 异常值检测
@@ -144,12 +144,12 @@ run_protein_qc <- function(expr_matrix, sample_info,
   flagged_features <- feature_summary[
     feature_summary$missing_rate > missing_rate_threshold, , drop = FALSE]
 
-  cat(sprintf("[protein-qc] 样本: %d, 蛋白: %d\n", n_samples, n_features))
-  cat(sprintf("[protein-qc] 问题样本: %d (缺失率 > %d%% 或 CV > %d%%)\n",
+  cat(sprintf("[protein-qc] Samples: %d, proteins: %d\n", n_samples, n_features))
+  cat(sprintf("[protein-qc] Problem samples: %d (missing rate > %d%% or CV > %d%%)\n",
               nrow(flagged_samples), missing_rate_threshold, cv_threshold))
-  cat(sprintf("[protein-qc] 问题蛋白: %d (缺失率 > %d%%)\n",
+  cat(sprintf("[protein-qc] Problem proteins: %d (missing rate > %d%%)\n",
               nrow(flagged_features), missing_rate_threshold))
-  cat(sprintf("[protein-qc] PCA 异常值: %d\n", sum(pca_df$outlier)))
+  cat(sprintf("[protein-qc] PCA outliers: %d\n", sum(pca_df$outlier)))
 
   return(list(
     sample_summary = sample_summary,

@@ -6,10 +6,10 @@
 
 #' 多因素方差分析
 #'
-#' @description 对每个特征执行多因素方差分析，可同时检验多个因素
+#' @description 对每个Feature执行多因素方差分析，可同时检验多个因素
 #'   （如处理、时间、批次）。
 #'
-#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param expr_matrix 数值矩阵（Feature x 样本）。
 #' @param sample_info 含有样本元数据的数据框。
 #' @param factors 用作因素的列名字符向量。默认："sample_info"。
 #' @param exclude_groups 可选的命名列表，指定每个因素要排除的分组。

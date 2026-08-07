@@ -1,22 +1,22 @@
 # ==============================================================================
 # OmicsFlow: CMeans 模糊聚类
 # ==============================================================================
-# 特征的模糊 c 均值聚类
+# Feature的模糊 c 均值聚类
 # ==============================================================================
 
 #' CMeans 模糊聚类
 #'
 #' @description 执行模糊 c 均值（fuzzy c-means）聚类，以识别具有相似表达模式的
-#'   特征组。与硬聚类不同，每个特征对每个聚类都会获得一个隶属度（membership）值。
+#'   Feature组。与硬聚类不同，每个Feature对每个聚类都会获得一个隶属度（membership）值。
 #'
 #'   聚类引擎为 \code{e1071::cmeans}（经典 FCM）。之所以使用它而非
 #'   \code{cluster::fanny}，是因为 FANNY 算法在高维 z-score 标准化矩阵上会退化
-#'   为均匀隶属度（全部 \eqn{= 1/k}），并把每个特征都分配到同一个聚类。
-#'   由于经典 FCM 可能留下某些空中心（没有任何特征被硬分配到该中心），本函数会
+#'   Found均匀隶属度（全部 \eqn{= 1/k}），并把每个Feature都分配到同一个聚类。
+#'   由于经典 FCM 可能留下某些空中心（没有任何Feature被硬分配到该中心），本函数会
 #'   在检测到空聚类时自动用逐渐减小的模糊度指数 \code{m} 重试，
 #'   以保证所有请求的聚类都被填充。
 #'
-#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param expr_matrix 数值矩阵（Feature x 样本）。
 #' @param n_clusters 聚类数量。默认：6。
 #' @param m 模糊度参数（> 1）。越大越模糊。默认：2。
 #' @param max_iter 最大迭代次数。默认：100。
@@ -25,7 +25,7 @@
 #' @return 一个列表，包含：
 #'   \itemize{
 #'     \item \code{cluster}：硬聚类分配的整数向量。
-#'     \item \code{membership}：隶属度矩阵（特征 x 聚类）。
+#'     \item \code{membership}：隶属度矩阵（Feature x 聚类）。
 #'     \item \code{centers}：聚类中心（聚类 x 样本）。
 #'     \item \code{model}：原始的聚类对象。
 #'   }
@@ -40,20 +40,20 @@
 run_cmeans <- function(expr_matrix, n_clusters = 6, m = 2,
                       max_iter = 100, seed = 42) {
   if (!requireNamespace("e1071", quietly = TRUE)) {
-    stop("需要安装 'e1071' 包，请先安装。")
+    stop("Package 'e1071' is required. Please install it first.")
   }
 
   set.seed(seed)
 
-  # 对特征进行标度变换以便聚类
+  # 对Feature进行标度变换以便聚类
   scaled_mat <- t(scale(t(as.matrix(expr_matrix))))
   scaled_mat[is.na(scaled_mat)] <- 0
 
   # 模糊 c 均值（通过 e1071::cmeans 实现的经典 FCM）。
   # 注意：不使用 cluster::fanny，因为 FANNY 算法在高维 z-score 数据上会退化
-  # 为均匀隶属度（全部 == 1/k），并将每个特征都分配到聚类 1。
+  # 为均匀隶属度（全部 == 1/k），并将每个Feature都分配到聚类 1。
   #
-  # 经典 FCM 可能留下某些空中心（没有特征被硬分配到这些中心），
+  # 经典 FCM 可能留下某些空中心（没有Feature被硬分配到这些中心），
   # 从而导致这些聚类的图消失。为保证所有请求的聚类都被填充，
   # 一旦检测到空聚类，就使用逐渐减小的模糊度指数 m 重试。
   candidates <- unique(c(m, 1.5, 1.4, 1.3, 1.2))
@@ -110,19 +110,19 @@ run_cmeans <- function(expr_matrix, n_clusters = 6, m = 2,
 
 #' 绘制 CMeans 聚类轮廓
 #'
-#' @description 创建折线图，展示每个聚类内部最具代表性特征在分组层面的表达模式。
-#'   x 轴为样本分组 id（\code{sample_info[[group_col]]}），y 轴为每个特征在各组中
-#'   平均表达的 z-score（即每个特征在各组内的表达先求平均，再对所得的特征 x 组
+#' @description 创建折线图，展示每个聚类内部最具代表性Feature在分组层面的表达模式。
+#'   x 轴为样本分组 id（\code{sample_info[[group_col]]}），y 轴为每个Feature在各组中
+#'   平均表达的 z-score（即每个Feature在各组内的表达先求平均，再对所得的Feature x 组
 #'   矩阵按行做 z-score 标准化）。对每个聚类，选取对该聚类隶属度最高的
-#'   \code{top_n} 个特征并以折線画出。线宽（\code{linewidth}）与颜色深浅
-#'   （\code{alpha}）均映射到特征的隶属度，隶属度越高的特征线条越粗、越深。
+#'   \code{top_n} 个Feature并以折線画出。线宽（\code{linewidth}）与颜色深浅
+#'   （\code{alpha}）均映射到Feature的隶属度，隶属度越高的Feature线条越粗、越深。
 #'
 #' @param cmeans_result 来自 \code{run_cmeans()} 的结果。
 #' @param sample_info 样本元数据。
-#' @param expr_matrix 可选的数值矩阵（特征 x 样本），保存用于绘制各特征曲线的
+#' @param expr_matrix 可选的数值矩阵（Feature x 样本），保存用于绘制各Feature曲线的
 #'   表达值。应与传入 \code{run_cmeans()} 的矩阵相同。若为 \code{NULL}，则回退为
 #'   每个聚类仅绘制单条聚类中心折线（旧行为）。
-#' @param top_n 每个聚类绘制的隶属度最高特征数量。默认：100。
+#' @param top_n 每个聚类绘制的隶属度最高Feature数量。默认：100。
 #' @param group_col 分组标签所在的列。默认："sample_info"。
 #' @param feature_names 可选的显示名称命名向量。
 #' @param palette 可选的 RColorBrewer 调色板名称（如 "Set1"、"Dark2"、
@@ -158,7 +158,7 @@ plot_cmeans_profiles <- function(cmeans_result, sample_info,
     stop("cmeans_result$membership / cluster is NULL; cannot plot feature curves.")
   }
 
-  # 校验并对齐表达矩阵（特征 x 样本）
+  # 校验并对齐表达矩阵（Feature x 样本）
   expr_mat <- as.matrix(expr_matrix)
   if (is.null(expr_mat) || nrow(expr_mat) == 0) {
     stop("expr_matrix is required for plotting group-level feature curves.")
@@ -172,7 +172,7 @@ plot_cmeans_profiles <- function(cmeans_result, sample_info,
   if (is.null(feat_ids)) feat_ids <- rownames(membership)
   if (is.null(feat_ids)) stop("Cannot determine feature ids from expr_matrix.")
 
-  # 按特征 id 将成员行映射到表达行
+  # 按Feature id 将成员行映射到表达行
   mb <- membership
   rownames(mb) <- rownames(membership)
   mem_idx <- match(feat_ids, rownames(mb))
@@ -180,8 +180,8 @@ plot_cmeans_profiles <- function(cmeans_result, sample_info,
   mb <- mb[mem_idx, , drop = FALSE]
 
   # --- 分组层面均值 + 按行 z-score --------------------------------
-  # 按分组标签对样本分组，计算每组内每个特征的均值，
-  # 再对每个特征跨组做 z-score 标准化。
+  # 按分组标签对样本分组，计算每组内每个Feature的均值，
+  # 再对每个Feature跨组做 z-score 标准化。
   grp_vec <- sample_info[sample_ids, group_col]
   grp_lev <- unique(grp_vec)
 
@@ -200,7 +200,7 @@ plot_cmeans_profiles <- function(cmeans_result, sample_info,
   gm_z <- t(scale(t(group_mean)))
   gm_z[is.na(gm_z)] <- 0
 
-  # --- 每个聚类选取隶属度最高的特征 -------------------------
+  # --- 每个聚类选取隶属度最高的Feature -------------------------
   rows <- list()
   for (cl in cluster_names) {
     k <- match(cl, colnames(mb))
@@ -335,13 +335,13 @@ plot_cmeans_profiles <- function(cmeans_result, sample_info,
 #' 将 CMeans 隶属度表导出为 CSV
 #'
 #' @description 将模糊 c 均值聚类结果导出为 CSV 文件。
-#'   输出每行对应一个特征，每列对应一个聚类（隶属度 / 归属度），
-#'   并额外包含一列 \code{cluster} 记录硬聚类分配（即每个特征隶属度最高的聚类）。
+#'   输出每行对应一个Feature，每列对应一个聚类（隶属度 / 归属度），
+#'   并额外包含一列 \code{cluster} 记录硬聚类分配（即每个Feature隶属度最高的聚类）。
 #'
 #' @param cmeans_result 来自 \code{run_cmeans()} 的结果。
 #' @param output_dir 输出目录。
 #' @param filename 基础文件名（不含扩展名）。默认："cmeans_membership"。
-#' @param id_col_name 特征 id 列的名称。默认："feature_id"。
+#' @param id_col_name Feature id 列的名称。默认："feature_id"。
 #'
 #' @return 导出 CSV 文件的可视（invisible）路径。
 #'
@@ -359,12 +359,12 @@ export_cmeans_membership <- function(cmeans_result, output_dir = ".",
     stop("cmeans_result$membership is NULL; nothing to export.")
   }
 
-  # 构建数据框：特征为行，聚类隶属度为列
+  # 构建数据框：Feature为行，聚类隶属度为列
   out <- as.data.frame(membership)
   out[[id_col_name]] <- rownames(membership)
   out$cluster <- cmeans_result$cluster
 
-  # 重新排列列顺序，使特征 id 列与硬分配列在前，
+  # 重新排列列顺序，使Feature id 列与硬分配列在前，
   # 随后才是各聚类的隶属度列
   member_cols <- setdiff(colnames(out), c(id_col_name, "cluster"))
   out <- out[, c(id_col_name, member_cols, "cluster")]

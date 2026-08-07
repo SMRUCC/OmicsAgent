@@ -6,10 +6,10 @@
 
 #' 使用最小正值的一半填补缺失值
 #'
-#' @description 将缺失值（NA，以及可选地将 0）用每个特征的最小正值的一半进行
+#' @description 将缺失值（NA，以及可选地将 0）用每个Feature的最小正值的一半进行
 #'   填补。这是代谢组学中一种简单且广泛使用的填补策略。
 #'
-#' @param expr_matrix 数值矩阵（特征 x 样本），缺失值用 NA 表示。
+#' @param expr_matrix 数值矩阵（Feature x 样本），缺失值用 NA 表示。
 #' @param treat_zero_as_missing 逻辑值，是否将零值视为缺失。默认：TRUE。
 #' @param factor 数值型，最小正值的乘子。默认：0.5（一半）。
 #'
@@ -34,7 +34,7 @@ impute_min_half <- function(expr_matrix, treat_zero_as_missing = TRUE,
     expr_matrix[expr_matrix == 0] <- NA
   }
 
-  # 按特征逐个填补
+  # 按Feature逐个填补
   for (i in 1:nrow(expr_matrix)) {
     row_vals <- expr_matrix[i, ]
     na_mask <- is.na(row_vals)
@@ -60,10 +60,10 @@ impute_min_half <- function(expr_matrix, treat_zero_as_missing = TRUE,
 #' @description 使用 K 近邻（K-Nearest Neighbors）填补缺失值。
 #'   底层调用 \code{impute} 包的 KNN 实现。
 #'
-#' @param expr_matrix 数值矩阵（特征 x 样本），缺失值用 NA 表示。
+#' @param expr_matrix 数值矩阵（Feature x 样本），缺失值用 NA 表示。
 #' @param k 近邻数量。默认：10。
 #' @param treat_zero_as_missing 逻辑值，是否将零值视为缺失。默认：TRUE。
-#' @param max_na_prop 每个特征允许的最大 NA 比例。超过该比例的特征将被
+#' @param max_na_prop 每个Feature允许的最大 NA 比例。超过该比例的Feature将被
 #'   移除。默认：0.5。
 #'
 #' @return 已填补缺失值的数值矩阵。
@@ -87,7 +87,7 @@ impute_knn <- function(expr_matrix, k = 10, treat_zero_as_missing = TRUE,
     expr_matrix[expr_matrix == 0] <- NA
   }
 
-  # 移除含过多 NA 的特征
+  # 移除含过多 NA 的Feature
   na_prop <- rowMeans(is.na(expr_matrix))
   high_na_features <- rownames(expr_matrix)[na_prop > max_na_prop]
   if (length(high_na_features) > 0) {
@@ -115,13 +115,13 @@ impute_knn <- function(expr_matrix, k = 10, treat_zero_as_missing = TRUE,
 #' @keywords internal
 #' @noRd
 .impute_knn_simple <- function(mat, k) {
-  # 计算特征之间的距离矩阵
-  # 对每个含 NA 的特征，找出 k 个最近邻特征并进行填补
+  # 计算Feature之间的距离矩阵
+  # 对每个含 NA 的Feature，找出 k 个最近邻Feature并进行填补
   for (i in 1:nrow(mat)) {
     na_mask <- is.na(mat[i, ])
     if (!any(na_mask)) next
 
-    # 与其他特征计算相关性
+    # 与其他Feature计算相关性
     other_features <- mat[-i, , drop = FALSE]
     correlations <- apply(other_features, 1, function(x) {
       common <- !is.na(mat[i, ]) & !is.na(x)

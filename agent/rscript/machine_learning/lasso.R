@@ -1,15 +1,15 @@
 # ==============================================================================
 # OmicsFlow: Lasso 回归
 # ==============================================================================
-# 通过 L1 正则化进行特征选择
+# 通过 L1 正则化进行Feature选择
 # ==============================================================================
 
-#' 运行 Lasso 回归以进行特征选择
+#' 运行 Lasso 回归以进行Feature选择
 #'
-#' @description 执行 Lasso（L1 惩罚）回归，用于识别重要的预测性特征。
+#' @description 执行 Lasso（L1 惩罚）回归，用于识别重要的预测性Feature。
 #'   支持二分类与多分类。
 #'
-#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param expr_matrix 数值矩阵（Feature x 样本）。
 #' @param sample_info 含有样本元数据的数据框。
 #' @param group_col 分组标签所在的列名。默认："sample_info"。
 #' @param exclude_groups 要排除的可选分组。默认："QC"。
@@ -21,8 +21,8 @@
 #' @return 一个列表，包含：
 #'   \itemize{
 #'     \item \code{model}：拟合的 cv.glmnet 模型。
-#'     \item \code{selected_features}：所选特征的字符向量。
-#'     \item \code{coefficients}：非零系数的数据框。
+#'     \item \code{selected_features}：所选Feature的字符向量。
+#'     \item \code{coefficients}：非零Coefficient的数据框。
 #'     \item \code{lambda}：所选的 lambda 值。
 #'     \item \code{accuracy}：分类准确率。
 #'     \item \code{confusion_matrix}：混淆矩阵。
@@ -87,11 +87,11 @@ run_lasso <- function(expr_matrix, sample_info, group_col = "sample_info",
   accuracy <- mean(predicted_class == groups)
   conf_mat <- as.matrix(table(Predicted = predicted_class, Actual = groups))
 
-  # 提取非零系数
+  # 提取非零Coefficient
   coefs <- stats::coef(cv_model, s = "lambda.min")
 
   if (is.list(coefs)) {
-    # 多分类：系数矩阵列表
+    # 多分类：Coefficient矩阵列表
     coef_df <- do.call(rbind, lapply(names(coefs), function(g) {
       coef_mat <- as.matrix(coefs[[g]])
       nz_idx <- which(coef_mat != 0)
@@ -118,7 +118,7 @@ run_lasso <- function(expr_matrix, sample_info, group_col = "sample_info",
     selected_features <- setdiff(selected_features, "(Intercept)")
   }
 
-  # 将特征设为行名（多个分组可能产生重复）
+  # 将Feature设为行名（多个分组可能产生重复）
   rownames(coef_df) <- make.unique(coef_df$feature)
   coef_df$feature <- NULL
 
@@ -133,9 +133,9 @@ run_lasso <- function(expr_matrix, sample_info, group_col = "sample_info",
 }
 
 
-#' 绘制 Lasso 系数路径
+#' 绘制 Lasso Coefficient Path
 #'
-#' @description 创建 Lasso 系数随 L1 范数变化的曲线图。
+#' @description 创建 Lasso Coefficient随 L1 范数变化的曲线图。
 #'
 #' @param lasso_result 来自 \code{run_lasso()} 的结果。
 #'
@@ -180,10 +180,10 @@ plot_lasso_path <- function(lasso_result) {
     ggplot2::geom_vline(xintercept = log(lasso_result$lambda),
                         color = "#e74c3c", linetype = "dashed") +
     ggplot2::labs(
-      title = "Lasso 系数路径",
+      title = "Lasso Coefficient Path",
       x = expression(log(lambda)),
-      y = "系数",
-      color = "特征"
+      y = "Coefficient",
+      color = "Feature"
     ) +
     ggplot2::theme_bw() +
     ggplot2::theme(

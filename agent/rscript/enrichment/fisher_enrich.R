@@ -6,13 +6,13 @@
 
 #' Fisher 精确富集检验
 #'
-#' @description 使用 Fisher 精确检验评估显著特征中各类别（如 KEGG 通路、
-#'   家族、类别）相对全部测量特征的过表达（over-representation）情况。
+#' @description 使用 Fisher 精确检验评估显著Feature中各类别（如 KEGG 通路、
+#'   家族、类别）相对全部测量Feature的过表达（over-representation）情况。
 #'
-#' @param significant_features 显著特征 ID 的字符向量。
-#' @param all_features 全部特征 ID（背景集）的字符向量。
-#' @param feature_info 含有特征注释的数据框。
-#' @param feature_id_col feature_info 中特征 ID 的列名。默认："ID"。
+#' @param significant_features 显著Feature ID 的字符向量。
+#' @param all_features 全部Feature ID（背景集）的字符向量。
+#' @param feature_info 含有Feature注释的数据框。
+#' @param feature_id_col feature_info 中Feature ID 的列名。默认："ID"。
 #' @param category_col 类别所在的列名（如 "kegg"、"family"、"class"）。
 #' @param p_adj_method P 值校正方法。默认："BH"。
 #' @param min_size 类别最小规模。默认：2。
@@ -21,9 +21,9 @@
 #'   \itemize{
 #'     \item \code{category}：类别名称。
 #'     \item \code{sig_count}：显著集中的计数。
-#'     \item \code{sig_total}：显著特征总数。
+#'     \item \code{sig_total}：显著Feature总数。
 #'     \item \code{bg_count}：背景集中的计数。
-#'     \item \code{bg_total}：背景特征总数。
+#'     \item \code{bg_total}：背景Feature总数。
 #'     \item \code{p_value}：原始 p 值。
 #'     \item \code{p_adj}：校正后的 p 值。
 #'     \item \code{fold_enrichment}：富集倍数。
@@ -51,7 +51,7 @@ run_fisher_enrich <- function(significant_features, all_features,
     rownames(feature_info) <- feature_info[[feature_id_col]]
   }
 
-  # 获取显著特征与背景特征的类别
+  # 获取显著Feature与背景Feature的类别
   sig_categories <- feature_info[intersect(significant_features,
                                             rownames(feature_info)), category_col]
   bg_categories <- feature_info[intersect(all_features,

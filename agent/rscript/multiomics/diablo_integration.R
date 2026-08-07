@@ -7,7 +7,7 @@
 #' 组学层的多模块稀疏 PLS-DA 整合
 #'
 #' @description 封装 \code{mixOmics::block.splsda()}（DIABLO），针对 MultiOmicsData
-#'   对象的所有组学层构建监督模型。所有特征均进入模型；稀疏参数 \code{keepX}
+#'   对象的所有组学层构建监督模型。所有Feature均进入模型；稀疏参数 \code{keepX}
 #'   在每个组分上执行内置的变量筛选，这是 DIABLO 的标准用法，可避免任意的
 #'   预筛选。
 #'
@@ -15,7 +15,7 @@
 #' @param group_col sample_info 中保存类别标签的列。默认："sample_info"。
 #' @param layers 可选字符向量，限定所使用的层。默认：NULL（所有层）。
 #' @param ncomp 组分数。默认：2。
-#' @param keepX 每个组分筛选的特征数。可为单个整数（应用于所有层），或为有名列表，
+#' @param keepX 每个组分筛选的Feature数。可为单个整数（应用于所有层），或为有名列表，
 #'   每层含一个长度为 \code{ncomp} 的数值向量。为 NULL 时根据层规模自适应取值。
 #'   默认：NULL。
 #' @param design DIABLO 设计矩阵的对角线外取值，用于权衡判别与跨层相关性。默认：0.1。
@@ -27,7 +27,7 @@
 #'     \item \code{model}: 拟合得到的 block.splsda 对象。
 #'     \item \code{scores}: 各层分数数据框的有名列表，包含分组标签。
 #'     \item \code{loadings}: 各层载荷数据框的有名列表。
-#'     \item \code{selected_features}: 选中特征的数据框，含 layer、component、
+#'     \item \code{selected_features}: 选中Feature的数据框，含 layer、component、
 #'       feature 与 loading。
 #'     \item \code{groups}: 所使用的类别水平。
 #'     \item \code{design}: 设计矩阵。
@@ -76,7 +76,7 @@ run_diablo <- function(mo, group_col = "sample_info",
     stop(sprintf("Column '%s' must contain at least two classes.", group_col))
   }
 
-  # 数据块：样本 x 特征，遵循 mixOmics 约定
+  # 数据块：样本 x Feature，遵循 mixOmics 约定
   X <- lapply(layers, function(nm) {
     mat <- get_omics_matrix(mo, nm)[, sample_ids, drop = FALSE]
     mat <- drop_zero_variance(mat, label = nm, verbose = FALSE)
@@ -133,7 +133,7 @@ run_diablo <- function(mo, group_col = "sample_info",
     scores[[nm]] <- v
   }
 
-  # 载荷与选中特征 -------------------------------------------
+  # Loading与选中Feature -------------------------------------------
   loadings <- list()
   selected <- NULL
   for (nm in names(model$loadings)) {

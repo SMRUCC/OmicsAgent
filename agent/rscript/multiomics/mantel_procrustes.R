@@ -8,10 +8,10 @@
 #' 为一组组学矩阵计算样本距离矩阵
 #'
 #' @description 为每个组学层构建一个样本对样本的距离矩阵。距离在样本空间上
-#'   计算，因此开销与特征数量无关，可以安全地使用全部特征集。所得列表会被
+#'   计算，因此开销与Feature数量无关，可以安全地使用全部Feature集。所得列表会被
 #'   Mantel、Procrustes 与排序函数复用。
 #'
-#' @param mat_list 数值矩阵的有名列表（特征 x 样本）。
+#' @param mat_list 数值矩阵的有名列表（Feature x 样本）。
 #' @param method 距离方法。"bray" 需要 vegan 包且数据非负；\code{stats::dist()}
 #'   支持的任何方法亦可使用。默认："euclidean"。
 #' @param verbose 逻辑值，是否打印进度。默认：TRUE。
@@ -64,10 +64,10 @@ compute_omics_distances <- function(mat_list, method = "euclidean",
 #' 组学层之间及与环境因子的 Mantel 检验
 #'
 #' @description 检验成对的组学层是否以一致的方式对样本排序，以及该排序是否匹配
-#'   温度、湿度或海拔等环境梯度。基于样本距离矩阵运算，因此运行时间与特征数量
+#'   温度、湿度或海拔等环境梯度。基于样本距离矩阵运算，因此运行时间与Feature数量
 #'   无关。
 #'
-#' @param mat_list 数值矩阵的有名列表（特征 x 样本），或为已计算好的 \code{dist}
+#' @param mat_list 数值矩阵的有名列表（Feature x 样本），或为已计算好的 \code{dist}
 #'   对象的有名列表。
 #' @param env_data 可选的数据框，包含以样本为行的数值型环境变量。每个变量会被
 #'   转换为欧氏距离矩阵，并与每个组学层进行检验。默认：NULL。
@@ -244,8 +244,8 @@ run_mantel_test <- function(mat_list, env_data = NULL,
 #' @description 将一个组学层的排序旋转到另一个组学层之上，并用 PROTEST 检验两者
 #'   一致性的显著性。返回叠加后的坐标，以便绘制逐样本残差。
 #'
-#' @param mat_x 第一层的数值矩阵（特征 x 样本），或 \code{dist} 对象。
-#' @param mat_y 第二层的数值矩阵（特征 x 样本），或 \code{dist} 对象。
+#' @param mat_x 第一层的数值矩阵（Feature x 样本），或 \code{dist} 对象。
+#' @param mat_y 第二层的数值矩阵（Feature x 样本），或 \code{dist} 对象。
 #' @param dist_method 传入矩阵时所用的距离方法。默认："euclidean"。
 #' @param ncomp 保留的排序轴数量。默认：2。
 #' @param permutations PROTEST 的置换次数。默认：999。
@@ -258,7 +258,7 @@ run_mantel_test <- function(mat_list, env_data = NULL,
 #'     \item \code{procrustes}: vegan 的 procrustes 对象。
 #'     \item \code{protest}: PROTEST 结果。
 #'     \item \code{ss}: Procrustes 残差平方和。
-#'     \item \code{correlation}: Procrustes 相关系数。
+#'     \item \code{correlation}: Procrustes 相关Coefficient。
 #'     \item \code{p_value}: 置换 p 值。
 #'     \item \code{coordinates}: 含 sample、x1、y1、x2、y2 与
 #'       residual 的数据框，可直接用于绘图。

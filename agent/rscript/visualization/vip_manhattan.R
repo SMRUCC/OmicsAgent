@@ -9,17 +9,17 @@
 #'
 #' @description 创建一张达到出版质量的曼哈顿风格图，x 轴表示类别注释（如代谢物
 #'   super_class，类似于基因组曼哈顿图中的染色体），y 轴为 VIP 分数。每个点是
-#'   一个特征，在各自类别内抖动，配有平滑的密度轮廓，并在 \code{threshold} 处
+#'   一个Feature，在各自类别内抖动，配有平滑的密度轮廓，并在 \code{threshold} 处
 #'   绘制参考线。
 #'
-#' @param vip 含 VIP 分数的数据框，行名为特征 ID，并含单个数值列
+#' @param vip 含 VIP 分数的数据框，行名为Feature ID，并含单个数值列
 #'   （通常为 \code{plsda_result$vip}）。
-#' @param feature_info 含特征注释的数据框。必须包含特征 ID 列与类别列。
-#' @param feature_id_col \code{feature_info} 中保存特征 ID 的列名。默认："name"。
+#' @param feature_info 含Feature注释的数据框。必须包含Feature ID 列与类别列。
+#' @param feature_id_col \code{feature_info} 中保存Feature ID 的列名。默认："name"。
 #' @param category_col \code{feature_info} 中保存分组类别（如 "super_class"）的列名。
 #'   默认："super_class"。
 #' @param threshold VIP 重要性阈值（参考线）。默认：1.0。
-#' @param top_n_labels 用文本标注的 VIP 最高特征数量（总体，跨所有类别）。
+#' @param top_n_labels 用文本标注的 VIP 最高Feature数量（总体，跨所有类别）。
 #'   设为 0 则关闭标注。默认：0。
 #' @param title 图标题。默认："VIP Manhattan Plot by Category"。
 #' @param x_label x 轴标签。默认："Metabolite Category"。
@@ -73,7 +73,7 @@ plot_vip_manhattan <- function(vip, feature_info,
     stringsAsFactors = FALSE
   )
   
-  # 将特征 ID 映射到类别
+  # 将Feature ID 映射到类别
   info_sub <- feature_info[, c(feature_id_col, category_col), drop = FALSE]
   colnames(info_sub) <- c("feature_id", "category")
   info_sub$feature_id <- as.character(info_sub$feature_id)

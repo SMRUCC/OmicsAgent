@@ -6,7 +6,7 @@
 
 #' WGCNA 模块-性状关联
 #'
-#' @description 计算 WGCNA 模块特征基因与生物学性状之间的相关性，
+#' @description 计算 WGCNA 模块Feature基因与生物学性状之间的相关性，
 #'   并通过线性回归评估显著性。
 #'
 #' @param wgcna_result 来自 \code{build_wgcna_modules()} 的结果。
@@ -20,8 +20,8 @@
 #'     \item \code{module_trait_cor}：相关矩阵（模块 x 性状）。
 #'     \item \code{module_trait_p}：p 值矩阵。
 #'     \item \code{module_trait_lm}：每个模块-性状对的线性回归结果。
-#'     \item \code{feature_trait_cor}：特征层面与性状的相关性。
-#'     \item \code{feature_trait_lm}：特征层面的线性回归。
+#'     \item \code{feature_trait_cor}：Feature层面与性状的相关性。
+#'     \item \code{feature_trait_lm}：Feature层面的线性回归。
 #'   }
 #'
 #' @examples
@@ -88,15 +88,15 @@ wgcna_module_trait <- function(wgcna_result, traits, sample_info = NULL,
   lm_df <- do.call(rbind, lm_results)
   rownames(lm_df) <- NULL
 
-  # 特征层面的相关性
+  # Feature层面的相关性
   # 需要从 wgcna_result 获取原始表达矩阵
   feature_trait_cor <- NULL
   feature_trait_lm <- NULL
 
-  # 若可用 module_colors，则计算特征-性状相关性
+  # 若可用 module_colors，则计算Feature-性状相关性
   if (!is.null(wgcna_result$module_colors)) {
     # 我们需要原始表达矩阵，但它并未被存储
-    # 因此改为以模块特征基因（eigengene）作为代理
+    # 因此改为以模块Feature基因（eigengene）作为代理
     feature_trait_cor <- data.frame(
       module = colnames(MEs),
       cor_mat,

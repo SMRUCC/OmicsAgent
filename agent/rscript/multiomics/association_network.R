@@ -2,15 +2,15 @@
 # OmicsFlow: Spearman + MIC Association Network
 # -----------------------------------------------------------------------------
 # 为跨组学（不同层之间）与组学内（同层内部）的 feature 构建
-# Spearman（单调线性关联）+ MIC（最大信息系数，任意非线性关联）双指标关联网络。
+# Spearman（单调线性关联）+ MIC（最大信息Coefficient，任意非线性关联）双指标关联网络。
 #
 # 设计要点：
-#   1. 矩阵约定：features x samples（行=特征，列=样本），与 cross_correlation.R 一致。
+#   1. 矩阵约定：features x samples（行=Feature，列=样本），与 cross_correlation.R 一致。
 #   2. 两阶段计算：先用向量化 Spearman 全量计算（毫秒级），按 |rho| 取 Top K
 #      候选对，再仅对候选对调用 minerva::mine() 计算 MIC —— 把 MIC 的网格搜索
-#      成本从 "全部配对" 降到 "候选集"，是本模块的核心性能决策。
-#   3. MIC 显著性：采用"共享零分布"置换检验（minerva 的 mine() 本身不返回 p 值）。
-#      在同样本量下，无关联特征对的 MIC 零分布仅依赖于 n，故对所有候选对
+#      成本从 "all pairs" 降到 "candidate set"，是本模块的Core性能决策。
+#   3. MIC 显著性：采用"shared null distribution"置换检验（minerva 的 mine() 本身不返回 p 值）。
+#      在同样本量下，无关联Feature对的 MIC 零分布仅依赖于 n，故对所有候选对
 #      共用 n_perm 个随机打乱对的 MIC 经验分布求经验 p 值，成本为常数 n_perm，
 #      而非 n_pairs x R。该近似在 mic_pvalue_method = "permutation" 时启用；
 #      设为 "none" 则跳过（MIC-pvalue 列返回 NA），进一步提速。
@@ -22,19 +22,19 @@
 # =============================================================================
 
 # 复用现有工具（这些函数在 source_all_scripts.R 加载后可用）
-#   drop_zero_variance()  : 移除零方差特征（multiomics_data.R）
+#   drop_zero_variance()  : 移除零方差Feature（multiomics_data.R）
 #   get_omics_matrix()    : 从 MultiOmicsData 取表达矩阵
-#   get_feature_info()    : 从 MultiOmicsData 取特征注释
+#   get_feature_info()    : 从 MultiOmicsData 取Feature注释
 #   export_table()        : 表格导出（utils/）
 
 # -----------------------------------------------------------------------------
-# 内部工具：按方差（信号强度）选择 Top N 特征
+# 内部工具：按方差（信号强度）选择 Top N Feature
 # -----------------------------------------------------------------------------
-#' 从矩阵中选择变异最大的 Top N 个特征
+#' 从矩阵中选择变异最大的 Top N 个Feature
 #'
-#' @param mat 数值矩阵（特征 x 样本）。
-#' @param top_n 整数，按行方差降序保留的特征数量。
-#'   若为 NULL 或大于 nrow(mat)，则保留全部特征。
+#' @param mat 数值矩阵（Feature x 样本）。
+#' @param top_n 整数，按行方差降序保留的Feature数量。
+#'   若为 NULL 或大于 nrow(mat)，则保留全部Feature。
 #' @param label 字符，进度提示信息中使用的名称。
 #' @param verbose 逻辑值，是否打印进度。
 #' @return 最多包含 \code{top_n} 行的一个数值矩阵。
@@ -104,15 +104,15 @@ select_top_features <- function(mat, top_n = NULL, label = "matrix",
 
 
 # -----------------------------------------------------------------------------
-# 内部工具：共享零分布置换 —— 返回 n_perm 个随机打乱对的 MIC 经验分布
+# 内部工具：shared null distribution置换 —— 返回 n_perm 个随机打乱对的 MIC 经验分布
 # -----------------------------------------------------------------------------
 #' 通过置换计算共享的 MIC 零分布
 #'
-#' @param mat 参考矩阵（特征 x 样本），用于抽取随机特征对进行置换。
+#' @param mat 参考矩阵（Feature x 样本），用于抽取随机Feature对进行置换。
 #' @param n_perm 整数，随机置换次数。
 #' @param n_sample 整数，实际使用的样本数（取交集之后）。
 #' @param verbose 逻辑值。
-#' @return 长度为 \code{n_perm} 的数值向量，包含随机（零）特征对的 MIC 值。
+#' @return 长度为 \code{n_perm} 的数值向量，包含随机（零）Feature对的 MIC 值。
 #'   若发生任何错误则返回 \code{NULL}。
 #' @noRd
 .mic_null_distribution <- function(mat, n_perm = 200, n_sample = NULL,
@@ -141,7 +141,7 @@ select_top_features <- function(mat, top_n = NULL, label = "matrix",
 # -----------------------------------------------------------------------------
 # 内部工具：对候选对批量计算 MIC（调用 minerva::mine）
 # -----------------------------------------------------------------------------
-#' 对一组特征对批量计算 MIC
+#' 对一组Feature对批量计算 MIC
 #'
 #' @param mat_x 数值矩阵。
 #' @param mat_y 数值矩阵。
@@ -174,8 +174,8 @@ select_top_features <- function(mat, top_n = NULL, label = "matrix",
 # -----------------------------------------------------------------------------
 #' 组装标准的 9 列关联边表
 #'
-#' @param src 源特征名称的字符向量。
-#' @param tgt 目标特征名称的字符向量。
+#' @param src 源Feature名称的字符向量。
+#' @param tgt 目标Feature名称的字符向量。
 #' @param rho 数值向量，Spearman rho。
 #' @param rho_p 数值向量，Spearman p 值。
 #' @param mic 数值向量，MIC（允许为 NA）。
@@ -252,22 +252,22 @@ select_top_features <- function(mat, top_n = NULL, label = "matrix",
 
 
 # -----------------------------------------------------------------------------
-# 核心函数一：跨组学关联（两个不同层之间）
+# Core函数一：跨组学关联（两个不同层之间）
 # -----------------------------------------------------------------------------
 #' 跨组学 Spearman + MIC 关联网络
 #'
-#' 使用 Spearman 相关（向量化）与 MIC（最大互信息系数），计算两个组学层之间
-#' 每一对特征的关联。为控制 MIC 的计算开销，仅将按 |Spearman rho| 排序的
-#' Top-K 特征对送入 \code{minerva::mine()}。
+#' 使用 Spearman 相关（向量化）与 MIC（最大互信息Coefficient），计算两个组学层之间
+#' 每一对Feature的关联。为控制 MIC 的计算开销，仅将按 |Spearman rho| 排序的
+#' Top-K Feature对送入 \code{minerva::mine()}。
 #'
-#' @param mat_x 第一层的数值矩阵（特征 x 样本）。
-#' @param mat_y 第二层的数值矩阵（特征 x 样本）。
-#' @param name_x 字符，第一层的标签（用于源特征命名）。
+#' @param mat_x 第一层的数值矩阵（Feature x 样本）。
+#' @param mat_y 第二层的数值矩阵（Feature x 样本）。
+#' @param name_x 字符，第一层的标签（用于源Feature命名）。
 #' @param name_y 字符，第二层的标签。
-#' @param top_n 整数，配对前按方差预筛选每层 Top-N 个特征。NULL 表示保留全部。
-#' @param max_pairs_for_mic 整数，送入 MIC 的最大特征对数量
+#' @param top_n 整数，配对前按方差预筛选每层 Top-N 个Feature。NULL 表示保留全部。
+#' @param max_pairs_for_mic 整数，送入 MIC 的最大Feature对数量
 #'   （按 |rho| 降序选取）。这是最关键的性能控制参数。
-#' @param mic_pvalue_method 字符，\code{"permutation"}（共享零分布）
+#' @param mic_pvalue_method 字符，\code{"permutation"}（shared null distribution）
 #'   或 \code{"none"}（跳过，MIC-pvalue = NA）。
 #' @param n_perm 整数，共享 MIC 零分布所用的置换次数。
 #' @param score_method 字符，\code{"combined"}（默认：
@@ -352,7 +352,7 @@ run_cross_omics_association <- function(mat_x, mat_y,
   mic[cand]  <- mic_calc
   if (verbose) cat(sprintf("[assoc] MIC computed for %d candidate pairs (minerva).\n", k))
 
-  # MIC p 值：共享零分布
+  # MIC p 值：shared null distribution
   if (mic_pvalue_method == "permutation" && any(!is.na(mic))) {
     null_dist <- .mic_null_distribution(mat_x, n_perm = n_perm,
                                         n_sample = ncol(mat_x), verbose = verbose)
@@ -399,18 +399,18 @@ run_cross_omics_association <- function(mat_x, mat_y,
 
 
 # -----------------------------------------------------------------------------
-# 核心函数二：组学内关联（同一层内部，上三角）
+# Core函数二：组学内关联（同一层内部，上三角）
 # -----------------------------------------------------------------------------
 #' 组学内 Spearman + MIC 关联网络
 #'
-#' 计算单个组学层\emph{内部}各特征之间的关联。仅评估特征自相关矩阵中严格的上三角
+#' 计算单个组学层\emph{内部}各Feature之间的关联。仅评估Feature自相关矩阵中严格的上三角
 #' （不含自配对、不含重复对）。评分 / p 值 / MIC 的方法学详见
 #' \code{run_cross_omics_association}。
 #'
-#' @param mat 数值矩阵（特征 x 样本）。
+#' @param mat 数值矩阵（Feature x 样本）。
 #' @param name 字符，该层的标签。
-#' @param top_n 整数，按方差预筛选 Top-N 个特征。
-#' @param max_pairs_for_mic 整数，送入 MIC 的最大特征对数。
+#' @param top_n 整数，按方差预筛选 Top-N 个Feature。
+#' @param max_pairs_for_mic 整数，送入 MIC 的最大Feature对数。
 #' @param mic_pvalue_method 字符，\code{"permutation"} 或 \code{"none"}。
 #' @param n_perm 整数，共享 MIC 零分布所用的置换次数。
 #' @param score_method 字符，\code{"combined"} 或 \code{"nonlinear"}。
@@ -552,8 +552,8 @@ run_intra_omics_association <- function(mat, name = "omics",
 #'
 #' @param mo 一个 MultiOmicsData 对象。
 #' @param layers 字符向量，指定要包含的层名称。NULL 表示所有层。
-#' @param top_n 整数，每层按方差预筛选特征。
-#' @param max_pairs_for_mic 整数，每次调用送入 MIC 的最大特征对数。
+#' @param top_n 整数，每层按方差预筛选Feature。
+#' @param max_pairs_for_mic 整数，每次调用送入 MIC 的最大Feature对数。
 #' @param mic_pvalue_method 字符，\code{"permutation"} 或 \code{"none"}。
 #' @param n_perm 整数，共享 MIC 零分布所用的置换次数。
 #' @param score_method 字符，\code{"combined"} 或 \code{"nonlinear"}。

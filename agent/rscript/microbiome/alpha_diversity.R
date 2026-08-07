@@ -50,7 +50,7 @@ calc_alpha_diversity <- function(expr_matrix, method = "count",
   sample_sums <- colSums(expr_matrix, na.rm = TRUE)
   valid_samples <- names(sample_sums)[sample_sums > 0]
   if (length(valid_samples) == 0) {
-    stop("所有样本的总和为零，无法计算α多样性。")
+    stop("All samples have zero total count, cannot calculate alpha diversity.")
   }
   expr_matrix <- expr_matrix[, valid_samples, drop = FALSE]
 
@@ -168,7 +168,7 @@ test_alpha_diversity <- function(diversity_result, sample_info,
 
   common <- intersect(diversity_result$sample, rownames(sample_info))
   if (length(common) == 0) {
-    stop("样本名不匹配，无法进行统计检验。")
+    stop("Sample names do not match, cannot perform statistical test.")
   }
 
   diversity_result <- diversity_result[common, , drop = FALSE]
@@ -178,7 +178,7 @@ test_alpha_diversity <- function(diversity_result, sample_info,
   # 如果只有两组，强制使用 wilcoxon
   if (n_groups == 2 && method == "kruskal") {
     method <- "wilcoxon"
-    cat("[alpha-div] 检测到2组，自动切换为 Wilcoxon 检验。\n")
+    cat("[alpha-div] 2 groups detected, switching to Wilcoxon test.\n")
   }
 
   indices <- c("observed_species", "shannon", "simpson", "inv_simpson",
@@ -243,7 +243,7 @@ plot_alpha_diversity <- function(diversity_result, sample_info,
                                 test_result = NULL) {
   common <- intersect(diversity_result$sample, rownames(sample_info))
   if (length(common) == 0) {
-    stop("样本名不匹配。")
+    stop("Sample names do not match.")
   }
 
   diversity_result <- diversity_result[common, , drop = FALSE]

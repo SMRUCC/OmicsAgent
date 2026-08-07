@@ -23,7 +23,7 @@
 #'     \item \code{clusters}: 聚类分配向量。
 #'     \item \code{centers}: 聚类中心。
 #'     \item \code{profiles}: 按聚类分组的表达谱数据（用于绘图）。
-#'     \item \code{silhouette}: 轮廓系数（如果计算了）。
+#'     \item \code{silhouette}: 轮廓Coefficient（如果计算了）。
 #'   }
 #'
 #' @examples
@@ -45,7 +45,7 @@ cluster_protein_profiles <- function(expr_matrix, sample_info,
   vars <- apply(expr_matrix, 1, stats::var, na.rm = TRUE)
   keep <- !is.na(vars) & vars > 0
   if (sum(keep) < n_clusters) {
-    stop(sprintf("零方差过滤后剩余 %d 蛋白，不足以聚为 %d 类。",
+    stop(sprintf("Only %d proteins remained after zero-variance filtering, insufficient for %d clusters.",
                 sum(keep), n_clusters))
   }
   expr_matrix <- expr_matrix[keep, , drop = FALSE]
@@ -105,7 +105,7 @@ cluster_protein_profiles <- function(expr_matrix, sample_info,
     stop("Unsupported method. Use 'kmeans', 'hierarchical', or 'fcm'.")
   }
 
-  # 轮廓系数
+  # 轮廓Coefficient
   sil <- NA
   if (n_clusters > 1) {
     dist_mat <- stats::dist(group_means, method = "euclidean")
@@ -125,9 +125,9 @@ cluster_protein_profiles <- function(expr_matrix, sample_info,
   names(clusters) <- rownames(expr_matrix)
   rownames(centers) <- new_names
 
-  cat(sprintf("[cluster] 方法: %s, 聚类数: %d, 轮廓系数: %.3f\n",
+  cat(sprintf("[cluster] Method: %s, clusters: %d, silhouette: %.3f\n",
               method, n_clusters, sil))
-  cat("[cluster] 聚类大小:")
+  cat("[cluster] Cluster sizes:")
   for (cl in sort(unique(clusters))) {
     cat(sprintf(" %s=%d", cl, sum(clusters == cl)))
   }

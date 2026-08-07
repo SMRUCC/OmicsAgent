@@ -7,14 +7,14 @@
 
 #' 构建跨组学关联网络
 #'
-#' @description 将 \code{run_cross_correlation()} 生成的显著特征对表合并为一个
+#' @description 将 \code{run_cross_correlation()} 生成的显著Feature对表合并为一个
 #'   \pkg{igraph} 对象。节点标注其所属组学层，边标注相关的符号与强度，从而形成
-#'   "微生物—代谢物—香气"关系的网络视图。
+#'   "Microbe-Metabolite-Aroma"关系的网络视图。
 #'
-#' @param pairs_list 特征对数据框的有名列表。每个元素必须包含
+#' @param pairs_list Feature对数据框的有名列表。每个元素必须包含
 #'   feature_x、feature_y、r 与 padj 列，且元素名称应遵循
 #'   \code{run_all_pairwise_correlation()} 使用的 "layerX_vs_layerY" 命名约定。
-#' @param r_threshold 保留的最小绝对相关系数。默认：0.7。
+#' @param r_threshold 保留的最小绝对相关Coefficient。默认：0.7。
 #' @param padj_threshold 保留的最大校正后 p 值。默认：0.05。
 #' @param max_edges 边数的上限；超出时保留关联最强者。默认：2000。
 #' @param verbose 逻辑值，是否打印进度。默认：TRUE。
@@ -102,7 +102,7 @@ build_cross_omics_network <- function(pairs_list,
   edges$direction <- ifelse(edges$r >= 0, "positive", "negative")
   edges$weight <- abs(edges$r)
 
-  # 节点表：一个特征保留其首次出现的层。
+  # 节点表：一个Feature保留其首次出现的层。
   node_names <- unique(c(edges$from, edges$to))
   node_layer <- c(
     stats::setNames(edges$from_layer, edges$from),
@@ -144,7 +144,7 @@ build_cross_omics_network <- function(pairs_list,
 #' @param verbose 逻辑值，是否打印进度。默认：TRUE。
 #'
 #' @return 数据框，含 name、omics、degree、betweenness、closeness 以及
-#'   关联边的平均绝对相关系数。
+#'   关联边的平均绝对相关Coefficient。
 #'
 #' @examples
 #' \dontrun{
@@ -175,7 +175,7 @@ get_network_hubs <- function(network, top_n = 20, by = "degree",
     rep(NA_character_, length(vnames))
   }
 
-  # 每个节点关联边上的平均绝对相关系数。
+  # 每个节点关联边上的平均绝对相关Coefficient。
   ew <- igraph::E(graph)$weight
   mean_r <- vapply(seq_along(vnames), function(i) {
     inc <- igraph::incident(graph, v = i, mode = "all")

@@ -6,19 +6,19 @@
 
 #' 计算 QC 样本变异
 #'
-#' @description 计算 QC 样本的系数变异（CV），以评估数据采集的稳定性。QC 样本中
-#'   CV 较高的特征说明分析重复性较差。
+#' @description 计算 QC 样本的Coefficient变异（CV），以评估数据采集的稳定性。QC 样本中
+#'   CV 较高的Feature说明分析重复性较差。
 #'
-#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param expr_matrix 数值矩阵（Feature x 样本）。
 #' @param sample_info 含样本元数据的 data.frame。
 #' @param qc_group 字符，\code{sample_info[[group_col]]} 中 QC 样本的分组标签。默认："QC"。
 #' @param group_col sample_info 中用于分组标签的列名。默认："sample_info"。
 #'
 #' @return 一个列表：
 #'   \itemize{
-#'     \item \code{qc_cv}: 各特征 CV（%）的有名数值向量。
-#'     \item \code{qc_mean}: 各特征均值的有名数值向量。
-#'     \item \code{qc_sd}: 各特征标准差的有名数值向量。
+#'     \item \code{qc_cv}: 各Feature CV（%）的有名数值向量。
+#'     \item \code{qc_mean}: 各Feature均值的有名数值向量。
+#'     \item \code{qc_sd}: 各Feature标准差的有名数值向量。
 #'     \item \code{summary}: 含 QC 统计量的数据框。
 #'     \item \code{plot}: 展示 CV 分布的 ggplot 对象。
 #'   }
@@ -95,21 +95,21 @@ qc_variation <- function(expr_matrix, sample_info, qc_group = "QC",
 #' 基于 PCA 的质控评估
 #'
 #' @description 对整个数据集（含 QC 样本）执行 PCA，以可视化方式评估数据质量。
-#'   若数据质量良好，QC 样本应在 PCA 得分图中紧密聚成一簇。
+#'   若数据质量良好，QC 样本应在 PCA Score Plot中紧密聚成一簇。
 #'
-#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param expr_matrix 数值矩阵（Feature x 样本）。
 #' @param sample_info 含样本元数据的 data.frame。
 #' @param qc_group 字符，QC 分组标签。默认："QC"。
 #' @param group_col 用于分组标签的列名。默认："sample_info"。
 #' @param color_col 用于颜色分组的列名。默认：group_col。
-#' @param scale 逻辑值，是否对特征进行标准化。默认：TRUE。
+#' @param scale 逻辑值，是否对Feature进行标准化。默认：TRUE。
 #'
 #' @return 一个列表：
 #'   \itemize{
 #'     \item \code{pca_result}: PCA 结果对象。
 #'     \item \code{scores}: PC 得分数据框。
 #'     \item \code{qc_dispersion}: QC 样本的离散度（到 QC 质心的平均距离）。
-#'     \item \code{plot}: 高亮 QC 的 ggplot PCA 得分图。
+#'     \item \code{plot}: 高亮 QC 的 ggplot PCA Score Plot。
 #'   }
 #'
 #' @examples

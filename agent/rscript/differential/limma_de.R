@@ -7,9 +7,9 @@
 #' 运行 limma 差异分析
 #'
 #' @description 使用 limma 包结合经验贝叶斯（empirical Bayes）收缩，进行差异表达分析。
-#'   支持多种用于筛选显著特征的策略。
+#'   支持多种用于筛选显著Feature的策略。
 #'
-#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param expr_matrix 数值矩阵（Feature x 样本）。
 #' @param sample_info 含有样本元数据的数据框。
 #' @param group_col 分组标签所在的列名。默认："sample_info"。
 #' @param control_group 字符型，对照/参考分组名称。默认：NULL（按字母序取第一个分组）。
@@ -25,16 +25,16 @@
 #' @param p_threshold p 值阈值。默认：0.05。
 #' @param logfc_threshold logFC 绝对值阈值。默认：1。
 #' @param vip_threshold VIP 阈值。默认：1.0。
-#' @param top_n "pvalue_topN" 策略下的前 N 个特征数量。默认：20。
+#' @param top_n "pvalue_topN" 策略下的前 N 个Feature数量。默认：20。
 #' @param p_adj_method P 值校正方法。默认："BH"。
 #' @param vip_result 来自 PLS-DA 的可选 VIP 结果。"pvalue_vip" 策略必填。
 #'
 #' @return 一个列表，包含：
 #'   \itemize{
 #'     \item \code{results}：合并结果数据框。行由 \code{feature_id} 列中的
-#'       纯特征名标识（无比较后缀）。包含 \code{significant} 逻辑列和
+#'       纯Feature名标识（无比较后缀）。包含 \code{significant} 逻辑列和
 #'       \code{regulation} 列（取值为 "up"、"down" 或 "not sig"）。
-#'     \item \code{significant}：显著特征数据框（results 的子集）。
+#'     \item \code{significant}：显著Feature数据框（results 的子集）。
 #'     \item \code{comparisons}：各比较结果列表。
 #'     \item \code{strategy}：所使用的策略。
 #'   }
@@ -125,7 +125,7 @@ run_limma <- function(expr_matrix, sample_info, group_col = "sample_info",
 
   } else {
     # 回退方案：使用基础 R 的 t 检验
-    warning("未安装 'limma' 包，改用简单 t 检验。")
+    warning("Package 'limma' not installed, falling back to simple t-test.")
     combined <- .t_test_de(expr_matrix, groups, control_group, case_groups)
   }
 
@@ -144,7 +144,7 @@ run_limma <- function(expr_matrix, sample_info, group_col = "sample_info",
 
   } else if (strategy_norm == "pvalue_vip") {
     if (is.null(vip_result)) {
-      stop("strategy = 'pvalue_vip' 时必须提供 vip_result")
+      stop("vip_result must be provided when strategy = 'pvalue_vip'")
     }
     # 合并 VIP
     vip_df <- vip_result
@@ -168,7 +168,7 @@ run_limma <- function(expr_matrix, sample_info, group_col = "sample_info",
 
   } else {
     # 未知策略 / 回退：默认采用 p 值 + logFC 规则
-    warning("未知策略 '", strategy, "'，回退到 'pvalue_logFC'。")
+    warning("Unknown strategy '", strategy, "', falling back to 'pvalue_logFC'.")
     combined$significant <- combined$p_adj < p_threshold &
                             abs(combined$logFC) >= logfc_threshold
   }
@@ -187,7 +187,7 @@ run_limma <- function(expr_matrix, sample_info, group_col = "sample_info",
   # 筛选显著结果
   sig_results <- combined[combined$significant, , drop = FALSE]
 
-  # 保留 feature_id 作为真实列（纯特征名，无比较后缀），
+  # 保留 feature_id 作为真实列（纯Feature名，无比较后缀），
   # 并将行名重置为默认，避免 export_table 将行名派生出的重复
   # feature_id 列前置。
   rownames(combined) <- NULL

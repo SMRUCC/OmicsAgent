@@ -12,7 +12,7 @@
 #'   功能变化。
 #'
 #' @param expr_matrix 数值矩阵（features × samples），行为蛋白质，列为样本。
-#' @param feature_info 特征注释 data.frame，需包含功能类别列。
+#' @param feature_info Feature注释 data.frame，需包含功能类别列。
 #' @param category_col 功能类别列名（如 "kegg_pathway"、"cog_category"、"super_class"）。
 #' @param agg_method 聚合方法，"mean"、"median"、"sum" 或 "pc1"（第一主成分）。
 #'   默认 "mean"。
@@ -40,7 +40,7 @@ calc_protein_functional_profile <- function(expr_matrix, feature_info,
                                            max_size = 100) {
   if (!is.matrix(expr_matrix)) expr_matrix <- as.matrix(expr_matrix)
 
-  # 确保特征注释行名与矩阵行名对应
+  # 确保Feature注释行名与矩阵行名对应
   common <- intersect(rownames(expr_matrix), rownames(feature_info))
   if (length(common) == 0) {
     # 尝试用 ID 列匹配
@@ -54,7 +54,7 @@ calc_protein_functional_profile <- function(expr_matrix, feature_info,
   }
 
   if (!category_col %in% colnames(feature_info)) {
-    stop(sprintf("功能类别列 '%s' 不在 feature_info 中。", category_col))
+    stop(sprintf("Category column '%s' not found in feature_info.", category_col))
   }
 
   # 按功能类别分组
@@ -67,10 +67,10 @@ calc_protein_functional_profile <- function(expr_matrix, feature_info,
   valid_cats <- setdiff(valid_cats, "Unknown")
 
   if (length(valid_cats) == 0) {
-    stop(sprintf("没有功能类别满足大小要求 (%d-%d 蛋白)。", min_size, max_size))
+    stop(sprintf("No functional categories met the size requirement (%d-%d proteins).", min_size, max_size))
   }
 
-  cat(sprintf("[func-profile] %d 个功能类别 (大小 %d-%d)\n",
+  cat(sprintf("[func-profile] %d functional categories (size %d-%d)\n",
               length(valid_cats), min_size, max_size))
 
   # 聚合
@@ -281,7 +281,7 @@ diff_functional_category <- function(func_result, sample_info,
   de_res$significant <- abs(de_res$logFC) >= fc_threshold &
                         de_res$p_adj < p_threshold
 
-  cat(sprintf("[func-diff] %d 功能类别差异显著 (|logFC| >= %.1f, p_adj < %.2f)\n",
+  cat(sprintf("[func-diff] %d functional categories significantly different (|logFC| >= %.1f, p_adj < %.2f)\n",
               sum(de_res$significant), fc_threshold, p_threshold))
 
   return(de_res)

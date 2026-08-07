@@ -6,9 +6,9 @@
 
 #' 构建 WGCNA 共表达模块
 #'
-#' @description 使用 WGCNA 包构建加权基因共表达网络，并识别共表达特征的模块。
+#' @description 使用 WGCNA 包构建加权基因共表达网络，并识别共表达Feature的模块。
 #'
-#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param expr_matrix 数值矩阵（Feature x 样本）。
 #' @param soft_power 数值型，软阈值幂。若为 NULL 则自动选择。默认：NULL。
 #' @param min_module_size 最小模块规模。默认：10。
 #' @param merge_cut_height 模块合并的高度阈值。默认：0.25。
@@ -18,9 +18,9 @@
 #'
 #' @return 一个列表，包含：
 #'   \itemize{
-#'     \item \code{module_colors}：每个特征的模块颜色命名向量。
+#'     \item \code{module_colors}：每个Feature的模块颜色命名向量。
 #'     \item \code{module_labels}：模块标签命名向量。
-#'     \item \code{MEs}：模块特征基因（样本 x 模块）。
+#'     \item \code{MEs}：模块Feature基因（样本 x 模块）。
 #'     \item \code{soft_power}：所选的软阈值幂。
 #'     \item \code{gene_tree}：层次聚类树。
 #'     \item \code{diss_TOM}：相异度矩阵（可选，若包含 TOM）。
@@ -91,7 +91,7 @@ build_wgcna_modules <- function(expr_matrix, soft_power = NULL,
   module_colors <- WGCNA::labels2colors(modules)
   names(module_colors) <- colnames(datExpr)
 
-  # 计算模块特征基因
+  # 计算模块Feature基因
   MEs <- WGCNA::moduleEigengenes(datExpr, module_colors)$eigengenes
   rownames(MEs) <- rownames(datExpr)
 
@@ -116,7 +116,7 @@ build_wgcna_modules <- function(expr_matrix, soft_power = NULL,
 
 #' 绘制 WGCNA 模块树状图
 #'
-#' @description 创建按模块分配着色的特征树状图。
+#' @description 创建按模块分配着色的Feature树状图。
 #'
 #' @param wgcna_result 来自 \code{build_wgcna_modules()} 的结果。
 #'
@@ -150,7 +150,7 @@ plot_wgcna_dendrogram <- function(wgcna_result) {
 #'
 #' @description 绘制无标度拓扑拟合与平均连通性随幂变化的曲线。
 #'
-#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param expr_matrix 数值矩阵（Feature x 样本）。
 #' @param powers 幂的范围。默认：1:20。
 #' @param network_type 网络类型。默认："signed"。
 #'

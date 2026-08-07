@@ -9,7 +9,7 @@
 #' @description 将每个样本按其总和归一化，转换为相对丰度。该方法在代谢组学
 #'   与微生物组数据中常用于校正样本间总信号强度的差异。
 #'
-#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param expr_matrix 数值矩阵（Feature x 样本）。
 #' @param scale_factor 数值型，缩放因子。默认：1e6（用于 ppm）。
 #'   比例值用 1，百万分比（ppm）用 1e6。
 #' @param multiply_by 归一化后乘上的数值型倍数。默认：1e6。
@@ -49,7 +49,7 @@ normalize_sample_total <- function(expr_matrix, scale_factor = 1, multiply_by = 
 #'
 #' @description 将每个样本按其中位数取值进行归一化。
 #'
-#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param expr_matrix 数值矩阵（Feature x 样本）。
 #'
 #' @return 按样本中位数归一化后的数值矩阵。
 #'

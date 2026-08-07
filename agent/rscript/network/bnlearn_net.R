@@ -6,12 +6,12 @@
 
 #' 使用 bnlearn 构建贝叶斯网络
 #'
-#' @description 从时间序列或多条件组学数据构建贝叶斯网络模型，以推断特征之间的
+#' @description 从时间序列或多条件组学数据构建贝叶斯网络模型，以推断Feature之间的
 #'   调控关系。
 #'
-#' @param expr_matrix 数值矩阵（特征 x 样本）。对于时间序列，列应按时间顺序排列。
+#' @param expr_matrix 数值矩阵（Feature x 样本）。对于时间序列，列应按时间顺序排列。
 #' @param time_points 可选的时间点数值向量。若为 NULL，则使用样本顺序。默认：NULL。
-#' @param feature_info 可选的特征注释数据框，用于节点标签。
+#' @param feature_info 可选的Feature注释数据框，用于节点标签。
 #' @param name_col feature_info 中用于节点名称的列。默认："name"。
 #' @param algorithm 学习算法："hc"（爬山法）、"tabu"、"gs"
 #'   （grow-shrink 生长-收缩）。默认："hc"。
@@ -43,7 +43,7 @@ run_bnlearn <- function(expr_matrix, time_points = NULL, feature_info = NULL,
 
   set.seed(seed)
 
-  # 若特征过多，则挑选变异最大的前若干个
+  # 若Feature过多，则挑选变异最大的前若干个
   mat <- as.matrix(expr_matrix)
   if (nrow(mat) > max_nodes) {
     row_vars <- apply(mat, 1, stats::var, na.rm = TRUE)
@@ -51,7 +51,7 @@ run_bnlearn <- function(expr_matrix, time_points = NULL, feature_info = NULL,
     mat <- mat[top_idx, , drop = FALSE]
   }
 
-  # 用特征名替换特征 ID
+  # 用Feature名替换Feature ID
   if (!is.null(feature_info) && name_col %in% colnames(feature_info)) {
     feature_names <- feature_info[match(rownames(mat), rownames(feature_info)), name_col]
     feature_names[is.na(feature_names)] <- rownames(mat)

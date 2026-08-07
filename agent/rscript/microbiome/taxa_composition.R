@@ -11,7 +11,7 @@
 #'   需要在 feature_info 中有分类层级列。
 #'
 #' @param expr_matrix 数值矩阵（features × samples），行为 taxa，列为样本。
-#' @param feature_info 特征注释 data.frame，需包含分类层级列。
+#' @param feature_info Feature注释 data.frame，需包含分类层级列。
 #' @param level 分类层级列名（如 "phylum"、"class"、"order"、"family"、"genus"）。
 #'
 #' @return 列表：
@@ -29,7 +29,7 @@
 aggregate_by_taxonomy <- function(expr_matrix, feature_info, level) {
   if (!is.matrix(expr_matrix)) expr_matrix <- as.matrix(expr_matrix)
   if (!level %in% colnames(feature_info)) {
-    stop(sprintf("层级 '%s' 不在 feature_info 中。可用列: %s",
+    stop(sprintf("Level '%s' not found in feature_info. Available columns: %s",
                  level, paste(colnames(feature_info), collapse = ", ")))
   }
 
@@ -47,7 +47,7 @@ aggregate_by_taxonomy <- function(expr_matrix, feature_info, level) {
   row_order <- order(rowSums(agg), decreasing = TRUE)
   agg <- agg[row_order, , drop = FALSE]
 
-  cat(sprintf("[taxa-comp] 聚合到 %s 层级: %d 个 taxa\n", level, nrow(agg)))
+  cat(sprintf("[taxa-comp] Aggregated to %s level: %d taxa\n", level, nrow(agg)))
 
   return(list(
     matrix = agg,
@@ -85,7 +85,7 @@ calc_relative_abundance_pseudo <- function(expr_matrix, pseudo_count = 1e-6) {
 #'
 #' @param expr_matrix 数值矩阵（features × samples）或聚合后的矩阵。
 #' @param sample_info 样本元数据 data.frame。
-#' @param feature_info 特征注释 data.frame（可选，用于按层级聚合）。
+#' @param feature_info Feature注释 data.frame（可选，用于按层级聚合）。
 #' @param tax_level 分类层级列名（如 "phylum"、"genus"）。默认 NULL（不聚合）。
 #' @param group_col 分组列名，按组聚合样本。默认 "sample_info"。
 #' @param top_n 展示前 N 个丰度最高的 taxa。默认 10。
@@ -196,7 +196,7 @@ plot_taxa_barplot <- function(expr_matrix, sample_info,
 #'
 #' @param expr_matrix 数值矩阵（features × samples）或聚合后的矩阵。
 #' @param sample_info 样本元数据 data.frame（可选）。
-#' @param feature_info 特征注释 data.frame（可选，用于按层级聚合）。
+#' @param feature_info Feature注释 data.frame（可选，用于按层级聚合）。
 #' @param tax_level 分类层级列名。默认 NULL。
 #' @param group_col 分组列名。默认 "sample_info"。
 #' @param group_name 指定要绘制的分组名。默认 NULL（全部样本平均）。

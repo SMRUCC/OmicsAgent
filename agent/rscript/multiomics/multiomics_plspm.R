@@ -11,7 +11,7 @@
 #   4. summarise_plspm_paths()           逐层路径汇总
 #
 # 与 network/plspm_net.R 中简化的 run_plspm()（PCA 分数加两两 lm）不同，本模块
-# 调用 plspm::plspm()，从而联合估计权重、载荷与路径系数。
+# 调用 plspm::plspm()，从而联合估计权重、载荷与路径Coefficient。
 # ==============================================================================
 
 
@@ -57,8 +57,8 @@ clean_ec_number <- function(x, level = 2) {
 
 #' 解析单个组学层的分组向量
 #'
-#' @param finfo 特征注释 data.frame（行名 = 矩阵行名）。
-#' @param features 表达矩阵中出现的特征 ID。
+#' @param finfo Feature注释 data.frame（行名 = 矩阵行名）。
+#' @param features 表达矩阵中出现的Feature ID。
 #' @param source 注释列的名称，或 "ec_number" / "kegg"。
 #' @param ec_level EC 截断层级。
 #'
@@ -96,7 +96,7 @@ clean_ec_number <- function(x, level = 2) {
 
 #' 基于注释构建多组学潜变量定义
 #'
-#' @description 利用生物学注释，将每个组学层的特征分组为潜变量。每层可使用不同的
+#' @description 利用生物学注释，将每个组学层的Feature分组为潜变量。每层可使用不同的
 #'   分组来源，这是必需的，因为各层携带的元数据不同：转录组与蛋白质组有 EC 编号
 #'   和 KEGG 直系同源，代谢组与挥发组有化合物类别，而 16S 层只有分类学信息。
 #'
@@ -107,17 +107,17 @@ clean_ec_number <- function(x, level = 2) {
 #' @param layer_sources 映射层名到用于分组的注释列的有名列表，例如
 #'   \code{list(transcriptome = "ec_number", metabolome = "super_class",
 #'   microbiome = "taxonomy_phylum")}。
-#' @param min_size 每个潜变量的最小特征数。默认：3。
+#' @param min_size 每个潜变量的最小Feature数。默认：3。
 #' @param max_latent_per_layer 每层保留的潜变量数量上限，按总方差选取。默认：NULL（无上限）。
 #' @param max_features_per_latent 每个潜变量的显变量数量上限，按方差选取。默认：15。
 #' @param ec_level EC 截断层级。默认：2。
 #' @param fallback_sources 当所请求来源覆盖率不足时尝试的列。
-#' @param min_coverage 接受某来源所需的最小注释特征比例。默认：0.2。
+#' @param min_coverage 接受某来源所需的最小注释Feature比例。默认：0.2。
 #' @param verbose 是否打印进度。默认：TRUE。
 #'
 #' @return 一个列表：
 #'   \itemize{
-#'     \item \code{latent_def}: latent -> 特征 ID 的有名列表。
+#'     \item \code{latent_def}: latent -> Feature ID 的有名列表。
 #'     \item \code{definitions}: 含 \code{latent}、\code{layer}、
 #'       \code{source}、\code{group}、\code{n_features} 的数据框。
 #'     \item \code{layer_sources_used}: 每层实际使用的来源。
@@ -310,7 +310,7 @@ build_hierarchical_inner_model <- function(definitions, layer_order,
 #'   因为它们会使 PLS 算法不稳定。
 #'
 #' @param mo 一个 MultiOmicsData 对象。
-#' @param latent_def latent -> 特征 ID 的有名列表。
+#' @param latent_def latent -> Feature ID 的有名列表。
 #' @param definitions 定义数据框，已按 \code{path_matrix} 排序（即由
 #'   \code{build_hierarchical_inner_model()} 返回者）。
 #' @param path_matrix 下三角 0/1 内模型矩阵。

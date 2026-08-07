@@ -1,15 +1,15 @@
 # ==============================================================================
 # OmicsFlow: 数据标度变换（Scaling）
 # ==============================================================================
-# 在特征维度上对表达数据进行标度变换
+# 在Feature维度上对表达数据进行标度变换
 # ==============================================================================
 
-#' 按特征中位数标度（中心化）
+#' 按Feature中位数标度（中心化）
 #'
-#' @description 将每个特征（行）按其值的中位数进行中心化。该方法在代谢组学中
-#'   常用于使各特征值具有可比性。
+#' @description 将每个Feature（行）按其值的中位数进行中心化。该方法在代谢组学中
+#'   常用于使各Feature值具有可比性。
 #'
-#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param expr_matrix 数值矩阵（Feature x 样本）。
 #' @param scale 逻辑值，是否同时按 MAD（中位数绝对偏差）进行标度。默认：FALSE。
 #'
 #' @return 已按中位数中心化的数值矩阵。
@@ -45,11 +45,11 @@ scale_feature_median <- function(expr_matrix, scale = FALSE) {
 }
 
 
-#' 按特征均值标度（z-score）
+#' 按Feature均值标度（z-score）
 #'
-#' @description 使用 z-score 对每个特征（行）进行标准化：减去均值后除以标准差。
+#' @description 使用 z-score 对每个Feature（行）进行标准化：减去均值后除以标准差。
 #'
-#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param expr_matrix 数值矩阵（Feature x 样本）。
 #'
 #' @return 已做 z-score 标度的数值矩阵。
 #'
@@ -75,11 +75,11 @@ scale_feature_zscore <- function(expr_matrix) {
 }
 
 
-#' 按特征极差标度（min-max）
+#' 按Feature极差标度（min-max）
 #'
-#' @description 使用 min-max 归一化将每个特征（行）缩放到 [0, 1] 区间。
+#' @description 使用 min-max 归一化将每个Feature（行）缩放到 [0, 1] 区间。
 #'
-#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param expr_matrix 数值矩阵（Feature x 样本）。
 #'
 #' @return 已做 min-max 标度的数值矩阵。
 #'
@@ -111,7 +111,7 @@ scale_feature_minmax <- function(expr_matrix) {
 #' @description 应用 Pareto 标度：先均值中心化，再除以标准差的平方根。
 #'   在代谢组学中广泛使用。
 #'
-#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param expr_matrix 数值矩阵（Feature x 样本）。
 #'
 #' @return 已做 Pareto 标度的数值矩阵。
 #'

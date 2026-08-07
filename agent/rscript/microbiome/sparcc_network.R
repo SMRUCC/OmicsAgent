@@ -2,13 +2,13 @@
 # OmicsFlow: SparCC Microbial Correlation Network
 # ==============================================================================
 # SparCC 风格的组成性数据关联分析
-# 通过迭代估计来校正组成性数据的"伪关联"问题
+# 通过迭代估计来校正组成性数据的"spurious correlation"问题
 # ==============================================================================
 
 #' SparCC 风格的组成性数据关联分析
 #'
 #' @description 模仿 SparCC 算法估计组成性微生物组数据中 taxa 之间的关联。
-#'   SparCC 的核心思想是通过迭代估计对数变换的基础数据来校正组成性效应。
+#'   SparCC 的Core思想是通过迭代估计对数变换的基础数据来校正组成性效应。
 #'
 #'   简化实现步骤：
 #'   1. 从相对丰度估计基础值（对数空间）
@@ -26,7 +26,7 @@
 #'
 #' @return 列表：
 #'   \itemize{
-#'     \item \code{cor_matrix}: 相关系数矩阵。
+#'     \item \code{cor_matrix}: 相关Coefficient矩阵。
 #'     \item \code{p_matrix}: p 值矩阵。
 #'     \item \code{edges}: 边表（source, target, correlation, p_value, p_adj）。
 #'     \item \code{nodes}: 节点表（name, degree）。
@@ -53,7 +53,7 @@ run_sparcc <- function(expr_matrix, n_iterations = 20,
   prevalence <- rowMeans(rel_abund > 0)
   keep <- prevalence >= 0.1  # 至少在 10% 样本中出现
   if (sum(keep) < 3) {
-    stop("至少需要 3 个 taxa 通过频率过滤。")
+    stop("At least 3 taxa required after frequency filtering.")
   }
   rel_abund <- rel_abund[keep, , drop = FALSE]
   n_features <- nrow(rel_abund)
@@ -68,7 +68,7 @@ run_sparcc <- function(expr_matrix, n_iterations = 20,
   # 第二步：排列检验
   p_matrix <- matrix(NA_real_, n_features, n_features)
   if (n_permutations > 0) {
-    if (verbose) cat(sprintf("[sparcc] 置换检验 %d 次...\n", n_permutations))
+    if (verbose) cat(sprintf("[sparcc] Permutation test %d iterations...\n", n_permutations))
     perm_cor <- list()
     for (p in seq_len(n_permutations)) {
       perm_mat <- apply(rel_abund, 2, function(x) sample(x))
@@ -142,7 +142,7 @@ run_sparcc <- function(expr_matrix, n_iterations = 20,
 }
 
 
-#' SparCC 核心算法
+#' SparCC Core算法
 #'
 #' @description 执行 SparCC 的迭代估计：在对数空间中估计基础数据的相关矩阵。
 #'
@@ -150,7 +150,7 @@ run_sparcc <- function(expr_matrix, n_iterations = 20,
 #' @param n_iterations 迭代次数。
 #' @param verbose 是否打印进度。
 #'
-#' @return 相关系数矩阵。
+#' @return 相关Coefficient矩阵。
 #' @keywords internal
 .sparcc_core <- function(rel_abund, n_iterations = 20, verbose = TRUE) {
   n_features <- nrow(rel_abund)
@@ -222,7 +222,7 @@ plot_sparcc_network <- function(sparcc_result, layout = "fr",
   edges <- sparcc_result$edges
   edges <- edges[abs(edges$correlation) >= edge_threshold, , drop = FALSE]
   if (nrow(edges) == 0) {
-    stop("没有满足阈值的边。")
+    stop("No edges met the threshold.")
   }
 
   # 构建图

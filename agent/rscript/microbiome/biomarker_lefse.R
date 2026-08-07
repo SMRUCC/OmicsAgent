@@ -47,7 +47,7 @@ run_lefse_analysis <- function(expr_matrix, sample_info,
   n_groups <- length(group_levels)
 
   if (n_groups < 2) {
-    stop("至少需要 2 组进行 LEfSe 分析。")
+    stop("At least 2 groups are required for LEfSe analysis.")
   }
 
   n_features <- nrow(expr_matrix)
@@ -114,7 +114,7 @@ run_lefse_analysis <- function(expr_matrix, sample_info,
           cent <- lda_fit$prior %*% t(lda_fit$scaling)
           lda_group[significant_idx] <- group_levels[which.max(cent)]
         }, error = function(e) {
-          cat(sprintf("[lefse] LDA 失败，使用 effect size 替代: %s\n",
+          cat(sprintf("[lefse] LDA failed, using effect size instead: %s\n",
                       conditionMessage(e)))
         })
       }
@@ -148,9 +148,9 @@ run_lefse_analysis <- function(expr_matrix, sample_info,
     abs(lda_scores_df$lda_score)
   )
 
-  cat(sprintf("[lefse] %d taxa 通过 KW 检验 (p_adj < %.2f)\n",
+  cat(sprintf("[lefse] %d taxa passed KW test (p_adj < %.2f)\n",
               length(significant_idx), kw_p_threshold))
-  cat(sprintf("[lefse] %d biomarker 通过 LDA 阈值 (|score| >= %.1f)\n",
+  cat(sprintf("[lefse] %d biomarkers passed LDA threshold (|score| >= %.1f)\n",
               nrow(significant), lda_threshold))
 
   return(list(
@@ -188,7 +188,7 @@ run_lefse_analysis <- function(expr_matrix, sample_info,
 plot_lefse_lda <- function(lefse_result, top_n = 30, color_by_group = TRUE) {
   lda_df <- lefse_result$lda_scores
   if (nrow(lda_df) == 0) {
-    stop("没有显著的 biomarker 可绘制。")
+    stop("No significant biomarkers to plot.")
   }
 
   # Top N
@@ -230,7 +230,7 @@ plot_lefse_lda <- function(lefse_result, top_n = 30, color_by_group = TRUE) {
 #'   节点颜色表示富集的组。需要 feature_info 包含多个分类层级。
 #'
 #' @param lefse_result \code{run_lefse_analysis()} 的返回结果。
-#' @param feature_info 特征注释 data.frame，需包含分类层级列。
+#' @param feature_info Feature注释 data.frame，需包含分类层级列。
 #' @param levels 分类层级列名向量，从高到低。默认 c("phylum", "class", "order", "family", "genus")。
 #''
 #' @return ggplot 对象。
@@ -246,7 +246,7 @@ plot_lefse_cladogram <- function(lefse_result, feature_info,
                                            "family", "genus")) {
   sig <- lefse_result$significant
   if (nrow(sig) == 0) {
-    stop("没有显著的 biomarker 可绘制 cladogram。")
+    stop("No significant biomarkers for cladogram.")
   }
 
   group_levels <- lefse_result$params$group_levels
@@ -275,7 +275,7 @@ plot_lefse_cladogram <- function(lefse_result, feature_info,
   }
 
   if (length(all_nodes) == 0) {
-    stop("无法匹配显著 biomarker 到分类层级。")
+    stop("Cannot match significant biomarkers to taxonomic levels.")
   }
 
   node_df <- do.call(rbind, all_nodes)

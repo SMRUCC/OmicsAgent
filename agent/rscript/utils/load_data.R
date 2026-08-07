@@ -6,15 +6,15 @@
 
 #' 从 CSV 文件加载表达矩阵
 #'
-#' @description 从 CSV 文件加载表达矩阵，其中行为特征（基因、代谢物等），
-#'   列为样本。第一列包含特征 ID，第一行包含样本 ID。
+#' @description 从 CSV 文件加载表达矩阵，其中行为Feature（基因、代谢物等），
+#'   列为样本。第一列包含Feature ID，第一行包含样本 ID。
 #'
 #' @param file 表达矩阵 CSV 文件的路径。
-#' @param feature_id_col 含有特征 ID 的列名。若为 NULL，则使用第一列。默认：NULL。
+#' @param feature_id_col 含有Feature ID 的列名。若为 NULL，则使用第一列。默认：NULL。
 #' @param na_values 解释为 NA 的字符串字符向量。默认：
 #'   c("", "NA", "N/A", "null")。
 #'
-#' @return 一个数值矩阵，行为特征、列为样本。行名为特征 ID，列名为样本 ID。
+#' @return 一个数值矩阵，行为Feature、列为样本。行名为Feature ID，列名为样本 ID。
 #'
 #' @examples
 #' \dontrun{
@@ -36,7 +36,7 @@ load_expression_matrix <- function(file, feature_id_col = NULL,
   }
 
   if (any(duplicated(feature_ids))) {
-    warning("检测到重复的特征 ID，正在进行唯一化处理。")
+    warning("Duplicate feature IDs detected, making them unique.")
     feature_ids <- make.unique(feature_ids)
   }
 
@@ -71,7 +71,7 @@ load_sample_info <- function(file) {
   required_cols <- c("ID", "sample_name", "sample_info")
   missing_cols <- setdiff(required_cols, colnames(df))
   if (length(missing_cols) > 0) {
-    stop(paste("样本信息中缺少必需的列：",
+    stop(paste("Missing required columns in sample info: ",
                paste(missing_cols, collapse = ", ")))
   }
 
@@ -80,17 +80,17 @@ load_sample_info <- function(file) {
 }
 
 
-#' 从 CSV 文件加载特征注释
+#' 从 CSV 文件加载Feature注释
 #'
-#' @description 从 CSV 文件加载特征注释。必需列包括
-#'   \code{ID}（与表达矩阵的特征 ID 对应）、\code{name}（常用名）、
-#'   \code{type}（特征类别）和 \code{kegg}（KEGG 通路 ID）。
+#' @description 从 CSV 文件加载Feature注释。必需列包括
+#'   \code{ID}（与表达矩阵的Feature ID 对应）、\code{name}（常用名）、
+#'   \code{type}（Feature类别）和 \code{kegg}（KEGG 通路 ID）。
 #'   可选列包括 \code{pfam} 和 \code{family}。
 #'
-#' @param file 特征注释 CSV 文件的路径。
-#' @param id_col 用作特征 ID 的列名。默认："ID"。
+#' @param file Feature注释 CSV 文件的路径。
+#' @param id_col 用作Feature ID 的列名。默认："ID"。
 #'
-#' @return 含有特征注释的数据框。行名设为特征 ID。
+#' @return 含有Feature注释的数据框。行名设为Feature ID。
 #'
 #' @examples
 #' \dontrun{

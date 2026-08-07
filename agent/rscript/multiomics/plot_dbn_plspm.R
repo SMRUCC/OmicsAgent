@@ -699,12 +699,12 @@ plot_perturbation_subnetwork <- function(dbn_result, node, title = NULL,
 #' 绘制分层多组学 PLS 路径模型
 #'
 #' @description 将潜变量按每层一列、依生物学层级排列，并绘制它们之间的估计路径
-#'   系数。边的线宽编码系数大小，颜色编码符号，虚线标记不显著的路径。
+#'   Coefficient。边的线宽编码Coefficient大小，颜色编码符号，虚线标记不显著的路径。
 #'
 #' @param plspm_result \code{run_multiomics_plspm()} 的输出。
 #' @param layer_order 组学层的列顺序。仅当 \code{layout = "hier"} 时使用。
 #' @param p_threshold 线型所用的显著性阈值。默认：0.05。
-#' @param min_abs_coeff 隐藏绝对系数低于该值的路径，以保持稠密模型的可读性。默认：0。
+#' @param min_abs_coeff 隐藏绝对Coefficient低于该值的路径，以保持稠密模型的可读性。默认：0。
 #' @param significant_only 仅绘制显著路径。默认：FALSE。
 #' @param layout 网络布局。\code{"hier"}（默认）保持遵循生物学层级的每层一列布局。
 #'   \code{"fr"} / \code{"force"} 使用 Fruchterman-Reingold 力导向布局，\code{"kk"}

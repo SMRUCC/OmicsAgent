@@ -225,7 +225,7 @@ run_node_knockout <- function(dbn_result, nodes = NULL, top_n = NULL) {
 #'     \item \code{"inhibit"}: 将节点固定到其最低状态。
 #'   }
 #'
-#'   为控制运行时间，采用两阶段策略：先用廉价的结构层对所有节点做筛选，
+#'   Found控制运行时间，采用两阶段策略：先用廉价的结构层对所有节点做筛选，
 #'   仅将连接度最高的 \code{top_n} 个候选送入基于采样的推断层。叶节点由于没有
 #'   下游效应而被跳过。
 #'

@@ -50,13 +50,13 @@ rarefy_matrix <- function(expr_matrix, depth = NULL, n_iter = 10, seed = 42) {
   if (is.null(depth)) {
     depth <- min(colSums(expr_matrix, na.rm = TRUE))
   }
-  cat(sprintf("[rarefy] 稀疏化深度: %d\n", depth))
+  cat(sprintf("[rarefy] Rarefaction depth: %d\n", depth))
 
   # 过滤深度不足的样本
   sample_depths <- colSums(expr_matrix, na.rm = TRUE)
   keep_samples <- names(sample_depths)[sample_depths >= depth]
   if (length(keep_samples) < ncol(expr_matrix)) {
-    cat(sprintf("[rarefy] 移除 %d 个深度不足的样本\n",
+    cat(sprintf("[rarefy] Removed %d samples with insufficient depth\n",
                 ncol(expr_matrix) - length(keep_samples)))
   }
   expr_matrix <- expr_matrix[, keep_samples, drop = FALSE]
@@ -84,12 +84,12 @@ rarefy_matrix <- function(expr_matrix, depth = NULL, n_iter = 10, seed = 42) {
 
 #' 计算覆盖率
 #'
-#' @description 计算每个样本的 Good's coverage 指数：
+#' @description Calculate Good's coverage 指数：
 #'   1 - (n_singletons / n_total)
 #'
 #' @param expr_matrix 数值矩阵（features × samples），计数数据。
 #'
-#' @return 数值向量，每个样本的 Good's coverage。
+#' @return Numeric vector, Good's coverage。
 #'
 #' @examples
 #' \dontrun{

@@ -6,10 +6,10 @@
 
 #' F 检验总体差异分析
 #'
-#' @description 对每个特征执行 F 检验（单因素方差分析），以检验各组之间的
+#' @description 对每个Feature执行 F 检验（单因素方差分析），以检验各组之间的
 #'   总体差异。返回 F 统计量、p 值与校正后的 p 值。
 #'
-#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param expr_matrix 数值矩阵（Feature x 样本）。
 #' @param sample_info 含有样本元数据的数据框。
 #' @param group_col 分组标签所在的列名。默认："sample_info"。
 #' @param exclude_groups 可选的要排除的分组字符向量。默认："QC"。
@@ -17,7 +17,7 @@
 #'
 #' @return 一个数据框，包含：
 #'   \itemize{
-#'     \item \code{feature_id}：特征 ID。
+#'     \item \code{feature_id}：Feature ID。
 #'     \item \code{F_stat}：F 统计量。
 #'     \item \code{p_value}：原始 p 值。
 #'     \item \code{p_adj}：校正后的 p 值。
@@ -47,7 +47,7 @@ run_f_test <- function(expr_matrix, sample_info, group_col = "sample_info",
 
   groups <- factor(sample_info[[group_col]])
 
-  # 对每个特征运行 F 检验
+  # 对每个Feature运行 F 检验
   n_features <- nrow(expr_matrix)
   results <- data.frame(
     feature_id = rownames(expr_matrix),

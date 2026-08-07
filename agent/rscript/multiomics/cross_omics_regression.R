@@ -1,19 +1,19 @@
 # ==============================================================================
 # OmicsFlow：跨组学线性回归
 # ==============================================================================
-# 在两个组学层的特征之间拟合单变量线性模型，其中一个层作为解释变量（x），
-# 另一个层作为响应变量（y）。支持特征级别的斜率 / p 值 / R2 表，以及带拟合
+# 在两个组学层的Feature之间拟合单变量线性模型，其中一个层作为解释变量（x），
+# 另一个层作为响应变量（y）。支持Feature级别的斜率 / p 值 / R2 表，以及带拟合
 # 线的逐对散点图。
 # ==============================================================================
 
 #' 两个组学层之间的单变量线性回归
 #'
-#' @description 对于在相同样本上共享的每一对 (x 特征, y 特征)，用 \code{lm()}
-#'   拟合 y ~ x，并记录斜率、截距、显著性与拟合优度。p 值在所有被测特征对上
+#' @description 对于在相同样本上共享的每一对 (x Feature, y Feature)，用 \code{lm()}
+#'   拟合 y ~ x，并记录斜率、截距、显著性与拟合优度。p 值在所有被测Feature对上
 #'   进行校正。这是一种直接的线性关联筛查，与别处使用的基于秩的相关互为补充。
 #'
-#' @param x_matrix 解释变量层的数值矩阵（特征 x 样本）。
-#' @param y_matrix 响应变量层的数值矩阵（特征 x 样本）。
+#' @param x_matrix 解释变量层的数值矩阵（Feature x 样本）。
+#' @param y_matrix 响应变量层的数值矩阵（Feature x 样本）。
 #' @param x_name 解释变量层的标签。默认："x"。
 #' @param y_name 响应变量层的标签。默认："y"。
 #' @param p_adjust 多重检验校正方法。默认："BH"。
@@ -24,8 +24,8 @@
 #'   \itemize{
 #'     \item \code{pairs}: 数据框，含 x_feature、y_feature、x_name、y_name、
 #'       slope、intercept、se、t_stat、p_value、padj、r_squared 与 n_samples。
-#'     \item \code{x_summary}: 每个 x 特征对应的显著 y 响应计数。
-#'     \item \code{y_summary}: 每个 y 特征对应的显著 x 预测因子计数。
+#'     \item \code{x_summary}: 每个 x Feature对应的显著 y 响应计数。
+#'     \item \code{y_summary}: 每个 y Feature对应的显著 x 预测因子计数。
 #'   }
 #'
 #' @examples
@@ -51,7 +51,7 @@ run_cross_omics_regression <- function(x_matrix, y_matrix,
   X <- x_matrix[, common, drop = FALSE]
   Y <- y_matrix[, common, drop = FALSE]
 
-  # 去除任一层中零方差的特征。
+  # 去除任一层中零方差的Feature。
   X <- drop_zero_variance(X, label = x_name, verbose = verbose)
   Y <- drop_zero_variance(Y, label = y_name, verbose = verbose)
 
@@ -60,21 +60,21 @@ run_cross_omics_regression <- function(x_matrix, y_matrix,
   }
 
   # ---------------------------------------------------------------------------
-  # 对于单变量模型 y ~ x，回归统计量可直接由 Pearson 相关系数 r 与特征矩得出：
+  # 对于单变量模型 y ~ x，回归统计量可直接由 Pearson 相关Coefficient r 与Feature矩得出：
   #   slope      = r * sd(y) / sd(x)
   #   intercept  = mean(y) - slope * mean(x)
   #   t_stat     = r * sqrt((n - 2) / (1 - r^2))
   #   p_value    = 2 * pt(-abs(t), df = n - 2)
   #   r_squared  = r^2
   #   se_slope   = slope / t_stat
-  # 这与 stats::lm(y ~ x) 完全等价，但避免了每对特征调用一次 lm() 的巨大开销，
+  # 这与 stats::lm(y ~ x) 完全等价，但避免了每对Feature调用一次 lm() 的巨大开销，
   # 从而使大规模的 x×y 筛查变得可行。
   # ---------------------------------------------------------------------------
   n <- length(common)
   df <- n - 2L
 
-  # 对每个特征在样本方向上中心化；其叉积即给出
-  # 特征间交叉乘积之和（n_features_x x n_features_y）。
+  # 对每个Feature在样本方向上中心化；其叉积即给出
+  # Feature间交叉乘积之和（n_features_x x n_features_y）。
   Xc <- X - rowMeans(X)             # features x samples
   Yc <- Y - rowMeans(Y)             # features x samples
   Sxx <- rowSums(Xc * Xc)
@@ -163,15 +163,15 @@ run_cross_omics_regression <- function(x_matrix, y_matrix,
 }
 
 
-#' 单个跨组学回归特征对的散点图
+#' 单个跨组学回归Feature对的散点图
 #'
-#' @description 绘制某一对 x-y 特征在各样本上的散点，并叠加拟合回归线及
+#' @description 绘制某一对 x-y Feature在各样本上的散点，并叠加拟合回归线及
 #'   95% 置信带。
 #'
-#' @param x_values 解释变量特征在各样本上的数值向量。
-#' @param y_values 响应变量特征在各样本上的数值向量。
-#' @param x_label x 轴标签（特征 + 层）。
-#' @param y_label y 轴标签（特征 + 层）。
+#' @param x_values 解释变量Feature在各样本上的数值向量。
+#' @param y_values 响应变量Feature在各样本上的数值向量。
+#' @param x_label x 轴标签（Feature + 层）。
+#' @param y_label y 轴标签（Feature + 层）。
 #' @param title 可选标题。
 #'
 #' @return 一个 ggplot 对象。
@@ -201,13 +201,13 @@ plot_regression_pair <- function(x_values, y_values,
 }
 
 
-#' 选取用于绘图的 Top 显著回归特征对
+#' 选取用于绘图的 Top 显著回归Feature对
 #'
-#' @description 从回归结果中提取最显著（或 R2 最高）的 x-y 特征对，
+#' @description 从回归结果中提取最显著（或 R2 最高）的 x-y Feature对，
 #'   以便生成数量可控的散点图。
 #'
 #' @param reg \code{run_cross_omics_regression()} 的结果。
-#' @param top_n 返回的特征对数量。默认：12。
+#' @param top_n 返回的Feature对数量。默认：12。
 #' @param by 排序依据："padj" 或 "r2"。默认："padj"。
 #'
 #' @return 包含 \code{reg$pairs} 中前 \code{top_n} 行的数据框。

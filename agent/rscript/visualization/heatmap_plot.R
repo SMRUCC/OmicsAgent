@@ -6,12 +6,12 @@
 
 #' 绘制带层次聚类的热图
 #'
-#' @description 创建一张达到出版质量的热图，对特征（行）做层次聚类，并对样本分组
+#' @description 创建一张达到出版质量的热图，对Feature（行）做层次聚类，并对样本分组
 #'   （列）着色。可选地显示家族分类的颜色色块。
 #'
-#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param expr_matrix 数值矩阵（Feature x 样本）。
 #' @param sample_info 含样本元数据的 data.frame。
-#' @param feature_info 可选，含特征注释的 data.frame。
+#' @param feature_info 可选，含Feature注释的 data.frame。
 #' @param group_col sample_info 中用于分组标签的列。默认："sample_info"。
 #' @param name_col feature_info 中用于显示名称的列。默认："name"。
 #' @param family_col feature_info 中用于家族分类的可选列。若提供，则以色块显示家族。
@@ -21,7 +21,7 @@
 #' @param distance_method 距离方法。默认："euclidean"。
 #' @param show_rownames 逻辑值，是否显示行名。默认：TRUE。
 #' @param show_colnames 逻辑值，是否显示列名。默认：FALSE。
-#' @param n_features 显示的最大特征数。若 nrow > n_features，则显示变异最大的特征。
+#' @param n_features 显示的最大Feature数。若 nrow > n_features，则显示变异最大的Feature。
 #'   默认：50。
 #'
 #' @return 一个 ComplexHeatmap 对象。
@@ -45,14 +45,14 @@ plot_heatmap <- function(expr_matrix, sample_info, feature_info = NULL,
   expr_matrix <- expr_matrix[, common_samples, drop = FALSE]
   sample_info <- sample_info[common_samples, , drop = FALSE]
   
-  # 必要时选取变异最大的特征
+  # 必要时选取变异最大的Feature
   if (nrow(expr_matrix) > n_features) {
     row_vars <- apply(expr_matrix, 1, stats::var, na.rm = TRUE)
     top_idx <- order(row_vars, decreasing = TRUE)[1:n_features]
     expr_matrix <- expr_matrix[top_idx, , drop = FALSE]
   }
   
-  # 若可用，则用名称替换特征 ID
+  # 若可用，则用名称替换Feature ID
   if (!is.null(feature_info) && name_col %in% colnames(feature_info)) {
     feature_names <- feature_info[match(rownames(expr_matrix),
                                         rownames(feature_info)), name_col]

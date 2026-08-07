@@ -2,7 +2,7 @@
 # OmicsFlow: Protein-Protein Interaction (PPI) Network
 # ==============================================================================
 # 蛋白质-蛋白质相互作用网络分析
-# 通过 STRING 数据库 API 查询 PPI，构建网络并分析拓扑特征
+# 通过 STRING 数据库 API 查询 PPI，构建网络并分析拓扑Feature
 # ==============================================================================
 
 #' 从 STRING 数据库查询 PPI 网络
@@ -53,19 +53,19 @@ query_string_ppi <- function(protein_ids, species = 9606,
   map_df <- tryCatch(
     utils::read.delim(text = map_data, stringsAsFactors = FALSE),
     error = function(e) {
-      cat(sprintf("[ppi] STRING ID 映射失败: %s\n", conditionMessage(e)))
+      cat(sprintf("[ppi] STRING ID mapping failed: %s\n", conditionMessage(e)))
       return(data.frame())
     }
   )
 
   if (nrow(map_df) == 0) {
-    warning("未找到匹配的 STRING ID。请检查 protein_ids 和 species。")
+    warning("No matching STRING IDs found. Check protein_ids and species.")
     return(list(edges = data.frame(), nodes = data.frame(),
                 string_ids = data.frame()))
   }
 
   string_ids <- unique(map_df$stringId)
-  cat(sprintf("[ppi] %d 蛋白映射到 %d STRING ID\n",
+  cat(sprintf("[ppi] %d proteins mapped to %d STRING IDs\n",
               length(protein_ids), length(string_ids)))
 
   # Step 2: 查询 PPI 边
@@ -83,13 +83,13 @@ query_string_ppi <- function(protein_ids, species = 9606,
   edges <- tryCatch(
     utils::read.delim(text = net_data, stringsAsFactors = FALSE),
     error = function(e) {
-      cat(sprintf("[ppi] PPI 网络查询失败: %s\n", conditionMessage(e)))
+      cat(sprintf("[ppi] PPI network query failed: %s\n", conditionMessage(e)))
       return(data.frame())
     }
   )
 
   if (nrow(edges) == 0) {
-    warning("未找到 PPI 边。可能 score_threshold 过高或物种数据不足。")
+    warning("No PPI edges found. Score threshold may be too high or species data insufficient.")
     return(list(edges = data.frame(), nodes = data.frame(),
                 string_ids = map_df))
   }
@@ -109,7 +109,7 @@ query_string_ppi <- function(protein_ids, species = 9606,
     stringsAsFactors = FALSE
   )
 
-  cat(sprintf("[ppi] %d 节点, %d 边\n", nrow(nodes), nrow(edges)))
+  cat(sprintf("[ppi] %d nodes, %d edges\n", nrow(nodes), nrow(edges)))
 
   return(list(
     edges = edges,
@@ -132,7 +132,7 @@ query_string_ppi <- function(protein_ids, species = 9606,
 #' @param expr_matrix 数值矩阵（features × samples），行为蛋白质。
 #' @param protein_ids 需要分析的蛋白质 ID 向量。默认使用矩阵所有行。
 #' @param cor_method 相关方法。默认 "pearson"。
-#' @param cor_threshold 相关系数阈值。默认 0.7。
+#' @param cor_threshold 相关Coefficient阈值。默认 0.7。
 #' @param p_adjust p 值校正方法。默认 "BH"。
 #' @param p_threshold p 值阈值。默认 0.01。
 #'
@@ -140,7 +140,7 @@ query_string_ppi <- function(protein_ids, species = 9606,
 #'   \itemize{
 #'     \item \code{edges}: 边表。
 #'     \item \code{nodes}: 节点表。
-#'     \item \code{cor_matrix}: 相关系数矩阵。
+#'     \item \code{cor_matrix}: 相关Coefficient矩阵。
 #'   }
 #'
 #' @examples
@@ -162,7 +162,7 @@ build_local_ppi <- function(expr_matrix, protein_ids = NULL,
   }
 
   n_proteins <- nrow(expr_matrix)
-  if (n_proteins < 2) stop("至少需要 2 个蛋白质。")
+  if (n_proteins < 2) stop("At least 2 proteins are required.")
 
   # 计算相关矩阵
   cor_mat <- stats::cor(t(expr_matrix), method = cor_method,
@@ -210,7 +210,7 @@ build_local_ppi <- function(expr_matrix, protein_ids = NULL,
     stringsAsFactors = FALSE
   )
 
-  cat(sprintf("[ppi-local] %d 蛋白, %d 边 (|cor| >= %.2f, p_adj < %.3f)\n",
+  cat(sprintf("[ppi-local] %d proteins, %d edges (|cor| >= %.2f, p_adj < %.3f)\n",
               n_proteins, nrow(edges), cor_threshold, p_threshold))
 
   return(list(
@@ -252,7 +252,7 @@ plot_ppi_network <- function(ppi_result, layout = "fr",
   }
 
   edges <- ppi_result$edges
-  if (nrow(edges) == 0) stop("没有 PPI 边可绘制。")
+  if (nrow(edges) == 0) stop("No PPI edges to plot.")
 
   # 确定边权重列
   weight_col <- NULL
@@ -326,7 +326,7 @@ plot_ppi_network <- function(ppi_result, layout = "fr",
 
 #' 计算 PPI 网络拓扑指标
 #'
-#' @description 计算 PPI 网络的拓扑特征，包括度分布、聚类系数、
+#' @description 计算 PPI 网络的拓扑Feature，包括度分布、聚类Coefficient、
 #'   介数中心性、紧密中心性等。
 #'
 #' @param ppi_result \code{query_string_ppi()} 或 \code{build_local_ppi()} 的返回结果。
@@ -350,7 +350,7 @@ calc_ppi_topology <- function(ppi_result) {
   }
 
   edges <- ppi_result$edges
-  if (nrow(edges) == 0) stop("没有 PPI 边可分析。")
+  if (nrow(edges) == 0) stop("No PPI edges to analyze.")
 
   g <- igraph::graph_from_data_frame(edges, directed = FALSE)
 
@@ -382,10 +382,10 @@ calc_ppi_topology <- function(ppi_result) {
   n_hub <- max(1, ceiling(nrow(node_metrics) * 0.1))
   hub_proteins <- node_metrics[1:n_hub, , drop = FALSE]
 
-  cat(sprintf("[ppi-topo] 节点: %d, 边: %d, 密度: %.4f, 组件: %d\n",
+  cat(sprintf("[ppi-topo] Nodes: %d, edges: %d, density: %.4f, components: %d\n",
               global_metrics$n_nodes, global_metrics$n_edges,
               global_metrics$density, global_metrics$n_components))
-  cat(sprintf("[ppi-topo] Hub 蛋白 (前 %d): %s\n",
+  cat(sprintf("[ppi-topo] Hub proteins (top %d): %s\n",
               n_hub, paste(hub_proteins$protein, collapse = ", ")))
 
   return(list(

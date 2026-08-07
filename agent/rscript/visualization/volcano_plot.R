@@ -1,26 +1,26 @@
 # ==============================================================================
 # OmicsFlow：火山图
 # ==============================================================================
-# 可视化差异特征
+# 可视化差异Feature
 # ==============================================================================
 
 #' 绘制火山图
 #'
 #' @description 创建一张达到出版质量的火山图，展示 logFC 对 -log10(p-value) 的关系，
-#'   并标注 Top N 个差异特征。
+#'   并标注 Top N 个差异Feature。
 #'
 #' @param de_results 来自 \code{run_limma()}$results 的结果，或含以下列的数据框：
 #'   feature_id、logFC、p_value 或 p_adj。
 #' @param p_col p 值列名。默认："p_adj"。
 #' @param logfc_col logFC 列名。默认："logFC"。
-#' @param feature_col 特征 ID 列名。默认："feature_id"。
-#' @param name_col 可选的特征名称列。默认：NULL。
+#' @param feature_col Feature ID 列名。默认："feature_id"。
+#' @param name_col 可选的Feature名称列。默认：NULL。
 #' @param p_threshold p 值阈值。默认：0.05。
 #' @param logfc_threshold 绝对 logFC 阈值。默认：1。
-#' @param top_n 标注的 Top 特征数。默认：5。
-#' @param color_up 上调特征的颜色。默认："#e74c3c"。
-#' @param color_down 下调特征的颜色。默认："#2ecc71"。
-#' @param color_ns 不显著特征的颜色。默认："grey70"。
+#' @param top_n 标注的 Top Feature数。默认：5。
+#' @param color_up 上调Feature的颜色。默认："#e74c3c"。
+#' @param color_down 下调Feature的颜色。默认："#2ecc71"。
+#' @param color_ns 不显著Feature的颜色。默认："grey70"。
 #'
 #' @return 一个 ggplot 对象。
 #'
@@ -73,7 +73,7 @@ plot_volcano <- function(de_results, p_col = "p_adj", logfc_col = "logFC",
     )
   )
   
-  # 选取用于标注的 Top 特征
+  # 选取用于标注的 Top Feature
   # 按显著性与效应量的组合排序
   plot_data$score <- abs(plot_data$logFC) * (-log10(plot_data$p_value))
   top_features <- plot_data[order(plot_data$score, decreasing = TRUE), ]

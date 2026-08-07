@@ -1,26 +1,26 @@
 # ==============================================================================
-# OmicsFlow：跨组学特征相关性分析
+# OmicsFlow：跨组学Feature相关性分析
 # ==============================================================================
-# 两个组学层之间特征级别的相关性（向量化计算），用于
+# 两个组学层之间Feature级别的相关性（向量化计算），用于
 # 微生物-代谢物、以及微生物-挥发物驱动的关联分析。
 # ==============================================================================
 
-#' 两个矩阵之间的跨组学特征相关性
+#' 两个矩阵之间的跨组学Feature相关性
 #'
-#' @description 计算在相同样本上测得的、两个组学层各特征之间的完整相关矩阵。
+#' @description 计算在相同样本上测得的、两个组学层各Feature之间的完整相关矩阵。
 #'   计算全程向量化（标准化矩阵叉积），因此诸如 2000 x 1000 这样的大规模
-#'   特征块可在数秒内完成，而无需运行数百万次 \code{cor.test()} 调用。
-#'   p 值由 t 分布解析得出，并针对多重检验进行校正；只有通过阈值的特征对
+#'   Feature块可在数秒内完成，而无需运行数百万次 \code{cor.test()} 调用。
+#'   p 值由 t 分布解析得出，并针对多重检验进行校正；只有通过阈值的Feature对
 #'   才会以稀疏 \code{pairs} 表的形式返回。
 #'
-#' @param mat_x 第一层的数值矩阵（特征 x 样本）。
-#' @param mat_y 第二层的数值矩阵（特征 x 样本）。
+#' @param mat_x 第一层的数值矩阵（Feature x 样本）。
+#' @param mat_y 第二层的数值矩阵（Feature x 样本）。
 #' @param method 相关方法，"pearson" 或 "spearman"。spearman 为对各行先排序
 #'   再套用同样的向量化路径得到。默认："pearson"。
 #' @param p_adjust 传给 \code{p.adjust()} 的多重检验校正方法。默认："BH"。
-#' @param r_threshold 报告某对特征所需的最小绝对相关系数。默认：0.6。
-#' @param p_threshold 报告某对特征所需的最大校正后 p 值。默认：0.05。
-#' @param max_pairs 稀疏表中保留的最大特征对数；超出上限时保留关联最强者。
+#' @param r_threshold 报告某对Feature所需的最小绝对相关Coefficient。默认：0.6。
+#' @param p_threshold 报告某对Feature所需的最大校正后 p 值。默认：0.05。
+#' @param max_pairs 稀疏表中保留的最大Feature对数；超出上限时保留关联最强者。
 #'   默认：100000。
 #' @param name_x 存储在 pairs 表中的第一层标签。默认："x"。
 #' @param name_y 存储在 pairs 表中的第二层标签。默认："y"。
@@ -31,7 +31,7 @@
 #'     \item \code{cor_matrix}: 相关矩阵（features_x x features_y）。
 #'     \item \code{p_matrix}: 原始 p 值矩阵。
 #'     \item \code{padj_matrix}: 校正后的 p 值矩阵。
-#'     \item \code{pairs}: 显著特征对的数据框，列包括
+#'     \item \code{pairs}: 显著Feature对的数据框，列包括
 #'       feature_x、feature_y、omics_x、omics_y、r、p、padj。
 #'     \item \code{params}: 所使用设置的列表。
 #'   }
@@ -90,7 +90,7 @@ run_cross_correlation <- function(mat_x, mat_y,
                 name_x, nrow(mat_x), name_y, nrow(mat_y), n, method))
   }
 
-  # 按行标准化 -> 相关系数即为简单的叉积 ---------
+  # 按行标准化 -> 相关Coefficient即为简单的叉积 ---------
   zx <- .row_standardise(mat_x)
   zy <- .row_standardise(mat_y)
 
@@ -110,7 +110,7 @@ run_cross_correlation <- function(mat_x, mat_y,
   padj_matrix <- matrix(padj_vec, nrow = nrow(p_matrix),
                         dimnames = dimnames(p_matrix))
 
-  # 显著特征对的稀疏表 -----------------------------------------
+  # 显著Feature对的稀疏表 -----------------------------------------
   sel <- which(abs(cor_matrix) >= r_threshold & padj_matrix <= p_threshold,
                arr.ind = TRUE)
 
@@ -167,7 +167,7 @@ run_cross_correlation <- function(mat_x, mat_y,
 
 #' 按行标准化辅助函数
 #'
-#' @param mat 数值矩阵（特征 x 样本）。
+#' @param mat 数值矩阵（Feature x 样本）。
 #'
 #' @return 每一行均中心化并缩放为单位标准差的矩阵。
 #'
@@ -190,9 +190,9 @@ run_cross_correlation <- function(mat_x, mat_y,
 #' @param layer_pairs 长度为 2 的字符向量组成的列表，用于指定要相关的层，
 #'   例如 \code{list(c("microbiome", "metabolome"))}。
 #' @param method 相关方法。默认："spearman"。
-#' @param r_threshold 最小绝对相关系数。默认：0.6。
+#' @param r_threshold 最小绝对相关Coefficient。默认：0.6。
 #' @param p_threshold 最大校正后 p 值。默认：0.05。
-#' @param max_pairs 每次比较保留的最大特征对数。默认：100000。
+#' @param max_pairs 每次比较保留的最大Feature对数。默认：100000。
 #' @param verbose 逻辑值，是否打印进度。默认：TRUE。
 #'
 #' @return \code{run_cross_correlation()} 结果的有名列表，名称为
@@ -267,10 +267,10 @@ run_all_pairwise_correlation <- function(mo, layer_pairs,
 }
 
 
-#' 对每个特征汇总跨组学相关性结果
+#' 对每个Feature汇总跨组学相关性结果
 #'
-#' @description 将稀疏特征对表聚合为每个特征的汇总（显著伙伴数、平均与最大
-#'   绝对相关系数），可用于筛选驱动类群或核心枢纽代谢物。
+#' @description 将稀疏Feature对表聚合为每个Feature的汇总（显著伙伴数、平均与最大
+#'   绝对相关Coefficient），可用于筛选驱动类群或Core枢纽代谢物。
 #'
 #' @param pairs 数据框，格式同 \code{run_cross_correlation()} 返回的
 #'   \code{pairs} 元素。

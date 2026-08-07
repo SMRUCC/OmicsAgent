@@ -8,16 +8,16 @@
 #'
 #' @description 对表达矩阵执行主成分分析（PCA）。返回得分、载荷与方差解释率。
 #'
-#' @param expr_matrix 数值矩阵（特征 x 样本）。
-#' @param scale 逻辑值，是否对特征进行标度变换。默认：TRUE。
-#' @param center 逻辑值，是否对特征进行中心化。默认：TRUE。
+#' @param expr_matrix 数值矩阵（Feature x 样本）。
+#' @param scale 逻辑值，是否对Feature进行标度变换。默认：TRUE。
+#' @param center 逻辑值，是否对Feature进行中心化。默认：TRUE。
 #' @param ncomp 要计算的组分数量。默认：min(样本数 - 1, 10)。
 #'
 #' @return 一个列表，包含：
 #'   \itemize{
 #'     \item \code{pca_result}：prcomp 结果对象。
 #'     \item \code{scores}：PC 得分数据框（样本 x 组分）。
-#'     \item \code{loadings}：PC 载荷数据框（特征 x 组分）。
+#'     \item \code{loadings}：PC Loading数据框（Feature x 组分）。
 #'     \item \code{var_explained}：方差解释率（%）的数值向量。
 #'     \item \code{ncomp}：计算得到的组分数。
 #'   }
@@ -39,7 +39,7 @@ run_pca <- function(expr_matrix, scale = TRUE, center = TRUE,
   # 转置以进行 PCA（样本作为行）
   data_t <- t(expr_matrix)
 
-  # 移除零方差特征
+  # 移除零方差Feature
   feature_var <- apply(data_t, 2, stats::var, na.rm = TRUE)
   data_t <- data_t[, feature_var > 0, drop = FALSE]
 
@@ -75,9 +75,9 @@ run_pca <- function(expr_matrix, scale = TRUE, center = TRUE,
 }
 
 
-#' 绘制 PCA 得分图
+#' 绘制 PCA Score Plot
 #'
-#' @description 使用 ggplot2 创建发表级质量的 PCA 得分图。
+#' @description 使用 ggplot2 创建发表级质量的 PCA Score Plot。
 #'
 #' @param pca_result 来自 \code{run_pca()} 的结果。
 #' @param sample_info 含有样本元数据的数据框。
@@ -158,7 +158,7 @@ plot_pca_scores <- function(pca_result, sample_info,
     ggplot2::scale_color_manual(values = colors, name = color_col) +
     ggplot2::scale_shape_manual(values = shapes, name = ifelse(is.null(shape_col), color_col, shape_col)) +
     ggplot2::labs(
-      title = "PCA 得分图",
+      title = "PCA Score Plot",
       x = paste0("PC", pc_x, " (", round(var_explained[pc_x], 1), "%)"),
       y = paste0("PC", pc_y, " (", round(var_explained[pc_y], 1), "%)")
     ) +
@@ -215,14 +215,14 @@ plot_pca_scores <- function(pca_result, sample_info,
 }
 
 
-#' 绘制 PCA 载荷图
+#' 绘制 PCA Loading Plot
 #'
-#' @description 创建展示特征贡献的 PCA 载荷图。
+#' @description 创建展示Feature贡献的 PCA Loading Plot。
 #'
 #' @param pca_result 来自 \code{run_pca()} 的结果。
 #' @param pc_x 整数，x 轴使用的 PC。默认：1。
 #' @param pc_y 整数，y 轴使用的 PC。默认：2。
-#' @param top_n 整数，标注的前 N 个特征数量。默认：10。
+#' @param top_n 整数，标注的前 N 个Feature数量。默认：10。
 #'
 #' @return 一个 ggplot 对象。
 #'
@@ -245,7 +245,7 @@ plot_pca_loadings <- function(pca_result, pc_x = 1, pc_y = 2, top_n = 10) {
   # 计算到原点的距离
   plot_data$dist <- sqrt(plot_data$loading_x^2 + plot_data$loading_y^2)
 
-  # 选取前 N 个特征
+  # 选取前 N 个Feature
   top_features <- plot_data[order(plot_data$dist, decreasing = TRUE), ][1:min(top_n, nrow(plot_data)), ]
 
   p <- ggplot2::ggplot(plot_data, ggplot2::aes(x = loading_x, y = loading_y)) +
@@ -257,9 +257,9 @@ plot_pca_loadings <- function(pca_result, pc_x = 1, pc_y = 2, top_n = 10) {
     ggplot2::geom_hline(yintercept = 0, linetype = "dotted", color = "grey50") +
     ggplot2::geom_vline(xintercept = 0, linetype = "dotted", color = "grey50") +
     ggplot2::labs(
-      title = "PCA 载荷图",
-      x = paste0("PC", pc_x, " 载荷"),
-      y = paste0("PC", pc_y, " 载荷")
+      title = "PCA Loading Plot",
+      x = paste0("PC", pc_x, " Loading"),
+      y = paste0("PC", pc_y, " Loading")
     ) +
     ggplot2::theme_bw() +
     ggplot2::theme(

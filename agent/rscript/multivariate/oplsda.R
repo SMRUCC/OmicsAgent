@@ -9,7 +9,7 @@
 #' @description 对表达矩阵执行正交偏最小二乘判别分析（OPLS-DA）。OPLS-DA 将
 #'   预测性变异与正交变异分离，以提升可解释性。
 #'
-#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param expr_matrix 数值矩阵（Feature x 样本）。
 #' @param sample_info 含有样本元数据的数据框。
 #' @param group_col 分组标签所在的列名。默认："sample_info"。
 #' @param ncomp_pred 预测性组分数。默认：1。
@@ -19,9 +19,9 @@
 #' @return 一个列表，包含：
 #'   \itemize{
 #'     \item \code{scores}：含预测性与正交得分的数据框。
-#'     \item \code{loadings}：OPLS-DA 载荷数据框（特征 x 组分），首列为
+#'     \item \code{loadings}：OPLS-DA Loading数据框（Feature x 组分），首列为
 #'       \code{feature_id}。
-#'     \item \code{vip}：VIP 得分数据框。
+#'     \item \code{vip}：VIP Score数据框。
 #'     \item \code{model}：OPLS-DA 模型对象。
 #'   }
 #'
@@ -75,7 +75,7 @@ run_oplsda <- function(expr_matrix, sample_info, group_col = "sample_info",
     scores <- as.data.frame(model$variates$X)
     colnames(scores) <- c(paste0("t", 1:ncomp_pred), paste0("to", 1:ncomp_orth))
 
-    # 载荷
+    # Loading
     loadings_mat <- as.matrix(model$loadings$X)
     colnames(loadings_mat) <- c(paste0("p", 1:ncomp_pred), paste0("po", 1:ncomp_orth))
 
@@ -86,7 +86,7 @@ run_oplsda <- function(expr_matrix, sample_info, group_col = "sample_info",
     }
   } else {
     # 回退方案：手动 OPLS 实现
-    warning("'metaboanalyst' 与 'mixOmics' 均不可用，改用简化版 OPLS-DA。")
+    warning("Neither 'metaboanalyst' nor 'mixOmics' available, using simplified OPLS-DA.")
     result <- .oplsda_base(X, groups, ncomp_pred = ncomp_pred, ncomp_orth = ncomp_orth)
     model <- result$model
     scores <- as.data.frame(result$scores)
@@ -111,7 +111,7 @@ run_oplsda <- function(expr_matrix, sample_info, group_col = "sample_info",
   rownames(vip_df) <- vip_df$feature_id
   vip_df$feature_id <- NULL
 
-  # 准备载荷数据框（特征 x 组分），首列为 feature_id
+  # 准备载荷数据框（Feature x 组分），首列为 feature_id
   loadings_df <- NULL
   if (!is.null(loadings_mat) && nrow(loadings_mat) > 0) {
     loadings_df <- as.data.frame(loadings_mat)
@@ -205,9 +205,9 @@ run_oplsda <- function(expr_matrix, sample_info, group_col = "sample_info",
 }
 
 
-#' 绘制 OPLS-DA 得分图
+#' 绘制 OPLS-DA Score Plot
 #'
-#' @description 创建发表级质量的 OPLS-DA 得分图，展示预测性组分与正交组分的对比。
+#' @description 创建发表级质量的 OPLS-DA Score Plot，展示预测性组分与正交组分的对比。
 #'
 #' @param oplsda_result 来自 \code{run_oplsda()} 的结果。
 #' @param color_col 用于颜色分组的列名（未使用，颜色基于分组）。
@@ -248,9 +248,9 @@ plot_oplsda_scores <- function(oplsda_result, color_col = NULL) {
     ggplot2::geom_point(ggplot2::aes(color = group), size = 3, alpha = 0.85) +
     ggplot2::scale_color_manual(values = colors) +
     ggplot2::labs(
-      title = "OPLS-DA 得分图",
-      x = "预测性组分 (t1)",
-      y = "正交组分 (to1)"
+      title = "OPLS-DA Score Plot",
+      x = "Predictive Component (t1)",
+      y = "Orthogonal Component (to1)"
     ) +
     ggplot2::theme_bw() +
     ggplot2::theme(

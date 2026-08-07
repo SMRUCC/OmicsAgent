@@ -9,7 +9,7 @@
 #' @description 对表达矩阵执行偏最小二乘判别分析（PLS-DA）。PLS-DA 是一种
 #'   有监督方法，可最大化预定义分组之间的分离度。
 #'
-#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param expr_matrix 数值矩阵（Feature x 样本）。
 #' @param sample_info 含有样本元数据的数据框。
 #' @param group_col 分组标签所在的列名。默认："sample_info"。
 #' @param ncomp 组分数量。默认：2。
@@ -18,8 +18,8 @@
 #' @return 一个列表，包含：
 #'   \itemize{
 #'     \item \code{scores}：PLS-DA 得分数据框。
-#'     \item \code{loadings}：PLS-DA 载荷数据框。
-#'     \item \code{vip}：VIP 得分数据框。
+#'     \item \code{loadings}：PLS-DA Loading数据框。
+#'     \item \code{vip}：VIP Score数据框。
 #'     \item \code{model}：PLS-DA 模型对象。
 #'     \item \code{groups}：分组水平。
 #'   }
@@ -65,7 +65,7 @@ run_plsda <- function(expr_matrix, sample_info, group_col = "sample_info",
 
   } else {
     # 回退方案：使用基础 PLS 实现
-    warning("未安装 'mixOmics' 包，改用基础 PLS 实现。")
+    warning("Package 'mixOmics' not installed, using basic PLS implementation.")
     result <- .plsda_base(X, groups, ncomp = ncomp)
     model <- result$model
     scores <- as.data.frame(result$scores)
@@ -107,7 +107,7 @@ run_plsda <- function(expr_matrix, sample_info, group_col = "sample_info",
 }
 
 
-#' 计算 VIP 得分（内部函数）
+#' 计算 VIP Score（内部函数）
 #'
 #' @keywords internal
 #' @noRd
@@ -196,9 +196,9 @@ run_plsda <- function(expr_matrix, sample_info, group_col = "sample_info",
 }
 
 
-#' 绘制 PLS-DA 得分图
+#' 绘制 PLS-DA Score Plot
 #'
-#' @description 创建发表级质量的 PLS-DA 得分图。
+#' @description 创建发表级质量的 PLS-DA Score Plot。
 #'
 #' @param plsda_result 来自 \code{run_plsda()} 的结果。
 #' @param sample_info 样本元数据数据框。
@@ -243,9 +243,9 @@ plot_plsda_scores <- function(plsda_result, sample_info,
     ggplot2::geom_point(ggplot2::aes(color = group), size = 3, alpha = 0.85) +
     ggplot2::scale_color_manual(values = colors) +
     ggplot2::labs(
-      title = "PLS-DA 得分图",
-      x = paste0("组分 ", comp_x),
-      y = paste0("组分 ", comp_y)
+      title = "PLS-DA Score Plot",
+      x = paste0("Component ", comp_x),
+      y = paste0("Component ", comp_y)
     ) +
     ggplot2::theme_bw() +
     ggplot2::theme(
@@ -292,12 +292,12 @@ plot_plsda_scores <- function(plsda_result, sample_info,
 }
 
 
-#' 绘制 VIP 得分图
+#' 绘制 VIP Score图
 #'
-#' @description 创建 PLS-DA 前 N 个 VIP 得分的条形图。
+#' @description 创建 PLS-DA 前 N 个 VIP Score的条形图。
 #'
 #' @param plsda_result 来自 \code{run_plsda()} 的结果。
-#' @param top_n 展示的前 N 个特征数量。默认：20。
+#' @param top_n 展示的前 N 个Feature数量。默认：20。
 #' @param threshold VIP 阈值线。默认：1.0。
 #'
 #' @return 一个 ggplot 对象。
@@ -322,9 +322,9 @@ plot_vip <- function(plsda_result, top_n = 20, threshold = 1.0) {
                         linetype = "dashed", linewidth = 0.8) +
     ggplot2::coord_flip() +
     ggplot2::labs(
-      title = "VIP 得分（前 N 个特征）",
-      x = "特征",
-      y = "VIP 得分"
+      title = "VIP Scores (Top Features)",
+      x = "Feature",
+      y = "VIP Score"
     ) +
     ggplot2::theme_bw() +
     ggplot2::theme(

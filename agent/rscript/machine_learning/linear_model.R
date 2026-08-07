@@ -9,26 +9,26 @@
 #' @description 构建用于样本分组预测的线性回归模型。二分类时使用逻辑回归，
 #'   多分类时使用多项逻辑回归。
 #'
-#'   此外，对每个比较（对照组编码为 a=0，其余各组编码为 b=1）执行逐特征的
+#'   此外，对每个比较（对照组编码为 a=0，其余各组编码为 b=1）执行逐Feature的
 #'   单变量普通最小二乘（OLS）回归。响应变量 y 为数值型分组编码，x 为
-#'   特征丰度。完整的统计量（斜率、截距、R2、调整后 R2、p 值、线性方程字符串、
+#'   Feature丰度。完整的统计量（斜率、截距、R2、调整后 R2、p 值、线性方程字符串、
 #'   比较标签）在 \code{coefficients} 表中返回。
 #'
-#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param expr_matrix 数值矩阵（Feature x 样本）。
 #' @param sample_info 含有样本元数据的数据框。
 #' @param group_col 分组标签所在的列名。默认："sample_info"。
 #' @param exclude_groups 要排除的可选分组。默认："QC"。
 #' @param control_group 字符型，参考分组。该组样本在每个线性回归比较中编码为
 #'   a=0。默认：NULL（使用第一个因子水平）。
-#' @param top_features 可选的特征字符向量。若为 NULL，则使用全部特征。默认：NULL。
+#' @param top_features 可选的Feature字符向量。若为 NULL，则使用全部Feature。默认：NULL。
 #' @param cv_folds 交叉验证折数。默认：5。
 #' @param seed 随机种子。默认：42。
 #'
 #' @return 一个列表，包含：
 #'   \itemize{
 #'     \item \code{model}：拟合的分类模型。
-#'     \item \code{coefficients}：逐特征单变量线性回归结果（数据框）。列：
-#'       \code{feature_id} 特征名；
+#'     \item \code{coefficients}：逐Feature单变量线性回归结果（数据框）。列：
+#'       \code{feature_id} Feature名；
 #'       \code{comparison} 分组比较标签，例如
 #'         "Standard (control)(a=0) vs Clostridium difficile infection(b=1)"；
 #'       \code{slope} 回归斜率（y = a*x + b 中的 a）；
@@ -39,7 +39,7 @@
 #'       \code{p_adj} 每个比较内的 BH 校正 p 值；
 #'       \code{n} 比较中使用的样本数；
 #'       \code{equation} 线性方程字符串，例如 "y = 0.4275*x + 0.5388"。
-#'     \item \code{classification_coefficients}：分类模型的回归系数
+#'     \item \code{classification_coefficients}：分类模型的回归Coefficient
 #'       （列：group、feature、coefficient）。
 #'     \item \code{accuracy}：分类准确率。
 #'     \item \code{predictions}：预测标签。
@@ -79,13 +79,13 @@ run_linear_model <- function(expr_matrix, sample_info,
 
   X <- t(as.matrix(expr_matrix))
 
-  # 若指定则筛选前 N 个特征
+  # 若指定则筛选前 N 个Feature
   if (!is.null(top_features)) {
     top_features <- intersect(top_features, colnames(X))
     X <- X[, top_features, drop = FALSE]
   }
 
-  # 在 make.names 之前保留原始特征名（以便输出时还原）
+  # 在 make.names 之前保留原始Feature名（以便输出时还原）
   orig_feat_names <- colnames(X)
 
   # 构建数据框
@@ -123,7 +123,7 @@ run_linear_model <- function(expr_matrix, sample_info,
         predictions <- stats::predict(model, X)$class
         predicted_class <- factor(predictions, levels = levels(groups))
       } else {
-        stop("多分类需要 'nnet' 或 'MASS' 包。")
+        stop("Multi-class classification requires 'nnet' or 'MASS' package.")
       }
     }
   }
@@ -132,7 +132,7 @@ run_linear_model <- function(expr_matrix, sample_info,
   accuracy <- mean(predicted_class == groups)
   conf_mat <- as.matrix(table(Predicted = predicted_class, Actual = groups))
 
-  # 分类系数（保留以兼容旧版本）
+  # 分类Coefficient（保留以兼容旧版本）
   class_coefs <- stats::coef(model)
   if (is.list(class_coefs)) {
     class_coef_df <- do.call(rbind, lapply(names(class_coefs), function(n) {
@@ -150,7 +150,7 @@ run_linear_model <- function(expr_matrix, sample_info,
                    stringsAsFactors = FALSE)
       }))
     } else {
-      # 行表示特征（如 LDA 缩放值），列表示分组水平
+      # 行表示Feature（如 LDA 缩放值），列表示分组水平
       class_coef_df <- do.call(rbind, lapply(colnames(class_coefs), function(g) {
         data.frame(group = g, feature = rownames(class_coefs),
                    coefficient = as.numeric(class_coefs[, g]),
@@ -169,9 +169,9 @@ run_linear_model <- function(expr_matrix, sample_info,
   }
 
   # ============================================================================
-  # 逐特征单变量线性回归：
+  # 逐Feature单变量线性回归：
   #   y = 0/1 分组编码（对照组 a=0，其余各组 b=1）
-  #   x = 单个特征丰度
+  #   x = 单个Feature丰度
   #   对每个比较拟合 y ~ x，并导出 斜率/截距/R2/调整后R2/p值
   # ============================================================================
   ref_group <- levels(groups)[1]
@@ -185,8 +185,8 @@ run_linear_model <- function(expr_matrix, sample_info,
     y <- ifelse(as.character(groups[idx]) == cg, 1, 0)
     n <- length(y)
     if (n < 3 || length(unique(y)) < 2) {
-      warning("跳过比较 '", ref_group, "' vs '", cg,
-              "'：用于线性回归的样本不足。")
+      warning("Skipping comparison '", ref_group, "' vs '", cg,
+              "': insufficient samples for linear regression.")
       next
     }
     comparison_label <- paste0(ref_group, "(a=0) vs ", cg, "(b=1)")
@@ -202,8 +202,8 @@ run_linear_model <- function(expr_matrix, sample_info,
 
       fit <- tryCatch(stats::lm(y ~ x), error = function(e) NULL)
       if (is.null(fit)) {
-        warning("特征 '", feat_id, "' 在比较 '", comparison_label,
-                "' 中的线性回归失败。")
+        warning("Feature '", feat_id, "' in comparison '", comparison_label,
+                "' failed in linear regression.")
         return(data.frame(
           feature_id = feat_id, comparison = comparison_label,
           slope = NA_real_, intercept = NA_real_,

@@ -2,7 +2,7 @@
 # OmicsFlow：面向多组学时间序列数据的动态贝叶斯网络
 # ==============================================================================
 # 使用 bnlearn 构建带时间滞后的（动态）贝叶斯网络。与静态贝叶斯网络不同，
-# DBN 将每个特征展开为两个时间切片（t0 与 t1），并通过黑名单约束结构学习，
+# DBN 将每个Feature展开为两个时间切片（t0 与 t1），并通过黑名单约束结构学习，
 # 使所有学习到的弧均从 t0 指向 t1，即编码时间先后关系。
 #
 # 典型流程：
@@ -23,9 +23,9 @@
 .dbn_suffix <- list(t0 = "_t0", t1 = "_t1")
 
 
-#' 清洗特征名称以生成合法且唯一的 bnlearn 节点标签
+#' 清洗Feature名称以生成合法且唯一的 bnlearn 节点标签
 #'
-#' @param x 原始特征名称的字符向量。
+#' @param x 原始Feature名称的字符向量。
 #'
 #' @return 语法合法且唯一的名称字符向量。
 #'
@@ -41,10 +41,10 @@
 }
 
 
-#' 选择矩阵中变异最大的特征
+#' 选择矩阵中变异最大的Feature
 #'
-#' @param mat 数值矩阵（特征 x 样本）。
-#' @param max_nodes 保留的最大特征数。
+#' @param mat 数值矩阵（Feature x 样本）。
+#' @param max_nodes 保留的最大Feature数。
 #'
 #' @return 最多包含 \code{max_nodes} 行的一个子集矩阵。
 #'
@@ -68,7 +68,7 @@
 #'   的重复样本取均值，将其合并。这将为每个 (序列, 时间点) 生成一条干净的观测，
 #'   是构建时间转移对的先决条件。
 #'
-#' @param mat 数值矩阵（特征 x 样本）。
+#' @param mat 数值矩阵（Feature x 样本）。
 #' @param sample_info 样本元数据 data.frame，行名为样本 ID。
 #' @param time_col 数值时间列的名称。默认："day"。
 #' @param group_cols 定义独立时间序列的列字符向量。重复样本仅在同一组合内求均值。
@@ -76,7 +76,7 @@
 #'
 #' @return 一个列表：
 #'   \itemize{
-#'     \item \code{matrix}: 聚合后的矩阵（特征 x 聚合列）。
+#'     \item \code{matrix}: 聚合后的矩阵（Feature x 聚合列）。
 #'     \item \code{meta}: 每个聚合列一行（\code{column}、\code{series}、
 #'       \code{time}、\code{n_replicates}）的数据框。
 #'   }
@@ -160,7 +160,7 @@ aggregate_time_series <- function(mat, sample_info, time_col = "day",
 
 #' 由聚合后的时间序列构建时间转移对
 #'
-#' @description 对每个独立序列，将相邻时间点配对为 (t, t + lag) 观测。每个特征
+#' @description 对每个独立序列，将相邻时间点配对为 (t, t + lag) 观测。每个Feature
 #'   贡献两列：\code{<feature>_t0}（较早切片）与 \code{<feature>_t1}（较晚切片）。
 #'   跨不同序列绝不配对，以避免虚假的时间边。
 #'
@@ -170,8 +170,8 @@ aggregate_time_series <- function(mat, sample_info, time_col = "day",
 #'
 #' @return 一个列表：
 #'   \itemize{
-#'     \item \code{data}: 转移对的数据框（行）x 2 * 特征数。
-#'     \item \code{features}: 清洗后特征名称的字符向量。
+#'     \item \code{data}: 转移对的数据框（行）x 2 * Feature数。
+#'     \item \code{features}: 清洗后Feature名称的字符向量。
 #'     \item \code{pairs}: 描述每次转移的数据框
 #'       （\code{series}、\code{time_from}、\code{time_to}）。
 #'   }
@@ -239,16 +239,16 @@ build_transition_pairs <- function(agg_mat, time_meta, max_lag = 1) {
 
 #' 使用两个时间切片共享的分箱对转移对数据离散化
 #'
-#' @description 每个特征被离散化为 \code{n_bins} 个水平。关键在于分箱断点由该特征
+#' @description 每个Feature被离散化为 \code{n_bins} 个水平。关键在于分箱断点由该Feature
 #'   t0 与 t1 的合并值估计，因此同一状态标签在两个切片中表示相同的含义，两个
 #'   时间点保持可比。
 #'
 #' @param df 来自 \code{build_transition_pairs()} 的转移对数据框。
-#' @param features 清洗后特征名称的字符向量。
+#' @param features 清洗后Feature名称的字符向量。
 #' @param n_bins 离散水平数。默认：3。
 #'
-#' @return 一个数据框，其中每一列均为因子，且同一特征的 t0/t1 对具有相同水平。
-#'   无法拆分为至少两个水平的特征将被丢弃。
+#' @return 一个数据框，其中每一列均为因子，且同一Feature的 t0/t1 对具有相同水平。
+#'   无法拆分为至少两个水平的Feature将被丢弃。
 #'
 #' @examples
 #' \dontrun{
@@ -487,13 +487,13 @@ discretize_transition_data <- function(df, features, n_bins = 3) {
 #'   并学习一个时间滞后的贝叶斯网络，其弧被强制从 t0 指向 t1。弧的可靠性
 #'   通过非参数自助法（bootstrap）评估。
 #'
-#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param expr_matrix 数值矩阵（Feature x 样本）。
 #' @param sample_info 样本元数据，行名等于样本 ID。
 #' @param feature_info 可选注释 data.frame，其行名与矩阵行名对应；\code{name_col}
 #'   提供可读的节点标签。
 #' @param time_col \code{sample_info} 中的数值时间列。默认："day"。
 #' @param group_cols 定义独立时间序列的列。默认：c("location", "variety")。
-#' @param max_nodes 特征的最大数量（按方差）。默认：25。
+#' @param max_nodes Feature的最大数量（按方差）。默认：25。
 #' @param algorithm 结构学习算法："hc" 或 "tabu"。默认："hc"。
 #' @param score 网络评分，如 "bic" 或 "aic"。默认："bic"。
 #' @param boot_R 用于弧强度的自助重复次数；0 表示关闭。默认：100。
@@ -529,7 +529,7 @@ run_dbn_layer <- function(expr_matrix, sample_info, feature_info = NULL,
   if (nrow(mat) < 2) stop("At least 2 non-constant features are required.")
   mat <- .dbn_select_features(mat, max_nodes)
 
-  # 以清洗后的特征名为键的可读标签
+  # 以清洗后的Feature名为键的可读标签
   raw_names <- rownames(mat)
   clean <- .dbn_clean_names(raw_names)
   labels <- raw_names
@@ -596,13 +596,13 @@ run_dbn_layer <- function(expr_matrix, sample_info, feature_info = NULL,
 
 #' 在所有组学层上学习一个合并的动态贝叶斯网络
 #'
-#' @description 从每个组学层选取变异最大的特征，为节点名添加层标签前缀以避免
+#' @description 从每个组学层选取变异最大的Feature，为节点名添加层标签前缀以避免
 #'   冲突，将其合并为单一矩阵，并学习一个跨越所有层的时间滞后贝叶斯网络。
 #'   弧被标注为 \code{intra_omics} 或 \code{inter_omics}。
 #'
 #' @param mo 一个 MultiOmicsData 对象。
 #' @param layers 要包含的组学层。默认：\code{mo} 的所有层。
-#' @param per_layer_nodes 从每层选取的特征数。默认：8。
+#' @param per_layer_nodes 从每层选取的Feature数。默认：8。
 #' @param time_col 数值时间列。默认："day"。
 #' @param group_cols 定义独立时间序列的列。默认：c("location", "variety")。
 #' @param enforce_layer_order 是否禁止与 \code{layer_order} 相悖的弧。默认：FALSE。

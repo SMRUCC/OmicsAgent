@@ -9,12 +9,12 @@
 #' GO 富集分析
 #'
 #' @description 执行 Gene Ontology (GO) 术语富集分析，支持 BP、MF、CC 三个本体。
-#'   基于 Fisher's exact test 检验显著差异蛋白质是否在特定 GO 术语中过度代表。
+#'   Based on Fisher's exact test 检验显著差异蛋白质是否在特定 GO 术语中过度代表。
 #'
 #' @param significant_proteins 显著差异蛋白质 ID 向量。
 #' @param all_proteins 所有蛋白质 ID 向量（背景集）。
-#' @param feature_info 特征注释 data.frame，需包含 GO 术语注释列。
-#' @param id_col 特征注释中 ID 列名。默认 "ID"。
+#' @param feature_info Feature注释 data.frame，需包含 GO 术语注释列。
+#' @param id_col Feature注释中 ID 列名。默认 "ID"。
 #' @param go_col GO 术语列名。默认 "go_terms"。
 #' @param ontologies 需要分析的 GO 本体类型。默认 c("BP", "MF", "CC")。
 #' @param p_adjust 多重检验校正方法。默认 "BH"。
@@ -44,7 +44,7 @@ run_go_enrichment <- function(significant_proteins, all_proteins,
                               min_genes = 2) {
   # 检查 GO 术语注释列
   if (!go_col %in% colnames(feature_info)) {
-    stop(sprintf("GO 术语列 '%s' 不在 feature_info 中。", go_col))
+    stop(sprintf("GO term column '%s' not found in feature_info.", go_col))
   }
 
   # 筛选有 GO 注释的蛋白
@@ -58,7 +58,7 @@ run_go_enrichment <- function(significant_proteins, all_proteins,
   go_terms_all <- unique(go_terms_all)
 
   if (length(go_terms_all) == 0) {
-    stop("没有找到 GO 术语注释。")
+    stop("No GO term annotations found.")
   }
 
   # 判断 GO 术语格式：是否包含本体前缀
@@ -158,7 +158,7 @@ run_go_enrichment <- function(significant_proteins, all_proteins,
     }
 
     results_list[[ont]] <- results
-    cat(sprintf("[GO-%s] %d 术语通过显著性阈值 (p_adj < %.2f)\n",
+    cat(sprintf("[GO-%s] %d terms passed significance threshold (p_adj < %.2f)\n",
                 ont, nrow(results), p_threshold))
   }
 
@@ -201,7 +201,7 @@ run_go_enrichment <- function(significant_proteins, all_proteins,
 plot_go_enrichment <- function(go_result, top_n = 10, plot_type = "bar") {
   combined <- go_result$combined
   if (nrow(combined) == 0) {
-    stop("没有显著的 GO 术语可绘制。")
+    stop("No significant GO terms to plot.")
   }
 
   # 按 ontology 取 Top N

@@ -155,7 +155,7 @@ run_permanova <- function(dist_mat, sample_info,
 
   common <- intersect(attr(dist_mat, "Labels"), rownames(sample_info))
   if (length(common) < 4) {
-    stop("至少需要4个共有样本。")
+    stop("At least 4 shared samples are required.")
   }
 
   dist_mat <- as.dist(as.matrix(dist_mat)[common, common])
@@ -188,7 +188,7 @@ run_permanova <- function(dist_mat, sample_info,
 #'   \itemize{
 #'     \item \code{points}: 样本坐标矩阵（samples × ncomp）。
 #'     \item \code{variance_explained}: 各轴方差解释率。
-#'     \item \code{eigenvalues}: 特征值。
+#'     \item \code{eigenvalues}: Feature值。
 #'   }
 #'
 #' @examples
@@ -200,7 +200,7 @@ run_permanova <- function(dist_mat, sample_info,
 run_pcoa <- function(dist_mat, ncomp = 2) {
   dist_mat <- as.dist(dist_mat)
 
-  # 处理负特征值（对欧氏距离不会出现，但 Bray-Curtis 可能）
+  # 处理负Feature值（对欧氏距离不会出现，但 Bray-Curtis 可能）
   pcoa <- stats::cmdscale(dist_mat, k = ncomp, eig = TRUE)
 
   # 计算方差解释率
@@ -295,7 +295,7 @@ plot_ordination <- function(ordination_result, sample_info,
   points <- ordination_result$points
   common <- intersect(rownames(points), rownames(sample_info))
   if (length(common) == 0) {
-    stop("样本名不匹配。")
+    stop("Sample names do not match.")
   }
 
   points <- points[common, , drop = FALSE]

@@ -95,7 +95,7 @@ export_heatmap <- function(heatmap, output_dir = ".", filename = "heatmap",
 #' 将数据框导出为 CSV
 #'
 #' @description 将数据框导出为 CSV 文件。当 \code{use_rownames = TRUE}
-#'   （默认）时，行名会作为第一列写出，这对于以特征 ID 作为行名的
+#'   （默认）时，行名会作为第一列写出，这对于以Feature ID 作为行名的
 #'   分子层面分析结果非常有用。
 #'
 #' @param data 待导出的数据框。

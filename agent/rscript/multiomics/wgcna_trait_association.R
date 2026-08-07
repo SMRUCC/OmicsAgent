@@ -1,9 +1,9 @@
 # ==============================================================================
 # OmicsFlow: WGCNA Module - Downstream Trait Association
 # ==============================================================================
-# 在一个组学层上构建 WGCNA 共表达模块，再将下游组学层的分子特征视为生物学性状，
-# 检验每个模块特征基因（eigengene）与每个下游特征之间的关联。它回答了
-# "层 A 的哪个共表达模块与层 B 的哪个分子相关联"，并支持跨组学整合中
+# 在一个组学层上构建 WGCNA 共表达模块，再将下游组学层的分子Feature视为生物学性状，
+# 检验每个模块Feature基因（eigengene）与每个下游Feature之间的关联。它回答了
+# "Which co-expression module in layer A is associated with which molecule in layer B"，并支持跨组学整合中
 # 以性状驱动的视角。
 # ==============================================================================
 
@@ -21,7 +21,7 @@
 #' @param network_type 传给 WGCNA 的网络类型。默认："signed"。
 #' @param cor_fn 相关函数字符串。默认："cor"。
 #'
-#' @return 一个列表，含 \code{module_colors}（每特征的有名向量）、
+#' @return 一个列表，含 \code{module_colors}（每Feature的有名向量）、
 #'   \code{MEs}（样本 x 模块）、\code{soft_power}、\code{membership}
 #'   （含 feature、module_color、module_label 的数据框）以及原始层名。
 #'
@@ -88,16 +88,16 @@ build_wgcna_modules_layer <- function(mo, layer,
 }
 
 
-#' 将下游组学特征提取为性状矩阵
+#' 将下游组学Feature提取为性状矩阵
 #'
 #' @description 将下游组学层的表达矩阵转换为性状关联所需的 样本 x 性状 矩阵，
-#'   并将样本对齐到参考样本顺序。可选地只保留特征子集（例如已显示为差异的
-#'   特征，或出现在某特征签名列表中的特征）。
+#'   并将样本对齐到参考样本顺序。可选地只保留Feature子集（例如已显示为差异的
+#'   Feature，或出现在某Feature签名列表中的Feature）。
 #'
 #' @param mo 一个 MultiOmicsData 对象。
 #' @param layer 下游组学层的名称。
 #' @param reference_samples 要对齐到的样本 ID 字符向量。
-#' @param features 可选字符向量，用于限定性状。默认：NULL（全部特征）。
+#' @param features 可选字符向量，用于限定性状。默认：NULL（全部Feature）。
 #' @param log_transform 逻辑值，是否对每个性状应用 log2(x+1)。默认：FALSE。
 #'
 #' @return 数值矩阵（样本 x 性状），样本顺序与 \code{reference_samples} 一致。
@@ -148,9 +148,9 @@ wgcna_traits_from_layer <- function(mo, layer, reference_samples,
 }
 
 
-#' WGCNA 模块特征基因 与 下游性状的关联分析
+#' WGCNA 模块Feature基因 与 下游性状的关联分析
 #'
-#' @description 将模块层的每个模块特征基因与下游组学层的每个分子特征（性状）做相关，
+#' @description 将模块层的每个模块Feature基因与下游组学层的每个分子Feature（性状）做相关，
 #'   并为每对 模块-性状 额外拟合一个单变量线性模型。p 值在所有被测的
 #'   模块-性状 对上进行调整，使结果可直接用于全局显著性过滤。
 #'
@@ -284,15 +284,15 @@ run_wgcna_trait_association <- function(wgcna, traits,
 }
 
 
-#' 将模块成员映射回特征名称
+#' 将模块成员映射回Feature名称
 #'
-#' @description 将可读的特征标识符（来自特征注释）附加到模块-性状结果上，
-#'   使显著对能够以生物学含义解读，而非依赖内部特征 id。
+#' @description 将可读的Feature标识符（来自Feature注释）附加到模块-性状结果上，
+#'   使显著对能够以生物学含义解读，而非依赖内部Feature id。
 #'
 #' @param assoc \code{run_wgcna_trait_association()} 的结果。
-#' @param module_feature_info 模块层的特征注释。
+#' @param module_feature_info 模块层的Feature注释。
 #' @param module_layer 模块层的名称。
-#' @param trait_feature_info 性状层的特征注释。
+#' @param trait_feature_info 性状层的Feature注释。
 #' @param trait_layer 性状层的名称。
 #'
 #' @return 与 \code{assoc$module_trait} 相同的数据框，另加 module 与 trait 的
@@ -323,7 +323,7 @@ annotate_wgcna_trait_result <- function(assoc, module_feature_info = NULL,
 
 #' 模块-性状相关矩阵的热力图
 #'
-#' @description 以瓦片热力图展示模块特征基因与下游性状的相关，并标注显著性星号。
+#' @description 以瓦片热力图展示模块Feature基因与下游性状的相关，并标注显著性星号。
 #'   当性状数量很大时，仅显示按显著性排序的 top 性状，其余在返回值中汇总。
 #'
 #' @param assoc \code{run_wgcna_trait_association()} 的结果。

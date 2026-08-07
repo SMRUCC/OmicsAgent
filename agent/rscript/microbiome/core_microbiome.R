@@ -1,14 +1,14 @@
 # ==============================================================================
 # OmicsFlow: Core Microbiome Analysis
 # ==============================================================================
-# 核心微生物组分析：识别在大部分样本中稳定出现的 taxa
+# Core微生物组分析：识别在大部分样本中稳定出现的 taxa
 # 支持按丰度阈值和出现频率阈值筛选
 # ==============================================================================
 
-#' 识别核心微生物组
+#' 识别Core微生物组
 #'
-#' @description 根据出现频率（prevalence）和相对丰度阈值识别核心微生物组。
-#'   一个 taxa 被认为是"核心"的条件是：在至少 prevalence_threshold 比例的
+#' @description 根据出现频率（prevalence）和相对丰度阈值识别Core微生物组。
+#'   一个 taxa 被认为是"Core"的条件是：在至少 prevalence_threshold 比例的
 #'   样本中出现，且在所有样本中的平均相对丰度不低于 abundance_threshold。
 #'
 #' @param expr_matrix 数值矩阵（features × samples），行为 taxa，列为样本。
@@ -20,9 +20,9 @@
 #'
 #' @return 列表：
 #'   \itemize{
-#'     \item \code{core_features}: 核心 taxa 名称向量。
+#'     \item \code{core_features}: Core taxa 名称向量。
 #'     \item \code{prevalence}: 所有 taxa 的出现频率数据框。
-#'     \item \code{core_by_group}: 按分组的核心 taxa 列表（如果提供了 group_col）。
+#'     \item \code{core_by_group}: 按分组的Core taxa 列表（如果提供了 group_col）。
 #'     \item \code{params}: 参数设置。
 #'   }
 #'
@@ -52,12 +52,12 @@ identify_core_microbiome <- function(expr_matrix, sample_info = NULL,
   # 平均相对丰度
   mean_abund <- rowMeans(rel_abund, na.rm = TRUE)
 
-  # 全局核心
+  # 全局Core
   core_idx <- which(prevalence >= prevalence_threshold &
                       mean_abund >= abundance_threshold)
   core_features <- rownames(expr_matrix)[core_idx]
 
-  cat(sprintf("[core] 全局核心 taxa: %d / %d (prevalence >= %.0f%%, abund >= %.1e)\n",
+  cat(sprintf("[core] Global core taxa: %d / %d (prevalence >= %.0f%%, abund >= %.1e)\n",
               length(core_features), nrow(expr_matrix),
               prevalence_threshold * 100, abundance_threshold))
 
@@ -72,7 +72,7 @@ identify_core_microbiome <- function(expr_matrix, sample_info = NULL,
   prev_df <- prev_df[order(-prev_df$prevalence, -prev_df$mean_abundance), ]
   rownames(prev_df) <- NULL
 
-  # 按分组的核心
+  # 按分组的Core
   core_by_group <- NULL
   if (!is.null(sample_info) && group_col %in% colnames(sample_info)) {
     common <- intersect(colnames(expr_matrix), rownames(sample_info))
@@ -90,14 +90,14 @@ identify_core_microbiome <- function(expr_matrix, sample_info = NULL,
       core_g <- rownames(expr_matrix)[prev_g >= prevalence_threshold &
                                         abund_g >= abundance_threshold]
       core_by_group[[g]] <- core_g
-      cat(sprintf("[core] %s 组核心 taxa: %d / %d\n",
+      cat(sprintf("[core] %s group core taxa: %d / %d\n",
                   g, length(core_g), nrow(expr_matrix)))
     }
 
-    # 识别共有核心（所有组中都核心）
+    # 识别共有Core（所有组中都Core）
     if (length(core_by_group) > 1) {
       shared_core <- Reduce(intersect, core_by_group)
-      cat(sprintf("[core] 各组共有核心 taxa: %d\n", length(shared_core)))
+      cat(sprintf("[core] Shared core taxa across groups: %d\n", length(shared_core)))
     }
   }
 
@@ -117,10 +117,10 @@ identify_core_microbiome <- function(expr_matrix, sample_info = NULL,
 #' 绘制出现频率图
 #'
 #' @description 绘制 taxa 出现频率 vs 平均丰度的散点图，
-#'   标出核心 taxa。横轴为出现频率，纵轴为平均相对丰度（log10）。
+#'   标出Core taxa。横轴为出现频率，纵轴为平均相对丰度（log10）。
 #'
 #' @param core_result \code{identify_core_microbiome()} 的返回结果。
-#' @param top_n 标注前 N 个核心 taxa 的名称。默认 20。
+#' @param top_n 标注前 N 个Core taxa 的名称。默认 20。
 #'
 #' @return ggplot 对象。
 #'
@@ -160,7 +160,7 @@ plot_prevalence <- function(core_result, top_n = 20) {
       legend.position = "right"
     )
 
-  # 标注核心 taxa 名称
+  # 标注Core taxa 名称
   if (sum(prev_df$is_core) > 0) {
     core_taxa <- prev_df[prev_df$is_core, , drop = FALSE]
     if (nrow(core_taxa) > top_n) {
@@ -177,9 +177,9 @@ plot_prevalence <- function(core_result, top_n = 20) {
 }
 
 
-#' 绘制核心微生物组热图
+#' 绘制Core微生物组热图
 #'
-#' @description 绘制核心 taxa 在所有样本中的相对丰度热图。
+#' @description 绘制Core taxa 在所有样本中的相对丰度热图。
 #'
 #' @param expr_matrix 数值矩阵（features × samples）。
 #' @param core_result \code{identify_core_microbiome()} 的返回结果。
@@ -200,10 +200,10 @@ plot_core_heatmap <- function(expr_matrix, core_result, sample_info,
                              scale = TRUE) {
   core_features <- core_result$core_features
   if (length(core_features) == 0) {
-    stop("没有核心 taxa 可绘制。")
+    stop("No core taxa to plot.")
   }
 
-  # 提取核心 taxa
+  # 提取Core taxa
   core_mat <- expr_matrix[core_features, , drop = FALSE]
 
   # 转为相对丰度

@@ -6,24 +6,24 @@
 
 #' 运行 PLS-PM 分析
 #'
-#' @description 执行偏最小二乘路径建模，从观测到的特征组（如家族或 KEGG 通路）
+#' @description 执行偏最小二乘路径建模，从观测到的Feature组（如家族或 KEGG 通路）
 #'   构建潜变量网络。适用于多组学整合。
 #'
-#' @param expr_matrix 数值矩阵（特征 x 样本）。
-#' @param feature_info 含有特征注释的数据框。
-#' @param latent_def 命名列表，每个元素为定义潜变量的特征 ID 字符向量，或
+#' @param expr_matrix 数值矩阵（Feature x 样本）。
+#' @param feature_info 含有Feature注释的数据框。
+#' @param latent_def 命名列表，每个元素为定义潜变量的Feature ID 字符向量，或
 #'   feature_info 中某列名。例如 \code{list(Metabolism = "kegg", Lipids = "super_class")}。
 #' @param inner_model 可选的矩阵，定义潜变量之间的关系。若为 NULL，则所有潜变量
 #'   互连。默认：NULL。
-#' @param feature_id_col 特征 ID 的列名。默认："ID"。
+#' @param feature_id_col Feature ID 的列名。默认："ID"。
 #' @param ncomp PLS 组分数。默认：2。
 #'
 #' @return 一个列表，包含：
 #'   \itemize{
 #'     \item \code{scores}：潜变量得分（样本 x 潜变量）。
-#'     \item \code{outer_model}：特征在潜变量上的载荷。
-#'     \item \code{inner_model}：潜变量之间的路径系数。
-#'     \item \code{path_coefficients}：路径系数矩阵。
+#'     \item \code{outer_model}：Feature在潜变量上的载荷。
+#'     \item \code{inner_model}：潜变量之间的路径Coefficient。
+#'     \item \code{path_coefficients}：路径Coefficient矩阵。
 #'   }
 #'
 #' @examples
@@ -44,7 +44,7 @@ run_plspm <- function(expr_matrix, feature_info, latent_def,
     warning("Package 'plsdepot' not available. Using simplified PLS-PM.")
   }
 
-  # 对齐特征信息
+  # 对齐Feature信息
   if (feature_id_col %in% colnames(feature_info)) {
     rownames(feature_info) <- feature_info[[feature_id_col]]
   }
@@ -85,7 +85,7 @@ run_plspm <- function(expr_matrix, feature_info, latent_def,
     pca_result <- stats::prcomp(sub_mat, scale. = TRUE, center = TRUE)
     latent_scores[[lv_name]] <- pca_result$x[, 1]
 
-    # 载荷
+    # Loading
     outer_loadings[[lv_name]] <- data.frame(
       feature_id = lv_features,
       loading = pca_result$rotation[, 1],
@@ -97,12 +97,12 @@ run_plspm <- function(expr_matrix, feature_info, latent_def,
   scores_df <- as.data.frame(do.call(cbind, latent_scores))
   rownames(scores_df) <- colnames(expr_matrix)
 
-  # 内模型：路径系数
+  # 内模型：路径Coefficient
   lv_names <- names(latent_scores)
   n_lv <- length(lv_names)
 
   if (is.null(inner_model)) {
-    # 全连接路径系数
+    # 全连接路径Coefficient
     path_mat <- matrix(0, n_lv, n_lv)
     rownames(path_mat) <- colnames(path_mat) <- lv_names
 
@@ -175,28 +175,28 @@ run_plspm <- function(expr_matrix, feature_info, latent_def,
 #' p <- plot_plspm_network(result)
 #' print(p)
 #' }
-#' 根据特征注释构建潜变量定义
+#' 根据Feature注释构建潜变量定义
 #'
 #' @description 通过按 KEGG 通路归属（经由 compound->pathway 映射）或
-#'   \code{super_class} 注释对实测特征进行分组，构建传给 \code{run_plspm()} 的
-#'   \code{latent_def} 列表。单个特征可属于多个 KEGG 通路，因此会被包含在多个
+#'   \code{super_class} 注释对实测Feature进行分组，构建传给 \code{run_plspm()} 的
+#'   \code{latent_def} 列表。单个Feature可属于多个 KEGG 通路，因此会被包含在多个
 #'   潜变量中；每个潜变量的得分由 \code{run_plspm()} 内部通过 PCA 独立计算。
 #'
-#' @param expr_matrix 数值矩阵（特征 x 样本）。
-#' @param feature_info 含有特征注释的数据框（行名或用于标识特征的
+#' @param expr_matrix 数值矩阵（Feature x 样本）。
+#' @param feature_info 含有Feature注释的数据框（行名或用于标识Feature的
 #'   \code{feature_id_col} 列）。必须包含 \code{kegg_col} 与 \code{category_col} 列。
 #' @param kegg_mapping 含有 \code{compound_id}、\code{pathway_id}、\code{pathway_name}
 #'   列的数据框（由 \code{load_kegg_mapping()} 生成）。可为 NULL 以跳过 KEGG 通路。
-#' @param feature_id_col \code{feature_info} 中特征 ID 的列名。默认："name"。
+#' @param feature_id_col \code{feature_info} 中Feature ID 的列名。默认："name"。
 #' @param kegg_col 保存 KEGG 化合物 ID 的列名。默认："kegg"。
 #' @param category_col 保存 super class 的列名。默认："super_class"。
-#' @param min_size 每个潜变量的最少特征数。实测特征少于该值的分组会被丢弃。默认：2。
+#' @param min_size 每个潜变量的最少Feature数。实测Feature少于该值的分组会被丢弃。默认：2。
 #' @param use_kegg 逻辑值；是否构建 KEGG 通路潜变量。默认：TRUE。
 #' @param use_super_class 逻辑值；是否构建 super_class 潜变量。默认：TRUE。
 #' @param prefix_kegg 添加到 KEGG 通路潜变量名的前缀。默认："KEGG:"。
 #' @param prefix_super 添加到 super_class 潜变量名的前缀。默认："SC:"。
 #'
-#' @return 适用于 \code{run_plspm()} 的字符向量命名列表（特征 ID）。
+#' @return 适用于 \code{run_plspm()} 的字符向量命名列表（Feature ID）。
 #'
 #' @examples
 #' \dontrun{
@@ -215,7 +215,7 @@ build_latent_def_from_annotation <- function(expr_matrix, feature_info,
                                              use_super_class = TRUE,
                                              prefix_kegg = "KEGG:",
                                              prefix_super = "SC:") {
-  # 识别特征 ID 及其与表达矩阵的交集
+  # 识别Feature ID 及其与表达矩阵的交集
   if (feature_id_col %in% colnames(feature_info)) {
     feat_ids <- feature_info[[feature_id_col]]
   } else {
@@ -253,7 +253,7 @@ build_latent_def_from_annotation <- function(expr_matrix, feature_info,
     }
   }
 
-  # ---- super_class 分组（每个特征单一取值）----
+  # ---- super_class 分组（每个Feature单一取值）----
   if (use_super_class && category_col %in% colnames(info)) {
     sc_vals <- as.character(info[[category_col]])
     names(sc_vals) <- rownames(info)

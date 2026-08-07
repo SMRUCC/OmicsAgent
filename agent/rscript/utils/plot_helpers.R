@@ -123,7 +123,7 @@ extract_plot_meta <- function(sample_info, color_col = "sample_info",
     meta$shape <- sample_info[[shape_col]]
     n_shapes <- length(unique(meta$shape))
     shape_values <- setNames(0:(n_shapes - 1) %% 25 + 1, unique(meta$shape))
-    if (n_shapes > 25) warning("形状分组超过 25 个，形状将会重复。")
+    if (n_shapes > 25) warning("More than 25 shape groups. Shapes will repeat.")
   } else {
     shape_values <- NULL
   }
