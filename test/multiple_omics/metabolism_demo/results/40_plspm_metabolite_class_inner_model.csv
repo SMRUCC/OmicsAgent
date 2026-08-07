@@ -1,0 +1,211 @@
+"from","to","path_coeff","p_value"
+"CLASS:Carotenoid degradation product (C13 norisoprenoid)","CLASS:Cembranoid degradation product",-0.24859586704636,8.85471335680356e-06
+"CLASS:Carotenoid degradation product (C13 norisoprenoid)","CLASS:Maillard reaction product (Pyrazine)",-0.254945429149402,5.09726575712898e-06
+"CLASS:Carotenoid degradation product (C13 norisoprenoid)","CLASS:Phenylpropanoid/benzenoid compound",0.746464077685339,8.76335450887766e-57
+"CLASS:Carotenoid degradation product (C13 norisoprenoid)","CLASS:Terpenoid (Monoterpenoid)",0.936794362896937,1.99143547990657e-143
+"CLASS:Carotenoid degradation product (C13 norisoprenoid)","CLASS:Terpenoid (Sesquiterpenoid)",0.94053636911065,2.08544932517943e-147
+"CLASS:Carotenoid degradation product (C13 norisoprenoid)","CLASS:Ester",-0.167929443584317,0.0029253260792683
+"CLASS:Carotenoid degradation product (C13 norisoprenoid)","CLASS:Acid (Fatty acid)",-0.46795860857169,2.20318692165952e-18
+"CLASS:Carotenoid degradation product (C13 norisoprenoid)","CLASS:Alcohol",-0.339907052623456,7.0768307592574e-10
+"CLASS:Carotenoid degradation product (C13 norisoprenoid)","CLASS:Aldehyde",-0.181996158526516,0.00124312239819326
+"CLASS:Carotenoid degradation product (C13 norisoprenoid)","CLASS:Ketone",-0.46717562967789,2.55173936118538e-18
+"CLASS:Carotenoid degradation product (C13 norisoprenoid)","CLASS:Sulfur compound (Heterocyclic)",-0.262235343854449,2.6551112131652e-06
+"CLASS:Carotenoid degradation product (C13 norisoprenoid)","CLASS:Nitrogen compound (Pyridine)",-0.0327819190222554,0.564023875167609
+"CLASS:Carotenoid degradation product (C13 norisoprenoid)","CLASS:Lactone (γ-Lactone)",0.0162314162550363,0.775205942522396
+"CLASS:Carotenoid degradation product (C13 norisoprenoid)","CLASS:Unknown",0.0662723891901067,0.243134145552481
+"CLASS:Cembranoid degradation product","CLASS:Carotenoid degradation product (C13 norisoprenoid)",-0.24859586704636,8.85471335680353e-06
+"CLASS:Cembranoid degradation product","CLASS:Maillard reaction product (Pyrazine)",-0.852907616082476,1.65310230097226e-89
+"CLASS:Cembranoid degradation product","CLASS:Phenylpropanoid/benzenoid compound",0.227538316234527,4.98501071977991e-05
+"CLASS:Cembranoid degradation product","CLASS:Terpenoid (Monoterpenoid)",-0.0317597030789885,0.576245317707473
+"CLASS:Cembranoid degradation product","CLASS:Terpenoid (Sesquiterpenoid)",-0.0454616753431473,0.423592635843754
+"CLASS:Cembranoid degradation product","CLASS:Ester",0.985354206803507,3.25584784003862e-240
+"CLASS:Cembranoid degradation product","CLASS:Acid (Fatty acid)",0.959607303982309,8.64647172166668e-173
+"CLASS:Cembranoid degradation product","CLASS:Alcohol",0.97933562775095,3.05404312829526e-217
+"CLASS:Cembranoid degradation product","CLASS:Aldehyde",-0.887419392783977,2.77885090242395e-106
+"CLASS:Cembranoid degradation product","CLASS:Ketone",0.923500190250418,4.91907449498145e-131
+"CLASS:Cembranoid degradation product","CLASS:Sulfur compound (Heterocyclic)",-0.852051364125817,3.78737411727048e-89
+"CLASS:Cembranoid degradation product","CLASS:Nitrogen compound (Pyridine)",-0.939876140022317,1.09619407656036e-146
+"CLASS:Cembranoid degradation product","CLASS:Lactone (γ-Lactone)",-0.935072809650601,1.11962193688175e-141
+"CLASS:Cembranoid degradation product","CLASS:Unknown",-0.957545180825172,1.65438304632548e-169
+"CLASS:Maillard reaction product (Pyrazine)","CLASS:Carotenoid degradation product (C13 norisoprenoid)",-0.254945429149402,5.09726575712902e-06
+"CLASS:Maillard reaction product (Pyrazine)","CLASS:Cembranoid degradation product",-0.852907616082475,1.65310230097245e-89
+"CLASS:Maillard reaction product (Pyrazine)","CLASS:Phenylpropanoid/benzenoid compound",-0.627313879504423,1.55797120005712e-35
+"CLASS:Maillard reaction product (Pyrazine)","CLASS:Terpenoid (Monoterpenoid)",-0.453673016205027,3.03008310066406e-17
+"CLASS:Maillard reaction product (Pyrazine)","CLASS:Terpenoid (Sesquiterpenoid)",-0.440179852732595,3.22687061012947e-16
+"CLASS:Maillard reaction product (Pyrazine)","CLASS:Ester",-0.892784227652638,2.21603052632497e-109
+"CLASS:Maillard reaction product (Pyrazine)","CLASS:Acid (Fatty acid)",-0.709261702188668,5.39402378570886e-49
+"CLASS:Maillard reaction product (Pyrazine)","CLASS:Alcohol",-0.78954948532201,1.050066643625e-67
+"CLASS:Maillard reaction product (Pyrazine)","CLASS:Aldehyde",0.972260245451166,1.17059135533826e-197
+"CLASS:Maillard reaction product (Pyrazine)","CLASS:Ketone",-0.655513941015372,1.0806752068947e-39
+"CLASS:Maillard reaction product (Pyrazine)","CLASS:Sulfur compound (Heterocyclic)",0.997879007992525,0
+"CLASS:Maillard reaction product (Pyrazine)","CLASS:Nitrogen compound (Pyridine)",0.948399761857443,1.09616776716002e-156
+"CLASS:Maillard reaction product (Pyrazine)","CLASS:Lactone (γ-Lactone)",0.913877728451761,2.15945742685436e-123
+"CLASS:Maillard reaction product (Pyrazine)","CLASS:Unknown",0.914536312642513,6.92544193793421e-124
+"CLASS:Phenylpropanoid/benzenoid compound","CLASS:Carotenoid degradation product (C13 norisoprenoid)",0.746464077685339,8.76335450887828e-57
+"CLASS:Phenylpropanoid/benzenoid compound","CLASS:Cembranoid degradation product",0.227538316234527,4.98501071977993e-05
+"CLASS:Phenylpropanoid/benzenoid compound","CLASS:Maillard reaction product (Pyrazine)",-0.627313879504424,1.55797120005705e-35
+"CLASS:Phenylpropanoid/benzenoid compound","CLASS:Terpenoid (Monoterpenoid)",0.925495895958039,9.57932004847352e-133
+"CLASS:Phenylpropanoid/benzenoid compound","CLASS:Terpenoid (Sesquiterpenoid)",0.922198485088863,6.06337139786103e-130
+"CLASS:Phenylpropanoid/benzenoid compound","CLASS:Ester",0.263325992905361,2.40420887277282e-06
+"CLASS:Phenylpropanoid/benzenoid compound","CLASS:Acid (Fatty acid)",0.0424829012402569,0.454627055835364
+"CLASS:Phenylpropanoid/benzenoid compound","CLASS:Alcohol",0.0873035061741603,0.123844027864552
+"CLASS:Phenylpropanoid/benzenoid compound","CLASS:Aldehyde",-0.542808096137887,2.64003555510885e-25
+"CLASS:Phenylpropanoid/benzenoid compound","CLASS:Ketone",-0.0731805315646606,0.197340135364017
+"CLASS:Phenylpropanoid/benzenoid compound","CLASS:Sulfur compound (Heterocyclic)",-0.623073422162411,6.04528582281815e-35
+"CLASS:Phenylpropanoid/benzenoid compound","CLASS:Nitrogen compound (Pyridine)",-0.411259271204303,3.65167168936378e-14
+"CLASS:Phenylpropanoid/benzenoid compound","CLASS:Lactone (γ-Lactone)",-0.322067040229772,5.8197300706879e-09
+"CLASS:Phenylpropanoid/benzenoid compound","CLASS:Unknown",-0.320468599179214,6.98295154607432e-09
+"CLASS:Terpenoid (Monoterpenoid)","CLASS:Carotenoid degradation product (C13 norisoprenoid)",0.936794362896937,1.9914354799068e-143
+"CLASS:Terpenoid (Monoterpenoid)","CLASS:Cembranoid degradation product",-0.0317597030789884,0.576245317707473
+"CLASS:Terpenoid (Monoterpenoid)","CLASS:Maillard reaction product (Pyrazine)",-0.453673016205027,3.03008310066402e-17
+"CLASS:Terpenoid (Monoterpenoid)","CLASS:Phenylpropanoid/benzenoid compound",0.925495895958038,9.5793200484746e-133
+"CLASS:Terpenoid (Monoterpenoid)","CLASS:Terpenoid (Sesquiterpenoid)",0.994669702631257,6.09104340945117e-308
+"CLASS:Terpenoid (Monoterpenoid)","CLASS:Ester",0.0325765588622914,0.56646912795962
+"CLASS:Terpenoid (Monoterpenoid)","CLASS:Acid (Fatty acid)",-0.246808536531835,1.03167177170138e-05
+"CLASS:Terpenoid (Monoterpenoid)","CLASS:Alcohol",-0.152625169182365,0.0069148233316702
+"CLASS:Terpenoid (Monoterpenoid)","CLASS:Aldehyde",-0.370600605792246,1.35966273263463e-11
+"CLASS:Terpenoid (Monoterpenoid)","CLASS:Ketone",-0.30512057685323,3.80723688545549e-08
+"CLASS:Terpenoid (Monoterpenoid)","CLASS:Sulfur compound (Heterocyclic)",-0.455060994607545,2.36141497451192e-17
+"CLASS:Terpenoid (Monoterpenoid)","CLASS:Nitrogen compound (Pyridine)",-0.220510516175553,8.57213609873156e-05
+"CLASS:Terpenoid (Monoterpenoid)","CLASS:Lactone (γ-Lactone)",-0.14506328010735,0.0102989072001586
+"CLASS:Terpenoid (Monoterpenoid)","CLASS:Unknown",-0.121006626898569,0.032623908684337
+"CLASS:Terpenoid (Sesquiterpenoid)","CLASS:Carotenoid degradation product (C13 norisoprenoid)",0.94053636911065,2.08544932517967e-147
+"CLASS:Terpenoid (Sesquiterpenoid)","CLASS:Cembranoid degradation product",-0.0454616753431473,0.423592635843753
+"CLASS:Terpenoid (Sesquiterpenoid)","CLASS:Maillard reaction product (Pyrazine)",-0.440179852732595,3.22687061012942e-16
+"CLASS:Terpenoid (Sesquiterpenoid)","CLASS:Phenylpropanoid/benzenoid compound",0.922198485088863,6.06337139786103e-130
+"CLASS:Terpenoid (Sesquiterpenoid)","CLASS:Terpenoid (Monoterpenoid)",0.994669702631258,6.09104340945186e-308
+"CLASS:Terpenoid (Sesquiterpenoid)","CLASS:Ester",0.0178582318999418,0.753370501231459
+"CLASS:Terpenoid (Sesquiterpenoid)","CLASS:Acid (Fatty acid)",-0.261702881244205,2.78650623193697e-06
+"CLASS:Terpenoid (Sesquiterpenoid)","CLASS:Alcohol",-0.167509765072554,0.00299808123057909
+"CLASS:Terpenoid (Sesquiterpenoid)","CLASS:Aldehyde",-0.358266787949881,7.004073462996e-11
+"CLASS:Terpenoid (Sesquiterpenoid)","CLASS:Ketone",-0.318186586649344,9.04102339861946e-09
+"CLASS:Terpenoid (Sesquiterpenoid)","CLASS:Sulfur compound (Heterocyclic)",-0.44243881055149,2.18752300737752e-16
+"CLASS:Terpenoid (Sesquiterpenoid)","CLASS:Nitrogen compound (Pyridine)",-0.205895238542919,0.000250698967252753
+"CLASS:Terpenoid (Sesquiterpenoid)","CLASS:Lactone (γ-Lactone)",-0.13436864709066,0.0175643804999535
+"CLASS:Terpenoid (Sesquiterpenoid)","CLASS:Unknown",-0.104059005463717,0.0664083583367843
+"CLASS:Ester","CLASS:Carotenoid degradation product (C13 norisoprenoid)",-0.167929443584316,0.0029253260792683
+"CLASS:Ester","CLASS:Cembranoid degradation product",0.985354206803507,3.25584784003862e-240
+"CLASS:Ester","CLASS:Maillard reaction product (Pyrazine)",-0.892784227652638,2.21603052632478e-109
+"CLASS:Ester","CLASS:Phenylpropanoid/benzenoid compound",0.263325992905361,2.40420887277282e-06
+"CLASS:Ester","CLASS:Terpenoid (Monoterpenoid)",0.0325765588622914,0.56646912795962
+"CLASS:Ester","CLASS:Terpenoid (Sesquiterpenoid)",0.0178582318999418,0.753370501231459
+"CLASS:Ester","CLASS:Acid (Fatty acid)",0.923086376164474,1.09836182319474e-130
+"CLASS:Ester","CLASS:Alcohol",0.977601523921026,7.09672248665144e-212
+"CLASS:Ester","CLASS:Aldehyde",-0.928123845141599,4.51484028316176e-135
+"CLASS:Ester","CLASS:Ketone",0.91719157375053,6.42529732543323e-126
+"CLASS:Ester","CLASS:Sulfur compound (Heterocyclic)",-0.892715036297031,2.43543342412872e-109
+"CLASS:Ester","CLASS:Nitrogen compound (Pyridine)",-0.972657990103231,1.28710941503416e-198
+"CLASS:Ester","CLASS:Lactone (γ-Lactone)",-0.97095576528395,1.31169059221517e-194
+"CLASS:Ester","CLASS:Unknown",-0.987765656499715,3.03967772517523e-252
+"CLASS:Acid (Fatty acid)","CLASS:Carotenoid degradation product (C13 norisoprenoid)",-0.46795860857169,2.2031869216596e-18
+"CLASS:Acid (Fatty acid)","CLASS:Cembranoid degradation product",0.959607303982308,8.64647172166815e-173
+"CLASS:Acid (Fatty acid)","CLASS:Maillard reaction product (Pyrazine)",-0.709261702188668,5.39402378570925e-49
+"CLASS:Acid (Fatty acid)","CLASS:Phenylpropanoid/benzenoid compound",0.0424829012402569,0.454627055835364
+"CLASS:Acid (Fatty acid)","CLASS:Terpenoid (Monoterpenoid)",-0.246808536531835,1.03167177170139e-05
+"CLASS:Acid (Fatty acid)","CLASS:Terpenoid (Sesquiterpenoid)",-0.261702881244204,2.78650623193701e-06
+"CLASS:Acid (Fatty acid)","CLASS:Ester",0.923086376164473,1.09836182319487e-130
+"CLASS:Acid (Fatty acid)","CLASS:Alcohol",0.958205074250774,1.53636574022138e-170
+"CLASS:Acid (Fatty acid)","CLASS:Aldehyde",-0.742707599664883,6.16519516570832e-56
+"CLASS:Acid (Fatty acid)","CLASS:Ketone",0.930956672628337,1.11012826074731e-137
+"CLASS:Acid (Fatty acid)","CLASS:Sulfur compound (Heterocyclic)",-0.703742339001537,6.07409174452668e-48
+"CLASS:Acid (Fatty acid)","CLASS:Nitrogen compound (Pyridine)",-0.826214609776523,3.02522822774615e-79
+"CLASS:Acid (Fatty acid)","CLASS:Lactone (γ-Lactone)",-0.821672406853084,1.12800599313746e-77
+"CLASS:Acid (Fatty acid)","CLASS:Unknown",-0.866474204193747,1.54419942919933e-95
+"CLASS:Alcohol","CLASS:Carotenoid degradation product (C13 norisoprenoid)",-0.339907052623456,7.07683075925743e-10
+"CLASS:Alcohol","CLASS:Cembranoid degradation product",0.979335627750948,3.05404312829665e-217
+"CLASS:Alcohol","CLASS:Maillard reaction product (Pyrazine)",-0.78954948532201,1.050066643625e-67
+"CLASS:Alcohol","CLASS:Phenylpropanoid/benzenoid compound",0.0873035061741602,0.123844027864552
+"CLASS:Alcohol","CLASS:Terpenoid (Monoterpenoid)",-0.152625169182365,0.00691482333167021
+"CLASS:Alcohol","CLASS:Terpenoid (Sesquiterpenoid)",-0.167509765072554,0.0029980812305791
+"CLASS:Alcohol","CLASS:Ester",0.977601523921025,7.09672248665305e-212
+"CLASS:Alcohol","CLASS:Acid (Fatty acid)",0.958205074250774,1.53636574022121e-170
+"CLASS:Alcohol","CLASS:Aldehyde",-0.846672000557257,6.15725164589646e-87
+"CLASS:Alcohol","CLASS:Ketone",0.967507336658341,3.58029448316757e-187
+"CLASS:Alcohol","CLASS:Sulfur compound (Heterocyclic)",-0.789262058182674,1.26600572030074e-67
+"CLASS:Alcohol","CLASS:Nitrogen compound (Pyridine)",-0.917922944252911,1.72205202567921e-126
+"CLASS:Alcohol","CLASS:Lactone (γ-Lactone)",-0.929278282257256,4.02191912283004e-136
+"CLASS:Alcohol","CLASS:Unknown",-0.953163550639137,4.80397396378944e-163
+"CLASS:Aldehyde","CLASS:Carotenoid degradation product (C13 norisoprenoid)",-0.181996158526516,0.00124312239819327
+"CLASS:Aldehyde","CLASS:Cembranoid degradation product",-0.887419392783977,2.77885090242419e-106
+"CLASS:Aldehyde","CLASS:Maillard reaction product (Pyrazine)",0.972260245451167,1.17059135533799e-197
+"CLASS:Aldehyde","CLASS:Phenylpropanoid/benzenoid compound",-0.542808096137887,2.64003555510885e-25
+"CLASS:Aldehyde","CLASS:Terpenoid (Monoterpenoid)",-0.370600605792247,1.3596627326346e-11
+"CLASS:Aldehyde","CLASS:Terpenoid (Sesquiterpenoid)",-0.358266787949881,7.004073462996e-11
+"CLASS:Aldehyde","CLASS:Ester",-0.9281238451416,4.5148402831615e-135
+"CLASS:Aldehyde","CLASS:Acid (Fatty acid)",-0.742707599664883,6.16519516570762e-56
+"CLASS:Aldehyde","CLASS:Alcohol",-0.846672000557257,6.15725164589558e-87
+"CLASS:Aldehyde","CLASS:Ketone",-0.743568094911584,3.95521808066945e-56
+"CLASS:Aldehyde","CLASS:Sulfur compound (Heterocyclic)",0.97541818670796,1.09384669464312e-205
+"CLASS:Aldehyde","CLASS:Nitrogen compound (Pyridine)",0.981168740533445,1.96444855426511e-223
+"CLASS:Aldehyde","CLASS:Lactone (γ-Lactone)",0.961335814039047,1.12550724287253e-175
+"CLASS:Aldehyde","CLASS:Unknown",0.958623430777217,3.33794296281594e-171
+"CLASS:Ketone","CLASS:Carotenoid degradation product (C13 norisoprenoid)",-0.46717562967789,2.55173936118538e-18
+"CLASS:Ketone","CLASS:Cembranoid degradation product",0.923500190250418,4.91907449498145e-131
+"CLASS:Ketone","CLASS:Maillard reaction product (Pyrazine)",-0.655513941015372,1.08067520689461e-39
+"CLASS:Ketone","CLASS:Phenylpropanoid/benzenoid compound",-0.0731805315646607,0.197340135364017
+"CLASS:Ketone","CLASS:Terpenoid (Monoterpenoid)",-0.305120576853231,3.80723688545544e-08
+"CLASS:Ketone","CLASS:Terpenoid (Sesquiterpenoid)",-0.318186586649344,9.04102339861943e-09
+"CLASS:Ketone","CLASS:Ester",0.91719157375053,6.42529732543287e-126
+"CLASS:Ketone","CLASS:Acid (Fatty acid)",0.930956672628338,1.11012826074712e-137
+"CLASS:Ketone","CLASS:Alcohol",0.967507336658342,3.58029448316696e-187
+"CLASS:Ketone","CLASS:Aldehyde",-0.743568094911584,3.95521808066951e-56
+"CLASS:Ketone","CLASS:Sulfur compound (Heterocyclic)",-0.657630960006635,5.05103828487986e-40
+"CLASS:Ketone","CLASS:Nitrogen compound (Pyridine)",-0.83338147964332,8.04919764334283e-82
+"CLASS:Ketone","CLASS:Lactone (γ-Lactone)",-0.863719989861115,2.9177667037358e-94
+"CLASS:Ketone","CLASS:Unknown",-0.88693606346754,5.19086168429148e-106
+"CLASS:Sulfur compound (Heterocyclic)","CLASS:Carotenoid degradation product (C13 norisoprenoid)",-0.262235343854449,2.65511121316521e-06
+"CLASS:Sulfur compound (Heterocyclic)","CLASS:Cembranoid degradation product",-0.852051364125817,3.7873741172707e-89
+"CLASS:Sulfur compound (Heterocyclic)","CLASS:Maillard reaction product (Pyrazine)",0.997879007992524,0
+"CLASS:Sulfur compound (Heterocyclic)","CLASS:Phenylpropanoid/benzenoid compound",-0.623073422162411,6.04528582281797e-35
+"CLASS:Sulfur compound (Heterocyclic)","CLASS:Terpenoid (Monoterpenoid)",-0.455060994607545,2.36141497451192e-17
+"CLASS:Sulfur compound (Heterocyclic)","CLASS:Terpenoid (Sesquiterpenoid)",-0.44243881055149,2.18752300737748e-16
+"CLASS:Sulfur compound (Heterocyclic)","CLASS:Ester",-0.89271503629703,2.43543342412914e-109
+"CLASS:Sulfur compound (Heterocyclic)","CLASS:Acid (Fatty acid)",-0.703742339001537,6.07409174452668e-48
+"CLASS:Sulfur compound (Heterocyclic)","CLASS:Alcohol",-0.789262058182674,1.26600572030081e-67
+"CLASS:Sulfur compound (Heterocyclic)","CLASS:Aldehyde",0.975418186707959,1.09384669464349e-205
+"CLASS:Sulfur compound (Heterocyclic)","CLASS:Ketone",-0.657630960006635,5.05103828488015e-40
+"CLASS:Sulfur compound (Heterocyclic)","CLASS:Nitrogen compound (Pyridine)",0.950920954668541,5.67104599552756e-160
+"CLASS:Sulfur compound (Heterocyclic)","CLASS:Lactone (γ-Lactone)",0.918944884189776,2.67927891693117e-127
+"CLASS:Sulfur compound (Heterocyclic)","CLASS:Unknown",0.916078400470698,4.65799874245616e-125
+"CLASS:Nitrogen compound (Pyridine)","CLASS:Carotenoid degradation product (C13 norisoprenoid)",-0.0327819190222554,0.564023875167609
+"CLASS:Nitrogen compound (Pyridine)","CLASS:Cembranoid degradation product",-0.939876140022316,1.09619407656061e-146
+"CLASS:Nitrogen compound (Pyridine)","CLASS:Maillard reaction product (Pyrazine)",0.948399761857443,1.09616776715983e-156
+"CLASS:Nitrogen compound (Pyridine)","CLASS:Phenylpropanoid/benzenoid compound",-0.411259271204303,3.65167168936378e-14
+"CLASS:Nitrogen compound (Pyridine)","CLASS:Terpenoid (Monoterpenoid)",-0.220510516175553,8.57213609873158e-05
+"CLASS:Nitrogen compound (Pyridine)","CLASS:Terpenoid (Sesquiterpenoid)",-0.205895238542918,0.000250698967252756
+"CLASS:Nitrogen compound (Pyridine)","CLASS:Ester",-0.97265799010323,1.28710941503423e-198
+"CLASS:Nitrogen compound (Pyridine)","CLASS:Acid (Fatty acid)",-0.826214609776523,3.02522822774632e-79
+"CLASS:Nitrogen compound (Pyridine)","CLASS:Alcohol",-0.917922944252911,1.72205202567921e-126
+"CLASS:Nitrogen compound (Pyridine)","CLASS:Aldehyde",0.981168740533445,1.96444855426533e-223
+"CLASS:Nitrogen compound (Pyridine)","CLASS:Ketone",-0.833381479643319,8.04919764334374e-82
+"CLASS:Nitrogen compound (Pyridine)","CLASS:Sulfur compound (Heterocyclic)",0.950920954668541,5.67104599552788e-160
+"CLASS:Nitrogen compound (Pyridine)","CLASS:Lactone (γ-Lactone)",0.983778707518578,2.17600865499731e-233
+"CLASS:Nitrogen compound (Pyridine)","CLASS:Unknown",0.990161662343957,7.77566263191403e-267
+"CLASS:Lactone (γ-Lactone)","CLASS:Carotenoid degradation product (C13 norisoprenoid)",0.0162314162550363,0.775205942522396
+"CLASS:Lactone (γ-Lactone)","CLASS:Cembranoid degradation product",-0.935072809650602,1.11962193688163e-141
+"CLASS:Lactone (γ-Lactone)","CLASS:Maillard reaction product (Pyrazine)",0.913877728451762,2.15945742685387e-123
+"CLASS:Lactone (γ-Lactone)","CLASS:Phenylpropanoid/benzenoid compound",-0.322067040229773,5.81973007068779e-09
+"CLASS:Lactone (γ-Lactone)","CLASS:Terpenoid (Monoterpenoid)",-0.14506328010735,0.0102989072001586
+"CLASS:Lactone (γ-Lactone)","CLASS:Terpenoid (Sesquiterpenoid)",-0.13436864709066,0.0175643804999534
+"CLASS:Lactone (γ-Lactone)","CLASS:Ester",-0.970955765283951,1.31169059221488e-194
+"CLASS:Lactone (γ-Lactone)","CLASS:Acid (Fatty acid)",-0.821672406853085,1.12800599313711e-77
+"CLASS:Lactone (γ-Lactone)","CLASS:Alcohol",-0.929278282257258,4.02191912282867e-136
+"CLASS:Lactone (γ-Lactone)","CLASS:Aldehyde",0.961335814039048,1.12550724287227e-175
+"CLASS:Lactone (γ-Lactone)","CLASS:Ketone",-0.863719989861116,2.91776670373563e-94
+"CLASS:Lactone (γ-Lactone)","CLASS:Sulfur compound (Heterocyclic)",0.918944884189778,2.6792789169304e-127
+"CLASS:Lactone (γ-Lactone)","CLASS:Nitrogen compound (Pyridine)",0.983778707518579,2.17600865499706e-233
+"CLASS:Lactone (γ-Lactone)","CLASS:Unknown",0.984576986617928,9.27639511932001e-237
+"CLASS:Unknown","CLASS:Carotenoid degradation product (C13 norisoprenoid)",0.0662723891901068,0.243134145552481
+"CLASS:Unknown","CLASS:Cembranoid degradation product",-0.957545180825172,1.65438304632557e-169
+"CLASS:Unknown","CLASS:Maillard reaction product (Pyrazine)",0.914536312642513,6.92544193793539e-124
+"CLASS:Unknown","CLASS:Phenylpropanoid/benzenoid compound",-0.320468599179213,6.9829515460744e-09
+"CLASS:Unknown","CLASS:Terpenoid (Monoterpenoid)",-0.121006626898569,0.0326239086843369
+"CLASS:Unknown","CLASS:Terpenoid (Sesquiterpenoid)",-0.104059005463717,0.0664083583367844
+"CLASS:Unknown","CLASS:Ester",-0.987765656499715,3.03967772517557e-252
+"CLASS:Unknown","CLASS:Acid (Fatty acid)",-0.866474204193747,1.54419942919941e-95
+"CLASS:Unknown","CLASS:Alcohol",-0.953163550639138,4.80397396378944e-163
+"CLASS:Unknown","CLASS:Aldehyde",0.958623430777217,3.33794296281594e-171
+"CLASS:Unknown","CLASS:Ketone",-0.886936063467539,5.19086168429148e-106
+"CLASS:Unknown","CLASS:Sulfur compound (Heterocyclic)",0.916078400470698,4.65799874245616e-125
+"CLASS:Unknown","CLASS:Nitrogen compound (Pyridine)",0.990161662343958,7.77566263191314e-267
+"CLASS:Unknown","CLASS:Lactone (γ-Lactone)",0.984576986617926,9.27639511932317e-237

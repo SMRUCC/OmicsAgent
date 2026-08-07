@@ -1,0 +1,211 @@
+"from","to","path_coeff","p_value"
+"KEGG:Metabolic pathways","KEGG:Biosynthesis of secondary metabolites",0.996331823268402,0
+"KEGG:Metabolic pathways","KEGG:Microbial metabolism in diverse environments",0.991495346643688,1.34635873828811e-276
+"KEGG:Metabolic pathways","KEGG:Other carbon fixation pathways",0.989817492110167,1.56266185810481e-264
+"KEGG:Metabolic pathways","KEGG:Carbon metabolism",-0.990693103264281,1.48037132623918e-270
+"KEGG:Metabolic pathways","KEGG:Biosynthesis of phenylpropanoids",0.983348323535505,1.21894044923553e-231
+"KEGG:Metabolic pathways","KEGG:Biosynthesis of alkaloids derived from shikimate pathway",0.994544347776416,2.21450999796753e-306
+"KEGG:Metabolic pathways","KEGG:Biosynthesis of plant secondary metabolites",0.996995159028383,0
+"KEGG:Metabolic pathways","KEGG:Biosynthesis of plant hormones",0.981868361519701,5.86329178846528e-226
+"KEGG:Metabolic pathways","KEGG:Glyoxylate and dicarboxylate metabolism",-0.984772947402024,1.29767177539798e-237
+"KEGG:Metabolic pathways","KEGG:Biosynthesis of alkaloids derived from ornithine, lysine and nicotinic acid",-0.988326162512147,2.21142643061033e-255
+"KEGG:Metabolic pathways","KEGG:Central carbon metabolism in cancer",-0.983130290550297,9.00267561791183e-231
+"KEGG:Metabolic pathways","KEGG:Biosynthesis of amino acids",-0.936016400235965,1.24730527898345e-142
+"KEGG:Metabolic pathways","KEGG:Biosynthesis of cofactors",-0.966949316608871,4.80085498550624e-186
+"KEGG:Metabolic pathways","KEGG:ABC transporters",-0.963163052167862,7.14994005010045e-179
+"KEGG:Biosynthesis of secondary metabolites","KEGG:Metabolic pathways",0.996331823268402,0
+"KEGG:Biosynthesis of secondary metabolites","KEGG:Microbial metabolism in diverse environments",0.994408100439559,1.00277690686611e-304
+"KEGG:Biosynthesis of secondary metabolites","KEGG:Other carbon fixation pathways",0.979650842037862,2.8887553732691e-218
+"KEGG:Biosynthesis of secondary metabolites","KEGG:Carbon metabolism",-0.994403284485998,1.14549624755878e-304
+"KEGG:Biosynthesis of secondary metabolites","KEGG:Biosynthesis of phenylpropanoids",0.971047125610853,8.10647507620401e-195
+"KEGG:Biosynthesis of secondary metabolites","KEGG:Biosynthesis of alkaloids derived from shikimate pathway",0.992582368062229,9.11514937654802e-286
+"KEGG:Biosynthesis of secondary metabolites","KEGG:Biosynthesis of plant secondary metabolites",0.996816986949137,0
+"KEGG:Biosynthesis of secondary metabolites","KEGG:Biosynthesis of plant hormones",0.970594478062414,8.66641400564726e-194
+"KEGG:Biosynthesis of secondary metabolites","KEGG:Glyoxylate and dicarboxylate metabolism",-0.991526961370912,7.57729062345908e-277
+"KEGG:Biosynthesis of secondary metabolites","KEGG:Biosynthesis of alkaloids derived from ornithine, lysine and nicotinic acid",-0.995610335099672,5.57306048508926e-321
+"KEGG:Biosynthesis of secondary metabolites","KEGG:Central carbon metabolism in cancer",-0.9918178320166,3.44941296106186e-279
+"KEGG:Biosynthesis of secondary metabolites","KEGG:Biosynthesis of amino acids",-0.956054647429781,3.09639010528641e-167
+"KEGG:Biosynthesis of secondary metabolites","KEGG:Biosynthesis of cofactors",-0.976568259095034,7.11502914963625e-209
+"KEGG:Biosynthesis of secondary metabolites","KEGG:ABC transporters",-0.977852281991076,1.26360656871644e-212
+"KEGG:Microbial metabolism in diverse environments","KEGG:Metabolic pathways",0.991495346643689,1.34635873828796e-276
+"KEGG:Microbial metabolism in diverse environments","KEGG:Biosynthesis of secondary metabolites",0.994408100439561,1.00277690686576e-304
+"KEGG:Microbial metabolism in diverse environments","KEGG:Other carbon fixation pathways",0.977400578410742,2.78951254208691e-211
+"KEGG:Microbial metabolism in diverse environments","KEGG:Carbon metabolism",-0.998205131169,0
+"KEGG:Microbial metabolism in diverse environments","KEGG:Biosynthesis of phenylpropanoids",0.966370569511942,6.76585816615509e-185
+"KEGG:Microbial metabolism in diverse environments","KEGG:Biosynthesis of alkaloids derived from shikimate pathway",0.992135155077549,7.6860867780593e-282
+"KEGG:Microbial metabolism in diverse environments","KEGG:Biosynthesis of plant secondary metabolites",0.987309741895621,8.52122702245757e-250
+"KEGG:Microbial metabolism in diverse environments","KEGG:Biosynthesis of plant hormones",0.959223942605255,3.62836896285253e-172
+"KEGG:Microbial metabolism in diverse environments","KEGG:Glyoxylate and dicarboxylate metabolism",-0.992988270259737,1.53137423901631e-289
+"KEGG:Microbial metabolism in diverse environments","KEGG:Biosynthesis of alkaloids derived from ornithine, lysine and nicotinic acid",-0.991304168297578,4.16131387334871e-275
+"KEGG:Microbial metabolism in diverse environments","KEGG:Central carbon metabolism in cancer",-0.992123500377844,9.66041791938486e-282
+"KEGG:Microbial metabolism in diverse environments","KEGG:Biosynthesis of amino acids",-0.953041557908618,7.1212664326369e-163
+"KEGG:Microbial metabolism in diverse environments","KEGG:Biosynthesis of cofactors",-0.958013934022703,3.07016464069623e-170
+"KEGG:Microbial metabolism in diverse environments","KEGG:ABC transporters",-0.971564062929513,5.17026451972723e-196
+"KEGG:Other carbon fixation pathways","KEGG:Metabolic pathways",0.989817492110168,1.56266185810481e-264
+"KEGG:Other carbon fixation pathways","KEGG:Biosynthesis of secondary metabolites",0.979650842037863,2.88875537326861e-218
+"KEGG:Other carbon fixation pathways","KEGG:Microbial metabolism in diverse environments",0.977400578410741,2.7895125420877e-211
+"KEGG:Other carbon fixation pathways","KEGG:Carbon metabolism",-0.978404291708535,2.63703388597218e-214
+"KEGG:Other carbon fixation pathways","KEGG:Biosynthesis of phenylpropanoids",0.996256958024868,0
+"KEGG:Other carbon fixation pathways","KEGG:Biosynthesis of alkaloids derived from shikimate pathway",0.989504070671472,1.67552089643057e-262
+"KEGG:Other carbon fixation pathways","KEGG:Biosynthesis of plant secondary metabolites",0.985488342728558,7.90298470940701e-241
+"KEGG:Other carbon fixation pathways","KEGG:Biosynthesis of plant hormones",0.991540680581999,5.90049593260337e-277
+"KEGG:Other carbon fixation pathways","KEGG:Glyoxylate and dicarboxylate metabolism",-0.967222014550704,1.35771986241558e-186
+"KEGG:Other carbon fixation pathways","KEGG:Biosynthesis of alkaloids derived from ornithine, lysine and nicotinic acid",-0.969585159908644,1.49823862994326e-191
+"KEGG:Other carbon fixation pathways","KEGG:Central carbon metabolism in cancer",-0.959579187626971,9.61006147943278e-173
+"KEGG:Other carbon fixation pathways","KEGG:Biosynthesis of amino acids",-0.892246442377168,4.60799747058302e-109
+"KEGG:Other carbon fixation pathways","KEGG:Biosynthesis of cofactors",-0.93634980969309,5.69798839853944e-143
+"KEGG:Other carbon fixation pathways","KEGG:ABC transporters",-0.923719397197332,3.20837497704072e-131
+"KEGG:Carbon metabolism","KEGG:Metabolic pathways",-0.990693103264282,1.48037132623901e-270
+"KEGG:Carbon metabolism","KEGG:Biosynthesis of secondary metabolites",-0.994403284485999,1.14549624755878e-304
+"KEGG:Carbon metabolism","KEGG:Microbial metabolism in diverse environments",-0.998205131168999,0
+"KEGG:Carbon metabolism","KEGG:Other carbon fixation pathways",-0.978404291708536,2.63703388597218e-214
+"KEGG:Carbon metabolism","KEGG:Biosynthesis of phenylpropanoids",-0.966539659544961,3.13845830941427e-185
+"KEGG:Carbon metabolism","KEGG:Biosynthesis of alkaloids derived from shikimate pathway",-0.994028614857114,2.56151021994525e-300
+"KEGG:Carbon metabolism","KEGG:Biosynthesis of plant secondary metabolites",-0.989069850836628,8.67861093097066e-260
+"KEGG:Carbon metabolism","KEGG:Biosynthesis of plant hormones",-0.959762926998787,4.81130998276142e-173
+"KEGG:Carbon metabolism","KEGG:Glyoxylate and dicarboxylate metabolism",0.996344501731387,0
+"KEGG:Carbon metabolism","KEGG:Biosynthesis of alkaloids derived from ornithine, lysine and nicotinic acid",0.993946646656948,2.10625265047814e-299
+"KEGG:Carbon metabolism","KEGG:Central carbon metabolism in cancer",0.994136265427987,1.53979360167667e-301
+"KEGG:Carbon metabolism","KEGG:Biosynthesis of amino acids",0.957841819924793,5.71091427524174e-170
+"KEGG:Carbon metabolism","KEGG:Biosynthesis of cofactors",0.964118177881161,1.31280233846007e-180
+"KEGG:Carbon metabolism","KEGG:ABC transporters",0.973242008042618,4.74089828044487e-200
+"KEGG:Biosynthesis of phenylpropanoids","KEGG:Metabolic pathways",0.983348323535505,1.21894044923539e-231
+"KEGG:Biosynthesis of phenylpropanoids","KEGG:Biosynthesis of secondary metabolites",0.971047125610853,8.10647507620448e-195
+"KEGG:Biosynthesis of phenylpropanoids","KEGG:Microbial metabolism in diverse environments",0.966370569511941,6.76585816615663e-185
+"KEGG:Biosynthesis of phenylpropanoids","KEGG:Other carbon fixation pathways",0.996256958024868,0
+"KEGG:Biosynthesis of phenylpropanoids","KEGG:Carbon metabolism",-0.966539659544961,3.13845830941445e-185
+"KEGG:Biosynthesis of phenylpropanoids","KEGG:Biosynthesis of alkaloids derived from shikimate pathway",0.981143546855265,2.41209687229471e-223
+"KEGG:Biosynthesis of phenylpropanoids","KEGG:Biosynthesis of plant secondary metabolites",0.979254693635644,5.56277975529788e-217
+"KEGG:Biosynthesis of phenylpropanoids","KEGG:Biosynthesis of plant hormones",0.99523445924371,1.83831348673311e-315
+"KEGG:Biosynthesis of phenylpropanoids","KEGG:Glyoxylate and dicarboxylate metabolism",-0.951206142729784,2.35004087883506e-160
+"KEGG:Biosynthesis of phenylpropanoids","KEGG:Biosynthesis of alkaloids derived from ornithine, lysine and nicotinic acid",-0.956879295616333,1.75249092098908e-168
+"KEGG:Biosynthesis of phenylpropanoids","KEGG:Central carbon metabolism in cancer",-0.944259230516889,1.24266405588412e-151
+"KEGG:Biosynthesis of phenylpropanoids","KEGG:Biosynthesis of amino acids",-0.868986489718905,9.98604966056409e-97
+"KEGG:Biosynthesis of phenylpropanoids","KEGG:Biosynthesis of cofactors",-0.921166939392661,4.30243040738453e-129
+"KEGG:Biosynthesis of phenylpropanoids","KEGG:ABC transporters",-0.904982320562746,4.38272281176247e-117
+"KEGG:Biosynthesis of alkaloids derived from shikimate pathway","KEGG:Metabolic pathways",0.994544347776417,2.21450999796627e-306
+"KEGG:Biosynthesis of alkaloids derived from shikimate pathway","KEGG:Biosynthesis of secondary metabolites",0.99258236806223,9.11514937654906e-286
+"KEGG:Biosynthesis of alkaloids derived from shikimate pathway","KEGG:Microbial metabolism in diverse environments",0.992135155077549,7.68608677806105e-282
+"KEGG:Biosynthesis of alkaloids derived from shikimate pathway","KEGG:Other carbon fixation pathways",0.989504070671472,1.67552089643038e-262
+"KEGG:Biosynthesis of alkaloids derived from shikimate pathway","KEGG:Carbon metabolism",-0.994028614857114,2.56151021994583e-300
+"KEGG:Biosynthesis of alkaloids derived from shikimate pathway","KEGG:Biosynthesis of phenylpropanoids",0.981143546855266,2.4120968722943e-223
+"KEGG:Biosynthesis of alkaloids derived from shikimate pathway","KEGG:Biosynthesis of plant secondary metabolites",0.99262709440186,3.58204720317189e-286
+"KEGG:Biosynthesis of alkaloids derived from shikimate pathway","KEGG:Biosynthesis of plant hormones",0.974265523194207,1.21589871516171e-202
+"KEGG:Biosynthesis of alkaloids derived from shikimate pathway","KEGG:Glyoxylate and dicarboxylate metabolism",-0.98990965693232,3.8448123947934e-265
+"KEGG:Biosynthesis of alkaloids derived from shikimate pathway","KEGG:Biosynthesis of alkaloids derived from ornithine, lysine and nicotinic acid",-0.990595541484934,7.39764476538876e-270
+"KEGG:Biosynthesis of alkaloids derived from shikimate pathway","KEGG:Central carbon metabolism in cancer",-0.987497582394809,8.56903755867323e-251
+"KEGG:Biosynthesis of alkaloids derived from shikimate pathway","KEGG:Biosynthesis of amino acids",-0.943438901395651,1.12144065410761e-150
+"KEGG:Biosynthesis of alkaloids derived from shikimate pathway","KEGG:Biosynthesis of cofactors",-0.963706478907969,7.45139211144022e-180
+"KEGG:Biosynthesis of alkaloids derived from shikimate pathway","KEGG:ABC transporters",-0.961878236787431,1.31418325897072e-176
+"KEGG:Biosynthesis of plant secondary metabolites","KEGG:Metabolic pathways",0.996995159028383,0
+"KEGG:Biosynthesis of plant secondary metabolites","KEGG:Biosynthesis of secondary metabolites",0.996816986949137,0
+"KEGG:Biosynthesis of plant secondary metabolites","KEGG:Microbial metabolism in diverse environments",0.987309741895621,8.52122702245757e-250
+"KEGG:Biosynthesis of plant secondary metabolites","KEGG:Other carbon fixation pathways",0.985488342728559,7.90298470940522e-241
+"KEGG:Biosynthesis of plant secondary metabolites","KEGG:Carbon metabolism",-0.989069850836628,8.67861093096967e-260
+"KEGG:Biosynthesis of plant secondary metabolites","KEGG:Biosynthesis of phenylpropanoids",0.979254693635644,5.56277975529756e-217
+"KEGG:Biosynthesis of plant secondary metabolites","KEGG:Biosynthesis of alkaloids derived from shikimate pathway",0.99262709440186,3.58204720317271e-286
+"KEGG:Biosynthesis of plant secondary metabolites","KEGG:Biosynthesis of plant hormones",0.981921380680488,3.73930915484435e-226
+"KEGG:Biosynthesis of plant secondary metabolites","KEGG:Glyoxylate and dicarboxylate metabolism",-0.985291831168251,6.26125436911625e-240
+"KEGG:Biosynthesis of plant secondary metabolites","KEGG:Biosynthesis of alkaloids derived from ornithine, lysine and nicotinic acid",-0.991666152175171,5.87688037424992e-278
+"KEGG:Biosynthesis of plant secondary metabolites","KEGG:Central carbon metabolism in cancer",-0.984033121094806,1.91443622275701e-234
+"KEGG:Biosynthesis of plant secondary metabolites","KEGG:Biosynthesis of amino acids",-0.943061086701701,3.05505186760618e-150
+"KEGG:Biosynthesis of plant secondary metabolites","KEGG:Biosynthesis of cofactors",-0.976463271757747,1.41119029017061e-208
+"KEGG:Biosynthesis of plant secondary metabolites","KEGG:ABC transporters",-0.96718337001875,1.62488250492676e-186
+"KEGG:Biosynthesis of plant hormones","KEGG:Metabolic pathways",0.981868361519701,5.86329178846461e-226
+"KEGG:Biosynthesis of plant hormones","KEGG:Biosynthesis of secondary metabolites",0.970594478062414,8.66641400564726e-194
+"KEGG:Biosynthesis of plant hormones","KEGG:Microbial metabolism in diverse environments",0.959223942605254,3.62836896285274e-172
+"KEGG:Biosynthesis of plant hormones","KEGG:Other carbon fixation pathways",0.991540680581998,5.90049593260404e-277
+"KEGG:Biosynthesis of plant hormones","KEGG:Carbon metabolism",-0.959762926998787,4.81130998276115e-173
+"KEGG:Biosynthesis of plant hormones","KEGG:Biosynthesis of phenylpropanoids",0.99523445924371,1.83831348673311e-315
+"KEGG:Biosynthesis of plant hormones","KEGG:Biosynthesis of alkaloids derived from shikimate pathway",0.974265523194206,1.21589871516178e-202
+"KEGG:Biosynthesis of plant hormones","KEGG:Biosynthesis of plant secondary metabolites",0.981921380680488,3.73930915484435e-226
+"KEGG:Biosynthesis of plant hormones","KEGG:Glyoxylate and dicarboxylate metabolism",-0.945553024193269,3.61133343986061e-153
+"KEGG:Biosynthesis of plant hormones","KEGG:Biosynthesis of alkaloids derived from ornithine, lysine and nicotinic acid",-0.955368459092845,3.23989193191035e-166
+"KEGG:Biosynthesis of plant hormones","KEGG:Central carbon metabolism in cancer",-0.938877882020499,1.3007231601539e-145
+"KEGG:Biosynthesis of plant hormones","KEGG:Biosynthesis of amino acids",-0.86609584940958,2.32123098849058e-95
+"KEGG:Biosynthesis of plant hormones","KEGG:Biosynthesis of cofactors",-0.929720094317066,1.57684664756344e-136
+"KEGG:Biosynthesis of plant hormones","KEGG:ABC transporters",-0.905309561046651,2.63582070667723e-117
+"KEGG:Glyoxylate and dicarboxylate metabolism","KEGG:Metabolic pathways",-0.984772947402024,1.29767177539798e-237
+"KEGG:Glyoxylate and dicarboxylate metabolism","KEGG:Biosynthesis of secondary metabolites",-0.991526961370912,7.57729062345908e-277
+"KEGG:Glyoxylate and dicarboxylate metabolism","KEGG:Microbial metabolism in diverse environments",-0.992988270259736,1.53137423901665e-289
+"KEGG:Glyoxylate and dicarboxylate metabolism","KEGG:Other carbon fixation pathways",-0.967222014550703,1.35771986241558e-186
+"KEGG:Glyoxylate and dicarboxylate metabolism","KEGG:Carbon metabolism",0.996344501731386,0
+"KEGG:Glyoxylate and dicarboxylate metabolism","KEGG:Biosynthesis of phenylpropanoids",-0.951206142729784,2.35004087883506e-160
+"KEGG:Glyoxylate and dicarboxylate metabolism","KEGG:Biosynthesis of alkaloids derived from shikimate pathway",-0.989909656932319,3.8448123947934e-265
+"KEGG:Glyoxylate and dicarboxylate metabolism","KEGG:Biosynthesis of plant secondary metabolites",-0.985291831168251,6.26125436911696e-240
+"KEGG:Glyoxylate and dicarboxylate metabolism","KEGG:Biosynthesis of plant hormones",-0.945553024193269,3.61133343986102e-153
+"KEGG:Glyoxylate and dicarboxylate metabolism","KEGG:Biosynthesis of alkaloids derived from ornithine, lysine and nicotinic acid",0.995981421856026,0
+"KEGG:Glyoxylate and dicarboxylate metabolism","KEGG:Central carbon metabolism in cancer",0.99722852210809,0
+"KEGG:Glyoxylate and dicarboxylate metabolism","KEGG:Biosynthesis of amino acids",0.973818942881882,1.69044486818715e-201
+"KEGG:Glyoxylate and dicarboxylate metabolism","KEGG:Biosynthesis of cofactors",0.975645993747599,2.62951279029849e-206
+"KEGG:Glyoxylate and dicarboxylate metabolism","KEGG:ABC transporters",0.9832556569904,2.86055861296959e-231
+"KEGG:Biosynthesis of alkaloids derived from ornithine, lysine and nicotinic acid","KEGG:Metabolic pathways",-0.988326162512147,2.21142643061058e-255
+"KEGG:Biosynthesis of alkaloids derived from ornithine, lysine and nicotinic acid","KEGG:Biosynthesis of secondary metabolites",-0.995610335099672,5.57306048508926e-321
+"KEGG:Biosynthesis of alkaloids derived from ornithine, lysine and nicotinic acid","KEGG:Microbial metabolism in diverse environments",-0.991304168297577,4.16131387334965e-275
+"KEGG:Biosynthesis of alkaloids derived from ornithine, lysine and nicotinic acid","KEGG:Other carbon fixation pathways",-0.969585159908643,1.4982386299436e-191
+"KEGG:Biosynthesis of alkaloids derived from ornithine, lysine and nicotinic acid","KEGG:Carbon metabolism",0.993946646656948,2.10625265047862e-299
+"KEGG:Biosynthesis of alkaloids derived from ornithine, lysine and nicotinic acid","KEGG:Biosynthesis of phenylpropanoids",-0.956879295616333,1.75249092098948e-168
+"KEGG:Biosynthesis of alkaloids derived from ornithine, lysine and nicotinic acid","KEGG:Biosynthesis of alkaloids derived from shikimate pathway",-0.990595541484934,7.39764476539044e-270
+"KEGG:Biosynthesis of alkaloids derived from ornithine, lysine and nicotinic acid","KEGG:Biosynthesis of plant secondary metabolites",-0.99166615217517,5.87688037424992e-278
+"KEGG:Biosynthesis of alkaloids derived from ornithine, lysine and nicotinic acid","KEGG:Biosynthesis of plant hormones",-0.955368459092845,3.23989193191091e-166
+"KEGG:Biosynthesis of alkaloids derived from ornithine, lysine and nicotinic acid","KEGG:Glyoxylate and dicarboxylate metabolism",0.995981421856026,0
+"KEGG:Biosynthesis of alkaloids derived from ornithine, lysine and nicotinic acid","KEGG:Central carbon metabolism in cancer",0.996442178637631,0
+"KEGG:Biosynthesis of alkaloids derived from ornithine, lysine and nicotinic acid","KEGG:Biosynthesis of amino acids",0.972128625384452,2.41332761269407e-197
+"KEGG:Biosynthesis of alkaloids derived from ornithine, lysine and nicotinic acid","KEGG:Biosynthesis of cofactors",0.982508428273144,2.34597691726138e-228
+"KEGG:Biosynthesis of alkaloids derived from ornithine, lysine and nicotinic acid","KEGG:ABC transporters",0.985923355149698,7.30431548655867e-243
+"KEGG:Central carbon metabolism in cancer","KEGG:Metabolic pathways",-0.983130290550297,9.00267561791286e-231
+"KEGG:Central carbon metabolism in cancer","KEGG:Biosynthesis of secondary metabolites",-0.9918178320166,3.44941296106147e-279
+"KEGG:Central carbon metabolism in cancer","KEGG:Microbial metabolism in diverse environments",-0.992123500377843,9.66041791938816e-282
+"KEGG:Central carbon metabolism in cancer","KEGG:Other carbon fixation pathways",-0.959579187626971,9.61006147943278e-173
+"KEGG:Central carbon metabolism in cancer","KEGG:Carbon metabolism",0.994136265427987,1.53979360167719e-301
+"KEGG:Central carbon metabolism in cancer","KEGG:Biosynthesis of phenylpropanoids",-0.944259230516889,1.24266405588405e-151
+"KEGG:Central carbon metabolism in cancer","KEGG:Biosynthesis of alkaloids derived from shikimate pathway",-0.987497582394809,8.56903755867226e-251
+"KEGG:Central carbon metabolism in cancer","KEGG:Biosynthesis of plant secondary metabolites",-0.984033121094806,1.91443622275723e-234
+"KEGG:Central carbon metabolism in cancer","KEGG:Biosynthesis of plant hormones",-0.938877882020499,1.30072316015383e-145
+"KEGG:Central carbon metabolism in cancer","KEGG:Glyoxylate and dicarboxylate metabolism",0.997228522108091,0
+"KEGG:Central carbon metabolism in cancer","KEGG:Biosynthesis of alkaloids derived from ornithine, lysine and nicotinic acid",0.996442178637632,0
+"KEGG:Central carbon metabolism in cancer","KEGG:Biosynthesis of amino acids",0.980666786000019,1.11488752287444e-221
+"KEGG:Central carbon metabolism in cancer","KEGG:Biosynthesis of cofactors",0.977284461789291,6.11802413484434e-211
+"KEGG:Central carbon metabolism in cancer","KEGG:ABC transporters",0.989575059559245,5.88419297493441e-263
+"KEGG:Biosynthesis of amino acids","KEGG:Metabolic pathways",-0.936016400235966,1.24730527898316e-142
+"KEGG:Biosynthesis of amino acids","KEGG:Biosynthesis of secondary metabolites",-0.956054647429782,3.09639010528588e-167
+"KEGG:Biosynthesis of amino acids","KEGG:Microbial metabolism in diverse environments",-0.953041557908618,7.12126643263731e-163
+"KEGG:Biosynthesis of amino acids","KEGG:Other carbon fixation pathways",-0.892246442377168,4.6079974705825e-109
+"KEGG:Biosynthesis of amino acids","KEGG:Carbon metabolism",0.957841819924793,5.71091427524044e-170
+"KEGG:Biosynthesis of amino acids","KEGG:Biosynthesis of phenylpropanoids",-0.868986489718906,9.98604966056125e-97
+"KEGG:Biosynthesis of amino acids","KEGG:Biosynthesis of alkaloids derived from shikimate pathway",-0.943438901395651,1.12144065410761e-150
+"KEGG:Biosynthesis of amino acids","KEGG:Biosynthesis of plant secondary metabolites",-0.943061086701701,3.05505186760652e-150
+"KEGG:Biosynthesis of amino acids","KEGG:Biosynthesis of plant hormones",-0.866095849409581,2.32123098849045e-95
+"KEGG:Biosynthesis of amino acids","KEGG:Glyoxylate and dicarboxylate metabolism",0.973818942881883,1.69044486818724e-201
+"KEGG:Biosynthesis of amino acids","KEGG:Biosynthesis of alkaloids derived from ornithine, lysine and nicotinic acid",0.972128625384453,2.41332761269366e-197
+"KEGG:Biosynthesis of amino acids","KEGG:Central carbon metabolism in cancer",0.980666786000019,1.11488752287444e-221
+"KEGG:Biosynthesis of amino acids","KEGG:Biosynthesis of cofactors",0.973682918652026,3.73470700853543e-201
+"KEGG:Biosynthesis of amino acids","KEGG:ABC transporters",0.991434071721268,4.07734891384274e-276
+"KEGG:Biosynthesis of cofactors","KEGG:Metabolic pathways",-0.966949316608872,4.80085498550515e-186
+"KEGG:Biosynthesis of cofactors","KEGG:Biosynthesis of secondary metabolites",-0.976568259095035,7.11502914963867e-209
+"KEGG:Biosynthesis of cofactors","KEGG:Microbial metabolism in diverse environments",-0.958013934022702,3.07016464069676e-170
+"KEGG:Biosynthesis of cofactors","KEGG:Other carbon fixation pathways",-0.93634980969309,5.69798839853944e-143
+"KEGG:Biosynthesis of cofactors","KEGG:Carbon metabolism",0.964118177881161,1.31280233846007e-180
+"KEGG:Biosynthesis of cofactors","KEGG:Biosynthesis of phenylpropanoids",-0.921166939392662,4.30243040738356e-129
+"KEGG:Biosynthesis of cofactors","KEGG:Biosynthesis of alkaloids derived from shikimate pathway",-0.963706478907969,7.45139211144149e-180
+"KEGG:Biosynthesis of cofactors","KEGG:Biosynthesis of plant secondary metabolites",-0.976463271757748,1.41119029017053e-208
+"KEGG:Biosynthesis of cofactors","KEGG:Biosynthesis of plant hormones",-0.929720094317066,1.57684664756335e-136
+"KEGG:Biosynthesis of cofactors","KEGG:Glyoxylate and dicarboxylate metabolism",0.9756459937476,2.62951279029819e-206
+"KEGG:Biosynthesis of cofactors","KEGG:Biosynthesis of alkaloids derived from ornithine, lysine and nicotinic acid",0.982508428273145,2.34597691726164e-228
+"KEGG:Biosynthesis of cofactors","KEGG:Central carbon metabolism in cancer",0.977284461789292,6.11802413484434e-211
+"KEGG:Biosynthesis of cofactors","KEGG:Biosynthesis of amino acids",0.973682918652026,3.73470700853586e-201
+"KEGG:Biosynthesis of cofactors","KEGG:ABC transporters",0.983658785877899,6.75255237258685e-233
+"KEGG:ABC transporters","KEGG:Metabolic pathways",-0.963163052167862,7.14994005010086e-179
+"KEGG:ABC transporters","KEGG:Biosynthesis of secondary metabolites",-0.977852281991076,1.26360656871651e-212
+"KEGG:ABC transporters","KEGG:Microbial metabolism in diverse environments",-0.971564062929512,5.17026451972811e-196
+"KEGG:ABC transporters","KEGG:Other carbon fixation pathways",-0.923719397197333,3.20837497703999e-131
+"KEGG:ABC transporters","KEGG:Carbon metabolism",0.973242008042618,4.74089828044487e-200
+"KEGG:ABC transporters","KEGG:Biosynthesis of phenylpropanoids",-0.904982320562747,4.38272281176197e-117
+"KEGG:ABC transporters","KEGG:Biosynthesis of alkaloids derived from shikimate pathway",-0.961878236787431,1.31418325897064e-176
+"KEGG:ABC transporters","KEGG:Biosynthesis of plant secondary metabolites",-0.967183370018751,1.62488250492639e-186
+"KEGG:ABC transporters","KEGG:Biosynthesis of plant hormones",-0.905309561046652,2.63582070667693e-117
+"KEGG:ABC transporters","KEGG:Glyoxylate and dicarboxylate metabolism",0.983255656990401,2.86055861296959e-231
+"KEGG:ABC transporters","KEGG:Biosynthesis of alkaloids derived from ornithine, lysine and nicotinic acid",0.985923355149699,7.30431548655618e-243
+"KEGG:ABC transporters","KEGG:Central carbon metabolism in cancer",0.989575059559245,5.88419297493374e-263
+"KEGG:ABC transporters","KEGG:Biosynthesis of amino acids",0.991434071721268,4.07734891384274e-276
+"KEGG:ABC transporters","KEGG:Biosynthesis of cofactors",0.983658785877898,6.75255237258685e-233

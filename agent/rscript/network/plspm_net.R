@@ -94,7 +94,17 @@ run_plspm <- function(expr_matrix, feature_info, latent_def,
     ld <- pca_result$rotation[, 1]
     sgn <- if (sum(ld) < 0) -1 else 1
 
-    latent_scores[[lv_name]] <- pca_result$x[, 1] * sgn
+    # prcomp 返回的 PC1 得分未标准化，其标准差为 sqrt(特征值)，会随潜变量
+    # 成员数增大而增大（成员越多、方差越大）。若直接用于内模型的 OLS，
+    # 斜率会被 sd(to)/sd(from) 这一与成员数相关的比例污染，导致路径系数
+    # 突破 [-1, 1]（实测 11 个成员的潜变量指向 369 个成员的潜变量时
+    # beta 达 -5.46）。PLS-PM 的路径系数定义为标准化回归系数，
+    # 故此处将潜变量得分标准化为单位方差。
+    sc <- pca_result$x[, 1] * sgn
+    sc_sd <- stats::sd(sc)
+    if (is.finite(sc_sd) && sc_sd > 0) sc <- sc / sc_sd
+
+    latent_scores[[lv_name]] <- sc
 
     # Loading
     outer_loadings[[lv_name]] <- data.frame(
@@ -128,23 +138,45 @@ run_plspm <- function(expr_matrix, feature_info, latent_def,
   colnames(scores_df) <- lv_names
   rownames(scores_df) <- colnames(expr_matrix)
 
-  if (is.null(inner_model)) {
-    # 全连接路径Coefficient
-    path_mat <- matrix(0, n_lv, n_lv)
-    rownames(path_mat) <- colnames(path_mat) <- lv_names
+  # 内模型：路径系数与显著性
+  # 原实现对每个有序对拟合两次 lm（一次填 path_mat、一次填 inner_summary），
+  # 共 2*k*(k-1) 次回归。此处合并为单趟，同时产出系数矩阵与汇总表。
+  path_mat <- matrix(0, n_lv, n_lv)
+  rownames(path_mat) <- colnames(path_mat) <- lv_names
+  pval_mat <- matrix(NA_real_, n_lv, n_lv)
 
+  if (is.null(inner_model)) {
+    # 全连接：任意有序对之间均估计一条路径
     # seq_len 而非 1:n_lv：n_lv 为 0 时 1:0 会反向迭代 c(1, 0)
     for (i in seq_len(n_lv)) {
       for (j in seq_len(n_lv)) {
-        if (i != j) {
-          fit <- stats::lm(scores_df[, j] ~ scores_df[, i])
-          cf <- stats::coef(summary(fit))
-          path_mat[i, j] <- if (nrow(cf) >= 2) cf[2, 1] else 0
-        }
+        if (i == j) next
+        fit <- stats::lm(scores_df[, j] ~ scores_df[, i])
+        cf <- stats::coef(summary(fit))
+        if (nrow(cf) < 2) next
+        path_mat[i, j] <- cf[2, 1]
+        pval_mat[i, j] <- cf[2, 4]
       }
     }
   } else {
-    path_mat <- inner_model
+    # 由调用方指定的邻接结构：仅估计 inner_model 中标记为非 0 的路径
+    spec <- inner_model
+    if (is.null(rownames(spec)) || is.null(colnames(spec))) {
+      rownames(spec) <- colnames(spec) <- lv_names
+    }
+    common_lv <- intersect(lv_names, intersect(rownames(spec), colnames(spec)))
+    for (i in seq_len(n_lv)) {
+      for (j in seq_len(n_lv)) {
+        if (i == j) next
+        if (!(lv_names[i] %in% common_lv) || !(lv_names[j] %in% common_lv)) next
+        if (spec[lv_names[i], lv_names[j]] == 0) next
+        fit <- stats::lm(scores_df[, j] ~ scores_df[, i])
+        cf <- stats::coef(summary(fit))
+        if (nrow(cf) < 2) next
+        path_mat[i, j] <- cf[2, 1]
+        pval_mat[i, j] <- cf[2, 4]
+      }
+    }
   }
 
   # 外模型
@@ -163,26 +195,20 @@ run_plspm <- function(expr_matrix, feature_info, latent_def,
     stringsAsFactors = FALSE
   )
 
-  # 预分配后一次性 rbind，避免在循环内反复 rbind（O(n^2) 复制）
-  rows <- list()
-  for (i in seq_len(n_lv)) {
-    for (j in seq_len(n_lv)) {
-      if (i != j && path_mat[i, j] != 0) {
-        fit <- stats::lm(scores_df[, j] ~ scores_df[, i])
-        cf <- stats::coef(summary(fit))
-        if (nrow(cf) < 2) next
-        rows[[length(rows) + 1]] <- data.frame(
-          from = lv_names[i],
-          to = lv_names[j],
-          path_coeff = cf[2, 1],
-          p_value = cf[2, 4],
-          stringsAsFactors = FALSE
-        )
-      }
-    }
-  }
-  if (length(rows) > 0) {
-    inner_summary <- do.call(rbind, rows)
+  # 直接由上一步已算好的 path_mat / pval_mat 组装，不再重复拟合 lm。
+  # 以 pval_mat 非 NA 判定"该路径已被估计"，而非以 path_coeff != 0 判定：
+  # 系数恰为 0（两潜变量完全不相关）是合法估计结果，不应被丢弃。
+  idx <- which(!is.na(pval_mat), arr.ind = TRUE)
+  if (nrow(idx) > 0) {
+    inner_summary <- data.frame(
+      from = lv_names[idx[, 1]],
+      to = lv_names[idx[, 2]],
+      path_coeff = path_mat[idx],
+      p_value = pval_mat[idx],
+      stringsAsFactors = FALSE
+    )
+    # 按 (from, to) 稳定排序，保证输出顺序可复现
+    inner_summary <- inner_summary[order(idx[, 1], idx[, 2]), , drop = FALSE]
     rownames(inner_summary) <- NULL
   }
 

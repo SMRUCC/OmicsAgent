@@ -45,15 +45,23 @@ map_kegg_compound_to_pathway <- function(kegg_ids, cache_dir = NULL,
     ))
   }
 
+  # 保留调用方请求的完整 ID 集合：后续 kegg_ids 会被缩减为"未缓存的新 ID"，
+  # 而最终返回值必须按原始请求集合过滤。
+  orig_ids <- kegg_ids
+
   # 检查缓存
   cache_file <- if (!is.null(cache_dir)) file.path(cache_dir, "kegg_pathway_mapping.csv") else NULL
   if (!is.null(cache_file) && file.exists(cache_file)) {
     cached <- utils::read.csv(cache_file, stringsAsFactors = FALSE)
-    cached_ids <- unique(cached$compound_id)
-    new_ids <- setdiff(kegg_ids, cached_ids)
+    # 已查询过的 ID = 有通路的 ID + 确认无通路的 ID（负结果）。
+    # 若只记录前者，那些本就没有通路的化合物会在每次运行时被反复查询，
+    # 既拖慢速度，又会触发"本批为空"的分支。
+    queried_ids <- .kegg_queried_ids(cached, cache_file)
+    new_ids <- setdiff(kegg_ids, queried_ids)
+    cached <- cached[!is.na(cached$compound_id), , drop = FALSE]
     if (length(new_ids) == 0) {
       cat("  Using cached KEGG pathway mapping\n")
-      return(cached[cached$compound_id %in% kegg_ids, ])
+      return(cached[cached$compound_id %in% orig_ids, , drop = FALSE])
     }
     kegg_ids <- new_ids
     cached_data <- cached
@@ -92,6 +100,16 @@ map_kegg_compound_to_pathway <- function(kegg_ids, cache_dir = NULL,
   }
 
   if (length(all_links) == 0) {
+    # 本批查询无任何通路关联。注意：这不代表整体结果为空——若已有缓存，
+    # 缓存中的历史映射必须原样保留，否则"命中缓存但新 ID 全部无通路"的
+    # 场景会把已缓存的全部映射一并丢弃（实测：74 个化合物中 57 个有通路、
+    # 17 个无通路，第二次运行时这 17 个被当作新 ID 重查，返回空后
+    # 导致 889 行缓存全部丢失）。
+    if (!is.null(cached_data) && nrow(cached_data) > 0) {
+      # 同时把本轮确认"无通路"的 ID 记为负结果，避免后续每次运行都重查
+      .kegg_write_cache(cached_data, cache_file, kegg_ids)
+      return(cached_data[cached_data$compound_id %in% orig_ids, , drop = FALSE])
+    }
     warning("No pathway associations found for any compound.")
     return(data.frame(
       compound_id = character(),
@@ -141,18 +159,61 @@ map_kegg_compound_to_pathway <- function(kegg_ids, cache_dir = NULL,
     stringsAsFactors = FALSE
   )
 
-  # 缓存
-  if (!is.null(cache_file)) {
-    if (!is.null(cached_data)) {
-      result <- rbind(cached_data, result)
-    }
-    utils::write.csv(result, cache_file, row.names = FALSE)
-    cat("  KEGG mapping cached at: ", cache_file, "\n")
-  } else if (!is.null(cached_data)) {
+  # 与历史缓存合并
+  if (!is.null(cached_data)) {
     result <- rbind(cached_data, result)
+    result <- result[!duplicated(result[, c("compound_id", "pathway_id")]), ,
+                     drop = FALSE]
   }
 
-  return(result)
+  # 缓存（含本轮已查询过的 ID，用于记录负结果）
+  if (!is.null(cache_file)) {
+    .kegg_write_cache(result, cache_file, kegg_ids)
+    cat("  KEGG mapping cached at: ", cache_file, "\n")
+  }
+
+  # 只返回调用方请求的化合物，避免把历史缓存中的无关记录一并带出
+  rownames(result) <- NULL
+  return(result[result$compound_id %in% orig_ids, , drop = FALSE])
+}
+
+
+# ------------------------------------------------------------------------------
+# KEGG 缓存内部辅助函数
+# ------------------------------------------------------------------------------
+# 负结果（某化合物确认无任何通路关联）与映射表分开存放：映射表保持
+# compound_id/pathway_id/pathway_name 三列的原有结构不变（向后兼容，
+# 旧缓存文件可直接读取），负结果另存同目录下的 sidecar 文件。
+
+.kegg_negative_file <- function(cache_file) {
+  file.path(dirname(cache_file), "kegg_no_pathway_ids.txt")
+}
+
+# 返回"已经查询过"的化合物 ID：缓存命中的 + 已知无通路的
+.kegg_queried_ids <- function(cached, cache_file) {
+  ids <- unique(cached$compound_id)
+  neg_file <- .kegg_negative_file(cache_file)
+  if (file.exists(neg_file)) {
+    neg <- readLines(neg_file, warn = FALSE)
+    neg <- trimws(neg)
+    ids <- unique(c(ids, neg[nzchar(neg)]))
+  }
+  ids
+}
+
+# 写出映射缓存，并把本轮查询中未获得任何通路的 ID 追加到负结果文件
+.kegg_write_cache <- function(result, cache_file, queried_ids) {
+  dir.create(dirname(cache_file), showWarnings = FALSE, recursive = TRUE)
+  utils::write.csv(result, cache_file, row.names = FALSE)
+
+  no_hit <- setdiff(queried_ids, unique(result$compound_id))
+  if (length(no_hit) > 0) {
+    neg_file <- .kegg_negative_file(cache_file)
+    prev <- if (file.exists(neg_file)) readLines(neg_file, warn = FALSE) else character()
+    all_neg <- sort(unique(c(trimws(prev), no_hit)))
+    writeLines(all_neg[nzchar(all_neg)], neg_file)
+  }
+  invisible(NULL)
 }
 
 
