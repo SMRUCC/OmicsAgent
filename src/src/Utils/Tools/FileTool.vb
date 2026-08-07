@@ -94,7 +94,17 @@ Public Class FileTool : Inherits WorkspaceTool
     <Description("获取 csv 表格文件的预览摘要，返回维度大小和列标题")>
     Public Function peek_csv(<Argument("path", Description:="文件路径，相对于工作区根目录或绝对路径")> path As String) As String
         Try
-            Dim dims = DataFrame.GetDimension(path)
+            Dim err As String = Nothing
+            Dim absPath = ResolvePath(path, err:=err)
+
+            If Not err Is Nothing Then
+                Return JsonMsg.error(err)
+            End If
+            If Not File.Exists(absPath) Then
+                Return JsonMsg.error($"File not found: {path}")
+            End If
+
+            Dim dims = DataFrame.GetDimension(absPath)
             Dim content As String = $"Csv Table[{dims.rows} Rows x {dims.cols} Cols]; column_headers:{JsonContract.GetJson(dims.header)}"
 
             Return content
@@ -178,22 +188,55 @@ Public Class FileTool : Inherits WorkspaceTool
                 Return JsonMsg.error(err)
             End If
             If Not Directory.Exists(absPath) Then
-                Return $"{{""error"": ""Directory not found: {EscapeJson(absPath)}""}}"
+                Return JsonMsg.error($"Directory not found: {EscapeJson(absPath)}")
+            Else
+                Return DirInfo.Load(absPath, extension).GetJson
             End If
+        Catch ex As Exception
+            Return JsonMsg.error(ex.Message)
+        End Try
+    End Function
 
+    Public Class DirInfo
+
+        Public Property count As Integer
+        Public Property dir As String
+        Public Property files As FileInfo()
+
+        Public Class FileInfo
+
+            Public Property path As String
+            Public Property size As String
+
+            Sub New()
+            End Sub
+
+            Sub New(file As String)
+                path = file.FileName
+                size = StringFormats.Lanudry(file.FileLength)
+            End Sub
+
+        End Class
+
+        Public Shared Function Load(absPath As String, Optional extension As String = "") As DirInfo
             Dim files As String()
+
             If String.IsNullOrEmpty(extension) Then
                 files = Directory.GetFiles(absPath)
             Else
                 files = Directory.GetFiles(absPath, $"*{extension}")
             End If
 
-            Dim fileList = files.Select(Function(f) Path.GetFileName(f)).ToArray()
-            Return $"{{""count"": {fileList.Length}, ""dir"": ""{EscapeJson(absPath)}"", ""files"": [""{String.Join(""", """, fileList)}""]}}"
-        Catch ex As Exception
-            Return JsonMsg.error(ex.Message)
-        End Try
-    End Function
+            Dim fileList = files.Select(Function(path) New FileInfo(path)).ToArray
+
+            Return New DirInfo With {
+                .dir = absPath,
+                .count = files.Length,
+                .files = fileList
+            }
+        End Function
+
+    End Class
 
     <Description("在工作区内创建目录，如有需要会创建所有父目录。")>
     Public Function create_directory(
@@ -221,7 +264,7 @@ Public Class FileTool : Inherits WorkspaceTool
         Try
             Dim absPath = ResolvePath(path, enforceWorkspace:=True)
             If Not File.Exists(absPath) Then
-                Return $"{{""error"": ""File not found: {EscapeJson(absPath)}""}}"
+                Return JsonMsg.error($"File Not found: {EscapeJson(absPath)}")
             End If
             File.Delete(absPath)
             _logger?.Invoke($"[FileTool] Deleted file: {absPath}")
