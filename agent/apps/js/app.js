@@ -8,6 +8,12 @@ function run(BASE_URL) {
   const getConclusionUrl = function (m) {
     return BASE_URL + "/analysis/" + m + "/conclusion.md";
   };
+  const getPlanUrl = function (m) {
+    return BASE_URL + "/tmp/" + m + "/plan.json";
+  };
+  const getResultUrl = function (m) {
+    return BASE_URL + "/tmp/" + m + "/result.json";
+  };
 
   /* ================================================================
    *  DOM 引用
@@ -20,6 +26,7 @@ function run(BASE_URL) {
   var searchInput = document.getElementById("searchInput");
   var moduleList = document.getElementById("moduleList");
   var view = document.getElementById("view");
+  var tabBar = document.getElementById("tabBar");
   var currentModuleLabel = document.getElementById("currentModule");
   var scrim = document.getElementById("scrim");
 
@@ -29,6 +36,10 @@ function run(BASE_URL) {
   var modules = [];
   var currentModule = null;
   var abortController = null;
+  var activeTab = "conclusion"; // "conclusion" | "plan" | "result"
+  // 缓存：每个模块加载过的数据，避免重复请求
+  // cache[moduleName] = { conclusion: {ok, data, error}, plan: {...}, result: {...} }
+  var cache = {};
 
   /* ================================================================
    *  SVG 图标
@@ -216,7 +227,45 @@ function run(BASE_URL) {
   }
 
   /* ================================================================
-   *  加载模块结论
+   *  标签页切换
+   * ================================================================ */
+  function switchTab(tabName) {
+    activeTab = tabName;
+
+    // 更新标签按钮状态
+    var tabs = tabBar.querySelectorAll(".tab");
+    tabs.forEach(function (btn) {
+      btn.classList.toggle("active", btn.dataset.tab === tabName);
+    });
+
+    // 渲染对应内容
+    renderTabContent();
+  }
+
+  // 根据当前激活标签渲染内容（使用缓存数据）
+  function renderTabContent() {
+    if (!currentModule) return;
+    var cached = cache[currentModule];
+    if (!cached) {
+      showSkeleton();
+      return;
+    }
+
+    if (activeTab === "conclusion") {
+      renderConclusionTab(cached.conclusion);
+    } else if (activeTab === "plan") {
+      renderPlanTab(cached.plan);
+    } else if (activeTab === "result") {
+      renderResultTab(cached.result);
+    }
+
+    // 滚动到顶部
+    var content = document.getElementById("content");
+    if (content) content.scrollTop = 0;
+  }
+
+  /* ================================================================
+   *  加载模块（并行拉取三个文件）
    * ================================================================ */
   async function loadModule(name) {
     // 取消上一个正在进行的请求
@@ -224,6 +273,7 @@ function run(BASE_URL) {
       abortController.abort();
     }
     abortController = new AbortController();
+    var signal = abortController.signal;
 
     currentModule = name;
     currentModuleLabel.textContent = name;
@@ -235,20 +285,527 @@ function run(BASE_URL) {
       el.classList.toggle("active", el.dataset.module === name);
     });
 
+    // 显示标签栏
+    tabBar.style.display = "flex";
+
+    // 重置到 conclusion 标签
+    activeTab = "conclusion";
+    var tabs = tabBar.querySelectorAll(".tab");
+    tabs.forEach(function (btn) {
+      btn.classList.toggle("active", btn.dataset.tab === "conclusion");
+    });
+
+    // 如果该模块已缓存，直接渲染
+    if (cache[name]) {
+      renderTabContent();
+      return;
+    }
+
     // 显示骨架屏
     showSkeleton();
 
+    // 初始化缓存条目
+    cache[name] = {
+      conclusion: { status: "pending" },
+      plan: { status: "pending" },
+      result: { status: "pending" },
+    };
+
+    // 并行拉取三个文件
+    fetchFile(getConclusionUrl(name), signal).then(
+      function (result) {
+        cache[name].conclusion = result;
+        if (activeTab === "conclusion") renderConclusionTab(result);
+      },
+      function (err) {
+        if (err.name === "AbortError") return;
+        cache[name].conclusion = {
+          status: "error",
+          error: err.message,
+        };
+        if (activeTab === "conclusion")
+          renderConclusionTab(cache[name].conclusion);
+      },
+    );
+
+    fetchFile(getPlanUrl(name), signal).then(
+      function (result) {
+        cache[name].plan = result;
+        if (activeTab === "plan") renderPlanTab(result);
+      },
+      function (err) {
+        if (err.name === "AbortError") return;
+        cache[name].plan = { status: "error", error: err.message };
+        if (activeTab === "plan") renderPlanTab(cache[name].plan);
+      },
+    );
+
+    fetchFile(getResultUrl(name), signal).then(
+      function (result) {
+        cache[name].result = result;
+        if (activeTab === "result") renderResultTab(result);
+      },
+      function (err) {
+        if (err.name === "AbortError") return;
+        cache[name].result = { status: "error", error: err.message };
+        if (activeTab === "result")
+          renderResultTab(cache[name].result);
+      },
+    );
+  }
+
+  // 通用文件拉取：返回 {status, data, error}
+  async function fetchFile(url, signal) {
     try {
-      var resp = await fetch(getConclusionUrl(name), {
-        signal: abortController.signal,
-      });
+      var resp = await fetch(url, { signal: signal });
       if (!resp.ok) throw new Error("HTTP " + resp.status);
-      var md = await resp.text();
-      renderMarkdown(md, name);
+      var text = await resp.text();
+      return { status: "ok", data: text };
     } catch (err) {
-      if (err.name === "AbortError") return;
-      showError(name, err);
+      if (err.name === "AbortError") throw err;
+      return { status: "error", error: err.message };
     }
+  }
+
+  /* ================================================================
+   *  渲染：分析结论标签（conclusion.md）
+   * ================================================================ */
+  function renderConclusionTab(result) {
+    if (result.status === "pending") {
+      showSkeleton();
+      return;
+    }
+    if (result.status === "error") {
+      view.innerHTML =
+        '<div class="banner err">' +
+        "<strong>无法加载分析结论</strong><br>" +
+        "conclusion.md 请求失败：<code>" +
+        escapeHtml(result.error) +
+        "</code>" +
+        "</div>";
+      return;
+    }
+    renderMarkdown(result.data, currentModule);
+  }
+
+  /* ================================================================
+   *  渲染：分析计划标签（plan.json）
+   * ================================================================ */
+  function renderPlanTab(result) {
+    if (result.status === "pending") {
+      showSkeleton();
+      return;
+    }
+    if (result.status === "error") {
+      view.innerHTML =
+        '<div class="banner err">' +
+        "<strong>无法加载分析计划</strong><br>" +
+        "plan.json 请求失败：<code>" +
+        escapeHtml(result.error) +
+        "</code>" +
+        "</div>";
+      return;
+    }
+
+    // 尝试解析 JSON
+    var parsed;
+    try {
+      parsed = JSON.parse(result.data);
+    } catch (e) {
+      view.innerHTML =
+        '<div class="banner err">' +
+        "<strong>plan.json 解析失败</strong><br>" +
+        "<code>" +
+        escapeHtml(e.message) +
+        "</code>" +
+        "</div>";
+      return;
+    }
+
+    view.innerHTML = renderPlanStructured(parsed, result.data);
+    bindJsonToggle();
+    bindCollapsible();
+
+    // 滚动到顶部
+    var content = document.getElementById("content");
+    if (content) content.scrollTop = 0;
+  }
+
+  /* ================================================================
+   *  渲染：分析结果标签（result.json）
+   * ================================================================ */
+  function renderResultTab(result) {
+    if (result.status === "pending") {
+      showSkeleton();
+      return;
+    }
+    if (result.status === "error") {
+      view.innerHTML =
+        '<div class="banner err">' +
+        "<strong>无法加载分析结果</strong><br>" +
+        "result.json 请求失败：<code>" +
+        escapeHtml(result.error) +
+        "</code>" +
+        "</div>";
+      return;
+    }
+
+    var parsed;
+    try {
+      parsed = JSON.parse(result.data);
+    } catch (e) {
+      view.innerHTML =
+        '<div class="banner err">' +
+        "<strong>result.json 解析失败</strong><br>" +
+        "<code>" +
+        escapeHtml(e.message) +
+        "</code>" +
+        "</div>";
+      return;
+    }
+
+    view.innerHTML = renderResultStructured(parsed, result.data);
+    bindJsonToggle();
+    bindCollapsible();
+
+    var content = document.getElementById("content");
+    if (content) content.scrollTop = 0;
+  }
+
+  /* ================================================================
+   *  plan.json 结构化渲染
+   * ================================================================ */
+  function renderPlanStructured(data, rawJson) {
+    var html = '<div class="json-viewer">';
+
+    // 头部：模块名称
+    var moduleName = data.module_name || data.ModuleName || data.name || "";
+    if (moduleName) {
+      html +=
+        '<div class="jv-header">' +
+        '<div class="jv-icon jv-icon-plan">📋</div>' +
+        '<div>' +
+        '<div class="jv-title">' +
+        escapeHtml(moduleName) +
+        "</div>" +
+        '<div class="jv-subtitle">分析计划 (plan.json)</div>' +
+        "</div></div>";
+    }
+
+    // 目标
+    var goal = data.goal || data.Goal || "";
+    if (goal) {
+      html += renderSection("🎯 分析目标", goal, "jv-goal");
+    }
+
+    // 输入文件
+    var inputFiles = data.input_files || data.InputFiles;
+    if (inputFiles && inputFiles.length > 0) {
+      html += renderFileList("📥 输入文件", inputFiles, "input");
+    }
+
+    // 输出文件
+    var outputFiles = data.output_files || data.OutputFiles;
+    if (outputFiles && outputFiles.length > 0) {
+      html += renderFileList("📤 输出文件", outputFiles, "output");
+    }
+
+    // 执行步骤
+    var steps = data.execution_steps || data.ExecutionSteps;
+    if (steps && steps.length > 0) {
+      html += '<div class="jv-section">';
+      html += '<div class="jv-section-title">📝 执行步骤</div>';
+      steps.forEach(function (step, i) {
+        var action = step.action || step.Action || "";
+        var stepGoal = step.goal || step.Goal || "";
+        var rscript = step.rscript_path || step.RScriptPath || "";
+
+        html += '<div class="jv-step">';
+        html +=
+          '<div class="jv-step-num">' + (i + 1) + "</div>";
+        html += '<div class="jv-step-body">';
+        if (action) {
+          html +=
+            '<div class="jv-step-action">' +
+            escapeHtml(action) +
+            "</div>";
+        }
+        if (stepGoal) {
+          html +=
+            '<div class="jv-step-goal"><span class="jv-label">目标：</span>' +
+            escapeHtml(stepGoal) +
+            "</div>";
+        }
+        if (rscript) {
+          html +=
+            '<div class="jv-step-meta"><span class="jv-label">脚本：</span><code>' +
+            escapeHtml(rscript) +
+            "</code></div>";
+        }
+        html += "</div></div>";
+      });
+      html += "</div>";
+    }
+
+    // 备注
+    var notes = data.notes || data.Notes || "";
+    if (notes) {
+      html += renderSection("💡 备注", notes, "jv-notes");
+    }
+
+    // 比较组（如果有）
+    var comparisons = data.comparisons;
+    if (comparisons) {
+      var compStr =
+        typeof comparisons === "string"
+          ? comparisons
+          : JSON.stringify(comparisons, null, 2);
+      if (compStr && compStr !== "null") {
+        html += renderSection("🔬 比较组设计", compStr, "jv-comparisons");
+      }
+    }
+
+    // 结论（折叠）
+    var conclusion = data.conclusion || data.Conclusion || "";
+    if (conclusion) {
+      html +=
+        '<div class="jv-section jv-collapsible">' +
+        '<div class="jv-section-title jv-collapse-toggle">' +
+        '<span class="jv-collapse-icon">▼</span>分析结论预览</div>' +
+        '<div class="jv-collapse-body jv-conclusion-text">' +
+        escapeHtml(conclusion) +
+        "</div></div>";
+    }
+
+    // LLM 回复（折叠）
+    var llmResp = data.llm_response || data.LlmResponse || "";
+    if (llmResp) {
+      html +=
+        '<div class="jv-section jv-collapsible">' +
+        '<div class="jv-section-title jv-collapse-toggle">' +
+        '<span class="jv-collapse-icon">▼</span>LLM 回复</div>' +
+        '<div class="jv-collapse-body jv-llm-text">' +
+        escapeHtml(llmResp) +
+        "</div></div>";
+    }
+
+    // Raw JSON 切换
+    html +=
+      '<div class="jv-raw-toggle">' +
+      '<button class="jv-raw-btn" data-raw="plan">查看原始 JSON</button>' +
+      "</div>";
+
+    html += "</div>"; // json-viewer
+
+    // 隐藏的 raw JSON 预格式化块（切换时显示）
+    html +=
+      '<pre class="jv-raw-pre" id="raw-plan" style="display:none;"><code>' +
+      escapeHtml(prettyJson(rawJson)) +
+      "</code></pre>";
+
+    return html;
+  }
+
+  /* ================================================================
+   *  result.json 结构化渲染
+   * ================================================================ */
+  function renderResultStructured(data, rawJson) {
+    var html = '<div class="json-viewer">';
+
+    // 头部：模块名称 + 序号
+    var moduleName = data.ModuleName || data.module_name || data.name || "";
+    var moduleIndex = data.ModuleIndex || data.module_index;
+
+    if (moduleName) {
+      var indexBadge = moduleIndex != null
+        ? '<span class="jv-index-badge">模块 ' + escapeHtml(String(moduleIndex)) + "</span>"
+        : "";
+      html +=
+        '<div class="jv-header">' +
+        '<div class="jv-icon jv-icon-result">📊</div>' +
+        '<div>' +
+        '<div class="jv-title">' +
+        indexBadge +
+        escapeHtml(moduleName) +
+        "</div>" +
+        '<div class="jv-subtitle">分析结果 (result.json)</div>' +
+        "</div></div>";
+    }
+
+    // 目标
+    var goal = data.Goal || data.goal || "";
+    if (goal) {
+      html += renderSection("🎯 分析目标", goal, "jv-goal");
+    }
+
+    // 结论（长文本，折叠）
+    var conclusion = data.Conclusion || data.conclusion || "";
+    if (conclusion) {
+      html +=
+        '<div class="jv-section jv-collapsible">' +
+        '<div class="jv-section-title jv-collapse-toggle">' +
+        '<span class="jv-collapse-icon">▼</span>分析结论</div>' +
+        '<div class="jv-collapse-body jv-conclusion-text">' +
+        escapeHtml(conclusion) +
+        "</div></div>";
+    }
+
+    // 输出目录
+    var outputDir = data.OutputDir || data.output_dir || "";
+    if (outputDir) {
+      html += renderKeyValue("📂 输出目录", outputDir);
+    }
+
+    // 工作目录
+    var workdir = data.Workdir || data.workdir || "";
+    if (workdir) {
+      html += renderKeyValue("🔧 工作目录", workdir);
+    }
+
+    // 输出文件（如果有）
+    var outputFiles = data.OutputFiles || data.output_files;
+    if (outputFiles && outputFiles.length > 0) {
+      html += renderFileList("📤 输出文件", outputFiles, "output");
+    }
+
+    // 输入文件（如果有）
+    var inputFiles = data.InputFiles || data.input_files;
+    if (inputFiles && inputFiles.length > 0) {
+      html += renderFileList("📥 输入文件", inputFiles, "input");
+    }
+
+    // 比较组（如果有）
+    var comparisons = data.comparisons || data.Comparisons;
+    if (comparisons) {
+      var compStr =
+        typeof comparisons === "string"
+          ? comparisons
+          : JSON.stringify(comparisons, null, 2);
+      if (compStr && compStr !== "null") {
+        html += renderSection("🔬 比较组设计", compStr, "jv-comparisons");
+      }
+    }
+
+    // Raw JSON 切换
+    html +=
+      '<div class="jv-raw-toggle">' +
+      '<button class="jv-raw-btn" data-raw="result">查看原始 JSON</button>' +
+      "</div>";
+
+    html += "</div>"; // json-viewer
+
+    html +=
+      '<pre class="jv-raw-pre" id="raw-result" style="display:none;"><code>' +
+      escapeHtml(prettyJson(rawJson)) +
+      "</code></pre>";
+
+    return html;
+  }
+
+  /* ================================================================
+   *  JSON 渲染辅助函数
+   * ================================================================ */
+
+  // 渲染一个文本段落区块
+  function renderSection(title, text, extraClass) {
+    return (
+      '<div class="jv-section ' + (extraClass || "") + '">' +
+      '<div class="jv-section-title">' + title + "</div>" +
+      '<div class="jv-section-text">' +
+      escapeHtml(text) +
+      "</div></div>"
+    );
+  }
+
+  // 渲染键值对
+  function renderKeyValue(label, value) {
+    return (
+      '<div class="jv-section jv-kv">' +
+      '<span class="jv-section-label">' + label + "</span>" +
+      '<code class="jv-section-code">' +
+      escapeHtml(value) +
+      "</code></div>"
+    );
+  }
+
+  // 渲染文件列表
+  function renderFileList(title, files, type) {
+    var html = '<div class="jv-section">';
+    html += '<div class="jv-section-title">' + title + "</div>";
+    html += '<ul class="jv-file-list jv-file-' + type + '">';
+    files.forEach(function (f) {
+      // 提取文件名部分用于显示
+      var display = f;
+      var sep = f.lastIndexOf("/");
+      var sep2 = f.lastIndexOf("\\");
+      var lastSep = Math.max(sep, sep2);
+      if (lastSep >= 0 && lastSep < f.length - 1) {
+        display = f.substring(lastSep + 1);
+      }
+      html +=
+        '<li title="' +
+        escapeHtml(f) +
+        '"><span class="jv-file-icon">' +
+        (type === "input" ? "▸" : "▹") +
+        "</span>" +
+        escapeHtml(display) +
+        "</li>";
+    });
+    html += "</ul></div>";
+    return html;
+  }
+
+  // 美化 JSON 字符串（如果解析失败则返回原始）
+  function prettyJson(rawStr) {
+    try {
+      return JSON.stringify(JSON.parse(rawStr), null, 2);
+    } catch (e) {
+      return rawStr;
+    }
+  }
+
+  /* ================================================================
+   *  交互绑定：Raw JSON 切换
+   * ================================================================ */
+  function bindJsonToggle() {
+    var btns = view.querySelectorAll(".jv-raw-btn");
+    btns.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var key = btn.dataset.raw; // "plan" or "result"
+        var pre = document.getElementById("raw-" + key);
+        var viewer = view.querySelector(".json-viewer");
+        if (!pre || !viewer) return;
+
+        if (pre.style.display === "none") {
+          pre.style.display = "block";
+          viewer.style.display = "none";
+          btn.textContent = "查看结构化视图";
+        } else {
+          pre.style.display = "none";
+          viewer.style.display = "block";
+          btn.textContent = "查看原始 JSON";
+        }
+      });
+    });
+  }
+
+  /* ================================================================
+   *  交互绑定：折叠区块
+   * ================================================================ */
+  function bindCollapsible() {
+    var toggles = view.querySelectorAll(".jv-collapse-toggle");
+    toggles.forEach(function (toggle) {
+      toggle.addEventListener("click", function () {
+        var section = toggle.parentElement;
+        section.classList.toggle("collapsed");
+        var icon = toggle.querySelector(".jv-collapse-icon");
+        if (icon) {
+          icon.textContent = section.classList.contains("collapsed")
+            ? "▶"
+            : "▼";
+        }
+      });
+    });
   }
 
   /* ================================================================
@@ -327,21 +884,6 @@ function run(BASE_URL) {
   }
 
   /* ================================================================
-   *  错误提示
-   * ================================================================ */
-  function showError(name, err) {
-    view.innerHTML =
-      '<div class="banner err">' +
-      "<strong>无法加载模块结论</strong><br>" +
-      "模块 <code>" +
-      escapeHtml(name) +
-      "</code> 的 conclusion.md 请求失败：<code>" +
-      escapeHtml(err.message) +
-      "</code>" +
-      "</div>";
-  }
-
-  /* ================================================================
    *  事件绑定
    * ================================================================ */
   themeToggle.addEventListener("click", toggleTheme);
@@ -349,6 +891,13 @@ function run(BASE_URL) {
   sidebarRestore.addEventListener("click", toggleSidebar);
   searchInput.addEventListener("input", function (e) {
     filterModules(e.target.value);
+  });
+
+  // 标签页切换
+  tabBar.addEventListener("click", function (e) {
+    var btn = e.target.closest(".tab");
+    if (!btn) return;
+    switchTab(btn.dataset.tab);
   });
 
   // 移动端点击遮罩关闭侧栏
