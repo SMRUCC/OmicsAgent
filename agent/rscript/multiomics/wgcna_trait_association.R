@@ -44,7 +44,7 @@ build_wgcna_modules_layer <- function(mo, layer,
     stop(sprintf("Omics layer '%s' not found. Available: %s",
                  layer, paste(names(mo$omics), collapse = ", ")))
   }
-
+  
   mat <- mo$omics[[layer]]$expression
   n_samp <- ncol(mat)
   n_feat <- nrow(mat)
@@ -54,7 +54,7 @@ build_wgcna_modules_layer <- function(mo, layer,
   }
   cat(sprintf("  [WGCNA] building modules on '%s' (%d features x %d samples)\n",
               layer, n_feat, n_samp))
-
+  
   wgcna <- build_wgcna_modules(
     expr_matrix = mat,
     soft_power = soft_power,
@@ -63,18 +63,18 @@ build_wgcna_modules_layer <- function(mo, layer,
     network_type = network_type,
     cor_fn = cor_fn
   )
-
+  
   membership <- data.frame(
     feature = names(wgcna$module_colors),
     module_color = unname(wgcna$module_colors),
     stringsAsFactors = FALSE
   )
   rownames(membership) <- membership$feature
-
+  
   n_modules <- length(setdiff(unique(wgcna$module_colors), "grey"))
   cat(sprintf("  [WGCNA] '%s': soft power = %s, %d non-grey module(s)\n",
               layer, wgcna$soft_power, n_modules))
-
+  
   list(
     module_colors = wgcna$module_colors,
     module_labels = wgcna$module_labels,
@@ -131,7 +131,7 @@ wgcna_traits_from_layer <- function(mo, layer, reference_samples,
   }
   traits <- t(as.matrix(mat[, common, drop = FALSE]))
   if (isTRUE(log_transform)) traits <- log2(traits + 1)
-
+  
   # 确保性状为数值型，并丢弃所有零方差列。
   mode(traits) <- "numeric"
   v <- apply(traits, 2, function(x) stats::var(x, na.rm = TRUE))
@@ -141,7 +141,7 @@ wgcna_traits_from_layer <- function(mo, layer, reference_samples,
                 layer, sum(!keep_col)))
   }
   traits <- traits[, keep_col, drop = FALSE]
-
+  
   # 按参考顺序返回（行为样本）。
   traits <- traits[reference_samples[reference_samples %in% rownames(traits)], , drop = FALSE]
   return(traits)
@@ -188,15 +188,15 @@ run_wgcna_trait_association <- function(wgcna, traits,
   }
   MEs <- MEs[common, , drop = FALSE]
   traits <- traits[common, , drop = FALSE]
-
+  
   modules <- colnames(MEs)
   trait_ids <- colnames(traits)
   modules <- modules[modules != "MEgrey"]  # unassigned genes are not a module
-
+  
   if (length(modules) == 0) {
     stop("No non-grey module is available for trait association.")
   }
-
+  
   rows <- list()
   for (mod in modules) {
     x <- as.numeric(MEs[, mod])
@@ -226,7 +226,7 @@ run_wgcna_trait_association <- function(wgcna, traits,
       )
     }
   }
-
+  
   if (length(rows) == 0) {
     return(list(module_trait = data.frame(),
                 module_summary = data.frame(),
@@ -238,7 +238,7 @@ run_wgcna_trait_association <- function(wgcna, traits,
   out$significant <- out$padj < 0.05
   out <- out[order(out$padj, -abs(out$r)), , drop = FALSE]
   rownames(out) <- NULL
-
+  
   module_summary <- do.call(rbind, lapply(split(out, out$module), function(sub) {
     data.frame(
       module = sub$module[1],
@@ -254,7 +254,7 @@ run_wgcna_trait_association <- function(wgcna, traits,
   module_summary <- module_summary[order(-module_summary$n_significant,
                                          -module_summary$mean_abs_r), , drop = FALSE]
   rownames(module_summary) <- NULL
-
+  
   trait_summary <- do.call(rbind, lapply(split(out, out$trait), function(sub) {
     data.frame(
       trait = sub$trait[1],
@@ -269,12 +269,12 @@ run_wgcna_trait_association <- function(wgcna, traits,
   trait_summary <- trait_summary[order(-trait_summary$n_significant,
                                        -abs(trait_summary$best_r)), , drop = FALSE]
   rownames(trait_summary) <- NULL
-
+  
   if (verbose) {
     cat(sprintf("  [WGCNA] %d module-trait pairs tested, %d significant (padj<0.05)\n",
                 nrow(out), sum(out$significant)))
   }
-
+  
   list(
     module_trait = out,
     module_summary = module_summary,
@@ -347,19 +347,19 @@ plot_wgcna_trait_heatmap <- function(assoc, top_n_traits = 40, title = NULL) {
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("Package 'ggplot2' is required.")
   }
-
+  
   # 按最小校正 p 值选取 top 性状。
   trait_rank <- aggregate(padj ~ trait, res, FUN = min)
   trait_rank <- trait_rank[order(trait_rank$padj), , drop = FALSE]
   top_traits <- head(trait_rank$trait, top_n_traits)
   sub <- res[res$trait %in% top_traits, , drop = FALSE]
-
+  
   sub$module <- factor(sub$module, levels = rev(sort(unique(sub$module))))
   sub$trait <- factor(sub$trait, levels = rev(unique(sub$trait)))
   sub$star <- ifelse(sub$padj < 0.001, "***",
                      ifelse(sub$padj < 0.01, "**",
                             ifelse(sub$padj < 0.05, "*", "")))
-
+  
   p <- ggplot2::ggplot(sub, ggplot2::aes(x = trait, y = module, fill = r)) +
     ggplot2::geom_tile(color = "grey90") +
     ggplot2::geom_text(ggplot2::aes(label = star), size = 2.6, nudge_y = 0.22) +
