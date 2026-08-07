@@ -109,18 +109,19 @@ source("source_all_scripts.R")
 | `expr_matrix` | 数值矩阵，features × samples | 必填 |
 | `sample_info` | data.frame，行名对应样本列 | 必填 |
 | `group_col` | 字符，分组列名 | `"sample_info"` |
-| `contrast` | 字符，对比公式（如 `"grp2-grp1"`） | `NULL` |
-| `covariates` | 字符向量，需纳入的协变量列名 | `NULL` |
-| `method` | 字符，归一化/估计方法 | `"ls"` |
-| `trend` | 逻辑 | `TRUE` |
-| `robust` | 逻辑 | `TRUE` |
-| `adj_method` | 多重检验校正方法 | `"BH"` |
-| `p_cutoff` | 数值，显著性阈值 | `0.05` |
-| `logFC_cutoff` | 数值，logFC 阈值 | `1` |
-| `verbose` | 逻辑 | `TRUE` |
+| `control_group` | 字符，对照/参考组名（NULL 则取字母序第一组） | `NULL` |
+| `case_groups` | 字符向量，与对照比较的组（NULL 则所有非对照组） | `NULL` |
+| `exclude_groups` | 字符向量，建模前剔除的分组（如 `"QC"`） | `"QC"` |
+| `strategy` | 字符，筛选策略：`"pvalue_logFC"` / `"pvalue_vip"` / `"pvalue_topN"` | `"pvalue_logFC"` |
+| `p_threshold` | 数值，p 值阈值 | `0.05` |
+| `logfc_threshold` | 数值，logFC 绝对值阈值 | `1` |
+| `vip_threshold` | 数值，VIP 阈值（strategy="pvalue_vip" 用） | `1.0` |
+| `top_n` | 数值，"pvalue_topN" 策略下按 logFC 取前 N | `20` |
+| `p_adj_method` | 多重检验校正方法 | `"BH"` |
+| `vip_result` | PLS-DA 的 VIP 结果（strategy="pvalue_vip" 时必填） | `NULL` |
 
-- **返回值**：列表，含 `results`（差异结果 data.frame：logFC、AveExpr、t、P.Value、adj.P.Val、B 等）、`fit`、`top_table`、`params`。
-- **输出文件**：返回对象，需经 `export_table()` 保存 `results`。
+- **返回值**：列表，含 `results`（合并结果 data.frame：feature_id、logFC、AveExpr、t、P.Value、adj.P.Val、B、significant、regulation 等）、`significant`（显著特征子集）、`comparisons`（每对比 data.frame 列表）、`strategy`。
+- **输出文件**：返回对象，需经 `export_table()` 保存 `results`（注意行名即 feature_id，建议 `use_rownames=TRUE`）。
 
 ### `differential/anova.R`
 
@@ -337,12 +338,10 @@ source("source_all_scripts.R")
 | `expr_matrix` | 数值矩阵，features × samples | 必填 |
 | `sample_info` | data.frame | 必填 |
 | `group_col` | 字符，分组列名 | `"sample_info"` |
-| `n_comp` | 数值，成分数 | `2` |
-| `scale` | 逻辑 | `TRUE` |
-| `validation` | 字符，`"none"` / `"CV"` / `"LOO"` | `"CV"` |
-| `verbose` | 逻辑 | `TRUE` |
+| `ncomp` | 数值，成分数 | `2` |
+| `exclude_groups` | 字符向量，建模前剔除的分组（如 `"QC"`） | `NULL` |
 
-- **返回值**：列表，含 `scores`、`loadings`、`vip`（变量重要性投影值）、`perf`、`params`。
+- **返回值**：列表，含 `scores`（样本得分 data.frame）、`loadings`（特征载荷 data.frame）、`vip`（VIP 值 data.frame）、`model`（PLS-DA 模型对象）、`groups`（分组水平）。
 - **输出文件**：返回 R 对象，需经 `export_table()` 保存 `vip` / `scores`。
 
 **`plot_plsda_scores`** — PLS-DA 样本得分图。
@@ -374,16 +373,14 @@ source("source_all_scripts.R")
 | 参数 | 类型 / 格式 | 默认值 |
 | --- | --- | --- |
 | `expr_matrix` | 数值矩阵，features × samples | 必填 |
-| `sample_info` | data.frame | 必填 |
+| `sample_info` | data.frame |  |
 | `group_col` | 字符 | `"sample_info"` |
 | `ncomp_pred` | 数值，预测成分数 | `1` |
-| `ncomp_ortho` | 数值，正交成分数 | `NULL`（自动） |
-| `scale` | 逻辑 | `TRUE` |
-| `validation` | 字符 | `"CV"` |
-| `verbose` | 逻辑 | `TRUE` |
+| `ncomp_orth` | 数值，正交成分数 | `1` |
+| `exclude_groups` | 字符向量，建模前剔除的分组 | `NULL` |
 
-- **返回值**：列表，含 `scores`、`loadings`、`vip`、`ortho_scores`、`perf`、`params`。
-- **输出文件**：返回 R 对象，需经 `export_table()` 保存结果表格。
+- **返回值**：列表，含 `scores`（含预测与正交得分的 data.frame）、`loadings`（特征载荷 data.frame，首列为 feature_id）、`vip`（VIP 值 data.frame）、`model`（OPLS-DA 模型对象）。
+- **输出文件**：返回 R 对象，需经 `export_table()` 保存 `scores` / `loadings` / `vip`。
 
 **`plot_oplsda_scores`** — OPLS-DA 样本得分图。
 
@@ -750,12 +747,12 @@ source("source_all_scripts.R")
 
 | 函数 | 功能 | 关键参数（默认值） | 返回值 / 输出 |
 | --- | --- | --- | --- |
-| `map_kegg_compound_to_pathway` | 将 KEGG compound ID 映射到通路 | `compound_ids`（必填）；`species = "hsa"` | data.frame（compound→pathway） |
-| `run_kegg_pathway_enrich` | KEGG 通路富集（超几何/Fisher） | `features`（必填）；`background`（必填）；`species="hsa"`；`p_cutoff=0.05`；`adj_method="BH"` | 列表，含 `results` data.frame |
-| `run_kegg_pathway_gsva` | KEGG 通路 GSVA 评分 | `expr_matrix`（必填）；`species="hsa"`；`method="gsva"` | 列表，含 `scores` 矩阵 |
-| `run_kegg_pathway_wgcna` | KEGG 通路与 WGCNA 模块关联 | `modules`（必填，WGCNA 结果）；`species="hsa"`；`cor_method="pearson"` | 列表，含 `assoc` data.frame |
+| `map_kegg_compound_to_pathway` | 查询 KEGG REST API，将 KEGG compound ID（如 `C02845`）映射到通路 | `kegg_ids`（必填）；`cache_dir=NULL`；`batch_size=10`；`delay=0.3` | data.frame（compound_id、pathway_id、pathway_name） |
+| `run_kegg_pathway_enrich` | KEGG 通路富集（Fisher 精确检验，先映射化合物到通路再检验每条通路） | `significant_compounds`（必填）；`all_compounds`（必填，背景）；`kegg_mapping`（必填，来自上一步）；`p_adj_method="BH"`；`min_size=2` | data.frame（pathway 富集结果，行名=pathway_name） |
+| `run_kegg_pathway_gsva` | KEGG 通路活性评分（GSVA/ssgsea/zscore/mean） | `expr_matrix`（必填）；`kegg_mapping`（必填）；`feature_info=NULL`；`feature_id_col="name"`；`kegg_col="kegg"`；`method="mean"`；`min_size=2`；`max_size=500` | 列表，含 `gsva_matrix`（通路×样本矩阵）、`pathways`、`n_pathways` |
+| `run_kegg_pathway_wgcna` | 由 KEGG 通路释义构建特征模块（供 `wgcna_module_trait` 使用） | `expr_matrix`（必填）；`kegg_mapping`（必填）；`feature_info`（必填）；`feature_id_col="name"`；`kegg_col="kegg"`；`min_size=2`；`max_size=500` | 列表，含 `MEs`、`colors`、`module_sizes`、`modules`、`n_modules`、`category_col="kegg_pathway"` |
 
-- **输出文件**：均返回 R 对象，需经 `export_table()` 保存 `results` / `scores` / `assoc`。
+- **输出文件**：均返回 R 对象，需经 `export_table()` 保存（GSVA 的 `gsva_matrix` 需先转 data.frame；enrich 的 data.frame 直接保存）。
 
 ---
 
