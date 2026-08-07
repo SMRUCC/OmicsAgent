@@ -1,5 +1,0 @@
-"layer_x","layer_y","procrustes_r","ss","p_value"
-"microbiome","metabolome",0.908716155433891,0.174234948853448,0.001
-"microbiome","volatilome",0.695546040891983,0.516215704999488,0.001
-"metabolome","volatilome",0.914850141214712,0.163049219119422,0.001
-"transcriptome","proteome",0.99250279751763,0.0149381969196773,0.001

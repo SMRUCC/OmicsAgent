@@ -1,5 +1,0 @@
-"transition","from_layer","to_layer","n_paths","n_significant","mean_path_coeff","mean_abs_path_coeff","max_abs_path_coeff","n_positive","n_negative"
-"proteome -> metabolome","proteome","metabolome",16,14,-0.3539,0.4933,1.2099,5,11
-"transcriptome -> proteome","transcriptome","proteome",16,14,0.0068,0.4449,1.0616,10,6
-"metabolome -> volatilome","metabolome","volatilome",16,13,0.0687,0.3602,0.9151,8,8
-"microbiome -> transcriptome","microbiome","transcriptome",16,10,0.0489,0.3111,1.0578,8,8

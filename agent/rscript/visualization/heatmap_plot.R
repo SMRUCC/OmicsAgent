@@ -4,30 +4,27 @@
 # Complex heatmap with family color blocks
 # ==============================================================================
 
-#' Plot heatmap with hierarchical clustering
+#' 绘制带层次聚类的热图
 #'
-#' @description Creates a publication-quality heatmap with hierarchical
-#'   clustering of features (rows) and sample grouping (columns). Optionally
-#'   displays family classification color blocks.
+#' @description 创建一张达到出版质量的热图，对特征（行）做层次聚类，并对样本分组
+#'   （列）着色。可选地显示家族分类的颜色色块。
 #'
-#' @param expr_matrix A numeric matrix (features x samples).
-#' @param sample_info A data.frame with sample metadata.
-#' @param feature_info Optional data.frame with feature annotations.
-#' @param group_col Column in sample_info for group labels. Default: "sample_info".
-#' @param name_col Column in feature_info for display names. Default: "name".
-#' @param family_col Optional column in feature_info for family classification.
-#'   If provided, a color block will show family. Default: "super_class".
-#' @param scale Character, scaling method: "row", "column", or "none".
-#'   Default: "row".
-#' @param clustering_method Linkage method for hierarchical clustering.
-#'   Default: "ward.D2".
-#' @param distance_method Distance method. Default: "euclidean".
-#' @param show_rownames Logical, whether to show row names. Default: TRUE.
-#' @param show_colnames Logical, whether to show column names. Default: FALSE.
-#' @param n_features Maximum number of features to display. If nrow > n_features,
-#'   shows top variable features. Default: 50.
+#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param sample_info 含样本元数据的 data.frame。
+#' @param feature_info 可选，含特征注释的 data.frame。
+#' @param group_col sample_info 中用于分组标签的列。默认："sample_info"。
+#' @param name_col feature_info 中用于显示名称的列。默认："name"。
+#' @param family_col feature_info 中用于家族分类的可选列。若提供，则以色块显示家族。
+#'   默认："super_class"。
+#' @param scale 字符，标准化方式："row"、"column" 或 "none"。默认："row"。
+#' @param clustering_method 层次聚类的连接方法。默认："ward.D2"。
+#' @param distance_method 距离方法。默认："euclidean"。
+#' @param show_rownames 逻辑值，是否显示行名。默认：TRUE。
+#' @param show_colnames 逻辑值，是否显示列名。默认：FALSE。
+#' @param n_features 显示的最大特征数。若 nrow > n_features，则显示变异最大的特征。
+#'   默认：50。
 #'
-#' @return A ComplexHeatmap object.
+#' @return 一个 ComplexHeatmap 对象。
 #'
 #' @examples
 #' \dontrun{
@@ -43,19 +40,19 @@ plot_heatmap <- function(expr_matrix, sample_info, feature_info = NULL,
                         distance_method = "euclidean",
                         show_rownames = TRUE, show_colnames = FALSE,
                         n_features = 50) {
-  # Align samples
+  # 对齐样本
   common_samples <- intersect(colnames(expr_matrix), rownames(sample_info))
   expr_matrix <- expr_matrix[, common_samples, drop = FALSE]
   sample_info <- sample_info[common_samples, , drop = FALSE]
 
-  # Select top variable features if needed
+  # 必要时选取变异最大的特征
   if (nrow(expr_matrix) > n_features) {
     row_vars <- apply(expr_matrix, 1, stats::var, na.rm = TRUE)
     top_idx <- order(row_vars, decreasing = TRUE)[1:n_features]
     expr_matrix <- expr_matrix[top_idx, , drop = FALSE]
   }
 
-  # Replace feature IDs with names if available
+  # 若可用，则用名称替换特征 ID
   if (!is.null(feature_info) && name_col %in% colnames(feature_info)) {
     feature_names <- feature_info[match(rownames(expr_matrix),
                                         rownames(feature_info)), name_col]
@@ -63,17 +60,17 @@ plot_heatmap <- function(expr_matrix, sample_info, feature_info = NULL,
                                      rownames(expr_matrix), feature_names)
   }
 
-  # Scale
+  # 标准化
   if (scale == "row") {
     expr_matrix <- t(scale(t(expr_matrix)))
   } else if (scale == "column") {
     expr_matrix <- scale(expr_matrix)
   }
 
-  # Handle NAs from scaling
+  # 处理标准化产生的 NA
   expr_matrix[is.na(expr_matrix)] <- 0
 
-  # Distance and clustering
+  # 距离与聚类
   dist_method <- get("dist", asNamespace("stats"))
   row_dist <- stats::dist(expr_matrix, method = distance_method)
   col_dist <- stats::dist(t(expr_matrix), method = distance_method)
@@ -81,13 +78,13 @@ plot_heatmap <- function(expr_matrix, sample_info, feature_info = NULL,
   row_hc <- stats::hclust(row_dist, method = clustering_method)
   col_order <- order(sample_info[[group_col]])
 
-  # Column annotation
+  # 列注释
   groups <- sample_info[[group_col]]
   group_colors <- make_group_colors(unique(groups))
 
-  # Check for ComplexHeatmap
+  # 检查 ComplexHeatmap 是否可用
   if (requireNamespace("ComplexHeatmap", quietly = TRUE)) {
-    # Column annotation
+    # 列注释
     col_anno <- ComplexHeatmap::HeatmapAnnotation(
       Group = groups,
       col = list(Group = group_colors),
@@ -112,7 +109,7 @@ plot_heatmap <- function(expr_matrix, sample_info, feature_info = NULL,
       )
     }
 
-    # Create heatmap
+    # 创建热图
     hm <- ComplexHeatmap::Heatmap(
       expr_matrix,
       name = "Expression",
@@ -130,7 +127,7 @@ plot_heatmap <- function(expr_matrix, sample_info, feature_info = NULL,
     )
 
   } else if (requireNamespace("pheatmap", quietly = TRUE)) {
-    # Fallback to pheatmap
+    # 退而使用 pheatmap
     annotation_col <- data.frame(
       Group = groups,
       row.names = colnames(expr_matrix)

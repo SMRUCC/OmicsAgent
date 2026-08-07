@@ -285,20 +285,19 @@ run_wgcna_trait_association <- function(wgcna, traits,
 }
 
 
-#' Map module membership back to feature names
+#' 将模块成员映射回特征名称
 #'
-#' @description Attaches readable feature identifiers (from the feature
-#'   annotation) to a module-trait result so the significant pairs can be
-#'   interpreted biologically instead of by internal feature ids.
+#' @description 将可读的特征标识符（来自特征注释）附加到模块-性状结果上，
+#'   使显著对能够以生物学含义解读，而非依赖内部特征 id。
 #'
-#' @param assoc Result of \code{run_wgcna_trait_association()}.
-#' @param module_feature_info Feature annotation of the module layer.
-#' @param module_layer Name of the module layer.
-#' @param trait_feature_info Feature annotation of the trait layer.
-#' @param trait_layer Name of the trait layer.
+#' @param assoc \code{run_wgcna_trait_association()} 的结果。
+#' @param module_feature_info 模块层的特征注释。
+#' @param module_layer 模块层的名称。
+#' @param trait_feature_info 性状层的特征注释。
+#' @param trait_layer 性状层的名称。
 #'
-#' @return A data.frame identical to \code{assoc$module_trait} plus module and
-#'   trait display-name columns.
+#' @return 与 \code{assoc$module_trait} 相同的数据框，另加 module 与 trait 的
+#'   显示名称列。
 #'
 #' @export
 annotate_wgcna_trait_result <- function(assoc, module_feature_info = NULL,
@@ -323,19 +322,17 @@ annotate_wgcna_trait_result <- function(assoc, module_feature_info = NULL,
 }
 
 
-#' Heatmap of module-trait correlation matrix
+#' 模块-性状相关矩阵的热力图
 #'
-#' @description Renders a tile heatmap of module eigengene vs downstream trait
-#'   correlations with significance stars. When the number of traits is large,
-#'   only the top traits by significance are shown and the rest are aggregated
-#'   in the return value.
+#' @description 以瓦片热力图展示模块特征基因与下游性状的相关，并标注显著性星号。
+#'   当性状数量很大时，仅显示按显著性排序的 top 性状，其余在返回值中汇总。
 #'
-#' @param assoc Result of \code{run_wgcna_trait_association()}.
-#' @param top_n_traits Maximum number of traits shown. Default: 40.
-#' @param title Optional plot title.
+#' @param assoc \code{run_wgcna_trait_association()} 的结果。
+#' @param top_n_traits 显示的最大性状数。默认：40。
+#' @param title 可选图标题。
 #'
-#' @return A ggplot object (invisibly a list with the data is returned for the
-#'   full matrix when n_traits exceeds \code{top_n_traits}).
+#' @return 一个 ggplot 对象（当性状数超过 \code{top_n_traits} 时，完整矩阵的数据
+#'   会以列表形式（invisibly）一并返回）。
 #'
 #' @examples
 #' \dontrun{
@@ -352,7 +349,7 @@ plot_wgcna_trait_heatmap <- function(assoc, top_n_traits = 40, title = NULL) {
     stop("Package 'ggplot2' is required.")
   }
 
-  # Choose the top traits by minimum adjusted p-value.
+  # 按最小校正 p 值选取 top 性状。
   trait_rank <- aggregate(padj ~ trait, res, FUN = min)
   trait_rank <- trait_rank[order(trait_rank$padj), , drop = FALSE]
   top_traits <- head(trait_rank$trait, top_n_traits)

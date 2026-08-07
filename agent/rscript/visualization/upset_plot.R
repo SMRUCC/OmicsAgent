@@ -4,19 +4,17 @@
 # Visualize intersections of multiple feature sets
 # ==============================================================================
 
-#' Plot UpSet diagram
+#' 绘制 UpSet 图
 #'
-#' @description Creates an UpSet plot for visualizing intersections among
-#'   multiple sets of features. Handles more than 4 sets where Venn diagrams
-#'   become impractical.
+#' @description 创建 UpSet 图以可视化多个特征集合之间的交集。可处理超过 4 个的集合，
+#'   而此时韦恩图已不再适用。
 #'
-#' @param sets Named list of character vectors (feature IDs).
-#' @param n_intersections Number of intersections to display. Default: 30.
-#' @param order_by Character, ordering of intersections: "degree" or "size".
-#'   Default: "size".
-#' @param fill_color Bar fill color. Default: "#4a90d9".
+#' @param sets 字符向量（特征 ID）的有名列表。
+#' @param n_intersections 显示的交集数量。默认：30。
+#' @param order_by 字符，交集的排序方式："degree" 或 "size"。默认："size"。
+#' @param fill_color 柱子填充色。默认："#4a90d9"。
 #'
-#' @return A ggplot-compatible object from UpSetR.
+#' @return 来自 UpSetR 的、与 ggplot 兼容的对象。
 #'
 #' @examples
 #' \dontrun{
@@ -36,7 +34,7 @@ plot_upset <- function(sets, n_intersections = 30, order_by = "size",
     stop("Package 'UpSetR' is required. Please install it.")
   }
 
-  # Convert list of sets to binary matrix
+  # 将集合列表转换为二值矩阵
   all_features <- unique(unlist(sets))
   binary_mat <- data.frame(
     feature_id = all_features,
@@ -50,10 +48,9 @@ plot_upset <- function(sets, n_intersections = 30, order_by = "size",
   rownames(binary_mat) <- binary_mat$feature_id
   binary_mat$feature_id <- NULL
 
-  # Create UpSet plot
-  # Note: order_by = "size" can crash in UpSetR for data frames with few sets
-  # and many elements (Counter selects a non-existent column). Fall back to
-  # "degree" in that case.
+  # 创建 UpSet 图
+  # 注意：当数据框集合很少而元素很多时，order_by = "size" 会在 UpSetR 中崩溃
+  # （Counter 选择了不存在的列）。此时回退到 "degree"。
   p <- NULL
   orders <- unique(c(order_by, "size", "degree"))
   for (ord in orders) {

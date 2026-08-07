@@ -1,2 +1,0 @@
-"network","type","n_nodes","n_arcs","n_features","n_timepoints","n_series","n_transitions","n_inter_omics_arcs","n_intra_omics_arcs","mean_arc_strength","mean_degree","max_out_degree","max_in_degree","algorithm","score"
-"pan_omics","dbn_multiomics",60,18,30,13,4,48,11,7,0.6139,0.6,8,1,"hc","bic"

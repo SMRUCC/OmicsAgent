@@ -1,29 +1,26 @@
 # ==============================================================================
-# OmicsFlow: QC/QA Assessment
+# OmicsFlow：质控 / 质量保证评估
 # ==============================================================================
-# Quality control and quality assessment functions
+# 质量控制与质量保证相关函数
 # ==============================================================================
 
-#' Calculate QC sample variation
+#' 计算 QC 样本变异
 #'
-#' @description Calculates the coefficient of variation (CV) for QC samples to
-#'   assess data acquisition stability. Features with high CV in QC samples
-#'   indicate poor analytical reproducibility.
+#' @description 计算 QC 样本的系数变异（CV），以评估数据采集的稳定性。QC 样本中
+#'   CV 较高的特征说明分析重复性较差。
 #'
-#' @param expr_matrix A numeric matrix (features x samples).
-#' @param sample_info A data.frame with sample metadata.
-#' @param qc_group Character, the group label for QC samples in
-#'   \code{sample_info[[group_col]]}. Default: "QC".
-#' @param group_col Column name in sample_info for group labels.
-#'   Default: "sample_info".
+#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param sample_info 含样本元数据的 data.frame。
+#' @param qc_group 字符，\code{sample_info[[group_col]]} 中 QC 样本的分组标签。默认："QC"。
+#' @param group_col sample_info 中用于分组标签的列名。默认："sample_info"。
 #'
-#' @return A list with:
+#' @return 一个列表：
 #'   \itemize{
-#'     \item \code{qc_cv}: Named numeric vector of CV (%) per feature.
-#'     \item \code{qc_mean}: Named numeric vector of mean per feature.
-#'     \item \code{qc_sd}: Named numeric vector of SD per feature.
-#'     \item \code{summary}: Data.frame with QC statistics.
-#'     \item \code{plot}: ggplot object showing CV distribution.
+#'     \item \code{qc_cv}: 各特征 CV（%）的有名数值向量。
+#'     \item \code{qc_mean}: 各特征均值的有名数值向量。
+#'     \item \code{qc_sd}: 各特征标准差的有名数值向量。
+#'     \item \code{summary}: 含 QC 统计量的数据框。
+#'     \item \code{plot}: 展示 CV 分布的 ggplot 对象。
 #'   }
 #'
 #' @examples
@@ -35,18 +32,18 @@
 #' @export
 qc_variation <- function(expr_matrix, sample_info, qc_group = "QC",
                          group_col = "sample_info") {
-  # Validate
+  # 校验
   if (!is.matrix(expr_matrix)) {
     expr_matrix <- as.matrix(expr_matrix)
     mode(expr_matrix) <- "numeric"
   }
 
-  # Align samples
+  # 对齐样本
   common_samples <- intersect(colnames(expr_matrix), rownames(sample_info))
   expr_matrix <- expr_matrix[, common_samples, drop = FALSE]
   sample_info <- sample_info[common_samples, , drop = FALSE]
 
-  # Get QC samples
+  # 获取 QC 样本
   qc_samples <- rownames(sample_info)[sample_info[[group_col]] == qc_group]
   if (length(qc_samples) == 0) {
     stop(paste("No QC samples found for group:", qc_group))
@@ -54,7 +51,7 @@ qc_variation <- function(expr_matrix, sample_info, qc_group = "QC",
 
   qc_data <- expr_matrix[, qc_samples, drop = FALSE]
 
-  # Calculate statistics
+  # 计算统计量
   qc_mean <- rowMeans(qc_data, na.rm = TRUE)
   qc_sd <- apply(qc_data, 1, stats::sd, na.rm = TRUE)
   qc_cv <- (qc_sd / abs(qc_mean)) * 100  # CV as percentage
@@ -95,25 +92,24 @@ qc_variation <- function(expr_matrix, sample_info, qc_group = "QC",
 }
 
 
-#' PCA-based QC assessment
+#' 基于 PCA 的质控评估
 #'
-#' @description Performs PCA on the full dataset (including QC samples) to
-#'   visually assess data quality. QC samples should cluster tightly in the
-#'   PCA score plot if data quality is good.
+#' @description 对整个数据集（含 QC 样本）执行 PCA，以可视化方式评估数据质量。
+#'   若数据质量良好，QC 样本应在 PCA 得分图中紧密聚成一簇。
 #'
-#' @param expr_matrix A numeric matrix (features x samples).
-#' @param sample_info A data.frame with sample metadata.
-#' @param qc_group Character, QC group label. Default: "QC".
-#' @param group_col Column name for group labels. Default: "sample_info".
-#' @param color_col Column name for color grouping. Default: group_col.
-#' @param scale Logical, whether to scale features. Default: TRUE.
+#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param sample_info 含样本元数据的 data.frame。
+#' @param qc_group 字符，QC 分组标签。默认："QC"。
+#' @param group_col 用于分组标签的列名。默认："sample_info"。
+#' @param color_col 用于颜色分组的列名。默认：group_col。
+#' @param scale 逻辑值，是否对特征进行标准化。默认：TRUE。
 #'
-#' @return A list with:
+#' @return 一个列表：
 #'   \itemize{
-#'     \item \code{pca_result}: PCA result object.
-#'     \item \code{scores}: PC scores data.frame.
-#'     \item \code{qc_dispersion}: Dispersion of QC samples (mean distance to QC centroid).
-#'     \item \code{plot}: ggplot PCA score plot with QC highlighted.
+#'     \item \code{pca_result}: PCA 结果对象。
+#'     \item \code{scores}: PC 得分数据框。
+#'     \item \code{qc_dispersion}: QC 样本的离散度（到 QC 质心的平均距离）。
+#'     \item \code{plot}: 高亮 QC 的 ggplot PCA 得分图。
 #'   }
 #'
 #' @examples
@@ -126,21 +122,21 @@ qc_variation <- function(expr_matrix, sample_info, qc_group = "QC",
 qc_pca_assessment <- function(expr_matrix, sample_info, qc_group = "QC",
                               group_col = "sample_info", color_col = NULL,
                               scale = TRUE) {
-  # Validate
+  # 校验
   common_samples <- intersect(colnames(expr_matrix), rownames(sample_info))
   expr_matrix <- expr_matrix[, common_samples, drop = FALSE]
   sample_info <- sample_info[common_samples, , drop = FALSE]
 
-  # Perform PCA
+  # 执行 PCA
   pca_result <- stats::prcomp(t(expr_matrix), scale. = scale, center = TRUE)
 
-  # Extract scores
+  # 提取得分
   scores <- as.data.frame(pca_result$x[, 1:2])
   colnames(scores) <- c("PC1", "PC2")
   scores$sample_id <- rownames(scores)
   scores$group <- sample_info[rownames(scores), group_col]
 
-  # Color column
+  # 颜色列
   if (is.null(color_col)) color_col <- group_col
   if (color_col %in% colnames(sample_info)) {
     scores$color_group <- sample_info[rownames(scores), color_col]
@@ -148,7 +144,7 @@ qc_pca_assessment <- function(expr_matrix, sample_info, qc_group = "QC",
     scores$color_group <- scores$group
   }
 
-  # QC dispersion
+  # QC 离散度
   qc_scores <- scores[scores$group == qc_group, ]
   if (nrow(qc_scores) > 0) {
     qc_centroid <- colMeans(qc_scores[, c("PC1", "PC2")])
@@ -158,14 +154,14 @@ qc_pca_assessment <- function(expr_matrix, sample_info, qc_group = "QC",
     qc_dispersion <- NA
   }
 
-  # Variance explained
+  # 解释方差
   var_explained <- pca_result$sdev^2 / sum(pca_result$sdev^2) * 100
 
-  # Colors
+  # 颜色
   groups <- unique(scores$color_group)
   colors <- make_group_colors(groups)
 
-  # Plot
+  # 绘图
   p <- ggplot2::ggplot(scores, ggplot2::aes(x = PC1, y = PC2)) +
     ggplot2::geom_point(ggplot2::aes(color = color_group, shape = group),
                         size = 3) +
@@ -182,12 +178,12 @@ qc_pca_assessment <- function(expr_matrix, sample_info, qc_group = "QC",
     ) +
     ggplot2::coord_equal()
 
-  # Add QC ellipse if enough QC samples
+  # 若 QC 样本足够，则添加 QC 椭圆
   if (nrow(qc_scores) >= 3) {
-    # Calculate 95% confidence ellipse for QC
+    # 计算 QC 的 95% 置信椭圆
     qc_mat <- as.matrix(qc_scores[, c("PC1", "PC2")])
     if (nrow(qc_mat) >= 3) {
-      # Simple ellipse using mean and covariance
+      # 使用均值与协方差构造简单椭圆
       centroid <- colMeans(qc_mat)
       cov_mat <- cov(qc_mat)
       eig <- eigen(cov_mat)
