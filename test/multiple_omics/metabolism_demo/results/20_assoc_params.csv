@@ -4,6 +4,7 @@
 "n_features","300"
 "n_pairs","44850"
 "n_mic","2000"
+"mic_candidate","balanced"
 "mic_pvalue_method","permutation"
 "n_perm","200"
 "score_method","combined"
@@ -11,4 +12,4 @@
 "p_adjust","BH"
 "p_threshold","0.05"
 "n_significant","37848"
-"n_nonlinear","0"
+"n_nonlinear","1000"

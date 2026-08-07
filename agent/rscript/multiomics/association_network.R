@@ -174,6 +174,74 @@ select_top_features <- function(mat, top_n = NULL, label = "matrix",
 
 
 # -----------------------------------------------------------------------------
+# 内部工具：选取送入 MIC 计算的候选Feature对
+# -----------------------------------------------------------------------------
+#' 选择 MIC 候选对
+#'
+#' @description MIC 的价值在于发现 Spearman 捕捉不到的非线性关联。
+#'   原实现一律按 |rho| 降序取 Top-K，导致候选对全是高度线性的边
+#'   （实测 top 2000 的 |rho| 落在 [0.951, 0.973]），而
+#'   \code{association} 判定 "nonlinear" 要求 |rho| < rho_linear_min
+#'   （默认 0.3）——两个条件互斥，nonlinear 永远为 0，MIC 实际上白算了。
+#'
+#'   此处提供三种策略：
+#'   \itemize{
+#'     \item \code{"balanced"}（默认）：一半取 |rho| 最高（验证强线性关联），
+#'       一半取 |rho| < rho_linear_min 中 MIC 最有可能有发现的低 rho 对，
+#'       使非线性关联真正可被检出。
+#'     \item \code{"low_rho"}：全部取 |rho| < rho_linear_min 的对，
+#'       专注非线性发现。
+#'     \item \code{"top_rho"}：保持原行为，按 |rho| 降序取 Top-K。
+#'   }
+#'
+#' @param rho 数值向量，Spearman rho。
+#' @param k 整数，候选对数量上限。
+#' @param strategy 字符，候选选取策略。
+#' @param rho_linear_min 数值，线性/非线性的 |rho| 分界。
+#'
+#' @return 整数向量，候选对在 rho 中的下标。
+#'
+#' @keywords internal
+#' @noRd
+.select_mic_candidates <- function(rho, k,
+                                   strategy = "balanced",
+                                   rho_linear_min = 0.3) {
+  n <- length(rho)
+  k <- min(k, n)
+  if (k <= 0) return(integer(0))
+
+  arho <- abs(rho)
+  ord_desc <- order(arho, decreasing = TRUE)
+
+  if (identical(strategy, "top_rho")) {
+    return(ord_desc[seq_len(k)])
+  }
+
+  low_idx <- which(arho < rho_linear_min)
+
+  if (identical(strategy, "low_rho")) {
+    if (length(low_idx) == 0) return(ord_desc[seq_len(k)])
+    # 低 rho 内部按 |rho| 降序：更接近阈值的边信息量通常更高
+    low_sorted <- low_idx[order(arho[low_idx], decreasing = TRUE)]
+    return(low_sorted[seq_len(min(k, length(low_sorted)))])
+  }
+
+  # balanced：高 rho 与低 rho 各占一半，不足的一方由另一方补足
+  n_low <- min(length(low_idx), floor(k / 2))
+  low_sel <- if (n_low > 0) {
+    low_sorted <- low_idx[order(arho[low_idx], decreasing = TRUE)]
+    low_sorted[seq_len(n_low)]
+  } else {
+    integer(0)
+  }
+  high_sel <- setdiff(ord_desc, low_sel)
+  high_sel <- high_sel[seq_len(min(k - length(low_sel), length(high_sel)))]
+
+  sort(unique(c(low_sel, high_sel)))
+}
+
+
+# -----------------------------------------------------------------------------
 # 内部工具：组装标准 9 列边表
 # -----------------------------------------------------------------------------
 #' 组装标准的 9 列关联边表
@@ -333,9 +401,11 @@ run_cross_omics_association <- function(mat_x, mat_y,
                                         p_adjust = "BH",
                                         p_threshold = 0.05,
                                         rho_linear_min = 0.3,
+                                        mic_candidate = c("balanced", "low_rho", "top_rho"),
                                         verbose = TRUE) {
   mic_pvalue_method <- match.arg(mic_pvalue_method)
   score_method      <- match.arg(score_method)
+  mic_candidate     <- match.arg(mic_candidate)
   
   if (!is.matrix(mat_x)) mat_x <- as.matrix(mat_x)
   if (!is.matrix(mat_y)) mat_y <- as.matrix(mat_y)
@@ -364,12 +434,18 @@ run_cross_omics_association <- function(mat_x, mat_y,
   n_pairs <- length(rho)
   if (verbose) cat(sprintf("[assoc] Spearman computed for %d feature pairs.\n", n_pairs))
   
-  # 候选对：按 |rho| 取 Top K
-  ord <- order(abs(rho), decreasing = TRUE)
+  # 候选对选取（见 .select_mic_candidates：按 |rho| 取 Top-K 会让
+  # nonlinear 判定永远无法触发）
   k <- min(max_pairs_for_mic, n_pairs)
-  cand <- ord[seq_len(k)]
-  if (verbose) cat(sprintf("[assoc] Selected %d candidate pairs for MIC.\n", k))
-  
+  cand <- .select_mic_candidates(rho, k, mic_candidate, rho_linear_min)
+  k <- length(cand)
+  if (verbose) {
+    cat(sprintf(paste0("[assoc] Selected %d candidate pairs for MIC ",
+                       "(strategy=%s; %d with |rho| < %.2f).\n"),
+                k, mic_candidate, sum(abs(rho[cand]) < rho_linear_min),
+                rho_linear_min))
+  }
+
   pairs_idx <- cbind(match(src_x[cand], fx), match(src_y[cand], fy))
   mic  <- rep(NA_real_, n_pairs)
   mic_p <- rep(NA_real_, n_pairs)
@@ -446,6 +522,10 @@ run_cross_omics_association <- function(mat_x, mat_y,
 #' @param p_adjust 字符，合并 p 值所用 p.adjust 方法。
 #' @param p_threshold 数值，校正后合并 p 值的显著性阈值。
 #' @param rho_linear_min 数值，线性与线性标签判定的 |rho| 阈值。
+#' @param mic_candidate 字符，MIC 候选对选取策略：
+#'   \code{"balanced"}（默认，高/低 rho 各半，使非线性关联可被检出）、
+#'   \code{"low_rho"}（只取 |rho| < rho_linear_min）或
+#'   \code{"top_rho"}（按 |rho| 降序，旧行为）。
 #' @param verbose 逻辑值，是否打印进度。
 #'
 #' @return 一个列表，含有 \code{edges}（9 列）、\code{nodes}、\code{params}
@@ -470,9 +550,11 @@ run_intra_omics_association <- function(mat, name = "omics",
                                         p_adjust = "BH",
                                         p_threshold = 0.05,
                                         rho_linear_min = 0.3,
+                                        mic_candidate = c("balanced", "low_rho", "top_rho"),
                                         verbose = TRUE) {
   mic_pvalue_method <- match.arg(mic_pvalue_method)
   score_method      <- match.arg(score_method)
+  mic_candidate     <- match.arg(mic_candidate)
   
   if (!is.matrix(mat)) mat <- as.matrix(mat)
   if (verbose) cat(sprintf("\n[assoc] === Intra-omics: %s ===\n", name))
@@ -493,11 +575,16 @@ run_intra_omics_association <- function(mat, name = "omics",
   n_pairs <- length(rho)
   if (verbose) cat(sprintf("[assoc] Spearman computed for %d intra-layer pairs.\n", n_pairs))
   
-  ord <- order(abs(rho), decreasing = TRUE)
   k <- min(max_pairs_for_mic, n_pairs)
-  cand <- ord[seq_len(k)]
-  if (verbose) cat(sprintf("[assoc] Selected %d candidate pairs for MIC.\n", k))
-  
+  cand <- .select_mic_candidates(rho, k, mic_candidate, rho_linear_min)
+  k <- length(cand)
+  if (verbose) {
+    cat(sprintf(paste0("[assoc] Selected %d candidate pairs for MIC ",
+                       "(strategy=%s; %d with |rho| < %.2f).\n"),
+                k, mic_candidate, sum(abs(rho[cand]) < rho_linear_min),
+                rho_linear_min))
+  }
+
   pairs_idx <- ut[cand, , drop = FALSE]
   mic  <- rep(NA_real_, n_pairs)
   mic_p <- rep(NA_real_, n_pairs)
@@ -541,6 +628,7 @@ run_intra_omics_association <- function(mat, name = "omics",
       name = name,
       n_features = nrow(mat),
       n_pairs = n_pairs, n_mic = k,
+      mic_candidate = mic_candidate,
       mic_pvalue_method = mic_pvalue_method, n_perm = n_perm,
       score_method = score_method, score_weight = score_weight,
       p_adjust = p_adjust, p_threshold = p_threshold,
