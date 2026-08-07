@@ -1,23 +1,19 @@
 # ==============================================================================
-# OmicsFlow: Missing Value Imputation
+# OmicsFlow: 缺失值填补
 # ==============================================================================
-# Impute missing values in expression matrix
+# 对表达矩阵中的缺失值进行填补
 # ==============================================================================
 
-#' Impute missing values using minimum positive value half
+#' 使用最小正值的一半填补缺失值
 #'
-#' @description Fills missing values (NA and optionally zero) with half of the
-#'   minimum positive value of each feature. This is a simple and widely used
-#'   imputation strategy in metabolomics.
+#' @description 将缺失值（NA，以及可选地将 0）用每个特征的最小正值的一半进行
+#'   填补。这是代谢组学中一种简单且广泛使用的填补策略。
 #'
-#' @param expr_matrix A numeric matrix (features x samples) with NA for
-#'   missing values.
-#' @param treat_zero_as_missing Logical, whether to treat zero values as
-#'   missing. Default: TRUE.
-#' @param factor Numeric, multiplier for the minimum positive value.
-#'   Default: 0.5 (half).
+#' @param expr_matrix 数值矩阵（特征 x 样本），缺失值用 NA 表示。
+#' @param treat_zero_as_missing 逻辑值，是否将零值视为缺失。默认：TRUE。
+#' @param factor 数值型，最小正值的乘子。默认：0.5（一半）。
 #'
-#' @return A numeric matrix with missing values imputed.
+#' @return 已填补缺失值的数值矩阵。
 #'
 #' @examples
 #' \dontrun{
@@ -27,18 +23,18 @@
 #' @export
 impute_min_half <- function(expr_matrix, treat_zero_as_missing = TRUE,
                             factor = 0.5) {
-  # Convert to matrix if needed
+  # 必要时转换为矩阵
   if (!is.matrix(expr_matrix)) {
     expr_matrix <- as.matrix(expr_matrix)
     mode(expr_matrix) <- "numeric"
   }
 
-  # Treat zeros as NA if specified
+  # 若指定则把零值当作 NA
   if (treat_zero_as_missing) {
     expr_matrix[expr_matrix == 0] <- NA
   }
 
-  # Impute per feature
+  # 按特征逐个填补
   for (i in 1:nrow(expr_matrix)) {
     row_vals <- expr_matrix[i, ]
     na_mask <- is.na(row_vals)
@@ -49,7 +45,7 @@ impute_min_half <- function(expr_matrix, treat_zero_as_missing = TRUE,
         fill_value <- min_positive * factor
         expr_matrix[i, na_mask] <- fill_value
       } else {
-        # All values are NA - fill with 0
+        # 所有值都是 NA —— 以 0 填充
         expr_matrix[i, na_mask] <- 0
       }
     }
@@ -59,20 +55,18 @@ impute_min_half <- function(expr_matrix, treat_zero_as_missing = TRUE,
 }
 
 
-#' Impute missing values using KNN
+#' 使用 KNN 填补缺失值
 #'
-#' @description Fills missing values using K-Nearest Neighbors imputation.
-#'   Uses the \code{impute} package's KNN implementation.
+#' @description 使用 K 近邻（K-Nearest Neighbors）填补缺失值。
+#'   底层调用 \code{impute} 包的 KNN 实现。
 #'
-#' @param expr_matrix A numeric matrix (features x samples) with NA for
-#'   missing values.
-#' @param k Number of nearest neighbors. Default: 10.
-#' @param treat_zero_as_missing Logical, whether to treat zero values as
-#'   missing. Default: TRUE.
-#' @param max_na_prop Maximum proportion of NA allowed per feature. Features
-#'   exceeding this are removed. Default: 0.5.
+#' @param expr_matrix 数值矩阵（特征 x 样本），缺失值用 NA 表示。
+#' @param k 近邻数量。默认：10。
+#' @param treat_zero_as_missing 逻辑值，是否将零值视为缺失。默认：TRUE。
+#' @param max_na_prop 每个特征允许的最大 NA 比例。超过该比例的特征将被
+#'   移除。默认：0.5。
 #'
-#' @return A numeric matrix with missing values imputed.
+#' @return 已填补缺失值的数值矩阵。
 #'
 #' @examples
 #' \dontrun{
@@ -82,18 +76,18 @@ impute_min_half <- function(expr_matrix, treat_zero_as_missing = TRUE,
 #' @export
 impute_knn <- function(expr_matrix, k = 10, treat_zero_as_missing = TRUE,
                        max_na_prop = 0.5) {
-  # Convert to matrix if needed
+  # 必要时转换为矩阵
   if (!is.matrix(expr_matrix)) {
     expr_matrix <- as.matrix(expr_matrix)
     mode(expr_matrix) <- "numeric"
   }
 
-  # Treat zeros as NA if specified
+  # 若指定则把零值当作 NA
   if (treat_zero_as_missing) {
     expr_matrix[expr_matrix == 0] <- NA
   }
 
-  # Remove features with too many NAs
+  # 移除含过多 NA 的特征
   na_prop <- rowMeans(is.na(expr_matrix))
   high_na_features <- rownames(expr_matrix)[na_prop > max_na_prop]
   if (length(high_na_features) > 0) {
@@ -102,32 +96,32 @@ impute_knn <- function(expr_matrix, k = 10, treat_zero_as_missing = TRUE,
     expr_matrix <- expr_matrix[na_prop <= max_na_prop, , drop = FALSE]
   }
 
-  # Check if impute package is available
+  # 检查 impute 包是否可用
   if (!requireNamespace("impute", quietly = TRUE)) {
-    # Fallback: use simple KNN implementation
+    # 回退：使用简化版 KNN 实现
     warning("Package 'impute' not available. Using simple KNN implementation.")
     return(.impute_knn_simple(expr_matrix, k))
   }
 
-  # Use impute.knn
+  # 使用 impute.knn
   result <- impute::impute.knn(as.matrix(expr_matrix), k = k,
                                 maxp = nrow(expr_matrix))
   return(result$data)
 }
 
 
-#' Simple KNN imputation (internal fallback)
+#' 简化版 KNN 填补（内部回退实现）
 #'
 #' @keywords internal
 #' @noRd
 .impute_knn_simple <- function(mat, k) {
-  # Calculate distance matrix between features
-  # For each feature with NAs, find k nearest features and impute
+  # 计算特征之间的距离矩阵
+  # 对每个含 NA 的特征，找出 k 个最近邻特征并进行填补
   for (i in 1:nrow(mat)) {
     na_mask <- is.na(mat[i, ])
     if (!any(na_mask)) next
 
-    # Calculate correlations with other features
+    # 与其他特征计算相关性
     other_features <- mat[-i, , drop = FALSE]
     correlations <- apply(other_features, 1, function(x) {
       common <- !is.na(mat[i, ]) & !is.na(x)
@@ -135,7 +129,7 @@ impute_knn <- function(expr_matrix, k = 10, treat_zero_as_missing = TRUE,
       cor(mat[i, common], x[common], use = "everything")
     })
 
-    # Get k nearest (highest absolute correlation)
+    # 取 k 个最近邻（绝对相关性最高）
     k_actual <- min(k, length(correlations))
     nearest_idx <- order(abs(correlations), decreasing = TRUE)[1:k_actual]
 
