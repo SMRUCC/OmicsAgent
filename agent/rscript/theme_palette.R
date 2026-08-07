@@ -208,7 +208,7 @@ save_plot_unified <- function(plot, filename, width = 8, height = 6,
                               dpi = 600, out_dir = ".") {
   pdf_path  <- file.path(out_dir, paste0(filename, ".pdf"))
   png_path  <- file.path(out_dir, paste0(filename, ".png"))
-  # cairo_pdf embeds fonts properly for journal submission
+  # cairo_pdf 可正确内嵌字体，满足期刊投稿要求
   ggsave(pdf_path, plot, width = width, height = height,
          device = cairo_pdf)
   ggsave(png_path, plot, width = width, height = height,
