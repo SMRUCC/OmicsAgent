@@ -18,6 +18,12 @@
       }
     })();
   </script>
+
+  <style>
+    .view {
+      max-width: 1600px;
+    }
+  </style>
 </head>
 
 <body>
@@ -39,17 +45,23 @@
     <aside class="sidebar">
       <h2>功能导航</h2>
       <div class="doc-list">
-        <a class="doc-item active" href="#" onclick="window.chrome.webview.hostObjects.win32.openResearch();"><span class="title">📚 开始数据研究</span></a>
+        <a class="doc-item active" href="#" onclick="window.chrome.webview.hostObjects.win32.openResearch();"><span
+            class="title">📚 开始数据研究</span></a>
         <hr />
-        <a class="doc-item" href="#" onclick="window.chrome.webview.hostObjects.win32.openVennTool();"><span class="title">🔵 Venn 图工具</span></a>
-        <a class="doc-item" href="#" onclick="window.chrome.webview.hostObjects.win32.openFolder();"><span class="title">📄 文件查看器</span></a>
-        <a class="doc-item" href="#" onclick="window.chrome.webview.hostObjects.win32.openSettings();"><span class="title">⚙️ 应用参数配置</span></a>
+        <a class="doc-item" href="#" onclick="window.chrome.webview.hostObjects.win32.openVennTool();"><span
+            class="title">🔵 Venn 图工具</span></a>
+        <a class="doc-item" href="#" onclick="window.chrome.webview.hostObjects.win32.openFolder();"><span
+            class="title">📄 文件查看器</span></a>
+        <a class="doc-item" href="#" onclick="window.chrome.webview.hostObjects.win32.openSettings();"><span
+            class="title">⚙️ 应用参数配置</span></a>
       </div>
     </aside>
 
     <!-- 内容区 -->
     <main class="content">
       <div class="view">
+        <h1 style="font-size: 64px;">Omics Flow Workshop™</h1>
+        <br />
         <!-- 软件总结 -->
         <section class="card card--blue">
           <h3><span class="dot"></span>👋 欢迎使用科研数据分析智能工作站</h3>
