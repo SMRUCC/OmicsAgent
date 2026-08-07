@@ -556,12 +556,9 @@ function run(BASE_URL) {
     // 比较组（如果有）
     var comparisons = data.comparisons;
     if (comparisons) {
-      var compStr =
-        typeof comparisons === "string"
-          ? comparisons
-          : JSON.stringify(comparisons, null, 2);
-      if (compStr && compStr !== "null") {
-        html += renderSection("🔬 比较组设计", compStr, "jv-comparisons");
+      var compHtml = renderComparisonsTable(comparisons);
+      if (compHtml) {
+        html += compHtml;
       }
     }
 
@@ -677,12 +674,9 @@ function run(BASE_URL) {
     // 比较组（如果有）
     var comparisons = data.comparisons || data.Comparisons;
     if (comparisons) {
-      var compStr =
-        typeof comparisons === "string"
-          ? comparisons
-          : JSON.stringify(comparisons, null, 2);
-      if (compStr && compStr !== "null") {
-        html += renderSection("🔬 比较组设计", compStr, "jv-comparisons");
+      var compHtml = renderComparisonsTable(comparisons);
+      if (compHtml) {
+        html += compHtml;
       }
     }
 
@@ -752,6 +746,69 @@ function run(BASE_URL) {
         "</li>";
     });
     html += "</ul></div>";
+    return html;
+  }
+
+  // 渲染比较组设计表格
+  function renderComparisonsTable(comparisons) {
+    // 如果是字符串，尝试解析为 JSON
+    if (typeof comparisons === "string") {
+      try {
+        comparisons = JSON.parse(comparisons);
+      } catch (e) {
+        return renderSection("🔬 比较组设计", comparisons, "jv-comparisons");
+      }
+    }
+
+    // 非数组则包装为单元素数组
+    if (!Array.isArray(comparisons)) {
+      comparisons = [comparisons];
+    }
+
+    if (comparisons.length === 0) return "";
+
+    // 字段名兼容（plan.json 小写 / result.json 大写）
+    function getField(obj, lowerKey, upperKey) {
+      return obj[lowerKey] || obj[upperKey] || obj[lowerKey.charAt(0).toUpperCase() + lowerKey.slice(1)] || "";
+    }
+
+    var html = '<div class="jv-section jv-comparisons">';
+    html += '<div class="jv-section-title">🔬 比较组设计 <span class="jv-comp-count">(' + comparisons.length + " 组)</span></div>";
+    html += '<div class="jv-table-wrap">';
+    html += '<table class="jv-comp-table">';
+    html += "<thead><tr>";
+    html += '<th class="col-idx">#</th>';
+    html += '<th class="col-name">比较名称</th>';
+    html += '<th class="col-treatment">处理组 (Treatment)</th>';
+    html += '<th class="col-control">对照组 (Control)</th>';
+    html += '<th class="col-rationale">生物学依据</th>';
+    html += '<th class="col-findings">预期发现</th>';
+    html += "</tr></thead>";
+    html += "<tbody>";
+
+    comparisons.forEach(function (comp, i) {
+      var name = getField(comp, "name", "Name");
+      var treatment = getField(comp, "treatment", "Treatment");
+      var control = getField(comp, "control", "Control");
+      var rationale = getField(comp, "biological_rationale", "BiologicalRationale");
+      var findings = getField(comp, "expected_findings", "ExpectedFindings");
+
+      var rowClass = i % 2 === 0 ? "jv-row-even" : "jv-row-odd";
+
+      html += '<tr class="' + rowClass + '">';
+      html += '<td class="col-idx">' + (i + 1) + "</td>";
+      html += '<td class="col-name"><code>' + escapeHtml(name) + "</code></td>";
+      html += '<td class="col-treatment">' + escapeHtml(treatment) + "</td>";
+      html += '<td class="col-control">' + escapeHtml(control) + "</td>";
+      html += '<td class="col-rationale">' + escapeHtml(rationale) + "</td>";
+      html += '<td class="col-findings">' + escapeHtml(findings) + "</td>";
+      html += "</tr>";
+    });
+
+    html += "</tbody></table>";
+    html += "</div>"; // jv-table-wrap
+    html += "</div>"; // jv-section
+
     return html;
   }
 
