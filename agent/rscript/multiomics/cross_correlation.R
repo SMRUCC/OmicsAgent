@@ -1,48 +1,39 @@
 # ==============================================================================
-# OmicsFlow: Cross-Omics Feature Correlation
+# OmicsFlow：跨组学特征相关性分析
 # ==============================================================================
-# Vectorised feature-level correlation between two omics layers, used for
-# microbiome-metabolite and microbiome-volatilome driver analysis.
+# 两个组学层之间特征级别的相关性（向量化计算），用于
+# 微生物-代谢物、以及微生物-挥发物驱动的关联分析。
 # ==============================================================================
 
-#' Cross-omics feature correlation between two matrices
+#' 两个矩阵之间的跨组学特征相关性
 #'
-#' @description Computes the full correlation matrix between the features of
-#'   two omics layers measured on the same samples. The computation is fully
-#'   vectorised (standardised matrix cross-product) so that large blocks such
-#'   as 2000 x 1000 features are evaluated in seconds instead of running
-#'   millions of \code{cor.test()} calls. P-values are derived analytically
-#'   from the t distribution and adjusted for multiple testing; only pairs
-#'   passing the thresholds are returned in the sparse \code{pairs} table.
+#' @description 计算在相同样本上测得的、两个组学层各特征之间的完整相关矩阵。
+#'   计算全程向量化（标准化矩阵叉积），因此诸如 2000 x 1000 这样的大规模
+#'   特征块可在数秒内完成，而无需运行数百万次 \code{cor.test()} 调用。
+#'   p 值由 t 分布解析得出，并针对多重检验进行校正；只有通过阈值的特征对
+#'   才会以稀疏 \code{pairs} 表的形式返回。
 #'
-#' @param mat_x Numeric matrix of the first layer (features x samples).
-#' @param mat_y Numeric matrix of the second layer (features x samples).
-#' @param method Correlation method, "pearson" or "spearman". Spearman is
-#'   obtained by ranking rows before applying the same vectorised path.
-#'   Default: "pearson".
-#' @param p_adjust Multiple-testing correction passed to \code{p.adjust()}.
-#'   Default: "BH".
-#' @param r_threshold Minimum absolute correlation for a pair to be reported.
-#'   Default: 0.6.
-#' @param p_threshold Maximum adjusted p-value for a pair to be reported.
-#'   Default: 0.05.
-#' @param max_pairs Maximum number of pairs kept in the sparse table; the
-#'   strongest associations are retained when the limit is exceeded.
-#'   Default: 100000.
-#' @param name_x Label of the first layer stored in the pairs table.
-#'   Default: "x".
-#' @param name_y Label of the second layer stored in the pairs table.
-#'   Default: "y".
-#' @param verbose Logical, print progress information. Default: TRUE.
+#' @param mat_x 第一层的数值矩阵（特征 x 样本）。
+#' @param mat_y 第二层的数值矩阵（特征 x 样本）。
+#' @param method 相关方法，"pearson" 或 "spearman"。spearman 为对各行先排序
+#'   再套用同样的向量化路径得到。默认："pearson"。
+#' @param p_adjust 传给 \code{p.adjust()} 的多重检验校正方法。默认："BH"。
+#' @param r_threshold 报告某对特征所需的最小绝对相关系数。默认：0.6。
+#' @param p_threshold 报告某对特征所需的最大校正后 p 值。默认：0.05。
+#' @param max_pairs 稀疏表中保留的最大特征对数；超出上限时保留关联最强者。
+#'   默认：100000。
+#' @param name_x 存储在 pairs 表中的第一层标签。默认："x"。
+#' @param name_y 存储在 pairs 表中的第二层标签。默认："y"。
+#' @param verbose 逻辑值，是否打印进度信息。默认：TRUE。
 #'
-#' @return A list with:
+#' @return 一个列表：
 #'   \itemize{
-#'     \item \code{cor_matrix}: Correlation matrix (features_x x features_y).
-#'     \item \code{p_matrix}: Raw p-value matrix.
-#'     \item \code{padj_matrix}: Adjusted p-value matrix.
-#'     \item \code{pairs}: data.frame of significant pairs with columns
-#'       feature_x, feature_y, omics_x, omics_y, r, p, padj.
-#'     \item \code{params}: List of the settings used.
+#'     \item \code{cor_matrix}: 相关矩阵（features_x x features_y）。
+#'     \item \code{p_matrix}: 原始 p 值矩阵。
+#'     \item \code{padj_matrix}: 校正后的 p 值矩阵。
+#'     \item \code{pairs}: 显著特征对的数据框，列包括
+#'       feature_x、feature_y、omics_x、omics_y、r、p、padj。
+#'     \item \code{params}: 所使用设置的列表。
 #'   }
 #'
 #' @examples
@@ -82,7 +73,7 @@ run_cross_correlation <- function(mat_x, mat_y,
     stop("No informative features left after removing zero-variance rows.")
   }
 
-  # Spearman is Pearson on ranks
+  # Spearman 即秩上的 Pearson
   if (method == "spearman") {
     mat_x <- t(apply(mat_x, 1, rank))
     mat_y <- t(apply(mat_y, 1, rank))
@@ -99,7 +90,7 @@ run_cross_correlation <- function(mat_x, mat_y,
                 name_x, nrow(mat_x), name_y, nrow(mat_y), n, method))
   }
 
-  # Row-wise standardisation -> correlation is a simple cross-product ---------
+  # 按行标准化 -> 相关系数即为简单的叉积 ---------
   zx <- .row_standardise(mat_x)
   zy <- .row_standardise(mat_y)
 
@@ -107,7 +98,7 @@ run_cross_correlation <- function(mat_x, mat_y,
   cor_matrix[cor_matrix > 1] <- 1
   cor_matrix[cor_matrix < -1] <- -1
 
-  # Analytic p-values from the t distribution ---------------------------------
+  # 由 t 分布解析得到 p 值 ---------------------------------
   df <- n - 2
   denom <- 1 - cor_matrix^2
   denom[denom <= .Machine$double.eps] <- .Machine$double.eps
@@ -119,7 +110,7 @@ run_cross_correlation <- function(mat_x, mat_y,
   padj_matrix <- matrix(padj_vec, nrow = nrow(p_matrix),
                         dimnames = dimnames(p_matrix))
 
-  # Sparse table of significant pairs -----------------------------------------
+  # 显著特征对的稀疏表 -----------------------------------------
   sel <- which(abs(cor_matrix) >= r_threshold & padj_matrix <= p_threshold,
                arr.ind = TRUE)
 
@@ -174,11 +165,11 @@ run_cross_correlation <- function(mat_x, mat_y,
 }
 
 
-#' Row-wise standardisation helper
+#' 按行标准化辅助函数
 #'
-#' @param mat A numeric matrix (features x samples).
+#' @param mat 数值矩阵（特征 x 样本）。
 #'
-#' @return A matrix with each row centred and scaled to unit standard deviation.
+#' @return 每一行均中心化并缩放为单位标准差的矩阵。
 #'
 #' @keywords internal
 .row_standardise <- function(mat) {
@@ -190,23 +181,22 @@ run_cross_correlation <- function(mat_x, mat_y,
 }
 
 
-#' Run cross-correlation for several layer pairs
+#' 针对多个层对运行跨组学相关性分析
 #'
-#' @description Convenience wrapper looping \code{run_cross_correlation()} over
-#'   a list of omics layer pairs of a MultiOmicsData object.
+#' @description 便利封装，针对 MultiOmicsData 对象中若干组学层对的列表，
+#'   循环调用 \code{run_cross_correlation()}。
 #'
-#' @param mo A MultiOmicsData object.
-#' @param layer_pairs List of length-2 character vectors naming the layers to
-#'   correlate, e.g. \code{list(c("microbiome", "metabolome"))}.
-#' @param method Correlation method. Default: "spearman".
-#' @param r_threshold Minimum absolute correlation. Default: 0.6.
-#' @param p_threshold Maximum adjusted p-value. Default: 0.05.
-#' @param max_pairs Maximum number of pairs per comparison. Default: 100000.
-#' @param verbose Logical, print progress. Default: TRUE.
+#' @param mo 一个 MultiOmicsData 对象。
+#' @param layer_pairs 长度为 2 的字符向量组成的列表，用于指定要相关的层，
+#'   例如 \code{list(c("microbiome", "metabolome"))}。
+#' @param method 相关方法。默认："spearman"。
+#' @param r_threshold 最小绝对相关系数。默认：0.6。
+#' @param p_threshold 最大校正后 p 值。默认：0.05。
+#' @param max_pairs 每次比较保留的最大特征对数。默认：100000。
+#' @param verbose 逻辑值，是否打印进度。默认：TRUE。
 #'
-#' @return A named list of \code{run_cross_correlation()} results, names being
-#'   "layerA__layerB". An extra element \code{all_pairs} concatenates the
-#'   sparse pair tables of all comparisons.
+#' @return \code{run_cross_correlation()} 结果的有名列表，名称为
+#'   "layerA__layerB"。额外元素 \code{all_pairs} 拼接了所有比较的稀疏对表。
 #'
 #' @examples
 #' \dontrun{

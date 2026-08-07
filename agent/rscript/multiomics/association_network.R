@@ -548,25 +548,25 @@ run_intra_omics_association <- function(mat, name = "omics",
 # -----------------------------------------------------------------------------
 # 便捷封装：遍历 MultiOmicsData 全部跨层组合 + 层内组合
 # -----------------------------------------------------------------------------
-#' Run all cross-omics and intra-omics associations on a MultiOmicsData object
+#' 对 MultiOmicsData 对象运行全部跨层与层内关联分析
 #'
-#' @param mo A MultiOmicsData object.
-#' @param layers Character vector of layer names to include. NULL = all layers.
-#' @param top_n Integer, per-layer feature pre-filter by variance.
-#' @param max_pairs_for_mic Integer, max pairs sent to MIC per call.
-#' @param mic_pvalue_method Character, \code{"permutation"} or \code{"none"}.
-#' @param n_perm Integer, permutations for shared MIC null.
-#' @param score_method Character, \code{"combined"} or \code{"nonlinear"}.
-#' @param score_weight Numeric, weight of |rho| in combined score.
-#' @param p_adjust Character, p.adjust method.
-#' @param p_threshold Numeric, significance cutoff.
-#' @param rho_linear_min Numeric, |rho| cutoff for linear vs nonlinear.
-#' @param verbose Logical.
+#' @param mo 一个 MultiOmicsData 对象。
+#' @param layers 字符向量，指定要包含的层名称。NULL 表示所有层。
+#' @param top_n 整数，每层按方差预筛选特征。
+#' @param max_pairs_for_mic 整数，每次调用送入 MIC 的最大特征对数。
+#' @param mic_pvalue_method 字符，\code{"permutation"} 或 \code{"none"}。
+#' @param n_perm 整数，共享 MIC 零分布所用的置换次数。
+#' @param score_method 字符，\code{"combined"} 或 \code{"nonlinear"}。
+#' @param score_weight 数值，综合评分中 |rho| 的权重。
+#' @param p_adjust 字符，p.adjust 方法。
+#' @param p_threshold 数值，显著性阈值。
+#' @param rho_linear_min 数值，线性与非线性的 |rho| 阈值。
+#' @param verbose 逻辑值。
 #'
-#' @return A list with:
-#'   \item{cross}{named list of \code{run_cross_omics_association} results}
-#'   \item{intra}{named list of \code{run_intra_omics_association} results}
-#'   \item{summary}{data.frame of pair counts / significant counts per combo}
+#' @return 一个列表：
+#'   \item{cross}{\code{run_cross_omics_association} 结果的有名列表}
+#'   \item{intra}{\code{run_intra_omics_association} 结果的有名列表}
+#'   \item{summary}{每组合的对数与显著数对的数据框}
 #'
 #' @examples
 #' \dontrun{
