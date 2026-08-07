@@ -62,8 +62,8 @@ Module RibbonMenu
         Call InputDialog.ShowDialog(Of FormLicenseDialog)()
     End Sub
 
-    Public Sub OpenConsole()
-        Call CommonRuntime.RegisterToolWindow(New FormConsole, DockState.DockBottom)
+    Public Sub OpenConsole(Optional folder As String = Nothing)
+        Call CommonRuntime.RegisterToolWindow(New FormConsole With {.workspace = folder}, DockState.DockBottom)
     End Sub
 
     Public Sub OpenFolder()

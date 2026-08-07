@@ -91,10 +91,10 @@ source("source_all_scripts.R")
 
 | 函数 | 功能 | 关键参数（默认值） | 返回值 / 输出 |
 | --- | --- | --- | --- |
-| `get_npg_palette` | 返回 Nature Publishing Group 风格配色向量 | `n = 10`（颜色数）；`alpha = 1` | 命名字符向量。返回对象 |
-| `theme_pub` | 发表级 ggplot 主题 | `base_size = 12`；`legend = "right"`；`grid = "y"` | ggplot 主题对象。返回对象 |
-| `setup_base_font` | 设置基础字体（影响 pdf/png 输出） | `family = "sans"`；`font_dir = NULL` | 无（副作用设置图形设备字体） |
-| `save_plot_unified` | 统一保存 ggplot 至 pdf+png | `plot`（必填）；`filename`（必填）；`output_dir = "."`；`width = 10`；`height = 8`；`dpi = 300`；`device = c("pdf","png")` | **直接落盘**：`<output_dir>/<filename>.pdf` + `.png` |
+| `get_npg_palette` | 返回 Nature Publishing Group 风格配色向量 | `n`（必填，颜色数） | 命名字符向量。返回对象 |
+| `theme_pub` | 发表级 ggplot 主题 | `base_size = 13` | ggplot 主题对象。返回对象 |
+| `setup_base_font` | 设置基础字体（影响 pdf/png 输出） | 无参数 | 无（副作用设置图形设备字体） |
+| `save_plot_unified` | 统一保存 ggplot 至 pdf+png | `plot`（必填）；`filename`（必填）；`width = 8`；`height = 6`；`dpi = 300`；`device = c("pdf","png")` | **直接落盘**：`<output_dir>/<filename>.pdf` + `.png` |
 
 ---
 
@@ -124,36 +124,33 @@ source("source_all_scripts.R")
 
 ### `differential/anova.R`
 
-**`run_anova`** — 单因素方差分析（每组测序/测量重复）。
+**`run_anova`** — 多因素方差分析（可同时检验多个因子，如处理×时间×批次）。
 
 | 参数 | 类型 / 格式 | 默认值 |
 | --- | --- | --- |
 | `expr_matrix` | 数值矩阵，features × samples | 必填 |
-| `sample_info` | data.frame | 必填 |
-| `group_col` | 字符，分组列名 | `"sample_info"` |
-| `adj_method` | 多重检验校正 | `"BH"` |
-| `p_cutoff` | 数值 | `0.05` |
-| `verbose` | 逻辑 | `TRUE` |
+| `sample_info` | data.frame，样本注释 | 必填 |
+| `factors` | 字符向量，用作因子的列名（如 `c("sample_info")` 或 `c("sample_info","condition")`） | `"sample_info"` |
+| `exclude_groups` | 命名列表，按因子指定需剔除的分组（如 `list(sample_info="QC")`） | `NULL` |
+| `p_adj_method` | 多重检验校正方法 | `"BH"` |
 
-- **返回值**：列表，含 `results`（data.frame：ANOVA F、P.Value、adj.P.Val、组均值等）、`params`。
-- **输出文件**：返回 R 对象，需经 `export_table()` 保存 `results`。
+- **返回值**：列表，含 `results`（data.frame：feature_id、各因子的 F_stat/p_value/p_adj）、`factor_results`（每因子单独的 data.frame 列表）。
+- **输出文件**：返回 R 对象，需经 `export_table()` 保存 `results`（注意行名即 feature_id，建议 `use_rownames=TRUE`）。
 
 ### `differential/f_test.R`
 
-**`run_f_test`** — F 检验（两组或多组均值差异检验）。
+**`run_f_test`** — F 检验（单因素方差分析，检验组间整体差异）。
 
 | 参数 | 类型 / 格式 | 默认值 |
 | --- | --- | --- |
 | `expr_matrix` | 数值矩阵，features × samples | 必填 |
-| `sample_info` | data.frame | 必填 |
-| `group_col` | 字符 | `"sample_info"` |
-| `var_equal` | 逻辑，是否假定方差齐 | `TRUE` |
-| `adj_method` | 多重检验校正 | `"BH"` |
-| `p_cutoff` | 数值 | `0.05` |
-| `verbose` | 逻辑 | `TRUE` |
+| `sample_info` | data.frame，样本注释 | 必填 |
+| `group_col` | 字符，分组列名 | `"sample_info"` |
+| `exclude_groups` | 字符向量，建模前剔除的分组（如 QC） | `"QC"` |
+| `p_adj_method` | 多重检验校正方法 | `"BH"` |
 
-- **返回值**：列表，含 `results`（data.frame：statistic、P.Value、adj.P.Val 等）、`params`。
-- **输出文件**：返回 R 对象，需经 `export_table()` 保存 `results`。
+- **返回值**：data.frame，含 `feature_id`（行名）、`F_stat`、`p_value`、`p_adj`、`significant`（p_adj<0.05）。
+- **输出文件**：返回 R 对象，需经 `export_table()` 保存（注意默认行名即 feature_id，建议 `use_rownames=TRUE`）。
 
 ---
 
@@ -161,39 +158,58 @@ source("source_all_scripts.R")
 
 ### `enrichment/fisher_enrich.R`
 
-**`run_fisher_enrich`** — 基于超几何分布（Fisher 精确检验）的富集分析。
+**`run_fisher_enrich`** — 基于超几何分布（Fisher 精确检验）的富集分析（按单列注释类别，如 KEGG 通路）。
 
 | 参数 | 类型 / 格式 | 默认值 |
 | --- | --- | --- |
-| `feature_list` | 字符向量，待富集的特征（如差异特征） | 必填 |
-| `background` | 字符向量，背景特征全集 | 必填 |
-| `annotation` | data.frame，特征→通路/类别映射 | 必填 |
-| `feature_col` | 字符，annotation 中特征列名 | `"feature"` |
-| `category_col` | 字符，annotation 中类别列名 | `"category"` |
-| `min_size` | 数值，类别最小成员数 | `3` |
-| `p_cutoff` | 数值 | `0.05` |
-| `adj_method` | 多重检验校正 | `"BH"` |
+| `significant_features` | 字符向量，待富集的特征（如差异特征） | 必填 |
+| `all_features` | 字符向量，背景特征全集 | 必填 |
+| `feature_info` | data.frame，特征→类别映射（行名或某列为特征 ID） | 必填 |
+| `category_col` | 字符，feature_info 中类别列名 | `"kegg"` |
+| `min_size` | 数值，类别最小成员数 | `5` |
+| `max_size` | 数值，类别最大成员数 | `500` |
 | `verbose` | 逻辑 | `TRUE` |
 
-- **返回值**：列表，含 `results`（data.frame：category、count、expected、odds_ratio、p_value、adj_p_value 等）、`params`。
+- **返回值**：列表，含 `results`（data.frame：category、count、size、expected、fold_enrichment、p_value、p_adj 等）、`params`。
 - **输出文件**：返回 R 对象，需经 `export_table()` 保存 `results`。
+
+**`plot_enrichment`** — 富集结果条形图（展示 fold enrichment 与显著性）。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `enrich_result` | `run_fisher_enrich` 返回对象 | 必填 |
+| `top_n` | 数值，展示前 N 类别 | `20` |
+| `p_threshold` | 数值，显著性阈值 | `0.05` |
+
+- **返回值**：ggplot 对象。
+- **输出文件**：返回 R 对象，需经 `export_plot()` 保存。
 
 ### `enrichment/gsva.R`
 
-**`run_gsva`** — 基因集变异分析（GSVA），将表达矩阵转为通路活性评分矩阵。
+**`run_gsva`** — 基因集变异分析（GSVA），将表达矩阵转为通路活性评分矩阵（按注释列划分基因集）。
 
 | 参数 | 类型 / 格式 | 默认值 |
 | --- | --- | --- |
 | `expr_matrix` | 数值矩阵，features × samples | 必填 |
-| `gene_sets` | 列表，名称=基因集名，元素=特征向量 | 必填 |
-| `method` | 字符，`"gsva"` / `"ssgsea"` / `"zscore"` / `"plage"` | `"gsva"` |
-| `kcdf` | 字符，核密度类型 | `"Gaussian"` |
-| `parallel` | 逻辑，是否并行 | `FALSE` |
-| `parallel_sz` | 数值，并行线程数 | `1` |
+| `feature_info` | data.frame，特征注释（含用于分组的类别列） | 必填 |
+| `pathway_col` | 字符，feature_info 中通路/基因集列名 | `"kegg"` |
+| `min_size` | 数值，通路最小特征数 | `5` |
+| `max_size` | 数值，通路最大特征数 | `500` |
 | `verbose` | 逻辑 | `TRUE` |
 
-- **返回值**：列表，含 `scores`（通路×样本评分矩阵）、`params`。
-- **输出文件**：返回 R 对象，需经 `export_table()` 保存 `scores`（矩阵需先转为 data.frame）。
+- **返回值**：列表，含 `gsva_matrix`（通路×样本评分矩阵）、`pathways`（通路特征集列表）、`n_pathways`。
+- **输出文件**：返回 R 对象，需经 `export_table()` 保存 `gsva_matrix`（矩阵需先转为 data.frame）。
+
+**`plot_gsva_heatmap`** — GSVA 通路评分热图。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `gsva_result` | `run_gsva` 返回对象 | 必填 |
+| `sample_info` | data.frame，样本注释 | 必填 |
+| `group_col` | 字符，分组列名 | `"sample_info"` |
+
+- **返回值**：pheatmap/ggplot 对象。
+- **输出文件**：返回 R 对象，需经 `export_heatmap()` 保存。
 
 ---
 
@@ -201,75 +217,70 @@ source("source_all_scripts.R")
 
 ### `machine_learning/lasso.R`
 
-**`run_lasso`** — Lasso 回归（glmnet）特征选择与系数估计。
+**`run_lasso`** — Lasso 回归（cv.glmnet）分类/回归与特征选择（含交叉验证与混淆矩阵）。
 
 | 参数 | 类型 / 格式 | 默认值 |
 | --- | --- | --- |
-| `x` | 数值矩阵，features × samples（或转置） | 必填 |
-| `y` | 数值/因子向量，样本响应（长度=样本数） | 必填 |
-| `alpha` | 数值，弹性网络混合参数（1=Lasso） | `1` |
-| `family` | 字符，如 `"gaussian"` / `"binomial"` | `"gaussian"` |
-| `n_fold` | 数值，交叉验证折数 | `10` |
-| `lambda` | 数值，固定 lambda（NULL 则按 cv 选） | `NULL` |
-| `transpose` | 逻辑，是否转置 x 使行为样本 | `TRUE` |
+| `expr_matrix` | 数值矩阵，features × samples | 必填 |
+| `sample_info` | data.frame，样本注释 | 必填 |
+| `group_col` | 字符，分组列名（作为响应变量） | `"sample_info"` |
 | `verbose` | 逻辑 | `TRUE` |
 
-- **返回值**：列表，含 `model`（glmnet 拟合）、`cvfit`、`coefficients`（非零系数 data.frame）、`lambda_min`/`lambda_1se`、`params`。
+- **返回值**：列表，含 `model`（cv.glmnet 拟合）、`selected_features`（选中特征向量）、`coefficients`（非零系数 data.frame）、`lambda`、`accuracy`、`confusion_matrix`。
 - **输出文件**：返回 R 对象，需经 `export_table()` 保存 `coefficients`。
+
+**`plot_lasso_path`** — Lasso 系数路径图（系数 vs L1 norm）。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `lasso_result` | `run_lasso` 返回对象 | 必填 |
+
+- **返回值**：ggplot 对象。
+- **输出文件**：返回 R 对象，需经 `export_plot()` 保存。
 
 ### `machine_learning/linear_model.R`
 
-**`run_linear_model`** — 多元线性回归。
+**`run_linear_model`** — 多元线性/逻辑回归（含分类准确率与混淆矩阵）。
 
 | 参数 | 类型 / 格式 | 默认值 |
 | --- | --- | --- |
-| `x` | 数值矩阵，特征 × samples（或转置） | 必填 |
-| `y` | 数值向量，响应 | 必填 |
-| `transpose` | 逻辑 | `TRUE` |
-| `standardize` | 逻辑，是否标准化 | `TRUE` |
-| `intercept` | 逻辑，是否含截距 | `TRUE` |
+| `expr_matrix` | 数值矩阵，features × samples | 必填 |
+| `sample_info` | data.frame，样本注释 | 必填 |
+| `group_col` | 字符，分组列名（响应变量） | `"sample_info"` |
 | `verbose` | 逻辑 | `TRUE` |
 
-- **返回值**：列表，含 `model`（lm 拟合）、`coefficients`、`summary`（统计量 data.frame）、`params`。
-- **输出文件**：返回 R 对象，需经 `export_table()` 保存 `coefficients` / `summary`。
+- **返回值**：列表，含 `coefficients`（回归系数 data.frame）、`classification_coefficients`（各分组特征系数）、`accuracy`、`predictions`、`confusion_matrix`。
+- **输出文件**：返回 R 对象，需经 `export_table()` 保存 `coefficients` / `classification_coefficients`。
 
 ### `machine_learning/rf_shap.R`
 
-**`run_rf_shap`** — 随机森林训练 + SHAP 值解释。
+**`run_rf_shap`** — 随机森林训练 + SHAP 值解释（含准确率与混淆矩阵）。
 
 | 参数 | 类型 / 格式 | 默认值 |
 | --- | --- | --- |
-| `x` | 数值矩阵，特征 × samples（或转置） | 必填 |
-| `y` | 向量，响应（分类或回归） | 必填 |
-| `group_col` | 字符，样本分组列名（用于着色/分层） | `"sample_info"` |
-| `exclude_groups` | 字符向量，需剔除的分组 | `NULL` |
-| `transpose` | 逻辑 | `TRUE` |
-| `n_trees` | 数值，树数量 | `500` |
-| `cv_folds` | 数值，交叉验证折数 | `5` |
-| `n_top_features` | 数值，展示/绘制的重要特征数 | `20` |
-| `compute_shap` | 逻辑，是否计算 SHAP | `TRUE` |
-| `seed` | 数值，随机种子 | `42` |
+| `expr_matrix` | 数值矩阵，features × samples | 必填 |
+| `sample_info` | data.frame，样本注释 | 必填 |
+| `group_col` | 字符，分组列名（响应变量） | `"sample_info"` |
 | `verbose` | 逻辑 | `TRUE` |
 
-- **返回值**：列表，含 `model`（randomForest 拟合）、`importance`（重要性 data.frame）、`shap`（SHAP 值矩阵）、`params`。
-- **输出文件**：返回 R 对象，需经 `export_table()` 保存 `importance` / `shap`。
+- **返回值**：列表，含 `model`（随机森林模型）、`accuracy`、`confusion_matrix`、`importance`（MeanDecreaseGini）、`shap_values`（SHAP 值矩阵）、`shap_summary`（绘图用汇总 data.frame）。
+- **输出文件**：返回 R 对象，需经 `export_table()` 保存 `importance` / `shap_values`。
 
-**`plot_rf_importance`** — 随机森林特征重要性条形图。
+**`plot_rf_importance`** — 随机森林特征重要性（SHAP）条形图。
 
 | 参数 | 类型 / 格式 | 默认值 |
 | --- | --- | --- |
 | `rf_result` | `run_rf_shap` 返回对象 | 必填 |
 | `top_n` | 数值，展示前 N 重要特征 | `20` |
-| `title` | 字符 | `"Random Forest Importance"` |
 
 - **返回值**：ggplot 对象。
 - **输出文件**：返回 R 对象，需经 `export_plot()` 保存。
 
-**`plot_confusion_matrix`** — 随机森林预测混淆矩阵图（分类场景）。
+**`plot_confusion_matrix`** — 随机森林预测混淆矩阵热图。
 
 | 参数 | 类型 / 格式 | 默认值 |
 | --- | --- | --- |
-| `rf_result` | `run_rf_shap` 返回对象（含预测与真实标签） | 必填 |
+| `rf_result` | `run_rf_shap` 返回对象（含 `confusion_matrix`） | 必填 |
 | `title` | 字符 | `"Confusion Matrix"` |
 
 - **返回值**：ggplot 对象。
@@ -286,14 +297,11 @@ source("source_all_scripts.R")
 | 参数 | 类型 / 格式 | 默认值 |
 | --- | --- | --- |
 | `expr_matrix` | 数值矩阵，features × samples | 必填 |
-| `sample_info` | data.frame（可选，用于着色） | `NULL` |
-| `group_col` | 字符，分组列名 | `NULL` |
-| `n_comp` | 数值，保留主成分数 | `5` |
 | `scale` | 逻辑，是否按特征标准化 | `TRUE` |
 | `center` | 逻辑，是否中心化 | `TRUE` |
-| `verbose` | 逻辑 | `TRUE` |
+| `ncomp` | 数值，保留主成分数（NULL 则取 min(样本数-1, 特征数, 10)） | `NULL` |
 
-- **返回值**：列表，含 `scores`（样本主成分坐标 data.frame）、`loadings`（特征载荷）、`variance`（各 PC 方差解释率）、`params`。
+- **返回值**：列表，含 `pca_result`（prcomp 对象）、`scores`（样本×PC 得分 data.frame）、`loadings`（特征×PC 载荷 data.frame）、`var_explained`（各 PC 方差解释率 % 向量）、`ncomp`。
 - **输出文件**：返回 R 对象，需经 `export_table()` 保存 `scores` / `loadings`。
 
 **`plot_pca_scores`** — PCA 样本得分散点图。
@@ -342,8 +350,8 @@ source("source_all_scripts.R")
 | 参数 | 类型 / 格式 | 默认值 |
 | --- | --- | --- |
 | `plsda_result` | `run_plsda` 返回对象 | 必填 |
+| `sample_info` | data.frame，样本注释（用于着色，可选） | `NULL` |
 | `comp_x` / `comp_y` | 数值，使用第几成分 | `1` / `2` |
-| `title` | 字符 | `"PLS-DA Scores"` |
 
 - **返回值**：ggplot 对象。
 - **输出文件**：返回 R 对象，需经 `export_plot()` 保存。
@@ -354,8 +362,7 @@ source("source_all_scripts.R")
 | --- | --- | --- |
 | `plsda_result` | `run_plsda` 返回对象（含 `vip`） | 必填 |
 | `top_n` | 数值 | `20` |
-| `threshold` | 数值，VIP 显著阈值线 | `1` |
-| `title` | 字符 | `"VIP Scores"` |
+| `threshold` | 数值，VIP 显著阈值线 | `1.0` |
 
 - **返回值**：ggplot 对象。
 - **输出文件**：返回 R 对象，需经 `export_plot()` 保存。
@@ -383,8 +390,7 @@ source("source_all_scripts.R")
 | 参数 | 类型 / 格式 | 默认值 |
 | --- | --- | --- |
 | `oplsda_result` | `run_oplsda` 返回对象 | 必填 |
-| `comp_x` / `comp_y` | 数值 | `1` / `2` |
-| `title` | 字符 | `"OPLS-DA Scores"` |
+| `color_col` | 字符，着色列名（NULL 则使用分组） | `NULL` |
 
 - **返回值**：ggplot 对象。
 - **输出文件**：返回 R 对象，需经 `export_plot()` 保存。
@@ -395,19 +401,30 @@ source("source_all_scripts.R")
 
 ### `network/bnlearn_net.R`
 
-**`run_bn_learn`** — 基于 bnlearn 的贝叶斯网络结构学习。
+**`run_bnlearn`** — 基于 bnlearn 的贝叶斯网络结构学习（时间序列/多条件组学数据推断特征间调控关系）。
 
 | 参数 | 类型 / 格式 | 默认值 |
 | --- | --- | --- |
-| `data` | data.frame，变量×观测（或转置） | 必填 |
-| `transpose` | 逻辑 | `TRUE` |
-| `method` | 字符，结构学习算法（如 `"hc"`、`"tabu"`） | `"hc"` |
-| `whitelist` | 字符矩阵/数据框，强制边 | `NULL` |
-| `blacklist` | 字符矩阵/数据框，禁止边 | `NULL` |
-| `verbose` | 逻辑 | `TRUE` |
+| `expr_matrix` | 数值矩阵，特征×样本（时序数据列需按时间排序） | 必填 |
+| `time_points` | 数值向量，时间点（NULL 则按样本顺序） | `NULL` |
+| `feature_info` | data.frame，特征注释（用于节点标签，可选） | `NULL` |
+| `name_col` | 字符，feature_info 中节点名列 | `"name"` |
+| `algorithm` | 字符，学习算法 `"hc"`/`"tabu"`/`"gs"` | `"hc"` |
+| `score` | 字符，评分函数 | `"bic"` |
+| `max_nodes` | 数值，最大节点数（超则按方差取 top） | `50` |
+| `seed` | 数值，随机种子 | `42` |
 
-- **返回值**：列表，含 `dag`（bn 对象）、`arcs`（边 data.frame）、`fitted`（参数拟合）、`params`。
+- **返回值**：列表，含 `network`（bn 对象）、`arcs`（有向边 data.frame）、`nodes`（节点名向量）、`adjacency`（邻接矩阵）。
 - **输出文件**：返回 R 对象。
+
+**`plot_bnlearn_network`** — 贝叶斯网络结构可视化。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `bn_result` | `run_bnlearn` 返回对象 | 必填 |
+
+- **返回值**：ggplot 对象。
+- **输出文件**：返回 R 对象，需经 `export_plot()` 保存。
 
 ### `network/cmeans.R`
 
@@ -449,31 +466,42 @@ source("source_all_scripts.R")
 
 ### `network/plspm_net.R`
 
-**`run_plspm`** — 偏最小二乘路径模型（PLS-PM）拟合。
+**`run_plspm`** — 偏最小二乘路径模型（PLS-PM）拟合（由观测特征组构造潜变量网络，适合多组学整合）。
 
 | 参数 | 类型 / 格式 | 默认值 |
 | --- | --- | --- |
-| `data` | data.frame，观测×变量 | 必填 |
-| `inner_model` | 列表，内部路径（潜变量间关系） | 必填 |
-| `outer_model` | 列表，测量模型（块指标） | 必填 |
-| `scheme` | 字符，内模型权重方案 | `"centroid"` |
-| `scaled` | 逻辑 | `TRUE` |
-| `verbose` | 逻辑 | `TRUE` |
+| `expr_matrix` | 数值矩阵，特征×样本 | 必填 |
+| `feature_info` | data.frame，特征注释 | 必填 |
+| `latent_def` | 命名列表，每个元素为特征 ID 向量，或 feature_info 中的列名（定义潜变量） | 必填 |
+| `inner_model` | 矩阵，潜变量间关系（NULL 则全连接） | `NULL` |
+| `feature_id_col` | 字符，feature_info 中特征 ID 列名 | `"ID"` |
+| `ncomp` | 数值，PLS 成分数 | `2` |
 
-- **返回值**：列表，含 `inner_paths`、`outer_loadings`、`r2`、`gof`、`params`。
+- **返回值**：列表，含 `scores`（潜变量得分，样本×潜变量）、`outer_model`（特征载荷）、`inner_model`（潜变量路径系数）、`path_coefficients`。
 - **输出文件**：返回 R 对象。
 
 **`build_latent_def_from_annotation`** — 由注释表（特征→潜变量块）自动构建 PLS-PM 测量模型定义。
 
 | 参数 | 类型 / 格式 | 默认值 |
 | --- | --- | --- |
-| `annotation` | data.frame，含特征列与块/潜变量列 | 必填 |
-| `feature_col` | 字符，特征列名 | `"feature"` |
-| `block_col` | 字符，块/潜变量列名 | `"block"` |
-| `inner_edges` | 字符矩阵，潜变量间边（可选） | `NULL` |
+| `expr_matrix` | 数值矩阵，特征×样本 | 必填 |
+| `feature_info` | data.frame，特征注释 | 必填 |
+| `annotation_col` | 字符，块/潜变量列名 | 必填 |
+| `feature_id_col` | 字符，特征 ID 列名 | `"ID"` |
+| `min_size` | 数值，潜变量最小特征数 | `2` |
 
-- **返回值**：列表，含 `outer_model`、`inner_model`（供 `run_plspm` 使用）。
+- **返回值**：命名列表（潜变量→特征向量），供 `run_plspm` 使用。
 - **输出文件**：返回 R 对象。
+
+**`plot_plspm_network`** — PLS-PM 网络图（潜变量及路径系数可视化）。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `plspm_result` | `run_plspm` 返回对象 | 必填 |
+| `p_threshold` | 数值，路径显著性阈值 | `0.05` |
+
+- **返回值**：ggplot 对象。
+- **输出文件**：返回 R 对象，需经 `export_plot()` 保存。
 
 ### `network/wgcna_module.R`
 
@@ -482,11 +510,11 @@ source("source_all_scripts.R")
 | 参数 | 类型 / 格式 | 默认值 |
 | --- | --- | --- |
 | `expr_matrix` | 数值矩阵，features × samples | 必填 |
-| `soft_power` | 数值，软阈值幂（NULL 则自动选） | `NULL` |
-| `min_module_size` | 数值 | `30` |
+| `soft_power` | 数值，软阈值幂（NULL 则自动选，失败时回退 6） | `NULL` |
+| `min_module_size` | 数值，最小模块大小 | `10` |
 | `merge_cut_height` | 数值，模块合并高度 | `0.25` |
-| `network_type` | 字符，如 `"signed"` / `"unsigned"` | `"signed"` |
-| `cor_fn` | 字符，相关函数 | `"cor"` |
+| `network_type` | 字符，`"signed"` / `"unsigned"` / `"signed hybrid"` | `"signed"` |
+| `cor_fn` | 字符，相关函数（如 `"cor"` / `"bicor"`） | `"cor"` |
 | `verbose` | 逻辑 | `TRUE` |
 
 - **返回值**：列表，含 `module_colors`（特征→模块命名向量）、`module_labels`、`MEs`（模块特征基因矩阵）、`soft_power`、`gene_tree`、`diss_TOM`、`params`。
@@ -514,18 +542,27 @@ source("source_all_scripts.R")
 
 ### `network/wgcna_trait.R`
 
-**`run_wgcna_trait`** — WGCNA 模块与性状关联分析（单组学）。
+**`wgcna_module_trait`** — WGCNA 模块特征基因与性状关联（含线性相关）。
 
 | 参数 | 类型 / 格式 | 默认值 |
 | --- | --- | --- |
-| `modules` | `build_wgcna_modules` 返回对象 | 必填 |
-| `trait` | data.frame，样本×性状 | 必填 |
-| `cor_method` | 字符，`"pearson"` / `"spearman"` | `"pearson"` |
-| `adj_method` | 多重检验校正 | `"BH"` |
-| `verbose` | 逻辑 | `TRUE` |
+| `wgcna_result` | `build_wgcna_modules` 返回对象 | 必填 |
+| `traits` | 数值矩阵/data.frame（samples × traits），行名需匹配 `MEs` 样本 | 必填 |
+| `sample_info` | data.frame，样本注释（可选） | `NULL` |
+| `cor_method` | 字符 | `"pearson"` |
 
-- **返回值**：列表，含 `assoc`（模块-性状关联 data.frame：correlation、p_value、adj_p 等）、`params`。
-- **输出文件**：返回 R 对象，需经 `export_table()` 保存 `assoc`。
+- **返回值**：列表，含 `module_trait_cor`（相关矩阵）、`module_trait_p`（p 矩阵）、`module_trait_lm`（每模块-性状线性回归 data.frame，含 estimate/std_error/t_stat/p_value/r_squared）、`feature_trait_cor`/`feature_trait_lm`。
+- **输出文件**：返回 R 对象，需经 `export_table()` 保存 `module_trait_lm`。
+
+**`plot_module_trait`** — 模块-性状相关性热图（标注显著性）。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `assoc_result` | `wgcna_module_trait` 返回对象 | 必填 |
+| `p_threshold` | 数值，显著性阈值 | `0.05` |
+
+- **返回值**：ggplot 对象。
+- **输出文件**：返回 R 对象，需经 `export_plot()` 保存。
 
 ---
 
@@ -533,87 +570,104 @@ source("source_all_scripts.R")
 
 ### `preprocessing/filter_missing.R`
 
-**`filter_missing`** — 按缺失值比例过滤特征。
+**`filter_missing_values`** — 按缺失值比例过滤特征（支持分组/整体两种策略）。
 
 | 参数 | 类型 / 格式 | 默认值 |
 | --- | --- | --- |
-| `expr_matrix` | 数值矩阵，features × samples | 必填 |
-| `max_missing` | 数值，最大允许缺失比例（0–1） | 必填 |
-| `by_group` | 逻辑，是否按分组计算缺失比例 | `FALSE` |
-| `sample_info` | data.frame（当 by_group=TRUE） | `NULL` |
-| `group_col` | 字符（当 by_group=TRUE） | `NULL` |
-| `verbose` | 逻辑 | `TRUE` |
+| `expr_matrix` | 数值矩阵，features × samples，缺失用 NA 表示 | 必填 |
+| `sample_info` | data.frame，样本注释（含分组列，method="group" 时必填） | `NULL` |
+| `threshold` | 数值，缺失比例阈值（0–1），超过则移除 | `0.8` |
+| `method` | 字符，`"group"`（所有组均超阈值才移除）/ `"overall"`（整体超阈值） | `"group"` |
+| `group_col` | 字符，sample_info 中分组列名 | `"sample_info"` |
+| `exclude_groups` | 字符向量，建模前剔除的分组（如 QC） | `NULL` |
 
-- **返回值**：列表，含 `filtered`（过滤后矩阵）、`removed`（被移除特征向量）、`params`。
+- **返回值**：列表，含 `filtered_matrix`（过滤后矩阵）、`removed_features`、`kept_features`、`missing_report`（每特征缺失比例 data.frame）。
 - **输出文件**：返回 R 对象。
 
 ### `preprocessing/impute_missing.R`
 
-**`impute_missing`** — 缺失值填补。
+**`impute_min_half`** — 以每特征最小正值的一半填补缺失（代谢组学常用）。
 
 | 参数 | 类型 / 格式 | 默认值 |
 | --- | --- | --- |
-| `expr_matrix` | 数值矩阵 | 必填 |
-| `method` | 字符，`"knn"` / `"mean"` / `"median"` / `"min"` / `"zero"` | `"knn"` |
-| `k` | 数值，knn 近邻数（method="knn"） | `10` |
-| `verbose` | 逻辑 | `TRUE` |
+| `expr_matrix` | 数值矩阵，features × samples | 必填 |
+| `treat_zero_as_missing` | 逻辑，是否将 0 视为缺失 | `TRUE` |
+| `factor` | 数值，最小正值的乘子（0.5=一半） | `0.5` |
 
-- **返回值**：列表，含 `imputed`（填补后矩阵）、`params`。
+- **返回值**：填补后的数值矩阵。
+- **输出文件**：返回 R 对象。
+
+**`impute_knn`** — K 近邻（KNN）缺失值填补（基于 `impute` 包）。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `expr_matrix` | 数值矩阵，features × samples | 必填 |
+| `k` | 数值，近邻数 | `10` |
+| `treat_zero_as_missing` | 逻辑，是否将 0 视为缺失 | `TRUE` |
+| `max_na_prop` | 数值，单特征最大允许 NA 比例（超出则移除该特征） | `0.5` |
+
+- **返回值**：填补后的数值矩阵。
 - **输出文件**：返回 R 对象。
 
 ### `preprocessing/normalize.R`
 
-**`normalize`** — 表达矩阵归一化。
+**`normalize_sample_total`** — 按样本总量归一化（转为相对丰度/ppm）。
 
 | 参数 | 类型 / 格式 | 默认值 |
 | --- | --- | --- |
-| `expr_matrix` | 数值矩阵 | 必填 |
-| `method` | 字符，`"quantile"` / `"tmm"` / `"totals"` / `"median"` | `"quantile"` |
-| `verbose` | 逻辑 | `TRUE` |
+| `expr_matrix` | 数值矩阵，features × samples | 必填 |
+| `scale_factor` | 数值，缩放因子 | `1` |
+| `multiply_by` | 数值，归一化后乘子（1=比例，1e6=ppm） | `1e6` |
 
-- **返回值**：列表，含 `normalized`（归一化矩阵）、`params`。
+- **返回值**：按样本总和归一化后的数值矩阵。
+- **输出文件**：返回 R 对象。
+
+**`normalize_median`** — 按样本中位数归一化。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `expr_matrix` | 数值矩阵，features × samples | 必填 |
+
+- **返回值**：按样本中位数归一化后的数值矩阵。
 - **输出文件**：返回 R 对象。
 
 ### `preprocessing/scale.R`
 
-**`scale_feature_median`** — 以特征中位数居中（特征级中心化）。
+**`scale_feature_median`** — 以特征中位数居中（可选按 MAD 缩放）。
 
 | 参数 | 类型 / 格式 | 默认值 |
 | --- | --- | --- |
-| `expr_matrix` | 数值矩阵 | 必填 |
-| `verbose` | 逻辑 | `TRUE` |
+| `expr_matrix` | 数值矩阵，features × samples | 必填 |
+| `scale` | 逻辑，是否同时按 MAD（中位数绝对偏差）缩放 | `FALSE` |
 
-- **返回值**：列表，含 `scaled`（居中矩阵）、`center`（中位数向量）、`params`。
+- **返回值**：中位数居中（或 MAD 缩放后）的数值矩阵。
 - **输出文件**：返回 R 对象。
 
-**`scale_feature_zscore`** — 特征级 z-score 标准化（减中位数/除以 MAD）。
+**`scale_feature_zscore`** — 特征级 z-score 标准化（减均值/除以标准差）。
 
 | 参数 | 类型 / 格式 | 默认值 |
 | --- | --- | --- |
-| `expr_matrix` | 数值矩阵 | 必填 |
-| `verbose` | 逻辑 | `TRUE` |
+| `expr_matrix` | 数值矩阵，features × samples | 必填 |
 
-- **返回值**：列表，含 `scaled`、`center`、`scale`（MAD 向量）、`params`。
+- **返回值**：z-score 标准化后的数值矩阵。
 - **输出文件**：返回 R 对象。
 
 **`scale_feature_minmax`** — 特征级 min-max 缩放至 [0,1]。
 
 | 参数 | 类型 / 格式 | 默认值 |
 | --- | --- | --- |
-| `expr_matrix` | 数值矩阵 | 必填 |
-| `verbose` | 逻辑 | `TRUE` |
+| `expr_matrix` | 数值矩阵，features × samples | 必填 |
 
-- **返回值**：列表，含 `scaled`、`min`、`max`、`params`。
+- **返回值**：min-max 缩放后的数值矩阵。
 - **输出文件**：返回 R 对象。
 
-**`scale_pareto`** — 特征级 Pareto 缩放（减均值/除以标准差平方根）。
+**`scale_pareto`** — 特征级 Pareto 缩放（均值居中/除以标准差平方根）。
 
 | 参数 | 类型 / 格式 | 默认值 |
 | --- | --- | --- |
-| `expr_matrix` | 数值矩阵 | 必填 |
-| `verbose` | 逻辑 | `TRUE` |
+| `expr_matrix` | 数值矩阵，features × samples | 必填 |
 
-- **返回值**：列表，含 `scaled`、`center`、`scale`、`params`。
+- **返回值**：Pareto 缩放后的数值矩阵。
 - **输出文件**：返回 R 对象。
 
 ---
@@ -622,28 +676,30 @@ source("source_all_scripts.R")
 
 ### `qcqa/qcqa.R`
 
-**`run_qcqa`** — 质控摘要：缺失率、变异系数、样本聚类一致性等。
+**`qc_variation`** — 质控变异评估：计算每特征的 CV(%)、均值、标准差及汇总统计。
 
 | 参数 | 类型 / 格式 | 默认值 |
 | --- | --- | --- |
-| `expr_matrix` | 数值矩阵 | 必填 |
-| `sample_info` | data.frame | `NULL` |
-| `group_col` | 字符 | `NULL` |
-| `cv_threshold` | 数值，CV 阈值 | `0.3` |
+| `expr_matrix` | 数值矩阵，features × samples | 必填 |
+| `sample_info` | data.frame，样本注释 | 必填 |
+| `qc_group` | 字符，QC 样本分组列名（用于子集评估） | `"QC"` |
 | `verbose` | 逻辑 | `TRUE` |
 
-- **返回值**：列表，含 `qc_table`（每特征 QC 指标 data.frame）、`sample_qc`、`params`。
-- **输出文件**：返回 R 对象，需经 `export_table()` 保存 `qc_table`。
+- **返回值**：列表，含 `qc_cv`（每特征 CV 向量）、`qc_mean`、`qc_sd`、`summary`（QC 统计 data.frame）、`plot`（CV 分布 ggplot）。
+- **输出文件**：返回 R 对象，需经 `export_table()` 保存 `summary`。
 
-**`plot_qcqa`** — 质控图（缺失热图、CV 分布、样本 PCA 散点）。
+**`qc_pca_assessment`** — 质控 PCA 评估：QC 样本在研究样本云中的离散程度。
 
 | 参数 | 类型 / 格式 | 默认值 |
 | --- | --- | --- |
-| `qc_result` | `run_qcqa` 返回对象 | 必填 |
-| `title` | 字符 | `"QC/QA"` |
+| `expr_matrix` | 数值矩阵，features × samples | 必填 |
+| `sample_info` | data.frame，样本注释 | 必填 |
+| `qc_group` | 字符，QC 样本分组列名 | `"QC"` |
+| `scale` | 逻辑，是否按特征标准化 | `TRUE` |
+| `verbose` | 逻辑 | `TRUE` |
 
-- **返回值**：ggplot 对象（或多面板列表）。
-- **输出文件**：返回 R 对象，需经 `export_plot()` 保存。
+- **返回值**：列表，含 `pca_result`（PCA 结果）、`scores`（PC 得分）、`qc_dispersion`（QC 样本到 QC 质心的平均距离）、`plot`（QC 高亮的 PCA 得分 ggplot）。
+- **输出文件**：返回 R 对象，需经 `export_plot()` 保存 `plot`。
 
 ---
 
@@ -653,11 +709,10 @@ source("source_all_scripts.R")
 
 | 函数 | 功能 | 关键参数（默认值） | 返回值 / 输出 |
 | --- | --- | --- | --- |
-| `load_expression_matrix` | 读取表达矩阵 | `path`（必填）；`transpose = TRUE`（使行为特征） | 数值矩阵 |
-| `load_sample_info` | 读取样本注释 | `path`（必填）；`sep = ","` | data.frame |
-| `load_feature_info` | 读取特征注释 | `path`（必填）；`sep = ","` | data.frame |
-| `create_omics_data` | 构造单组学 `OmicsData` 对象 | `expr_matrix`（必填）；`sample_info`（必填）；`feature_info = NULL` | `OmicsData` S3 对象 |
-| `print.OmicsData` | 打印 `OmicsData` 摘要 | `x`（OmicsData）；`...` | 控制台输出（无返回值） |
+| `load_expression_matrix` | 读取表达矩阵 | `file`（必填）；`feature_id_col = NULL`（特征 ID 列） | 数值矩阵 |
+| `load_sample_info` | 读取样本注释 | `file`（必填） | data.frame |
+| `load_feature_info` | 读取特征注释 | `file`（必填）；`id_col = "ID"` | data.frame |
+| `create_omics_data` | 构造单组学 `OmicsData` 对象 | `expr_matrix`（必填）；`sample_info`（必填）；`feature_info = NULL`（可选） | `OmicsData` S3 对象 |
 
 ### `utils/export.R`（导出约定，详见上方"快速开始"）
 
@@ -671,9 +726,9 @@ source("source_all_scripts.R")
 
 | 函数 | 功能 | 关键参数（默认值） | 返回值 / 输出 |
 | --- | --- | --- | --- |
-| `make_group_colors` | 生成分组成员配色（复用 npg 调色板） | `groups`（必填，字符向量） | 命名字符向量 |
-| `save_plot` | 保存 ggplot 的轻量封装（等价于 `export_plot`） | `plot`（必填）；`output_dir`；`filename`；`width=8`；`height=6`；`dpi=300` | **直接落盘**：`.pdf` + `.png` |
-| `extract_plot_meta` | 从结果对象提取用于绘图的元数据（样本/分组标签） | `result`（必填） | data.frame |
+| `make_group_colors` | 生成分组成员配色（基于 RColorBrewer 调色板） | `groups`（必填，字符向量）；`palette_name = "Set2"`；`custom_colors = NULL` | 命名字符向量 |
+| `save_plot` | 保存 ggplot 的轻量封装（等价于 `export_plot`） | `plot`（必填）；`filename`（必填）；`output_dir = "."`；`width=8`；`height=6`；`dpi=300` | **直接落盘**：`.pdf` + `.png` |
+| `extract_plot_meta` | 从样本注释提取用于绘图的元数据（样本/分组标签） | `sample_info`（必填）；`color_col = "sample_info"` | data.frame |
 
 ### `utils/external_modules`（预定义模块）
 
@@ -712,11 +767,13 @@ source("source_all_scripts.R")
 
 | 参数 | 类型 / 格式 | 默认值 |
 | --- | --- | --- |
-| `results` | data.frame，含 `logFC`/`log2FoldChange` 与 `adj.P.Val`/`padj` 列 | 必填 |
-| `logFC_threshold` | 数值 | `1` |
-| `p_threshold` | 数值 | `0.05` |
-| `label_top_n` | 数值，标注 top 差异特征数 | `10` |
-| `title` | 字符 | `"Volcano plot"` |
+| `de_results` | data.frame，含 p 值与 logFC 列（列名由下列参数指定） | 必填 |
+| `p_threshold` | 数值，p 值显著性阈值 | `0.05` |
+| `logfc_threshold` | 数值，logFC 绝对值阈值 | `1` |
+| `top_n` | 数值，标注 top 差异特征数 | `5` |
+| `p_col` | 字符，`de_results` 中 p 值列名 | `"p_adj"` |
+| `logfc_col` | 字符，`de_results` 中 logFC 列名 | `"logFC"` |
+| `color_up` / `color_down` / `color_ns` | 字符，上/下调/不显著配色 | `"#e74c3c"` / `"#2ecc71"` / `"grey70"` |
 
 - **返回值**：ggplot 对象。
 - **输出文件**：返回 R 对象，需经 `export_plot()` 保存。
@@ -728,9 +785,9 @@ source("source_all_scripts.R")
 | 参数 | 类型 / 格式 | 默认值 |
 | --- | --- | --- |
 | `vip` | 数值向量或 data.frame（特征→VIP） | 必填 |
+| `feature_info` | data.frame，特征注释（用于标签，可选） | 必填 |
 | `threshold` | 数值，VIP 显著阈值 | `1` |
 | `top_n` | 数值，标注数 | `20` |
-| `title` | 字符 | `"VIP Manhattan"` |
 
 - **返回值**：ggplot 对象。
 - **输出文件**：返回 R 对象，需经 `export_plot()` 保存。
@@ -741,14 +798,14 @@ source("source_all_scripts.R")
 
 | 参数 | 类型 / 格式 | 默认值 |
 | --- | --- | --- |
-| `mat` | 数值矩阵（特征×样本） | 必填 |
-| `annotation_col` | data.frame，列注释（可选） | `NULL` |
+| `expr_matrix` | 数值矩阵，特征×样本 | 必填 |
+| `sample_info` | data.frame，样本注释（用于列注释） | 必填 |
+| `feature_info` | data.frame，特征注释（可选） | `NULL` |
 | `scale` | 字符，`"none"` / `"row"` / `"column"` | `"row"` |
 | `cluster_rows` | 逻辑 | `TRUE` |
 | `cluster_cols` | 逻辑 | `TRUE` |
 | `show_rownames` | 逻辑 | `FALSE` |
 | `top_n` | 数值，仅显示 top 变异特征 | `NULL` |
-| `title` | 字符 | `""` |
 
 - **返回值**：pheatmap 对象。
 - **输出文件**：返回 R 对象，需经 `export_heatmap()` 保存。
@@ -760,11 +817,21 @@ source("source_all_scripts.R")
 | 参数 | 类型 / 格式 | 默认值 |
 | --- | --- | --- |
 | `sets` | 列表，命名集合（字符向量） | 必填 |
-| `title` | 字符 | `"Venn"` |
-| `fill` | 字符向量，各集合填充色 | `NULL`（自动） |
+| `fill_colors` | 字符向量，各集合填充色 | `NULL`（自动） |
+| `font_size` | 数值，字体缩放 | `0.8` |
 
 - **返回值**：ggplot 对象。
 - **输出文件**：返回 R 对象，需经 `export_plot()` 保存。
+
+**`export_venn`** — 将韦恩图直接写盘。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `venn` | `plot_venn` 返回的 ggplot 对象 | 必填 |
+| `output_dir` | 字符，输出目录 | `"."` |
+| `filename` | 字符，文件名（不含扩展名） | `"venn"` |
+
+- **输出文件（直接落盘）**：`<output_dir>/<filename>.pdf` + `.png`。
 
 ### `visualization/upset_plot.R`
 
@@ -773,9 +840,8 @@ source("source_all_scripts.R")
 | 参数 | 类型 / 格式 | 默认值 |
 | --- | --- | --- |
 | `sets` | 列表，命名集合 | 必填 |
-| `n_intersections` | 数值，展示交集数 | `10` |
-| `order_by` | 字符，`"freq"` / `"degree"` | `"freq"` |
-| `title` | 字符 | `"Upset"` |
+| `n_intersections` | 数值，展示交集数 | `30` |
+| `order_by` | 字符，`"size"` / `"degree"` | `"size"` |
 
 - **返回值**：ggplot/ComplexUpset 对象。
 - **输出文件**：返回 R 对象，需经 `export_plot()` 保存。
@@ -1115,6 +1181,71 @@ source("source_all_scripts.R")
 
 - **返回值**：data.frame（网络摘要）。
 - **输出文件**：返回 R 对象，需经 `export_table()` 保存。
+
+### `multiomics/network_perturbation.R`
+
+> 本文件函数与上方 DBN（dynamic_bayesian_network.R）结果配套，用于网络级虚拟扰动与调控重要性评估（输入均为 `run_dbn_layer()` / `run_dbn_multiomics()` 的结果对象）。
+
+**`get_downstream_nodes`** — 查找某节点在 DBN 中的所有下游可达节点及其最短路径距离（结构证据层，始终可用）。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `dbn_result` | DBN 结果对象（`run_dbn_*()` 输出） | 必填 |
+| `node` | 字符，起始节点名 | 必填 |
+| `max_distance` | 数值，最大路径长度 | `Inf` |
+
+- **返回值**：data.frame（node、distance），无下游时为空。
+- **输出文件**：返回 R 对象。
+
+**`run_node_knockout`** — 模拟节点敲除以衡量结构破坏程度。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `dbn_result` | DBN 结果对象 | 必填 |
+| `nodes` | 字符向量，待敲除节点（默认所有有出弧的节点） | `NULL` |
+| `top_n` | 数值，仅保留出度最高的 top_n 节点 | `NULL`（全部） |
+
+- **返回值**：data.frame（每节点：n_descendants、n_arcs_lost、n_components_after、n_orphaned）。
+- **输出文件**：返回 R 对象，需经 `export_table()` 保存。
+
+**`run_virtual_perturbation`** — 虚拟扰动分析（knockout / overexpress / inhibit + 下游传播推断）。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `dbn_result` | DBN 结果对象（含 bn.fit 与数据） | 必填 |
+| `mode` | 字符，`"knockout"` / `"overexpress"` / `"inhibit"` | 必填 |
+| `nodes` | 候选节点（默认所有有出弧节点） | `NULL` |
+| `n_sim` | 数值，Monte-Carlo 采样数 | `2000` |
+| `top_n` | 数值，送入推断层的候选数 | `15` |
+| `seed` | 数值 | `42` |
+| `verbose` | 逻辑 | `TRUE` |
+
+- **返回值**：列表，含 `node_summary`（每节点效应摘要）、`pair_details`（每对下游效应）、`params`。
+- **输出文件**：返回 R 对象，需经 `export_table()` 保存 `pair_details`。
+
+**`score_regulatory_importance`** — 综合调控重要性评分（归一化至 [0,1]）。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `perturb_result` | `run_virtual_perturbation()` 输出 | 必填 |
+| `weights` | 命名数值向量，各成分权重 | `c(descendants=0.4, tvd=0.4, betweenness=0.2)` |
+
+- **返回值**：data.frame（按 impact_score 排序，含 rank 列）。
+- **输出文件**：返回 R 对象，需经 `export_table()` 保存。
+
+**`run_perturbation_panel`** — 运行全部扰动模式并合并排序。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `dbn_result` | DBN 结果对象 | 必填 |
+| `modes` | 字符向量，扰动模式（默认全部三种） | `NULL` |
+| `n_sim` | 数值，每干预 Monte-Carlo 采样数 | `3000` |
+| `top_n` | 数值，每模式候选数 | `15` |
+| `seed` | 数值 | `42` |
+| `verbose` | 逻辑 | `TRUE` |
+
+- **返回值**：列表，含 `importance`（堆叠评分）、`pair_details`（堆叠下游效应）、`by_mode`（原始每模式结果）。
+- **输出文件**：返回 R 对象，需经 `export_table()` 保存 `pair_details`。
 
 ### `multiomics/mantel_procrustes.R`
 

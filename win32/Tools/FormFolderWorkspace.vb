@@ -204,7 +204,15 @@ Public Class FormFolderWorkspace
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub OpenConsoleAtHereToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenConsoleAtHereToolStripMenuItem.Click
+        Dim node As TreeNode = TreeView1.SelectedNode
 
+        If node.Parent Is Nothing Then
+            Call RibbonMenu.OpenConsole(Folder)
+        ElseIf DirectCast(node.Tag, FileSystemTree).IsDirectory Then
+            Call RibbonMenu.OpenConsole(Folder & "/" & DirectCast(node.Tag, FileSystemTree).FullName)
+        Else
+            Call RibbonMenu.OpenConsole((Folder & "/" & DirectCast(node.Tag, FileSystemTree).FullName).ParentPath)
+        End If
     End Sub
 
     ''' <summary>
@@ -213,6 +221,6 @@ Public Class FormFolderWorkspace
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
-
+        Call RibbonMenu.OpenConsole(Folder)
     End Sub
 End Class
