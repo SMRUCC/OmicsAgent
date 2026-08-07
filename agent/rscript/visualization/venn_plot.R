@@ -4,18 +4,16 @@
 # Visualize overlap between feature sets
 # ==============================================================================
 
-#' Plot Venn diagram
+#' 绘制韦恩图
 #'
-#' @description Creates a Venn diagram showing overlap between up to 4 sets of
-#'   features. Useful for comparing differential features across conditions.
+#' @description 创建韦恩图，展示最多 4 个特征集合之间的重叠。适用于比较不同条件下
+#'   的差异特征。
 #'
-#' @param sets Named list of character vectors (feature IDs). Names will be
-#'   used as set labels.
-#' @param fill_colors Optional named vector of fill colors. Default: uses
-#'   RColorBrewer.
-#' @param font_size Numeric, font size for labels. Default: 0.8.
+#' @param sets 字符向量（特征 ID）的有名列表。名称将用作集合标签。
+#' @param fill_colors 可选的填充色有名向量。默认：使用 RColorBrewer。
+#' @param font_size 数值，标签字号。默认：0.8。
 #'
-#' @return A VennDiagram grob.
+#' @return 一个 VennDiagram grob。
 #'
 #' @examples
 #' \dontrun{
@@ -37,7 +35,7 @@ plot_venn <- function(sets, fill_colors = NULL, font_size = 0.8) {
     stop("Venn diagram supports 2 to 4 sets. Got: ", n_sets)
   }
 
-  # Default colors
+  # 默认颜色
   if (is.null(fill_colors)) {
     colors <- make_group_colors(names(sets), palette_name = "Set2")
     colors <- adjustcolor(colors, alpha.f = 0.5)
@@ -45,7 +43,7 @@ plot_venn <- function(sets, fill_colors = NULL, font_size = 0.8) {
     colors <- fill_colors
   }
 
-  # Create Venn diagram
+  # 创建韦恩图
   if (n_sets == 2) {
     venn <- VennDiagram::draw.pairwise.venn(
       area1 = length(sets[[1]]),
@@ -104,13 +102,13 @@ plot_venn <- function(sets, fill_colors = NULL, font_size = 0.8) {
 }
 
 
-#' Export Venn diagram to PDF and PNG
+#' 将韦恩图导出为 PDF 与 PNG
 #'
-#' @param venn A VennDiagram grob from \code{plot_venn()}.
-#' @param output_dir Directory for output files.
-#' @param filename Base filename (without extension).
+#' @param venn 来自 \code{plot_venn()} 的 VennDiagram grob。
+#' @param output_dir 输出文件所在目录。
+#' @param filename 基础文件名（不含扩展名）。
 #'
-#' @return Invisible list of file paths.
+#' @return 不可见的文件路径列表。
 #'
 #' @examples
 #' \dontrun{
