@@ -29,6 +29,7 @@ Namespace RibbonLib.Controls
             Public Const cmdGroupResearchWork As UInteger = 4
             Public Const cmdButtonOpenKb As UInteger = 2
             Public Const cmdButtonDataset As UInteger = 26
+            Public Const cmdButtonEditResearchTopic As UInteger = 42
             Public Const cmdGroupResearchAgentWork As UInteger = 27
             Public Const cmdButtonStart As UInteger = 28
             Public Const cmdMenuKBLib As UInteger = 12
@@ -146,6 +147,12 @@ Namespace RibbonLib.Controls
         Public ReadOnly Property ButtonDataset As RibbonButton
             Get
                 Return _ButtonDataset
+            End Get
+        End Property
+        Private _ButtonEditResearchTopic As RibbonButton
+        Public ReadOnly Property ButtonEditResearchTopic As RibbonButton
+            Get
+                Return _ButtonEditResearchTopic
             End Get
         End Property
         Private _GroupResearchAgentWork As RibbonGroup
@@ -318,6 +325,7 @@ Namespace RibbonLib.Controls
             _GroupResearchWork = New RibbonGroup(_ribbon, Cmd.cmdGroupResearchWork)
             _ButtonOpenKb = New RibbonButton(_ribbon, Cmd.cmdButtonOpenKb)
             _ButtonDataset = New RibbonButton(_ribbon, Cmd.cmdButtonDataset)
+            _ButtonEditResearchTopic = New RibbonButton(_ribbon, Cmd.cmdButtonEditResearchTopic)
             _GroupResearchAgentWork = New RibbonGroup(_ribbon, Cmd.cmdGroupResearchAgentWork)
             _ButtonStart = New RibbonButton(_ribbon, Cmd.cmdButtonStart)
             _MenuKBLib = New RibbonTabGroup(_ribbon, Cmd.cmdMenuKBLib)

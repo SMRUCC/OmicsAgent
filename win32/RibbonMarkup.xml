@@ -188,6 +188,14 @@
       </Command.LargeImages>
     </Command>
     <Command Name="cmdGroupWorkbench" Id="40" LabelTitle="Workbench" />
+    <Command Name="cmdButtonEditResearchTopic" Id="42" LabelTitle="Research Background">
+      <Command.SmallImages>
+        <Image MinDPI="192">Icons/icons8-research-96.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Icons/icons8-research-96.png</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <Ribbon>
@@ -219,9 +227,10 @@
       <Ribbon.ContextualTabs>
         <TabGroup CommandName="cmdMenuResearchWork">
           <Tab CommandName="cmdTabResearchWork">
-            <Group CommandName="cmdGroupResearchWork" SizeDefinition="TwoButtons">
+            <Group CommandName="cmdGroupResearchWork" SizeDefinition="ThreeButtons">
               <Button CommandName="cmdButtonOpenKb" />
               <Button CommandName="cmdButtonDataset" />
+              <Button CommandName="cmdButtonEditResearchTopic" />
             </Group>
             <Group CommandName="cmdGroupResearchAgentWork" SizeDefinition="OneButton">
               <Button CommandName="cmdButtonStart" />

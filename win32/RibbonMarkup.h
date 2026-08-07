@@ -127,6 +127,10 @@
 #define cmdBtnOpenKBLib_LargeImages_192__RESID 60081
 #define cmdGroupWorkbench 40 
 #define cmdGroupWorkbench_LabelTitle_RESID 60082
-#define InternalCmd2_LabelTitle_RESID 60083
-#define InternalCmd6_LabelTitle_RESID 60084
-#define InternalCmd8_LabelTitle_RESID 60085
+#define cmdButtonEditResearchTopic 42 
+#define cmdButtonEditResearchTopic_LabelTitle_RESID 60083
+#define cmdButtonEditResearchTopic_SmallImages_192__RESID 60084
+#define cmdButtonEditResearchTopic_LargeImages_192__RESID 60085
+#define InternalCmd2_LabelTitle_RESID 60086
+#define InternalCmd6_LabelTitle_RESID 60087
+#define InternalCmd8_LabelTitle_RESID 60088

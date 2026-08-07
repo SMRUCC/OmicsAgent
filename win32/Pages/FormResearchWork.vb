@@ -8,10 +8,12 @@ Public Class FormResearchWork
     Shared ReadOnly btnOpenKb As RibbonEventBinding
     Shared ReadOnly btnDataset As RibbonEventBinding
     Shared ReadOnly btnRun As RibbonEventBinding
+    Shared ReadOnly btnBackground As RibbonEventBinding
 
     Shared Sub New()
         btnOpenKb = New RibbonEventBinding(Ribbon.ButtonOpenKb)
         btnDataset = New RibbonEventBinding(Ribbon.ButtonDataset)
+        btnBackground = New RibbonEventBinding(Ribbon.ButtonEditResearchTopic)
 
         btnRun = New RibbonEventBinding(Ribbon.ButtonStart)
     End Sub
@@ -39,6 +41,10 @@ Public Class FormResearchWork
         Call CommonRuntime.ShowDocument(New FormDataSetEditor With {.workspace = Workspace})
     End Sub
 
+    Private Sub OpenBackgroundEdit()
+        Call CommonRuntime.ShowDocument(New FormTextEdit With {.TextFile = $"{Workspace}/research.txt"})
+    End Sub
+
     Private Sub RunAgentTask()
         If agentContainer Is Nothing Then
             If MessageBox.Show("Start to run a long time omics analysis task by agent?", "Run Task", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk) = DialogResult.OK Then
@@ -59,6 +65,7 @@ Public Class FormResearchWork
         Call btnOpenKb.Addhandler(AddressOf OpenKBPage)
         Call btnDataset.Addhandler(AddressOf OpenDatasetPage)
         Call btnRun.Addhandler(AddressOf RunAgentTask)
+        Call btnBackground.Addhandler(AddressOf OpenBackgroundEdit)
 
         Call RibbonMenu.OpenFolder(Workspace)
     End Sub

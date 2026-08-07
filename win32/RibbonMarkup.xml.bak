@@ -87,10 +87,10 @@
     </Command>
     <Command Name="cmdButtonOpenOutput" Id="41" LabelTitle="Output Window">
       <Command.SmallImages>
-        <Image MinDPI="192">Icons/icons8-bash-96.png</Image>
+        <Image MinDPI="192">Icons/icons8-log-96 (1).png</Image>
       </Command.SmallImages>
       <Command.LargeImages>
-        <Image MinDPI="192">Icons/icons8-bash-96.png</Image>
+        <Image MinDPI="192">Icons/icons8-log-96 (1).png</Image>
       </Command.LargeImages>
     </Command>
     <Command Name="cmdButtonPreviewDataset" Id="35" LabelTitle="Preview">
@@ -188,6 +188,14 @@
       </Command.LargeImages>
     </Command>
     <Command Name="cmdGroupWorkbench" Id="40" LabelTitle="Workbench" />
+    <Command Name="cmdButtonEditResearchTopic" Id="42" LabelTitle="Research Background">
+      <Command.SmallImages>
+        <Image MinDPI="192">Icons/icons8-research-96.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Icons/icons8-research-96.png</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <Ribbon>
