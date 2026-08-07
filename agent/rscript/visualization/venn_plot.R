@@ -29,12 +29,12 @@ plot_venn <- function(sets, fill_colors = NULL, font_size = 0.8) {
   if (!requireNamespace("VennDiagram", quietly = TRUE)) {
     stop("Package 'VennDiagram' is required. Please install it.")
   }
-
+  
   n_sets <- length(sets)
   if (n_sets < 2 || n_sets > 4) {
     stop("Venn diagram supports 2 to 4 sets. Got: ", n_sets)
   }
-
+  
   # 默认颜色
   if (is.null(fill_colors)) {
     colors <- make_group_colors(names(sets), palette_name = "Set2")
@@ -42,7 +42,7 @@ plot_venn <- function(sets, fill_colors = NULL, font_size = 0.8) {
   } else {
     colors <- fill_colors
   }
-
+  
   # 创建韦恩图
   if (n_sets == 2) {
     venn <- VennDiagram::draw.pairwise.venn(
@@ -97,7 +97,7 @@ plot_venn <- function(sets, fill_colors = NULL, font_size = 0.8) {
       cex = font_size
     )
   }
-
+  
   return(venn)
 }
 
@@ -118,18 +118,18 @@ plot_venn <- function(sets, fill_colors = NULL, font_size = 0.8) {
 #' @export
 export_venn <- function(venn, output_dir = ".", filename = "venn") {
   if (!dir.exists(output_dir)) dir.create(output_dir, recursive = TRUE)
-
+  
   pdf_file <- file.path(output_dir, paste0(filename, ".pdf"))
   png_file <- file.path(output_dir, paste0(filename, ".png"))
-
+  
   grDevices::pdf(pdf_file, width = 6, height = 6)
   grid::grid.draw(venn)
   grDevices::dev.off()
-
+  
   grDevices::png(png_file, width = 2400, height = 2400, res = 300,
                  type = "cairo")
   grid::grid.draw(venn)
   grDevices::dev.off()
-
+  
   invisible(list(pdf = pdf_file, png = png_file))
 }

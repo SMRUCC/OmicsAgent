@@ -56,7 +56,7 @@ plot_vip_manhattan <- function(vip, feature_info,
   if (!category_col %in% colnames(feature_info)) {
     stop("category_col '", category_col, "' not found in feature_info.")
   }
-
+  
   # 确保 vip 为含数值 vip 列的数据框
   if (!is.data.frame(vip)) {
     vip <- as.data.frame(vip, stringsAsFactors = FALSE)
@@ -72,20 +72,20 @@ plot_vip_manhattan <- function(vip, feature_info,
     vip = vip[[vip_col]],
     stringsAsFactors = FALSE
   )
-
+  
   # 将特征 ID 映射到类别
   info_sub <- feature_info[, c(feature_id_col, category_col), drop = FALSE]
   colnames(info_sub) <- c("feature_id", "category")
   info_sub$feature_id <- as.character(info_sub$feature_id)
   info_sub$category <- as.character(info_sub$category)
-
+  
   plot_df <- merge(vip_df, info_sub, by = "feature_id", all.x = TRUE)
-
+  
   # 丢弃缺失 / 无效的类别
   n_before <- nrow(plot_df)
   valid_cat <- !is.na(plot_df$category) &
-               plot_df$category != "" &
-               plot_df$category != "NULL"
+    plot_df$category != "" &
+    plot_df$category != "NULL"
   plot_df <- plot_df[valid_cat, ]
   n_dropped <- n_before - nrow(plot_df)
   if (n_dropped > 0) {
@@ -94,18 +94,18 @@ plot_vip_manhattan <- function(vip, feature_info,
   if (nrow(plot_df) == 0) {
     stop("No features left after category filtering. Check feature_id_col / category_col.")
   }
-
+  
   # 按平均 VIP（降序）重排类别，以获得更整洁的布局
   cat_order <- names(sort(tapply(plot_df$vip, plot_df$category, mean),
                           decreasing = TRUE))
   plot_df$category <- factor(plot_df$category, levels = cat_order)
-
+  
   # 可选的 top 标注（总体，跨所有类别）
   label_df <- NULL
   if (top_n_labels > 0 && nrow(plot_df) > 0) {
     label_df <- head(plot_df[order(plot_df$vip, decreasing = TRUE), ], top_n_labels)
   }
-
+  
   p <- ggplot2::ggplot(plot_df, ggplot2::aes(x = category, y = vip)) +
     # 每个类别的密度轮廓（模拟染色体条带观感）
     ggplot2::geom_violin(ggplot2::aes(fill = category), alpha = 0.12,
@@ -129,16 +129,16 @@ plot_vip_manhattan <- function(vip, feature_info,
     ggplot2::theme_bw(base_size = base_size) +
     ggplot2::theme(
       plot.title = ggplot2::element_text(size = base_size + 2,
-                                          face = "bold", hjust = 0.5),
+                                         face = "bold", hjust = 0.5),
       axis.text.x = ggplot2::element_text(angle = 45, hjust = 1,
-                                           size = base_size - 1),
+                                          size = base_size - 1),
       axis.text.y = ggplot2::element_text(size = base_size - 1),
       axis.title = ggplot2::element_text(size = base_size + 1),
       legend.position = "right",
       panel.grid.major.x = ggplot2::element_blank(),
       panel.grid.minor = ggplot2::element_blank()
     )
-
+  
   if (!is.null(label_df) && nrow(label_df) > 0) {
     p <- p + ggrepel::geom_text_repel(
       data = label_df,
@@ -147,6 +147,6 @@ plot_vip_manhattan <- function(vip, feature_info,
       color = "#2c3e50", segment.color = "#7f8c8d"
     )
   }
-
+  
   return(p)
 }

@@ -50,20 +50,20 @@ plot_volcano <- function(de_results, p_col = "p_adj", logfc_col = "logFC",
     p_value = de_results[[p_col]],
     stringsAsFactors = FALSE
   )
-
+  
   # 若提供了名称列则添加
   if (!is.null(name_col) && name_col %in% colnames(de_results)) {
     plot_data$name <- de_results[[name_col]]
   } else {
     plot_data$name <- plot_data$feature_id
   }
-
+  
   # 去除 NA
   plot_data <- plot_data[!is.na(plot_data$logFC) & !is.na(plot_data$p_value), ]
-
+  
   # 计算 -log10 p 值
   plot_data$neg_log10_p <- -log10(plot_data$p_value)
-
+  
   # 判定显著性
   plot_data$direction <- ifelse(
     plot_data$p_value < p_threshold & plot_data$logFC > logfc_threshold, "Up",
@@ -72,13 +72,13 @@ plot_volcano <- function(de_results, p_col = "p_adj", logfc_col = "logFC",
       "NS"
     )
   )
-
+  
   # 选取用于标注的 Top 特征
   # 按显著性与效应量的组合排序
   plot_data$score <- abs(plot_data$logFC) * (-log10(plot_data$p_value))
   top_features <- plot_data[order(plot_data$score, decreasing = TRUE), ]
   top_features <- head(top_features[top_features$direction != "NS", ], top_n)
-
+  
   # 构建图形
   p <- ggplot2::ggplot(plot_data, ggplot2::aes(x = logFC, y = neg_log10_p)) +
     ggplot2::geom_point(ggplot2::aes(color = direction), size = 1.5, alpha = 0.7) +
@@ -109,6 +109,6 @@ plot_volcano <- function(de_results, p_col = "p_adj", logfc_col = "logFC",
       legend.text = ggplot2::element_text(size = 10),
       legend.title = ggplot2::element_text(size = 11)
     )
-
+  
   return(p)
 }

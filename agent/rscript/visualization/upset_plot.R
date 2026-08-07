@@ -29,25 +29,25 @@
 #'
 #' @export
 plot_upset <- function(sets, n_intersections = 30, order_by = "size",
-                      fill_color = "#4a90d9") {
+                       fill_color = "#4a90d9") {
   if (!requireNamespace("UpSetR", quietly = TRUE)) {
     stop("Package 'UpSetR' is required. Please install it.")
   }
-
+  
   # 将集合列表转换为二值矩阵
   all_features <- unique(unlist(sets))
   binary_mat <- data.frame(
     feature_id = all_features,
     stringsAsFactors = FALSE
   )
-
+  
   for (set_name in names(sets)) {
     binary_mat[[set_name]] <- as.integer(all_features %in% sets[[set_name]])
   }
-
+  
   rownames(binary_mat) <- binary_mat$feature_id
   binary_mat$feature_id <- NULL
-
+  
   # 创建 UpSet 图
   # 注意：当数据框集合很少而元素很多时，order_by = "size" 会在 UpSetR 中崩溃
   # （Counter 选择了不存在的列）。此时回退到 "degree"。
@@ -73,6 +73,6 @@ plot_upset <- function(sets, n_intersections = 30, order_by = "size",
   if (is.null(p)) {
     stop("Failed to create UpSet plot with order_by = '", order_by, "'.")
   }
-
+  
   return(p)
 }
