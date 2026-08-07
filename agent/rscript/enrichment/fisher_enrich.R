@@ -1,38 +1,37 @@
 # ==============================================================================
-# OmicsFlow: Fisher Enrichment Test
+# OmicsFlow: Fisher 富集检验
 # ==============================================================================
-# Fisher's exact test for over-representation analysis
+# 用于过表达分析的 Fisher 精确检验
 # ==============================================================================
 
-#' Fisher's exact enrichment test
+#' Fisher 精确富集检验
 #'
-#' @description Performs Fisher's exact test to assess over-representation of
-#'   categories (e.g., KEGG pathways, families, classes) among significant
-#'   features compared to all measured features.
+#' @description 使用 Fisher 精确检验评估显著特征中各类别（如 KEGG 通路、
+#'   家族、类别）相对全部测量特征的过表达（over-representation）情况。
 #'
-#' @param significant_features Character vector of significant feature IDs.
-#' @param all_features Character vector of all feature IDs (background).
-#' @param feature_info Data.frame with feature annotations.
-#' @param feature_id_col Column name for feature IDs in feature_info. Default: "ID".
-#' @param category_col Column name for category (e.g., "kegg", "family", "class").
-#' @param p_adj_method P-value adjustment method. Default: "BH".
-#' @param min_size Minimum category size. Default: 2.
+#' @param significant_features 显著特征 ID 的字符向量。
+#' @param all_features 全部特征 ID（背景集）的字符向量。
+#' @param feature_info 含有特征注释的数据框。
+#' @param feature_id_col feature_info 中特征 ID 的列名。默认："ID"。
+#' @param category_col 类别所在的列名（如 "kegg"、"family"、"class"）。
+#' @param p_adj_method P 值校正方法。默认："BH"。
+#' @param min_size 类别最小规模。默认：2。
 #'
-#' @return A data.frame with:
+#' @return 一个数据框，包含：
 #'   \itemize{
-#'     \item \code{category}: Category name.
-#'     \item \code{sig_count}: Count in significant set.
-#'     \item \code{sig_total}: Total significant features.
-#'     \item \code{bg_count}: Count in background.
-#'     \item \code{bg_total}: Total background features.
-#'     \item \code{p_value}: Raw p-value.
-#'     \item \code{p_adj}: Adjusted p-value.
-#'     \item \code{fold_enrichment}: Fold enrichment.
+#'     \item \code{category}：类别名称。
+#'     \item \code{sig_count}：显著集中的计数。
+#'     \item \code{sig_total}：显著特征总数。
+#'     \item \code{bg_count}：背景集中的计数。
+#'     \item \code{bg_total}：背景特征总数。
+#'     \item \code{p_value}：原始 p 值。
+#'     \item \code{p_adj}：校正后的 p 值。
+#'     \item \code{fold_enrichment}：富集倍数。
 #'   }
 #'
 #' @examples
 #' \dontrun{
-#' # Test KEGG pathway enrichment
+#' # 检验 KEGG 通路富集
 #' enrich <- run_fisher_enrich(
 #'   significant_features = c("feature1", "feature2", "feature3"),
 #'   all_features = rownames(expr_matrix),
@@ -47,29 +46,29 @@ run_fisher_enrich <- function(significant_features, all_features,
                               feature_info, feature_id_col = "ID",
                               category_col = "kegg",
                               p_adj_method = "BH", min_size = 2) {
-  # Ensure feature_info rownames match
+  # 确保 feature_info 的行名匹配
   if (feature_id_col %in% colnames(feature_info)) {
     rownames(feature_info) <- feature_info[[feature_id_col]]
   }
 
-  # Get categories for significant and background features
+  # 获取显著特征与背景特征的类别
   sig_categories <- feature_info[intersect(significant_features,
                                             rownames(feature_info)), category_col]
   bg_categories <- feature_info[intersect(all_features,
                                           rownames(feature_info)), category_col]
 
-  # Remove NAs and empty strings
+  # 移除 NA 与空字符串
   sig_categories <- sig_categories[!is.na(sig_categories) & sig_categories != ""]
   bg_categories <- bg_categories[!is.na(bg_categories) & bg_categories != ""]
 
-  # Count categories
+  # 统计类别数量
   sig_counts <- table(sig_categories)
   bg_counts <- table(bg_categories)
 
-  # Get all unique categories
+  # 获取所有唯一类别
   all_categories <- unique(c(names(sig_counts), names(bg_counts)))
 
-  # Build contingency table for each category
+  # 为每个类别构建列联表
   n_sig <- length(sig_categories)
   n_bg <- length(bg_categories)
 
@@ -90,17 +89,17 @@ run_fisher_enrich <- function(significant_features, all_features,
     cat_bg <- as.numeric(bg_counts[cat])
     if (is.na(cat_bg)) cat_bg <- 0
 
-    # Skip if too small
+    # 规模过小则跳过
     if (cat_sig < min_size) next
 
     not_cat_sig <- n_sig - cat_sig
     not_cat_bg <- n_bg - cat_bg
 
-    # Fisher's exact test
+    # Fisher 精确检验
     contingency <- matrix(c(cat_sig, not_cat_sig, cat_bg, not_cat_bg), nrow = 2)
     ft <- stats::fisher.test(contingency, alternative = "greater")
 
-    # Fold enrichment
+    # 富集倍数
     expected <- (cat_sig + cat_bg) * n_sig / (n_sig + n_bg)
     fold <- if (expected > 0) cat_sig / expected else 0
 
@@ -116,10 +115,10 @@ run_fisher_enrich <- function(significant_features, all_features,
     ))
   }
 
-  # Adjust p-values
+  # 校正 p 值
   results$p_adj <- stats::p.adjust(results$p_value, method = p_adj_method)
 
-  # Sort by p-value
+  # 按 p 值排序
   results <- results[order(results$p_value), ]
   rownames(results) <- make.unique(as.character(results$category))
   results$category <- NULL
@@ -128,16 +127,15 @@ run_fisher_enrich <- function(significant_features, all_features,
 }
 
 
-#' Plot enrichment results
+#' 绘制富集结果
 #'
-#' @description Creates a bar plot of enrichment results showing fold enrichment
-#'   and significance.
+#' @description 创建富集结果的条形图，展示富集倍数与显著性。
 #'
-#' @param enrich_result Result from \code{run_fisher_enrich()}.
-#' @param top_n Number of top categories to show. Default: 20.
-#' @param p_threshold P-value threshold for significance. Default: 0.05.
+#' @param enrich_result 来自 \code{run_fisher_enrich()} 的结果。
+#' @param top_n 展示的前 N 个类别数量。默认：20。
+#' @param p_threshold 显著性 p 值阈值。默认：0.05。
 #'
-#' @return A ggplot object.
+#' @return 一个 ggplot 对象。
 #'
 #' @examples
 #' \dontrun{
