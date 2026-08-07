@@ -69,8 +69,19 @@ map_kegg_compound_to_pathway <- function(kegg_ids, cache_dir = NULL,
     cached_data <- NULL
   }
 
-  # 确保带有 "cpd:" 前缀
-  query_ids <- paste0("cpd:", kegg_ids)
+  # 归一化 KEGG ID 前缀：KO 号（ko:Kxxxx 或 Kxxxx）走 ko: 端点，
+  # 化合物（cpd:Cxxxx 或 Cxxxx）走 cpd: 端点；两者均使用通用的
+  # rest.kegg.jp/link/pathway/<id> 接口，端点由 ID 前缀决定。
+  # 这是通用能力补全：此前仅支持化合物，KO 号被错误地加上 cpd: 前缀。
+  query_ids <- character(length(kegg_ids))
+  for (i in seq_along(kegg_ids)) {
+    id <- kegg_ids[i]
+    if (grepl("^ko:", id)) query_ids[i] <- id
+    else if (grepl("^K\\d+$", id)) query_ids[i] <- paste0("ko:", id)
+    else if (grepl("^cpd:", id)) query_ids[i] <- id
+    else if (grepl("^C\\d+$", id)) query_ids[i] <- paste0("cpd:", id)
+    else query_ids[i] <- id
+  }
 
   # 分批查询 KEGG API
   all_links <- character()
@@ -121,7 +132,9 @@ map_kegg_compound_to_pathway <- function(kegg_ids, cache_dir = NULL,
 
   # 解析链接
   links <- strsplit(all_links, "\t")
-  compound_ids <- gsub("cpd:", "", sapply(links, `[`, 1))
+  # 剥离 KEGG ID 前缀（ko: 或 cpd:），使 compound_id 与 feature_info 中的
+  # 原始 KO 号/化合物号（如 K01610、C00022）保持一致，便于下游按 kegg 列回连。
+  compound_ids <- sub("^(ko|cpd):", "", sapply(links, `[`, 1))
   pathway_ids <- sapply(links, `[`, 2)
 
   # 获取通路名称
