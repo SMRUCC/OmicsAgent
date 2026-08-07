@@ -1,0 +1,3 @@
+"phenotype","n_groups","n_features","n_samples","train_accuracy","cv_accuracy"
+"variety",2,40,312,1,1
+"phase",4,40,312,1,0.961538461538462

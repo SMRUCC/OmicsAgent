@@ -1,0 +1,5 @@
+"predicted","Active_fermentation","Early_fermentation","Fresh","Late_maturation"
+"Active_fermentation",96,0,0,0
+"Early_fermentation",0,120,0,0
+"Fresh",0,0,24,0
+"Late_maturation",0,0,0,72

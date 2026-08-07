@@ -15,34 +15,44 @@
 # 若 Times New Roman 不可用，则回退到 "serif"
 # （大多数操作系统下系统默认衬线字体即 Times）。
 
+# 本文件的主题函数依赖 ggplot2 的 theme_bw()/element_*() 等，
+# 必须显式加载，否则被单独 source 时会报 "没有 theme_set 这个函数"。
 suppressPackageStartupMessages({
-  if (!requireNamespace("extrafont", quietly = TRUE)) {
-    install.packages("extrafont", dependencies = TRUE)
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop("Package 'ggplot2' is required by theme_palette.R.")
   }
-  library(extrafont)
+  library(ggplot2)
 })
 
-# 尝试导入 Times New Roman 字体（每台机器只需执行一次）
-tryCatch({
-  if (!("Times New Roman" %in% fonts())) {
-    # 仅导入 Times 系列字体以加快速度
-    font_import(pattern = "Times", prompt = FALSE)
-  }
-  loadfonts(quiet = TRUE)
-}, error = function(e) {
-  message("[00_theme_palette] extrafont import skipped: ",
-          conditionMessage(e),
-          "\n  -> Falling back to 'serif' family.")
-})
+# extrafont 为可选依赖：仅在已安装时使用。
+# 原实现在 source 时直接调用 install.packages()，会在无网络/无写权限的
+# 环境中阻塞或失败；纯粹为了取字体名而联网安装属于不可接受的副作用。
+.have_extrafont <- requireNamespace("extrafont", quietly = TRUE)
+
+.available_fonts <- character(0)
+if (.have_extrafont) {
+  # font_import() 需扫描整个系统字体目录，耗时可达数分钟，
+  # 因此只读取已注册的字体表，不在 source 阶段触发导入。
+  .available_fonts <- tryCatch({
+    suppressMessages(extrafont::loadfonts(quiet = TRUE))
+    extrafont::fonts()
+  }, error = function(e) {
+    message("[00_theme_palette] extrafont unavailable: ",
+            conditionMessage(e), "\n  -> Falling back to 'serif' family.")
+    character(0)
+  })
+  if (is.null(.available_fonts)) .available_fonts <- character(0)
+}
 
 # 全局使用的字体族名称
 # 在 Windows 上为 "Times New Roman"；在 macOS 上可能为 "Times"；
 # 此处自动检测当前可用的最佳选项。
-TIMES_FONT <- if ("Times New Roman" %in% fonts()) {
+TIMES_FONT <- if ("Times New Roman" %in% .available_fonts) {
   "Times New Roman"
-} else if ("Times" %in% fonts()) {
+} else if ("Times" %in% .available_fonts) {
   "Times"
 } else {
+  # "serif" 是 R 图形设备内置的字体族别名，任何设备均可解析
   "serif"
 }
 
@@ -192,7 +202,9 @@ theme_pub <- function(base_size = 13) {
 }
 
 # 设为后续所有 ggplot 调用的默认主题
-theme_set(theme_pub())
+# 必须用 ggplot2:: 限定：本文件可能在 ggplot2 未被 attach 的会话中被 source，
+# 此时裸调用 theme_set() 会报 "没有 theme_set 这个函数"。
+ggplot2::theme_set(theme_pub())
 
 # ---- 12. 辅助函数：为 base-R 图形设置 Times New Roman -----
 # 在 pheatmap() / labeledHeatmap() / plot() 之前调用，

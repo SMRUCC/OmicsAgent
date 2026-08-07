@@ -82,36 +82,64 @@ run_plspm <- function(expr_matrix, feature_info, latent_def,
 
     # 通过 PCA 获取潜变量得分
     sub_mat <- t(as.matrix(expr_matrix[lv_features, , drop = FALSE]))
+    # 零方差列会让 scale. = TRUE 报错，须先剔除
+    v <- apply(sub_mat, 2, stats::var, na.rm = TRUE)
+    sub_mat <- sub_mat[, !is.na(v) & v > 0, drop = FALSE]
+    if (ncol(sub_mat) < 2) next
     pca_result <- stats::prcomp(sub_mat, scale. = TRUE, center = TRUE)
-    latent_scores[[lv_name]] <- pca_result$x[, 1]
+
+    # PC1 的符号是任意的（prcomp 不保证方向），会让路径系数的正负在不同
+    # 运行/不同数据子集间随机翻转。此处约定"载荷之和为正"以固定方向，
+    # 使潜变量得分与路径系数可复现、可解释。
+    ld <- pca_result$rotation[, 1]
+    sgn <- if (sum(ld) < 0) -1 else 1
+
+    latent_scores[[lv_name]] <- pca_result$x[, 1] * sgn
 
     # Loading
     outer_loadings[[lv_name]] <- data.frame(
-      feature_id = lv_features,
-      loading = pca_result$rotation[, 1],
+      feature_id = colnames(sub_mat),
+      loading = unname(ld * sgn),
       stringsAsFactors = FALSE
     )
   }
 
-  # 合并得分
-  scores_df <- as.data.frame(do.call(cbind, latent_scores))
-  rownames(scores_df) <- colnames(expr_matrix)
-
   # 内模型：路径Coefficient
   lv_names <- names(latent_scores)
   n_lv <- length(lv_names)
+
+  if (n_lv == 0) {
+    warning("No latent variable could be built (all groups < 2 usable features).")
+    return(list(
+      scores = data.frame(row.names = colnames(expr_matrix)),
+      outer_model = data.frame(feature_id = character(0),
+                               loading = numeric(0),
+                               latent_variable = character(0),
+                               stringsAsFactors = FALSE),
+      inner_model = data.frame(from = character(0), to = character(0),
+                               path_coeff = numeric(0), p_value = numeric(0),
+                               stringsAsFactors = FALSE),
+      path_coefficients = matrix(numeric(0), 0, 0)
+    ))
+  }
+
+  # 合并得分
+  scores_df <- as.data.frame(do.call(cbind, latent_scores))
+  colnames(scores_df) <- lv_names
+  rownames(scores_df) <- colnames(expr_matrix)
 
   if (is.null(inner_model)) {
     # 全连接路径Coefficient
     path_mat <- matrix(0, n_lv, n_lv)
     rownames(path_mat) <- colnames(path_mat) <- lv_names
 
-    for (i in 1:n_lv) {
-      for (j in 1:n_lv) {
+    # seq_len 而非 1:n_lv：n_lv 为 0 时 1:0 会反向迭代 c(1, 0)
+    for (i in seq_len(n_lv)) {
+      for (j in seq_len(n_lv)) {
         if (i != j) {
           fit <- stats::lm(scores_df[, j] ~ scores_df[, i])
-          s <- summary(fit)
-          path_mat[i, j] <- stats::coef(s)[2, 1]
+          cf <- stats::coef(summary(fit))
+          path_mat[i, j] <- if (nrow(cf) >= 2) cf[2, 1] else 0
         }
       }
     }
@@ -135,20 +163,27 @@ run_plspm <- function(expr_matrix, feature_info, latent_def,
     stringsAsFactors = FALSE
   )
 
-  for (i in 1:n_lv) {
-    for (j in 1:n_lv) {
+  # 预分配后一次性 rbind，避免在循环内反复 rbind（O(n^2) 复制）
+  rows <- list()
+  for (i in seq_len(n_lv)) {
+    for (j in seq_len(n_lv)) {
       if (i != j && path_mat[i, j] != 0) {
         fit <- stats::lm(scores_df[, j] ~ scores_df[, i])
-        s <- summary(fit)
-        inner_summary <- rbind(inner_summary, data.frame(
+        cf <- stats::coef(summary(fit))
+        if (nrow(cf) < 2) next
+        rows[[length(rows) + 1]] <- data.frame(
           from = lv_names[i],
           to = lv_names[j],
-          path_coeff = stats::coef(s)[2, 1],
-          p_value = stats::coef(s)[2, 4],
+          path_coeff = cf[2, 1],
+          p_value = cf[2, 4],
           stringsAsFactors = FALSE
-        ))
+        )
       }
     }
+  }
+  if (length(rows) > 0) {
+    inner_summary <- do.call(rbind, rows)
+    rownames(inner_summary) <- NULL
   }
 
   return(list(
@@ -235,7 +270,8 @@ build_latent_def_from_annotation <- function(expr_matrix, feature_info,
     } else {
       kegg_vals <- as.character(info[[kegg_col]])
       names(kegg_vals) <- rownames(info)
-      keep <- kegg_vals != "" & !is.na(kegg_vals)
+      kegg_vals <- trimws(kegg_vals)
+      keep <- !is.na(kegg_vals) & nzchar(kegg_vals)
       map_sub <- kegg_mapping[
         kegg_mapping$compound_id %in% kegg_vals[keep],
         c("compound_id", "pathway_name")
@@ -243,9 +279,14 @@ build_latent_def_from_annotation <- function(expr_matrix, feature_info,
       map_sub$pathway_name <- as.character(map_sub$pathway_name)
       map_sub$compound_id <- as.character(map_sub$compound_id)
       for (pid in unique(map_sub$pathway_name)) {
-        members <- map_sub$compound_id[map_sub$pathway_name == pid]
-        lv_features <- intersect(members, rownames(info))
-        lv_features <- lv_features[lv_features %in% rownames(info)]
+        members_cid <- map_sub$compound_id[map_sub$pathway_name == pid]
+        # 关键修正：map_sub$compound_id 是 KEGG 化合物编号（如 C00025），
+        # 而 rownames(info) 是Feature ID（代谢物名 / METAB 编号）。
+        # 原实现直接 intersect(members_cid, rownames(info))，两个命名空间
+        # 永不相交，导致 KEGG 潜变量恒为空、KEGG-PLSPM 必然失败。
+        # 此处先由 compound_id 反查Feature ID 再取交集。
+        lv_features <- names(kegg_vals)[keep & kegg_vals %in% members_cid]
+        lv_features <- unique(intersect(lv_features, rownames(info)))
         if (length(lv_features) >= min_size) {
           latent_def[[paste0(prefix_kegg, pid)]] <- lv_features
         }
@@ -283,8 +324,18 @@ plot_plspm_network <- function(plspm_result, p_threshold = 0.05) {
   lv_names <- colnames(scores)
   n_lv <- length(lv_names)
 
+  if (n_lv == 0) {
+    return(
+      ggplot2::ggplot() +
+        ggplot2::annotate("text", x = 0, y = 0,
+                          label = "No latent variable", size = 5) +
+        ggplot2::theme_void() +
+        ggplot2::labs(title = "PLS-PM Network")
+    )
+  }
+
   # 环形布局
-  angles <- seq(0, 2 * pi, length.out = n_lv + 1)[1:n_lv]
+  angles <- seq(0, 2 * pi, length.out = n_lv + 1)[seq_len(n_lv)]
   node_pos <- data.frame(
     node = lv_names,
     x = cos(angles),
@@ -293,14 +344,32 @@ plot_plspm_network <- function(plspm_result, p_threshold = 0.05) {
   )
 
   # 边数据
-  if (nrow(inner) > 0) {
-    edge_data <- merge(inner, node_pos, by.x = "from", by.y = "node")
-    colnames(edge_data)[5:6] <- c("x_from", "y_from")
-    edge_data <- merge(edge_data, node_pos, by.x = "to", by.y = "node")
-    colnames(edge_data)[7:8] <- c("x_to", "y_to")
-    edge_data$significant <- edge_data$p_value < p_threshold
+  # 原实现用硬编码列位置 colnames(edge_data)[5:6] / [7:8] 来命名合并进来的
+  # 坐标列，一旦 inner_model 的列数变化（或 merge 改变列序）就会把错误的列
+  # 重命名为坐标列。此处改为先重命名 node_pos 的坐标列再 merge，
+  # 完全不依赖列位置。
+  if (!is.null(inner) && nrow(inner) > 0) {
+    from_pos <- node_pos
+    colnames(from_pos) <- c("from", "x_from", "y_from")
+    to_pos <- node_pos
+    colnames(to_pos) <- c("to", "x_to", "y_to")
+
+    edge_data <- merge(inner, from_pos, by = "from")
+    edge_data <- merge(edge_data, to_pos, by = "to")
+    edge_data$significant <- factor(
+      ifelse(!is.na(edge_data$p_value) & edge_data$p_value < p_threshold,
+             "TRUE", "FALSE"),
+      levels = c("FALSE", "TRUE")
+    )
   } else {
-    edge_data <- data.frame()
+    edge_data <- data.frame(
+      from = character(0), to = character(0),
+      path_coeff = numeric(0), p_value = numeric(0),
+      x_from = numeric(0), y_from = numeric(0),
+      x_to = numeric(0), y_to = numeric(0),
+      significant = factor(character(0), levels = c("FALSE", "TRUE")),
+      stringsAsFactors = FALSE
+    )
   }
 
   p <- ggplot2::ggplot() +
@@ -316,7 +385,8 @@ plot_plspm_network <- function(plspm_result, p_threshold = 0.05) {
                                    name = "Path Coefficient") +
     ggplot2::scale_linetype_manual(values = c("TRUE" = "solid",
                                                "FALSE" = "dashed"),
-                                    name = "Significant") +
+                                    name = "Significant",
+                                    drop = FALSE) +
     ggplot2::geom_point(data = node_pos, ggplot2::aes(x = x, y = y),
                         size = 8, color = "#4a90d9", fill = "white",
                         shape = 21, stroke = 1.5) +

@@ -72,8 +72,19 @@ run_linear_model <- function(expr_matrix, sample_info,
     sample_info <- sample_info[keep_samples, , drop = FALSE]
   }
   
-  groups <- factor(sample_info[[group_col]])
+  # 先转 character 再建 factor：若 sample_info 列本身是 factor，
+  # 排除分组后原水平仍会残留，导致 nlevels() 虚高、模型出现空分组。
+  groups <- factor(as.character(sample_info[[group_col]]))
+  if (nlevels(groups) < 2) {
+    stop(sprintf("Column '%s' has %d level(s) after exclusion; need >= 2.",
+                 group_col, nlevels(groups)))
+  }
   if (!is.null(control_group)) {
+    if (!control_group %in% levels(groups)) {
+      stop(sprintf("control_group '%s' not found in '%s'. Available: %s",
+                   control_group, group_col,
+                   paste(levels(groups), collapse = ", ")))
+    }
     groups <- stats::relevel(groups, ref = control_group)
   }
   
@@ -99,38 +110,89 @@ run_linear_model <- function(expr_matrix, sample_info,
   # 确定模型类型
   n_groups <- nlevels(groups)
   
-  if (n_groups == 2) {
-    # 二分类：逻辑回归
-    formula_str <- "group ~ ."
-    model <- stats::glm(as.formula(formula_str), data = data_df,
-                        family = stats::binomial())
-    predictions <- stats::predict(model, type = "response")
-    predicted_class <- ifelse(predictions > 0.5, levels(groups)[2],
-                              levels(groups)[1])
-    predicted_class <- factor(predicted_class, levels = levels(groups))
-  } else {
-    # 多分类：多项逻辑回归
-    if (requireNamespace("nnet", quietly = TRUE)) {
-      formula_str <- "group ~ ."
-      model <- nnet::multinom(as.formula(formula_str), data = data_df,
-                              trace = FALSE)
-      predictions <- stats::predict(model, type = "class")
-      predicted_class <- factor(predictions, levels = levels(groups))
+  if (ncol(X) >= nrow(X)) {
+    warning(sprintf(
+      paste0("Feature count (%d) >= sample count (%d). The classifier is ",
+             "saturated and will separate the training data perfectly; ",
+             "training accuracy is meaningless. Pass 'top_features' to ",
+             "restrict the predictor set."),
+      ncol(X), nrow(X)))
+  }
+  
+  # 单次拟合（在全部样本上），用于返回模型对象与Coefficient
+  .fit_model <- function(df, grp) {
+    if (n_groups == 2) {
+      stats::glm(group ~ ., data = df, family = stats::binomial())
+    } else if (requireNamespace("nnet", quietly = TRUE)) {
+      nnet::multinom(group ~ ., data = df, trace = FALSE)
+    } else if (requireNamespace("MASS", quietly = TRUE)) {
+      MASS::lda(group ~ ., data = df)
     } else {
-      # 回退：LDA
-      if (requireNamespace("MASS", quietly = TRUE)) {
-        model <- MASS::lda(x = X, grouping = groups)
-        predictions <- stats::predict(model, X)$class
-        predicted_class <- factor(predictions, levels = levels(groups))
-      } else {
-        stop("Multi-class classification requires 'nnet' or 'MASS' package.")
-      }
+      stop("Multi-class classification requires 'nnet' or 'MASS' package.")
     }
   }
   
-  # 准确率
-  accuracy <- mean(predicted_class == groups)
+  .predict_class <- function(m, newdata, lv) {
+    if (inherits(m, "glm")) {
+      pr <- stats::predict(m, newdata = newdata, type = "response")
+      factor(ifelse(pr > 0.5, lv[2], lv[1]), levels = lv)
+    } else if (inherits(m, "lda")) {
+      factor(stats::predict(m, newdata)$class, levels = lv)
+    } else {
+      factor(stats::predict(m, newdata = newdata, type = "class"), levels = lv)
+    }
+  }
+  
+  model <- suppressWarnings(.fit_model(data_df, groups))
+  lv <- levels(groups)
+  predicted_class <- suppressWarnings(.predict_class(model, data_df, lv))
+  
+  # 训练集（重代入）准确率——在 p >= n 时通常为 1，不能作为泛化能力指标
+  train_accuracy <- mean(predicted_class == groups)
   conf_mat <- as.matrix(table(Predicted = predicted_class, Actual = groups))
+  
+  # ---- K 折交叉验证 ----
+  # 此前 cv_folds 虽在函数签名与文档中声明，但从未被使用，
+  # 返回的 accuracy 实际是重代入准确率。此处补齐真正的交叉验证。
+  cv_accuracy <- NA_real_
+  cv_predictions <- NULL
+  cv_confusion_matrix <- NULL
+  if (!is.null(cv_folds) && cv_folds >= 2 && nrow(data_df) >= cv_folds) {
+    # 分层抽样，保证每折都覆盖所有分组
+    fold_id <- integer(nrow(data_df))
+    for (g in lv) {
+      gi <- which(groups == g)
+      fold_id[gi] <- sample(rep_len(seq_len(cv_folds), length(gi)))
+    }
+    cv_pred <- factor(rep(NA_character_, nrow(data_df)), levels = lv)
+    for (k in seq_len(cv_folds)) {
+      tr <- fold_id != k
+      te <- !tr
+      if (!any(te)) next
+      # 训练折必须包含全部分组，否则模型无法预测缺失类别
+      if (nlevels(droplevels(groups[tr])) < n_groups) next
+      mk <- tryCatch(suppressWarnings(.fit_model(data_df[tr, , drop = FALSE],
+                                                 groups[tr])),
+                     error = function(e) NULL)
+      if (is.null(mk)) next
+      pk <- tryCatch(
+        suppressWarnings(.predict_class(mk, data_df[te, , drop = FALSE], lv)),
+        error = function(e) NULL)
+      if (is.null(pk)) next
+      cv_pred[te] <- pk
+    }
+    ok <- !is.na(cv_pred)
+    if (any(ok)) {
+      cv_accuracy <- mean(cv_pred[ok] == groups[ok])
+      cv_predictions <- cv_pred
+      cv_confusion_matrix <- as.matrix(
+        table(Predicted = cv_pred[ok], Actual = groups[ok]))
+    }
+  }
+  
+  # accuracy 保持向后兼容语义（重代入准确率），
+  # 泛化能力请参考 cv_accuracy。
+  accuracy <- train_accuracy
   
   # 分类Coefficient（保留以兼容旧版本）
   class_coefs <- stats::coef(model)
@@ -265,7 +327,15 @@ run_linear_model <- function(expr_matrix, sample_info,
     coefficients = coef_df,
     classification_coefficients = class_coef_df,
     accuracy = accuracy,
+    train_accuracy = train_accuracy,
+    cv_accuracy = cv_accuracy,
+    cv_folds = cv_folds,
     predictions = predicted_class,
-    confusion_matrix = conf_mat
+    cv_predictions = cv_predictions,
+    confusion_matrix = conf_mat,
+    cv_confusion_matrix = cv_confusion_matrix,
+    n_features = ncol(X),
+    n_samples = nrow(X),
+    groups = lv
   ))
 }
