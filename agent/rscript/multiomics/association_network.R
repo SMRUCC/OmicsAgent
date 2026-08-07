@@ -247,10 +247,15 @@ select_top_features <- function(mat, top_n = NULL, label = "matrix",
     `MIC-pvalue`   = if (is.null(mic_p)) rep(NA_real_, n) else mic_p,
     score          = score,
     pvalue         = merged_p,
+    padj           = padj,
     association    = assoc,
     check.names = FALSE
   )
-  attr(df, "padj") <- padj   # 供调用方按需使用（不导出到 CSV）
+  # association 列是依据 padj（BH 校正后）判定的。此前 padj 仅作为 attr 附带，
+  # 而 attr 会在 data.frame 取子集 / rbind / 写 CSV 时全部丢失，导致下游
+  # （如 build_association_network）只能退而用未校正的 pvalue 过滤，
+  # 与 association 的判定口径不一致。因此提升为正式列。
+  attr(df, "padj") <- padj   # 保留以兼容既有调用方
   df
 }
 

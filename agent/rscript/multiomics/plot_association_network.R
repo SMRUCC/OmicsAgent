@@ -42,8 +42,12 @@ build_association_network <- function(edges, p_threshold = 0.05, max_edges = 500
     if (isTRUE(verbose)) cat("[assoc-plot] empty edge table -> no network.\n")
     return(NULL)
   }
-  sig <- edges[edges$pvalue < p_threshold & edges$association != "not_significant", ,
-               drop = FALSE]
+  # 与 .assemble_edge_table 中 association 的判定口径保持一致：优先使用
+  # BH 校正后的 padj 列；老版本边表没有该列时回退到未校正的 pvalue。
+  pcol <- if ("padj" %in% colnames(edges)) edges$padj else edges$pvalue
+  keep <- !is.na(pcol) & pcol < p_threshold &
+    edges$association != "not_significant"
+  sig <- edges[keep, , drop = FALSE]
   if (nrow(sig) == 0) {
     if (isTRUE(verbose)) cat("[assoc-plot] no significant edges -> no network.\n")
     return(NULL)
@@ -154,10 +158,13 @@ plot_association_network <- function(g, p_threshold = 0.05, label_top_n = 12,
                                        xend = x_to, yend = y_to),
                           color = E$ecol, linewidth = E$ewidth,
                           alpha = 0.45) +
+    # shape = 21 的填充色由 fill 通道决定，原实现把 omics 映射到 color（描边），
+    # 却用 V$fill 原始向量设置填充，导致图例颜色与实际点色不一致。
+    # 统一改为映射 fill，描边固定为深灰。
     ggplot2::geom_point(data = V, ggplot2::aes(x = x, y = y,
-                                               color = omics, size = size),
-                        fill = V$fill, shape = 21, stroke = 0.4) +
-    ggplot2::scale_color_manual(values = node_colors) +
+                                               fill = omics, size = size),
+                        shape = 21, stroke = 0.4, color = "grey30") +
+    ggplot2::scale_fill_manual(values = node_colors) +
     ggplot2::scale_size_identity() +
     ggrepel::geom_text_repel(data = hub,
                              ggplot2::aes(x = x, y = y, label = name),
@@ -166,8 +173,8 @@ plot_association_network <- function(g, p_threshold = 0.05, label_top_n = 12,
     ggplot2::theme_void() +
     ggplot2::theme(legend.position = "right",
                    plot.title = ggplot2::element_text(hjust = 0.5, size = 13)) +
-    ggplot2::guides(size = "none", fill = "none") +
-    ggplot2::labs(title = title, color = "Omics layer")
+    ggplot2::guides(size = "none") +
+    ggplot2::labs(title = title, fill = "Omics layer")
   p
 }
 
@@ -201,8 +208,15 @@ plot_association_summary <- function(results, title = "Association Summary") {
       stringsAsFactors = FALSE)
   }
   df <- do.call(rbind, rows)
-  m <- reshape2::melt(df, id.vars = "combo",
-                      variable.name = "type", value.name = "count")
+  # 改用 base R 长表变形，避免为一次 melt 引入 reshape2 依赖
+  m <- data.frame(
+    combo = rep(df$combo, times = 3),
+    type  = factor(rep(c("positive", "negative", "nonlinear"),
+                       each = nrow(df)),
+                   levels = c("positive", "negative", "nonlinear")),
+    count = c(df$positive, df$negative, df$nonlinear),
+    stringsAsFactors = FALSE
+  )
   ggplot2::ggplot(m, ggplot2::aes(x = combo, y = count, fill = type)) +
     ggplot2::geom_col(position = "stack") +
     ggplot2::scale_fill_brewer(palette = "Set2") +
