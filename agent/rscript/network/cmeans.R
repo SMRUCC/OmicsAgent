@@ -1,35 +1,33 @@
 # ==============================================================================
-# OmicsFlow: CMeans Fuzzy Clustering
+# OmicsFlow: CMeans 模糊聚类
 # ==============================================================================
-# Fuzzy c-means clustering of features
+# 特征的模糊 c 均值聚类
 # ==============================================================================
 
-#' CMeans fuzzy clustering
+#' CMeans 模糊聚类
 #'
-#' @description Performs fuzzy c-means clustering to identify groups of features
-#'   with similar expression patterns. Unlike hard clustering, each feature
-#'   receives a membership value for each cluster.
+#' @description 执行模糊 c 均值（fuzzy c-means）聚类，以识别具有相似表达模式的
+#'   特征组。与硬聚类不同，每个特征对每个聚类都会获得一个隶属度（membership）值。
 #'
-#'   The clustering engine is \code{e1071::cmeans} (classic FCM). It is used
-#'   instead of \code{cluster::fanny}, which degenerates to uniform memberships
-#'   (all \eqn{= 1/k}) on high-dimensional z-scored matrices and assigns every
-#'   feature to a single cluster. Because classic FCM can leave some centers
-#'   empty (no feature hard-assigned), the function automatically retries with
-#'   a progressively smaller fuzziness exponent \code{m} so that all requested
-#'   clusters are populated.
+#'   聚类引擎为 \code{e1071::cmeans}（经典 FCM）。之所以使用它而非
+#'   \code{cluster::fanny}，是因为 FANNY 算法在高维 z-score 标准化矩阵上会退化
+#'   为均匀隶属度（全部 \eqn{= 1/k}），并把每个特征都分配到同一个聚类。
+#'   由于经典 FCM 可能留下某些空中心（没有任何特征被硬分配到该中心），本函数会
+#'   在检测到空聚类时自动用逐渐减小的模糊度指数 \code{m} 重试，
+#'   以保证所有请求的聚类都被填充。
 #'
-#' @param expr_matrix A numeric matrix (features x samples).
-#' @param n_clusters Number of clusters. Default: 6.
-#' @param m Fuzziness parameter (> 1). Higher = fuzzier. Default: 2.
-#' @param max_iter Maximum iterations. Default: 100.
-#' @param seed Random seed. Default: 42.
+#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param n_clusters 聚类数量。默认：6。
+#' @param m 模糊度参数（> 1）。越大越模糊。默认：2。
+#' @param max_iter 最大迭代次数。默认：100。
+#' @param seed 随机种子。默认：42。
 #'
-#' @return A list with:
+#' @return 一个列表，包含：
 #'   \itemize{
-#'     \item \code{cluster}: Integer vector of hard cluster assignment.
-#'     \item \code{membership}: Membership matrix (features x clusters).
-#'     \item \code{centers}: Cluster centers (clusters x samples).
-#'     \item \code{model}: Original cluster object.
+#'     \item \code{cluster}：硬聚类分配的整数向量。
+#'     \item \code{membership}：隶属度矩阵（特征 x 聚类）。
+#'     \item \code{centers}：聚类中心（聚类 x 样本）。
+#'     \item \code{model}：原始的聚类对象。
 #'   }
 #'
 #' @examples
@@ -42,24 +40,22 @@
 run_cmeans <- function(expr_matrix, n_clusters = 6, m = 2,
                       max_iter = 100, seed = 42) {
   if (!requireNamespace("e1071", quietly = TRUE)) {
-    stop("Package 'e1071' is required. Please install it.")
+    stop("需要安装 'e1071' 包，请先安装。")
   }
 
   set.seed(seed)
 
-  # Scale features for clustering
+  # 对特征进行标度变换以便聚类
   scaled_mat <- t(scale(t(as.matrix(expr_matrix))))
   scaled_mat[is.na(scaled_mat)] <- 0
 
-  # Fuzzy c-means (classic FCM via e1071::cmeans).
-  # NOTE: cluster::fanny is not used because the FANNY algorithm degenerates
-  # to uniform memberships (all == 1/k) on high-dimensional z-scored data,
-  # assigning every feature to cluster 1.
+  # 模糊 c 均值（通过 e1071::cmeans 实现的经典 FCM）。
+  # 注意：不使用 cluster::fanny，因为 FANNY 算法在高维 z-score 数据上会退化
+  # 为均匀隶属度（全部 == 1/k），并将每个特征都分配到聚类 1。
   #
-  # Classic FCM can leave some centers empty (no feature hard-assigned to
-  # them), which makes those clusters vanish from plots. To guarantee that all
-  # requested clusters are populated, retry with progressively smaller
-  # fuzziness exponent m if empty clusters are detected.
+  # 经典 FCM 可能留下某些空中心（没有特征被硬分配到这些中心），
+  # 从而导致这些聚类的图消失。为保证所有请求的聚类都被填充，
+  # 一旦检测到空聚类，就使用逐渐减小的模糊度指数 m 重试。
   candidates <- unique(c(m, 1.5, 1.4, 1.3, 1.2))
   cm <- NULL
   used_m <- m
@@ -75,21 +71,21 @@ run_cmeans <- function(expr_matrix, n_clusters = 6, m = 2,
     cm <- tmp
   }
 
-  # Extract results
+  # 提取结果
   membership <- cm$membership
   rownames(membership) <- rownames(expr_matrix)
   colnames(membership) <- paste0("Cluster", 1:n_clusters)
 
-  # Hard assignment
+  # 硬分配
   cluster <- apply(membership, 1, which.max)
   names(cluster) <- rownames(expr_matrix)
 
-  # Cluster centers (clusters x samples)
+  # 聚类中心（聚类 x 样本）
   centers <- cm$centers
   rownames(centers) <- paste0("Cluster", 1:n_clusters)
   colnames(centers) <- colnames(expr_matrix)
 
-  # Non-empty cluster count
+  # 非空聚类数量
   n_nonempty <- length(unique(cluster))
   if (n_nonempty < n_clusters) {
     message(sprintf(
@@ -112,35 +108,28 @@ run_cmeans <- function(expr_matrix, n_clusters = 6, m = 2,
 }
 
 
-#' Plot CMeans cluster profiles
+#' 绘制 CMeans 聚类轮廓
 #'
-#' @description Creates line plots showing the group-level expression pattern of
-#'   the most representative features within each cluster. The x axis is the
-#'   sample group id (\code{sample_info[[group_col]]}) and the y axis is the
-#'   z-score of each feature's average expression per group (i.e. each feature's
-#'   expression is averaged within each group, then the resulting
-#'   feature x group matrix is row-wise z-scored). For every cluster the
-#'   \code{top_n} features with the highest membership to that cluster are
-#'   selected and drawn as lines. Line thickness (\code{linewidth}) and colour
-#'   depth (\code{alpha}) both map to the feature's membership, so that features
-#'   with higher membership appear thicker and darker.
+#' @description 创建折线图，展示每个聚类内部最具代表性特征在分组层面的表达模式。
+#'   x 轴为样本分组 id（\code{sample_info[[group_col]]}），y 轴为每个特征在各组中
+#'   平均表达的 z-score（即每个特征在各组内的表达先求平均，再对所得的特征 x 组
+#'   矩阵按行做 z-score 标准化）。对每个聚类，选取对该聚类隶属度最高的
+#'   \code{top_n} 个特征并以折線画出。线宽（\code{linewidth}）与颜色深浅
+#'   （\code{alpha}）均映射到特征的隶属度，隶属度越高的特征线条越粗、越深。
 #'
-#' @param cmeans_result Result from \code{run_cmeans()}.
-#' @param sample_info Sample metadata.
-#' @param expr_matrix Optional numeric matrix (features x samples) holding the
-#'   expression values used to draw the per-feature curves. Should be the same
-#'   matrix passed to \code{run_cmeans()}. If \code{NULL}, falls back to drawing
-#'   a single cluster-centre line per cluster (legacy behaviour).
-#' @param top_n Number of top membership features to draw per cluster.
-#'   Default: 100.
-#' @param group_col Column for group labels. Default: "sample_info".
-#' @param feature_names Optional named vector of display names.
-#' @param palette Optional name of an RColorBrewer palette (e.g. "Set1", "Dark2",
-#'   "Paired"). When set, each cluster panel uses a distinct colour from the
-#'   palette; otherwise all curves are drawn in a single colour
-#'   (default: \code{NULL}).
+#' @param cmeans_result 来自 \code{run_cmeans()} 的结果。
+#' @param sample_info 样本元数据。
+#' @param expr_matrix 可选的数值矩阵（特征 x 样本），保存用于绘制各特征曲线的
+#'   表达值。应与传入 \code{run_cmeans()} 的矩阵相同。若为 \code{NULL}，则回退为
+#'   每个聚类仅绘制单条聚类中心折线（旧行为）。
+#' @param top_n 每个聚类绘制的隶属度最高特征数量。默认：100。
+#' @param group_col 分组标签所在的列。默认："sample_info"。
+#' @param feature_names 可选的显示名称命名向量。
+#' @param palette 可选的 RColorBrewer 调色板名称（如 "Set1"、"Dark2"、
+#'   "Paired"）。设置后，每个聚类面板使用调色板中一种不同的颜色；否则所有曲线
+#'   以单一颜色绘制（默认：\code{NULL}）。
 #'
-#' @return A ggplot object.
+#' @return 一个 ggplot 对象。
 #'
 #' @examples
 #' \dontrun{
@@ -169,7 +158,7 @@ plot_cmeans_profiles <- function(cmeans_result, sample_info,
     stop("cmeans_result$membership / cluster is NULL; cannot plot feature curves.")
   }
 
-  # Validate and align the expression matrix (features x samples)
+  # 校验并对齐表达矩阵（特征 x 样本）
   expr_mat <- as.matrix(expr_matrix)
   if (is.null(expr_mat) || nrow(expr_mat) == 0) {
     stop("expr_matrix is required for plotting group-level feature curves.")
@@ -190,9 +179,9 @@ plot_cmeans_profiles <- function(cmeans_result, sample_info,
   if (any(is.na(mem_idx))) stop("expr_matrix rownames do not match membership rownames.")
   mb <- mb[mem_idx, , drop = FALSE]
 
-  # --- Group-level mean + row-wise z-score --------------------------------
-  # Group each sample by its group label, compute the per-feature mean within
-  # each group, then z-score across groups for every feature.
+  # --- 分组层面均值 + 按行 z-score --------------------------------
+  # 按分组标签对样本分组，计算每组内每个特征的均值，
+  # 再对每个特征跨组做 z-score 标准化。
   grp_vec <- sample_info[sample_ids, group_col]
   grp_lev <- unique(grp_vec)
 
@@ -207,11 +196,11 @@ plot_cmeans_profiles <- function(cmeans_result, sample_info,
   rownames(group_mean) <- feat_ids
   colnames(group_mean) <- grp_lev
 
-  # Row-wise z-score across groups
+  # 跨组按行 z-score
   gm_z <- t(scale(t(group_mean)))
   gm_z[is.na(gm_z)] <- 0
 
-  # --- Select top membership features per cluster -------------------------
+  # --- 每个聚类选取隶属度最高的特征 -------------------------
   rows <- list()
   for (cl in cluster_names) {
     k <- match(cl, colnames(mb))
@@ -238,21 +227,21 @@ plot_cmeans_profiles <- function(cmeans_result, sample_info,
   plot_data_long <- do.call(rbind, rows)
   plot_data_long$feature_id <- as.character(plot_data_long$feature_id)
 
-  # Order cluster factor so all clusters are shown in requested order
+  # 设置聚类因子顺序，使所有聚类按请求顺序显示
   plot_data_long$cluster <- factor(plot_data_long$cluster,
                                     levels = cluster_names)
-  # Order group factor consistently
+  # 一致地设置分组因子顺序
   plot_data_long$group <- factor(plot_data_long$group, levels = grp_lev)
 
-  # Map membership to line thickness and transparency (depth).
-  # Moderate linewidth ceiling so overlapping high-membership lines do not
-  # coalesce into a solid block; low-membership lines stay faint but visible.
+  # 将隶属度映射到线宽与透明度（深浅）。
+  # 线宽上限适中，使相互重叠的高隶属度线条不会
+  # 融合成实心色块；低隶属度线条保持浅淡但仍可见。
   mem_range <- range(plot_data_long$membership, na.rm = TRUE)
   if (diff(mem_range) == 0) mem_range <- c(mem_range[1] - 1, mem_range[2])
 
-  # --- Palette handling ----------------------------------------------------
-  # When a palette name is supplied, each cluster gets its own colour from an
-  # RColorBrewer palette. Otherwise all curves share a single colour.
+  # --- 调色板处理 ----------------------------------------------------
+  # 提供调色板名称时，每个聚类从 RColorBrewer 调色板中获得各自颜色；
+  # 否则所有曲线共用单一颜色。
   use_palette <- !is.null(palette) && !is.na(palette) &&
     nzchar(palette) && palette != ""
   cluster_colors <- NULL
@@ -333,7 +322,7 @@ plot_cmeans_profiles <- function(cmeans_result, sample_info,
       ggplot2::facet_wrap(~ cluster, scales = "free_y")
   }
 
-  # Append shared membership scales, legend guides and theme
+  # 追加共享的隶属度标度、图例引导与主题
   p <- p +
     ggplot2::guides(linewidth = ggplot2::guide_legend(title = "Membership"),
                     alpha = ggplot2::guide_legend(title = "Membership")) +
@@ -343,20 +332,18 @@ plot_cmeans_profiles <- function(cmeans_result, sample_info,
 }
 
 
-#' Export CMeans membership table to CSV
+#' 将 CMeans 隶属度表导出为 CSV
 #'
-#' @description Exports the fuzzy c-means clustering result as a CSV file.
-#'   The output has one row per feature and one column per cluster
-#'   (membership degree / 归属度), plus an additional \code{cluster} column
-#'   recording the hard cluster assignment (the cluster with the highest
-#'   membership for each feature).
+#' @description 将模糊 c 均值聚类结果导出为 CSV 文件。
+#'   输出每行对应一个特征，每列对应一个聚类（隶属度 / 归属度），
+#'   并额外包含一列 \code{cluster} 记录硬聚类分配（即每个特征隶属度最高的聚类）。
 #'
-#' @param cmeans_result Result from \code{run_cmeans()}.
-#' @param output_dir Directory for output.
-#' @param filename Base filename (without extension). Default: "cmeans_membership".
-#' @param id_col_name Name for the feature-id column. Default: "feature_id".
+#' @param cmeans_result 来自 \code{run_cmeans()} 的结果。
+#' @param output_dir 输出目录。
+#' @param filename 基础文件名（不含扩展名）。默认："cmeans_membership"。
+#' @param id_col_name 特征 id 列的名称。默认："feature_id"。
 #'
-#' @return Invisible path to the exported CSV file.
+#' @return 导出 CSV 文件的可视（invisible）路径。
 #'
 #' @examples
 #' \dontrun{
@@ -372,13 +359,13 @@ export_cmeans_membership <- function(cmeans_result, output_dir = ".",
     stop("cmeans_result$membership is NULL; nothing to export.")
   }
 
-  # Build data frame: feature rows, cluster-membership columns
+  # 构建数据框：特征为行，聚类隶属度为列
   out <- as.data.frame(membership)
   out[[id_col_name]] <- rownames(membership)
   out$cluster <- cmeans_result$cluster
 
-  # Reorder so feature id and hard-assignment columns come first,
-  # then the per-cluster membership columns
+  # 重新排列列顺序，使特征 id 列与硬分配列在前，
+  # 随后才是各聚类的隶属度列
   member_cols <- setdiff(colnames(out), c(id_col_name, "cluster"))
   out <- out[, c(id_col_name, member_cols, "cluster")]
 

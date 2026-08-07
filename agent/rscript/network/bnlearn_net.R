@@ -43,7 +43,7 @@ run_bnlearn <- function(expr_matrix, time_points = NULL, feature_info = NULL,
 
   set.seed(seed)
 
-  # Select top variable features if too many
+  # 若特征过多，则挑选变异最大的前若干个
   mat <- as.matrix(expr_matrix)
   if (nrow(mat) > max_nodes) {
     row_vars <- apply(mat, 1, stats::var, na.rm = TRUE)
@@ -51,7 +51,7 @@ run_bnlearn <- function(expr_matrix, time_points = NULL, feature_info = NULL,
     mat <- mat[top_idx, , drop = FALSE]
   }
 
-  # Replace feature IDs with names
+  # 用特征名替换特征 ID
   if (!is.null(feature_info) && name_col %in% colnames(feature_info)) {
     feature_names <- feature_info[match(rownames(mat), rownames(feature_info)), name_col]
     feature_names[is.na(feature_names)] <- rownames(mat)
@@ -60,21 +60,21 @@ run_bnlearn <- function(expr_matrix, time_points = NULL, feature_info = NULL,
     rownames(mat) <- feature_names
   }
 
-  # Discretize if needed (bnlearn requires discrete data for some algorithms)
-  # Use quantile discretization
+  # 必要时进行离散化（部分算法要求 bnlearn 使用离散数据）
+  # 使用分位数离散化
   mat_disc <- t(apply(mat, 1, function(x) {
     if (stats::sd(x, na.rm = TRUE) == 0) return(rep(1, length(x)))
     cuts <- stats::quantile(x, probs = c(0.33, 0.67), na.rm = TRUE)
     cut(x, breaks = c(-Inf, cuts[1], cuts[2], Inf), labels = FALSE)
   }))
 
-  # Create data.frame for bnlearn
+  # 为 bnlearn 创建数据框
   bn_data <- as.data.frame(t(mat_disc))
   for (col in colnames(bn_data)) {
     bn_data[[col]] <- as.factor(bn_data[[col]])
   }
 
-  # Learn structure
+  # 学习结构
   if (algorithm == "hc") {
     bn <- bnlearn::hc(bn_data, score = score)
   } else if (algorithm == "tabu") {
@@ -85,10 +85,10 @@ run_bnlearn <- function(expr_matrix, time_points = NULL, feature_info = NULL,
     bn <- bnlearn::hc(bn_data, score = score)
   }
 
-  # Extract arcs
+  # 提取有向边
   arcs_df <- bnlearn::arcs(bn)
 
-  # Build adjacency matrix
+  # 构建邻接矩阵
   nodes <- bnlearn::nodes(bn)
   adj_mat <- matrix(0, length(nodes), length(nodes))
   rownames(adj_mat) <- colnames(adj_mat) <- nodes
@@ -107,13 +107,13 @@ run_bnlearn <- function(expr_matrix, time_points = NULL, feature_info = NULL,
 }
 
 
-#' Plot Bayesian network
+#' 绘制贝叶斯网络
 #'
-#' @description Creates a visualization of the Bayesian network structure.
+#' @description 创建贝叶斯网络结构的可视化图形。
 #'
-#' @param bn_result Result from \code{run_bnlearn()}.
+#' @param bn_result 来自 \code{run_bnlearn()} 的结果。
 #'
-#' @return A ggplot object.
+#' @return 一个 ggplot 对象。
 #'
 #' @examples
 #' \dontrun{
@@ -133,7 +133,7 @@ plot_bnlearn_network <- function(bn_result) {
            ggplot2::theme_void())
   }
 
-  # Simple circular layout
+  # 简单的环形布局
   n_nodes <- length(nodes)
   angles <- seq(0, 2 * pi, length.out = n_nodes + 1)[1:n_nodes]
   node_pos <- data.frame(
@@ -143,7 +143,7 @@ plot_bnlearn_network <- function(bn_result) {
     stringsAsFactors = FALSE
   )
 
-  # Edge data
+  # 边数据
   edge_data <- merge(arcs_df, node_pos, by.x = "from", by.y = "node")
   colnames(edge_data)[3:4] <- c("x_from", "y_from")
   edge_data <- merge(edge_data, node_pos, by.x = "to", by.y = "node")
