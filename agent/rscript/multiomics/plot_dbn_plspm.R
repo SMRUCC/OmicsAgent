@@ -1,14 +1,11 @@
 # ==============================================================================
-# OmicsFlow: Visualisation for Dynamic Bayesian Networks, Virtual Perturbation
-#            and Hierarchical PLS Path Models
+# OmicsFlow：动态贝叶斯网络、虚拟扰动与分层 PLS 路径模型可视化
 # ==============================================================================
-# Layout coordinates are computed with igraph where a force-directed placement
-# helps, and rendered with ggplot2 so the figures match the style of the other
-# plot_* functions in this project and can be passed straight to export_plot().
+# 布局坐标在需要力导向排布时由 igraph 计算，再使用 ggplot2 渲染，使图形与本项目中
+# 其他 plot_* 函数风格一致，并可直接传入 export_plot()。
 #
-# Every function degrades gracefully: when there is nothing to draw a valid
-# ggplot carrying an explanatory message is returned instead of an error, so a
-# pipeline step never breaks because a network happened to be empty.
+# 每个函数都能优雅降级：当无可绘制内容时，返回一个带有说明信息的合法 ggplot，
+# 而非报错，从而避免流水线步骤因网络恰好为空而中断。
 # ==============================================================================
 
 
@@ -23,11 +20,11 @@
 )
 
 
-#' Resolve colours for a set of omics layers
+#' 为一组组学层解析颜色
 #'
-#' @param layers Character vector of layer names.
+#' @param layers 层名称的字符向量。
 #'
-#' @return Named character vector of colours.
+#' @return 颜色的有名字符向量。
 #'
 #' @keywords internal
 .dbn_layer_colors <- function(layers) {
@@ -44,12 +41,12 @@
 }
 
 
-#' Empty placeholder plot carrying a message
+#' 携带说明信息的占位空图
 #'
-#' @param msg Message to display.
-#' @param title Optional plot title.
+#' @param msg 要显示的提示信息。
+#' @param title 可选图标题。
 #'
-#' @return A ggplot object.
+#' @return 一个 ggplot 对象。
 #'
 #' @keywords internal
 .dbn_empty_plot <- function(msg, title = NULL) {
@@ -63,12 +60,12 @@
 }
 
 
-#' Shorten long labels so the figures stay readable
+#' 截断过长的标签以保持图形可读性
 #'
-#' @param x Character vector.
-#' @param n Maximum number of characters.
+#' @param x 字符向量。
+#' @param n 最大字符数。
 #'
-#' @return Character vector of truncated labels.
+#' @return 截断后的标签字符向量。
 #'
 #' @keywords internal
 .dbn_trim <- function(x, n = 26) {
@@ -77,13 +74,12 @@
 }
 
 
-#' Normalise a network layout into a two-column data frame
+#' 将网络布局归一化为两列数据框
 #'
-#' @param coords A 2-column numeric matrix/df or NULL.
-#' @param nodes Character vector of node identifiers to keep.
+#' @param coords 两列数值矩阵 / df，或 NULL。
+#' @param nodes 要保留的节点标识字符向量。
 #'
-#' @return A data frame with columns `node`, `x`, `y`, or NULL when `coords`
-#'   cannot be matched to the nodes.
+#' @return 含 `node`、`x`、`y` 列的数据框；当 `coords` 无法与节点匹配时返回 NULL。
 #'
 #' @keywords internal
 .dbn_layout_df <- function(coords, nodes) {
@@ -105,35 +101,30 @@
 }
 
 
-#' Compute node coordinates for a network using igraph layouts
+#' 使用 igraph 布局为网络计算节点坐标
 #'
-#' @description Wraps the igraph layout engine so the network figures share a
-#'   single, consistent way of turning an edge list into coordinates. Besides
-#'   the force-directed / spectral layouts it can also reuse a hand-written
-#'   layout handed in through the `layout` argument.
+#' @description 封装 igraph 布局引擎，使网络图形统一采用同一种将边列表转换为坐标
+#'   的方式。除力导向 / 谱布局外，它也可复用通过 `layout` 参数传入的手动布局。
 #'
-#' @param arcs A data frame with `from` and `to` columns.
-#' @param layout Layout selector. One of:
+#' @param arcs 含 `from` 与 `to` 列的数据框。
+#' @param layout 布局选择器，可选之一：
 #'   \itemize{
-#'     \item \code{"fr"} / \code{"force"}: Fruchterman-Reingold force-directed
-#'       (respects a previous layout when one is supplied via \code{old_coords}).
-#'     \item \code{"kk"}: Kamada-Kawai force-directed.
-#'     \item \code{"tree"}: Sugiyama hierarchical layout (useful for upstream ->
-#'       downstream flows).
-#'     \item \code{"circle"}: circular arrangement.
-#'     \item a 2-column matrix / data frame of explicit coordinates (rows must
-#'       be named with the node ids).
+#'     \item \code{"fr"} / \code{"force"}: Fruchterman-Reingold 力导向布局
+#'       （若通过 \code{old_coords} 提供先前布局，则以其为起点）。
+#'     \item \code{"kk"}: Kamada-Kawai 力导向布局。
+#'     \item \code{"tree"}: Sugiyama 分层布局（适用于上游 -> 下游流向）。
+#'     \item \code{"circle"}: 环形排列。
+#'     \item 显式坐标的两列矩阵 / 数据框（行须以节点 id 命名）。
 #'   }
-#' @param old_coords Optional previous coordinates (named matrix) used as the
-#'   starting point for the force-directed layouts. Ignored otherwise.
+#' @param old_coords 可选先前的坐标（具名矩阵），用作力导向布局的起点；否则忽略。
 #'
-#' @return A data frame with columns `node`, `x`, `y`.
+#' @return 含 `node`、`x`、`y` 列的数据框。
 #'
 #' @keywords internal
 .dbn_compute_layout <- function(arcs, layout = "fr", old_coords = NULL) {
   all_nodes <- unique(c(arcs$from, arcs$to))
 
-  # explicit coordinate matrix passed by the caller
+  # 调用方传入的显式坐标矩阵
   if (is.matrix(layout) || is.data.frame(layout)) {
     return(.dbn_layout_df(layout, all_nodes))
   }
@@ -177,25 +168,21 @@
 # Dynamic Bayesian network figures
 # ------------------------------------------------------------------------------
 
-#' Plot a single-omics dynamic Bayesian network
+#' 绘制单组学动态贝叶斯网络
 #'
-#' @description Draws the two time slices of the DBN as two vertical columns,
-#'   the earlier slice (t0) on the left and the later slice (t1) on the right,
-#'   so every arrow visualises a temporal transition. Arc width and opacity
-#'   encode the bootstrap arc strength.
+#' @description 将 DBN 的两个时间切片绘制为两列竖直柱：较早切片（t0）在左、
+#'   较晚切片（t1）在右，使每条箭头都表示一个时间转移。弧的线宽与透明度编码
+#'   自助弧强度。
 #'
-#' @param dbn_result Result of \code{run_dbn_layer()}.
-#' @param title Plot title.
-#' @param label_top Maximum number of nodes to label, chosen by degree.
-#'   Default: 30.
-#' @param layout Network layout. \code{"fr"} / \code{"force"} (default) uses
-#'   the Fruchterman-Reingold force-directed placement, \code{"kk"} the
-#'   Kamada-Kawai placement, \code{"tree"} a Sugiyama layered placement, and
-#'   \code{"hier"} the two-column time-slice layout used in earlier versions.
-#'   A 2-column coordinate matrix (rows named with node ids) can also be
-#'   supplied to place the nodes explicitly.
+#' @param dbn_result \code{run_dbn_layer()} 的结果。
+#' @param title 图标题。
+#' @param label_top 标注的最大节点数，按度数选取。默认：30。
+#' @param layout 网络布局。\code{"fr"} / \code{"force"}（默认）使用
+#'   Fruchterman-Reingold 力导向布局，\code{"kk"} 使用 Kamada-Kawai 布局，
+#'   \code{"tree"} 使用 Sugiyama 分层布局，\code{"hier"} 使用早期版本的两列时间
+#'   切片布局。也可传入两列坐标矩阵（行以节点 id 命名）以显式指定节点位置。
 #'
-#' @return A ggplot object.
+#' @return 一个 ggplot 对象。
 #'
 #' @examples
 #' \dontrun{
@@ -297,25 +284,20 @@ plot_dbn_layer <- function(dbn_result, title = NULL, label_top = 30,
 }
 
 
-#' Plot the merged pan-omics dynamic Bayesian network
+#' 绘制合并的全组学动态贝叶斯网络
 #'
-#' @description Places the nodes in one column per omics layer, ordered by the
-#'   biological hierarchy, so that arcs crossing omics layers become visually
-#'   obvious. Inter-omics arcs are highlighted while intra-omics arcs are
-#'   drawn faintly, and node size encodes the number of connections.
+#' @description 将节点按每层一列、依生物学层级排列，使跨组学层的弧在视觉上一目了然。
+#'   跨组学弧被高亮，而组学内弧以淡色绘制，节点大小编码连接数。
 #'
-#' @param dbn_result Result of \code{run_dbn_multiomics()}.
-#' @param title Plot title.
-#' @param layer_order Column ordering of the omics layers. Default: the order
-#'   stored in the result. Only used when \code{layout = "hier"}.
-#' @param label_top Maximum number of nodes to label. Default: 30.
-#' @param layout Network layout. \code{"fr"} / \code{"force"} (default) uses
-#'   the Fruchterman-Reingold force-directed placement, \code{"kk"} the
-#'   Kamada-Kawai placement, and \code{"hier"} the one-column-per-omics
-#'   layout used in earlier versions. A 2-column coordinate matrix (rows named
-#'   with node ids) can also be supplied.
+#' @param dbn_result \code{run_dbn_multiomics()} 的结果。
+#' @param title 图标题。
+#' @param layer_order 组学层的列顺序。默认：结果中存储的顺序。仅当 \code{layout = "hier"} 时使用。
+#' @param label_top 标注的最大节点数。默认：30。
+#' @param layout 网络布局。\code{"fr"} / \code{"force"}（默认）使用
+#'   Fruchterman-Reingold 力导向布局，\code{"kk"} 使用 Kamada-Kawai 布局，
+#'   \code{"hier"} 使用早期版本的每层一列布局。也可传入两列坐标矩阵（行以节点 id 命名）。
 #'
-#' @return A ggplot object.
+#' @return 一个 ggplot 对象。
 #'
 #' @examples
 #' \dontrun{
@@ -443,14 +425,14 @@ plot_dbn_multiomics <- function(dbn_result, title = NULL, layer_order = NULL,
 # Perturbation figures
 # ------------------------------------------------------------------------------
 
-#' Plot the regulatory importance ranking of perturbed nodes
+#' 绘制被扰动节点的调控重要性排序
 #'
-#' @param importance_df Output of \code{score_regulatory_importance()} or the
-#'   stacked \code{importance} table of \code{run_perturbation_panel()}.
-#' @param top_n Number of nodes to display per mode. Default: 20.
-#' @param title Plot title.
+#' @param importance_df \code{score_regulatory_importance()} 的输出，或
+#'   \code{run_perturbation_panel()} 堆叠后的 \code{importance} 表。
+#' @param top_n 每种模式显示的节点数。默认：20。
+#' @param title 图标题。
 #'
-#' @return A ggplot object.
+#' @return 一个 ggplot 对象。
 #'
 #' @examples
 #' \dontrun{
@@ -504,19 +486,17 @@ plot_perturbation_ranking <- function(importance_df, top_n = 20,
 }
 
 
-#' Heatmap of perturbation effects on downstream nodes
+#' 扰动对下游节点影响的瀑布热力图
 #'
-#' @description Shows how strongly each perturbed node shifts the state
-#'   distribution of the nodes downstream of it. The fill encodes the signed
-#'   probability shift when available, otherwise the total variation distance.
+#' @description 展示每个被扰动节点对其下游节点状态分布的偏移强度。填充色编码有符号
+#'   概率偏移（若可用），否则编码总变差距离。
 #'
-#' @param pair_details The \code{pair_details} table of a perturbation result.
-#' @param mode Restrict to a single perturbation mode. Default: the first mode
-#'   with usable inference values.
-#' @param top_n Maximum number of perturbed nodes to show. Default: 15.
-#' @param title Plot title.
+#' @param pair_details 扰动结果的 \code{pair_details} 表。
+#' @param mode 限定为单一扰动模式。默认：首个具有可用推断值的模式。
+#' @param top_n 显示的最大被扰动节点数。默认：15。
+#' @param title 图标题。
 #'
-#' @return A ggplot object.
+#' @return 一个 ggplot 对象。
 #'
 #' @examples
 #' \dontrun{
@@ -593,23 +573,21 @@ plot_perturbation_heatmap <- function(pair_details, mode = NULL, top_n = 15,
 }
 
 
-#' Plot the downstream impact sub-network of one perturbed node
+#' 绘制单个被扰动节点的下游影响子网络
 #'
-#' @description Extracts the node together with everything reachable from it
-#'   and draws that sub-network, with the perturbed node highlighted and the
-#'   remaining nodes placed in concentric rings by path distance.
+#' @description 提取该节点及其可达的所有节点，并绘制该子网络，其中被扰动节点高亮，
+#'   其余节点按路径距离排布为同心环。
 #'
-#' @param dbn_result A DBN result object.
-#' @param node Name of the perturbed node.
-#' @param title Plot title.
-#' @param max_distance Maximum path length to include. Default: Inf.
-#' @param layout Sub-network layout. \code{"fr"} / \code{"force"} (default)
-#'   uses the Fruchterman-Reingold force-directed placement and \code{"kk"}
-#'   the Kamada-Kawai placement. \code{"ring"} (the default in earlier
-#'   versions) arranges the nodes in concentric rings by path distance from the
-#'   perturbed node. A 2-column coordinate matrix can also be supplied.
+#' @param dbn_result 一个 DBN 结果对象。
+#' @param node 被扰动节点的名称。
+#' @param title 图标题。
+#' @param max_distance 包含的最大路径长度。默认：Inf。
+#' @param layout 子网络布局。\code{"fr"} / \code{"force"}（默认）使用
+#'   Fruchterman-Reingold 力导向布局，\code{"kk"} 使用 Kamada-Kawai 布局。
+#'   \code{"ring"}（早期版本默认）按距被扰动节点的路径距离将节点排布为同心环。
+#'   也可传入两列坐标矩阵。
 #'
-#' @return A ggplot object.
+#' @return 一个 ggplot 对象。
 #'
 #' @examples
 #' \dontrun{
