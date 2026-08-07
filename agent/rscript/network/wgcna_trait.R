@@ -1,32 +1,32 @@
 # ==============================================================================
-# OmicsFlow: WGCNA Module-Trait Association
+# OmicsFlow: WGCNA 模块-性状关联
 # ==============================================================================
-# Correlation of modules with biological traits + linear regression
+# 模块与生物学性状的相关性 + 线性回归
 # ==============================================================================
 
-#' WGCNA module-trait association
+#' WGCNA 模块-性状关联
 #'
-#' @description Calculates correlations between WGCNA module eigengenes and
-#'   biological traits. Also performs linear regression to assess significance.
+#' @description 计算 WGCNA 模块特征基因与生物学性状之间的相关性，
+#'   并通过线性回归评估显著性。
 #'
-#' @param wgcna_result Result from \code{build_wgcna_modules()}.
-#' @param traits A numeric matrix or data.frame (samples x traits). Rows must
-#'   match sample names in wgcna_result$MEs.
-#' @param sample_info Optional sample metadata for grouping.
-#' @param cor_method Correlation method. Default: "pearson".
+#' @param wgcna_result 来自 \code{build_wgcna_modules()} 的结果。
+#' @param traits 数值矩阵或数据框（样本 x 性状）。行名必须与
+#'   wgcna_result$MEs 中的样本名对应。
+#' @param sample_info 可选的样本元数据，用于分组。
+#' @param cor_method 相关方法。默认："pearson"。
 #'
-#' @return A list with:
+#' @return 一个列表，包含：
 #'   \itemize{
-#'     \item \code{module_trait_cor}: Correlation matrix (modules x traits).
-#'     \item \code{module_trait_p}: P-value matrix.
-#'     \item \code{module_trait_lm}: Linear regression results per module-trait.
-#'     \item \code{feature_trait_cor}: Feature-level correlations with traits.
-#'     \item \code{feature_trait_lm}: Feature-level linear regression.
+#'     \item \code{module_trait_cor}：相关矩阵（模块 x 性状）。
+#'     \item \code{module_trait_p}：p 值矩阵。
+#'     \item \code{module_trait_lm}：每个模块-性状对的线性回归结果。
+#'     \item \code{feature_trait_cor}：特征层面与性状的相关性。
+#'     \item \code{feature_trait_lm}：特征层面的线性回归。
 #'   }
 #'
 #' @examples
 #' \dontrun{
-#' # Traits could be clinical measurements or phenotypes
+#' # 性状可以是临床测量值或表型
 #' traits <- data.frame(
 #'   weight = c(25, 30, 22, 28),
 #'   survival = c(0.8, 0.6, 0.9, 0.7),
@@ -40,7 +40,7 @@ wgcna_module_trait <- function(wgcna_result, traits, sample_info = NULL,
                                cor_method = "pearson") {
   MEs <- wgcna_result$MEs
 
-  # Align samples
+  # 对齐样本
   common_samples <- intersect(rownames(MEs), rownames(traits))
   MEs <- MEs[common_samples, , drop = FALSE]
   traits <- as.matrix(traits)[common_samples, , drop = FALSE]
@@ -49,7 +49,7 @@ wgcna_module_trait <- function(wgcna_result, traits, sample_info = NULL,
   n_modules <- ncol(MEs)
   n_traits <- ncol(traits)
 
-  # Module-trait correlations
+  # 模块-性状相关性
   cor_mat <- matrix(0, n_modules, n_traits)
   p_mat <- matrix(1, n_modules, n_traits)
   rownames(cor_mat) <- colnames(MEs)
@@ -65,7 +65,7 @@ wgcna_module_trait <- function(wgcna_result, traits, sample_info = NULL,
     }
   }
 
-  # Linear regression for each module-trait pair
+  # 对每个模块-性状对做线性回归
   lm_results <- list()
   for (i in 1:n_modules) {
     for (j in 1:n_traits) {
@@ -88,12 +88,12 @@ wgcna_module_trait <- function(wgcna_result, traits, sample_info = NULL,
   lm_df <- do.call(rbind, lm_results)
   rownames(lm_df) <- NULL
 
-  # Feature-level correlations
-  # Need original expression matrix from wgcna_result
+  # 特征层面的相关性
+  # 需要从 wgcna_result 获取原始表达矩阵
   feature_trait_cor <- NULL
   feature_trait_lm <- NULL
 
-  # If module_colors available, compute feature-trait correlations
+  # 若可用 module_colors，则计算特征-性状相关性
   if (!is.null(wgcna_result$module_colors)) {
     # We need the original expression matrix - but it's not stored
     # Instead, use module eigengenes as proxy

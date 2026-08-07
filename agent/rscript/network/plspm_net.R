@@ -1,36 +1,34 @@
 # ==============================================================================
-# OmicsFlow: PLS-PM (Partial Least Squares Path Modeling)
+# OmicsFlow: PLS-PM（偏最小二乘路径建模，Partial Least Squares Path Modeling）
 # ==============================================================================
-# Multi-omics or single-omics latent variable network
+# 多组学或单组学的潜变量网络
 # ==============================================================================
 
-#' Run PLS-PM analysis
+#' 运行 PLS-PM 分析
 #'
-#' @description Performs Partial Least Squares Path Modeling to construct
-#'   networks of latent variables from observed feature groups (e.g., families
-#'   or KEGG pathways). Suitable for multi-omics integration.
+#' @description 执行偏最小二乘路径建模，从观测到的特征组（如家族或 KEGG 通路）
+#'   构建潜变量网络。适用于多组学整合。
 #'
-#' @param expr_matrix A numeric matrix (features x samples).
-#' @param feature_info Data.frame with feature annotations.
-#' @param latent_def Named list where each element is a character vector of
-#'   feature IDs or a column name from feature_info defining the latent variable.
-#'   E.g., \code{list(Metabolism = "kegg", Lipids = "super_class")}.
-#' @param inner_model Optional matrix defining relationships between latent
-#'   variables. If NULL, all latent variables are connected. Default: NULL.
-#' @param feature_id_col Column name for feature IDs. Default: "ID".
-#' @param ncomp Number of PLS components. Default: 2.
+#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param feature_info 含有特征注释的数据框。
+#' @param latent_def 命名列表，每个元素为定义潜变量的特征 ID 字符向量，或
+#'   feature_info 中某列名。例如 \code{list(Metabolism = "kegg", Lipids = "super_class")}。
+#' @param inner_model 可选的矩阵，定义潜变量之间的关系。若为 NULL，则所有潜变量
+#'   互连。默认：NULL。
+#' @param feature_id_col 特征 ID 的列名。默认："ID"。
+#' @param ncomp PLS 组分数。默认：2。
 #'
-#' @return A list with:
+#' @return 一个列表，包含：
 #'   \itemize{
-#'     \item \code{scores}: Latent variable scores (samples x latent vars).
-#'     \item \code{outer_model}: Loadings of features on latent variables.
-#'     \item \code{inner_model}: Path coefficients between latent variables.
-#'     \item \code{path_coefficients}: Matrix of path coefficients.
+#'     \item \code{scores}：潜变量得分（样本 x 潜变量）。
+#'     \item \code{outer_model}：特征在潜变量上的载荷。
+#'     \item \code{inner_model}：潜变量之间的路径系数。
+#'     \item \code{path_coefficients}：路径系数矩阵。
 #'   }
 #'
 #' @examples
 #' \dontrun{
-#' # Define latent variables by KEGG pathway
+#' # 按 KEGG 通路定义潜变量
 #' latent_def <- list(
 #'   AminoAcid = c("feature1", "feature2", "feature3"),
 #'   Lipid = c("feature4", "feature5", "feature6")
@@ -46,13 +44,13 @@ run_plspm <- function(expr_matrix, feature_info, latent_def,
     warning("Package 'plsdepot' not available. Using simplified PLS-PM.")
   }
 
-  # Align feature info
+  # 对齐特征信息
   if (feature_id_col %in% colnames(feature_info)) {
     rownames(feature_info) <- feature_info[[feature_id_col]]
   }
   common_features <- intersect(rownames(expr_matrix), rownames(feature_info))
 
-  # Build latent variable data
+  # 构建潜变量数据
   latent_scores <- list()
   outer_loadings <- list()
 
@@ -60,9 +58,8 @@ run_plspm <- function(expr_matrix, feature_info, latent_def,
     lv_def <- latent_def[[lv_name]]
 
     if (length(lv_def) == 1 && lv_def %in% colnames(feature_info)) {
-      # Column name: each distinct (non-empty) value becomes its own latent
-      # variable. Emit a warning if the caller did not expect multi-group
-      # behaviour, but proceed by building only the first category group.
+      # 列名：每个不同（非空）的取值成为一个独立的潜变量。
+      # 若调用方未预期多分组行为，则发出警告，但仍仅构建第一个类别分组后继续。
       warning(
         "latent_def element '", lv_name, "' is a column name ('", lv_def,
         "'). Grouping is ambiguous; use build_latent_def_from_annotation() ",
@@ -83,12 +80,12 @@ run_plspm <- function(expr_matrix, feature_info, latent_def,
 
     if (length(lv_features) < 2) next
 
-    # PCA to get latent score
+    # 通过 PCA 获取潜变量得分
     sub_mat <- t(as.matrix(expr_matrix[lv_features, , drop = FALSE]))
     pca_result <- stats::prcomp(sub_mat, scale. = TRUE, center = TRUE)
     latent_scores[[lv_name]] <- pca_result$x[, 1]
 
-    # Loadings
+    # 载荷
     outer_loadings[[lv_name]] <- data.frame(
       feature_id = lv_features,
       loading = pca_result$rotation[, 1],
@@ -96,16 +93,16 @@ run_plspm <- function(expr_matrix, feature_info, latent_def,
     )
   }
 
-  # Combine scores
+  # 合并得分
   scores_df <- as.data.frame(do.call(cbind, latent_scores))
   rownames(scores_df) <- colnames(expr_matrix)
 
-  # Inner model: path coefficients
+  # 内模型：路径系数
   lv_names <- names(latent_scores)
   n_lv <- length(lv_names)
 
   if (is.null(inner_model)) {
-    # All-to-all path coefficients
+    # 全连接路径系数
     path_mat <- matrix(0, n_lv, n_lv)
     rownames(path_mat) <- colnames(path_mat) <- lv_names
 
@@ -122,14 +119,14 @@ run_plspm <- function(expr_matrix, feature_info, latent_def,
     path_mat <- inner_model
   }
 
-  # Outer model
+  # 外模型
   outer_model <- do.call(rbind, lapply(names(outer_loadings), function(lv) {
     df <- outer_loadings[[lv]]
     df$latent_variable <- lv
     return(df)
   }))
 
-  # Inner model summary
+  # 内模型汇总
   inner_summary <- data.frame(
     from = character(),
     to = character(),
@@ -163,15 +160,14 @@ run_plspm <- function(expr_matrix, feature_info, latent_def,
 }
 
 
-#' Plot PLS-PM path diagram
+#' 绘制 PLS-PM 路径图
 #'
-#' @description Creates a path diagram showing latent variables and their
-#'   relationships.
+#' @description 创建展示潜变量及其相互关系的路径图。
 #'
-#' @param plspm_result Result from \code{run_plspm()}.
-#' @param p_threshold P-value threshold for significance. Default: 0.05.
+#' @param plspm_result 来自 \code{run_plspm()} 的结果。
+#' @param p_threshold 显著性 p 值阈值。默认：0.05。
 #'
-#' @return A ggplot object.
+#' @return 一个 ggplot 对象。
 #'
 #' @examples
 #' \dontrun{
@@ -179,40 +175,28 @@ run_plspm <- function(expr_matrix, feature_info, latent_def,
 #' p <- plot_plspm_network(result)
 #' print(p)
 #' }
-#' Build latent variable definitions from feature annotation
+#' 根据特征注释构建潜变量定义
 #'
-#' @description Constructs a \code{latent_def} list (passed to
-#'   \code{run_plspm()}) by grouping measured features according to either
-#'   their KEGG pathway membership (via a compound->pathway mapping) or their
-#'   \code{super_class} annotation. A single feature may belong to multiple
-#'   KEGG pathways and will therefore be included in several latent variables;
-#'   each latent variable's score is computed independently by PCA inside
-#'   \code{run_plspm()}.
+#' @description 通过按 KEGG 通路归属（经由 compound->pathway 映射）或
+#'   \code{super_class} 注释对实测特征进行分组，构建传给 \code{run_plspm()} 的
+#'   \code{latent_def} 列表。单个特征可属于多个 KEGG 通路，因此会被包含在多个
+#'   潜变量中；每个潜变量的得分由 \code{run_plspm()} 内部通过 PCA 独立计算。
 #'
-#' @param expr_matrix A numeric matrix (features x samples).
-#' @param feature_info Data.frame with feature annotations (rownames or a
-#'   column \code{feature_id_col} identifying features). Must contain
-#'   \code{kegg_col} and \code{category_col} columns.
-#' @param kegg_mapping Data.frame with columns \code{compound_id},
-#'   \code{pathway_id}, \code{pathway_name} (as produced by
-#'   \code{load_kegg_mapping()}). May be NULL to skip KEGG pathways.
-#' @param feature_id_col Column name for feature IDs in \code{feature_info}.
-#'   Default: "name".
-#' @param kegg_col Column name holding the KEGG compound ID. Default: "kegg".
-#' @param category_col Column name holding the super class. Default:
-#'   "super_class".
-#' @param min_size Minimum number of features per latent variable. Groups with
-#'   fewer measured features are dropped. Default: 2.
-#' @param use_kegg Logical; build KEGG pathway latent variables. Default: TRUE.
-#' @param use_super_class Logical; build super_class latent variables.
-#'   Default: TRUE.
-#' @param prefix_kegg Prefix added to KEGG pathway latent variable names.
-#'   Default: "KEGG:".
-#' @param prefix_super Prefix added to super_class latent variable names.
-#'   Default: "SC:".
+#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param feature_info 含有特征注释的数据框（行名或用于标识特征的
+#'   \code{feature_id_col} 列）。必须包含 \code{kegg_col} 与 \code{category_col} 列。
+#' @param kegg_mapping 含有 \code{compound_id}、\code{pathway_id}、\code{pathway_name}
+#'   列的数据框（由 \code{load_kegg_mapping()} 生成）。可为 NULL 以跳过 KEGG 通路。
+#' @param feature_id_col \code{feature_info} 中特征 ID 的列名。默认："name"。
+#' @param kegg_col 保存 KEGG 化合物 ID 的列名。默认："kegg"。
+#' @param category_col 保存 super class 的列名。默认："super_class"。
+#' @param min_size 每个潜变量的最少特征数。实测特征少于该值的分组会被丢弃。默认：2。
+#' @param use_kegg 逻辑值；是否构建 KEGG 通路潜变量。默认：TRUE。
+#' @param use_super_class 逻辑值；是否构建 super_class 潜变量。默认：TRUE。
+#' @param prefix_kegg 添加到 KEGG 通路潜变量名的前缀。默认："KEGG:"。
+#' @param prefix_super 添加到 super_class 潜变量名的前缀。默认："SC:"。
 #'
-#' @return A named list of character vectors (feature IDs) suitable for
-#'   \code{run_plspm()}.
+#' @return 适用于 \code{run_plspm()} 的字符向量命名列表（特征 ID）。
 #'
 #' @examples
 #' \dontrun{
@@ -231,7 +215,7 @@ build_latent_def_from_annotation <- function(expr_matrix, feature_info,
                                              use_super_class = TRUE,
                                              prefix_kegg = "KEGG:",
                                              prefix_super = "SC:") {
-  # Identify feature IDs and the intersection with the expression matrix
+  # 识别特征 ID 及其与表达矩阵的交集
   if (feature_id_col %in% colnames(feature_info)) {
     feat_ids <- feature_info[[feature_id_col]]
   } else {
@@ -244,7 +228,7 @@ build_latent_def_from_annotation <- function(expr_matrix, feature_info,
 
   latent_def <- list()
 
-  # ---- KEGG pathway grouping (compound -> pathway, many-to-many) ----
+  # ---- KEGG 通路分组（compound -> pathway，多对多）----
   if (use_kegg && !is.null(kegg_mapping) && nrow(kegg_mapping) > 0) {
     if (!all(c("compound_id", "pathway_name") %in% colnames(kegg_mapping))) {
       warning("kegg_mapping missing 'compound_id'/'pathway_name'; skipping KEGG LVs.")
@@ -269,7 +253,7 @@ build_latent_def_from_annotation <- function(expr_matrix, feature_info,
     }
   }
 
-  # ---- super_class grouping (single value per feature) ----
+  # ---- super_class 分组（每个特征单一取值）----
   if (use_super_class && category_col %in% colnames(info)) {
     sc_vals <- as.character(info[[category_col]])
     names(sc_vals) <- rownames(info)
@@ -299,7 +283,7 @@ plot_plspm_network <- function(plspm_result, p_threshold = 0.05) {
   lv_names <- colnames(scores)
   n_lv <- length(lv_names)
 
-  # Layout in circle
+  # 环形布局
   angles <- seq(0, 2 * pi, length.out = n_lv + 1)[1:n_lv]
   node_pos <- data.frame(
     node = lv_names,
@@ -308,7 +292,7 @@ plot_plspm_network <- function(plspm_result, p_threshold = 0.05) {
     stringsAsFactors = FALSE
   )
 
-  # Edge data
+  # 边数据
   if (nrow(inner) > 0) {
     edge_data <- merge(inner, node_pos, by.x = "from", by.y = "node")
     colnames(edge_data)[5:6] <- c("x_from", "y_from")

@@ -1,31 +1,29 @@
 # ==============================================================================
-# OmicsFlow: WGCNA Co-expression Module Construction
+# OmicsFlow: WGCNA 共表达模块构建
 # ==============================================================================
-# Weighted Gene Co-expression Network Analysis - module building
+# 加权基因共表达网络分析（Weighted Gene Co-expression Network Analysis）—— 模块构建
 # ==============================================================================
 
-#' Build WGCNA co-expression modules
+#' 构建 WGCNA 共表达模块
 #'
-#' @description Constructs a weighted gene co-expression network and identifies
-#'   modules of co-expressed features using the WGCNA package.
+#' @description 使用 WGCNA 包构建加权基因共表达网络，并识别共表达特征的模块。
 #'
-#' @param expr_matrix A numeric matrix (features x samples).
-#' @param soft_power Numeric, soft-thresholding power. If NULL, automatically
-#'   selected. Default: NULL.
-#' @param min_module_size Minimum module size. Default: 10.
-#' @param merge_cut_height Height cut for module merging. Default: 0.25.
-#' @param network_type Network type: "unsigned", "signed", or "signed hybrid".
-#'   Default: "signed".
-#' @param cor_fn Correlation function: "pearson" or "bicor". Default: "bicor".
+#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param soft_power 数值型，软阈值幂。若为 NULL 则自动选择。默认：NULL。
+#' @param min_module_size 最小模块规模。默认：10。
+#' @param merge_cut_height 模块合并的高度阈值。默认：0.25。
+#' @param network_type 网络类型："unsigned"、"signed" 或 "signed hybrid"。
+#'   默认："signed"。
+#' @param cor_fn 相关函数："pearson" 或 "bicor"。默认："bicor"。
 #'
-#' @return A list with:
+#' @return 一个列表，包含：
 #'   \itemize{
-#'     \item \code{module_colors}: Named vector of module colors per feature.
-#'     \item \code{module_labels}: Named vector of module labels.
-#'     \item \code{MEs}: Module eigengenes (samples x modules).
-#'     \item \code{soft_power}: Selected soft-thresholding power.
-#'     \item \code{gene_tree}: Hierarchical clustering tree.
-#'     \item \code{diss_TOM}: Dissimilarity matrix (optional, if TOM included).
+#'     \item \code{module_colors}：每个特征的模块颜色命名向量。
+#'     \item \code{module_labels}：模块标签命名向量。
+#'     \item \code{MEs}：模块特征基因（样本 x 模块）。
+#'     \item \code{soft_power}：所选的软阈值幂。
+#'     \item \code{gene_tree}：层次聚类树。
+#'     \item \code{diss_TOM}：相异度矩阵（可选，若包含 TOM）。
 #'   }
 #'
 #' @examples
@@ -43,38 +41,38 @@ build_wgcna_modules <- function(expr_matrix, soft_power = NULL,
     stop("Package 'WGCNA' is required. Please install it.")
   }
 
-  # Enable WGCNA threads
+  # 启用 WGCNA 多线程
   WGCNA::enableWGCNAThreads()
 
-  # Transpose: WGCNA expects samples in rows
+  # 转置：WGCNA 要求样本在行
   datExpr <- t(as.matrix(expr_matrix))
   datExpr <- datExpr[, apply(datExpr, 2, stats::var, na.rm = TRUE) > 0]
 
-  # Select soft-thresholding power
-  cor_fn_name <- cor_fn  # Store as string
+  # 选择软阈值幂
+  cor_fn_name <- cor_fn  # 以字符串形式保存
   if (is.null(soft_power)) {
     powers <- 1:20
     sft <- WGCNA::pickSoftThreshold(datExpr, powerVector = powers,
                                      networkType = network_type,
                                      corFnc = cor_fn_name, verbose = 0)
     soft_power <- sft$power
-    # pickSoftThreshold returns NA when no tested power reaches the scale-free
-    # topology fit criterion; fall back to a fixed default in that case.
+    # 当没有任何被试幂达到无标度拓扑拟合标准时，pickSoftThreshold 返回 NA；
+    # 此时回退到固定的默认值。
     if (is.null(soft_power) || is.na(soft_power) || soft_power == 0) soft_power <- 6
   }
 
-  # Calculate adjacency
+  # 计算邻接矩阵
   adjacency <- WGCNA::adjacency(datExpr, power = soft_power,
                                 type = network_type, corFnc = cor_fn_name)
 
-  # Calculate TOM
+  # 计算 TOM（拓扑重叠矩阵）
   TOM <- WGCNA::TOMsimilarity(adjacency, TOMType = network_type)
   diss_TOM <- 1 - TOM
 
-  # Hierarchical clustering
+  # 层次聚类
   gene_tree <- stats::hclust(stats::as.dist(diss_TOM), method = "average")
 
-  # Identify modules
+  # 识别模块
     cutree_fn <- if (requireNamespace("dynamicTreeCut", quietly = TRUE)) {
       dynamicTreeCut::cutreeDynamic
     } else {
@@ -89,15 +87,15 @@ build_wgcna_modules <- function(expr_matrix, soft_power = NULL,
       pamRespectsDendro = FALSE
     )
 
-  # Convert to colors
+  # 转换为颜色
   module_colors <- WGCNA::labels2colors(modules)
   names(module_colors) <- colnames(datExpr)
 
-  # Calculate module eigengenes
+  # 计算模块特征基因
   MEs <- WGCNA::moduleEigengenes(datExpr, module_colors)$eigengenes
   rownames(MEs) <- rownames(datExpr)
 
-  # Merge close modules
+  # 合并相近的模块
   merge_result <- WGCNA::mergeCloseModules(datExpr, module_colors,
                                            cutHeight = merge_cut_height)
   module_colors_merged <- merge_result$colors
@@ -116,13 +114,13 @@ build_wgcna_modules <- function(expr_matrix, soft_power = NULL,
 }
 
 
-#' Plot WGCNA module dendrogram
+#' 绘制 WGCNA 模块树状图
 #'
-#' @description Creates a dendrogram of features colored by module assignment.
+#' @description 创建按模块分配着色的特征树状图。
 #'
-#' @param wgcna_result Result from \code{build_wgcna_modules()}.
+#' @param wgcna_result 来自 \code{build_wgcna_modules()} 的结果。
 #'
-#' @return A ggplot object.
+#' @return 一个 ggplot 对象。
 #'
 #' @examples
 #' \dontrun{
@@ -132,8 +130,8 @@ build_wgcna_modules <- function(expr_matrix, soft_power = NULL,
 #'
 #' @export
 plot_wgcna_dendrogram <- function(wgcna_result) {
-  # Use base R plot for dendrogram
-  grDevices::pdf(NULL)  # Suppress device
+  # 使用基础 R 绘图函数绘制树状图
+  grDevices::pdf(NULL)  # 抑制图形设备
 
   old_par <- graphics::par(no.readonly = TRUE)
   on.exit(graphics::par(old_par))
@@ -148,15 +146,15 @@ plot_wgcna_dendrogram <- function(wgcna_result) {
 }
 
 
-#' Plot soft-thresholding power selection
+#' 绘制软阈值幂选择图
 #'
-#' @description Plots scale-free topology fit and mean connectivity vs power.
+#' @description 绘制无标度拓扑拟合与平均连通性随幂变化的曲线。
 #'
-#' @param expr_matrix A numeric matrix (features x samples).
-#' @param powers Power range. Default: 1:20.
-#' @param network_type Network type. Default: "signed".
+#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param powers 幂的范围。默认：1:20。
+#' @param network_type 网络类型。默认："signed"。
 #'
-#' @return A ggplot object.
+#' @return 一个 ggplot 对象。
 #'
 #' @examples
 #' \dontrun{
@@ -175,7 +173,7 @@ plot_soft_threshold <- function(expr_matrix, powers = 1:20,
   sft <- WGCNA::pickSoftThreshold(datExpr, powerVector = powers,
                                    networkType = network_type, verbose = 0)
 
-  # Scale-free topology fit
+  # 无标度拓扑拟合
   fit_data <- data.frame(
     power = powers,
     fit = -sign(sft$fitIndices$SFT.R.sq) * sft$fitIndices$SFT.R.sq,
