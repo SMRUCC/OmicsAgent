@@ -1,4 +1,5 @@
-﻿Imports Galaxy.Workbench
+﻿Imports System.IO
+Imports Galaxy.Workbench
 Imports Galaxy.Workbench.CommonDialogs
 Imports Microsoft.VisualStudio.WinForms.Docking
 Imports Ollama
@@ -50,7 +51,11 @@ Module RibbonMenu
     End Sub
 
     Public Sub OpenJVennTool()
-        Call CommonRuntime.ShowDocument(New FormHtmlViewer With {.URL = $"http://127.0.0.1:{Workbench.port}/jvenn.html", .TabText = "jVenn"})
+        Call CommonRuntime.ShowDocument(New FormHtmlViewer With {
+            .URL = $"http://127.0.0.1:{Workbench.port}/jvenn.html",
+            .TabText = "jVenn",
+            .Icon = New Icon(New MemoryStream(My.Resources.IconSet.Venn))
+        })
     End Sub
 
     Public Sub OpenLicenseDialog()

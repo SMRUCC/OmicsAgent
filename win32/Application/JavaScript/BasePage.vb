@@ -1,12 +1,9 @@
-﻿Imports System.Runtime.InteropServices
-Imports System.Text
+﻿Imports System.Text
 Imports System.Text.Json
 
 Namespace JavaScript
 
-    <ClassInterface(ClassInterfaceType.AutoDual)>
-    <ComVisible(True)>
-    Public Class BasePage
+    Public MustInherit Class BasePage
 
         Public Const HostObject As String = "win32"
 

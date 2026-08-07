@@ -17,14 +17,6 @@
         document.documentElement.dataset.theme = "light";
       }
     })();
-
-    const host =
-      window.chrome &&
-      window.chrome.webview &&
-      window.chrome.webview.hostObjects &&
-      window.chrome.webview.hostObjects.win32;
-
-    console.log(host);
   </script>
 </head>
 
@@ -47,11 +39,11 @@
     <aside class="sidebar">
       <h2>功能导航</h2>
       <div class="doc-list">
-        <a class="doc-item active" href="#" onclick="host.openResearch();"><span class="title">📚 开始数据研究</span></a>
+        <a class="doc-item active" href="#" onclick="window.chrome.webview.hostObjects.win32.openResearch();"><span class="title">📚 开始数据研究</span></a>
         <hr />
-        <a class="doc-item" href="#" onclick="host.openVennTool();"><span class="title">🔵 Venn 图工具</span></a>
-        <a class="doc-item" href="#" onclick="host.openFolder();"><span class="title">📄 文件查看器</span></a>
-        <a class="doc-item" href="#" onclick="host.openSettings();"><span class="title">⚙️ 应用参数配置</span></a>
+        <a class="doc-item" href="#" onclick="window.chrome.webview.hostObjects.win32.openVennTool();"><span class="title">🔵 Venn 图工具</span></a>
+        <a class="doc-item" href="#" onclick="window.chrome.webview.hostObjects.win32.openFolder();"><span class="title">📄 文件查看器</span></a>
+        <a class="doc-item" href="#" onclick="window.chrome.webview.hostObjects.win32.openSettings();"><span class="title">⚙️ 应用参数配置</span></a>
       </div>
     </aside>
 
@@ -69,7 +61,7 @@
           </p>
         </section>
 
-        <!-- 智能体分析能力：14 模块流水线 -->
+        <!-- 智能体分析能力：14 模块流水线（5 列 × 3 行卡片网格） -->
         <section class="card">
           <h3><span class="dot"></span>🤖 智能体分析流水线</h3>
           <p style="margin:-4px 0 16px;color:var(--ui-foreground-muted);font-size:13px;">LLM Agent 自主编排 · 模块化 R 脚本实现</p>
