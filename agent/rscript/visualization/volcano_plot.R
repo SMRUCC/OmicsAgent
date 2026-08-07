@@ -62,15 +62,24 @@ plot_volcano <- function(de_results, p_col = "p_adj", logfc_col = "logFC",
   plot_data <- plot_data[!is.na(plot_data$logFC) & !is.na(plot_data$p_value), ]
   
   # 计算 -log10 p 值
-  plot_data$neg_log10_p <- -log10(plot_data$p_value)
+  # p 值为 0（下溢）时 -log10(0) = Inf，会使 y 轴范围失效且点无法绘制。
+  # 用非零最小 p 值的一半作为下限进行截断。
+  pv <- plot_data$p_value
+  pos_pv <- pv[pv > 0]
+  floor_p <- if (length(pos_pv) > 0) min(pos_pv) / 2 else .Machine$double.xmin
+  pv[pv <= 0] <- floor_p
+  plot_data$neg_log10_p <- -log10(pv)
   
-  # 判定显著性
-  plot_data$direction <- ifelse(
-    plot_data$p_value < p_threshold & plot_data$logFC > logfc_threshold, "Up",
+  # 判定显著性（显式指定三水平，保证配色与图例稳定）
+  plot_data$direction <- factor(
     ifelse(
-      plot_data$p_value < p_threshold & plot_data$logFC < -logfc_threshold, "Down",
-      "NS"
-    )
+      plot_data$p_value < p_threshold & plot_data$logFC > logfc_threshold, "Up",
+      ifelse(
+        plot_data$p_value < p_threshold & plot_data$logFC < -logfc_threshold, "Down",
+        "NS"
+      )
+    ),
+    levels = c("Down", "NS", "Up")
   )
   
   # 选取用于标注的 Top Feature
@@ -82,10 +91,13 @@ plot_volcano <- function(de_results, p_col = "p_adj", logfc_col = "logFC",
   # 构建图形
   p <- ggplot2::ggplot(plot_data, ggplot2::aes(x = logFC, y = neg_log10_p)) +
     ggplot2::geom_point(ggplot2::aes(color = direction), size = 1.5, alpha = 0.7) +
+    # 使用命名 labels 而非位置向量：当某个方向水平在数据中不存在时，
+    # 位置型 labels 的长度会与实际水平数不匹配而报错。
     ggplot2::scale_color_manual(
-      values = c("Up" = color_up, "Down" = color_down, "NS" = color_ns),
+      values = c("Down" = color_down, "NS" = color_ns, "Up" = color_up),
       name = "Regulation",
-      labels = c("Down", "Not Significant", "Up")
+      labels = c("Down" = "Down", "NS" = "Not Significant", "Up" = "Up"),
+      drop = FALSE
     ) +
     ggplot2::geom_hline(yintercept = -log10(p_threshold), color = "grey40",
                         linetype = "dashed", linewidth = 0.5) +

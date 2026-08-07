@@ -52,12 +52,20 @@ plot_heatmap <- function(expr_matrix, sample_info, feature_info = NULL,
     expr_matrix <- expr_matrix[top_idx, , drop = FALSE]
   }
   
+  # 先记录原始Feature ID。下方会用 name_col 覆盖 rownames 作为显示名，
+  # 若之后仍用 rownames(expr_matrix) 去 match(rownames(feature_info))
+  # 取家族注释，则匹配全部落空（显示名 != Feature ID）。
+  feature_ids <- rownames(expr_matrix)
+  
   # 若可用，则用名称替换Feature ID
   if (!is.null(feature_info) && name_col %in% colnames(feature_info)) {
-    feature_names <- feature_info[match(rownames(expr_matrix),
+    feature_names <- feature_info[match(feature_ids,
                                         rownames(feature_info)), name_col]
-    rownames(expr_matrix) <- ifelse(is.na(feature_names),
-                                    rownames(expr_matrix), feature_names)
+    display_names <- ifelse(is.na(feature_names) | !nzchar(feature_names),
+                            feature_ids, feature_names)
+    # name_col 可能存在重复值，直接作为 rownames 会触发
+    # "duplicate row.names are not allowed"，用 make.unique 去重。
+    rownames(expr_matrix) <- make.unique(as.character(display_names))
   }
   
   # 标准化
@@ -96,9 +104,9 @@ plot_heatmap <- function(expr_matrix, sample_info, feature_info = NULL,
     row_anno <- NULL
     if (!is.null(feature_info) && !is.null(family_col) &&
         family_col %in% colnames(feature_info)) {
-      family_info <- feature_info[match(rownames(expr_matrix),
-                                        rownames(feature_info)), family_col]
-      family_info[is.na(family_info)] <- "Unknown"
+      family_info <- as.character(feature_info[match(feature_ids,
+                                        rownames(feature_info)), family_col])
+      family_info[is.na(family_info) | !nzchar(family_info)] <- "Unknown"
       family_colors <- make_group_colors(unique(family_info),
                                          palette_name = "Set3")
       row_anno <- ComplexHeatmap::rowAnnotation(
@@ -137,9 +145,9 @@ plot_heatmap <- function(expr_matrix, sample_info, feature_info = NULL,
     annotation_row <- NULL
     if (!is.null(feature_info) && !is.null(family_col) &&
         family_col %in% colnames(feature_info)) {
-      family_info <- feature_info[match(rownames(expr_matrix),
-                                        rownames(feature_info)), family_col]
-      family_info[is.na(family_info)] <- "Unknown"
+      family_info <- as.character(feature_info[match(feature_ids,
+                                        rownames(feature_info)), family_col])
+      family_info[is.na(family_info) | !nzchar(family_info)] <- "Unknown"
       annotation_row <- data.frame(
         Family = family_info,
         row.names = rownames(expr_matrix)

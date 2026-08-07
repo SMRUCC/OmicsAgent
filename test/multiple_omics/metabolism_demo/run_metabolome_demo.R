@@ -181,14 +181,165 @@ for (gc in c(GROUP_VARIETY, GROUP_PHASE)) {
 }
 
 # ==============================================================================
-# SECTION 5: 缓存中间态
+# SECTION 5: limma 两组差异分析 (variety)
 # ==============================================================================
-section("SECTION 5  缓存中间态供进阶脚本复用")
+section("SECTION 5  limma 两组差异分析 (variety: Virginia vs Burley)")
+
+step("run_limma (control_group=Burley, strategy=pvalue_logFC)")
+# 差异分析在 log2 空间进行，保证 logFC 语义正确
+de_variety <- run_limma(
+  log2_mat, sample_info,
+  group_col = GROUP_VARIETY,
+  control_group = "Burley",
+  exclude_groups = NULL,          # 本数据集无 QC 样本，显式关闭默认排除
+  strategy = "pvalue_logFC",
+  p_threshold = 0.05,
+  logfc_threshold = 0.25          # log2 归一化后动态范围较小，阈值相应下调
+)
+cat(sprintf("    结果行数: %d\n", nrow(de_variety$results)))
+cat(sprintf("    显著特征数: %d\n", nrow(de_variety$significant)))
+cat("    调节方向分布:",
+    paste(sprintf("%s=%d", names(table(de_variety$results$regulation)),
+                  table(de_variety$results$regulation)), collapse = ", "), "\n")
+
+export_table(de_variety$results, RESULT_DIR, "04_limma_variety_all",
+             use_rownames = FALSE)
+export_table(de_variety$significant, RESULT_DIR, "04_limma_variety_significant",
+             use_rownames = FALSE)
+
+step("plot_volcano")
+p_volc <- plot_volcano(de_variety$results, p_col = "p_adj",
+                       p_threshold = 0.05, logfc_threshold = 0.25, top_n = 10)
+export_plot(p_volc, FIGURE_DIR, "04_volcano_variety", width = 9, height = 7)
+
+# --- 另测 pvalue_topN 策略（覆盖该分支的索引逻辑）---------------------------
+step("run_limma (strategy=pvalue_topN, top_n=30) 覆盖 topN 分支")
+de_topn <- run_limma(
+  log2_mat, sample_info,
+  group_col = GROUP_VARIETY, control_group = "Burley",
+  exclude_groups = NULL, strategy = "pvalue_topN",
+  p_threshold = 0.05, top_n = 30
+)
+cat(sprintf("    topN 策略显著特征数: %d (期望 <= 30)\n",
+            nrow(de_topn$significant)))
+export_table(de_topn$significant, RESULT_DIR, "04_limma_variety_top30",
+             use_rownames = FALSE)
+
+# --- 另测 pvalue_vip 策略（覆盖 merge 分支）----------------------------------
+step("run_limma (strategy=pvalue_vip) 覆盖 VIP 合并分支")
+de_vip <- run_limma(
+  log2_mat, sample_info,
+  group_col = GROUP_VARIETY, control_group = "Burley",
+  exclude_groups = NULL, strategy = "pvalue_vip",
+  p_threshold = 0.05, vip_threshold = 1.0,
+  vip_result = plsda_runs[[GROUP_VARIETY]]$vip
+)
+cat(sprintf("    VIP 策略显著特征数: %d\n", nrow(de_vip$significant)))
+export_table(de_vip$significant, RESULT_DIR, "04_limma_variety_vip",
+             use_rownames = FALSE)
+
+# ==============================================================================
+# SECTION 6: 多组差异检验 (phase)
+# ==============================================================================
+section("SECTION 6  多组差异检验 (phase, 4 组)")
+
+step("run_f_test (group_col=phase)")
+ft <- run_f_test(log2_mat, sample_info, group_col = GROUP_PHASE,
+                 exclude_groups = NULL)
+ft_res <- if (is.list(ft) && !is.data.frame(ft)) ft$results else ft
+cat(sprintf("    F 检验结果行数: %d\n", nrow(ft_res)))
+cat(sprintf("    p_adj < 0.05 的特征数: %d\n",
+            sum(ft_res$p_adj < 0.05, na.rm = TRUE)))
+export_table(ft_res, RESULT_DIR, "05_ftest_phase", use_rownames = FALSE)
+
+step("run_anova (factors = variety * phase)")
+av <- run_anova(log2_mat, sample_info,
+                factors = c(GROUP_VARIETY, GROUP_PHASE),
+                exclude_groups = NULL)
+av_res <- if (is.list(av) && !is.data.frame(av)) av$results else av
+cat(sprintf("    ANOVA 结果行数: %d\n", nrow(av_res)))
+cat("    ANOVA 结果列名:", paste(colnames(av_res), collapse = ", "), "\n")
+export_table(av_res, RESULT_DIR, "05_anova_variety_phase", use_rownames = FALSE)
+
+# ==============================================================================
+# SECTION 7: 聚类热图
+# ==============================================================================
+section("SECTION 7  聚类热图")
+
+# 取 F 检验最显著的 top 60 代谢物
+ord_ft <- order(ft_res$p_adj, decreasing = FALSE)
+top_feats <- ft_res$feature_id[ord_ft][seq_len(min(60, nrow(ft_res)))]
+top_feats <- intersect(top_feats, rownames(log2_mat))
+cat(sprintf("    热图特征数: %d\n", length(top_feats)))
+
+step("plot_heatmap (group_col=phase, family_col=super_class)")
+hm <- plot_heatmap(
+  log2_mat[top_feats, , drop = FALSE], sample_info, feature_info,
+  group_col = GROUP_PHASE, name_col = "name", family_col = "super_class",
+  scale = "row", show_rownames = TRUE, show_colnames = FALSE,
+  n_features = 60
+)
+export_heatmap(hm, FIGURE_DIR, "06_heatmap_phase_top60",
+               width = 12, height = 11)
+
+# ==============================================================================
+# SECTION 8: 化学分类富集分析
+# ==============================================================================
+section("SECTION 8  化学分类富集分析")
+
+sig_feats <- unique(de_variety$significant$feature_id)
+all_feats <- rownames(log2_mat)
+cat(sprintf("    显著集: %d, 背景集: %d\n", length(sig_feats), length(all_feats)))
+
+enrich_results <- list()
+for (cc in c("super_class", "class", "family")) {
+  section(sprintf("8.x 富集 category_col = %s", cc), 2)
+  er <- run_fisher_enrich(
+    significant_features = sig_feats,
+    all_features = all_feats,
+    feature_info = feature_info,
+    feature_id_col = FEATURE_ID_COL,
+    category_col = cc,
+    min_size = 2
+  )
+  cat(sprintf("    富集类别数: %d\n", nrow(er)))
+  if (nrow(er) > 0) {
+    cat(sprintf("    p_adj < 0.05 的类别数: %d\n", sum(er$p_adj < 0.05)))
+    cat("    Top3:", paste(head(rownames(er), 3), collapse = ", "), "\n")
+  }
+  export_table(er, RESULT_DIR, sprintf("07_enrichment_%s", cc),
+               use_rownames = TRUE, id_col_name = "category")
+
+  p_en <- plot_enrichment(er, top_n = 20, p_threshold = 0.05)
+  export_plot(p_en, FIGURE_DIR, sprintf("07_enrichment_%s", cc),
+              width = 9, height = 7)
+  enrich_results[[cc]] <- er
+}
+
+# 额外用 kegg 列跑一次，覆盖"类别几乎全空"的边界情况
+section("8.x 富集 category_col = kegg (边界测试)", 2)
+er_kegg <- run_fisher_enrich(
+  significant_features = sig_feats, all_features = all_feats,
+  feature_info = feature_info, feature_id_col = FEATURE_ID_COL,
+  category_col = "kegg", min_size = 2
+)
+cat(sprintf("    KEGG 富集类别数: %d\n", nrow(er_kegg)))
+export_table(er_kegg, RESULT_DIR, "07_enrichment_kegg",
+             use_rownames = TRUE, id_col_name = "category")
+p_kegg <- plot_enrichment(er_kegg, top_n = 20)
+export_plot(p_kegg, FIGURE_DIR, "07_enrichment_kegg", width = 9, height = 7)
+
+# ==============================================================================
+# SECTION 9: 缓存中间态
+# ==============================================================================
+section("SECTION 9  缓存中间态供进阶脚本复用")
 
 saveRDS(log2_mat,       file.path(CACHE_DIR, "log2_mat.rds"))
 saveRDS(pareto_mat,     file.path(CACHE_DIR, "pareto_mat.rds"))
 saveRDS(sample_info,    file.path(CACHE_DIR, "sample_info.rds"))
 saveRDS(feature_info,   file.path(CACHE_DIR, "feature_info.rds"))
-step("已缓存 log2_mat / pareto_mat / sample_info / feature_info")
+saveRDS(list(variety = de_variety, ftest = ft_res, anova = av_res),
+        file.path(CACHE_DIR, "de_results.rds"))
+step("已缓存 log2_mat / pareto_mat / sample_info / feature_info / de_results")
 
-cat("\n[done] SECTION 1-5 完成。\n")
+cat("\n[done] 基础流程 SECTION 1-9 全部完成。\n")

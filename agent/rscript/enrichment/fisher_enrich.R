@@ -158,16 +158,40 @@ run_fisher_enrich <- function(significant_features, all_features,
 #'
 #' @export
 plot_enrichment <- function(enrich_result, top_n = 20, p_threshold = 0.05) {
+  if (is.null(enrich_result) || nrow(enrich_result) == 0) {
+    # 空结果时返回一张带提示文字的占位图，避免调用方因绘图报错中断整个流程
+    return(
+      ggplot2::ggplot() +
+        ggplot2::annotate("text", x = 0, y = 0,
+                          label = "No enriched category", size = 5) +
+        ggplot2::theme_void() +
+        ggplot2::labs(title = "Enrichment Analysis")
+    )
+  }
+  
   top_df <- head(enrich_result, top_n)
   top_df$category <- factor(rownames(top_df), levels = rownames(top_df))
   
+  # 显式构造两水平因子并同时指定 values 与 labels 的命名向量。
+  # 原实现用位置型 labels = c("Not Sig", ...)，当数据中显著性全为 TRUE 或
+  # 全为 FALSE 时只有一个水平，labels 数量与水平数不匹配会直接报错。
+  sig_lab_false <- "Not Sig"
+  sig_lab_true <- paste0("p_adj < ", p_threshold)
+  top_df$sig_flag <- factor(
+    ifelse(!is.na(top_df$p_adj) & top_df$p_adj < p_threshold,
+           "TRUE", "FALSE"),
+    levels = c("FALSE", "TRUE")
+  )
+  
   p <- ggplot2::ggplot(top_df, ggplot2::aes(x = category, y = fold_enrichment,
-                                            fill = p_adj < p_threshold)) +
+                                            fill = sig_flag)) +
     ggplot2::geom_bar(stat = "identity") +
     ggplot2::coord_flip() +
     ggplot2::scale_fill_manual(values = c("FALSE" = "grey70", "TRUE" = "#e74c3c"),
                                name = "Significant",
-                               labels = c("Not Sig", paste0("p_adj < ", p_threshold))) +
+                               labels = c("FALSE" = sig_lab_false,
+                                          "TRUE" = sig_lab_true),
+                               drop = FALSE) +
     ggplot2::labs(
       title = "Enrichment Analysis",
       x = "Category",

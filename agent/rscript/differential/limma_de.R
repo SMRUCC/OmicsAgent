@@ -168,8 +168,36 @@ run_limma <- function(expr_matrix, sample_info, group_col = "sample_info",
       stop("vip_result must be provided when strategy = 'pvalue_vip'")
     }
     # 合并 VIP
-    vip_df <- vip_result
-    colnames(vip_df)[2] <- "vip"
+    # vip_result 允许两种形态：
+    #   (a) 含 feature_id 列 + VIP 数值列；
+    #   (b) run_plsda()$vip 的形态：单列数据框，Feature ID 存放在行名中。
+    # 原实现固定取 colnames(vip_df)[2] <- "vip"，在形态 (b) 下只有 1 列，
+    # 会抛出 "'names' attribute [2] must be the same length as the vector [1]"。
+    vip_df <- as.data.frame(vip_result, stringsAsFactors = FALSE)
+    if (!"feature_id" %in% colnames(vip_df)) {
+      if (is.null(rownames(vip_df))) {
+        stop("vip_result must contain a 'feature_id' column or row names.")
+      }
+      vip_df$feature_id <- rownames(vip_df)
+    }
+    # 定位 VIP 数值列：优先名为 vip/VIP 的列，否则取第一个非 feature_id 的数值列
+    vip_col <- intersect(c("vip", "VIP"), colnames(vip_df))
+    if (length(vip_col) == 0) {
+      cand <- setdiff(colnames(vip_df), "feature_id")
+      cand <- cand[vapply(vip_df[cand], is.numeric, logical(1))]
+      if (length(cand) == 0) {
+        stop("vip_result must contain a numeric VIP column.")
+      }
+      vip_col <- cand[1]
+    } else {
+      vip_col <- vip_col[1]
+    }
+    vip_df <- data.frame(
+      feature_id = as.character(vip_df$feature_id),
+      vip = as.numeric(vip_df[[vip_col]]),
+      stringsAsFactors = FALSE
+    )
+    
     combined <- merge(combined, vip_df, by = "feature_id", all.x = TRUE)
     combined$significant <- combined$p_adj < p_threshold &
       combined$vip >= vip_threshold
