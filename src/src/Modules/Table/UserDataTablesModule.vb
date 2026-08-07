@@ -7,6 +7,8 @@ Imports OmicsAgent.AppRuntime
 
 ' ============================================================================
 ' 模块 13: 用户数据表格整理（/report 模式专用）
+' 注：本模块索引 13 与 /agent 模式的 Module13_AssociationNetwork（Spearman+MIC 关联网络）
+'     重名但分属两种互斥运行模式（/report 仅在用户数据整理下使用），不会同时出现在同一分析流程中。
 ' ============================================================================
 
 ''' <summary>
@@ -14,7 +16,7 @@ Imports OmicsAgent.AppRuntime
 '''
 ''' 从用户通过 --dirs 参数指定的文件夹中递归扫描所有 CSV 文件，
 ''' 按文件夹分组后调用 LLM 理解数据内容、生成英文注释并整理为 xlsx 表格，
-''' 最终构造 ModuleResult 对象供 ReportModule（Module14）撰写报告。
+''' 最终构造 ModuleResult 对象供 ReportModule（Module15）撰写报告。
 '''
 ''' 与 ResultTablesModule（/agent 模式）的区别：
 ''' - /agent 模式中，ModuleResults 由各分析模块在执行过程中自动生成，
@@ -26,7 +28,7 @@ Imports OmicsAgent.AppRuntime
 '''   3. LLM 生成数据总结（Conclusion） → 保存 conclusion.md
 '''   4. 将各组 ModuleResult 添加到 _context.ModuleResults
 '''
-''' xlsx 表格样式由 ReportHelper.WriteReportSheet 统一实现（与 Module13 一致）：
+''' xlsx 表格样式由 ReportHelper.WriteReportSheet 统一实现（与 Module14 一致）：
 ''' - 第 1 行（注释说明文本行）：白底、草绿色斜体字，跨列合并、左对齐
 ''' - 第 2 行（列标题行）：深蓝色背景，白色加粗字体
 ''' - 第 3 行起（正文）：Cambria 11 号字体，首列为深灰色斜体行标题
@@ -251,7 +253,7 @@ Public Class UserDataTablesModule : Inherits AnalysisModuleBase
 
     ''' <summary>
     ''' 读取 kb.json 知识库内容并截断至 30000 字符，返回字符串。
-    ''' 与 Module13 的 ReadKnowledgeBaseContent 保持一致的逻辑。
+    ''' 与 Module14 的 ReadKnowledgeBaseContent 保持一致的逻辑。
     ''' </summary>
     Private Function ReadKnowledgeBaseContent() As String
         If File.Exists(_context.KnowledgeBaseFile) Then

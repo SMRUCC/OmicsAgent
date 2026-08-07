@@ -58,7 +58,7 @@ Public Class BayesianNetworkModule : Inherits AnalysisModuleBase
 - 上游输入：{PreprocessedInputHint()}
 - 上游输入：读取样本信息表中的时间信息
 - 上游输入（可选）：读取模块 6(WGCNA) 或模块 7(CMeans) 的模块/聚类结果
-- 下游输出：调控网络结果供模块 {If(_context.IsMultiOmics, "12(跨组学整合)、", "")}13(表格) 和模块 14(报告) 引用
+- 下游输出：调控网络结果供模块 {If(_context.IsMultiOmics, "12(跨组学整合)、", "")}13(Spearman+MIC 关联网络)、14(表格) 和模块 15(报告) 引用
 
 # 实现要求
 - 动态贝叶斯网络（仅时间序列数据）：

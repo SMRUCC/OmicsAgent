@@ -39,11 +39,12 @@ Omics Data Analysis LLM Agent [OmicsWorks]
   --config,-c=<path>      INI 配置文件路径（默认为 ./config.ini）
   --skip-literature       跳过文献检索步骤
   --skip-kb               跳过知识库构建步骤
-  --module=<n>            仅执行指定分析模块（1-12），多个模块用逗号分隔
+  --module=<n>            仅执行指定分析模块（1-13），多个模块用逗号分隔
                           1=预处理 2=PCA 3=比较组设计 4=差异分析 5=KEGG功能
                           6=WGCNA 7=CMeans 8=贝叶斯网络 9=PLS-PM
                           10=随机森林 11=回归分析 12=跨组学整合（仅多组学）
-                          注：结果表(13)与报告(14)为必要的收尾模块，
+                          13=Spearman+MIC关联网络
+                          注：结果表(14)与报告(15)为必要的收尾模块，
                           每次分析结束后必定执行，不受本参数影响
   --custom-modules=<path> 自定义分析模块 JSON 文件夹路径（默认为程序根目录下的 custom_modules/ 文件夹）
   --report-format=<fmt>   报告输出格式：pdf（默认）/ docx / both，优先级高于配置文件中的 [report] format
@@ -188,7 +189,7 @@ Omics Data Analysis LLM Agent [OmicsWorks]
     <Argument("--config", True, CLITypes.File, Description:="Path to the INI configuration file. Default is './config.ini'.")>
     <Argument("--skip-literature", True, CLITypes.Boolean, Description:="Skip the literature search step.")>
     <Argument("--skip-kb", True, CLITypes.Boolean, Description:="Skip the knowledge base construction step.")>
-    <Argument("--module", True, CLITypes.String, Description:="Specify which analysis modules to execute, multiple modules separated by commas. 1=Preprocessing 2=PCA 3=ComparisonGroup 4=DifferentialAnalysis 5=KEGG 6=WGCNA 7=CMeans 8=BayesianNetwork 9=PLS-PM 10=RandomForest 11=Regression 12=MultiOmicsIntegration.\nNote: ResultTables(13) and Report(14) are finalize modules that always execute regardless of this parameter.")>
+    <Argument("--module", True, CLITypes.String, Description:="Specify which analysis modules to execute, multiple modules separated by commas. 1=Preprocessing 2=PCA 3=ComparisonGroup 4=DifferentialAnalysis 5=KEGG 6=WGCNA 7=CMeans 8=BayesianNetwork 9=PLS-PM 10=RandomForest 11=Regression 12=MultiOmicsIntegration 13=AssociationNetwork.\nNote: ResultTables(14) and Report(15) are finalize modules that always execute regardless of this parameter.")>
     <Argument("--custom-modules", True, CLITypes.File, Description:="Path to a directory containing custom analysis module JSON files. Default is the 'custom_modules/' directory under the program root.")>
     <Argument("--report-format", True, CLITypes.String, Description:="Report output format: pdf (default) / docx / both. The priority of this parameter is higher than the [report] format setting in the configuration file.")>
     <Argument("--debug-cache", True, CLITypes.Boolean, Description:="[Agent debugging] Skip modules that already have result.json output files.")>

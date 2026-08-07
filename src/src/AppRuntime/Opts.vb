@@ -150,12 +150,12 @@ Namespace AppRuntime
         ''' 解析要执行的分析模块列表。
         ''' </summary>
         ''' <returns>
-        ''' 仅包含主循环内执行的分析模块索引。结果表格(13)与报告(14)属于收尾模块，
+        ''' 仅包含主循环内执行的分析模块索引。结果表格(14)与报告(15)属于收尾模块，
         ''' 由主循环结束后强制执行，故一律不会出现在返回结果中。
         ''' </returns>
         Public Function ParseModulesToRun() As List(Of Integer)
             If Not modules.StringEmpty(, True) Then
-                ' 收尾模块必定在主循环之后执行，若用户在 --module 中误传 13/14，
+                ' 收尾模块必定在主循环之后执行，若用户在 --module 中误传 14/15，
                 ' 此处必须过滤掉，否则这两个模块会被重复执行两次
                 Return modules.Split(","c) _
                     .Select(Function(s) Integer.Parse(s.Trim())) _
@@ -165,7 +165,8 @@ Namespace AppRuntime
 
             ' 默认执行全部标准分析模块
             ' （12 = 跨组学整合，仅在多组学场景下实际执行）
-            Return {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}.ToList()
+            ' （13 = Spearman + MIC 关联网络，多组学与单组学均执行）
+            Return {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13}.ToList()
         End Function
     End Class
 End Namespace

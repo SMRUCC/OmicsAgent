@@ -69,7 +69,7 @@ Public Class LimmaDiffModule : Inherits AnalysisModuleBase
 # 上下游衔接说明
 - 上游输入：{PreprocessedInputHint()}
 - 上游输入：读取模块 3 的比对设计（tables/comparison_design.csv，若缺失则读取 {$"{_context.AnalysisDir}/design.json"} 文件）
-- 下游输出：差异分析结果表（前缀 'limma_'）将作为模块 5(KEGG 富集分析) 的输入分子列表，同时作为模块 10(随机森林) 与模块 11(回归分析) 的候选特征初筛来源，供模块 {If(_context.IsMultiOmics, "12(跨组学整合)、", "")}13(表格) 和模块 14(报告) 引用
+- 下游输出：差异分析结果表（前缀 'limma_'）将作为模块 5(KEGG 富集分析) 的输入分子列表，同时作为模块 10(随机森林) 与模块 11(回归分析) 的候选特征初筛来源，供模块 {If(_context.IsMultiOmics, "12(跨组学整合)、", "")}13(Spearman+MIC 关联网络)、14(表格) 和模块 15(报告) 引用
 {MultiOmicsSection()}
 # 实现要求
 - 按上方「上游输入」所列路径读取预处理后的表达矩阵

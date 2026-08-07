@@ -9,7 +9,7 @@ Imports OmicsAgent.AppRuntime.Ini
 Imports OmicsAgent.ReportData
 
 ' ============================================================================
-' 模块 14: 撰写论文初稿（生成 HTML 报告并转换为 PDF）
+' 模块 15: 撰写论文初稿（生成 HTML 报告并转换为 PDF）
 ' ============================================================================
 
 ''' <summary>
@@ -28,7 +28,7 @@ Imports OmicsAgent.ReportData
 Public Class ReportModule : Inherits AnalysisModuleBase
 
     Public Overrides ReadOnly Property ModuleName As String = "Paper Draft Report"
-    Public Overrides ReadOnly Property ModuleIndex As Integer = 14
+    Public Overrides ReadOnly Property ModuleIndex As Integer = 15
 
     Public Property debugCache As Boolean = False
 

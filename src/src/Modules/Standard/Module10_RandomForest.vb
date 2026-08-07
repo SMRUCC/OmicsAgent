@@ -76,7 +76,7 @@ Public Class RandomForestModule : Inherits AnalysisModuleBase
 - 上游输入（可选）：读取模块 4(LIMMA 差异分析) 的差异分子列表作为候选特征的初筛来源，
   这样可显著降低特征维度并提升模型稳定性
 - 上游输入（可选）：读取模块 6(WGCNA) 的模块特征基因作为降维后的特征
-- 下游输出：预测模型性能与候选标志物结果供模块 {If(_context.IsMultiOmics, "12(跨组学整合)、", "")}13(表格) 和模块 14(报告) 引用
+- 下游输出：预测模型性能与候选标志物结果供模块 {If(_context.IsMultiOmics, "12(跨组学整合)、", "")}13(Spearman+MIC 关联网络)、14(表格) 和模块 15(报告) 引用
 
 # 实现要求
 

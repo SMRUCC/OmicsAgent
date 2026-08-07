@@ -13,11 +13,11 @@
         End Sub
 
         ''' <summary>结果表格整理模块索引</summary>
-        Public Const ResultTablesIndex As Integer = 13
+        Public Const ResultTablesIndex As Integer = 14
         ''' <summary>论文报告撰写模块索引</summary>
-        Public Const ReportIndex As Integer = 14
+        Public Const ReportIndex As Integer = 15
         ''' <summary>自定义 JSON 模块的起始索引，须大于全部标准模块索引</summary>
-        Public Const CustomModuleStartIndex As Integer = 15
+        Public Const CustomModuleStartIndex As Integer = 16
 
         ''' <summary>
         ''' 收尾模块的执行顺序。顺序不可调换：

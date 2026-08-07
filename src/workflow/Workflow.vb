@@ -76,7 +76,7 @@ Module Workflow
         _customModules = LoadCustomModules(customModuleDir)
 
         ' 自定义模块索引紧随标准分析模块之后追加到循环末尾。
-        ' 结果表格(13)与报告(14)已不在循环内，而是在循环结束后强制执行，
+        ' 结果表格(14)与报告(15)已不在循环内，而是在循环结束后强制执行，
         ' 因此自定义模块只需追加到列表尾部，即可自然地在二者之前完成，
         ' 保证自定义模块的结论能够被结果表与最终报告收录。
         If _customModules.Count > 0 Then
@@ -336,6 +336,10 @@ Module Workflow
                 End If
 
                 Return New CrossOmicsModule(_config, _context, _logger)
+            Case 13
+                ' 跨组学关联网络分析：基于 Spearman + MIC 双重方法，多组学与单组学均执行
+                ' （单组学时退化为组学内部分子-分子关联网络）
+                Return New AssociationNetworkModule(_config, _context, _logger)
             Case FinalizeModules.ResultTablesIndex : Return New ResultTablesModule(_config, _context, _logger)
             Case FinalizeModules.ReportIndex : Return New ReportModule(_config, _context, _logger)
             Case Is >= FinalizeModules.CustomModuleStartIndex

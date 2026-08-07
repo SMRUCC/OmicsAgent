@@ -72,7 +72,7 @@ Public Class KeggFunctionModule : Inherits AnalysisModuleBase
 - 上游输入：读取模块 4 的差异分析结果（tables/ 目录，前缀 'limma_'）
 - 上游输入：读取 data/ 目录中的 KEGG 背景数据
 - 上游输入：读取模块 3 的比对设计（用于 GSVA 差异分析）
-- 下游输出：GSVA 分析结果将作为模块 6(WGCNA) 的表型性状数据，结果表供模块 {If(_context.IsMultiOmics, "12(跨组学整合)、", "")}13(表格) 和模块 14(报告) 引用
+- 下游输出：GSVA 分析结果将作为模块 6(WGCNA) 的表型性状数据，结果表供模块 {If(_context.IsMultiOmics, "12(跨组学整合)、", "")}13(Spearman+MIC 关联网络)、14(表格) 和模块 15(报告) 引用
 {MultiOmicsSection()}
 # 实现要求
 - 读取模块 4 的差异分析结果（tables/ 目录）

@@ -92,7 +92,7 @@ Public Class PLSPMAnalysisModule : Inherits AnalysisModuleBase
 # 上下游衔接说明
 - 上游输入：{PreprocessedInputHint()}
 - 上游输入（可选）：读取模块 5(KEGG GSVA) 或模块 6(WGCNA 模块特征基因) 的结果作为潜变量的观测变量
-- 下游输出：因果路径分析结果供模块 12(跨组学整合)、13(表格) 和模块 14(报告) 引用
+- 下游输出：因果路径分析结果供模块 12(跨组学整合)、13(Spearman+MIC 关联网络)、14(表格) 和模块 15(报告) 引用
 
 # 实现要求
 - 为每个组学层次构建潜变量块

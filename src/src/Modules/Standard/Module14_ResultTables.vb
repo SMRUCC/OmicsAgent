@@ -3,7 +3,7 @@ Imports Ollama
 Imports OmicsAgent.AppRuntime
 
 ' ============================================================================
-' 模块 13: 整理结果文件（生成 xlsx 表格）
+' 模块 14: 整理结果文件（生成 xlsx 表格）
 ' ============================================================================
 
 ''' <summary>
@@ -28,7 +28,7 @@ Imports OmicsAgent.AppRuntime
 Public Class ResultTablesModule : Inherits AnalysisModuleBase
 
     Public Overrides ReadOnly Property ModuleName As String = "Result Tables Compilation"
-    Public Overrides ReadOnly Property ModuleIndex As Integer = 13
+    Public Overrides ReadOnly Property ModuleIndex As Integer = 14
 
     Public Overrides ReadOnly Property CsvFileNamePrefix As String
         Get
