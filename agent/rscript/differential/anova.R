@@ -69,43 +69,58 @@ run_anova <- function(expr_matrix, sample_info, factors = "sample_info",
   # 结果存储
   factor_results <- list()
   
-  for (i in 1:n_features) {
+  feature_ids <- rownames(expr_matrix)
+  if (is.null(feature_ids)) feature_ids <- paste0("feature_", seq_len(n_features))
+
+  for (i in seq_len(n_features)) {
     data_tmp <- data.frame(
-      value = expr_matrix[i, ],
+      value = as.numeric(expr_matrix[i, ]),
       sample_info,
       stringsAsFactors = FALSE
     )
-    
-    fit <- stats::aov(formula_obj, data = data_tmp)
-    anova_summary <- summary(fit)[[1]]
-    # summary.aov 的行名带有对齐用的尾部空格（如 "variety    "），
-    # 直接用 fac %in% rownames(anova_summary) 永远不匹配，
-    # 会导致 factor_results 始终为空、下游 combined 为 NULL。
-    rownames(anova_summary) <- trimws(rownames(anova_summary))
-    
-    for (j in 1:n_factors) {
+
+    # 常量特征会让 aov 秩亏或报错，跳过（对应行保持 NA）
+    if (all(is.na(data_tmp$value)) ||
+        length(unique(data_tmp$value[!is.na(data_tmp$value)])) < 2) {
+      next
+    }
+
+    anova_summary <- tryCatch({
+      s <- summary(stats::aov(formula_obj, data = data_tmp))[[1]]
+      # summary.aov 的行名带有对齐用的尾部空格（如 "variety    "），
+      # 直接用 fac %in% rownames(anova_summary) 永远不匹配，
+      # 会导致 factor_results 始终为空、下游 combined 为 NULL。
+      rownames(s) <- trimws(rownames(s))
+      s
+    }, error = function(e) NULL)
+    if (is.null(anova_summary)) next
+
+    for (j in seq_len(n_factors)) {
       fac <- factors[j]
       if (fac %in% rownames(anova_summary)) {
         if (is.null(factor_results[[fac]])) {
+          # 预填 NA 而非 character(n)/numeric(n)。原实现留下的 "" 与 0
+          # 会在某特征该因素缺失（秩亏/aov 失败）时残留，随后被
+          # p.adjust 当作真实 p = 0 参与 BH 校正，静默污染全部校正结果。
           factor_results[[fac]] <- data.frame(
-            feature_id = character(n_features),
-            F_stat = numeric(n_features),
-            p_value = numeric(n_features),
+            feature_id = feature_ids,
+            F_stat = rep(NA_real_, n_features),
+            p_value = rep(NA_real_, n_features),
             stringsAsFactors = FALSE
           )
         }
-        factor_results[[fac]]$feature_id[i] <- rownames(expr_matrix)[i]
         factor_results[[fac]]$F_stat[i] <- anova_summary[fac, "F value"]
         factor_results[[fac]]$p_value[i] <- anova_summary[fac, "Pr(>F)"]
       }
     }
   }
-  
-  # 校正 P 值
+
+  # 校正 P 值（p.adjust 忽略 NA；significant 显式排除 NA）
   for (fac in names(factor_results)) {
     factor_results[[fac]]$p_adj <- stats::p.adjust(factor_results[[fac]]$p_value,
                                                    method = p_adj_method)
-    factor_results[[fac]]$significant <- factor_results[[fac]]$p_adj < 0.05
+    factor_results[[fac]]$significant <- !is.na(factor_results[[fac]]$p_adj) &
+      factor_results[[fac]]$p_adj < 0.05
   }
   
   # 合并结果

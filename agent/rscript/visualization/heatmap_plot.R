@@ -60,8 +60,14 @@ plot_heatmap <- function(expr_matrix, sample_info, feature_info = NULL,
   # 必要时选取变异最大的Feature
   if (nrow(expr_matrix) > n_features) {
     row_vars <- apply(expr_matrix, 1, stats::var, na.rm = TRUE)
-    top_idx <- order(row_vars, decreasing = TRUE)[1:n_features]
-    expr_matrix <- expr_matrix[top_idx, , drop = FALSE]
+    # 全 NA 行的 var 为 NA，order() 默认把 NA 排在最后；若有效行数不足
+    # n_features，这些 NA 行会被选进来，缩放后又被统一置 0，
+    # 在热图上表现为一整条无意义却视觉显著的"全零特征"。此处先剔除。
+    valid_idx <- which(!is.na(row_vars) & row_vars > 0)
+    if (length(valid_idx) >= 2) {
+      ord <- valid_idx[order(row_vars[valid_idx], decreasing = TRUE)]
+      expr_matrix <- expr_matrix[utils::head(ord, n_features), , drop = FALSE]
+    }
   }
   
   # 先记录原始Feature ID。下方会用 name_col 覆盖 rownames 作为显示名，

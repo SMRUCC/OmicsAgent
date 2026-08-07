@@ -155,7 +155,7 @@ run_plsda <- function(expr_matrix, sample_info, group_col = "sample_info",
   X_k <- X
   Y_k <- Y_dummy
 
-  for (a in 1:ncomp) {
+  for (a in seq_len(ncomp)) {
     # 交叉乘积的 SVD
     cross <- crossprod(X_k, Y_k)
     svd_result <- svd(cross)
@@ -174,8 +174,8 @@ run_plsda <- function(expr_matrix, sample_info, group_col = "sample_info",
     Y_k <- Y_k - tcrossprod(ta, qa)
   }
 
-  colnames(scores_mat) <- paste0("comp", 1:ncomp)
-  colnames(loadings_mat) <- paste0("comp", 1:ncomp)
+  colnames(scores_mat) <- paste0("comp", seq_len(ncomp))
+  colnames(loadings_mat) <- paste0("comp", seq_len(ncomp))
   rownames(loadings_mat) <- colnames(X)
 
   # 简单 VIP 计算

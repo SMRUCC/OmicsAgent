@@ -96,8 +96,8 @@ wgcna_module_trait <- function(wgcna_result, traits, sample_info = NULL,
   rownames(p_mat) <- colnames(MEs)
   colnames(p_mat) <- colnames(traits)
 
-  for (i in 1:n_modules) {
-    for (j in 1:n_traits) {
+  for (i in seq_len(n_modules)) {
+    for (j in seq_len(n_traits)) {
       ct <- tryCatch(
         stats::cor.test(MEs[, i], traits[, j], method = cor_method),
         error = function(e) NULL
@@ -114,8 +114,8 @@ wgcna_module_trait <- function(wgcna_result, traits, sample_info = NULL,
 
   # 对每个模块-性状对做线性回归
   lm_results <- list()
-  for (i in 1:n_modules) {
-    for (j in 1:n_traits) {
+  for (i in seq_len(n_modules)) {
+    for (j in seq_len(n_traits)) {
       key <- paste0(colnames(MEs)[i], "_vs_", colnames(traits)[j])
       fit <- stats::lm(traits[, j] ~ MEs[, i])
       s <- summary(fit)

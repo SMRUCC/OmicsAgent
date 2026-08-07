@@ -67,16 +67,32 @@ save_plot <- function(plot, filename = "plot", output_dir = ".",
     dir.create(output_dir, recursive = TRUE)
   }
 
+  # 统一的绘制动作：ggplot / trellis 需要 print()，base 绘图函数直接调用。
+  # print() 对 ggplot 是惰性求值，真正的绘图错误（如 scale_*_manual 的
+  # 水平数不匹配）在此刻才抛出，因此设备必须用 on.exit 保护。
+  draw <- function() {
+    if (is.function(plot)) plot() else print(plot)
+  }
+
   # 输出 PDF
+  # 原实现为 pdf() -> print() -> dev.off() 的裸序列：一旦 print() 抛错，
+  # dev.off() 永不执行，设备泄漏会导致后续所有绘图被静默写进这个残留
+  # PDF。改用 export.R 中已有的 .with_device()（内部 on.exit 保证配对）。
   pdf_file <- file.path(output_dir, paste0(filename, ".pdf"))
-  grDevices::pdf(pdf_file, width = width, height = height)
-  print(plot)
-  grDevices::dev.off()
+  .with_device(
+    function() .open_pdf_device(pdf_file, width = width, height = height),
+    draw
+  )
 
   # 输出 PNG
+  # ggsave() 仅支持 ggplot 对象，对 base 绘图函数或 grid 对象会报错，
+  # 故统一走 png 设备 + 同一套 draw()。
   png_file <- file.path(output_dir, paste0(filename, ".png"))
-  ggplot2::ggsave(png_file, plot = plot, width = width, height = height,
-                  dpi = dpi, units = "in")
+  .with_device(
+    function() .open_png_device(png_file, width = width, height = height,
+                                dpi = dpi),
+    draw
+  )
 
   invisible(list(pdf = pdf_file, png = png_file))
 }

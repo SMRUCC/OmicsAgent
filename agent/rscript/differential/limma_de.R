@@ -275,25 +275,54 @@ run_limma <- function(expr_matrix, sample_info, group_col = "sample_info",
   control_samples <- colnames(expr_matrix)[groups == control_group]
   results_list <- list()
   
+  feature_ids <- rownames(expr_matrix)
+  if (is.null(feature_ids)) {
+    feature_ids <- paste0("feature_", seq_len(nrow(expr_matrix)))
+  }
+
   for (cg in case_groups) {
     case_samples <- colnames(expr_matrix)[groups == cg]
-    for (i in 1:nrow(expr_matrix)) {
-      control_vals <- expr_matrix[i, control_samples]
-      case_vals <- expr_matrix[i, case_samples]
-      
-      tt <- stats::t.test(case_vals, control_vals)
-      logfc <- log2(mean(case_vals) / mean(control_vals))
-      
+    for (i in seq_len(nrow(expr_matrix))) {
+      control_vals <- as.numeric(expr_matrix[i, control_samples])
+      case_vals <- as.numeric(expr_matrix[i, case_samples])
+
+      # 常量特征或样本不足时 t.test 会报错，记为 NA 而非中断整个流程
+      tt <- tryCatch(stats::t.test(case_vals, control_vals),
+                     error = function(e) NULL)
+      pval <- if (is.null(tt)) NA_real_ else tt$p.value
+
+      # 该回退路径接收的通常已是 log2 数据，均值可能为负或 0，
+      # 此时 log2(mean/mean) 会产生 NaN/Inf。对 log 尺度数据，
+      # logFC 应为均值之差；仅当两组均值均为正时才按比值取对数。
+      m_case <- mean(case_vals, na.rm = TRUE)
+      m_ctrl <- mean(control_vals, na.rm = TRUE)
+      logfc <- if (is.finite(m_case) && is.finite(m_ctrl) &&
+                   m_case > 0 && m_ctrl > 0) {
+        log2(m_case / m_ctrl)
+      } else {
+        m_case - m_ctrl
+      }
+
       results_list[[length(results_list) + 1]] <- data.frame(
-        feature_id = rownames(expr_matrix)[i],
+        feature_id = feature_ids[i],
         logFC = logfc,
-        p_value = tt$p.value,
+        p_value = pval,
         comparison = paste0(cg, "_vs_", control_group),
         stringsAsFactors = FALSE
       )
     }
   }
-  
+
+  # 无任何对比结果时 do.call(rbind, list()) 返回 NULL，
+  # 后续 combined$p_adj <- ... 会对 NULL 赋值而报错
+  if (length(results_list) == 0) {
+    return(data.frame(
+      feature_id = character(0), logFC = numeric(0),
+      p_value = numeric(0), comparison = character(0),
+      p_adj = numeric(0), stringsAsFactors = FALSE
+    ))
+  }
+
   combined <- do.call(rbind, results_list)
   combined$p_adj <- stats::p.adjust(combined$p_value, method = "BH")
   return(combined)

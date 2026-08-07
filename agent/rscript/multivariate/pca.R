@@ -40,30 +40,46 @@ run_pca <- function(expr_matrix, scale = TRUE, center = TRUE,
   data_t <- t(expr_matrix)
 
   # 移除零方差Feature
+  # 全 NA 列的 var 返回 NA，逻辑下标中的 NA 会产生 NA 列，必须显式剔除
   feature_var <- apply(data_t, 2, stats::var, na.rm = TRUE)
-  data_t <- data_t[, feature_var > 0, drop = FALSE]
+  keep_feature <- !is.na(feature_var) & feature_var > 0
+  data_t <- data_t[, keep_feature, drop = FALSE]
 
-  # 设定组分数
-  if (is.null(ncomp)) {
-    ncomp <- min(nrow(data_t) - 1, ncol(data_t), 10)
+  # 输入充分性校验：PCA 至少需要 2 个样本与 1 个非零方差特征。
+  # 否则下面 ncomp 会算出 0 或负数，1:ncomp 反向迭代取到错误的列。
+  if (ncol(data_t) == 0) {
+    stop("run_pca: 移除零方差特征后无可用特征，无法进行 PCA。")
   }
+  if (nrow(data_t) < 2) {
+    stop("run_pca: 样本数不足 2，无法进行 PCA。")
+  }
+
+  # 设定组分数，并夹取到 [1, 可用组分数] 区间
+  max_comp <- min(nrow(data_t) - 1, ncol(data_t))
+  if (is.null(ncomp)) {
+    ncomp <- min(max_comp, 10)
+  }
+  ncomp <- max(1, min(as.integer(ncomp), max_comp))
 
   # 执行 PCA（计算全部组分以获得正确的方差解释率）
   pca_result <- stats::prcomp(data_t, scale. = scale, center = center)
 
+  # prcomp 实际返回的组分数可能少于请求值（如存在共线性）
+  ncomp <- min(ncomp, ncol(pca_result$x))
+
   # 提取结果
-  scores <- as.data.frame(pca_result$x[, 1:ncomp, drop = FALSE])
+  scores <- as.data.frame(pca_result$x[, seq_len(ncomp), drop = FALSE])
   scores$sample_id <- rownames(scores)
   scores <- scores[, c("sample_id", setdiff(colnames(scores), "sample_id")), drop = FALSE]
   rownames(scores) <- NULL
 
-  loadings <- as.data.frame(pca_result$rotation[, 1:ncomp, drop = FALSE])
+  loadings <- as.data.frame(pca_result$rotation[, seq_len(ncomp), drop = FALSE])
   loadings$feature_id <- rownames(loadings)
   loadings <- loadings[, c("feature_id", setdiff(colnames(loadings), "feature_id")), drop = FALSE]
   rownames(loadings) <- NULL
 
   # 方差解释率：使用总方差（所有 sdev^2 之和）
-  var_explained <- (pca_result$sdev^2 / sum(pca_result$sdev^2) * 100)[1:ncomp]
+  var_explained <- (pca_result$sdev^2 / sum(pca_result$sdev^2) * 100)[seq_len(ncomp)]
 
   return(list(
     pca_result = pca_result,
