@@ -1,35 +1,33 @@
 # ==============================================================================
-# OmicsFlow: Multi-factor ANOVA
+# OmicsFlow: 多因素方差分析（Multi-factor ANOVA）
 # ==============================================================================
-# Multi-factor ANOVA for overall differential analysis
+# 用于总体差异分析的多因素方差分析
 # ==============================================================================
 
-#' Multi-factor ANOVA analysis
+#' 多因素方差分析
 #'
-#' @description Performs multi-factor ANOVA for each feature, allowing
-#'   multiple factors (e.g., treatment, time, batch) to be tested simultaneously.
+#' @description 对每个特征执行多因素方差分析，可同时检验多个因素
+#'   （如处理、时间、批次）。
 #'
-#' @param expr_matrix A numeric matrix (features x samples).
-#' @param sample_info A data.frame with sample metadata.
-#' @param factors Character vector of column names to use as factors.
-#'   Default: "sample_info".
-#' @param exclude_groups Optional named list specifying groups to exclude per
-#'   factor. E.g., \code{list(sample_info = "QC")}. Default: NULL.
-#' @param p_adj_method P-value adjustment method. Default: "BH".
+#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param sample_info 含有样本元数据的数据框。
+#' @param factors 用作因素的列名字符向量。默认："sample_info"。
+#' @param exclude_groups 可选的命名列表，指定每个因素要排除的分组。
+#'   例如 \code{list(sample_info = "QC")}。默认：NULL。
+#' @param p_adj_method P 值校正方法。默认："BH"。
 #'
-#' @return A list with:
+#' @return 一个列表，包含：
 #'   \itemize{
-#'     \item \code{results}: Data.frame with feature_id, F-stat, p-value, p_adj
-#'       for each factor.
-#'     \item \code{factor_results}: List of data.frames per factor.
+#'     \item \code{results}：含 feature_id、F 统计量、p 值、各因素的 p_adj 的数据框。
+#'     \item \code{factor_results}：每个因素的数据框列表。
 #'   }
 #'
 #' @examples
 #' \dontrun{
-#' # Single factor
+#' # 单因素
 #' anova_result <- run_anova(expr_matrix, sample_info, factors = "sample_info")
 #'
-#' # Multi-factor
+#' # 多因素
 #' anova_result <- run_anova(expr_matrix, sample_info,
 #'                           factors = c("sample_info", "condition"))
 #' }
@@ -37,12 +35,12 @@
 #' @export
 run_anova <- function(expr_matrix, sample_info, factors = "sample_info",
                      exclude_groups = NULL, p_adj_method = "BH") {
-  # Align samples
+  # 对齐样本
   common_samples <- intersect(colnames(expr_matrix), rownames(sample_info))
   expr_matrix <- expr_matrix[, common_samples, drop = FALSE]
   sample_info <- sample_info[common_samples, , drop = FALSE]
 
-  # Exclude groups
+  # 排除分组
   if (!is.null(exclude_groups)) {
     for (fac in names(exclude_groups)) {
       if (fac %in% colnames(sample_info)) {
@@ -54,21 +52,21 @@ run_anova <- function(expr_matrix, sample_info, factors = "sample_info",
     }
   }
 
-  # Ensure factors are factors
+  # 确保因素为因子类型
   for (f in factors) {
     if (f %in% colnames(sample_info)) {
       sample_info[[f]] <- factor(sample_info[[f]])
     }
   }
 
-  # Build formula
+  # 构建公式
   formula_str <- paste0("value ~ ", paste(factors, collapse = " * "))
   formula_obj <- as.formula(formula_str)
 
   n_features <- nrow(expr_matrix)
   n_factors <- length(factors)
 
-  # Results storage
+  # 结果存储
   factor_results <- list()
 
   for (i in 1:n_features) {
