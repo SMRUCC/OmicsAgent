@@ -47,38 +47,38 @@ predefined_module_eigengenes <- function(expr_matrix, feature_info,
     mode(expr_matrix) <- "numeric"
   }
 
-  # Match features
+  # 匹配特征
   feat_ids <- intersect(rownames(expr_matrix),
                         feature_info[[feature_id_col]])
   expr_sub <- expr_matrix[feat_ids, , drop = FALSE]
 
-  # Get category for each feature
+  # 获取每个特征的类别
   cat_map <- feature_info[[category_col]][match(feat_ids,
                                                   feature_info[[feature_id_col]])]
 
-  # Remove features with NA or empty category
+  # 移除类别为 NA 或空的特征
   valid_idx <- !is.na(cat_map) & cat_map != "" & cat_map != "NULL" &
                cat_map != "NA"
   expr_sub <- expr_sub[valid_idx, , drop = FALSE]
   cat_map <- cat_map[valid_idx]
 
   if (length(cat_map) == 0) {
-    warning("No valid category assignments found in column: ", category_col)
+    warning("在列 ", category_col, " 中未找到有效的类别分配。")
     return(NULL)
   }
 
-  # Group features by category
+  # 按类别对特征分组
   modules <- split(rownames(expr_sub), as.character(cat_map))
 
-  # Filter by minimum size
+  # 按最小规模过滤
   modules <- modules[sapply(modules, length) >= min_size]
 
   if (length(modules) == 0) {
-    warning("No modules with size >= ", min_size, " found.")
+    warning("未找到规模 >= ", min_size, " 的模块。")
     return(NULL)
   }
 
-  # Calculate module eigengenes (first PC) for each module
+  # 为每个模块计算模块特征基因（第一主成分）
   me_list <- list()
   colors <- character(nrow(expr_sub))
   names(colors) <- rownames(expr_sub)
@@ -87,14 +87,14 @@ predefined_module_eigengenes <- function(expr_matrix, feature_info,
     mod_features <- modules[[mod_name]]
     mod_expr <- expr_sub[mod_features, , drop = FALSE]
 
-    # Calculate eigengene (first PC via prcomp or svd)
+    # 计算特征基因（通过 prcomp 或 svd 取第一主成分）
     if (length(mod_features) == 1) {
-      # Single feature: use the feature itself as eigengene
+      # 单个特征：以该特征自身作为特征基因
       me <- as.numeric(mod_expr[1, ])
     } else {
-      # Multi-feature: use first PC
+      # 多特征：取第一主成分
       data_t <- t(mod_expr)
-      # Remove zero-variance features
+      # 移除零方差特征
       feat_var <- apply(data_t, 2, stats::var, na.rm = TRUE)
       if (any(feat_var == 0)) {
         data_t <- data_t[, feat_var > 0, drop = FALSE]
@@ -108,19 +108,19 @@ predefined_module_eigengenes <- function(expr_matrix, feature_info,
     }
     me_list[[mod_name]] <- me
 
-    # Assign module colors
+    # 分配模块颜色
     colors[mod_features] <- mod_name
   }
 
-  # Features not in any module get "grey"
+  # 不属于任何模块的特征标记为 "grey"
   unassigned <- names(colors)[colors == ""]
   colors[unassigned] <- "grey"
 
-  # Combine eigengenes
+  # 合并特征基因
   MEs <- as.data.frame(do.call(cbind, me_list))
   rownames(MEs) <- colnames(expr_matrix)
 
-  # Module sizes
+  # 模块规模
   module_sizes <- sapply(modules, length)
 
   return(list(
