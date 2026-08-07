@@ -66,7 +66,7 @@ if (length(all_r_files) == 0) {
 
 # 标准化为相对路径，便于过滤与排序展示
 rel_files <- sub(paste0("^", fixed = normalizePath(script_dir), "/?"), "",
-                normalizePath(all_r_files))
+                 normalizePath(all_r_files))
 
 cat(sprintf("[scan] 共发现 %d 个 R 脚本文件。\n", length(all_r_files)))
 
@@ -128,7 +128,7 @@ for (i in seq_along(ordered_full)) {
     message(sprintf("[source] 警告: 加载 '%s' -> %s", r, conditionMessage(w)))
     TRUE
   })
-
+  
   if (isTRUE(ok)) {
     sourced_ok <- c(sourced_ok, r)
   } else {
