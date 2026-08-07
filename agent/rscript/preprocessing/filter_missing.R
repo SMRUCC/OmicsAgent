@@ -120,7 +120,7 @@ filter_missing_values <- function(expr_matrix, sample_info = NULL,
     )
   }
 
-  # Filter
+  # 过滤
   kept_idx <- !remove_mask
   filtered_matrix <- expr_matrix[kept_idx, , drop = FALSE]
 
