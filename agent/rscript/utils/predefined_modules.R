@@ -1,39 +1,38 @@
 # ==============================================================================
-# OmicsFlow: Predefined Module Eigengenes
+# OmicsFlow: 预定义模块特征基因（Module Eigengenes）
 # ==============================================================================
-# Calculate module eigengenes for predefined feature groups (KEGG pathways,
-# super_class categories, etc.) and correlate with biological traits
+# 为预定义的特征分组（KEGG 通路、super_class 类别等）计算模块特征基因，
+# 并与生物学性状做相关性分析
 # ==============================================================================
 
-#' Calculate module eigengenes for predefined feature groups
+#' 为预定义特征分组计算模块特征基因
 #'
-#' @description Groups features by a category column (e.g., KEGG pathway,
-#'   super_class) and calculates module eigengenes (first principal component)
-#'   for each group. Returns a result compatible with \code{wgcna_module_trait()}
-#'   for trait association analysis.
+#' @description 按某一类别列（如 KEGG 通路、super_class）对特征分组，并为每个
+#'   分组计算模块特征基因（第一主成分）。返回的结果与 \code{wgcna_module_trait()}
+#'   兼容，可用于性状关联分析。
 #'
-#' @param expr_matrix A numeric matrix (features x samples).
-#' @param feature_info Data.frame with feature annotations.
-#' @param feature_id_col Column name for feature IDs. Default: "name".
-#' @param category_col Column name for category (e.g., "kegg", "super_class").
-#' @param min_size Minimum features per module. Default: 2.
+#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param feature_info 含有特征注释的数据框。
+#' @param feature_id_col 特征 ID 的列名。默认："name"。
+#' @param category_col 类别所在的列名（如 "kegg"、"super_class"）。
+#' @param min_size 每个模块的最少特征数。默认：2。
 #'
-#' @return A list with:
+#' @return 一个列表，包含：
 #'   \itemize{
-#'     \item \code{MEs}: Module eigengenes (samples x modules).
-#'     \item \code{colors}: Named vector of module assignments per feature.
-#'     \item \code{module_sizes}: Table of module sizes.
-#'     \item \code{modules}: List of feature IDs per module.
-#'     \item \code{n_modules}: Number of modules.
+#'     \item \code{MEs}：模块特征基因（样本 x 模块）。
+#'     \item \code{colors}：每个特征的模块归属命名向量。
+#'     \item \code{module_sizes}：模块规模表。
+#'     \item \code{modules}：每个模块的特征 ID 列表。
+#'     \item \code{n_modules}：模块数量。
 #'   }
 #'
 #' @examples
 #' \dontrun{
-#' # KEGG-based modules
+#' # 基于 KEGG 的模块
 #' kegg_mods <- predefined_module_eigengenes(expr_mat, feat_info,
 #'                                           category_col = "kegg")
 #'
-#' # Super class-based modules
+#' # 基于 super_class 的模块
 #' sc_mods <- predefined_module_eigengenes(expr_mat, feat_info,
 #'                                          category_col = "super_class")
 #' }
