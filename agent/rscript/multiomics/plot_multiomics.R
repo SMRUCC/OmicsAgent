@@ -37,7 +37,7 @@ plot_cross_correlation_heatmap <- function(cor_result, top_n = 30,
     return(NULL)
   }
 
-  # Keep the features carrying the strongest associations.
+  # 保留承载最强关联的特征。
   row_score <- apply(abs(cm), 1, max, na.rm = TRUE)
   col_score <- apply(abs(cm), 2, max, na.rm = TRUE)
   row_score[!is.finite(row_score)] <- 0
@@ -47,7 +47,7 @@ plot_cross_correlation_heatmap <- function(cor_result, top_n = 30,
   sub <- cm[sort(ridx), sort(cidx), drop = FALSE]
   sub[!is.finite(sub)] <- 0
 
-  # Clustering needs at least two rows and columns.
+  # 聚类至少需要两行两列。
   do_cluster <- cluster && nrow(sub) > 1 && ncol(sub) > 1
   limit <- max(abs(sub), na.rm = TRUE)
   if (!is.finite(limit) || limit == 0) limit <- 1
@@ -88,7 +88,7 @@ plot_cross_correlation_heatmap <- function(cor_result, top_n = 30,
 plot_mantel_network <- function(mantel_result, title = "Mantel test",
                                 alpha = 0.05) {
   parts <- list()
-  # Layer-to-layer congruence.
+  # 层与层之间的一致性。
   oo <- mantel_result$omics_omics
   if (!is.null(oo) && is.data.frame(oo) && nrow(oo) > 0) {
     parts[[length(parts) + 1L]] <- data.frame(
@@ -99,7 +99,7 @@ plot_mantel_network <- function(mantel_result, title = "Mantel test",
       stringsAsFactors = FALSE
     )
   }
-  # Layer against each environmental variable.
+  # 各层与每个环境变量的对比。
   oe <- mantel_result$omics_env
   if (!is.null(oe) && is.data.frame(oe) && nrow(oe) > 0) {
     parts[[length(parts) + 1L]] <- data.frame(

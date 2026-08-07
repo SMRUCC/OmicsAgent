@@ -143,14 +143,14 @@ run_linear_model <- function(expr_matrix, sample_info,
   } else if (is.matrix(class_coefs)) {
     if (length(rownames(class_coefs)) > 1 &&
         all(rownames(class_coefs) %in% levels(groups))) {
-      # Rows are group levels (multinomial logit)
+      # 行表示分组水平（多项 logit）
       class_coef_df <- do.call(rbind, lapply(rownames(class_coefs), function(g) {
         data.frame(group = g, feature = colnames(class_coefs),
                    coefficient = as.numeric(class_coefs[g, ]),
                    stringsAsFactors = FALSE)
       }))
     } else {
-      # Rows are features (e.g. LDA scaling), columns are group levels
+      # 行表示特征（如 LDA 缩放值），列表示分组水平
       class_coef_df <- do.call(rbind, lapply(colnames(class_coefs), function(g) {
         data.frame(group = g, feature = rownames(class_coefs),
                    coefficient = as.numeric(class_coefs[, g]),
@@ -169,24 +169,24 @@ run_linear_model <- function(expr_matrix, sample_info,
   }
 
   # ============================================================================
-  # Per-feature univariate linear regression:
-  #   y = 0/1 group encoding (control a=0, each other group b=1)
-  #   x = single feature abundance
-  #   for each comparison: fit y ~ x and export slope/intercept/R2/adjR2/pvalue
+  # 逐特征单变量线性回归：
+  #   y = 0/1 分组编码（对照组 a=0，其余各组 b=1）
+  #   x = 单个特征丰度
+  #   对每个比较拟合 y ~ x，并导出 斜率/截距/R2/调整后R2/p值
   # ============================================================================
   ref_group <- levels(groups)[1]
   case_groups <- levels(groups)[-1]
 
   lm_parts <- list()
   for (cg in case_groups) {
-    # Keep only samples belonging to the two groups of this comparison
+    # 仅保留该比较中两个分组的样本
     idx <- groups %in% c(ref_group, cg)
     x_sub <- X[idx, , drop = FALSE]
     y <- ifelse(as.character(groups[idx]) == cg, 1, 0)
     n <- length(y)
     if (n < 3 || length(unique(y)) < 2) {
-      warning("Skipping comparison '", ref_group, "' vs '", cg,
-              "': not enough samples for linear regression.")
+      warning("跳过比较 '", ref_group, "' vs '", cg,
+              "'：用于线性回归的样本不足。")
       next
     }
     comparison_label <- paste0(ref_group, "(a=0) vs ", cg, "(b=1)")
@@ -202,8 +202,8 @@ run_linear_model <- function(expr_matrix, sample_info,
 
       fit <- tryCatch(stats::lm(y ~ x), error = function(e) NULL)
       if (is.null(fit)) {
-        warning("Linear regression failed for feature '", feat_id,
-                "' in comparison '", comparison_label, "'.")
+        warning("特征 '", feat_id, "' 在比较 '", comparison_label,
+                "' 中的线性回归失败。")
         return(data.frame(
           feature_id = feat_id, comparison = comparison_label,
           slope = NA_real_, intercept = NA_real_,
@@ -220,7 +220,7 @@ run_linear_model <- function(expr_matrix, sample_info,
       r2 <- s$r.squared
       adj_r2 <- s$adj.r.squared
       p_value <- if (nrow(s$coefficients) >= 2) s$coefficients[2, 4] else NA_real_
-      # Equation string "y = a*x + b" (handles negative intercept sign)
+      # 方程字符串 "y = a*x + b"（处理负截距符号）
       eq_slope <- formatC(slope, format = "g", digits = 4)
       eq_intercept <- formatC(abs(intercept), format = "g", digits = 4)
       eq_sign <- ifelse(intercept < 0, "-", "+")
@@ -237,7 +237,7 @@ run_linear_model <- function(expr_matrix, sample_info,
     })
 
     comp_df <- do.call(rbind, comp_rows)
-    # BH adjust p-values within this comparison
+    # 在该比较内对 p 值进行 BH 校正
     non_na <- !is.na(comp_df$p_value)
     if (any(non_na)) {
       comp_df$p_adj[non_na] <- stats::p.adjust(comp_df$p_value[non_na],

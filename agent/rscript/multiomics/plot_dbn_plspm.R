@@ -165,7 +165,7 @@
 
 
 # ------------------------------------------------------------------------------
-# Dynamic Bayesian network figures
+# 动态贝叶斯网络图形
 # ------------------------------------------------------------------------------
 
 #' 绘制单组学动态贝叶斯网络
@@ -200,7 +200,7 @@ plot_dbn_layer <- function(dbn_result, title = NULL, label_top = 30,
                            title))
   }
 
-  # keep only nodes that participate in at least one arc
+  # 仅保留至少参与一条弧的节点
   active <- union(arcs$from, arcs$to)
   nd <- nd[nd$node %in% active, , drop = FALSE]
   if (nrow(nd) == 0) return(.dbn_empty_plot("No connected node.", title))
@@ -334,7 +334,7 @@ plot_dbn_multiomics <- function(dbn_result, title = NULL, layer_order = NULL,
   nd$omics <- factor(nd$omics, levels = layer_order)
 
   if (hier_layout) {
-    # one column per omics layer, t0 slightly left of t1 inside the column
+    # 每层一列，列内 t0 略位于 t1 左侧
     pos <- do.call(rbind, lapply(split(nd, nd$omics, drop = TRUE), function(s) {
       s <- s[order(s$time_slice, -s$degree), , drop = FALSE]
       s$x <- as.numeric(s$omics) + ifelse(s$time_slice == "t0", -0.16, 0.16)
@@ -422,7 +422,7 @@ plot_dbn_multiomics <- function(dbn_result, title = NULL, layer_order = NULL,
 
 
 # ------------------------------------------------------------------------------
-# Perturbation figures
+# 扰动图形
 # ------------------------------------------------------------------------------
 
 #' 绘制被扰动节点的调控重要性排序
@@ -454,7 +454,7 @@ plot_perturbation_ranking <- function(importance_df, top_n = 20,
     s[seq_len(min(top_n, nrow(s))), , drop = FALSE]
   }))
   df$text <- .dbn_trim(df$label, 30)
-  # keep bars sorted within each facet
+  # 在每个分面内保持柱子有序
   df$key <- paste(df$mode, df$text, sep = "|")
   df <- df[order(df$mode, df$impact_score), , drop = FALSE]
   df$key <- factor(df$key, levels = unique(df$key))
@@ -693,7 +693,7 @@ plot_perturbation_subnetwork <- function(dbn_result, node, title = NULL,
 
 
 # ------------------------------------------------------------------------------
-# PLS path model figure
+# PLS 路径模型图形
 # ------------------------------------------------------------------------------
 
 #' 绘制分层多组学 PLS 路径模型

@@ -105,7 +105,7 @@ build_cross_omics_modules <- function(mo,
       next
     }
 
-    # Optional restriction to host or microbial features.
+    # 可选：仅保留宿主或微生物特征。
     if (!is.null(organism_col) && organism_keep != "all" &&
         organism_col %in% colnames(finfo)) {
       parts <- split_by_organism(finfo, organism_col = organism_col)
