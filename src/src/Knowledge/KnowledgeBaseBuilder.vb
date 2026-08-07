@@ -70,10 +70,10 @@ Public Class KnowledgeBaseBuilder
         End If
 
         For Each f In Directory.GetFiles(_context.ReferenceDir, "*.pdf")
-            Dim text_cache As String = $"{_context.ReferenceDir}/{f.BaseName}.txt"
-            Dim dst = Path.Combine(_context.KnowledgeDir, $"{f.BaseName}.txt")
+            Dim text_cache As String = $"{_context.ReferenceDir}/{f.BaseName}.txt".GetFullPath
+            Dim dst = Path.Combine(_context.KnowledgeDir, $"{f.BaseName}.txt").GetFullPath
 
-            If Not text_cache.FileExists Then
+            If text_cache <> dst AndAlso Not text_cache.FileExists Then
                 Using llm As LLMClient = _config.CreateLLMClient("extract_pdf_text", _context.TmpDir),
                     s As Stream = f.Open(FileMode.Open,
                                          doClear:=False,
@@ -91,11 +91,16 @@ Public Class KnowledgeBaseBuilder
 
         For Each f In Directory.GetFiles(_context.ReferenceDir, "*.txt")
             ' 复制到 research_kb 目录
-            Dim dst = Path.Combine(_context.KnowledgeDir, Path.GetFileName(f))
+            Dim dst = Path.Combine(_context.KnowledgeDir, Path.GetFileName(f)).GetFullPath
+
+            ' 20260808 假若reference dir和knowledge dir是同一个文件夹
+            ' 则dst文件肯定会存在
+            ' 下面的文件复制代码会跳过执行
             If Not File.Exists(dst) Then
                 File.Copy(f, dst, True)
             End If
-            result.Add(dst)
+
+            Call result.Add(dst)
         Next
 
         Return New List(Of String)(result.Select(Function(f) f.GetFullPath).Distinct)

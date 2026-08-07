@@ -38,6 +38,7 @@ namespace RibbonLib.Controls
             public const uint cmdMenuKBLib = 12;
             public const uint cmdTabKBLib = 11;
             public const uint cmdGroupKBLib = 13;
+            public const uint cmdButtonOpenKBFolder = 43;
             public const uint cmdBtnOpenKBLib = 10;
             public const uint cmdGroupTools = 14;
             public const uint cmdButtonToggleTheme = 15;
@@ -83,6 +84,7 @@ namespace RibbonLib.Controls
         public RibbonTabGroup MenuKBLib { get; private set; }
         public RibbonTab TabKBLib { get; private set; }
         public RibbonGroup GroupKBLib { get; private set; }
+        public RibbonButton ButtonOpenKBFolder { get; private set; }
         public RibbonButton BtnOpenKBLib { get; private set; }
         public RibbonGroup GroupTools { get; private set; }
         public RibbonButton ButtonToggleTheme { get; private set; }
@@ -129,6 +131,7 @@ namespace RibbonLib.Controls
             MenuKBLib = new RibbonTabGroup(ribbon, Cmd.cmdMenuKBLib);
             TabKBLib = new RibbonTab(ribbon, Cmd.cmdTabKBLib);
             GroupKBLib = new RibbonGroup(ribbon, Cmd.cmdGroupKBLib);
+            ButtonOpenKBFolder = new RibbonButton(ribbon, Cmd.cmdButtonOpenKBFolder);
             BtnOpenKBLib = new RibbonButton(ribbon, Cmd.cmdBtnOpenKBLib);
             GroupTools = new RibbonGroup(ribbon, Cmd.cmdGroupTools);
             ButtonToggleTheme = new RibbonButton(ribbon, Cmd.cmdButtonToggleTheme);

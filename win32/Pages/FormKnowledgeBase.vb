@@ -6,10 +6,12 @@ Public Class FormKnowledgeBase
 
     Shared ReadOnly btnOpenKBLib As RibbonEventBinding
     Shared ReadOnly btnToggleTheme As RibbonEventBinding
+    Shared ReadOnly btnOpenFolder As RibbonEventBinding
 
     Shared Sub New()
         btnOpenKBLib = New RibbonEventBinding(Ribbon.BtnOpenKBLib)
         btnToggleTheme = New RibbonEventBinding(Ribbon.ButtonToggleTheme)
+        btnOpenFolder = New RibbonEventBinding(Ribbon.ButtonOpenKBFolder)
     End Sub
 
     Public Property kb_dir As String
@@ -31,11 +33,24 @@ Public Class FormKnowledgeBase
         Await WebView21.CoreWebView2.ExecuteScriptAsync("toggleTheme();")
     End Function
 
+    Private Sub OpenFolder()
+        ' 创建 ProcessStartInfo 对象
+        ' 必须设置为 True 才能由系统外壳解析并打开文件夹
+        Dim psi As New ProcessStartInfo() With {
+            .FileName = kb_dir.GetDirectoryFullPath,
+            .UseShellExecute = True
+        }
+
+        ' 启动进程
+        Call Process.Start(psi)
+    End Sub
+
     Private Sub AvtivateRibbon()
         Ribbon.MenuKBLib.ContextAvailable = ContextAvailability.Active
 
         btnOpenKBLib.Addhandler(Async Sub() Await openKBLib())
         btnToggleTheme.Addhandler(Async Sub() Await toggleTheme())
+        btnOpenFolder.Addhandler(AddressOf OpenFolder)
     End Sub
 
     Private Async Sub WebView21_NavigationCompleted(sender As Object, e As CoreWebView2NavigationCompletedEventArgs) Handles WebView21.NavigationCompleted
