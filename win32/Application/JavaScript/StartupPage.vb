@@ -14,5 +14,25 @@ Namespace JavaScript
         Public Sub New(owner As Form)
             MyBase.New(owner)
         End Sub
+
+        Public Async Function openVennTool() As Task(Of Boolean)
+            Call RibbonMenu.OpenJVennTool()
+            Return Await Task.FromResult(True)
+        End Function
+
+        Public Async Function openSettings() As Task(Of Boolean)
+            Call RibbonMenu.OpenSettings()
+            Return Await Task.FromResult(True)
+        End Function
+
+        Public Async Function openFolder() As Task(Of Boolean)
+            Call RibbonMenu.OpenFolder()
+            Return Await Task.FromResult(True)
+        End Function
+
+        Public Async Function openResearch() As Task(Of Boolean)
+            Call RibbonMenu.OpenResearch()
+            Return Await Task.FromResult(True)
+        End Function
     End Class
 End Namespace

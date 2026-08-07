@@ -1,5 +1,9 @@
-﻿Namespace JavaScript
+﻿Imports System.Runtime.InteropServices
 
+Namespace JavaScript
+
+    <ClassInterface(ClassInterfaceType.AutoDual)>
+    <ComVisible(True)>
     Public Class SettingsPage : Inherits BasePage
 
         Public Sub New(owner As Form)

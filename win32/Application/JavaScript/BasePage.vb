@@ -4,6 +4,7 @@ Imports System.Text.Json
 
 Namespace JavaScript
 
+    <ClassInterface(ClassInterfaceType.AutoDual)>
     <ComVisible(True)>
     Public Class BasePage
 
