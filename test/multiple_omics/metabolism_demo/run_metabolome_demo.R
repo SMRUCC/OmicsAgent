@@ -33,7 +33,8 @@ source_modules(c(
   "differential/f_test.R",
   "visualization/volcano_plot.R",
   "visualization/heatmap_plot.R",
-  "enrichment/fisher_enrich.R"
+  "enrichment/fisher_enrich.R",
+  "utils/kegg_pathway.R"
 ))
 
 # ==============================================================================
@@ -327,17 +328,82 @@ for (cc in c("super_class", "class", "family")) {
   enrich_results[[cc]] <- er
 }
 
-# 额外用 kegg 列跑一次，覆盖"类别几乎全空"的边界情况
-section("8.x 富集 category_col = kegg (边界测试)", 2)
-er_kegg <- run_fisher_enrich(
-  significant_features = sig_feats, all_features = all_feats,
-  feature_info = feature_info, feature_id_col = FEATURE_ID_COL,
-  category_col = "kegg", min_size = 2
+# ------------------------------------------------------------------------------
+# SECTION 8.4  KEGG 通路富集
+# ------------------------------------------------------------------------------
+# 科学性修正：KEGG 富集应针对"通路（pathway）"而非 KEGG 化合物 ID。
+# 之前直接用 feature_info$kegg（化合物 ID）作为富集类别，每个类别通常只含
+# 一个化合物，检验退化、无意义。现改为：先按 kegg id 将化合物映射为通路，
+# 再对每条通路做 Fisher 过表达检验。
+section("8.4 KEGG 通路富集 (map compound -> pathway)", 2)
+
+# (1) 构建 feature 名 -> KEGG 化合物 ID 的命名向量（剔除 kegg 为空者）
+kegg_valid <- !is.na(feature_info[[ "kegg" ]]) & feature_info[[ "kegg" ]] != ""
+feat_to_kegg <- setNames(
+  as.character(feature_info[[ "kegg" ]][kegg_valid]),
+  feature_info[[ FEATURE_ID_COL ]][kegg_valid]
 )
-cat(sprintf("    KEGG 富集类别数: %d\n", nrow(er_kegg)))
-export_table(er_kegg, RESULT_DIR, "07_enrichment_kegg",
-             use_rownames = TRUE, id_col_name = "category")
-p_kegg <- plot_enrichment(er_kegg, top_n = 20)
+
+# 背景集 = 全部带 KEGG 注释的化合物（用 KEGG 化合物 ID 标识）
+all_compounds <- unique(feat_to_kegg)
+# 兴趣集 = 差异代谢物中有 KEGG 注释者（映射为 KEGG 化合物 ID）
+sig_compounds <- unique(feat_to_kegg[intersect(sig_feats, names(feat_to_kegg))])
+
+cat(sprintf("    背景化合物数 (带 KEGG 注释): %d\n", length(all_compounds)))
+cat(sprintf("    兴趣化合物数 (差异+带 KEGG 注释): %d\n", length(sig_compounds)))
+
+# (2) 化合物 -> 通路 映射（直接命中本地缓存，避免重复联网）
+kegg_mapping <- map_kegg_compound_to_pathway(
+  kegg_ids = all_compounds, cache_dir = KEGG_CACHE
+)
+cat(sprintf("    化合物-通路映射记录数: %d, 覆盖通路数: %d\n",
+            nrow(kegg_mapping), length(unique(kegg_mapping$pathway_id))))
+export_table(kegg_mapping, RESULT_DIR, "07_kegg_compound_pathway_mapping",
+             use_rownames = FALSE)
+
+# 空映射保护：仍导出空表与占位图，不中断流程
+er_kegg <- data.frame()
+if (nrow(kegg_mapping) > 0) {
+  # (3) 以通路为单位做 Fisher 过表达富集（min_size=2 滤除单化合物通路）
+  er_kegg <- run_kegg_pathway_enrich(
+    significant_compounds = sig_compounds,
+    all_compounds = all_compounds,
+    kegg_mapping = kegg_mapping,
+    p_adj_method = "BH",
+    min_size = 2
+  )
+} else {
+  warning("KEGG 映射为空，跳过通路富集。")
+}
+
+cat(sprintf("    KEGG 通路富集结果数: %d\n", nrow(er_kegg)))
+if (nrow(er_kegg) > 0) {
+  cat(sprintf("    p_adj < 0.05 的通路数: %d\n", sum(er_kegg$p_adj < 0.05)))
+  cat("    Top3:", paste(head(rownames(er_kegg), 3), collapse = ", "), "\n")
+}
+
+# 导出富集结果：行名替换为人类可读的通路名称，便于 CSV 与图形标签
+er_kegg_out <- er_kegg
+if (nrow(er_kegg_out) > 0) {
+  rownames(er_kegg_out) <- make.unique(as.character(er_kegg_out$pathway_name))
+}
+export_table(er_kegg_out, RESULT_DIR, "07_enrichment_kegg",
+             use_rownames = TRUE, id_col_name = "pathway_id")
+
+# (4) 绘图：纵轴用通路名称（截断超长名），仍复用 plot_enrichment
+p_kegg <- if (nrow(er_kegg_out) > 0) {
+  er_plot <- er_kegg_out
+  # 截断过长的通路名作为展示标签（仅影响图形坐标，不影响数据）
+  lbl <- ifelse(nchar(rownames(er_plot)) > 45,
+                paste0(substr(rownames(er_plot), 1, 42), "..."),
+                rownames(er_plot))
+  rownames(er_plot) <- lbl
+  plot_enrichment(er_plot, top_n = 20, p_threshold = 0.05) +
+    ggplot2::labs(title = "KEGG Pathway Enrichment", x = "KEGG Pathway")
+} else {
+  plot_enrichment(er_kegg_out, top_n = 20) +
+    ggplot2::labs(title = "KEGG Pathway Enrichment")
+}
 export_plot(p_kegg, FIGURE_DIR, "07_enrichment_kegg", width = 9, height = 7)
 
 # ==============================================================================

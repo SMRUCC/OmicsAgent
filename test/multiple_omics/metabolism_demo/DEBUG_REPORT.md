@@ -154,6 +154,45 @@ KEGG 正确返回空 → `all_links` 为空 → 函数走到"无结果"早退分
 
 ---
 
+### 2.8 `run_metabolome_demo.R` SECTION 8.4 —— KEGG 富集的类别被错用为化合物 ID
+
+**现象**：原 KEGG 富集段（`07_enrichment_kegg.csv`）以 `feature_info$kegg`
+列的取值作为 Fisher 检验的**类别**，而 `kegg` 列存的是 KEGG **化合物 ID**
+（如 `C06174`）。每个化合物 ID 在类别表中只出现一次，导致每个"类别"只含
+一个化合物，富集检验退化、无统计意义——这是方法论层面的科学性错误。
+
+**根因**：demo 直接调用 `run_fisher_enrich(category_col = "kegg")`，
+该函数对 `category_col` 做 `table()` 计数，隐含"一个特征恰属一个类别"的假设，
+结构上无法表达"一个化合物可归属多条通路"的一对多关系。
+项目库 `agent/rscript/utils/kegg_pathway.R` 早已提供纠正此错误的
+`map_kegg_compound_to_pathway()` + `run_kegg_pathway_enrich()`，但 demo 未使用。
+
+**修复**：删除错误段，新增 SECTION 8.4：
+1. 由 `feature_info` 构造 `feature 名 → kegg 化合物 ID` 命名向量（剔除空值）；
+2. 背景集 = 全部带 KEGG 注释的化合物（74 个），兴趣集 = 差异代谢物中带注释者（33 个）；
+3. `map_kegg_compound_to_pathway()` 把化合物按 kegg id 映射为通路（命中本地缓存，
+   889 条映射记录、覆盖 219 条通路，耗时 1.78 s 无联网）；
+4. `run_kegg_pathway_enrich(min_size = 2)` 对每条通路做单侧 Fisher 检验，
+   行标识为通路 ID / 名称，导出 `07_enrichment_kegg.csv` 与通路富集条形图；
+5. 同时导出 `07_kegg_compound_pathway_mapping.csv` 作为映射明细。
+
+**修复前后对比**：
+
+```
+                         修复前 (错误)            修复后 (正确)
+富集类别语义              KEGG 化合物 ID          KEGG 代谢通路
+07_enrichment_kegg 行数   81（每化合物一行）       135（每条通路一行）
+类别所含化合物数          均 = 1（退化）            bg_count 均 >= 2
+方法函数                  run_fisher_enrich         run_kegg_pathway_enrich
+一对多关系                不支持                    支持（一化合物→多通路）
+```
+
+> 注：背景化合物数（74）与映射后背景（57 个有通路注释）、兴趣化合物数（33 / 26）
+> 的差异，源于部分带注释化合物在 KEGG 中确认无通路归属（`kegg_no_pathway_ids.txt`
+> 负结果缓存），属数据本身限制，非缺陷。
+
+---
+
 ## 三、其余修复一览
 
 | # | 文件 / 函数 | 问题 | 修复 |
@@ -219,6 +258,10 @@ KEGG 正确返回空 → `all_links` 为空 → 函数走到"无结果"早退分
 > 说明：富集分析中各化学分类 `p_adj` 均未达 0.05。这与数据本身一致 ——
 > 差异代谢物（429/1000）在各化学类别中近似均匀分布，不存在某一类别的特异性富集，
 > 属于合理的阴性结果，非模块缺陷。
+>
+> KEGG 富集已修正为**通路层面**（见 2.8）：背景 74 个带 KEGG 注释化合物 → 映射后 57 个有
+> 通路注释，兴趣集 33 个差异+注释化合物 → 映射后 26 个；共 135 条通路进入富集，
+> `p_adj < 0.05` 的通路数与 Top 通路详见 `07_enrichment_kegg.csv`。
 
 ---
 
