@@ -31,9 +31,9 @@ Partial Class FormMain
         VisualStudioToolStripExtender1 = New Microsoft.VisualStudio.WinForms.Docking.VisualStudioToolStripExtender(components)
         StatusStrip1 = New StatusStrip()
         ToolStripStatusLabel1 = New ToolStripStatusLabel()
-        Ribbon1 = New Ribbon()
         ToolStripStatusLabel2 = New ToolStripStatusLabel()
         ToolStripStatusLabel3 = New ToolStripStatusLabel()
+        Ribbon1 = New Ribbon()
         StatusStrip1.SuspendLayout()
         SuspendLayout()
         ' 
@@ -64,6 +64,19 @@ Partial Class FormMain
         ToolStripStatusLabel1.Size = New Size(42, 17)
         ToolStripStatusLabel1.Text = "Ready!"
         ' 
+        ' ToolStripStatusLabel2
+        ' 
+        ToolStripStatusLabel2.Name = "ToolStripStatusLabel2"
+        ToolStripStatusLabel2.Size = New Size(1077, 17)
+        ToolStripStatusLabel2.Spring = True
+        ' 
+        ' ToolStripStatusLabel3
+        ' 
+        ToolStripStatusLabel3.IsLink = True
+        ToolStripStatusLabel3.Name = "ToolStripStatusLabel3"
+        ToolStripStatusLabel3.Size = New Size(114, 17)
+        ToolStripStatusLabel3.Text = "Unlicensed Software"
+        ' 
         ' Ribbon1
         ' 
         Ribbon1.Location = New Point(0, 0)
@@ -73,18 +86,6 @@ Partial Class FormMain
         Ribbon1.ShortcutTableResourceName = Nothing
         Ribbon1.Size = New Size(1279, 116)
         Ribbon1.TabIndex = 2
-        ' 
-        ' ToolStripStatusLabel2
-        ' 
-        ToolStripStatusLabel2.Name = "ToolStripStatusLabel2"
-        ToolStripStatusLabel2.Size = New Size(1077, 17)
-        ToolStripStatusLabel2.Spring = True
-        ' 
-        ' ToolStripStatusLabel3
-        ' 
-        ToolStripStatusLabel3.Name = "ToolStripStatusLabel3"
-        ToolStripStatusLabel3.Size = New Size(114, 17)
-        ToolStripStatusLabel3.Text = "Unlicensed Software"
         ' 
         ' FormMain
         ' 

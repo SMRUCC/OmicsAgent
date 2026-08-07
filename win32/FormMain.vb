@@ -121,4 +121,8 @@ Public Class FormMain : Implements AppHost
                 End If
             End Sub)
     End Sub
+
+    Private Sub ToolStripStatusLabel3_Click(sender As Object, e As EventArgs) Handles ToolStripStatusLabel3.Click
+        Call License.OpenLicenseDialog()
+    End Sub
 End Class
