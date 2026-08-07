@@ -172,7 +172,7 @@ plot_cmeans_profiles <- function(cmeans_result, sample_info,
   if (is.null(feat_ids)) feat_ids <- rownames(membership)
   if (is.null(feat_ids)) stop("Cannot determine feature ids from expr_matrix.")
 
-  # Map membership rows to expression rows by feature id
+  # 按特征 id 将成员行映射到表达行
   mb <- membership
   rownames(mb) <- rownames(membership)
   mem_idx <- match(feat_ids, rownames(mb))
@@ -264,7 +264,7 @@ plot_cmeans_profiles <- function(cmeans_result, sample_info,
     names(cluster_colors) <- cluster_names
   }
 
-  # Common membership scales and theme
+  # 通用的成员比例与主题
   common <- list(
     ggplot2::scale_linewidth(range = c(0.2, 0.9),
                              name = "Membership",
@@ -291,7 +291,7 @@ plot_cmeans_profiles <- function(cmeans_result, sample_info,
   )
 
   if (use_palette) {
-    # One colour per cluster
+    # 每个聚类一种颜色
     p <- ggplot2::ggplot(plot_data_long,
                          ggplot2::aes(x = group, y = value,
                                       group = feature_id,
@@ -311,7 +311,7 @@ plot_cmeans_profiles <- function(cmeans_result, sample_info,
                                                       alpha = 1
                                                     )))
   } else {
-    # Single colour for all curves (default)
+    # 所有曲线使用单一颜色（默认）
     p <- ggplot2::ggplot(plot_data_long,
                          ggplot2::aes(x = group, y = value,
                                       group = feature_id,

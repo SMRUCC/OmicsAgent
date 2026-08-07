@@ -95,8 +95,8 @@ wgcna_module_trait <- function(wgcna_result, traits, sample_info = NULL,
 
   # 若可用 module_colors，则计算特征-性状相关性
   if (!is.null(wgcna_result$module_colors)) {
-    # We need the original expression matrix - but it's not stored
-    # Instead, use module eigengenes as proxy
+    # 我们需要原始表达矩阵，但它并未被存储
+    # 因此改为以模块特征基因（eigengene）作为代理
     feature_trait_cor <- data.frame(
       module = colnames(MEs),
       cor_mat,

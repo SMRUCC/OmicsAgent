@@ -1,8 +1,9 @@
 # ==============================================================================
 # OmicsFlow: ANCOM-BC Differential Abundance Analysis
 # ==============================================================================
-# ANCOM-BC (Analysis of Composition of Microbiomes with Bias Correction)
-# 风格的差异丰度分析，适用于组成性数据
+# ANCOM-BC（带偏差校正的微生物组组成差异丰度分析，
+# Analysis of Composition of Microbiomes with Bias Correction）
+# 适用于组成性数据的差异丰度分析
 # 包含伪计数对数变换 + 组间比较 + 丰度偏差校正
 # ==============================================================================
 

@@ -104,7 +104,7 @@ load_feature_info <- function(file, id_col = "ID") {
   required_cols <- c(id_col, "name", "type", "kegg")
   missing_cols <- setdiff(required_cols, colnames(df))
   if (length(missing_cols) > 0) {
-    # Try case-insensitive matching
+    # 尝试大小写不敏感的匹配
     colnames(df) <- tolower(colnames(df))
     id_col <- tolower(id_col)
     required_cols <- c(id_col, "name", "type", "kegg")
@@ -115,7 +115,7 @@ load_feature_info <- function(file, id_col = "ID") {
     }
   }
 
-  # Normalize type column - handle aliases
+  # 规范化 type 列 - 处理别名
   type_aliases <- list(
     gene = c("gene"),
     rna = c("rna", "transcript"),
