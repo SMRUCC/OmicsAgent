@@ -135,6 +135,14 @@
 #define cmdButtonOpenKBFolder_LabelTitle_RESID 60086
 #define cmdButtonOpenKBFolder_SmallImages_192__RESID 60087
 #define cmdButtonOpenKBFolder_LargeImages_192__RESID 60088
-#define InternalCmd2_LabelTitle_RESID 60089
-#define InternalCmd6_LabelTitle_RESID 60090
-#define InternalCmd8_LabelTitle_RESID 60091
+#define cmdButtonRefreshProgress 44 
+#define cmdButtonRefreshProgress_LabelTitle_RESID 60089
+#define cmdButtonRefreshProgress_SmallImages_192__RESID 60090
+#define cmdButtonRefreshProgress_LargeImages_192__RESID 60091
+#define cmdButtonUpdateKB 45 
+#define cmdButtonUpdateKB_LabelTitle_RESID 60092
+#define cmdButtonUpdateKB_SmallImages_192__RESID 60093
+#define cmdButtonUpdateKB_LargeImages_192__RESID 60094
+#define InternalCmd2_LabelTitle_RESID 60095
+#define InternalCmd6_LabelTitle_RESID 60096
+#define InternalCmd8_LabelTitle_RESID 60097

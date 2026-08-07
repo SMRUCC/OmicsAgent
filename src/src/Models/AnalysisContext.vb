@@ -128,7 +128,7 @@ Public Class AnalysisContext
     ' 分析结果
     ' ------------------------------------------------------------------
     ''' <summary>所有差异比较组别设计</summary>
-    Public Property Comparisons As New List(Of ComparisonGroup)()
+    Public Property Comparisons As Comparison()
 
     ''' <summary>各分析模块的阶段性总结文本文件路径列表（用于最终报告生成）</summary>
     Public Property ModuleConclusions As New List(Of String)()

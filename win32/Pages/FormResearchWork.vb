@@ -9,12 +9,14 @@ Public Class FormResearchWork
     Shared ReadOnly btnDataset As RibbonEventBinding
     Shared ReadOnly btnRun As RibbonEventBinding
     Shared ReadOnly btnBackground As RibbonEventBinding
+    Shared ReadOnly btnRefresh As RibbonEventBinding
 
     Shared Sub New()
         btnOpenKb = New RibbonEventBinding(Ribbon.ButtonOpenKb)
         btnDataset = New RibbonEventBinding(Ribbon.ButtonDataset)
         btnBackground = New RibbonEventBinding(Ribbon.ButtonEditResearchTopic)
 
+        btnRefresh = New RibbonEventBinding(Ribbon.ButtonRefreshProgress)
         btnRun = New RibbonEventBinding(Ribbon.ButtonStart)
     End Sub
 
@@ -45,6 +47,15 @@ Public Class FormResearchWork
         Call CommonRuntime.ShowDocument(New FormTextEdit With {.TextFile = $"{Workspace}/research.txt"})
     End Sub
 
+    Private Sub RefreshProgress()
+        Dim dirs = $"{Workspace}/analysis".ListDirectory.Select(Function(d) d.BaseName).ToArray
+        Call dirs.SaveTo($"{Workspace}/tmp/modules.txt")
+
+        If webview_inited Then
+            Call WebView21.CoreWebView2.Reload()
+        End If
+    End Sub
+
     Private Sub RunAgentTask()
         If agentContainer Is Nothing Then
             If MessageBox.Show("Start to run a long time omics analysis task by agent?", "Run Task", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk) = DialogResult.OK Then
@@ -66,6 +77,7 @@ Public Class FormResearchWork
         Call btnDataset.Addhandler(AddressOf OpenDatasetPage)
         Call btnRun.Addhandler(AddressOf RunAgentTask)
         Call btnBackground.Addhandler(AddressOf OpenBackgroundEdit)
+        Call btnRefresh.Addhandler(AddressOf RefreshProgress)
 
         Call RibbonMenu.OpenFolder(Workspace)
     End Sub
@@ -76,10 +88,10 @@ Public Class FormResearchWork
         http = New HttpServices(Workspace)
         http.StartHttp()
 
-        Dim dirs = $"{Workspace}/analysis".ListDirectory.Select(Function(d) d.BaseName).ToArray
-
-        Call dirs.SaveTo($"{Workspace}/tmp/modules.txt")
+        Call RefreshProgress()
     End Sub
+
+    Dim webview_inited As Boolean = False
 
     Private Sub WebView21_CoreWebView2InitializationCompleted(sender As Object, e As CoreWebView2InitializationCompletedEventArgs) Handles WebView21.CoreWebView2InitializationCompleted
         ' Call WebView21.CoreWebView2.AddHostObjectToScript(BasePage.HostObject, New StartupPage(Me))
@@ -87,6 +99,7 @@ Public Class FormResearchWork
     End Sub
 
     Private Async Sub WebView21_NavigationCompleted(sender As Object, e As CoreWebView2NavigationCompletedEventArgs) Handles WebView21.NavigationCompleted
+        webview_inited = True
         Await WebView21.ExecuteScriptAsync($"run('http://127.0.0.1:{port}/');")
     End Sub
 End Class

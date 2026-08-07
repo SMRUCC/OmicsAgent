@@ -14,8 +14,10 @@ Imports OmicsAgent.AppRuntime
 ''' </summary>
 Public Class ComparisonDesignModule : Inherits AnalysisModuleBase
 
-    Public Overrides ReadOnly Property ModuleName As String = "Comparison Group Design"
+    Public Overrides ReadOnly Property ModuleName As String = Name
     Public Overrides ReadOnly Property ModuleIndex As Integer = 3
+
+    Public Const Name As String = "Comparison Group Design"
 
     Public Overrides ReadOnly Property CsvFileNamePrefix As String
         Get

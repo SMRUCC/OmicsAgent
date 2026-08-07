@@ -32,11 +32,13 @@ Namespace RibbonLib.Controls
             Public Const cmdButtonEditResearchTopic As UInteger = 42
             Public Const cmdGroupResearchAgentWork As UInteger = 27
             Public Const cmdButtonStart As UInteger = 28
+            Public Const cmdButtonRefreshProgress As UInteger = 44
             Public Const cmdMenuKBLib As UInteger = 12
             Public Const cmdTabKBLib As UInteger = 11
             Public Const cmdGroupKBLib As UInteger = 13
             Public Const cmdButtonOpenKBFolder As UInteger = 43
             Public Const cmdBtnOpenKBLib As UInteger = 10
+            Public Const cmdButtonUpdateKB As UInteger = 45
             Public Const cmdGroupTools As UInteger = 14
             Public Const cmdButtonToggleTheme As UInteger = 15
             Public Const cmdMenuDataSet As UInteger = 29
@@ -168,6 +170,12 @@ Namespace RibbonLib.Controls
                 Return _ButtonStart
             End Get
         End Property
+        Private _ButtonRefreshProgress As RibbonButton
+        Public ReadOnly Property ButtonRefreshProgress As RibbonButton
+            Get
+                Return _ButtonRefreshProgress
+            End Get
+        End Property
         Private _MenuKBLib As RibbonTabGroup
         Public ReadOnly Property MenuKBLib As RibbonTabGroup
             Get
@@ -196,6 +204,12 @@ Namespace RibbonLib.Controls
         Public ReadOnly Property BtnOpenKBLib As RibbonButton
             Get
                 Return _BtnOpenKBLib
+            End Get
+        End Property
+        Private _ButtonUpdateKB As RibbonButton
+        Public ReadOnly Property ButtonUpdateKB As RibbonButton
+            Get
+                Return _ButtonUpdateKB
             End Get
         End Property
         Private _GroupTools As RibbonGroup
@@ -335,11 +349,13 @@ Namespace RibbonLib.Controls
             _ButtonEditResearchTopic = New RibbonButton(_ribbon, Cmd.cmdButtonEditResearchTopic)
             _GroupResearchAgentWork = New RibbonGroup(_ribbon, Cmd.cmdGroupResearchAgentWork)
             _ButtonStart = New RibbonButton(_ribbon, Cmd.cmdButtonStart)
+            _ButtonRefreshProgress = New RibbonButton(_ribbon, Cmd.cmdButtonRefreshProgress)
             _MenuKBLib = New RibbonTabGroup(_ribbon, Cmd.cmdMenuKBLib)
             _TabKBLib = New RibbonTab(_ribbon, Cmd.cmdTabKBLib)
             _GroupKBLib = New RibbonGroup(_ribbon, Cmd.cmdGroupKBLib)
             _ButtonOpenKBFolder = New RibbonButton(_ribbon, Cmd.cmdButtonOpenKBFolder)
             _BtnOpenKBLib = New RibbonButton(_ribbon, Cmd.cmdBtnOpenKBLib)
+            _ButtonUpdateKB = New RibbonButton(_ribbon, Cmd.cmdButtonUpdateKB)
             _GroupTools = New RibbonGroup(_ribbon, Cmd.cmdGroupTools)
             _ButtonToggleTheme = New RibbonButton(_ribbon, Cmd.cmdButtonToggleTheme)
             _MenuDataSet = New RibbonTabGroup(_ribbon, Cmd.cmdMenuDataSet)

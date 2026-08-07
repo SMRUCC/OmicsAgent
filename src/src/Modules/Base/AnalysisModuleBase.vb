@@ -140,7 +140,8 @@ Public MustInherit Class AnalysisModuleBase
             JsonContract.GetJson(plan).SaveTo($"{Workspace}/plan.json")
         End Using
 
-        If ModuleName = "Comparison Group Design" Then
+        If ModuleName = ComparisonDesignModule.Name Then
+            _context.Comparisons = plan.comparisons
             JsonContract.GetJson(plan.comparisons).SaveTo($"{_context.AnalysisDir}/design.json")
         End If
 

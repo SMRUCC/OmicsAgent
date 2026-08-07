@@ -204,6 +204,22 @@
         <Image MinDPI="192">Icons/icons8-file-explorer-new-96.png</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdButtonRefreshProgress" Id="44" LabelTitle="Refresh Progress">
+      <Command.SmallImages>
+        <Image MinDPI="192">Icons/icons8-refresh-96.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Icons/icons8-refresh-96.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdButtonUpdateKB" Id="45" LabelTitle="Update KB Library">
+      <Command.SmallImages>
+        <Image MinDPI="192">Icons/icons8-refresh-96.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Icons/icons8-refresh-96.png</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <Ribbon>
@@ -240,16 +256,18 @@
               <Button CommandName="cmdButtonDataset" />
               <Button CommandName="cmdButtonEditResearchTopic" />
             </Group>
-            <Group CommandName="cmdGroupResearchAgentWork" SizeDefinition="OneButton">
+            <Group CommandName="cmdGroupResearchAgentWork" SizeDefinition="TwoButtons">
               <Button CommandName="cmdButtonStart" />
+              <Button CommandName="cmdButtonRefreshProgress" />
             </Group>
           </Tab>
         </TabGroup>
         <TabGroup CommandName="cmdMenuKBLib">
           <Tab CommandName="cmdTabKBLib">
-            <Group CommandName="cmdGroupKBLib" SizeDefinition="TwoButtons">
+            <Group CommandName="cmdGroupKBLib" SizeDefinition="ThreeButtons">
               <Button CommandName="cmdButtonOpenKBFolder" />
               <Button CommandName="cmdBtnOpenKBLib" />
+              <Button CommandName="cmdButtonUpdateKB" />
             </Group>
             <Group CommandName="cmdGroupTools" SizeDefinition="OneButton">
               <Button CommandName="cmdButtonToggleTheme" />

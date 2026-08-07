@@ -35,11 +35,13 @@ namespace RibbonLib.Controls
             public const uint cmdButtonEditResearchTopic = 42;
             public const uint cmdGroupResearchAgentWork = 27;
             public const uint cmdButtonStart = 28;
+            public const uint cmdButtonRefreshProgress = 44;
             public const uint cmdMenuKBLib = 12;
             public const uint cmdTabKBLib = 11;
             public const uint cmdGroupKBLib = 13;
             public const uint cmdButtonOpenKBFolder = 43;
             public const uint cmdBtnOpenKBLib = 10;
+            public const uint cmdButtonUpdateKB = 45;
             public const uint cmdGroupTools = 14;
             public const uint cmdButtonToggleTheme = 15;
             public const uint cmdMenuDataSet = 29;
@@ -81,11 +83,13 @@ namespace RibbonLib.Controls
         public RibbonButton ButtonEditResearchTopic { get; private set; }
         public RibbonGroup GroupResearchAgentWork { get; private set; }
         public RibbonButton ButtonStart { get; private set; }
+        public RibbonButton ButtonRefreshProgress { get; private set; }
         public RibbonTabGroup MenuKBLib { get; private set; }
         public RibbonTab TabKBLib { get; private set; }
         public RibbonGroup GroupKBLib { get; private set; }
         public RibbonButton ButtonOpenKBFolder { get; private set; }
         public RibbonButton BtnOpenKBLib { get; private set; }
+        public RibbonButton ButtonUpdateKB { get; private set; }
         public RibbonGroup GroupTools { get; private set; }
         public RibbonButton ButtonToggleTheme { get; private set; }
         public RibbonTabGroup MenuDataSet { get; private set; }
@@ -128,11 +132,13 @@ namespace RibbonLib.Controls
             ButtonEditResearchTopic = new RibbonButton(ribbon, Cmd.cmdButtonEditResearchTopic);
             GroupResearchAgentWork = new RibbonGroup(ribbon, Cmd.cmdGroupResearchAgentWork);
             ButtonStart = new RibbonButton(ribbon, Cmd.cmdButtonStart);
+            ButtonRefreshProgress = new RibbonButton(ribbon, Cmd.cmdButtonRefreshProgress);
             MenuKBLib = new RibbonTabGroup(ribbon, Cmd.cmdMenuKBLib);
             TabKBLib = new RibbonTab(ribbon, Cmd.cmdTabKBLib);
             GroupKBLib = new RibbonGroup(ribbon, Cmd.cmdGroupKBLib);
             ButtonOpenKBFolder = new RibbonButton(ribbon, Cmd.cmdButtonOpenKBFolder);
             BtnOpenKBLib = new RibbonButton(ribbon, Cmd.cmdBtnOpenKBLib);
+            ButtonUpdateKB = new RibbonButton(ribbon, Cmd.cmdButtonUpdateKB);
             GroupTools = new RibbonGroup(ribbon, Cmd.cmdGroupTools);
             ButtonToggleTheme = new RibbonButton(ribbon, Cmd.cmdButtonToggleTheme);
             MenuDataSet = new RibbonTabGroup(ribbon, Cmd.cmdMenuDataSet);
