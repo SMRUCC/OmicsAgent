@@ -1,32 +1,30 @@
 # ==============================================================================
-# OmicsFlow: Bayesian Network with bnlearn
+# OmicsFlow: 基于 bnlearn 的贝叶斯网络
 # ==============================================================================
-# Time-series regulatory network construction
+# 时间序列调控网络构建
 # ==============================================================================
 
-#' Build Bayesian network with bnlearn
+#' 使用 bnlearn 构建贝叶斯网络
 #'
-#' @description Constructs a Bayesian network model from time-series or
-#'   multi-condition omics data to infer regulatory relationships between features.
+#' @description 从时间序列或多条件组学数据构建贝叶斯网络模型，以推断特征之间的
+#'   调控关系。
 #'
-#' @param expr_matrix A numeric matrix (features x samples). For time series,
-#'   columns should be ordered by time.
-#' @param time_points Optional numeric vector of time points. If NULL, uses
-#'   sample order. Default: NULL.
-#' @param feature_info Optional feature annotation for node labels.
-#' @param name_col Column in feature_info for node names. Default: "name".
-#' @param algorithm Learning algorithm: "hc" (hill-climbing), "tabu", "gs"
-#'   (grow-shrink). Default: "hc".
-#' @param score Score function for structure learning. Default: "bic".
-#' @param max_nodes Maximum nodes to include (for performance). Default: 50.
-#' @param seed Random seed. Default: 42.
+#' @param expr_matrix 数值矩阵（特征 x 样本）。对于时间序列，列应按时间顺序排列。
+#' @param time_points 可选的时间点数值向量。若为 NULL，则使用样本顺序。默认：NULL。
+#' @param feature_info 可选的特征注释数据框，用于节点标签。
+#' @param name_col feature_info 中用于节点名称的列。默认："name"。
+#' @param algorithm 学习算法："hc"（爬山法）、"tabu"、"gs"
+#'   （grow-shrink 生长-收缩）。默认："hc"。
+#' @param score 结构学习的评分函数。默认："bic"。
+#' @param max_nodes 包含的最大节点数（出于性能考虑）。默认：50。
+#' @param seed 随机种子。默认：42。
 #'
-#' @return A list with:
+#' @return 一个列表，包含：
 #'   \itemize{
-#'     \item \code{network}: bnlearn network object.
-#'     \item \code{arcs}: Data.frame of directed edges.
-#'     \item \code{nodes}: Character vector of node names.
-#'     \item \code{adjacency}: Adjacency matrix.
+#'     \item \code{network}：bnlearn 网络对象。
+#'     \item \code{arcs}：有向边数据框。
+#'     \item \code{nodes}：节点名称的字符向量。
+#'     \item \code{adjacency}：邻接矩阵。
 #'   }
 #'
 #' @examples
