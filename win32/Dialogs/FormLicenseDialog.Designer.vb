@@ -84,7 +84,7 @@ Partial Class FormLicenseDialog
         RichTextBox1.ReadOnly = True
         RichTextBox1.Size = New Size(514, 426)
         RichTextBox1.TabIndex = 4
-        RichTextBox1.Text = ""
+        RichTextBox1.Text = resources.GetString("RichTextBox1.Text")
         ' 
         ' FormLicenseDialog
         ' 
