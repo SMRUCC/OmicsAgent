@@ -221,21 +221,6 @@ run_plspm <- function(expr_matrix, feature_info, latent_def,
 }
 
 
-#' 绘制 PLS-PM 路径图
-#'
-#' @description 创建展示潜变量及其相互关系的路径图。
-#'
-#' @param plspm_result 来自 \code{run_plspm()} 的结果。
-#' @param p_threshold 显著性 p 值阈值。默认：0.05。
-#'
-#' @return 一个 ggplot 对象。
-#'
-#' @examples
-#' \dontrun{
-#' result <- run_plspm(expr_matrix, feature_info, latent_def)
-#' p <- plot_plspm_network(result)
-#' print(p)
-#' }
 #' 根据Feature注释构建潜变量定义
 #'
 #' @description 通过按 KEGG 通路归属（经由 compound->pathway 映射）或
@@ -341,6 +326,15 @@ build_latent_def_from_annotation <- function(expr_matrix, feature_info,
 }
 
 
+#' 绘制 PLS-PM 路径图（入口）
+#'
+#' @description 创建展示潜变量及其相互关系的路径图，
+#'   仅绘制路径系数 p < p_threshold 的显著路径。
+#'
+#' @param plspm_result 来自 \code{run_plspm()} 的结果。
+#' @param p_threshold 显著性 p 值阈值。默认：0.05。
+#'
+#' @return 一个 ggplot 对象。
 #'
 #' @export
 plot_plspm_network <- function(plspm_result, p_threshold = 0.05) {

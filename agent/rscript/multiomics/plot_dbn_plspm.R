@@ -427,6 +427,8 @@ plot_dbn_multiomics <- function(dbn_result, title = NULL, layer_order = NULL,
 
 #' 绘制被扰动节点的调控重要性排序
 #'
+#' @description 绘制虚拟扰动调控重要性排名图。
+#'
 #' @param importance_df \code{score_regulatory_importance()} 的输出，或
 #'   \code{run_perturbation_panel()} 堆叠后的 \code{importance} 表。
 #' @param top_n 每种模式显示的节点数。默认：20。
@@ -849,6 +851,8 @@ plot_plspm_hierarchy <- function(plspm_result, layer_order = NULL,
 
 
 #' 各潜变量解释方差的柱状图
+#'
+#' @description 绘制 PLS-PM 路径分析的 R2 解释率条形图。
 #'
 #' @param plspm_result \code{run_multiomics_plspm()} 的输出。
 #' @param title 图标题。

@@ -6,6 +6,11 @@
 
 #' 将多个 CSV 文件编译为一个带样式的 XLSX 工作簿
 #'
+#' @description 读取多个 CSV 结果表格，根据 JSON 配置文件将每个 CSV
+#'   写入 XLSX 工作簿的独立工作表，并添加合并注释行、表头样式、
+#'   ID 列样式、列宽设置和冻结窗格等格式化处理，生成可直接用于
+#'   期刊投稿附录的结构化 Excel 报告。
+#'
 #' @param csv_paths   CSV 文件的绝对路径字符向量。
 #' @param output_xlsx 字符标量；输出 XLSX 的绝对路径。
 #' @param json_path   字符标量；table_descriptions.json 的路径，

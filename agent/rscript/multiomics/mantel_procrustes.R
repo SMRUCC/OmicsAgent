@@ -335,6 +335,8 @@ run_procrustes <- function(mat_x, mat_y,
 
 #' 对多个层对运行 Procrustes 分析
 #'
+#' @description 对多组学容器中所有组学层两两执行 Procrustes 分析。
+#'
 #' @param mo 一个 MultiOmicsData 对象。
 #' @param layer_pairs 长度为 2 的字符向量组成的列表，用于指定层。
 #' @param dist_method 距离方法。默认："euclidean"。

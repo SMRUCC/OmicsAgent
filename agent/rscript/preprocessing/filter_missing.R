@@ -22,6 +22,7 @@
 #'   \code{"overall"}。默认："group"。
 #' @param group_col sample_info 中用于分组的列名。默认："sample_info"。
 #'
+#' @param exclude_groups 字符向量，需排除的分组名（这些组的样本不参与缺失率统计）。默认：NULL。
 #' @return 一个列表，包含：
 #'   \itemize{
 #'     \item \code{filtered_matrix}：过滤后的表达矩阵。

@@ -101,6 +101,17 @@ exclude_names <- c(
   "install_packages.R"
 )
 
+#' 判断脚本是否应被排除加载
+#'
+#' @description 判断给定文件路径是否属于需排除的引导/安装脚本
+#'   （\code{source_all_scripts.R} 自身和 \code{install_packages.R}），
+#'   以避免递归 source 或意外触发联网安装。
+#'
+#' @param rel_path 字符，相对脚本目录的文件路径。
+#'
+#' @return 逻辑值，\code{TRUE} 表示应排除。
+#'
+#' @keywords internal
 to_exclude <- function(rel_path) {
   base <- basename(rel_path)
   tolower(base) %in% tolower(exclude_names)

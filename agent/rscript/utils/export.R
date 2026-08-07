@@ -93,6 +93,25 @@
 }
 
 
+#' 将 ggplot 对象导出为 PDF 和 PNG
+#'
+#' @description 将 ggplot 对象同时保存为出版质量的 PDF 和 PNG 文件。
+#'   PDF 使用 cairo_pdf 设备内嵌字体，PNG 使用高 DPI 光栅化。
+#'
+#' @param plot ggplot 对象。
+#' @param output_dir 输出目录。默认：当前目录。
+#' @param filename 基础文件名（不含扩展名）。默认："plot"。
+#' @param width 宽度（英寸）。默认：8。
+#' @param height 高度（英寸）。默认：6。
+#' @param dpi PNG 分辨率。默认：300。
+#'
+#' @return 不可见的列表，含 \code{pdf} 和 \code{png} 文件路径。
+#'
+#' @examples
+#' \dontrun{
+#' export_plot(pca_plot, "results/figures", "pca_score")
+#' }
+#'
 #' @export
 export_plot <- function(plot, output_dir = ".", filename = "plot",
                         width = 8, height = 6, dpi = 300) {
@@ -116,9 +135,12 @@ export_plot <- function(plot, output_dir = ".", filename = "plot",
 
 #' 将热图（ComplexHeatmap 或 pheatmap）导出为 PDF 与 PNG
 #'
-#' @param heatmap 一个热图对象。
-#' @param output_dir 输出文件所在目录。
-#' @param filename 基础文件名。
+#' @description 将 ComplexHeatmap 或 pheatmap 对象同时保存为 PDF 和 PNG
+#'   文件。自动检测热图类型并选择对应的绘制方法。
+#'
+#' @param heatmap 一个热图对象（ComplexHeatmap::Heatmap 或 pheatmap）。
+#' @param output_dir 输出目录。默认：当前目录。
+#' @param filename 基础文件名。默认："heatmap"。
 #' @param width 宽度（英寸）。默认：10。
 #' @param height 高度（英寸）。默认：8。
 #'

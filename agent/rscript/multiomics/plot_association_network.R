@@ -18,6 +18,10 @@
 # -----------------------------------------------------------------------------
 #' 由显著关联边表构建 igraph 网络
 #'
+#' @description 从 \code{run_*_association} 返回的边表中筛选显著关联
+#'   （p < p_threshold 且 association != "not_significant"），
+#'   构建无向 igraph 图对象，并标注节点所属组学层和连接度。
+#'
 #' @param edges 来自 \code{run_*_association} 的数据框，含 source、target、score、
 #'   association（以及 spearman-rho、MIC）列。
 #' @param p_threshold 数值，保留校正后合并 p（\code{pvalue}）低于该阈值的边。
@@ -94,6 +98,8 @@ build_association_network <- function(edges, p_threshold = 0.05, max_edges = 500
 # 显著关联网络图（ggplot + layout_with_fr）
 # -----------------------------------------------------------------------------
 #' 绘制显著关联网络
+#'
+#' @description 绘制跨组学关联网络图（Spearman + MIC）。
 #'
 #' @param g 来自 \code{build_association_network} 的 \code{igraph} 图，或
 #'   一个边表（data.frame），将在运行时即时转换。
@@ -184,6 +190,8 @@ plot_association_network <- function(g, p_threshold = 0.05, label_top_n = 12,
 # -----------------------------------------------------------------------------
 #' 各组合关联数量的汇总柱状图
 #'
+#' @description 绘制关联分析摘要统计图（每特征关联数、最大 |r|）。
+#'
 #' @param results \code{run_*_association} 结果的有名列表（每个含 \code{edges}
 #'   与 \code{params}）。
 #' @param title 字符。
@@ -232,6 +240,8 @@ plot_association_summary <- function(results, title = "Association Summary") {
 # 枢纽节点表（按 degree 排序）
 # -----------------------------------------------------------------------------
 #' 按度数提取枢纽节点
+#'
+#' @description 识别关联网络中的 hub 特征（关联伙伴数最多的特征）。
 #'
 #' @param g 来自 \code{build_association_network} 的 \code{igraph} 图。
 #' @param top_n 整数，返回的 top 枢纽节点数量。

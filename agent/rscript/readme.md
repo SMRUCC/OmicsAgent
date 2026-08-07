@@ -18,11 +18,13 @@ rscript/
 ├── install_packages.R          # 安装全部依赖包（环境准备脚本，无 @export）
 ├── theme_palette.R             # 配色与主题辅助
 ├── differential/               # 差异分析：limma / ANOVA / F 检验
-├── enrichment/                 # 富集分析：Fisher / GSVA
+├── enrichment/                 # 富集分析：Fisher / GSVA / KEGG
 ├── machine_learning/           # 机器学习：LASSO / 线性模型 / 随机森林
+├── microbiome/                 # 微生物组：α/β多样性 / 分类组成 / LEfSe / 核心 / ANCOM-BC / SparCC
 ├── multivariate/               # 多变量：PCA / PLS-DA / OPLS-DA
 ├── network/                    # 网络：贝叶斯网络 / c-means / PLS-PM / WGCNA
 ├── preprocessing/              # 预处理：缺失值过滤 / 填补 / 归一化 / 标准化
+├── proteome/                   # 蛋白质组：GO富集 / 聚类 / PPI / 质控 / 功能谱
 ├── multiomics/                 # 多组学整合：关联网络 / 轨迹 / DBN / PLS-PM / 通路桥接等
 ├── qcqa/                       # 质控与质控图（QC/QA）
 ├── utils/                      # 工具：数据加载 / 导出 / 绘图辅助 / 预定义模块 / KEGG
@@ -211,6 +213,18 @@ source("source_all_scripts.R")
 
 - **返回值**：pheatmap/ggplot 对象。
 - **输出文件**：返回 R 对象，需经 `export_heatmap()` 保存。
+
+### `enrichment/kegg.R`
+
+| 函数 | 功能 | 关键参数（默认值） | 返回值 / 输出 |
+| --- | --- | --- | --- |
+| `run_kegg_pathway_enrich` | KEGG 通路 Fisher 富集（先映射化合物到通路再逐条检验） | `significant_compounds`（必填）；`all_compounds`（必填，背景）；`kegg_mapping`（必填）；`p_adj_method="BH"`；`min_size=2` | data.frame（行名=pathway_name） |
+| `run_kegg_pathway_gsva` | KEGG 通路活性评分（GSVA/ssgsea/zscore/mean） | `expr_matrix`（必填）；`kegg_mapping`（必填）；`feature_info=NULL`；`feature_id_col="name"`；`kegg_col="kegg"`；`method="mean"`；`min_size=2`；`max_size=500` | 列表，含 `gsva_matrix`（通路×样本矩阵）、`pathways`、`n_pathways` |
+| `run_kegg_pathway_wgcna` | 由 KEGG 通路构建预定义特征模块（供 `wgcna_module_trait` 使用） | `expr_matrix`（必填）；`kegg_mapping`（必填）；`feature_info`（必填）；`feature_id_col="name"`；`kegg_col="kegg"`；`min_size=2`；`max_size=500` | 列表，含 `MEs`、`colors`、`module_sizes`、`modules`、`n_modules`、`category_col="kegg_pathway"` |
+| `plot_kegg_enrichment` | KEGG 通路富集结果水平条形图（按 -log10(p) 排序，显著通路高亮） | `enrich_res`（必填，`run_kegg_pathway_enrich` 返回）；`top_n=20` | ggplot 对象。若输入为空则返回 NULL |
+| `plot_kegg_pathway_activity` | KEGG 通路活性热图（方差最大的前 N 条通路） | `gsva_res`（必填，`run_kegg_pathway_gsva` 返回）；`top_n=30`；`sample_info=NULL`；`group_col=NULL` | ggplot 对象。若输入为空则返回 NULL |
+
+- **输出文件**：均返回 R 对象，需经 `export_table()` 保存（GSVA 的 `gsva_matrix` 需先转 data.frame；enrich 的 data.frame 直接保存）。绘图函数需经 `export_plot()` 保存。
 
 ---
 
@@ -842,6 +856,466 @@ source("source_all_scripts.R")
 
 - **返回值**：ggplot/ComplexUpset 对象。
 - **输出文件**：返回 R 对象，需经 `export_plot()` 保存。
+
+---
+
+## `microbiome/`（微生物组分析）
+
+### `microbiome/microbiome_utils.R`
+
+| 函数 | 功能 | 关键参数（默认值） | 返回值 / 输出 |
+| --- | --- | --- | --- |
+| `calc_relative_abundance` | 将计数矩阵转为相对丰度（列归一化） | `expr_matrix`（必填）；`multiply_by=1` | 数值矩阵 |
+| `rarefy_matrix` | 稀疏化（rarefaction），使所有样本等深度 | `expr_matrix`（必填）；`depth=NULL`（最小深度）；`n_iter=10`；`seed=42` | 数值矩阵 |
+| `calc_goods_coverage` | 计算 Good's coverage 指数 | `expr_matrix`（必填） | 数值向量 |
+
+### `microbiome/alpha_diversity.R`
+
+**`calc_alpha_diversity`** — 计算α多样性指数（Shannon / Simpson / inv_Simpson / Chao1 / ACE / Pielou / Goods_coverage / observed_species）。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `expr_matrix` | 数值矩阵，features × samples（行=taxa，列=样本） | 必填 |
+| `method` | 字符，`"count"`（计数）/ `"abundance"`（相对丰度） | `"count"` |
+| `digits` | 数值，保留小数位 | `4` |
+
+- **返回值**：data.frame（样本 × 指数），含 sample、observed_species、shannon、simpson、inv_simpson、chao1、ace、pielou、goods_coverage 列。
+- **输出文件**：返回 R 对象，需经 `export_table()` 保存。
+
+**`test_alpha_diversity`** — α多样性指数组间差异统计检验（Kruskal-Wallis / ANOVA，2 组自动切 Wilcoxon）。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `alpha_df` | `calc_alpha_diversity` 返回的 data.frame | 必填 |
+| `sample_info` | data.frame | 必填 |
+| `group_col` | 字符 | `"sample_info"` |
+| `test` | 字符，`"kruskal"` / `"anova"` / `"wilcox"` | `"kruskal"` |
+| `p_adjust` | 字符 | `"BH"` |
+
+- **返回值**：data.frame（index、p_value、p_adj、test_method、comparison）。
+- **输出文件**：返回 R 对象，需经 `export_table()` 保存。
+
+**`plot_alpha_diversity`** — 分组箱线图（每个指数一个子图，可选叠加 p 值标注）。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `alpha_df` | `calc_alpha_diversity` 返回对象 | 必填 |
+| `sample_info` | data.frame | 必填 |
+| `group_col` | 字符 | `"sample_info"` |
+| `test_result` | `test_alpha_diversity` 返回对象（可选，用于标注 p 值） | `NULL` |
+| `show_pvalue` | 逻辑 | `TRUE` |
+
+- **返回值**：ggplot 对象列表（每个指数一个）。
+- **输出文件**：返回 R 对象，需经 `export_plot()` 保存。
+
+### `microbiome/beta_diversity.R`
+
+**`calc_beta_diversity`** — 计算样本间β多样性距离。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `expr_matrix` | 数值矩阵，features × samples | 必填 |
+| `method` | 字符，`"bray"` / `"jaccard"` / `"sorensen"` / `"euclidean"` | `"bray"` |
+| `method_type` | 字符，`"count"` / `"abundance"` | `"count"` |
+
+- **返回值**：dist 对象。
+- **输出文件**：返回 R 对象。
+
+**`run_permanova`** — PERMANOVA (vegan::adonis2) 组间差异检验。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `dist_mat` | dist 对象 | 必填 |
+| `sample_info` | data.frame | 必填 |
+| `group_col` | 字符 | `"sample_info"` |
+| `permutations` | 数值 | `999` |
+
+- **返回值**：列表，含 `result`（adonis2 对象）、`r2`、`p_value`、`df`。
+- **输出文件**：返回 R 对象。
+
+**`run_pcoa`** — 主坐标分析（PCoA）。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `dist_mat` | dist 对象 | 必填 |
+| `ncomp` | 数值 | `min(n_samples - 1, 10)` |
+
+- **返回值**：列表，含 `points`（样本坐标 data.frame）、`var_explained`、`eigenvalues`、`ncomp`。
+- **输出文件**：返回 R 对象。
+
+**`run_nmds`** — 非度量多维尺度分析（NMDS）。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `dist_mat` | dist 对象 | 必填 |
+| `ncomp` | 数值 | `2` |
+| `trymax` | 数值，最大迭代 | `50` |
+| `seed` | 数值 | `42` |
+
+- **返回值**：列表，含 `points`、`stress`、`ncomp`。
+- **输出文件**：返回 R 对象。
+
+**`plot_ordination`** — 排序散点图（PCoA / NMDS），支持分组着色、置信椭圆、质心标注。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `ord_result` | `run_pcoa` 或 `run_nmds` 返回对象 | 必填 |
+| `sample_info` | data.frame | 必填 |
+| `group_col` | 字符 | `"sample_info"` |
+| `title` | 字符 | `"PCoA"` |
+| `show_ellipses` | 逻辑 | `TRUE` |
+| `show_centroids` | 逻辑 | `TRUE` |
+
+- **返回值**：ggplot 对象。
+- **输出文件**：返回 R 对象，需经 `export_plot()` 保存。
+
+### `microbiome/taxa_composition.R`
+
+| 函数 | 功能 | 关键参数（默认值） | 返回值 / 输出 |
+| --- | --- | --- | --- |
+| `aggregate_by_taxonomy` | 按 phylum/class/order/family/genus 聚合丰度 | `expr_matrix`（必填）；`feature_info`（必填）；`level`（必填） | 列表，含 `matrix`、`level` |
+| `calc_relative_abundance_pseudo` | 计算相对丰度（加伪计数） | `expr_matrix`（必填）；`pseudo_count=1e-6` | 数值矩阵 |
+| `plot_taxa_barplot` | 分类组成堆叠柱状图（Top N + Other） | `expr_matrix`（必填）；`sample_info`（必填）；`feature_info`（必填）；`level="phylum"`；`top_n=10`；`group_col="sample_info"`；`title=NULL` | ggplot 对象 |
+| `plot_taxa_pie` | 分类组成饼图 | `expr_matrix`（必填）；`sample_info`（必填）；`feature_info`（必填）；`level="phylum"`；`top_n=8`；`group_col=NULL`；`title=NULL` | ggplot 对象 |
+
+- **输出文件**：绘图函数返回 R 对象，需经 `export_plot()` 保存。
+
+### `microbiome/biomarker_lefse.R`
+
+**`run_lefse_analysis`** — LEfSe 风格生物标志物发现（Kruskal-Wallis + LDA effect size）。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `expr_matrix` | 数值矩阵，features × samples | 必填 |
+| `sample_info` | data.frame | 必填 |
+| `group_col` | 字符 | `"sample_info"` |
+| `kw_p_threshold` | 数值，KW p 值阈值 | `0.05` |
+| `lda_threshold` | 数值，LDA score 阈值 | `2.0` |
+| `p_adjust` | 字符 | `"BH"` |
+
+- **返回值**：列表，含 `full_results`（所有 taxa 的 KW + LDA 结果）、`significant`（显著 biomarker）、`params`。
+- **输出文件**：返回 R 对象，需经 `export_table()` 保存。
+
+**`plot_lefse_lda`** — LDA score 条形图。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `lefse_result` | `run_lefse_analysis` 返回对象 | 必填 |
+| `top_n` | 数值 | `20` |
+
+- **返回值**：ggplot 对象。
+- **输出文件**：返回 R 对象，需经 `export_plot()` 保存。
+
+**`plot_lefse_cladogram`** — 简化版 cladogram（同心圆表示分类层级）。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `lefse_result` | `run_lefse_analysis` 返回对象 | 必填 |
+| `feature_info` | data.frame，含分类层级列 | 必填 |
+| `levels` | 字符向量，分类层级列名 | `c("phylum","class","order","family","genus")` |
+
+- **返回值**：ggplot 对象。
+- **输出文件**：返回 R 对象，需经 `export_plot()` 保存。
+
+### `microbiome/core_microbiome.R`
+
+**`identify_core_microbiome`** — 按频率和丰度阈值识别核心 taxa。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `expr_matrix` | 数值矩阵，features × samples | 必填 |
+| `sample_info` | data.frame | `NULL` |
+| `group_col` | 字符 | `"sample_info"` |
+| `prevalence_threshold` | 数值，出现频率阈值（0–1） | `0.8` |
+| `abundance_threshold` | 数值，平均相对丰度阈值 | `1e-4` |
+| `detection_limit` | 数值，检出限 | `0` |
+
+- **返回值**：列表，含 `core_features`（核心 taxa 名）、`prevalence`（频率 data.frame）、`core_by_group`（分组核心列表）、`shared_core`（各组共有）、`params`。
+- **输出文件**：返回 R 对象，需经 `export_table()` 保存。
+
+**`plot_prevalence`** — 频率-丰度散点图（高亮核心 taxa）。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `core_result` | `identify_core_microbiome` 返回对象 | 必填 |
+| `title` | 字符 | `"Prevalence vs Abundance"` |
+
+- **返回值**：ggplot 对象。
+- **输出文件**：返回 R 对象，需经 `export_plot()` 保存。
+
+**`plot_core_heatmap`** — 核心 taxa 相对丰度热图。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `expr_matrix` | 数值矩阵 | 必填 |
+| `core_result` | `identify_core_microbiome` 返回对象 | 必填 |
+| `sample_info` | data.frame | 必填 |
+| `group_col` | 字符 | `"sample_info"` |
+| `scale` | 逻辑 | `TRUE` |
+
+- **返回值**：pheatmap 对象。
+- **输出文件**：返回 R 对象，需经 `export_heatmap()` 保存。
+
+### `microbiome/diff_abundance_ancom.R`
+
+**`run_ancom_bc`** — ANCOM-BC 风格差异丰度分析（组成性数据校正）。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `expr_matrix` | 数值矩阵，features × samples | 必填 |
+| `sample_info` | data.frame | 必填 |
+| `group_col` | 字符 | `"sample_info"` |
+| `pseudo_count` | 数值，伪计数 | `1` |
+| `p_adjust` | 字符 | `"BH"` |
+| `p_threshold` | 数值 | `0.05` |
+| `w_threshold` | 数值，ANCOM W 统计量阈值 | `0.7` |
+
+- **返回值**：列表，含 `results`（data.frame：feature、logFC、p_value、p_adj、W、significant）、`significant`、`params`。
+- **输出文件**：返回 R 对象，需经 `export_table()` 保存 `results`。
+
+**`plot_ancom_volcano`** — 差异丰度火山图。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `ancom_result` | `run_ancom_bc` 返回对象 | 必填 |
+| `feature_info` | data.frame（可选，用于标签） | `NULL` |
+| `name_col` | 字符 | `"name"` |
+| `top_n` | 数值，标注数 | `15` |
+
+- **返回值**：ggplot 对象。
+- **输出文件**：返回 R 对象，需经 `export_plot()` 保存。
+
+### `microbiome/sparcc_network.R`
+
+**`run_sparcc`** — SparCC 组成性数据关联分析（迭代估计校正伪关联）。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `expr_matrix` | 数值矩阵，features × samples | 必填 |
+| `n_iterations` | 数值 | `20` |
+| `n_permutations` | 数值（0 则不做） | `100` |
+| `filter_threshold` | 数值，|correlation| 阈值 | `0.3` |
+| `p_adjust` | 字符 | `"BH"` |
+| `p_threshold` | 数值 | `0.05` |
+| `verbose` | 逻辑 | `TRUE` |
+
+- **返回值**：列表，含 `cor_matrix`（相关系数矩阵）、`p_matrix`（p 值矩阵）、`edges`（显著边表 data.frame：source、target、correlation、p_value、p_adj）、`params`。
+- **输出文件**：返回 R 对象，需经 `export_table()` 保存 `edges`。
+
+**`plot_sparcc_network`** — SparCC 关联网络可视化。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `sparcc_result` | `run_sparcc` 返回对象 | 必填 |
+| `cor_threshold` | 数值 | `0.3` |
+| `p_threshold` | 数值 | `0.05` |
+| `layout` | 字符，`"fr"` / `"circle"` / `"kk"` | `"fr"` |
+| `node_size_by_degree` | 逻辑 | `TRUE` |
+
+- **返回值**：ggraph / igraph 图对象。
+- **输出文件**：返回 R 对象，需经 `export_plot()` 保存。
+
+---
+
+## `proteome/`（蛋白质组分析）
+
+### `proteome/protein_qc.R`
+
+**`run_protein_qc`** — 蛋白质组全面质控（鉴定数 / 缺失率 / CV / 动态范围 / 样本相关性 / PCA 异常值）。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `expr_matrix` | 数值矩阵，features × samples（行=蛋白） | 必填 |
+| `sample_info` | data.frame | 必填 |
+| `group_col` | 字符 | `"sample_info"` |
+| `cv_threshold` | 数值，CV 阈值（%） | `20` |
+| `missing_rate_threshold` | 数值，缺失率阈值（%） | `30` |
+| `log_transform` | 逻辑，是否做 log2 变换 | `FALSE` |
+
+- **返回值**：列表，含 `sample_summary`（样本级 QC）、`feature_summary`（蛋白级 QC）、`cv_distribution`、`correlation_matrix`、`pca_result`（含 outlier 标记的 PCA 得分 data.frame）、`flagged_samples`、`flagged_features`。
+- **输出文件**：返回 R 对象，需经 `export_table()` 保存 `sample_summary` / `feature_summary`。
+
+**`plot_protein_qc`** — 5 面板质控图（鉴定数 / 缺失率 / CV / 相关性 / PCA）。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `qc_result` | `run_protein_qc` 返回对象 | 必填 |
+| `sample_info` | data.frame | 必填 |
+| `group_col` | 字符 | `"sample_info"` |
+
+- **返回值**：ggplot 对象列表（5 个面板）。
+- **输出文件**：返回 R 对象，需经 `export_plot()` 保存。
+
+### `proteome/go_enrichment.R`
+
+**`run_go_enrichment`** — GO 术语富集分析（BP / MF / CC 三本体，Fisher 精确检验）。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `significant_proteins` | 字符向量，显著蛋白 ID | 必填 |
+| `all_proteins` | 字符向量，背景蛋白 ID | 必填 |
+| `feature_info` | data.frame，含 GO 术语注释 | 必填 |
+| `id_col` | 字符，ID 列名 | `"ID"` |
+| `go_col` | 字符，GO 术语列名 | `"go_terms"` |
+| `ontologies` | 字符向量，`c("BP","MF","CC")` | `c("BP","MF","CC")` |
+| `p_adjust` | 字符 | `"BH"` |
+| `p_threshold` | 数值 | `0.05` |
+| `min_genes` | 数值，GO 术语中最少显著基因数 | `2` |
+
+- **返回值**：列表，含 `results`（合并 data.frame：ontology、go_id、go_term、count、expected、fold_enrichment、p_value、p_adj）、`by_ontology`（按本体分组的列表）、`params`。
+- **输出文件**：返回 R 对象，需经 `export_table()` 保存 `results`。
+
+**`plot_go_enrichment`** — GO 富集条形图（按 ontology 分面着色）。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `go_result` | `run_go_enrichment` 返回对象 | 必填 |
+| `top_n` | 数值 | `15` |
+| `ontologies` | 字符向量 | `c("BP","MF","CC")` |
+| `plot_type` | 字符，`"bar"` / `"bubble"` | `"bar"` |
+
+- **返回值**：ggplot 对象。
+- **输出文件**：返回 R 对象，需经 `export_plot()` 保存。
+
+### `proteome/protein_clustering.R`
+
+**`cluster_protein_profiles`** — 蛋白表达模式聚类（K-means / 层次 / 模糊 c-means）。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `expr_matrix` | 数值矩阵，features × samples | 必填 |
+| `sample_info` | data.frame | 必填 |
+| `group_col` | 字符，用于定义时间/条件顺序 | `"sample_info"` |
+| `method` | 字符，`"kmeans"` / `"hierarchical"` / `"fcm"` | `"kmeans"` |
+| `n_clusters` | 数值 | `6` |
+| `scale` | 逻辑 | `TRUE` |
+| `nstart` | 数值，K-means 随机起始 | `25` |
+
+- **返回值**：列表，含 `clusters`（聚类分配向量）、`centers`（聚类中心）、`profiles`（长表：protein、cluster、group、value）、`silhouette`（轮廓系数）、`params`。
+- **输出文件**：返回 R 对象，需经 `export_table()` 保存 `profiles`。
+
+**`plot_profile_clusters`** — 聚类表达谱面板图（每个聚类一个子图，含中心线和个体曲线）。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `cluster_result` | `cluster_protein_profiles` 返回对象 | 必填 |
+| `n_features` | 数值，每聚类展示的最大蛋白数 | `50` |
+| `show_center` | 逻辑 | `TRUE` |
+
+- **返回值**：ggplot 对象。
+- **输出文件**：返回 R 对象，需经 `export_plot()` 保存。
+
+**`plot_cluster_centers`** — 聚类中心比较图（所有中心在同一图）。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `cluster_result` | `cluster_protein_profiles` 返回对象 | 必填 |
+
+- **返回值**：ggplot 对象。
+- **输出文件**：返回 R 对象，需经 `export_plot()` 保存。
+
+### `proteome/protein_ppi.R`
+
+**`query_string_ppi`** — 通过 STRING API 查询 PPI 网络。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `protein_ids` | 字符向量，蛋白 ID（UniProt / 基因符号） | 必填 |
+| `species` | 数值，物种 NCBI taxon ID | `9606` |
+| `score_threshold` | 数值，STRING score 阈值（0–1000） | `400` |
+| `network_type` | 字符，`"functional"` / `"physical"` | `"functional"` |
+
+- **返回值**：列表，含 `edges`（source、target、score）、`nodes`（id、degree）、`string_ids`。
+- **输出文件**：返回 R 对象，需经 `export_table()` 保存 `edges`。
+
+**`build_local_ppi`** — 基于本地数据的 PPI 网络构建（STRING 不可用时的降级方案）。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `expr_matrix` | 数值矩阵 | 必填 |
+| `cor_method` | 字符 | `"spearman"` |
+| `cor_threshold` | 数值 | `0.7` |
+| `p_adjust` | 字符 | `"BH"` |
+| `p_threshold` | 数值 | `0.01` |
+
+- **返回值**：同 `query_string_ppi`。
+- **输出文件**：返回 R 对象。
+
+**`plot_ppi_network`** — PPI 网络可视化（ggraph / igraph）。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `ppi_result` | `query_string_ppi` 或 `build_local_ppi` 返回对象 | 必填 |
+| `layout` | 字符 | `"fr"` |
+| `node_size_by_degree` | 逻辑 | `TRUE` |
+
+- **返回值**：ggraph / igraph 图对象。
+- **输出文件**：返回 R 对象，需经 `export_plot()` 保存。
+
+**`calc_ppi_topology`** — PPI 网络拓扑分析（度 / 介度 / 紧密度 / 特征向量 / hub 蛋白）。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `ppi_result` | `query_string_ppi` 或 `build_local_ppi` 返回对象 | 必填 |
+
+- **返回值**：列表，含 `global_metrics`（n_nodes、n_edges、density、n_components、avg_path_length、avg_clustering）、`node_metrics`（protein、degree、betweenness、closeness、eigenvector）、`hub_proteins`（前 10% hub）。
+- **输出文件**：返回 R 对象，需经 `export_table()` 保存 `node_metrics`。
+
+### `proteome/functional_profile.R`
+
+**`calc_protein_functional_profile`** — 按功能类别聚合蛋白丰度（mean / median / sum / PC1）。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `expr_matrix` | 数值矩阵，features × samples | 必填 |
+| `feature_info` | data.frame，含功能类别列 | 必填 |
+| `category_col` | 字符（如 `"kegg_pathway"`、`"cog_category"`、`"super_class"`） | 必填 |
+| `agg_method` | 字符，`"mean"` / `"median"` / `"sum"` / `"pc1"` | `"mean"` |
+| `min_size` | 数值 | `3` |
+| `max_size` | 数值 | `100` |
+
+- **返回值**：列表，含 `profile_matrix`（功能类别 × 样本矩阵）、`category_info`（各类别蛋白数等）、`params`。
+- **输出文件**：返回 R 对象，需经 `export_table()` 保存 `profile_matrix`。
+
+**`plot_functional_heatmap`** — 功能类别丰度热图。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `func_result` | `calc_protein_functional_profile` 返回对象 | 必填 |
+| `sample_info` | data.frame | 必填 |
+| `group_col` | 字符 | `"sample_info"` |
+| `top_n` | 数值 | `30` |
+
+- **返回值**：pheatmap 对象。
+- **输出文件**：返回 R 对象，需经 `export_heatmap()` 保存。
+
+**`plot_functional_comparison`** — 分组间功能类别活性比较图。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `func_result` | `calc_protein_functional_profile` 返回对象 | 必填 |
+| `sample_info` | data.frame | 必填 |
+| `group_col` | 字符 | `"sample_info"` |
+| `control_group` | 字符 | `NULL` |
+| `top_n` | 数值 | `20` |
+
+- **返回值**：ggplot 对象。
+- **输出文件**：返回 R 对象，需经 `export_plot()` 保存。
+
+**`diff_functional_category`** — 功能类别差异分析（limma）。
+
+| 参数 | 类型 / 格式 | 默认值 |
+| --- | --- | --- |
+| `func_result` | `calc_protein_functional_profile` 返回对象 | 必填 |
+| `sample_info` | data.frame | 必填 |
+| `group_col` | 字符 | `"sample_info"` |
+| `control_group` | 字符 | `NULL` |
+| `p_adjust` | 字符 | `"BH"` |
+| `p_threshold` | 数值 | `0.05` |
+| `fc_threshold` | 数值 | `0.5` |
+
+- **返回值**：data.frame（feature_id、logFC、P.Value、adj.P.Val、significant 等，调用 `run_limma` 的返回）。
+- **输出文件**：返回 R 对象，需经 `export_table()` 保存。
 
 ---
 

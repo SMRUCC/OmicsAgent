@@ -16,6 +16,7 @@
 #' @param batch_size 每次 API 请求的化合物数量（最多 10）。默认：10。
 #' @param delay 两次 API 调用之间的间隔秒数。默认：0.3。
 #'
+#' @param cache_dir 字符，缓存目录路径。默认：tempdir()。
 #' @return 一个数据框，包含以下列：
 #'   \itemize{
 #'     \item \code{compound_id}：KEGG 化合物 ID。

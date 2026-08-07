@@ -497,6 +497,8 @@ run_multiomics_plspm <- function(mo, latent_def, definitions, path_matrix,
 
 #' 按层间转移汇总 PLS 路径模型结果
 #'
+#' @description 汇总 PLS-PM 路径分析的所有路径系数、效应和显著性。
+#'
 #' @param plspm_result \code{run_multiomics_plspm()} 的输出。
 #' @param p_threshold 显著性阈值。默认：0.05。
 #'

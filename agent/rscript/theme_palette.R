@@ -167,6 +167,23 @@ EFFECT_COLORS <- c(
 
 # ---- 10. 辅助函数：任意长度的 NPG 配色 -----------
 # 用于需要多种颜色的类别注释（02.R、analysis.R）
+
+#' 生成指定长度的 NPG 风格配色
+#'
+#' @description 返回 Nature Publishing Group（NPG）风格的分类配色向量。
+#'   当所需颜色数不超过内置调色板长度（10 色）时直接取前 N 色；
+#'   超过时通过 \code{colorRampPalette()} 插值扩展。
+#'
+#' @param n 数值，所需颜色数量。
+#'
+#' @return 长度为 n 的字符向量（十六进制颜色码）。
+#'
+#' @examples
+#' \dontrun{
+#' colors <- get_npg_palette(5)
+#' }
+#'
+#' @export
 get_npg_palette <- function(n) {
   if (n <= length(NPG_COLORS)) {
     return(NPG_COLORS[seq_len(n)])
@@ -177,6 +194,23 @@ get_npg_palette <- function(n) {
 
 # ---- 11. 统一 ggplot2 主题（Times New Roman）------------
 # 一个可直接用于发表的，应用于每张 ggplot 图形的主题。
+
+#' 发表级 ggplot2 主题（Times New Roman 字体）
+#'
+#' @description 创建基于 \code{theme_bw()} 的发表级 ggplot2 主题，
+#'   使用 Times New Roman 字体族，移除面板网格线，加粗标题居中。
+#'   在本文件加载时自动设为全局默认主题。
+#'
+#' @param base_size 数值，基础字号。默认：13。
+#'
+#' @return ggplot2 theme 对象。
+#'
+#' @examples
+#' \dontrun{
+#' ggplot(mtcars, aes(mpg, disp)) + geom_point() + theme_pub()
+#' }
+#'
+#' @export
 theme_pub <- function(base_size = 13) {
   theme_bw(base_size = base_size, base_family = TIMES_FONT) +
     theme(
@@ -209,6 +243,22 @@ ggplot2::theme_set(theme_pub())
 # ---- 12. 辅助函数：为 base-R 图形设置 Times New Roman -----
 # 在 pheatmap() / labeledHeatmap() / plot() 之前调用，
 # 使 base 图形中的文字也使用 Times New Roman。
+
+#' 为 base R 图形设置 Times New Roman 字体
+#'
+#' @description 调用 \code{par(family = ...)} 将后续 base R 图形
+#'   （如 \code{pheatmap()}、\code{plot()}）的默认字体族设置为
+#'   Times New Roman（或其回退衬线字体）。在绘制 base 图形前调用。
+#'
+#' @return 无返回值（仅设置 \code{par()} 参数）。
+#'
+#' @examples
+#' \dontrun{
+#' setup_base_font()
+#' plot(1:10, main = "Title")
+#' }
+#'
+#' @export
 setup_base_font <- function() {
   par(family = TIMES_FONT)
 }
@@ -216,6 +266,28 @@ setup_base_font <- function() {
 # ---- 13. 辅助函数：统一保存函数 ----------------------
 # 同时保存 PDF（通过 cairo_pdf 内嵌字体）与 PNG。
 # 所有基于 ggplot 的图形均使用本函数保存。
+
+#' 统一保存 ggplot 图形为 PDF 和 PNG
+#'
+#' @description 同时将 ggplot 对象保存为 PDF（通过 cairo_pdf 内嵌字体，
+#'   满足期刊投稿要求）和 PNG（高 DPI）两种格式。
+#'
+#' @param plot ggplot 对象。
+#' @param filename 字符，文件基本名（不含扩展名）。
+#' @param width 数值，宽度（英寸）。默认：8。
+#' @param height 数值，高度（英寸）。默认：6。
+#' @param dpi 数值，PNG 分辨率。默认：600。
+#' @param out_dir 字符，输出目录。默认：当前目录。
+#'
+#' @return 不可见的字符向量（PDF 和 PNG 文件路径）。
+#'
+#' @examples
+#' \dontrun{
+#' p <- ggplot(mtcars, aes(mpg, disp)) + geom_point()
+#' save_plot_unified(p, "scatter", out_dir = "results/figures")
+#' }
+#'
+#' @export
 save_plot_unified <- function(plot, filename, width = 8, height = 6,
                               dpi = 600, out_dir = ".") {
   pdf_path  <- file.path(out_dir, paste0(filename, ".pdf"))

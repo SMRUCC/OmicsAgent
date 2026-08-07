@@ -156,8 +156,12 @@ create_multiomics_data <- function(expr_list, sample_info,
 
 #' MultiOmicsData 对象的打印方法
 #'
+#' @description MultiOmicsData 对象的打印方法，显示各层维度和样本对齐情况。
+#'
 #' @param x 一个 MultiOmicsData 对象。
 #' @param ... 额外参数（忽略）。
+#'
+#' @return 不可见的 MultiOmicsData 对象（仅用于打印）。
 #'
 #' @export
 print.MultiOmicsData <- function(x, ...) {
@@ -183,6 +187,8 @@ print.MultiOmicsData <- function(x, ...) {
 
 #' 从 MultiOmicsData 对象中提取单个表达矩阵
 #'
+#' @description 从 MultiOmicsData 容器中提取指定组学层的表达矩阵。
+#'
 #' @param mo 一个 MultiOmicsData 对象。
 #' @param name 组学层的名称。
 #'
@@ -207,6 +213,8 @@ get_omics_matrix <- function(mo, name) {
 
 
 #' 从 MultiOmicsData 对象中提取全部表达矩阵
+#'
+#' @description 从 MultiOmicsData 容器中提取多个组学层的表达矩阵列表。
 #'
 #' @param mo 一个 MultiOmicsData 对象。
 #' @param layers 可选字符向量，限定返回的层。默认：NULL（所有层）。
@@ -236,6 +244,8 @@ get_omics_list <- function(mo, layers = NULL) {
 
 
 #' 提取某个组学层的Feature注释
+#'
+#' @description 从 MultiOmicsData 容器中提取指定组学层的特征注释表。
 #'
 #' @param mo 一个 MultiOmicsData 对象。
 #' @param name 组学层的名称。

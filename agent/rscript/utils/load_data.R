@@ -225,8 +225,13 @@ create_omics_data <- function(expr_matrix, sample_info, feature_info,
 
 #' Print method for OmicsData object
 #'
+#' @description OmicsData 对象的打印方法，显示特征数、样本数、
+#'   分组信息和匹配统计。
+#'
 #' @param x An OmicsData object.
 #' @param ... Additional arguments (ignored).
+#'
+#' @return 不可见的 OmicsData 对象（仅用于打印）。
 #'
 #' @export
 print.OmicsData <- function(x, ...) {

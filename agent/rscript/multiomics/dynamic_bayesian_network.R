@@ -762,6 +762,8 @@ run_dbn_multiomics <- function(mo, layers = NULL, per_layer_nodes = 8,
 
 #' 将动态贝叶斯网络汇总为单行数据框
 #'
+#' @description 汇总动态贝叶斯网络的拓扑结构和时序依赖关系。
+#'
 #' @param dbn_result \code{run_dbn_layer()} 或 \code{run_dbn_multiomics()} 的结果。
 #' @param label 可选标签，写入 \code{network} 列。
 #'

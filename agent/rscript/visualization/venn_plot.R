@@ -104,6 +104,9 @@ plot_venn <- function(sets, fill_colors = NULL, font_size = 0.8) {
 
 #' 将韦恩图导出为 PDF 与 PNG
 #'
+#' @description 将 \code{plot_venn()} 返回的 VennDiagram grob 同时
+#'   保存为 PDF 和 PNG 文件。
+#'
 #' @param venn 来自 \code{plot_venn()} 的 VennDiagram grob。
 #' @param output_dir 输出文件所在目录。
 #' @param filename 基础文件名（不含扩展名）。

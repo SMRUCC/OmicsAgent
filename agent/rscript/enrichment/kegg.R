@@ -128,6 +128,10 @@ run_kegg_pathway_enrich <- function(significant_compounds, all_compounds,
 #'   \code{kegg_mapping$compound_id} 中的化合物名一致。
 #' @param kegg_mapping 来自 \code{map_kegg_compound_to_pathway()} 的数据框，
 #'   包含列：compound_id、pathway_id、pathway_name。
+#' @param feature_info 可选，data.frame，化合物注释表。提供时用于将
+#'   KEGG 化合物 ID 映射到表达矩阵的行名。默认：NULL。
+#' @param feature_id_col 字符，feature_info 中对应的行名列。默认："name"。
+#' @param kegg_col 字符，feature_info 中 KEGG ID 列名。默认："kegg"。
 #' @param method 得分计算方法："gsva"、"ssgsea"、"zscore" 或
 #'   "mean"。默认："mean"（当 GSVA 包不可用时使用平均 z-score）。
 #' @param min_size 通路最小规模。默认：2。
@@ -257,6 +261,24 @@ run_kegg_pathway_gsva <- function(expr_matrix, kegg_mapping,
 #       仅读取既有返回结构，不引入新的分析语义，向后兼容。
 # =============================================================================
 
+#' KEGG 通路富集结果条形图
+#'
+#' @description 将 \code{run_kegg_pathway_enrich()} 的返回结果可视化为
+#'   水平条形图，按 -log10(p) 排序，显著通路（p_adj < 0.05）以红色高亮。
+#'
+#' @param enrich_res \code{run_kegg_pathway_enrich()} 返回的数据框，
+#'   需含 p_value、p_adj、pathway_name 列。
+#' @param top_n 数值，展示前 N 条通路。默认：20。
+#'
+#' @return ggplot 对象。若输入为空则返回 NULL。
+#'
+#' @examples
+#' \dontrun{
+#' enrich <- run_kegg_pathway_enrich(sig, all, mapping)
+#' p <- plot_kegg_enrichment(enrich, top_n = 15)
+#' }
+#'
+#' @export
 plot_kegg_enrichment <- function(enrich_res, top_n = 20) {
   if (is.null(enrich_res) || nrow(enrich_res) == 0) {
     warning("plot_kegg_enrichment: 富集结果为空，返回 NULL。")
@@ -282,6 +304,26 @@ plot_kegg_enrichment <- function(enrich_res, top_n = 20) {
     ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))
 }
 
+#' KEGG 通路活性热图
+#'
+#' @description 将 \code{run_kegg_pathway_gsva()} 返回的通路活性矩阵
+#'   （gsva_matrix）可视化为热图，按行方差排序展示变异最大的通路。
+#'
+#' @param gsva_res \code{run_kegg_pathway_gsva()} 返回的列表，
+#'   需含 \code{gsva_matrix} 元素（通路 × 样本矩阵）。
+#' @param top_n 数值，展示方差最大的前 N 条通路。默认：30。
+#' @param sample_info 可选，data.frame，样本注释（行名为样本名）。
+#' @param group_col 可选，字符，sample_info 中分组列名（用于列注释）。
+#'
+#' @return ggplot 对象。若输入为空则返回 NULL。
+#'
+#' @examples
+#' \dontrun{
+#' gsva_res <- run_kegg_pathway_gsva(expr_matrix, mapping)
+#' p <- plot_kegg_pathway_activity(gsva_res, top_n = 20)
+#' }
+#'
+#' @export
 plot_kegg_pathway_activity <- function(gsva_res, top_n = 30,
                                        sample_info = NULL, group_col = NULL) {
   if (is.null(gsva_res) || is.null(gsva_res$gsva_matrix)) {

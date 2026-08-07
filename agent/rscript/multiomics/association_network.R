@@ -354,6 +354,8 @@ select_top_features <- function(mat, top_n = NULL, label = "matrix",
 #' 每一对Feature的关联。为控制 MIC 的计算开销，仅将按 |Spearman rho| 排序的
 #' Top-K Feature对送入 \code{minerva::mine()}。
 #'
+#' @description 跨组学（不同层之间）的 Spearman + MIC 双指标关联分析。
+#'
 #' @param mat_x 第一层的数值矩阵（Feature x 样本）。
 #' @param mat_y 第二层的数值矩阵（Feature x 样本）。
 #' @param name_x 字符，第一层的标签（用于源Feature命名）。
@@ -373,6 +375,7 @@ select_top_features <- function(mat, top_n = NULL, label = "matrix",
 #'   （positive/negative），否则为 \code{nonlinear}。
 #' @param verbose 逻辑值，是否打印进度。
 #'
+#' @param mic_candidate 数值，在 MIC 计算前按 |Spearman| 取前 K 候选对的最大对数。默认从上层参数继承。
 #' @return 一个列表：
 #'   \item{edges}{包含 9 列的数据框：source、target、spearman-rho、
 #'     spearman-pval、MIC、MIC-pvalue、score、pvalue、association。}
@@ -510,6 +513,8 @@ run_cross_omics_association <- function(mat_x, mat_y,
 #' 计算单个组学层\emph{内部}各Feature之间的关联。仅评估Feature自相关矩阵中严格的上三角
 #' （不含自配对、不含重复对）。评分 / p 值 / MIC 的方法学详见
 #' \code{run_cross_omics_association}。
+#'
+#' @description 组学内（同层内部）的 Spearman + MIC 双指标关联分析。
 #'
 #' @param mat 数值矩阵（Feature x 样本）。
 #' @param name 字符，该层的标签。
@@ -688,6 +693,8 @@ run_intra_omics_association <- function(mat, name = "omics",
 # 便捷封装：遍历 MultiOmicsData 全部跨层组合 + 层内组合
 # -----------------------------------------------------------------------------
 #' 对 MultiOmicsData 对象运行全部跨层与层内关联分析
+#'
+#' @description 批量运行所有组学层之间和层内的关联分析，汇总结果。
 #'
 #' @param mo 一个 MultiOmicsData 对象。
 #' @param layers 字符向量，指定要包含的层名称。NULL 表示所有层。
