@@ -114,14 +114,14 @@ wgcna_module_trait <- function(wgcna_result, traits, sample_info = NULL,
 }
 
 
-#' Plot module-trait relationship heatmap
+#' 绘制模块-性状关系热图
 #'
-#' @description Creates a heatmap of module-trait correlations with significance.
+#' @description 创建带显著性的模块-性状相关性热图。
 #'
-#' @param assoc_result Result from \code{wgcna_module_trait()}.
-#' @param p_threshold P-value threshold for significance. Default: 0.05.
+#' @param assoc_result 来自 \code{wgcna_module_trait()} 的结果。
+#' @param p_threshold 显著性 p 值阈值。默认：0.05。
 #'
-#' @return A ggplot object.
+#' @return 一个 ggplot 对象。
 #'
 #' @examples
 #' \dontrun{
@@ -134,7 +134,7 @@ plot_module_trait <- function(assoc_result, p_threshold = 0.05) {
   cor_mat <- assoc_result$module_trait_cor
   p_mat <- assoc_result$module_trait_p
 
-  # Create data.frame for plotting
+  # 创建用于绘图的数据框
   plot_data <- expand.grid(
     module = rownames(cor_mat),
     trait = colnames(cor_mat),

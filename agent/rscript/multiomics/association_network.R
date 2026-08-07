@@ -30,14 +30,14 @@
 # -----------------------------------------------------------------------------
 # 内部工具：按方差（信号强度）选择 Top N 特征
 # -----------------------------------------------------------------------------
-#' Select top variable features from a matrix
+#' 从矩阵中选择变异最大的 Top N 个特征
 #'
-#' @param mat Numeric matrix (features x samples).
-#' @param top_n Integer. Number of features to keep by descending row variance.
-#'   If NULL or larger than nrow(mat), all features are kept.
-#' @param label Character, name used in progress messages.
-#' @param verbose Logical, print progress.
-#' @return A numeric matrix with at most \code{top_n} rows.
+#' @param mat 数值矩阵（特征 x 样本）。
+#' @param top_n 整数，按行方差降序保留的特征数量。
+#'   若为 NULL 或大于 nrow(mat)，则保留全部特征。
+#' @param label 字符，进度提示信息中使用的名称。
+#' @param verbose 逻辑值，是否打印进度。
+#' @return 最多包含 \code{top_n} 行的一个数值矩阵。
 #' @noRd
 select_top_features <- function(mat, top_n = NULL, label = "matrix",
                                 verbose = TRUE) {
@@ -64,13 +64,13 @@ select_top_features <- function(mat, top_n = NULL, label = "matrix",
 # 内部工具：向量化 Spearman（对行取 rank 后做标准化矩阵叉积）
 # 返回 rho 矩阵与解析 p 值矩阵，复用 cross_correlation.R 的 .row_standardise 思路
 # -----------------------------------------------------------------------------
-#' Vectorised Spearman correlation matrix (rank transform + standardised cross-product)
+#' 向量化 Spearman 相关矩阵（秩变换 + 标准化叉积）
 #'
-#' @param mat_x Numeric matrix (features_x x samples).
-#' @param mat_y Numeric matrix (features_y x samples). Must share the same
-#'   column order / sample set as \code{mat_x}.
-#' @return A list with \code{rho} (features_x x features_y) and
-#'   \code{pval} (features_x x features_y) matrices.
+#' @param mat_x 数值矩阵（features_x x 样本）。
+#' @param mat_y 数值矩阵（features_y x 样本）。必须与 \code{mat_x} 具有
+#'   相同的列顺序 / 样本集合。
+#' @return 一个列表，含有 \code{rho}（features_x x features_y）与
+#'   \code{pval}（features_x x features_y）两个矩阵。
 #' @noRd
 .spearman_matrix <- function(mat_x, mat_y) {
   # 同一组学层内部配对时 mat_x == mat_y，仍使用通用路径（上三角在调用方裁剪）
@@ -106,15 +106,14 @@ select_top_features <- function(mat, top_n = NULL, label = "matrix",
 # -----------------------------------------------------------------------------
 # 内部工具：共享零分布置换 —— 返回 n_perm 个随机打乱对的 MIC 经验分布
 # -----------------------------------------------------------------------------
-#' Shared null distribution of MIC by permutation
+#' 通过置换计算共享的 MIC 零分布
 #'
-#' @param mat Reference matrix (features x samples) used to draw random feature
-#'   pairs for permutation.
-#' @param n_perm Integer, number of random permutations.
-#' @param n_sample Integer, number of samples actually used (after intersect).
-#' @param verbose Logical.
-#' @return A numeric vector of length \code{n_perm} with MIC values of random
-#'   (null) feature pairs. Returns \code{NULL} on any failure.
+#' @param mat 参考矩阵（特征 x 样本），用于抽取随机特征对进行置换。
+#' @param n_perm 整数，随机置换次数。
+#' @param n_sample 整数，实际使用的样本数（取交集之后）。
+#' @param verbose 逻辑值。
+#' @return 长度为 \code{n_perm} 的数值向量，包含随机（零）特征对的 MIC 值。
+#'   若发生任何错误则返回 \code{NULL}。
 #' @noRd
 .mic_null_distribution <- function(mat, n_perm = 200, n_sample = NULL,
                                    verbose = TRUE) {
@@ -142,14 +141,14 @@ select_top_features <- function(mat, top_n = NULL, label = "matrix",
 # -----------------------------------------------------------------------------
 # 内部工具：对候选对批量计算 MIC（调用 minerva::mine）
 # -----------------------------------------------------------------------------
-#' Compute MIC for a list of feature pairs
+#' 对一组特征对批量计算 MIC
 #'
-#' @param mat_x Numeric matrix.
-#' @param mat_y Numeric matrix.
-#' @param pairs A 2-column integer matrix of (row_in_x, row_in_y) indices.
-#' @param verbose Logical.
-#' @return Numeric vector of MIC values aligned with \code{pairs} (NA if
-#'   minerva unavailable or a pair fails).
+#' @param mat_x 数值矩阵。
+#' @param mat_y 数值矩阵。
+#' @param pairs 两列整数矩阵，含有 (row_in_x, row_in_y) 的索引。
+#' @param verbose 逻辑值。
+#' @return 与 \code{pairs} 对齐的 MIC 值数值向量（若 minerva 不可用或某对
+#'   计算失败则为 NA）。
 #' @noRd
 .compute_mic_for_pairs <- function(mat_x, mat_y, pairs, verbose = TRUE) {
   if (!requireNamespace("minerva", quietly = TRUE)) {
@@ -173,24 +172,23 @@ select_top_features <- function(mat, top_n = NULL, label = "matrix",
 # -----------------------------------------------------------------------------
 # 内部工具：组装标准 9 列边表
 # -----------------------------------------------------------------------------
-#' Assemble the canonical 9-column association edge table
+#' 组装标准的 9 列关联边表
 #'
-#' @param src Character vector of source feature names.
-#' @param tgt Character vector of target feature names.
-#' @param rho Numeric vector, Spearman rho.
-#' @param rho_p Numeric vector, Spearman p-value.
-#' @param mic Numeric vector, MIC (NA allowed).
-#' @param mic_p Numeric vector, MIC p-value (NA allowed).
-#' @param score_method Character, \code{"combined"} or \code{"nonlinear"}.
-#' @param score_weight Numeric, weight on |rho| for combined score.
-#' @param p_adjust Character, method passed to \code{p.adjust} for the merged p.
-#' @param p_threshold Numeric, significance cutoff on adjusted merged p.
-#' @param rho_linear_min Numeric, |rho| above which an association is treated
-#'   as linear (vs nonlinear).
-#' @return A data.frame with exactly 9 columns:
-#'   source, target, spearman-rho, spearman-pval, MIC, MIC-pvalue,
-#'   score, pvalue, association. Column names are set with check.names = FALSE
-#'   so that the hyphenated names survive export unchanged.
+#' @param src 源特征名称的字符向量。
+#' @param tgt 目标特征名称的字符向量。
+#' @param rho 数值向量，Spearman rho。
+#' @param rho_p 数值向量，Spearman p 值。
+#' @param mic 数值向量，MIC（允许为 NA）。
+#' @param mic_p 数值向量，MIC p 值（允许为 NA）。
+#' @param score_method 字符，\code{"combined"} 或 \code{"nonlinear"}。
+#' @param score_weight 数值，综合评分中 |rho| 的权重。
+#' @param p_adjust 字符，传给 \code{p.adjust} 用于合并 p 值的方法。
+#' @param p_threshold 数值，校正后合并 p 值的显著性阈值。
+#' @param rho_linear_min 数值，超过该 |rho| 的关联被视为线性（而非非线性）。
+#' @return 恰好包含 9 列的数据框：
+#'   source、target、spearman-rho、spearman-pval、MIC、MIC-pvalue、
+#'   score、pvalue、association。列名使用 check.names = FALSE 设置，
+#'   以保持带连字符的列名在导出时不被改变。
 #' @noRd
 .assemble_edge_table <- function(src, tgt, rho, rho_p, mic, mic_p,
                                  score_method = "combined",
@@ -256,38 +254,36 @@ select_top_features <- function(mat, top_n = NULL, label = "matrix",
 # -----------------------------------------------------------------------------
 # 核心函数一：跨组学关联（两个不同层之间）
 # -----------------------------------------------------------------------------
-#' Cross-omics Spearman + MIC association network
+#' 跨组学 Spearman + MIC 关联网络
 #'
-#' Computes the association between every feature pair across two omics layers
-#' using Spearman correlation (vectorised) and MIC (maximal information
-#' coefficient). To keep MIC affordable, only the Top-K feature pairs ranked by
-#' |Spearman rho| are sent to \code{minerva::mine()}.
+#' 使用 Spearman 相关（向量化）与 MIC（最大互信息系数），计算两个组学层之间
+#' 每一对特征的关联。为控制 MIC 的计算开销，仅将按 |Spearman rho| 排序的
+#' Top-K 特征对送入 \code{minerva::mine()}。
 #'
-#' @param mat_x Numeric matrix (features x samples) of the first layer.
-#' @param mat_y Numeric matrix (features x samples) of the second layer.
-#' @param name_x Character, label for the first layer (used in source names).
-#' @param name_y Character, label for the second layer.
-#' @param top_n Integer, pre-filter each layer to the top-N features by
-#'   variance before pairing. NULL keeps all features.
-#' @param max_pairs_for_mic Integer, maximum number of feature pairs sent to MIC
-#'   (selected by descending |rho|). The single most important cost knob.
-#' @param mic_pvalue_method Character, \code{"permutation"} (shared-null
-#'   distribution) or \code{"none"} (skip, MIC-pvalue = NA).
-#' @param n_perm Integer, number of permutations for the shared MIC null.
-#' @param score_method Character, \code{"combined"} (default:
-#'   \code{w*|rho| + (1-w)*MIC}) or \code{"nonlinear"} (\code{MIC - rho^2}).
-#' @param score_weight Numeric in [0,1], weight of |rho| in combined score.
-#' @param p_adjust Character, method for \code{p.adjust} on the merged p.
-#' @param p_threshold Numeric, significance cutoff on adjusted merged p.
-#' @param rho_linear_min Numeric, |rho| above which a significant pair is
-#'   classified as linear (positive/negative) vs \code{nonlinear}.
-#' @param verbose Logical, print progress.
+#' @param mat_x 第一层的数值矩阵（特征 x 样本）。
+#' @param mat_y 第二层的数值矩阵（特征 x 样本）。
+#' @param name_x 字符，第一层的标签（用于源特征命名）。
+#' @param name_y 字符，第二层的标签。
+#' @param top_n 整数，配对前按方差预筛选每层 Top-N 个特征。NULL 表示保留全部。
+#' @param max_pairs_for_mic 整数，送入 MIC 的最大特征对数量
+#'   （按 |rho| 降序选取）。这是最关键的性能控制参数。
+#' @param mic_pvalue_method 字符，\code{"permutation"}（共享零分布）
+#'   或 \code{"none"}（跳过，MIC-pvalue = NA）。
+#' @param n_perm 整数，共享 MIC 零分布所用的置换次数。
+#' @param score_method 字符，\code{"combined"}（默认：
+#'   \code{w*|rho| + (1-w)*MIC}）或 \code{"nonlinear"}（\code{MIC - rho^2}）。
+#' @param score_weight 数值，取值 [0,1]，综合评分中 |rho| 的权重。
+#' @param p_adjust 字符，合并 p 值所用 \code{p.adjust} 的方法。
+#' @param p_threshold 数值，校正后合并 p 值的显著性阈值。
+#' @param rho_linear_min 数值，超过该 |rho| 的显著对被判定为线性
+#'   （positive/negative），否则为 \code{nonlinear}。
+#' @param verbose 逻辑值，是否打印进度。
 #'
-#' @return A list:
-#'   \item{edges}{data.frame with 9 columns: source, target, spearman-rho,
-#'     spearman-pval, MIC, MIC-pvalue, score, pvalue, association.}
-#'   \item{nodes}{data.frame: name, omics, degree.}
-#'   \item{params}{list of run parameters and counts.}
+#' @return 一个列表：
+#'   \item{edges}{包含 9 列的数据框：source、target、spearman-rho、
+#'     spearman-pval、MIC、MIC-pvalue、score、pvalue、association。}
+#'   \item{nodes}{数据框：name、omics、degree。}
+#'   \item{params}{运行参数与计数的列表。}
 #'
 #' @examples
 #' \dontrun{
@@ -405,28 +401,27 @@ run_cross_omics_association <- function(mat_x, mat_y,
 # -----------------------------------------------------------------------------
 # 核心函数二：组学内关联（同一层内部，上三角）
 # -----------------------------------------------------------------------------
-#' Intra-omics Spearman + MIC association network
+#' 组学内 Spearman + MIC 关联网络
 #'
-#' Computes associations among features \emph{within} a single omics layer.
-#' Only the strict upper triangle of the feature self-correlation is evaluated
-#' (no self-pairs, no duplicates). See \code{run_cross_omics_association} for
-#' the score / p-value / MIC methodology.
+#' 计算单个组学层\emph{内部}各特征之间的关联。仅评估特征自相关矩阵中严格的上三角
+#' （不含自配对、不含重复对）。评分 / p 值 / MIC 的方法学详见
+#' \code{run_cross_omics_association}。
 #'
-#' @param mat Numeric matrix (features x samples).
-#' @param name Character, label for the layer.
-#' @param top_n Integer, pre-filter to the top-N features by variance.
-#' @param max_pairs_for_mic Integer, max pairs sent to MIC.
-#' @param mic_pvalue_method Character, \code{"permutation"} or \code{"none"}.
-#' @param n_perm Integer, permutations for shared MIC null.
-#' @param score_method Character, \code{"combined"} or \code{"nonlinear"}.
-#' @param score_weight Numeric, weight of |rho| in combined score.
-#' @param p_adjust Character, p.adjust method on merged p.
-#' @param p_threshold Numeric, significance cutoff on adjusted merged p.
-#' @param rho_linear_min Numeric, |rho| cutoff for linear vs nonlinear label.
-#' @param verbose Logical, print progress.
+#' @param mat 数值矩阵（特征 x 样本）。
+#' @param name 字符，该层的标签。
+#' @param top_n 整数，按方差预筛选 Top-N 个特征。
+#' @param max_pairs_for_mic 整数，送入 MIC 的最大特征对数。
+#' @param mic_pvalue_method 字符，\code{"permutation"} 或 \code{"none"}。
+#' @param n_perm 整数，共享 MIC 零分布所用的置换次数。
+#' @param score_method 字符，\code{"combined"} 或 \code{"nonlinear"}。
+#' @param score_weight 数值，综合评分中 |rho| 的权重。
+#' @param p_adjust 字符，合并 p 值所用 p.adjust 方法。
+#' @param p_threshold 数值，校正后合并 p 值的显著性阈值。
+#' @param rho_linear_min 数值，线性与线性标签判定的 |rho| 阈值。
+#' @param verbose 逻辑值，是否打印进度。
 #'
-#' @return A list with \code{edges} (9 columns), \code{nodes}, \code{params}
-#'   (see \code{run_cross_omics_association}).
+#' @return 一个列表，含有 \code{edges}（9 列）、\code{nodes}、\code{params}
+#'   （详见 \code{run_cross_omics_association}）。
 #'
 #' @examples
 #' \dontrun{
