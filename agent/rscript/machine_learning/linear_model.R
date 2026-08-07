@@ -1,55 +1,49 @@
 # ==============================================================================
-# OmicsFlow: Linear Regression Model
+# OmicsFlow: 线性回归模型
 # ==============================================================================
-# Sample classification using linear regression
+# 使用线性回归进行样本分类
 # ==============================================================================
 
-#' Run linear regression classification model
+#' 运行线性回归分类模型
 #'
-#' @description Builds a linear regression model for sample group prediction.
-#'   For binary classification, uses logistic regression. For multi-class,
-#'   uses multinomial logistic regression.
+#' @description 构建用于样本分组预测的线性回归模型。二分类时使用逻辑回归，
+#'   多分类时使用多项逻辑回归。
 #'
-#'   In addition, per-feature univariate ordinary least squares (OLS) regression
-#'   is performed for each comparison (control group encoded as a=0 vs each
-#'   other group encoded as b=1). The response variable y is the numeric group
-#'   encoding and x is the feature abundance. Full statistics (slope, intercept,
-#'   R2, adjusted R2, p-value, linear equation string, comparison label) are
-#'   returned in the \code{coefficients} table.
+#'   此外，对每个比较（对照组编码为 a=0，其余各组编码为 b=1）执行逐特征的
+#'   单变量普通最小二乘（OLS）回归。响应变量 y 为数值型分组编码，x 为
+#'   特征丰度。完整的统计量（斜率、截距、R2、调整后 R2、p 值、线性方程字符串、
+#'   比较标签）在 \code{coefficients} 表中返回。
 #'
-#' @param expr_matrix A numeric matrix (features x samples).
-#' @param sample_info A data.frame with sample metadata.
-#' @param group_col Column name for group labels. Default: "sample_info".
-#' @param exclude_groups Optional groups to exclude. Default: "QC".
-#' @param control_group Character, reference group. Samples in this group are
-#'   encoded as a=0 in each linear regression comparison. Default: NULL (uses
-#'   the first factor level).
-#' @param top_features Optional character vector of features to use. If NULL,
-#'   uses all features. Default: NULL.
-#' @param cv_folds Number of cross-validation folds. Default: 5.
-#' @param seed Random seed. Default: 42.
+#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param sample_info 含有样本元数据的数据框。
+#' @param group_col 分组标签所在的列名。默认："sample_info"。
+#' @param exclude_groups 要排除的可选分组。默认："QC"。
+#' @param control_group 字符型，参考分组。该组样本在每个线性回归比较中编码为
+#'   a=0。默认：NULL（使用第一个因子水平）。
+#' @param top_features 可选的特征字符向量。若为 NULL，则使用全部特征。默认：NULL。
+#' @param cv_folds 交叉验证折数。默认：5。
+#' @param seed 随机种子。默认：42。
 #'
-#' @return A list with:
+#' @return 一个列表，包含：
 #'   \itemize{
-#'     \item \code{model}: Fitted classification model.
-#'     \item \code{coefficients}: Per-feature univariate linear regression
-#'       results (data.frame). Columns:
-#'       \code{feature_id} feature name;
-#'       \code{comparison} group comparison label, e.g.
-#'         "Standard (control)(a=0) vs Clostridium difficile infection(b=1)";
-#'       \code{slope} regression slope (a in y = a*x + b);
-#'       \code{intercept} regression intercept (b in y = a*x + b);
-#'       \code{r2} R-squared;
-#'       \code{adj_r2} adjusted R-squared;
-#'       \code{p_value} p-value of the slope;
-#'       \code{p_adj} BH-adjusted p-value within each comparison;
-#'       \code{n} number of samples used in the comparison;
-#'       \code{equation} linear equation string, e.g. "y = 0.4275*x + 0.5388".
-#'     \item \code{classification_coefficients}: Coefficients of the
-#'       classification model (columns: group, feature, coefficient).
-#'     \item \code{accuracy}: Classification accuracy.
-#'     \item \code{predictions}: Predicted labels.
-#'     \item \code{confusion_matrix}: Confusion matrix.
+#'     \item \code{model}：拟合的分类模型。
+#'     \item \code{coefficients}：逐特征单变量线性回归结果（数据框）。列：
+#'       \code{feature_id} 特征名；
+#'       \code{comparison} 分组比较标签，例如
+#'         "Standard (control)(a=0) vs Clostridium difficile infection(b=1)"；
+#'       \code{slope} 回归斜率（y = a*x + b 中的 a）；
+#'       \code{intercept} 回归截距（y = a*x + b 中的 b）；
+#'       \code{r2} R 平方；
+#'       \code{adj_r2} 调整后的 R 平方；
+#'       \code{p_value} 斜率的 p 值；
+#'       \code{p_adj} 每个比较内的 BH 校正 p 值；
+#'       \code{n} 比较中使用的样本数；
+#'       \code{equation} 线性方程字符串，例如 "y = 0.4275*x + 0.5388"。
+#'     \item \code{classification_coefficients}：分类模型的回归系数
+#'       （列：group、feature、coefficient）。
+#'     \item \code{accuracy}：分类准确率。
+#'     \item \code{predictions}：预测标签。
+#'     \item \code{confusion_matrix}：混淆矩阵。
 #'   }
 #'
 #' @examples
@@ -66,12 +60,12 @@ run_linear_model <- function(expr_matrix, sample_info,
                             top_features = NULL, cv_folds = 5, seed = 42) {
   set.seed(seed)
 
-  # Align samples
+  # 对齐样本
   common_samples <- intersect(colnames(expr_matrix), rownames(sample_info))
   expr_matrix <- expr_matrix[, common_samples, drop = FALSE]
   sample_info <- sample_info[common_samples, , drop = FALSE]
 
-  # Exclude groups
+  # 排除分组
   if (!is.null(exclude_groups)) {
     keep_samples <- rownames(sample_info)[!(sample_info[[group_col]] %in% exclude_groups)]
     expr_matrix <- expr_matrix[, keep_samples, drop = FALSE]
@@ -85,16 +79,16 @@ run_linear_model <- function(expr_matrix, sample_info,
 
   X <- t(as.matrix(expr_matrix))
 
-  # Select top features if specified
+  # 若指定则筛选前 N 个特征
   if (!is.null(top_features)) {
     top_features <- intersect(top_features, colnames(X))
     X <- X[, top_features, drop = FALSE]
   }
 
-  # Keep original feature names before make.names (to restore in output)
+  # 在 make.names 之前保留原始特征名（以便输出时还原）
   orig_feat_names <- colnames(X)
 
-  # Build data.frame
+  # 构建数据框
   X <- as.matrix(X)
   colnames(X) <- make.names(colnames(X), unique = TRUE)
   safe_feat_names <- colnames(X)
@@ -102,11 +96,11 @@ run_linear_model <- function(expr_matrix, sample_info,
   data_df <- as.data.frame(X)
   data_df$group <- groups
 
-  # Determine model type
+  # 确定模型类型
   n_groups <- nlevels(groups)
 
   if (n_groups == 2) {
-    # Binary: logistic regression
+    # 二分类：逻辑回归
     formula_str <- "group ~ ."
     model <- stats::glm(as.formula(formula_str), data = data_df,
                         family = stats::binomial())
@@ -115,7 +109,7 @@ run_linear_model <- function(expr_matrix, sample_info,
                               levels(groups)[1])
     predicted_class <- factor(predicted_class, levels = levels(groups))
   } else {
-    # Multi-class: multinomial
+    # 多分类：多项逻辑回归
     if (requireNamespace("nnet", quietly = TRUE)) {
       formula_str <- "group ~ ."
       model <- nnet::multinom(as.formula(formula_str), data = data_df,
@@ -123,22 +117,22 @@ run_linear_model <- function(expr_matrix, sample_info,
       predictions <- stats::predict(model, type = "class")
       predicted_class <- factor(predictions, levels = levels(groups))
     } else {
-      # Fallback: LDA
+      # 回退：LDA
       if (requireNamespace("MASS", quietly = TRUE)) {
         model <- MASS::lda(x = X, grouping = groups)
         predictions <- stats::predict(model, X)$class
         predicted_class <- factor(predictions, levels = levels(groups))
       } else {
-        stop("Either 'nnet' or 'MASS' package is required for multi-class.")
+        stop("多分类需要 'nnet' 或 'MASS' 包。")
       }
     }
   }
 
-  # Accuracy
+  # 准确率
   accuracy <- mean(predicted_class == groups)
   conf_mat <- as.matrix(table(Predicted = predicted_class, Actual = groups))
 
-  # Classification coefficients (kept for backward compatibility)
+  # 分类系数（保留以兼容旧版本）
   class_coefs <- stats::coef(model)
   if (is.list(class_coefs)) {
     class_coef_df <- do.call(rbind, lapply(names(class_coefs), function(n) {

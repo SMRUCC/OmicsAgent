@@ -1,30 +1,28 @@
 # ==============================================================================
-# OmicsFlow: OPLS-DA Analysis and Visualization
+# OmicsFlow: OPLS-DA 分析与可视化
 # ==============================================================================
-# Orthogonal Partial Least Squares Discriminant Analysis
+# 正交偏最小二乘判别分析（Orthogonal Partial Least Squares Discriminant Analysis）
 # ==============================================================================
 
-#' Perform OPLS-DA analysis
+#' 执行 OPLS-DA 分析
 #'
-#' @description Performs Orthogonal Partial Least Squares Discriminant Analysis
-#'   (OPLS-DA) on the expression matrix. OPLS-DA separates predictive and
-#'   orthogonal variation for improved interpretation.
+#' @description 对表达矩阵执行正交偏最小二乘判别分析（OPLS-DA）。OPLS-DA 将
+#'   预测性变异与正交变异分离，以提升可解释性。
 #'
-#' @param expr_matrix A numeric matrix (features x samples).
-#' @param sample_info A data.frame with sample metadata.
-#' @param group_col Column name for group labels. Default: "sample_info".
-#' @param ncomp_pred Number of predictive components. Default: 1.
-#' @param ncomp_orth Number of orthogonal components. Default: 1.
-#' @param exclude_groups Optional character vector of groups to exclude.
-#'   Default: NULL.
+#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param sample_info 含有样本元数据的数据框。
+#' @param group_col 分组标签所在的列名。默认："sample_info"。
+#' @param ncomp_pred 预测性组分数。默认：1。
+#' @param ncomp_orth 正交组分数。默认：1。
+#' @param exclude_groups 要排除的可选分组字符向量。默认：NULL。
 #'
-#' @return A list with:
+#' @return 一个列表，包含：
 #'   \itemize{
-#'     \item \code{scores}: Data.frame with predictive and orthogonal scores.
-#'     \item \code{loadings}: Data.frame of OPLS-DA loadings (features x
-#'       components), with \code{feature_id} as the first column.
-#'     \item \code{vip}: VIP scores data.frame.
-#'     \item \code{model}: OPLS-DA model object.
+#'     \item \code{scores}：含预测性与正交得分的数据框。
+#'     \item \code{loadings}：OPLS-DA 载荷数据框（特征 x 组分），首列为
+#'       \code{feature_id}。
+#'     \item \code{vip}：VIP 得分数据框。
+#'     \item \code{model}：OPLS-DA 模型对象。
 #'   }
 #'
 #' @examples
@@ -36,12 +34,12 @@
 #' @export
 run_oplsda <- function(expr_matrix, sample_info, group_col = "sample_info",
                       ncomp_pred = 1, ncomp_orth = 1, exclude_groups = NULL) {
-  # Align samples
+  # 对齐样本
   common_samples <- intersect(colnames(expr_matrix), rownames(sample_info))
   expr_matrix <- expr_matrix[, common_samples, drop = FALSE]
   sample_info <- sample_info[common_samples, , drop = FALSE]
 
-  # Exclude groups
+  # 排除分组
   if (!is.null(exclude_groups)) {
     keep_samples <- rownames(sample_info)[!(sample_info[[group_col]] %in% exclude_groups)]
     expr_matrix <- expr_matrix[, keep_samples, drop = FALSE]
@@ -51,16 +49,16 @@ run_oplsda <- function(expr_matrix, sample_info, group_col = "sample_info",
   groups <- factor(sample_info[[group_col]])
   X <- t(expr_matrix)
 
-  # Check if mixOmics is available
+  # 检查 mixOmics 是否可用
   loadings_mat <- NULL
   if (requireNamespace("metaboanalyst", quietly = TRUE)) {
-    # Use MetaboAnalyst's OPLS-DA
+    # 使用 MetaboAnalyst 的 OPLS-DA
     model <- metaboanalyst:::oplsda(X, groups, ncomp_pred = ncomp_pred, ncomp_orth = ncomp_orth)
     scores <- as.data.frame(model$scores)
     if (is.null(colnames(scores)) || any(colnames(scores) == "")) {
       colnames(scores) <- c(paste0("t", 1:ncomp_pred), paste0("to", 1:ncomp_orth))
     }
-    # MetaboAnalyst OPLS-DA exposes loadings via the model matrix
+    # MetaboAnalyst 的 OPLS-DA 通过模型矩阵暴露载荷
     if (!is.null(model$loadings)) {
       loadings_mat <- as.matrix(model$loadings)
       if (!is.null(colnames(loadings_mat))) {
@@ -69,15 +67,15 @@ run_oplsda <- function(expr_matrix, sample_info, group_col = "sample_info",
     }
     vip_scores <- if (!is.null(model$vip)) model$vip else model$vipVn
   } else if (requireNamespace("mixOmics", quietly = TRUE)) {
-    # Use mixOmics - it doesn't have OPLS-DA directly, but we can use PLS-DA
-    # and separate predictive/orthogonal components
+    # 使用 mixOmics —— 它没有直接提供 OPLS-DA，但可用 PLS-DA
+    # 并区分预测性/正交组分
     model <- mixOmics::plsda(X, groups, ncomp = ncomp_pred + ncomp_orth)
 
-    # Extract scores
+    # 提取得分
     scores <- as.data.frame(model$variates$X)
     colnames(scores) <- c(paste0("t", 1:ncomp_pred), paste0("to", 1:ncomp_orth))
 
-    # Loadings
+    # 载荷
     loadings_mat <- as.matrix(model$loadings$X)
     colnames(loadings_mat) <- c(paste0("p", 1:ncomp_pred), paste0("po", 1:ncomp_orth))
 
@@ -87,8 +85,8 @@ run_oplsda <- function(expr_matrix, sample_info, group_col = "sample_info",
       vip_scores <- vip_scores[, ncol(vip_scores)]
     }
   } else {
-    # Fallback: manual OPLS implementation
-    warning("Neither 'metaboanalyst' nor 'mixOmics' available. Using simplified OPLS-DA.")
+    # 回退方案：手动 OPLS 实现
+    warning("'metaboanalyst' 与 'mixOmics' 均不可用，改用简化版 OPLS-DA。")
     result <- .oplsda_base(X, groups, ncomp_pred = ncomp_pred, ncomp_orth = ncomp_orth)
     model <- result$model
     scores <- as.data.frame(result$scores)
@@ -97,13 +95,13 @@ run_oplsda <- function(expr_matrix, sample_info, group_col = "sample_info",
     vip_scores <- result$vip
   }
 
-  # Prepare scores data.frame
+  # 准备得分数据框
   scores$sample_id <- rownames(scores)
   scores$group <- as.character(groups)
   scores <- scores[, c("sample_id", setdiff(colnames(scores), "sample_id")), drop = FALSE]
   rownames(scores) <- NULL
 
-  # Prepare VIP data.frame
+  # 准备 VIP 数据框
   vip_df <- data.frame(
     feature_id = rownames(expr_matrix),
     vip = vip_scores,
@@ -113,7 +111,7 @@ run_oplsda <- function(expr_matrix, sample_info, group_col = "sample_info",
   rownames(vip_df) <- vip_df$feature_id
   vip_df$feature_id <- NULL
 
-  # Prepare loadings data.frame (features x components), feature_id as first column
+  # 准备载荷数据框（特征 x 组分），首列为 feature_id
   loadings_df <- NULL
   if (!is.null(loadings_mat) && nrow(loadings_mat) > 0) {
     loadings_df <- as.data.frame(loadings_mat)
@@ -132,15 +130,15 @@ run_oplsda <- function(expr_matrix, sample_info, group_col = "sample_info",
 }
 
 
-#' Base OPLS-DA implementation (internal)
+#' 基础 OPLS-DA 实现（内部函数）
 #'
 #' @keywords internal
 #' @noRd
 .oplsda_base <- function(X, Y, ncomp_pred = 1, ncomp_orth = 1) {
-  # Simplified OPLS using NIPALS with orthogonalization
+  # 使用带正交化的 NIPALS 的简化版 OPLS
   X <- as.matrix(X)
 
-  # Dummy Y matrix
+  # 哑变量 Y 矩阵
   if (is.factor(Y)) {
     Y_dummy <- model.matrix(~ 0 + Y)
   } else {
@@ -151,7 +149,7 @@ run_oplsda <- function(expr_matrix, sample_info, group_col = "sample_info",
   p <- ncol(X)
   q <- ncol(Y_dummy)
 
-  # Total components
+  # 总组分数
   ncomp_total <- ncomp_pred + ncomp_orth
 
   scores_mat <- matrix(0, n, ncomp_total)
@@ -163,10 +161,10 @@ run_oplsda <- function(expr_matrix, sample_info, group_col = "sample_info",
 
   for (a in 1:ncomp_total) {
     if (a <= ncomp_pred) {
-      # Predictive component: use Y in cross product
+      # 预测性组分：交叉乘积中使用 Y
       cross <- crossprod(X_k, Y_k)
     } else {
-      # Orthogonal component: use X only
+      # 正交组分：仅使用 X
       cross <- crossprod(X_k)
     }
 
@@ -183,7 +181,7 @@ run_oplsda <- function(expr_matrix, sample_info, group_col = "sample_info",
     loadings_mat[, a] <- as.vector(pa)
     Y_loadings[, a] <- as.vector(qa)
 
-    # Deflation
+    # 收缩（deflation）
     X_k <- X_k - tcrossprod(ta, pa)
     if (a <= ncomp_pred) {
       Y_k <- Y_k - tcrossprod(ta, qa)
@@ -194,7 +192,7 @@ run_oplsda <- function(expr_matrix, sample_info, group_col = "sample_info",
   colnames(loadings_mat) <- c(paste0("p", 1:ncomp_pred), paste0("po", 1:ncomp_orth))
   rownames(loadings_mat) <- colnames(X)
 
-  # VIP calculation
+  # VIP 计算
   SSY <- colSums(Y_loadings^2)
   vip <- sqrt(p * rowSums(sweep(loadings_mat^2, 2, SSY, "*")) / sum(SSY))
 
@@ -207,15 +205,14 @@ run_oplsda <- function(expr_matrix, sample_info, group_col = "sample_info",
 }
 
 
-#' Plot OPLS-DA score plot
+#' 绘制 OPLS-DA 得分图
 #'
-#' @description Creates a publication-quality OPLS-DA score plot showing
-#'   predictive vs orthogonal components.
+#' @description 创建发表级质量的 OPLS-DA 得分图，展示预测性组分与正交组分的对比。
 #'
-#' @param oplsda_result Result from \code{run_oplsda()}.
-#' @param color_col Column for color grouping (not used, colors based on group).
+#' @param oplsda_result 来自 \code{run_oplsda()} 的结果。
+#' @param color_col 用于颜色分组的列名（未使用，颜色基于分组）。
 #'
-#' @return A ggplot object.
+#' @return 一个 ggplot 对象。
 #'
 #' @examples
 #' \dontrun{
@@ -227,12 +224,12 @@ run_oplsda <- function(expr_matrix, sample_info, group_col = "sample_info",
 plot_oplsda_scores <- function(oplsda_result, color_col = NULL) {
   scores <- oplsda_result$scores
 
-  # Find predictive and orthogonal score columns
+  # 查找预测性与正交得分列
   pred_col <- grep("^t[0-9]", colnames(scores), value = TRUE)[1]
   orth_col <- grep("^to[0-9]", colnames(scores), value = TRUE)[1]
 
   if (is.na(pred_col) || is.na(orth_col)) {
-    # Fallback to first two columns
+    # 回退到前 two 列
     pred_col <- colnames(scores)[1]
     orth_col <- colnames(scores)[2]
   }
@@ -251,9 +248,9 @@ plot_oplsda_scores <- function(oplsda_result, color_col = NULL) {
     ggplot2::geom_point(ggplot2::aes(color = group), size = 3, alpha = 0.85) +
     ggplot2::scale_color_manual(values = colors) +
     ggplot2::labs(
-      title = "OPLS-DA Score Plot",
-      x = "Predictive Component (t1)",
-      y = "Orthogonal Component (to1)"
+      title = "OPLS-DA 得分图",
+      x = "预测性组分 (t1)",
+      y = "正交组分 (to1)"
     ) +
     ggplot2::theme_bw() +
     ggplot2::theme(
@@ -264,7 +261,7 @@ plot_oplsda_scores <- function(oplsda_result, color_col = NULL) {
     ) +
     ggplot2::coord_equal()
 
-  # Add ellipses
+  # 添加椭圆
   for (g in groups) {
     g_data <- plot_data[plot_data$group == g, , drop = FALSE]
     if (nrow(g_data) >= 3) {
