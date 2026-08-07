@@ -145,7 +145,7 @@ Public MustInherit Class AnalysisModuleBase
             _context.Comparisons = plan.comparisons
 
             Call JsonContract.GetJson(plan.comparisons).SaveTo($"{_context.AnalysisDir}/design.json")
-            Call plan.comparisons.SaveTo($"{_context.AnalysisDir}/comparison_design.csv", silent:=True)
+            Call plan.comparisons.SaveTo($"{_context.TmpDir}/comparison_design.csv", silent:=True)
         End If
 
         Return conclusion
