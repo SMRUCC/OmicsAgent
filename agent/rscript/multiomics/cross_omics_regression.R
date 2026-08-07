@@ -99,8 +99,8 @@ run_cross_omics_regression <- function(x_matrix, y_matrix,
 
   is_finite <- !is.na(r) & is.finite(t_val) & abs(r) < 1
 
-  # expand.grid with x_feature first iterates x fastest, matching the column-
-  # major (as.vector) order of the slope / p-value matrices.
+  # 以 x_feature 在前的 expand.grid 让 x 变化最快，从而与斜率 / p 值矩阵
+  # 的按列（as.vector）存储顺序一致。
   pairs <- expand.grid(x_feature = rownames(X), y_feature = rownames(Y),
                        KEEP.OUT.ATTRS = FALSE, stringsAsFactors = FALSE)
   pairs$x_name <- x_name

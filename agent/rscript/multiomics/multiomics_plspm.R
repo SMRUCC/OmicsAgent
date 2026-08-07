@@ -16,7 +16,7 @@
 
 
 # ------------------------------------------------------------------------------
-# Annotation helpers
+# 注释辅助函数
 # ------------------------------------------------------------------------------
 
 #' 将 EC 编号规范化并截断到指定层级
@@ -91,7 +91,7 @@ clean_ec_number <- function(x, level = 2) {
 
 
 # ------------------------------------------------------------------------------
-# Latent variable construction
+# 潜变量构建
 # ------------------------------------------------------------------------------
 
 #' 基于注释构建多组学潜变量定义
@@ -156,7 +156,7 @@ build_multiomics_latent_def <- function(mo, layer_sources, min_size = 3,
     finfo <- get_feature_info(mo, nm)
     feats <- rownames(mat)
 
-    # pick the first source with acceptable coverage --------------------------
+    # 选择覆盖率达标的第一个来源 --------------------------
     candidates <- unique(c(layer_sources[[nm]], fallback_sources))
     chosen <- NULL
     grp <- NULL
@@ -194,7 +194,7 @@ build_multiomics_latent_def <- function(mo, layer_sources, min_size = 3,
       next
     }
 
-    # keep the most variable blocks, and the most variable members per block --
+    # 保留变异最大的块，以及每个块内变异最大的成员 --
     if (!is.null(max_latent_per_layer) &&
         length(groups) > max_latent_per_layer) {
       gv <- vapply(groups, function(f) sum(vars[f], na.rm = TRUE), numeric(1))
@@ -235,7 +235,7 @@ build_multiomics_latent_def <- function(mo, layer_sources, min_size = 3,
 
 
 # ------------------------------------------------------------------------------
-# Hierarchical inner model
+# 分层内模型
 # ------------------------------------------------------------------------------
 
 #' 为分层 PLS 路径模型构建下三角内模型矩阵
@@ -300,7 +300,7 @@ build_hierarchical_inner_model <- function(definitions, layer_order,
 
 
 # ------------------------------------------------------------------------------
-# Solving the path model
+# 求解路径模型
 # ------------------------------------------------------------------------------
 
 #' 拟合分层多组学 PLS 路径模型
@@ -384,7 +384,7 @@ run_multiomics_plspm <- function(mo, latent_def, definitions, path_matrix,
 
   # --- restrict the path matrix to the surviving latent variables -----------
   pm <- path_matrix[keep_lv, keep_lv, drop = FALSE]
-  # drop latent variables that ended up isolated
+  # 丢弃最终孤立的潜变量
   connected <- (rowSums(pm) + colSums(pm)) > 0
   if (sum(connected) < 2) {
     stop("The inner model has fewer than 2 connected latent variables.")

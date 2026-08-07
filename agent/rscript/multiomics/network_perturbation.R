@@ -349,7 +349,7 @@ run_virtual_perturbation <- function(dbn_result,
                prob_shift = numeric(0), mode = character(0),
                stringsAsFactors = FALSE)
 
-  # attach readable labels and omics annotation ------------------------------
+  # 附加可读标签与组学注释 ------------------------------
   lab <- stats::setNames(nd$label, nd$node)
   node_summary$label <- unname(lab[node_summary$node])
   if ("omics" %in% colnames(nd)) {
@@ -386,7 +386,7 @@ run_virtual_perturbation <- function(dbn_result,
 
 
 # ------------------------------------------------------------------------------
-# Regulatory importance scoring
+# 调控重要性评分
 # ------------------------------------------------------------------------------
 
 #' 按调控重要性对节点排序

@@ -266,7 +266,7 @@ run_pathway_bridge <- function(modules,
   links <- links[order(links$padj, -abs(links$r)), , drop = FALSE]
   rownames(links) <- NULL
 
-  # Per-module summary of how much of the chain is significant.
+  # 各模块中链路显著部分的比例汇总。
   chain_list <- lapply(split(links, links$module), function(sub) {
     data.frame(
       module = sub$module[1],

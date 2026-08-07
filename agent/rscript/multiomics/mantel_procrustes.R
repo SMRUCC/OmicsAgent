@@ -107,7 +107,7 @@ run_mantel_test <- function(mat_list, env_data = NULL,
     stop("mat_list must be a non-empty named list.")
   }
 
-  # Accept either raw matrices or precomputed distances
+  # 接受原始矩阵或预计算的距离
   is_dist <- vapply(mat_list, function(x) inherits(x, "dist"), logical(1))
   if (all(is_dist)) {
     dists <- mat_list
@@ -301,8 +301,8 @@ run_procrustes <- function(mat_x, mat_y,
   proc <- vegan::procrustes(pcoa_x, pcoa_y, symmetric = TRUE)
   prot <- vegan::protest(pcoa_x, pcoa_y, permutations = permutations)
 
-  # residuals() is an S3 method registered by vegan, not an exported object,
-  # so it has to be dispatched through the generic in stats.
+  # residuals() 是 vegan 注册的 S3 方法，而非导出对象，
+  # 因此必须通过 stats 中的泛型进行分发。
   resid <- stats::residuals(proc)
 
   coords <- data.frame(
