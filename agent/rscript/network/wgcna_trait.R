@@ -42,9 +42,48 @@ wgcna_module_trait <- function(wgcna_result, traits, sample_info = NULL,
 
   # 对齐样本
   common_samples <- intersect(rownames(MEs), rownames(traits))
+  if (length(common_samples) < 3) {
+    stop(sprintf(
+      "wgcna_module_trait needs at least 3 shared samples between MEs and traits, got %d.",
+      length(common_samples)))
+  }
   MEs <- MEs[common_samples, , drop = FALSE]
-  traits <- as.matrix(traits)[common_samples, , drop = FALSE]
-  mode(traits) <- "numeric"
+
+  # 逐列强制转数值。若 traits 为混合类型 data.frame，as.matrix() 会先整体
+  # 退化为 character，再 mode<-"numeric" 会把所有列变成 NA。
+  traits <- traits[common_samples, , drop = FALSE]
+  traits <- as.data.frame(traits, stringsAsFactors = FALSE)
+  traits[] <- lapply(traits, function(col) {
+    if (is.factor(col)) col <- as.character(col)
+    suppressWarnings(as.numeric(col))
+  })
+  bad_cols <- names(traits)[vapply(traits, function(c) all(is.na(c)),
+                                   logical(1))]
+  if (length(bad_cols) > 0) {
+    stop(sprintf(
+      "traits columns are not numeric-coercible: %s. Encode categorical phenotypes numerically first.",
+      paste(bad_cols, collapse = ", ")))
+  }
+  traits <- as.matrix(traits)
+
+  # 剔除零方差列，否则 cor.test 会抛出 "standard deviation is zero"
+  me_ok <- apply(MEs, 2, stats::var, na.rm = TRUE) > 0
+  me_ok[is.na(me_ok)] <- FALSE
+  if (any(!me_ok)) {
+    warning(sprintf("Dropping %d zero-variance module eigengene(s): %s",
+                    sum(!me_ok), paste(colnames(MEs)[!me_ok], collapse = ", ")))
+    MEs <- MEs[, me_ok, drop = FALSE]
+  }
+  tr_ok <- apply(traits, 2, stats::var, na.rm = TRUE) > 0
+  tr_ok[is.na(tr_ok)] <- FALSE
+  if (any(!tr_ok)) {
+    warning(sprintf("Dropping %d zero-variance trait(s): %s",
+                    sum(!tr_ok), paste(colnames(traits)[!tr_ok], collapse = ", ")))
+    traits <- traits[, tr_ok, drop = FALSE]
+  }
+  if (ncol(MEs) == 0 || ncol(traits) == 0) {
+    stop("No variable module eigengene or trait remains after filtering.")
+  }
 
   n_modules <- ncol(MEs)
   n_traits <- ncol(traits)
@@ -59,9 +98,17 @@ wgcna_module_trait <- function(wgcna_result, traits, sample_info = NULL,
 
   for (i in 1:n_modules) {
     for (j in 1:n_traits) {
-      ct <- stats::cor.test(MEs[, i], traits[, j], method = cor_method)
-      cor_mat[i, j] <- unname(ct$estimate)
-      p_mat[i, j] <- ct$p.value
+      ct <- tryCatch(
+        stats::cor.test(MEs[, i], traits[, j], method = cor_method),
+        error = function(e) NULL
+      )
+      if (is.null(ct) || is.na(ct$estimate)) {
+        cor_mat[i, j] <- NA_real_
+        p_mat[i, j] <- NA_real_
+      } else {
+        cor_mat[i, j] <- unname(ct$estimate)
+        p_mat[i, j] <- ct$p.value
+      }
     }
   }
 
@@ -72,13 +119,24 @@ wgcna_module_trait <- function(wgcna_result, traits, sample_info = NULL,
       key <- paste0(colnames(MEs)[i], "_vs_", colnames(traits)[j])
       fit <- stats::lm(traits[, j] ~ MEs[, i])
       s <- summary(fit)
+      cf <- stats::coef(s)
+      # 模型秩亏时 coef 只有截距一行，直接取 [2, ] 会下标越界
+      if (nrow(cf) < 2) {
+        lm_results[[key]] <- data.frame(
+          module = colnames(MEs)[i], trait = colnames(traits)[j],
+          estimate = NA_real_, std_error = NA_real_, t_stat = NA_real_,
+          p_value = NA_real_, r_squared = NA_real_, adj_r_squared = NA_real_,
+          stringsAsFactors = FALSE
+        )
+        next
+      }
       lm_results[[key]] <- data.frame(
         module = colnames(MEs)[i],
         trait = colnames(traits)[j],
-        estimate = stats::coef(s)[2, 1],
-        std_error = stats::coef(s)[2, 2],
-        t_stat = stats::coef(s)[2, 3],
-        p_value = stats::coef(s)[2, 4],
+        estimate = cf[2, 1],
+        std_error = cf[2, 2],
+        t_stat = cf[2, 3],
+        p_value = cf[2, 4],
         r_squared = s$r.squared,
         adj_r_squared = s$adj.r.squared,
         stringsAsFactors = FALSE
@@ -142,8 +200,12 @@ plot_module_trait <- function(assoc_result, p_threshold = 0.05) {
   )
   plot_data$cor <- as.vector(cor_mat)
   plot_data$p_value <- as.vector(p_mat)
-  plot_data$significant <- plot_data$p_value < p_threshold
-  plot_data$label <- sprintf("%.2f", plot_data$cor)
+  # p_value 为 NA（相关检验失败）时比较结果为 NA，会让下方按逻辑向量取子集
+  # 产生 NA 元素，统一按不显著处理
+  plot_data$significant <- !is.na(plot_data$p_value) &
+    plot_data$p_value < p_threshold
+  plot_data$label <- ifelse(is.na(plot_data$cor), "",
+                            sprintf("%.2f", plot_data$cor))
   plot_data$label[!plot_data$significant] <- ""
 
   p <- ggplot2::ggplot(plot_data, ggplot2::aes(x = trait, y = module)) +
