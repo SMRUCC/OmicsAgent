@@ -1,44 +1,36 @@
 # ==============================================================================
-# OmicsFlow: Multi-Block Discriminant Integration (DIABLO)
+# OmicsFlow：多模块判别整合（DIABLO）
 # ==============================================================================
-# Supervised integration of several omics layers to discriminate sample groups
-# such as geographic origin or fermentation phase.
+# 对多个组学层进行监督式整合，以区分样本分组，例如地理来源或发酵阶段。
 # ==============================================================================
 
-#' Multi-block sparse PLS-DA integration of omics layers
+#' 组学层的多模块稀疏 PLS-DA 整合
 #'
-#' @description Wraps \code{mixOmics::block.splsda()} (DIABLO) to build a
-#'   supervised model across all omics layers of a MultiOmicsData object. All
-#'   features enter the model; the sparsity parameter \code{keepX} performs the
-#'   built-in variable selection per component, which is the standard DIABLO
-#'   usage and avoids arbitrary pre-filtering.
+#' @description 封装 \code{mixOmics::block.splsda()}（DIABLO），针对 MultiOmicsData
+#'   对象的所有组学层构建监督模型。所有特征均进入模型；稀疏参数 \code{keepX}
+#'   在每个组分上执行内置的变量筛选，这是 DIABLO 的标准用法，可避免任意的
+#'   预筛选。
 #'
-#' @param mo A MultiOmicsData object.
-#' @param group_col Column in sample_info holding the class labels.
-#'   Default: "sample_info".
-#' @param layers Optional character vector restricting the layers used.
-#'   Default: NULL (all layers).
-#' @param ncomp Number of components. Default: 2.
-#' @param keepX Number of features selected per component. Either a single
-#'   integer applied to every layer, or a named list with one numeric vector of
-#'   length \code{ncomp} per layer. When NULL an adaptive value is derived from
-#'   the layer size. Default: NULL.
-#' @param design Off-diagonal value of the DIABLO design matrix, controlling
-#'   the trade-off between discrimination and cross-layer correlation.
-#'   Default: 0.1.
-#' @param exclude_groups Group labels removed before modelling. Default: NULL.
-#' @param verbose Logical, print progress. Default: TRUE.
+#' @param mo 一个 MultiOmicsData 对象。
+#' @param group_col sample_info 中保存类别标签的列。默认："sample_info"。
+#' @param layers 可选字符向量，限定所使用的层。默认：NULL（所有层）。
+#' @param ncomp 组分数。默认：2。
+#' @param keepX 每个组分筛选的特征数。可为单个整数（应用于所有层），或为有名列表，
+#'   每层含一个长度为 \code{ncomp} 的数值向量。为 NULL 时根据层规模自适应取值。
+#'   默认：NULL。
+#' @param design DIABLO 设计矩阵的对角线外取值，用于权衡判别与跨层相关性。默认：0.1。
+#' @param exclude_groups 建模前移除的分组标签。默认：NULL。
+#' @param verbose 逻辑值，是否打印进度。默认：TRUE。
 #'
-#' @return A list (NULL when the model cannot be fitted) with:
+#' @return 一个列表（模型无法拟合时为 NULL），含有：
 #'   \itemize{
-#'     \item \code{model}: The fitted block.splsda object.
-#'     \item \code{scores}: Named list of per-layer score data.frames including
-#'       the group label.
-#'     \item \code{loadings}: Named list of per-layer loading data.frames.
-#'     \item \code{selected_features}: data.frame of selected features with
-#'       layer, component, feature and loading.
-#'     \item \code{groups}: The class levels used.
-#'     \item \code{design}: The design matrix.
+#'     \item \code{model}: 拟合得到的 block.splsda 对象。
+#'     \item \code{scores}: 各层分数数据框的有名列表，包含分组标签。
+#'     \item \code{loadings}: 各层载荷数据框的有名列表。
+#'     \item \code{selected_features}: 选中特征的数据框，含 layer、component、
+#'       feature 与 loading。
+#'     \item \code{groups}: 所使用的类别水平。
+#'     \item \code{design}: 设计矩阵。
 #'   }
 #'
 #' @examples
@@ -84,7 +76,7 @@ run_diablo <- function(mo, group_col = "sample_info",
     stop(sprintf("Column '%s' must contain at least two classes.", group_col))
   }
 
-  # Blocks: samples x features, mixOmics convention
+  # 数据块：样本 x 特征，遵循 mixOmics 约定
   X <- lapply(layers, function(nm) {
     mat <- get_omics_matrix(mo, nm)[, sample_ids, drop = FALSE]
     mat <- drop_zero_variance(mat, label = nm, verbose = FALSE)
@@ -92,7 +84,7 @@ run_diablo <- function(mo, group_col = "sample_info",
   })
   names(X) <- layers
 
-  # Adaptive keepX ------------------------------------------------------------
+  # 自适应 keepX ------------------------------------------------------------
   if (is.null(keepX)) {
     keepX <- lapply(X, function(blk) {
       n_feat <- ncol(blk)

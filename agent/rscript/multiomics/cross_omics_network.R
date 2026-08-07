@@ -1,33 +1,29 @@
 # ==============================================================================
-# OmicsFlow: Cross-Omics Association Network
+# OmicsFlow：跨组学关联网络
 # ==============================================================================
-# Assembles significant cross-layer correlations into a single graph so that
-# hub taxa, hub metabolites and hub aroma compounds can be identified.
+# 将显著的跨层相关性整合为单一图，从而识别枢纽类群、枢纽代谢物
+# 以及枢纽香气化合物。
 # ==============================================================================
 
-#' Build a cross-omics association network
+#' 构建跨组学关联网络
 #'
-#' @description Merges the significant pair tables produced by
-#'   \code{run_cross_correlation()} into one \pkg{igraph} object. Nodes are
-#'   annotated with their omics layer and edges with the sign and strength of
-#'   the correlation, giving a network view of microbe to metabolite to aroma
-#'   relationships.
+#' @description 将 \code{run_cross_correlation()} 生成的显著特征对表合并为一个
+#'   \pkg{igraph} 对象。节点标注其所属组学层，边标注相关的符号与强度，从而形成
+#'   "微生物—代谢物—香气"关系的网络视图。
 #'
-#' @param pairs_list Named list of pair data.frames. Each element must contain
-#'   the columns feature_x, feature_y, r and padj, and the element name is
-#'   expected to follow the "layerX_vs_layerY" convention used by
-#'   \code{run_all_pairwise_correlation()}.
-#' @param r_threshold Minimum absolute correlation retained. Default: 0.7.
-#' @param padj_threshold Maximum adjusted p-value retained. Default: 0.05.
-#' @param max_edges Upper bound on the number of edges; when exceeded the
-#'   strongest associations are kept. Default: 2000.
-#' @param verbose Logical, print progress. Default: TRUE.
+#' @param pairs_list 特征对数据框的有名列表。每个元素必须包含
+#'   feature_x、feature_y、r 与 padj 列，且元素名称应遵循
+#'   \code{run_all_pairwise_correlation()} 使用的 "layerX_vs_layerY" 命名约定。
+#' @param r_threshold 保留的最小绝对相关系数。默认：0.7。
+#' @param padj_threshold 保留的最大校正后 p 值。默认：0.05。
+#' @param max_edges 边数的上限；超出时保留关联最强者。默认：2000。
+#' @param verbose 逻辑值，是否打印进度。默认：TRUE。
 #'
-#' @return A list (NULL when no edge survives) with:
+#' @return 一个列表（当没有边保留时为 NULL），含有：
 #'   \itemize{
-#'     \item \code{graph}: The igraph object.
-#'     \item \code{edges}: data.frame of retained edges.
-#'     \item \code{nodes}: data.frame of nodes with omics layer and degree.
+#'     \item \code{graph}: igraph 对象。
+#'     \item \code{edges}: 保留边的数据框。
+#'     \item \code{nodes}: 含组学层与度数的节点数据框。
 #'   }
 #'
 #' @examples
@@ -67,7 +63,7 @@ build_cross_omics_network <- function(pairs_list,
     df <- df[keep, , drop = FALSE]
     if (nrow(df) == 0) next
 
-    # Recover the layer names from the "a_vs_b" element name.
+    # 从 "a_vs_b" 的元素名中还原层名称。
     parts <- strsplit(nm, "_vs_", fixed = TRUE)[[1]]
     layer_x <- if (length(parts) == 2) parts[1] else "layer_x"
     layer_y <- if (length(parts) == 2) parts[2] else "layer_y"
@@ -106,7 +102,7 @@ build_cross_omics_network <- function(pairs_list,
   edges$direction <- ifelse(edges$r >= 0, "positive", "negative")
   edges$weight <- abs(edges$r)
 
-  # Node table: a feature keeps the layer it first appeared in.
+  # 节点表：一个特征保留其首次出现的层。
   node_names <- unique(c(edges$from, edges$to))
   node_layer <- c(
     stats::setNames(edges$from_layer, edges$from),
@@ -137,20 +133,18 @@ build_cross_omics_network <- function(pairs_list,
 }
 
 
-#' Extract hub nodes from a cross-omics network
+#' 从跨组学网络中提取枢纽节点
 #'
-#' @description Ranks nodes by degree and betweenness centrality to nominate the
-#'   taxa or compounds that sit at the centre of the association network and are
-#'   therefore candidate drivers of flavour formation.
+#' @description 按度数与中介中心性对节点排序，以筛选出位于关联网络中心、
+#'   因而可作为风味形成驱动因子的类群或化合物。
 #'
-#' @param network Result of \code{build_cross_omics_network()}, or a bare igraph
-#'   object.
-#' @param top_n Number of hubs returned. Default: 20.
-#' @param by Ranking criterion, "degree" or "betweenness". Default: "degree".
-#' @param verbose Logical, print progress. Default: TRUE.
+#' @param network \code{build_cross_omics_network()} 的结果，或原始 igraph 对象。
+#' @param top_n 返回的枢纽节点数。默认：20。
+#' @param by 排序依据，"degree" 或 "betweenness"。默认："degree"。
+#' @param verbose 逻辑值，是否打印进度。默认：TRUE。
 #'
-#' @return A data.frame with name, omics, degree, betweenness, closeness and the
-#'   mean absolute correlation of the incident edges.
+#' @return 数据框，含 name、omics、degree、betweenness、closeness 以及
+#'   关联边的平均绝对相关系数。
 #'
 #' @examples
 #' \dontrun{
@@ -181,7 +175,7 @@ get_network_hubs <- function(network, top_n = 20, by = "degree",
     rep(NA_character_, length(vnames))
   }
 
-  # Mean absolute correlation over the edges incident to each node.
+  # 每个节点关联边上的平均绝对相关系数。
   ew <- igraph::E(graph)$weight
   mean_r <- vapply(seq_along(vnames), function(i) {
     inc <- igraph::incident(graph, v = i, mode = "all")

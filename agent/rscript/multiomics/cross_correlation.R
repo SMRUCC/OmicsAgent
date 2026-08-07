@@ -267,20 +267,18 @@ run_all_pairwise_correlation <- function(mo, layer_pairs,
 }
 
 
-#' Summarise cross-correlation results per feature
+#' 对每个特征汇总跨组学相关性结果
 #'
-#' @description Aggregates a sparse pair table into a per-feature summary
-#'   (number of significant partners, mean and maximum absolute correlation),
-#'   useful to nominate driver taxa or hub metabolites.
+#' @description 将稀疏特征对表聚合为每个特征的汇总（显著伙伴数、平均与最大
+#'   绝对相关系数），可用于筛选驱动类群或核心枢纽代谢物。
 #'
-#' @param pairs A data.frame as returned in the \code{pairs} element of
-#'   \code{run_cross_correlation()}.
-#' @param side Which side to summarise, "x", "y" or "both". Default: "both".
-#' @param top_n Number of rows returned, ordered by number of partners.
-#'   Default: 50.
+#' @param pairs 数据框，格式同 \code{run_cross_correlation()} 返回的
+#'   \code{pairs} 元素。
+#' @param side 汇总哪一侧，"x"、"y" 或 "both"。默认："both"。
+#' @param top_n 返回的行数，按伙伴数量排序。默认：50。
 #'
-#' @return A data.frame with columns feature, omics, n_partners, n_positive,
-#'   n_negative, mean_abs_r and max_abs_r.
+#' @return 数据框，列包括 feature、omics、n_partners、n_positive、
+#'   n_negative、mean_abs_r 与 max_abs_r。
 #'
 #' @examples
 #' \dontrun{

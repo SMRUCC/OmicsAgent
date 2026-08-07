@@ -1,35 +1,31 @@
 # ==============================================================================
-# OmicsFlow: Cross-Omics Linear Regression
+# OmicsFlow：跨组学线性回归
 # ==============================================================================
-# Fits univariate linear models between features of two omics layers, one
-# treated as the explanatory variable (x) and the other as the response (y).
-# Supports feature-level slope / p-value / R2 tables and per-pair scatter plots
-# with the fitted line.
+# 在两个组学层的特征之间拟合单变量线性模型，其中一个层作为解释变量（x），
+# 另一个层作为响应变量（y）。支持特征级别的斜率 / p 值 / R2 表，以及带拟合
+# 线的逐对散点图。
 # ==============================================================================
 
-#' Univariate linear regression across two omics layers
+#' 两个组学层之间的单变量线性回归
 #'
-#' @description For every (x feature, y feature) pair shared across the same
-#'   samples, fits y ~ x with \code{lm()} and records the slope, intercept,
-#'   significance and goodness of fit. P-values are adjusted across all tested
-#'   pairs. This is a direct linear association screen complementary to the
-#'   rank-based correlation used elsewhere.
+#' @description 对于在相同样本上共享的每一对 (x 特征, y 特征)，用 \code{lm()}
+#'   拟合 y ~ x，并记录斜率、截距、显著性与拟合优度。p 值在所有被测特征对上
+#'   进行校正。这是一种直接的线性关联筛查，与别处使用的基于秩的相关互为补充。
 #'
-#' @param x_matrix A numeric matrix (features x samples) of the explanatory
-#'   layer.
-#' @param y_matrix A numeric matrix (features x samples) of the response layer.
-#' @param x_name Label for the explanatory layer. Default: "x".
-#' @param y_name Label for the response layer. Default: "y".
-#' @param p_adjust Multiple testing adjustment. Default: "BH".
-#' @param min_samples Minimum number of shared samples required. Default: 6.
-#' @param verbose Logical, print a short summary. Default: TRUE.
+#' @param x_matrix 解释变量层的数值矩阵（特征 x 样本）。
+#' @param y_matrix 响应变量层的数值矩阵（特征 x 样本）。
+#' @param x_name 解释变量层的标签。默认："x"。
+#' @param y_name 响应变量层的标签。默认："y"。
+#' @param p_adjust 多重检验校正方法。默认："BH"。
+#' @param min_samples 所需的最小共享样本数。默认：6。
+#' @param verbose 逻辑值，是否打印简短摘要。默认：TRUE。
 #'
-#' @return A list with:
+#' @return 一个列表：
 #'   \itemize{
-#'     \item \code{pairs}: data.frame of x_feature, y_feature, x_name, y_name,
-#'       slope, intercept, se, t_stat, p_value, padj, r_squared and n_samples.
-#'     \item \code{x_summary}: per-x-feature count of significant y responses.
-#'     \item \code{y_summary}: per-y-feature count of significant x predictors.
+#'     \item \code{pairs}: 数据框，含 x_feature、y_feature、x_name、y_name、
+#'       slope、intercept、se、t_stat、p_value、padj、r_squared 与 n_samples。
+#'     \item \code{x_summary}: 每个 x 特征对应的显著 y 响应计数。
+#'     \item \code{y_summary}: 每个 y 特征对应的显著 x 预测因子计数。
 #'   }
 #'
 #' @examples
@@ -55,7 +51,7 @@ run_cross_omics_regression <- function(x_matrix, y_matrix,
   X <- x_matrix[, common, drop = FALSE]
   Y <- y_matrix[, common, drop = FALSE]
 
-  # Drop zero-variance features in either layer.
+  # 去除任一层中零方差的特征。
   X <- drop_zero_variance(X, label = x_name, verbose = verbose)
   Y <- drop_zero_variance(Y, label = y_name, verbose = verbose)
 
@@ -64,22 +60,21 @@ run_cross_omics_regression <- function(x_matrix, y_matrix,
   }
 
   # ---------------------------------------------------------------------------
-  # For a univariate model y ~ x the regression statistics follow directly from
-  # the Pearson correlation r and the feature moments:
+  # 对于单变量模型 y ~ x，回归统计量可直接由 Pearson 相关系数 r 与特征矩得出：
   #   slope      = r * sd(y) / sd(x)
   #   intercept  = mean(y) - slope * mean(x)
   #   t_stat     = r * sqrt((n - 2) / (1 - r^2))
   #   p_value    = 2 * pt(-abs(t), df = n - 2)
   #   r_squared  = r^2
   #   se_slope   = slope / t_stat
-  # This is exactly equivalent to stats::lm(y ~ x) but avoids the huge overhead
-  # of one lm() call per pair, which makes large x-by-y screens tractable.
+  # 这与 stats::lm(y ~ x) 完全等价，但避免了每对特征调用一次 lm() 的巨大开销，
+  # 从而使大规模的 x×y 筛查变得可行。
   # ---------------------------------------------------------------------------
   n <- length(common)
   df <- n - 2L
 
-  # Centre every feature across samples; the cross product then yields the
-  # feature x feature sum of cross products (n_features_x x n_features_y).
+  # 对每个特征在样本方向上中心化；其叉积即给出
+  # 特征间交叉乘积之和（n_features_x x n_features_y）。
   Xc <- X - rowMeans(X)             # features x samples
   Yc <- Y - rowMeans(Y)             # features x samples
   Sxx <- rowSums(Xc * Xc)
@@ -168,18 +163,18 @@ run_cross_omics_regression <- function(x_matrix, y_matrix,
 }
 
 
-#' Scatter plot of a single cross-omics regression pair
+#' 单个跨组学回归特征对的散点图
 #'
-#' @description Draws the samples of one x-y feature pair with the fitted
-#'   regression line and 95% confidence band.
+#' @description 绘制某一对 x-y 特征在各样本上的散点，并叠加拟合回归线及
+#'   95% 置信带。
 #'
-#' @param x_values Numeric vector of the explanatory feature across samples.
-#' @param y_values Numeric vector of the response feature across samples.
-#' @param x_label Label for the x axis (feature + layer).
-#' @param y_label Label for the y axis (feature + layer).
-#' @param title Optional title.
+#' @param x_values 解释变量特征在各样本上的数值向量。
+#' @param y_values 响应变量特征在各样本上的数值向量。
+#' @param x_label x 轴标签（特征 + 层）。
+#' @param y_label y 轴标签（特征 + 层）。
+#' @param title 可选标题。
 #'
-#' @return A ggplot object.
+#' @return 一个 ggplot 对象。
 #'
 #' @examples
 #' \dontrun{
@@ -206,17 +201,16 @@ plot_regression_pair <- function(x_values, y_values,
 }
 
 
-#' Pick the top significant regression pairs for plotting
+#' 选取用于绘图的 Top 显著回归特征对
 #'
-#' @description Extracts the most significant (or highest-R2) x-y feature pairs
-#'   from a regression result so a manageable number of scatter plots can be
-#'   produced.
+#' @description 从回归结果中提取最显著（或 R2 最高）的 x-y 特征对，
+#'   以便生成数量可控的散点图。
 #'
-#' @param reg Result of \code{run_cross_omics_regression()}.
-#' @param top_n Number of pairs to return. Default: 12.
-#' @param by Ordering criterion: "padj" or "r2". Default: "padj".
+#' @param reg \code{run_cross_omics_regression()} 的结果。
+#' @param top_n 返回的特征对数量。默认：12。
+#' @param by 排序依据："padj" 或 "r2"。默认："padj"。
 #'
-#' @return A data.frame with the top \code{top_n} rows of \code{reg$pairs}.
+#' @return 包含 \code{reg$pairs} 中前 \code{top_n} 行的数据框。
 #'
 #' @export
 top_regression_pairs <- function(reg, top_n = 12, by = "padj") {
