@@ -1,23 +1,20 @@
 # ==============================================================================
-# OmicsFlow: Data Loading Utilities
+# OmicsFlow: 数据加载工具
 # ==============================================================================
-# Functions for loading omics data from CSV files
+# 用于从 CSV 文件加载组学数据的函数
 # ==============================================================================
 
-#' Load expression matrix from CSV file
+#' 从 CSV 文件加载表达矩阵
 #'
-#' @description Loads an expression matrix from a CSV file where rows are
-#'   features (genes, metabolites, etc.) and columns are samples. The first
-#'   column contains feature IDs and the first row contains sample IDs.
+#' @description 从 CSV 文件加载表达矩阵，其中行为特征（基因、代谢物等），
+#'   列为样本。第一列包含特征 ID，第一行包含样本 ID。
 #'
-#' @param file Path to the expression matrix CSV file.
-#' @param feature_id_col Name of the column containing feature IDs. If NULL,
-#'   uses the first column. Default: NULL.
-#' @param na_values Character vector of strings to interpret as NA. Default:
-#'   c("", "NA", "N/A", "null").
+#' @param file 表达矩阵 CSV 文件的路径。
+#' @param feature_id_col 含有特征 ID 的列名。若为 NULL，则使用第一列。默认：NULL。
+#' @param na_values 解释为 NA 的字符串字符向量。默认：
+#'   c("", "NA", "N/A", "null")。
 #'
-#' @return A numeric matrix with features as rows and samples as columns.
-#'   Row names are feature IDs, column names are sample IDs.
+#' @return 一个数值矩阵，行为特征、列为样本。行名为特征 ID，列名为样本 ID。
 #'
 #' @examples
 #' \dontrun{
@@ -39,7 +36,7 @@ load_expression_matrix <- function(file, feature_id_col = NULL,
   }
 
   if (any(duplicated(feature_ids))) {
-    warning("Duplicate feature IDs detected. Making unique.")
+    warning("检测到重复的特征 ID，正在进行唯一化处理。")
     feature_ids <- make.unique(feature_ids)
   }
 
@@ -52,15 +49,15 @@ load_expression_matrix <- function(file, feature_id_col = NULL,
 }
 
 
-#' Load sample metadata from CSV file
+#' 从 CSV 文件加载样本元数据
 #'
-#' @description Loads sample metadata from a CSV file. Required columns are
-#'   \code{ID} (matching expression matrix column names), \code{sample_name}
-#'   (display label for plots), and \code{sample_info} (grouping label).
+#' @description 从 CSV 文件加载样本元数据。必需列包括
+#'   \code{ID}（与表达矩阵的列名对应）、\code{sample_name}
+#'   （绘图时显示的标签）和 \code{sample_info}（分组标签）。
 #'
-#' @param file Path to the sample metadata CSV file.
+#' @param file 样本元数据 CSV 文件的路径。
 #'
-#' @return A data.frame with sample metadata. Row names are set to sample IDs.
+#' @return 含有样本元数据的数据框。行名设为样本 ID。
 #'
 #' @examples
 #' \dontrun{
@@ -74,7 +71,7 @@ load_sample_info <- function(file) {
   required_cols <- c("ID", "sample_name", "sample_info")
   missing_cols <- setdiff(required_cols, colnames(df))
   if (length(missing_cols) > 0) {
-    stop(paste("Missing required columns in sample info:",
+    stop(paste("样本信息中缺少必需的列：",
                paste(missing_cols, collapse = ", ")))
   }
 

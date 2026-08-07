@@ -310,7 +310,7 @@ run_kegg_pathway_gsva <- function(expr_matrix, kegg_mapping,
                                    method = "mean", min_size = 2,
                                    max_size = 500) {
   if (is.null(kegg_mapping) || nrow(kegg_mapping) == 0) {
-    warning("No KEGG pathway mapping provided.")
+    warning("未提供 KEGG 通路映射。")
     return(NULL)
   }
 
@@ -319,32 +319,32 @@ run_kegg_pathway_gsva <- function(expr_matrix, kegg_mapping,
     mode(expr_matrix) <- "numeric"
   }
 
-  # If feature_info provided, map KEGG compound IDs to feature row names
+  # 若提供了 feature_info，则将 KEGG 化合物 ID 映射到表达矩阵的行名
   if (!is.null(feature_info)) {
-    # Create mapping: KEGG ID -> feature name in expression matrix
+    # 建立映射：KEGG ID -> 表达矩阵中的特征名
     valid <- !is.na(feature_info[[kegg_col]]) & feature_info[[kegg_col]] != ""
     kegg_to_feature <- setNames(feature_info[[feature_id_col]][valid],
                                 feature_info[[kegg_col]][valid])
-    # Add feature_name column to mapping
+    # 在映射中加入 feature_name 列
     mapping <- kegg_mapping
     mapping$feature_name <- kegg_to_feature[mapping$compound_id]
     mapping <- mapping[!is.na(mapping$feature_name), ]
 
-    # Match to expression matrix
+    # 与表达矩阵匹配
     common_features <- intersect(mapping$feature_name, rownames(expr_matrix))
   } else {
-    # Direct match: compound IDs are row names in expr_matrix
+    # 直接匹配：化合物 ID 即表达矩阵的行名
     mapping <- kegg_mapping
     mapping$feature_name <- mapping$compound_id
     common_features <- intersect(mapping$compound_id, rownames(expr_matrix))
   }
 
   if (nrow(mapping) == 0 || length(common_features) == 0) {
-    warning("No matching compounds between expression matrix and KEGG mapping.")
+    warning("表达矩阵与 KEGG 映射之间未找到匹配的化合物。")
     return(NULL)
   }
 
-  # Group compounds by pathway
+  # 按通路对化合物分组
   pathways <- list()
   pathway_names <- character()
 
@@ -361,17 +361,17 @@ run_kegg_pathway_gsva <- function(expr_matrix, kegg_mapping,
   }
 
   if (length(pathways) == 0) {
-    warning("No KEGG pathways with sufficient compounds found.")
+    warning("未找到含有足够化合物的 KEGG 通路。")
     return(NULL)
   }
 
-  cat("  KEGG pathway GSVA:", length(pathways), "pathways\n")
+  cat("  KEGG 通路 GSVA：", length(pathways), " 条通路\n")
 
-  # Check if GSVA package is available
+  # 检查 GSVA 包是否可用
   use_gsva <- requireNamespace("GSVA", quietly = TRUE) && method %in% c("gsva", "ssgsea")
 
   if (use_gsva) {
-    # Use GSVA package
+    # 使用 GSVA 包
     gene_sets <- lapply(pathways, function(x) x)
     gsva_mat <- GSVA::gsva(expr_matrix, gene_sets, method = method,
                            min.sz = min_size, max.sz = max_size,
@@ -379,9 +379,9 @@ run_kegg_pathway_gsva <- function(expr_matrix, kegg_mapping,
     gsva_matrix <- as.matrix(gsva_mat)
     rownames(gsva_matrix) <- names(pathways)
   } else {
-    # Fallback: mean z-score per pathway
+    # 回退方案：每条通路使用平均 z-score
     if (!use_gsva) {
-      warning("Package 'GSVA' not available or method not one of c('gsva', 'ssgsea'). Using mean z-score per pathway.")
+      warning("未安装 'GSVA' 包，或 method 不是 c('gsva', 'ssgsea') 之一。将使用每条通路的平均 z-score。")
     }
 
     gsva_matrix <- matrix(NA, nrow = length(pathways), ncol = ncol(expr_matrix))
@@ -392,10 +392,10 @@ run_kegg_pathway_gsva <- function(expr_matrix, kegg_mapping,
       pw_compounds <- pathways[[i]]
       pw_expr <- expr_matrix[pw_compounds, , drop = FALSE]
 
-      # Z-score per compound, then mean across compounds per sample
-      pw_t <- t(as.matrix(pw_expr))  # samples x compounds
-      scaled_expr <- scale(pw_t)  # scale each column (compound)
-      # rowMeans gives mean across compounds per sample
+      # 先对每个化合物做 z-score，再在每个样本上对各化合物取均值
+      pw_t <- t(as.matrix(pw_expr))  # 样本 x 化合物
+      scaled_expr <- scale(pw_t)  # 对每一列（化合物）标准化
+      # rowMeans 给出每个样本跨化合物的均值
       gsva_matrix[i, ] <- rowMeans(scaled_expr, na.rm = TRUE)
     }
   }
@@ -408,33 +408,31 @@ run_kegg_pathway_gsva <- function(expr_matrix, kegg_mapping,
 }
 
 
-#' KEGG pathway-level WGCNA module eigengenes
+#' KEGG 通路层面的 WGCNA 模块特征基因（module eigengenes）
 #'
-#' @description Groups features by their KEGG pathway membership (via
-#'   compound-to-pathway mapping) and calculates module eigengenes (first
-#'   principal component) for each pathway. Returns a result compatible with
-#'   \code{wgcna_module_trait()} for trait association analysis. This corrects
-#'   the scientific error of treating compound IDs as module definitions.
+#' @description 按特征的 KEGG 通路归属（经由化合物-通路映射）进行分组，
+#'   并为每条通路计算模块特征基因（第一主成分）。返回的结果与
+#'   \code{wgcna_module_trait()} 兼容，可用于性状关联分析。此举纠正了把
+#'   化合物 ID 当作模块定义的科学性错误。
 #'
-#' @param expr_matrix A numeric matrix (features x samples).
-#' @param kegg_mapping Data.frame from \code{map_kegg_compound_to_pathway()}
-#'   with columns: compound_id, pathway_id, pathway_name.
-#' @param feature_info Data.frame with feature annotations. Must have a column
-#'   matching \code{feature_id_col} (feature names in expression matrix) and
-#'   \code{kegg_col} (KEGG compound IDs).
-#' @param feature_id_col Column name for feature IDs in feature_info. Default: "name".
-#' @param kegg_col Column name for KEGG compound IDs in feature_info. Default: "kegg".
-#' @param min_size Minimum pathway size. Default: 2.
-#' @param max_size Maximum pathway size. Default: 500.
+#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param kegg_mapping 来自 \code{map_kegg_compound_to_pathway()} 的数据框，
+#'   包含列：compound_id、pathway_id、pathway_name。
+#' @param feature_info 含有特征注释的数据框。必须包含与 \code{feature_id_col}
+#'   （表达矩阵中的特征名）和 \code{kegg_col}（KEGG 化合物 ID）对应的列。
+#' @param feature_id_col feature_info 中特征 ID 的列名。默认："name"。
+#' @param kegg_col feature_info 中 KEGG 化合物 ID 的列名。默认："kegg"。
+#' @param min_size 通路最小规模。默认：2。
+#' @param max_size 通路最大规模。默认：500。
 #'
-#' @return A list with:
+#' @return 一个列表，包含：
 #'   \itemize{
-#'     \item \code{MEs}: Data.frame of module eigengenes (samples x pathways).
-#'     \item \code{colors}: Named character vector of pathway assignment per feature.
-#'     \item \code{module_sizes}: Named integer vector of pathway sizes.
-#'     \item \code{modules}: Named list of feature vectors per pathway.
-#'     \item \code{n_modules}: Number of pathways.
-#'     \item \code{category_col}: "kegg_pathway".
+#'     \item \code{MEs}：模块特征基因的数据框（样本 x 通路）。
+#'     \item \code{colors}：每个特征的通路归属命名字符向量。
+#'     \item \code{module_sizes}：通路规模的命名整数向量。
+#'     \item \code{modules}：每条通路的特向量命名列表。
+#'     \item \code{n_modules}：通路数量。
+#'     \item \code{category_col}："kegg_pathway"。
 #'   }
 #'
 #' @examples
@@ -449,7 +447,7 @@ run_kegg_pathway_wgcna <- function(expr_matrix, kegg_mapping, feature_info,
                                     feature_id_col = "name", kegg_col = "kegg",
                                     min_size = 2, max_size = 500) {
   if (is.null(kegg_mapping) || nrow(kegg_mapping) == 0) {
-    warning("No KEGG pathway mapping provided.")
+    warning("未提供 KEGG 通路映射。")
     return(NULL)
   }
 
@@ -458,23 +456,23 @@ run_kegg_pathway_wgcna <- function(expr_matrix, kegg_mapping, feature_info,
     mode(expr_matrix) <- "numeric"
   }
 
-  # Map KEGG compound IDs to feature names in expression matrix
+  # 将 KEGG 化合物 ID 映射到表达矩阵中的特征名
   valid <- !is.na(feature_info[[kegg_col]]) & feature_info[[kegg_col]] != ""
   kegg_to_feature <- setNames(feature_info[[feature_id_col]][valid],
                               feature_info[[kegg_col]][valid])
 
-  # Build expanded mapping: feature_name -> pathway
+  # 构建扩展映射：feature_name -> pathway
   mapping <- kegg_mapping
   mapping$feature_name <- kegg_to_feature[mapping$compound_id]
   mapping <- mapping[!is.na(mapping$feature_name), ]
   mapping <- mapping[mapping$feature_name %in% rownames(expr_matrix), ]
 
   if (nrow(mapping) == 0) {
-    warning("No matching features between expression matrix and KEGG mapping.")
+    warning("表达矩阵与 KEGG 映射之间未找到匹配的特征。")
     return(NULL)
   }
 
-  # Group features by pathway
+  # 按通路对特征分组
   modules <- list()
   for (pw in unique(mapping$pathway_id)) {
     pw_mapping <- mapping[mapping$pathway_id == pw, ]
@@ -489,13 +487,13 @@ run_kegg_pathway_wgcna <- function(expr_matrix, kegg_mapping, feature_info,
   }
 
   if (length(modules) == 0) {
-    warning("No KEGG pathways with sufficient features found.")
+    warning("未找到含有足够特征的 KEGG 通路。")
     return(NULL)
   }
 
-  cat("  KEGG pathway modules:", length(modules), "pathways\n")
+  cat("  KEGG 通路模块：", length(modules), " 条通路\n")
 
-  # Calculate module eigengenes (first PC) per pathway
+  # 为每条通路计算模块特征基因（第一主成分）
   me_list <- list()
   colors <- setNames(rep("grey", nrow(expr_matrix)), rownames(expr_matrix))
 
@@ -522,11 +520,11 @@ run_kegg_pathway_wgcna <- function(expr_matrix, kegg_mapping, feature_info,
     colors[mod_features] <- mod_name
   }
 
-  # Combine eigengenes
+  # 合并特征基因
   MEs <- as.data.frame(do.call(cbind, me_list))
   rownames(MEs) <- colnames(expr_matrix)
 
-  # Module sizes
+  # 模块规模
   module_sizes <- sapply(modules, length)
 
   return(list(
