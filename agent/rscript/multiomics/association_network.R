@@ -123,8 +123,12 @@ select_top_features <- function(mat, top_n = NULL, label = "matrix",
   if (pf < 2) return(NULL)
   out <- numeric(n_perm)
   for (i in seq_len(n_perm)) {
-    a <- mat[sample.int(pf, 1), ]
-    b <- mat[sample.int(pf, 1), ]
+    # 抽取两个**不同**的Feature。原实现两次独立抽样可能取到同一行，
+    # 此时 a 与打乱后的 b 来自同一分布，会系统性抬高零分布，
+    # 使经验 p 值偏保守。
+    ij <- sample.int(pf, size = min(2L, pf), replace = FALSE)
+    a <- mat[ij[1], ]
+    b <- mat[if (length(ij) > 1) ij[2] else ij[1], ]
     # 随机打乱 b 的样本顺序，构造无关联对
     b_perm <- sample(b)
     res <- tryCatch(minerva::mine(a, b_perm)$MIC, error = function(e) NA_real_)
@@ -358,9 +362,11 @@ run_cross_omics_association <- function(mat_x, mat_y,
                                         n_sample = ncol(mat_x), verbose = verbose)
     if (!is.null(null_dist) && length(null_dist) > 0) {
       thr <- stats::quantile(null_dist, probs = 0.95, na.rm = TRUE)
+      n_null <- sum(!is.na(null_dist))
       mic_p[cand] <- sapply(mic[cand], function(m) {
         if (is.na(m)) return(NA_real_)
-        mean(null_dist >= m, na.rm = TRUE)
+        # (b+1)/(R+1) 伪计数：避免经验 p 恰为 0 导致 Fisher 合并 p 值为 0
+        (sum(null_dist >= m, na.rm = TRUE) + 1) / (n_null + 1)
       })
       if (verbose) {
         cat(sprintf("[assoc] MIC empirical p (95%% null threshold = %.3f).\n", thr))
@@ -483,9 +489,11 @@ run_intra_omics_association <- function(mat, name = "omics",
                                         n_sample = ncol(mat), verbose = verbose)
     if (!is.null(null_dist) && length(null_dist) > 0) {
       thr <- stats::quantile(null_dist, probs = 0.95, na.rm = TRUE)
+      n_null <- sum(!is.na(null_dist))
       mic_p[cand] <- sapply(mic[cand], function(m) {
         if (is.na(m)) return(NA_real_)
-        mean(null_dist >= m, na.rm = TRUE)
+        # (b+1)/(R+1) 伪计数：避免经验 p 恰为 0 导致 Fisher 合并 p 值为 0
+        (sum(null_dist >= m, na.rm = TRUE) + 1) / (n_null + 1)
       })
       if (verbose) {
         cat(sprintf("[assoc] MIC empirical p (95%% null threshold = %.3f).\n", thr))
@@ -525,21 +533,42 @@ run_intra_omics_association <- function(mat, name = "omics",
 # 内部工具：由边表构建节点表（含 degree）
 # -----------------------------------------------------------------------------
 #' Build node table (name, omics, degree) from an edge table
+#'
+#' @details degree 只统计**显著**边（association != "not_significant"），
+#'   因为不显著边在网络中不会被绘制，把它们计入会让每个节点的度都接近
+#'   "参与的总配对数"，从而完全失去区分度。
+#'
+#'   历史实现用带重复名的 `names_vec` 构造 `deg` 命名向量，再通过
+#'   `deg[s] <- deg[s] + 1L` 按名字累加。R 的按名索引只会命中**第一个**同名
+#'   元素，导致绝大多数计数被写到重复项上而丢失，degree 统计整体错误；
+#'   同时逐边 for 循环在数万条边时非常慢。此处改为对唯一节点建立索引后
+#'   用 `tabulate()` 向量化统计。
+#'
 #' @noRd
 .build_node_table <- function(names_vec, omics_vec, edges) {
-  deg <- structure(rep(0L, length(names_vec)),
-                   names = names_vec)
-  for (i in seq_len(nrow(edges))) {
-    s <- edges$source[i]; t <- edges$target[i]
-    if (!is.na(deg[s])) deg[s] <- deg[s] + 1L
-    if (!is.na(deg[t])) deg[t] <- deg[t] + 1L
-  }
   # 去重（source/target 中同一节点会出现多次）
   uniq <- !duplicated(names_vec)
+  node_names <- names_vec[uniq]
+  node_omics <- omics_vec[uniq]
+  n_nodes <- length(node_names)
+
+  deg <- integer(n_nodes)
+  if (!is.null(edges) && nrow(edges) > 0) {
+    keep <- edges$association != "not_significant"
+    keep[is.na(keep)] <- FALSE
+    if (any(keep)) {
+      si <- match(edges$source[keep], node_names)
+      ti <- match(edges$target[keep], node_names)
+      idx <- c(si, ti)
+      idx <- idx[!is.na(idx)]
+      deg <- tabulate(idx, nbins = n_nodes)
+    }
+  }
+
   data.frame(
-    name  = names_vec[uniq],
-    omics = omics_vec[uniq],
-    degree = as.integer(deg[names_vec[uniq]]),
+    name   = node_names,
+    omics  = node_omics,
+    degree = as.integer(deg),
     stringsAsFactors = FALSE
   )
 }
