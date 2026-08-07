@@ -271,11 +271,12 @@ diff_functional_category <- function(func_result, sample_info,
                                      fc_threshold = 0.5) {
   profile_mat <- func_result$profile_matrix
 
-  # 使用 limma
-  de_res <- run_limma_de(profile_mat, sample_info,
-                        group_col = group_col,
-                        control_group = control_group,
-                        p_adjust = p_adjust)
+  # 使用 limma（run_limma 返回 list，取 $results 为差异结果数据框）
+  de_res <- run_limma(profile_mat, sample_info,
+                      group_col = group_col,
+                      control_group = control_group,
+                      exclude_groups = NULL,
+                      p_adj_method = p_adjust)$results
 
   # 添加显著性标记
   de_res$significant <- abs(de_res$logFC) >= fc_threshold &

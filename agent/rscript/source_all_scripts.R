@@ -25,23 +25,41 @@
 # -----------------------------------------------------------------------------
 # 0. 准备工作：定位本脚本所在目录（即 rscript/ 根目录）
 # -----------------------------------------------------------------------------
-# 若通过 Rscript 直接运行，sys.frames 为空，使用首个命令行参数或脚本路径
+# 鲁棒定位本脚本真实路径，需覆盖三种调用场景：
+#   a) Rscript -e 'source(".../source_all_scripts.R")'          —— 顶层 source
+#   b) Rscript xxx/verify.R 内部再 source(".../source_all_scripts.R")  —— 嵌套 source
+#   c) 交互式 source()
+# 之前仅用 sys.frame(1)$ofile 或 --file=，在场景 (b) 下会把"调用方脚本"误判
+# 为本脚本，导致 script_dir 指向调用方目录、递归扫描并无限递归 source 自身，
+# 触发 "evaluation nested too deeply: infinite recursion"。
+# 修复：回溯整个调用栈 (sys.frames) 找到 ofile 以本文件名为结尾的 frame。
 this_file <- tryCatch(
   {
-    # 优先用当前脚本路径推断目录
-    script_path <- sys.frame(1)$ofile
-    if (is.null(script_path)) {
-      # 交互式 source 时 ofile 可能为 NULL，退而使用命令行参数
+    self_name <- "source_all_scripts.R"
+    # 1) 在调用栈中查找本脚本自身被 source 的 frame
+    nframes <- sys.nframe()
+    found <- NULL
+    if (nframes >= 1) {
+      for (i in seq_len(nframes)) {
+        of <- tryCatch(sys.frame(i)$ofile, error = function(e) NULL)
+        if (!is.null(of) && tolower(basename(of)) == tolower(self_name)) {
+          found <- of
+          break
+        }
+      }
+    }
+    if (!is.null(found)) {
+      found
+    } else {
+      # 2) 退而使用 --file= 命令行参数（仅直接 Rscript 运行时有效）
       args <- commandArgs(trailingOnly = FALSE)
       file_arg <- grep("^--file=", args, value = TRUE)
       if (length(file_arg) > 0) {
         sub("^--file=", "", file_arg[1])
       } else {
-        # 最后回退：使用当前工作目录下的 rscript 目录
-        file.path(getwd(), "rscript", "source_all_scripts.R")
+        # 3) 最后回退：使用当前工作目录下的 rscript 目录
+        file.path(getwd(), "rscript", self_name)
       }
-    } else {
-      script_path
     }
   },
   error = function(e) file.path(getwd(), "rscript", "source_all_scripts.R")

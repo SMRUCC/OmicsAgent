@@ -126,9 +126,18 @@ run_go_enrichment <- function(significant_proteins, all_proteins,
       n_bg_total <- length(all_proteins)
 
       # Fisher's exact test
+      # 2x2 列联表：
+      #              in_term      not_in_term
+      #   significant  n_sig_in_term   n_sig_total - n_sig_in_term
+      #   background    n_bg_in_term    n_bg_total - n_bg_in_term
+      # 同时减去显著部分得到各非显著格：
+      #   not_in_term & background = (n_bg_total - n_bg_in_term) - (n_sig_total - n_sig_in_term)
+      n_not_in_term_sig  <- n_sig_total - n_sig_in_term
+      n_in_term_bg       <- n_bg_in_term - n_sig_in_term
+      n_not_in_term_bg   <- (n_bg_total - n_sig_total) - n_in_term_bg
       m <- matrix(c(
-        n_sig_in_term, n_sig_total - n_sig_in_term,
-        n_bg_in_term - n_sig_in_term, n_bg_total - n_bg_total
+        n_sig_in_term,      n_not_in_term_sig,
+        n_in_term_bg,       n_not_in_term_bg
       ), nrow = 2)
 
       ft <- stats::fisher.test(m, alternative = "greater")
@@ -162,8 +171,17 @@ run_go_enrichment <- function(significant_proteins, all_proteins,
                 ont, nrow(results), p_threshold))
   }
 
-  # 合并结果
-  combined <- do.call(rbind, results_list)
+  # 合并结果（各本体可能全为空，需做空结果保护避免 do.call(rbind,...) 返回 NULL）
+  if (length(results_list) > 0 && !all(sapply(results_list, function(d) is.null(d) || nrow(d) == 0))) {
+    combined <- do.call(rbind, results_list[!sapply(results_list, function(d) is.null(d) || nrow(d) == 0)])
+  } else {
+    combined <- data.frame(
+      ontology = character(), go_id = character(), n_significant = integer(),
+      n_background = integer(), expected = numeric(), fold_enrichment = numeric(),
+      p_value = numeric(), p_adj = numeric(), genes = character(),
+      stringsAsFactors = FALSE
+    )
+  }
   rownames(combined) <- NULL
 
   return(list(

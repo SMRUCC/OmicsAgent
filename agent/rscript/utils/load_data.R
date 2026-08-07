@@ -134,7 +134,17 @@ load_feature_info <- function(file, id_col = "ID") {
     }
   }
 
-  rownames(df) <- as.character(df[[id_col]])
+  # 重复 ID 兜底：与 load_expression_matrix() 行为保持一致
+  # （对重复 id 做 make.unique 并给出警告，而非直接 stop）。
+  # 注意：原始输入可能存在 Excel 损坏值（如 "#NAME?"）造成的重复，
+  # 此处统一用 make.unique 保证行名唯一，避免后续行名赋值直接报错。
+  id_vals <- as.character(df[[id_col]])
+  if (any(duplicated(id_vals))) {
+    warning(sprintf("Duplicate values in id_col='%s' (%d 个)，已通过 make.unique 去重。",
+                    id_col, sum(duplicated(id_vals))))
+    id_vals <- make.unique(id_vals)
+  }
+  rownames(df) <- id_vals
   return(df)
 }
 
