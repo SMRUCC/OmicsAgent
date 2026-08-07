@@ -309,8 +309,9 @@ Public MustInherit Class AnalysisModuleBase
 {PerOmicsOutputConvention(CsvFileNamePrefix)}
 
 # 重要注意事项
-- 需要时使用 source() 函数从 rscript/ 目录加载辅助脚本
-- 所有可视化均使用 ggplot2
+- 为了保证分析结果可复现以及绘图标准划，你应该优先使用 source() 函数从 {AgentConfig.RScriptsDir} 中的对应子目录中加载模块化的辅助脚本，并使用其中的R函数做分析以及绘图
+- {AgentConfig.RScriptsDir}/readme.md 文件为可利用的标准R函数模块的索引，可以阅读这个文件了解你有哪些标准模块函数可以使用
+- 所有可视化均使用 ggplot2，优先使用从 {AgentConfig.RScriptsDir} 子目录中加载的辅助函数进行绘图
 - 所有输出文件使用绝对路径保存
 - 脚本须自包含，可通过 Rscript 直接运行
 - 将进度信息输出到 stdout
