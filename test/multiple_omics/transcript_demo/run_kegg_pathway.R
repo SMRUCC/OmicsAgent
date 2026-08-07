@@ -56,29 +56,36 @@ saveRDS(kegg_mapping, file.path(CACHE_DIR, "kegg_mapping.rds"))
 export_table(kegg_mapping, output_dir = RESULTS_DIR, filename = "07_kegg_mapping.csv")
 
 # =============================================================================
-# SECTION 3  差异基因 KEGG 通路富集
+# SECTION 3  差异基因 KEGG 通路富集（直接对 KO 号做超几何检验）
 # =============================================================================
 section("SECTION 3  差异基因 KEGG 通路富集")
-step("run_kegg_pathway_enrich (query=差异基因, 背景=全部有KO注释基因)")
+# 将基因名映射回 KO 号
+name_to_ko <- setNames(as.character(feature_info$kegg),
+                       as.character(feature_info$feature_id))
+sig_kos <- unique(na.omit(name_to_ko[match(sig_ids, names(name_to_ko))]))
+all_kos <- unique(na.omit(name_to_ko[match(all_ids, names(name_to_ko))]))
+cat(sprintf("  差异基因中有 KO 注释: %d / %d\n", length(sig_kos), length(sig_ids)))
+cat(sprintf("  背景基因中有 KO 注释: %d / %d\n", length(all_kos), length(all_ids)))
+
+step("run_kegg_pathway_enrich (significant_compounds=差异KO, all_compounds=背景KO)")
 kegg_enrich <- run_kegg_pathway_enrich(
-  feature_info        = feature_info,
-  expr_mat            = expr_mat,
-  query_compounds     = sig_ids,        # 差异基因（feature_info 行名）
-  kegg_col            = "kegg",
-  kegg_mapping        = kegg_mapping,
-  cache_dir           = kegg_cache_dir,
-  p_threshold         = P_THRESHOLD,
-  min_pathway_size    = 2
+  significant_compounds = sig_kos,
+  all_compounds         = all_kos,
+  kegg_mapping          = kegg_mapping,
+  p_adj_method          = "BH",
+  min_size              = 2
 )
-if (!is.null(kegg_enrich$enrichment_table)) {
-  mat_dim(kegg_enrich$enrichment_table, "enrichment_table")
-  cat(sprintf("  显著通路(p<%g): %d\n", P_THRESHOLD,
-              sum(kegg_enrich$enrichment_table$p_value < P_THRESHOLD, na.rm = TRUE)))
-  export_table(kegg_enrich$enrichment_table, output_dir = RESULTS_DIR,
-               filename = "07_kegg_enrich.csv")
-  if (nrow(kegg_enrich$enrichment_table) > 0) {
+if (!is.null(kegg_enrich) && nrow(kegg_enrich) > 0) {
+  mat_dim(kegg_enrich, "enrichment_table")
+  enr_out <- kegg_enrich
+  enr_out$pathway_id_char <- rownames(kegg_enrich)
+  rownames(enr_out) <- NULL
+  cat(sprintf("  显著通路(p_adj<%g): %d / %d\n", P_THRESHOLD,
+              sum(enr_out$p_adj < P_THRESHOLD, na.rm = TRUE), nrow(enr_out)))
+  export_table(enr_out, output_dir = RESULTS_DIR, filename = "07_kegg_enrich.csv")
+  if (nrow(enr_out) > 0) {
     step("富集条形图")
-    p_enr <- plot_kegg_enrichment(kegg_enrich, top_n = min(15, nrow(kegg_enrich$enrichment_table)))
+    p_enr <- plot_kegg_enrichment(kegg_enrich, top_n = min(15, nrow(enr_out)))
     export_plot(p_enr, output_dir = FIGURES_DIR, filename = "07_kegg_enrich")
   }
 } else {
@@ -86,29 +93,28 @@ if (!is.null(kegg_enrich$enrichment_table)) {
 }
 
 # =============================================================================
-# SECTION 4  全样本 KEGG 通路活性 GSVA 评分
+# SECTION 4  全样本 KEGG 通路活性评分（mean 聚合，绕开联网）
 # =============================================================================
-section("SECTION 4  全样本 KEGG 通路活性 GSVA 评分")
-step("run_kegg_pathway_gsva (kegg_mapping 传入，绕开联网)")
+section("SECTION 4  全样本 KEGG 通路活性评分")
+step("run_kegg_pathway_gsva (expr_matrix, kegg_mapping 传入)")
 gsva_res <- run_kegg_pathway_gsva(
+  expr_matrix   = expr_log2,
   feature_info  = feature_info,
-  expr_mat      = expr_mat,
+  feature_id_col = "name",
   kegg_col      = "kegg",
   kegg_mapping  = kegg_mapping,
-  cache_dir     = kegg_cache_dir
+  method        = "mean"
 )
-if (!is.null(gsva_res$activity_matrix)) {
-  mat_dim(gsva_res$activity_matrix, "gsva activity_matrix (pathway x sample)")
-  # 转置为 sample x pathway 便于下游
-  act_df <- as.data.frame(t(gsva_res$activity_matrix))
+if (!is.null(gsva_res$gsva_matrix)) {
+  mat_dim(gsva_res$gsva_matrix, "gsva_matrix (pathway x sample)")
+  act_df <- as.data.frame(t(gsva_res$gsva_matrix))
   act_df$sample_id <- rownames(act_df)
-  export_table(act_df, output_dir = RESULTS_DIR, filename = "07_kegg_gsva_activity.csv")
-  # 通路活性热图
+  export_table(act_df, output_dir = RESULTS_DIR, filename = "07_kegg_activity.csv")
   step("通路活性热图")
   p_act <- plot_kegg_pathway_activity(gsva_res)
-  export_plot(p_act, output_dir = FIGURES_DIR, filename = "07_kegg_gsva_activity")
+  export_plot(p_act, output_dir = FIGURES_DIR, filename = "07_kegg_activity")
 } else {
-  cat("  [WARN] GSVA activity_matrix 为空，跳过活性评分导出。\n")
+  cat("  [WARN] gsva_matrix 为空，跳过活性评分导出。\n")
 }
 
 step("KEGG 通路分析完成")

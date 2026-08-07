@@ -481,6 +481,62 @@ run_kegg_pathway_gsva <- function(expr_matrix, kegg_mapping,
   ))
 }
 
+# =============================================================================
+# KEGG 通路可视化（通用能力补全）
+# 说明：run_kegg_pathway_enrich / run_kegg_pathway_gsva 此前缺少配套绘图函数，
+#       调用方无法获得可视化产出。此处补实现两个通用 ggplot2 绘图函数，
+#       仅读取既有返回结构，不引入新的分析语义，向后兼容。
+# =============================================================================
+
+plot_kegg_enrichment <- function(enrich_res, top_n = 20) {
+  if (is.null(enrich_res) || nrow(enrich_res) == 0) {
+    warning("plot_kegg_enrichment: 富集结果为空，返回 NULL。")
+    return(NULL)
+  }
+  df <- enrich_res
+  df$pathway_id <- rownames(enrich_res)
+  df$label <- ifelse(!is.na(df$pathway_name) & df$pathway_name != "",
+                     df$pathway_name, df$pathway_id)
+  # pathway_name 可能重复（不同 pathway_id 同名），用 make.unique 去重避免 factor 报错
+  df$label <- make.unique(as.character(df$label), sep = "·")
+  df$neg_log10_p <- -log10(pmax(df$p_value, 1e-300))
+  df <- df[order(df$p_value), ][seq_len(min(top_n, nrow(df))), , drop = FALSE]
+  df$label <- factor(df$label, levels = rev(df$label))
+  df$sig <- ifelse(is.na(df$p_adj), FALSE, df$p_adj < 0.05)
+  ggplot2::ggplot(df, ggplot2::aes(x = neg_log10_p, y = label, fill = sig)) +
+    ggplot2::geom_col() +
+    ggplot2::scale_fill_manual(values = c("FALSE" = "#B0B0B0", "TRUE" = "#E64B35"),
+                               guide = "none") +
+    ggplot2::labs(x = expression(-log[10](p)), y = "KEGG Pathway",
+                  title = "KEGG Pathway Enrichment") +
+    ggplot2::theme_bw() +
+    ggplot2::theme(plot.title = ggplot2::element_text(hjust = 0.5))
+}
+
+plot_kegg_pathway_activity <- function(gsva_res, top_n = 30,
+                                       sample_info = NULL, group_col = NULL) {
+  if (is.null(gsva_res) || is.null(gsva_res$gsva_matrix)) {
+    warning("plot_kegg_pathway_activity: gsva_matrix 为空，返回 NULL。")
+    return(NULL)
+  }
+  mat <- gsva_res$gsva_matrix
+  rv <- matrixStats::rowVars(mat)
+  keep <- order(rv, decreasing = TRUE)[seq_len(min(top_n, nrow(mat)))]
+  sub <- mat[keep, , drop = FALSE]
+  long <- reshape2::melt(sub)
+  colnames(long) <- c("pathway", "sample", "activity")
+  if (!is.null(sample_info) && !is.null(group_col) &&
+      nrow(sample_info) == ncol(mat)) {
+    long$group <- sample_info[[group_col]][match(long$sample, rownames(sample_info))]
+  }
+  ggplot2::ggplot(long, ggplot2::aes(x = sample, y = pathway, fill = activity)) +
+    ggplot2::geom_tile() +
+    ggplot2::scale_fill_gradient2(low = "#1F77B4", mid = "white", high = "#D62728") +
+    ggplot2::labs(x = "Sample", y = "KEGG Pathway", fill = "Activity\n(z-score)") +
+    ggplot2::theme_minimal() +
+    ggplot2::theme(axis.text.x = ggplot2::element_blank())
+}
+
 
 #' KEGG 通路层面的 WGCNA 模块Feature基因（module eigengenes）
 #'
