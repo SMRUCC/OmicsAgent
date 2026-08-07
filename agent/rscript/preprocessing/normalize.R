@@ -1,29 +1,27 @@
 # ==============================================================================
-# OmicsFlow: Data Normalization
+# OmicsFlow: 数据归一化
 # ==============================================================================
-# Normalize expression data
+# 对表达数据进行归一化
 # ==============================================================================
 
-#' Normalize by sample total (relative abundance)
+#' 按样本总和归一化（相对丰度）
 #'
-#' @description Normalizes each sample by its total sum, converting values to
-#'   relative abundance. This is commonly used in metabolomics and microbiome
-#'   data to correct for differences in total signal intensity between samples.
+#' @description 将每个样本按其总和归一化，转换为相对丰度。该方法在代谢组学
+#'   与微生物组数据中常用于校正样本间总信号强度的差异。
 #'
-#' @param expr_matrix A numeric matrix (features x samples).
-#' @param scale_factor Numeric, scaling factor. Default: 1e6 (for ppm).
-#'   Use 1 for proportional values, 1e6 for parts-per-million.
-#' @param multiply_by Numeric multiplier applied after normalization.
-#'   Default: 1e6.
+#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param scale_factor 数值型，缩放因子。默认：1e6（用于 ppm）。
+#'   比例值用 1，百万分比（ppm）用 1e6。
+#' @param multiply_by 归一化后乘上的数值型倍数。默认：1e6。
 #'
-#' @return A numeric matrix normalized by sample total.
+#' @return 按样本总和归一化后的数值矩阵。
 #'
 #' @examples
 #' \dontrun{
-#' # Normalize to relative abundance (proportions summing to 1)
+#' # 归一化为相对丰度（各比例之和为 1）
 #' mat_norm <- normalize_sample_total(expr_matrix, multiply_by = 1)
 #'
-#' # Normalize to parts-per-million
+#' # 归一化为百万分比（ppm）
 #' mat_norm <- normalize_sample_total(expr_matrix, multiply_by = 1e6)
 #' }
 #'
@@ -34,26 +32,26 @@ normalize_sample_total <- function(expr_matrix, scale_factor = 1, multiply_by = 
     mode(expr_matrix) <- "numeric"
   }
 
-  # Calculate column sums
+  # 计算列总和
   col_sums <- colSums(expr_matrix, na.rm = TRUE)
 
-  # Avoid division by zero
+  # 避免除以零
   col_sums[col_sums == 0] <- 1
 
-  # Normalize
+  # 归一化
   normalized <- t(t(expr_matrix) / col_sums) * multiply_by
 
   return(normalized)
 }
 
 
-#' Normalize by median (sample median)
+#' 按中位数归一化（样本中位数）
 #'
-#' @description Normalizes each sample by its median value.
+#' @description 将每个样本按其中位数取值进行归一化。
 #'
-#' @param expr_matrix A numeric matrix (features x samples).
+#' @param expr_matrix 数值矩阵（特征 x 样本）。
 #'
-#' @return A numeric matrix normalized by sample median.
+#' @return 按样本中位数归一化后的数值矩阵。
 #'
 #' @examples
 #' \dontrun{

@@ -1,22 +1,21 @@
 # ==============================================================================
-# OmicsFlow: Export Utilities
+# OmicsFlow: 导出工具
 # ==============================================================================
-# Export plots and data to PDF/PNG
+# 将图形与数据导出为 PDF/PNG
 # ==============================================================================
 
-#' Export a ggplot to PDF and PNG
+#' 将 ggplot 图形导出为 PDF 与 PNG
 #'
-#' @description Saves a ggplot object to both PDF and PNG files with
-#'   publication-quality settings.
+#' @description 以发表级质量设置将 ggplot 对象同时保存为 PDF 与 PNG 文件。
 #'
-#' @param plot A ggplot object.
-#' @param output_dir Directory for output files.
-#' @param filename Base filename (without extension).
-#' @param width Width in inches. Default: 8.
-#' @param height Height in inches. Default: 6.
-#' @param dpi DPI for PNG. Default: 300.
+#' @param plot 一个 ggplot 对象。
+#' @param output_dir 输出文件所在目录。
+#' @param filename 基础文件名（不含扩展名）。
+#' @param width 宽度（英寸）。默认：8。
+#' @param height 高度（英寸）。默认：6。
+#' @param dpi PNG 的 DPI。默认：300。
 #'
-#' @return Invisible list of file paths.
+#' @return 文件路径的不可见列表。
 #'
 #' @examples
 #' \dontrun{
@@ -31,12 +30,12 @@ export_plot <- function(plot, output_dir = ".", filename = "plot",
   pdf_file <- file.path(output_dir, paste0(filename, ".pdf"))
   png_file <- file.path(output_dir, paste0(filename, ".png"))
 
-  # PDF
+  # 保存 PDF
   grDevices::pdf(pdf_file, width = width, height = height)
   print(plot)
   grDevices::dev.off()
 
-  # PNG
+  # 保存 PNG
   grDevices::png(png_file, width = width * dpi, height = height * dpi,
                  res = dpi, type = "cairo")
   print(plot)
@@ -46,15 +45,15 @@ export_plot <- function(plot, output_dir = ".", filename = "plot",
 }
 
 
-#' Export a heatmap (ComplexHeatmap or pheatmap) to PDF and PNG
+#' 将热图（ComplexHeatmap 或 pheatmap）导出为 PDF 与 PNG
 #'
-#' @param heatmap A heatmap object.
-#' @param output_dir Directory for output files.
-#' @param filename Base filename.
-#' @param width Width in inches. Default: 10.
-#' @param height Height in inches. Default: 8.
+#' @param heatmap 一个热图对象。
+#' @param output_dir 输出文件所在目录。
+#' @param filename 基础文件名。
+#' @param width 宽度（英寸）。默认：10。
+#' @param height 高度（英寸）。默认：8。
 #'
-#' @return Invisible list of file paths.
+#' @return 文件路径的不可见列表。
 #'
 #' @export
 export_heatmap <- function(heatmap, output_dir = ".", filename = "heatmap",
@@ -64,7 +63,7 @@ export_heatmap <- function(heatmap, output_dir = ".", filename = "heatmap",
   pdf_file <- file.path(output_dir, paste0(filename, ".pdf"))
   png_file <- file.path(output_dir, paste0(filename, ".png"))
 
-  # PDF
+  # 保存 PDF
   grDevices::pdf(pdf_file, width = width, height = height)
   if (inherits(heatmap, "Heatmap") || inherits(heatmap, "HeatmapList")) {
     ComplexHeatmap::draw(heatmap)
@@ -76,7 +75,7 @@ export_heatmap <- function(heatmap, output_dir = ".", filename = "heatmap",
   }
   grDevices::dev.off()
 
-  # PNG
+  # 保存 PNG
   grDevices::png(png_file, width = width * 300, height = height * 300,
                  res = 300, type = "cairo")
   if (inherits(heatmap, "Heatmap") || inherits(heatmap, "HeatmapList")) {
@@ -93,20 +92,19 @@ export_heatmap <- function(heatmap, output_dir = ".", filename = "heatmap",
 }
 
 
-#' Export data frame to CSV
+#' 将数据框导出为 CSV
 #'
-#' @description Exports a data frame to a CSV file. When \code{use_rownames = TRUE}
-#'   (default), row names are written as the first column, which is useful for
-#'   molecular-level analysis results where the feature ID serves as the row name.
+#' @description 将数据框导出为 CSV 文件。当 \code{use_rownames = TRUE}
+#'   （默认）时，行名会作为第一列写出，这对于以特征 ID 作为行名的
+#'   分子层面分析结果非常有用。
 #'
-#' @param data Data frame to export.
-#' @param output_dir Directory for output.
-#' @param filename Filename (with or without .csv extension).
-#' @param use_rownames Logical, whether to write row names as the first column.
-#'   Default: TRUE.
-#' @param id_col_name Character, name for the row names column. Default: "feature_id".
+#' @param data 待导出的数据框。
+#' @param output_dir 输出所在目录。
+#' @param filename 文件名（可带或不带 .csv 扩展名）。
+#' @param use_rownames 逻辑值，是否将行名作为第一列写出。默认：TRUE。
+#' @param id_col_name 字符型，行名列的列名。默认："feature_id"。
 #'
-#' @return Invisible path to exported file.
+#' @return 导出文件的可视（invisible）路径。
 #'
 #' @examples
 #' \dontrun{
@@ -124,7 +122,7 @@ export_table <- function(data, output_dir = ".", filename = "table.csv",
 
   if (use_rownames && !is.null(rownames(data)) &&
       !all(rownames(data) == as.character(seq_len(nrow(data))))) {
-    # Row names are meaningful (not just 1, 2, 3...), write as first column
+    # 行名有意义（不只是 1、2、3……），作为第一列写出
     data <- cbind(row.names(data), data, deparse.level = 0)
     colnames(data)[1] <- id_col_name
     utils::write.csv(data, file_path, row.names = FALSE)

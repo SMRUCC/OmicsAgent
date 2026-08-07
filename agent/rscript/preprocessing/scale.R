@@ -1,26 +1,25 @@
 # ==============================================================================
-# OmicsFlow: Data Scaling
+# OmicsFlow: 数据标度变换（Scaling）
 # ==============================================================================
-# Scale expression data across features
+# 在特征维度上对表达数据进行标度变换
 # ==============================================================================
 
-#' Scale by feature median (centering)
+#' 按特征中位数标度（中心化）
 #'
-#' @description Centers each feature (row) by its median value. This is
-#'   commonly used in metabolomics to make feature values comparable.
+#' @description 将每个特征（行）按其值的中位数进行中心化。该方法在代谢组学中
+#'   常用于使各特征值具有可比性。
 #'
-#' @param expr_matrix A numeric matrix (features x samples).
-#' @param scale Logical, whether to also scale by MAD (median absolute
-#'   deviation). Default: FALSE.
+#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param scale 逻辑值，是否同时按 MAD（中位数绝对偏差）进行标度。默认：FALSE。
 #'
-#' @return A numeric matrix with median-centered features.
+#' @return 已按中位数中心化的数值矩阵。
 #'
 #' @examples
 #' \dontrun{
-#' # Median centering only
+#' # 仅做中位数中心化
 #' mat_scaled <- scale_feature_median(expr_matrix)
 #'
-#' # Median centering + MAD scaling
+#' # 中位数中心化 + MAD 标度
 #' mat_scaled <- scale_feature_median(expr_matrix, scale = TRUE)
 #' }
 #'
@@ -31,12 +30,12 @@ scale_feature_median <- function(expr_matrix, scale = FALSE) {
     mode(expr_matrix) <- "numeric"
   }
 
-  # Median center
+  # 中位数中心化
   row_medians <- apply(expr_matrix, 1, stats::median, na.rm = TRUE)
   centered <- expr_matrix - row_medians
 
   if (scale) {
-    # Scale by MAD
+    # 按 MAD 标度
     row_mads <- apply(expr_matrix, 1, stats::mad, na.rm = TRUE)
     row_mads[row_mads == 0] <- 1
     centered <- centered / row_mads
@@ -46,14 +45,13 @@ scale_feature_median <- function(expr_matrix, scale = FALSE) {
 }
 
 
-#' Scale by feature mean (z-score)
+#' 按特征均值标度（z-score）
 #'
-#' @description Standardizes each feature (row) using z-score: subtract mean
-#'   and divide by standard deviation.
+#' @description 使用 z-score 对每个特征（行）进行标准化：减去均值后除以标准差。
 #'
-#' @param expr_matrix A numeric matrix (features x samples).
+#' @param expr_matrix 数值矩阵（特征 x 样本）。
 #'
-#' @return A numeric matrix with z-scored features.
+#' @return 已做 z-score 标度的数值矩阵。
 #'
 #' @examples
 #' \dontrun{
@@ -67,24 +65,23 @@ scale_feature_zscore <- function(expr_matrix) {
     mode(expr_matrix) <- "numeric"
   }
 
-  # Use base scale function (operates on columns, so transpose)
+  # 使用基础 scale 函数（默认按列操作，因此先转置）
   scaled <- t(scale(t(expr_matrix)))
 
-  # Replace NaN with 0
+  # 将 NaN 替换为 0
   scaled[is.nan(scaled)] <- 0
 
   return(scaled)
 }
 
 
-#' Scale by feature range (min-max)
+#' 按特征极差标度（min-max）
 #'
-#' @description Scales each feature (row) to [0, 1] range using min-max
-#'   normalization.
+#' @description 使用 min-max 归一化将每个特征（行）缩放到 [0, 1] 区间。
 #'
-#' @param expr_matrix A numeric matrix (features x samples).
+#' @param expr_matrix 数值矩阵（特征 x 样本）。
 #'
-#' @return A numeric matrix with min-max scaled features.
+#' @return 已做 min-max 标度的数值矩阵。
 #'
 #' @examples
 #' \dontrun{
@@ -109,14 +106,14 @@ scale_feature_minmax <- function(expr_matrix) {
 }
 
 
-#' Pareto scaling
+#' Pareto 标度
 #'
-#' @description Applies Pareto scaling: mean centering followed by division by
-#'   the square root of the standard deviation. Widely used in metabolomics.
+#' @description 应用 Pareto 标度：先均值中心化，再除以标准差的平方根。
+#'   在代谢组学中广泛使用。
 #'
-#' @param expr_matrix A numeric matrix (features x samples).
+#' @param expr_matrix 数值矩阵（特征 x 样本）。
 #'
-#' @return A numeric matrix with Pareto-scaled features.
+#' @return 已做 Pareto 标度的数值矩阵。
 #'
 #' @examples
 #' \dontrun{
