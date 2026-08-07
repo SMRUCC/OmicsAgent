@@ -33,5 +33,16 @@ Namespace JavaScript
             _owner = owner
         End Sub
 
+        ''' <summary>
+        ''' 文件对话框必须在 UI 线程上弹出；JS 侧的 COM 异步代理调用可能来自
+        ''' 非 UI 线程，因此统一在此调度。
+        ''' </summary>
+        Protected Function RunOnUi(Of T)(task As Func(Of T)) As T
+            If _owner IsNot Nothing AndAlso Not _owner.IsDisposed AndAlso _owner.InvokeRequired Then
+                Return DirectCast(_owner.Invoke(task), T)
+            Else
+                Return task()
+            End If
+        End Function
     End Class
 End Namespace

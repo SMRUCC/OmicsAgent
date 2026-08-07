@@ -15,24 +15,20 @@ Namespace JavaScript
             MyBase.New(owner)
         End Sub
 
-        Public Async Function openVennTool() As Task(Of Boolean)
+        Public Sub openVennTool()
             Call RibbonMenu.OpenJVennTool()
-            Return Await Task.FromResult(True)
-        End Function
+        End Sub
 
-        Public Async Function openSettings() As Task(Of Boolean)
+        Public Sub openSettings()
             Call RibbonMenu.OpenSettings()
-            Return Await Task.FromResult(True)
-        End Function
+        End Sub
 
-        Public Async Function openFolder() As Task(Of Boolean)
+        Public Sub openFolder()
             Call RibbonMenu.OpenFolder()
-            Return Await Task.FromResult(True)
-        End Function
+        End Sub
 
-        Public Async Function openResearch() As Task(Of Boolean)
+        Public Sub openResearch()
             Call RibbonMenu.OpenResearch()
-            Return Await Task.FromResult(True)
-        End Function
+        End Sub
     End Class
 End Namespace

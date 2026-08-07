@@ -252,18 +252,6 @@ Namespace JavaScript
             Return JsonSerializer.Serialize(New ApiResult With {.ok = False, .error = message}, _jsonOptions)
         End Function
 
-        ''' <summary>
-        ''' 文件对话框必须在 UI 线程上弹出；JS 侧的 COM 异步代理调用可能来自
-        ''' 非 UI 线程，因此统一在此调度。
-        ''' </summary>
-        Private Function RunOnUi(Of T)(task As Func(Of T)) As T
-            If _owner IsNot Nothing AndAlso Not _owner.IsDisposed AndAlso _owner.InvokeRequired Then
-                Return DirectCast(_owner.Invoke(task), T)
-            Else
-                Return task()
-            End If
-        End Function
-
         ''' <summary>统一的返回体：{ "ok": ..., "data": ..., "error": ... }。</summary>
         Private Class ApiResult
 
