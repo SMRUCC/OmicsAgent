@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>科研数据分析智能工作站</title>
+  <link rel="stylesheet" href="styles/kb.css">
+  <script>
+    // 首屏前设置主题，避免明暗闪烁（逻辑与 js/kb.js 对齐）
+    (function () {
+      try {
+        var t = localStorage.getItem("kb-theme");
+        if (!t) t = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.dataset.theme = t;
+      } catch (e) {
+        document.documentElement.dataset.theme = "light";
+      }
+    })();
+  </script>
+</head>
+<body>
+  <div class="app">
+    <!-- 顶栏 -->
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-logo">🧬</span>
+        <div>
+          <div class="brand-name">科研数据分析智能工作站</div>
+          <div class="brand-sub">LLM Agent · 组学数据分析 · 模块化 R 脚本</div>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button class="btn btn-ghost" id="themeBtn" title="切换明暗主题">🌙</button>
+      </div>
+    </header>
+
+    <!-- 侧边栏：功能导航 -->
+    <aside class="sidebar">
+      <div class="sidebar-title">功能导航</div>
+      <nav class="nav">
+        <a class="doc-item" href="kb.html"><span class="doc-icon">📚</span><span>文献知识库</span></a>
+        <a class="doc-item" href="analysis.html"><span class="doc-icon">📊</span><span>组学分析结果浏览器</span></a>
+        <a class="doc-item" href="dataset.html"><span class="doc-icon">🗂️</span><span>数据集定义编辑器</span></a>
+        <a class="doc-item" href="jvenn.html"><span class="doc-icon">🔵</span><span>Venn 图工具</span></a>
+        <a class="doc-item" href="viewer.html"><span class="doc-icon">📄</span><span>文件查看器</span></a>
+        <a class="doc-item" href="settings.html"><span class="doc-icon">⚙️</span><span>应用参数配置</span></a>
+      </nav>
+    </aside>
+
+    <!-- 内容区 -->
+    <main class="content">
+      <!-- 软件总结 -->
+      <section class="card card--blue" style="margin-bottom:22px">
+        <div class="card-head">
+          <h2 class="card-title">👋 欢迎使用科研数据分析智能工作站</h2>
+        </div>
+        <p class="card-desc">
+          本工作站是一套以本地 Ollama 大语言模型（LLM）智能体为核心的科研数据分析平台。智能体能够依据您的研究主题自动设计分析方案，并自主编写模块化 R 脚本，
+          完成从表达矩阵预处理、总体分析、差异分析、功能富集、共表达网络、聚类、因果路径、机器学习预测到跨组学整合的全流程组学生物信息学分析，
+          最终自动整理结果表格并撰写论文初稿报告（PDF / DOCX）。配合文献知识库（RAG 检索与图谱化）、数据集定义编辑器、结果浏览器、Venn 图与文件查看器等图形化辅助模块，
+          为科研人员提供从文献调研、方案设计、数据剖析到结果输出的端到端一体化工作环境。
+        </p>
+      </section>
+
+      <!-- 智能体分析能力：14 模块流水线 -->
+      <section style="margin-bottom:26px">
+        <div class="section-head">
+          <h3 class="section-title">🤖 智能体分析流水线</h3>
+          <span class="section-note">LLM Agent 自主编排 · 模块化 R 脚本实现</span>
+        </div>
+        <div class="meta-grid">
+          <div class="card card--blue">
+            <div class="card-head"><span class="step-no">01</span><h4 class="card-title">表达矩阵预处理</h4></div>
+            <p class="card-desc">缺失值填充、归一化、log 变换与中位数缩放，构建标准分析输入。</p>
+          </div>
+          <div class="card card--green">
+            <div class="card-head"><span class="step-no">02</span><h4 class="card-title">总体分析</h4></div>
+            <p class="card-desc">PCA / PLSDA / OPLSDA 降维可视化，F 检验 / ANOVA 初筛与样本重复性 QC。</p>
+          </div>
+          <div class="card card--purple">
+            <div class="card-head"><span class="step-no">03</span><h4 class="card-title">差异组别设计</h4></div>
+            <p class="card-desc">由 LLM 依据研究假设智能设计差异分析比对组别与对照方案。</p>
+          </div>
+          <div class="card card--orange">
+            <div class="card-head"><span class="step-no">04</span><h4 class="card-title">LIMMA 差异分析</h4></div>
+            <p class="card-desc">基于 LIMMA 的差异表达鉴定，输出火山图、文氏图与差异热图。</p>
+          </div>
+          <div class="card card--red">
+            <div class="card-head"><span class="step-no">05</span><h4 class="card-title">KEGG 功能分析</h4></div>
+            <p class="card-desc">差异基因 KEGG 富集分析与 GSVA 通路评分，条形图 / 热图 / 火山图呈现。</p>
+          </div>
+          <div class="card card--teal">
+            <div class="card-head"><span class="step-no">06</span><h4 class="card-title">WGCNA 共表达网络</h4></div>
+            <p class="card-desc">构建共表达模块，关联生物学性状并进行 KEGG 富集解读。</p>
+          </div>
+          <div class="card card--indigo">
+            <div class="card-head"><span class="step-no">07</span><h4 class="card-title">CMeans 模糊聚类</h4></div>
+            <p class="card-desc">模糊 C 均值聚类识别样本亚型，结合 WGCNA 与 KEGG 进行功能注释。</p>
+          </div>
+          <div class="card card--violet">
+            <div class="card-head"><span class="step-no">08</span><h4 class="card-title">动态贝叶斯网络</h4></div>
+            <p class="card-desc">基于 bnlearn 推断变量间调控与因果关系网络。</p>
+          </div>
+          <div class="card card--cyan">
+            <div class="card-head"><span class="step-no">09</span><h4 class="card-title">PLS-PM 因果路径</h4></div>
+            <p class="card-desc">偏最小二乘路径建模，解析多组学层次潜变量间的因果路径。</p>
+          </div>
+          <div class="card card--blue">
+            <div class="card-head"><span class="step-no">10</span><h4 class="card-title">随机森林预测</h4></div>
+            <p class="card-desc">RFE 特征选择、AUC 评估与特征重要性排序，挖掘生物标志物。</p>
+          </div>
+          <div class="card card--green">
+            <div class="card-head"><span class="step-no">11</span><h4 class="card-title">回归分析</h4></div>
+            <p class="card-desc">逻辑 / 线性回归建模，导出回归方程并辅以 VIF / LASSO 诊断。</p>
+          </div>
+          <div class="card card--orange">
+            <div class="card-head"><span class="step-no">12</span><h4 class="card-title">跨组学整合分析</h4></div>
+            <p class="card-desc">多组学（转录 / 蛋白 / 代谢 / 脂质）样本对齐后的整合建模（多组学专用）。</p>
+          </div>
+          <div class="card card--purple">
+            <div class="card-head"><span class="step-no">13</span><h4 class="card-title">结果表格整理</h4></div>
+            <p class="card-desc">汇总关键结果至 xlsx，套用 Cambria Math 样式与冻结窗格便于审阅。</p>
+          </div>
+          <div class="card card--teal">
+            <div class="card-head"><span class="step-no">14</span><h4 class="card-title">论文初稿撰写</h4></div>
+            <p class="card-desc">自动生成 PDF / DOCX 报告，中英图注齐全，可直接用于论文初稿。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 图形化功能模块入口 -->
+      <section style="margin-bottom:26px">
+        <div class="section-head">
+          <h3 class="section-title">🧭 图形化功能模块</h3>
+          <span class="section-note">点击卡片进入对应工具</span>
+        </div>
+        <div class="meta-grid">
+          <a class="card card--blue module-entry" href="kb.html">
+            <div class="card-head"><span class="module-icon">📚</span><h4 class="card-title">文献知识库</h4></div>
+            <p class="card-desc">检索 PubMed 与本地文献镜像，构建 RAG 知识库，支持全文检索、文献拆解与知识图谱化。</p>
+            <span class="btn btn-primary entry-btn">进入 →</span>
+          </a>
+          <a class="card card--green module-entry" href="analysis.html">
+            <div class="card-head"><span class="module-icon">📊</span><h4 class="card-title">组学分析结果浏览器</h4></div>
+            <p class="card-desc">浏览、检索与比较智能体生成的多组学分析结果，快速定位关键发现。</p>
+            <span class="btn btn-primary entry-btn">进入 →</span>
+          </a>
+          <a class="card card--purple module-entry" href="dataset.html">
+            <div class="card-head"><span class="module-icon">🗂️</span><h4 class="card-title">数据集定义编辑器</h4></div>
+            <p class="card-desc">以结构化 JSON 定义数据集（表达矩阵、注释、样本信息），支持多组学样本对齐。</p>
+            <span class="btn btn-primary entry-btn">进入 →</span>
+          </a>
+          <a class="card card--orange module-entry" href="jvenn.html">
+            <div class="card-head"><span class="module-icon">🔵</span><h4 class="card-title">Venn 图工具</h4></div>
+            <p class="card-desc">交互式生成 Venn / 集合可视化，用于差异基因等集合的直观比较。</p>
+            <span class="btn btn-primary entry-btn">进入 →</span>
+          </a>
+          <a class="card card--teal module-entry" href="viewer.html">
+            <div class="card-head"><span class="module-icon">📄</span><h4 class="card-title">文件查看器</h4></div>
+            <p class="card-desc">在图形化外壳中直接查看分析产物、表格与报告文件内容。</p>
+            <span class="btn btn-primary entry-btn">进入 →</span>
+          </a>
+          <a class="card card--gray module-entry" href="settings.html">
+            <div class="card-head"><span class="module-icon">⚙️</span><h4 class="card-title">应用参数配置</h4></div>
+            <p class="card-desc">配置 LLM 服务地址、输出路径、R 运行环境与报告格式等全局参数。</p>
+            <span class="btn btn-primary entry-btn">进入 →</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- 底层能力与特性标签云 -->
+      <section>
+        <div class="section-head">
+          <h3 class="section-title">⚙️ 底层能力与特性</h3>
+        </div>
+        <div class="tags">
+          <span class="tag">差异分析</span>
+          <span class="tag">富集分析</span>
+          <span class="tag">多组学整合</span>
+          <span class="tag">机器学习</span>
+          <span class="tag">多元统计</span>
+          <span class="tag">网络分析</span>
+          <span class="tag">数据预处理</span>
+          <span class="tag">QC / QA</span>
+          <span class="tag">可视化</span>
+          <span class="tag">多组学样本对齐</span>
+          <span class="tag">文献检索</span>
+          <span class="tag">知识库构建 (RAG)</span>
+          <span class="tag">自定义分析模块</span>
+          <span class="tag">PDF / DOCX 报告</span>
+          <span class="tag">本地 Ollama LLM</span>
+          <span class="tag">自主编写 R 脚本</span>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // 主题切换（与 kb.js 一致：localStorage key = kb-theme）
+    (function () {
+      var btn = document.getElementById("themeBtn");
+      if (!btn) return;
+      function sync() {
+        btn.textContent = document.documentElement.dataset.theme === "dark" ? "☀️" : "🌙";
+      }
+      sync();
+      btn.addEventListener("click", function () {
+        var cur = document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+        var next = cur === "dark" ? "light" : "dark";
+        document.documentElement.dataset.theme = next;
+        try { localStorage.setItem("kb-theme", next); } catch (e) {}
+        sync();
+      });
+    })();
+  </script>
+</body>
+</html>
