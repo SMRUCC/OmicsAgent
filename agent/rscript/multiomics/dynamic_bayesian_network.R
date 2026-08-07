@@ -1,34 +1,33 @@
 # ==============================================================================
-# OmicsFlow: Dynamic Bayesian Networks for Multi-Omics Time-Series Data
+# OmicsFlow：面向多组学时间序列数据的动态贝叶斯网络
 # ==============================================================================
-# Builds time-lagged (dynamic) Bayesian networks with bnlearn. Unlike a static
-# Bayesian network, a DBN unrolls every feature into two time slices (t0 and
-# t1) and constrains structure learning with a blacklist so that all learned
-# arcs are directed from t0 to t1, i.e. they encode temporal precedence.
+# 使用 bnlearn 构建带时间滞后的（动态）贝叶斯网络。与静态贝叶斯网络不同，
+# DBN 将每个特征展开为两个时间切片（t0 与 t1），并通过黑名单约束结构学习，
+# 使所有学习到的弧均从 t0 指向 t1，即编码时间先后关系。
 #
-# Typical workflow:
-#   1. aggregate_time_series()      collapse biological replicates per timepoint
-#   2. build_transition_pairs()     unroll consecutive timepoints into t0/t1
-#   3. discretize_transition_data() shared-bin discretisation of t0/t1
-#   4. run_dbn_layer()              single-omics DBN
-#   5. run_dbn_multiomics()         merged pan-omics DBN
+# 典型流程：
+#   1. aggregate_time_series()       按时间点合并生物学重复
+#   2. build_transition_pairs()      将相邻时间点展开为 t0/t1
+#   3. discretize_transition_data()  对 t0/t1 做共享分箱离散化
+#   4. run_dbn_layer()               单组学 DBN
+#   5. run_dbn_multiomics()           合并的全组学 DBN
 # ==============================================================================
 
 
 # ------------------------------------------------------------------------------
-# Internal helpers
+# 内部辅助函数
 # ------------------------------------------------------------------------------
 
-#' Suffix used to mark the two time slices of a dynamic Bayesian network
+#' 用于标记动态贝叶斯网络两个时间切片的后缀
 #' @keywords internal
 .dbn_suffix <- list(t0 = "_t0", t1 = "_t1")
 
 
-#' Sanitise feature names so they are valid and unique bnlearn node labels
+#' 清洗特征名称以生成合法且唯一的 bnlearn 节点标签
 #'
-#' @param x Character vector of raw feature names.
+#' @param x 原始特征名称的字符向量。
 #'
-#' @return Character vector of syntactically valid, unique names.
+#' @return 语法合法且唯一的名称字符向量。
 #'
 #' @keywords internal
 .dbn_clean_names <- function(x) {
@@ -42,12 +41,12 @@
 }
 
 
-#' Select the most variable features of a matrix
+#' 选择矩阵中变异最大的特征
 #'
-#' @param mat Numeric matrix (features x samples).
-#' @param max_nodes Maximum number of features to keep.
+#' @param mat 数值矩阵（特征 x 样本）。
+#' @param max_nodes 保留的最大特征数。
 #'
-#' @return Subset matrix with at most \code{max_nodes} rows.
+#' @return 最多包含 \code{max_nodes} 行的一个子集矩阵。
 #'
 #' @keywords internal
 .dbn_select_features <- function(mat, max_nodes) {
@@ -60,28 +59,26 @@
 
 
 # ------------------------------------------------------------------------------
-# Step 1: aggregate replicates within each timepoint
+# 步骤 1：在每个时间点内聚合重复样本
 # ------------------------------------------------------------------------------
 
-#' Aggregate biological replicates within each timepoint and series
+#' 在每个时间点与序列内聚合生物学重复
 #'
-#' @description Collapses replicate samples that share the same timepoint and
-#'   the same series definition (e.g. location x variety) by taking the mean.
-#'   This produces one clean observation per (series, timepoint) and is the
-#'   prerequisite for building temporal transition pairs.
+#' @description 通过对共享同一时间点、且属于同一序列定义（如 location x variety）
+#'   的重复样本取均值，将其合并。这将为每个 (序列, 时间点) 生成一条干净的观测，
+#'   是构建时间转移对的先决条件。
 #'
-#' @param mat Numeric matrix (features x samples).
-#' @param sample_info Sample metadata data.frame, row names are sample IDs.
-#' @param time_col Name of the numeric time column. Default: "day".
-#' @param group_cols Character vector of columns that define independent time
-#'   series. Replicates are only averaged within the same combination.
-#'   Default: c("location", "variety"). Columns that do not exist are ignored.
+#' @param mat 数值矩阵（特征 x 样本）。
+#' @param sample_info 样本元数据 data.frame，行名为样本 ID。
+#' @param time_col 数值时间列的名称。默认："day"。
+#' @param group_cols 定义独立时间序列的列字符向量。重复样本仅在同一组合内求均值。
+#'   默认：c("location", "variety")。不存在的列会被忽略。
 #'
-#' @return A list with:
+#' @return 一个列表：
 #'   \itemize{
-#'     \item \code{matrix}: aggregated matrix (features x aggregated columns).
-#'     \item \code{meta}: data.frame with one row per aggregated column
-#'       (\code{column}, \code{series}, \code{time}, \code{n_replicates}).
+#'     \item \code{matrix}: 聚合后的矩阵（特征 x 聚合列）。
+#'     \item \code{meta}: 每个聚合列一行（\code{column}、\code{series}、
+#'       \code{time}、\code{n_replicates}）的数据框。
 #'   }
 #'
 #' @examples
@@ -158,28 +155,25 @@ aggregate_time_series <- function(mat, sample_info, time_col = "day",
 
 
 # ------------------------------------------------------------------------------
-# Step 2: unroll consecutive timepoints into transition pairs
+# 步骤 2：将相邻时间点展开为转移对
 # ------------------------------------------------------------------------------
 
-#' Build temporal transition pairs from an aggregated time series
+#' 由聚合后的时间序列构建时间转移对
 #'
-#' @description For every independent series, consecutive timepoints are paired
-#'   into (t, t + lag) observations. Each feature contributes two columns,
-#'   \code{<feature>_t0} (the earlier slice) and \code{<feature>_t1} (the later
-#'   slice). Pairs are never formed across different series, which prevents
-#'   spurious temporal edges.
+#' @description 对每个独立序列，将相邻时间点配对为 (t, t + lag) 观测。每个特征
+#'   贡献两列：\code{<feature>_t0}（较早切片）与 \code{<feature>_t1}（较晚切片）。
+#'   跨不同序列绝不配对，以避免虚假的时间边。
 #'
-#' @param agg_mat Aggregated numeric matrix from \code{aggregate_time_series()}.
-#' @param time_meta The \code{meta} data.frame from
-#'   \code{aggregate_time_series()}.
-#' @param max_lag Number of timepoints between the two slices. Default: 1.
+#' @param agg_mat 来自 \code{aggregate_time_series()} 的聚合数值矩阵。
+#' @param time_meta 来自 \code{aggregate_time_series()} 的 \code{meta} 数据框。
+#' @param max_lag 两个切片之间的时间点数。默认：1。
 #'
-#' @return A list with:
+#' @return 一个列表：
 #'   \itemize{
-#'     \item \code{data}: data.frame of transition pairs (rows) x 2 * features.
-#'     \item \code{features}: character vector of the clean feature names.
-#'     \item \code{pairs}: data.frame describing each transition
-#'       (\code{series}, \code{time_from}, \code{time_to}).
+#'     \item \code{data}: 转移对的数据框（行）x 2 * 特征数。
+#'     \item \code{features}: 清洗后特征名称的字符向量。
+#'     \item \code{pairs}: 描述每次转移的数据框
+#'       （\code{series}、\code{time_from}、\code{time_to}）。
 #'   }
 #'
 #' @examples
@@ -240,23 +234,21 @@ build_transition_pairs <- function(agg_mat, time_meta, max_lag = 1) {
 
 
 # ------------------------------------------------------------------------------
-# Step 3: discretisation with shared bins across the two time slices
+# 步骤 3：两个时间切片共享分箱的离散化
 # ------------------------------------------------------------------------------
 
-#' Discretise transition-pair data using bins shared by both time slices
+#' 使用两个时间切片共享的分箱对转移对数据离散化
 #'
-#' @description Each feature is discretised into \code{n_bins} levels. Crucially
-#'   the bin breaks are estimated from the pooled t0 and t1 values of that
-#'   feature, so a given state label means the same thing in both slices and the
-#'   two time points remain comparable.
+#' @description 每个特征被离散化为 \code{n_bins} 个水平。关键在于分箱断点由该特征
+#'   t0 与 t1 的合并值估计，因此同一状态标签在两个切片中表示相同的含义，两个
+#'   时间点保持可比。
 #'
-#' @param df Data.frame of transition pairs from \code{build_transition_pairs()}.
-#' @param features Character vector of clean feature names.
-#' @param n_bins Number of discrete levels. Default: 3.
+#' @param df 来自 \code{build_transition_pairs()} 的转移对数据框。
+#' @param features 清洗后特征名称的字符向量。
+#' @param n_bins 离散水平数。默认：3。
 #'
-#' @return A data.frame where every column is a factor with identical levels
-#'   for the t0/t1 pair of the same feature. Features that cannot be split into
-#'   at least two levels are dropped.
+#' @return 一个数据框，其中每一列均为因子，且同一特征的 t0/t1 对具有相同水平。
+#'   无法拆分为至少两个水平的特征将被丢弃。
 #'
 #' @examples
 #' \dontrun{
@@ -288,7 +280,7 @@ discretize_transition_data <- function(df, features, n_bins = 3) {
     f0 <- cut(df[[c0]], breaks = breaks, labels = lab, include.lowest = TRUE)
     f1 <- cut(df[[c1]], breaks = breaks, labels = lab, include.lowest = TRUE)
     if (anyNA(f0) || anyNA(f1)) next
-    # bnlearn requires every node to have at least two observed states
+    # bnlearn 要求每个节点至少具有两个可观测状态
     if (nlevels(droplevels(f0)) < 2 && nlevels(droplevels(f1)) < 2) next
 
     f0 <- factor(as.character(f0), levels = lab)
@@ -305,22 +297,21 @@ discretize_transition_data <- function(df, features, n_bins = 3) {
 
 
 # ------------------------------------------------------------------------------
-# Step 4: structure learning with a temporal blacklist
+# 步骤 4：带时间黑名单的结构学习
 # ------------------------------------------------------------------------------
 
-#' Build the blacklist that enforces the dynamic (time-lagged) structure
+#' 构建强制动态（时间滞后）结构的黑名单
 #'
-#' @description Forbids (a) any arc leaving a t1 node, (b) any arc between two
-#'   t0 nodes, so that the only admissible arcs go from a t0 node to a t1 node.
-#'   Optionally also forbids arcs that violate a biological layer ordering.
+#' @description 禁止 (a) 任何离开 t1 节点的弧，(b) 任意两个 t0 节点之间的弧，
+#'   从而只有从 t0 节点指向 t1 节点的弧是允许的。可选地，还可禁止违反生物学
+#'   层顺序的弧。
 #'
-#' @param nodes Character vector of node names (with _t0 / _t1 suffixes).
-#' @param node_omics Optional named character vector mapping node -> omics
-#'   layer, used together with \code{layer_order}.
-#' @param layer_order Optional character vector giving the allowed upstream to
-#'   downstream ordering of omics layers.
+#' @param nodes 节点名称的字符向量（带 _t0 / _t1 后缀）。
+#' @param node_omics 可选的有名字符向量，映射节点 -> 组学层，与 \code{layer_order}
+#'   配合使用。
+#' @param layer_order 可选的字符向量，给出组学层允许的从上游到下游的顺序。
 #'
-#' @return A two-column data.frame (\code{from}, \code{to}) of forbidden arcs.
+#' @return 两列数据框（\code{from}、\code{to}），包含被禁止的弧。
 #'
 #' @keywords internal
 .dbn_build_blacklist <- function(nodes, node_omics = NULL, layer_order = NULL) {
@@ -330,7 +321,7 @@ discretize_transition_data <- function(df, features, n_bins = 3) {
 
   bl <- list()
 
-  # (a) nothing may originate from a future node
+  # (a) 任何弧都不得源自未来节点
   if (length(t1_nodes) > 0 && length(nodes) > 1) {
     bl[[length(bl) + 1]] <- expand.grid(from = t1_nodes, to = nodes,
                                         stringsAsFactors = FALSE)

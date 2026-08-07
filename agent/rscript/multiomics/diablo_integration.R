@@ -96,7 +96,7 @@ run_diablo <- function(mo, group_col = "sample_info",
   }
   names(keepX) <- names(X)
 
-  # Design matrix -------------------------------------------------------------
+  # 设计矩阵 -------------------------------------------------------------
   n_blocks <- length(X)
   design_mat <- matrix(design, nrow = n_blocks, ncol = n_blocks,
                        dimnames = list(names(X), names(X)))
@@ -122,7 +122,7 @@ run_diablo <- function(mo, group_col = "sample_info",
 
   if (is.null(model)) return(NULL)
 
-  # Scores --------------------------------------------------------------------
+  # 分数 --------------------------------------------------------------------
   scores <- list()
   for (nm in names(model$variates)) {
     if (identical(nm, "Y")) next
@@ -133,7 +133,7 @@ run_diablo <- function(mo, group_col = "sample_info",
     scores[[nm]] <- v
   }
 
-  # Loadings and selected features -------------------------------------------
+  # 载荷与选中特征 -------------------------------------------
   loadings <- list()
   selected <- NULL
   for (nm in names(model$loadings)) {
@@ -182,16 +182,15 @@ run_diablo <- function(mo, group_col = "sample_info",
 }
 
 
-#' Cross-block correlation of DIABLO components
+#' DIABLO 组分的跨块相关性
 #'
-#' @description Correlates the sample scores of the different blocks on each
-#'   component, quantifying how strongly the layers agree in the supervised
-#'   space. This is the numeric counterpart of the DIABLO circle plot.
+#' @description 计算每个组分上不同块样本分数之间的相关性，量化各层在监督空间中
+#'   的一致程度。这是 DIABLO 圆形图的数值对应形式。
 #'
-#' @param diablo_result Result of \code{run_diablo()}.
-#' @param comp Component index. Default: 1.
+#' @param diablo_result \code{run_diablo()} 的结果。
+#' @param comp 组分索引。默认：1。
 #'
-#' @return A data.frame with layer_x, layer_y, component and correlation.
+#' @return 数据框，含 layer_x、layer_y、component 与 correlation。
 #'
 #' @examples
 #' \dontrun{
@@ -234,20 +233,19 @@ diablo_block_correlation <- function(diablo_result, comp = 1) {
 }
 
 
-#' Fallback per-layer PLS-DA when DIABLO is unavailable
+#' DIABLO 不可用时各层独立的 PLS-DA 回退方案
 #'
-#' @description Runs \code{run_plsda()} independently on every omics layer.
-#'   Used by demo pipelines as a graceful degradation path when the multi-block
-#'   model cannot be fitted, and useful on its own as a per-layer overview.
+#' @description 在每个组学层上独立运行 \code{run_plsda()}。当多块模型无法拟合时，
+#'   由演示流程用作优雅降级路径；单独使用也可作为各层概览。
 #'
-#' @param mo A MultiOmicsData object.
-#' @param group_col Grouping column in sample_info. Default: "sample_info".
-#' @param layers Optional character vector of layers. Default: NULL (all).
-#' @param ncomp Number of components. Default: 2.
-#' @param exclude_groups Groups removed before modelling. Default: NULL.
-#' @param verbose Logical, print progress. Default: TRUE.
+#' @param mo 一个 MultiOmicsData 对象。
+#' @param group_col sample_info 中的分组列。默认："sample_info"。
+#' @param layers 可选的各层字符向量。默认：NULL（所有层）。
+#' @param ncomp 组分数。默认：2。
+#' @param exclude_groups 建模前移除的分组。默认：NULL。
+#' @param verbose 逻辑值，是否打印进度。默认：TRUE。
 #'
-#' @return A named list of \code{run_plsda()} results (NULL entries dropped).
+#' @return \code{run_plsda()} 结果的有名列表（丢弃 NULL 项）。
 #'
 #' @examples
 #' \dontrun{
