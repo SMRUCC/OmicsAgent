@@ -696,28 +696,22 @@ plot_perturbation_subnetwork <- function(dbn_result, node, title = NULL,
 # PLS path model figure
 # ------------------------------------------------------------------------------
 
-#' Plot a hierarchical multi-omics PLS path model
+#' 绘制分层多组学 PLS 路径模型
 #'
-#' @description Arranges the latent variables in one column per omics layer,
-#'   following the biological hierarchy, and draws the estimated path
-#'   coefficients between them. Edge width encodes the magnitude of the
-#'   coefficient, colour its sign, and dashed lines mark non-significant paths.
+#' @description 将潜变量按每层一列、依生物学层级排列，并绘制它们之间的估计路径
+#'   系数。边的线宽编码系数大小，颜色编码符号，虚线标记不显著的路径。
 #'
-#' @param plspm_result Output of \code{run_multiomics_plspm()}.
-#' @param layer_order Column ordering of the omics layers. Only used when
-#'   \code{layout = "hier"}.
-#' @param p_threshold Significance threshold for the line type. Default: 0.05.
-#' @param min_abs_coeff Hide paths whose absolute coefficient is below this
-#'   value, which keeps dense models readable. Default: 0.
-#' @param significant_only Draw only significant paths. Default: FALSE.
-#' @param layout Network layout. \code{"hier"} (default) keeps the one-column-
-#'   per-omics layer layout that follows the biological hierarchy. \code{"fr"} /
-#'   \code{"force"} uses the Fruchterman-Reingold force-directed placement and
-#'   \code{"kk"} the Kamada-Kawai placement. A 2-column coordinate matrix (rows
-#'   named with latent variable ids) can also be supplied.
-#' @param title Plot title.
+#' @param plspm_result \code{run_multiomics_plspm()} 的输出。
+#' @param layer_order 组学层的列顺序。仅当 \code{layout = "hier"} 时使用。
+#' @param p_threshold 线型所用的显著性阈值。默认：0.05。
+#' @param min_abs_coeff 隐藏绝对系数低于该值的路径，以保持稠密模型的可读性。默认：0。
+#' @param significant_only 仅绘制显著路径。默认：FALSE。
+#' @param layout 网络布局。\code{"hier"}（默认）保持遵循生物学层级的每层一列布局。
+#'   \code{"fr"} / \code{"force"} 使用 Fruchterman-Reingold 力导向布局，\code{"kk"}
+#'   使用 Kamada-Kawai 布局。也可传入两列坐标矩阵（行以潜变量 id 命名）。
+#' @param title 图标题。
 #'
-#' @return A ggplot object.
+#' @return 一个 ggplot 对象。
 #'
 #' @examples
 #' \dontrun{
@@ -854,12 +848,12 @@ plot_plspm_hierarchy <- function(plspm_result, layer_order = NULL,
 }
 
 
-#' Bar chart of the explained variance of every latent variable
+#' 各潜变量解释方差的柱状图
 #'
-#' @param plspm_result Output of \code{run_multiomics_plspm()}.
-#' @param title Plot title.
+#' @param plspm_result \code{run_multiomics_plspm()} 的输出。
+#' @param title 图标题。
 #'
-#' @return A ggplot object.
+#' @return 一个 ggplot 对象。
 #'
 #' @examples
 #' \dontrun{

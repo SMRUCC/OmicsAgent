@@ -7,19 +7,17 @@
 # helpers can be used directly.
 # ==============================================================================
 
-#' Heatmap of a cross-omics correlation matrix
+#' 跨组学相关矩阵的热力图
 #'
-#' @description Displays the strongest cross-layer correlations as a heatmap,
-#'   restricted to the features involved in the most significant associations so
-#'   that the picture stays readable even for large layers.
+#' @description 将最强的跨层相关以热力图展示，仅保留参与最显著关联的特征，
+#'   从而即使层规模很大也能保持图形清晰可读。
 #'
-#' @param cor_result Result of \code{run_cross_correlation()}.
-#' @param top_n Number of features per axis retained, chosen by the strongest
-#'   absolute correlation. Default: 30.
-#' @param title Plot title. Default: "Cross-omics correlation".
-#' @param cluster Logical, cluster rows and columns. Default: TRUE.
+#' @param cor_result \code{run_cross_correlation()} 的结果。
+#' @param top_n 每轴保留的特征数，按最强绝对相关选取。默认：30。
+#' @param title 图标题。默认："Cross-omics correlation"。
+#' @param cluster 逻辑值，是否对行与列聚类。默认：TRUE。
 #'
-#' @return A pheatmap object, or NULL when the matrix is empty.
+#' @return 一个 pheatmap 对象；矩阵为空时返回 NULL。
 #'
 #' @examples
 #' \dontrun{
@@ -71,17 +69,16 @@ plot_cross_correlation_heatmap <- function(cor_result, top_n = 30,
 }
 
 
-#' Bar chart of Mantel statistics
+#' Mantel 统计量柱状图
 #'
-#' @description Summarises the Mantel correlations between omics layers, and
-#'   between each layer and the environmental variables, as a bar chart with the
-#'   significant comparisons highlighted.
+#' @description 将组学层之间、以及各层与环境变量之间的 Mantel 相关汇总为柱状图，
+#'   并高亮显著比较。
 #'
-#' @param mantel_result Result of \code{run_mantel_test()}.
-#' @param title Plot title. Default: "Mantel test".
-#' @param alpha Significance cutoff used for the fill. Default: 0.05.
+#' @param mantel_result \code{run_mantel_test()} 的结果。
+#' @param title 图标题。默认："Mantel test"。
+#' @param alpha 填充所用的显著性阈值。默认：0.05。
 #'
-#' @return A ggplot object, or NULL when there is nothing to plot.
+#' @return 一个 ggplot 对象；无可绘制内容时返回 NULL。
 #'
 #' @examples
 #' \dontrun{
@@ -141,18 +138,17 @@ plot_mantel_network <- function(mantel_result, title = "Mantel test",
 }
 
 
-#' Procrustes displacement plot
+#' Procrustes 位移图
 #'
-#' @description Draws the sample-wise displacement between two ordinations,
-#'   each arrow joining the position of a sample in the first configuration to
-#'   its position in the second. Short arrows indicate good agreement.
+#' @description 绘制两次排序之间逐样本的位移：每条箭头将某个样本在第一个配置中的
+#'   位置连接到其在第二个配置中的位置。箭头越短表示一致性越好。
 #'
-#' @param proc_result Result of \code{run_procrustes()}.
-#' @param sample_info Optional sample annotation for colouring. Default: NULL.
-#' @param color_col Column used for colouring. Default: NULL.
-#' @param title Plot title. Default: "Procrustes analysis".
+#' @param proc_result \code{run_procrustes()} 的结果。
+#' @param sample_info 可选的用于着色的样本注释。默认：NULL。
+#' @param color_col 用于着色的列。默认：NULL。
+#' @param title 图标题。默认："Procrustes analysis"。
 #'
-#' @return A ggplot object, or NULL when coordinates are unavailable.
+#' @return 一个 ggplot 对象；坐标不可用时返回 NULL。
 #'
 #' @examples
 #' \dontrun{
@@ -202,15 +198,14 @@ plot_procrustes <- function(proc_result, sample_info = NULL, color_col = NULL,
 }
 
 
-#' DIABLO score plots for every block
+#' 每个数据块的 DIABLO 分数图
 #'
-#' @description Draws the sample scores of each omics block on the first two
-#'   DIABLO components, coloured by the discriminated group.
+#' @description 在每个组学块的前两个 DIABLO 组分上绘制样本分数，并按所区分的分组着色。
 #'
-#' @param diablo_result Result of \code{run_diablo()}.
-#' @param title Plot title. Default: "DIABLO sample scores".
+#' @param diablo_result \code{run_diablo()} 的结果。
+#' @param title 图标题。默认："DIABLO sample scores"。
 #'
-#' @return A ggplot object faceted by omics block, or NULL when unavailable.
+#' @return 按组学块分面（facet）的 ggplot 对象；不可用时返回 NULL。
 #'
 #' @examples
 #' \dontrun{
@@ -259,18 +254,16 @@ plot_diablo_scores <- function(diablo_result, title = "DIABLO sample scores") {
 }
 
 
-#' Fermentation trajectory plot
+#' 发酵轨迹图
 #'
-#' @description Plots the averaged position of each time point in PCA space and
-#'   joins consecutive time points, one path per group, revealing how the
-#'   fermentation progresses and whether the regions follow different rhythms.
+#' @description 在 PCA 空间中绘制每个时间点的平均位置，并将相邻时间点连接起来，
+#'   每组一条路径，从而揭示发酵进程的推进，以及不同区域是否遵循不同的节律。
 #'
-#' @param traj_result Result of \code{run_temporal_trajectory()}.
-#' @param title Plot title. Default: "Fermentation trajectory".
-#' @param show_samples Logical, draw the individual samples behind the path.
-#'   Default: TRUE.
+#' @param traj_result \code{run_temporal_trajectory()} 的结果。
+#' @param title 图标题。默认："Fermentation trajectory"。
+#' @param show_samples 逻辑值，是否在路径背后绘制单个样本。默认：TRUE。
 #'
-#' @return A ggplot object, or NULL when the trajectory is empty.
+#' @return 一个 ggplot 对象；轨迹为空时返回 NULL。
 #'
 #' @examples
 #' \dontrun{
@@ -330,15 +323,14 @@ plot_temporal_trajectory <- function(traj_result,
 }
 
 
-#' Temporal cluster profile plot
+#' 时间聚类轮廓图
 #'
-#' @description Draws the mean scaled profile of each temporal cluster across
-#'   the fermentation time course, one facet per cluster.
+#' @description 绘制每个时间聚类在发酵时间序列上的平均标准化轮廓，每个聚类一个分面。
 #'
-#' @param cluster_result Result of \code{run_temporal_clustering()}.
-#' @param title Plot title. Default: "Temporal expression clusters".
+#' @param cluster_result \code{run_temporal_clustering()} 的结果。
+#' @param title 图标题。默认："Temporal expression clusters"。
 #'
-#' @return A ggplot object, or NULL when profiles are unavailable.
+#' @return 一个 ggplot 对象；轮廓不可用时返回 NULL。
 #'
 #' @examples
 #' \dontrun{
@@ -370,18 +362,17 @@ plot_temporal_clusters <- function(cluster_result,
 }
 
 
-#' Cross-omics network plot
+#' 跨组学网络图
 #'
-#' @description Renders the association network with nodes coloured by omics
-#'   layer, node size proportional to degree and edge colour encoding the sign
-#'   of the correlation.
+#' @description 以节点按组学层着色、节点大小与度数成正比、边颜色编码相关符号的方式
+#'   渲染关联网络。
 #'
-#' @param network Result of \code{build_cross_omics_network()}.
-#' @param label_top Number of highest-degree nodes labelled. Default: 15.
-#' @param title Plot title. Default: "Cross-omics association network".
-#' @param seed Random seed for the layout. Default: 42.
+#' @param network \code{build_cross_omics_network()} 的结果。
+#' @param label_top 标注的最高度数节点数。默认：15。
+#' @param title 图标题。默认："Cross-omics association network"。
+#' @param seed 布局所用的随机种子。默认：42。
 #'
-#' @return A ggplot object, or NULL when the network is empty.
+#' @return 一个 ggplot 对象；网络为空时返回 NULL。
 #'
 #' @examples
 #' \dontrun{
@@ -457,18 +448,16 @@ plot_cross_omics_network <- function(network, label_top = 15,
 }
 
 
-#' Pathway bridging heatmap
+#' 通路桥接热力图
 #'
-#' @description Shows the correlation of each shared annotation module between
-#'   consecutive omics layers, so that modules propagating coherently from gene
-#'   to aroma stand out as a bright row.
+#' @description 展示每个共享注释模块在相邻组学层之间的相关性，从而让从基因连贯
+#'   传播到香气的模块以明亮的一行凸显出来。
 #'
-#' @param bridge_result Result of \code{run_pathway_bridge()}.
-#' @param top_n Number of modules displayed, ranked by mean absolute
-#'   correlation. Default: 30.
-#' @param title Plot title. Default: "Pathway bridging across omics layers".
+#' @param bridge_result \code{run_pathway_bridge()} 的结果。
+#' @param top_n 显示的模块数，按平均绝对相关排序。默认：30。
+#' @param title 图标题。默认："Pathway bridging across omics layers"。
 #'
-#' @return A ggplot object, or NULL when there is nothing to plot.
+#' @return 一个 ggplot 对象；无可绘制内容时返回 NULL。
 #'
 #' @examples
 #' \dontrun{

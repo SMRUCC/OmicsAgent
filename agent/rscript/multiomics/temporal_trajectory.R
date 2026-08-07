@@ -1,37 +1,32 @@
 # ==============================================================================
-# OmicsFlow: Fermentation Temporal Dynamics
+# OmicsFlow：发酵时间动态分析
 # ==============================================================================
-# Trajectory reconstruction and temporal pattern clustering across the
-# fermentation time course, optionally split by a grouping factor such as the
-# geographic origin of the samples.
+# 跨越发酵时间序列的轨迹重建与时间模式聚类，可按分组因子（如样本的地理来源）
+# 进行拆分。
 # ==============================================================================
 
-#' Reconstruct the temporal trajectory of one omics layer
+#' 重建单个组学层的时间轨迹
 #'
-#' @description Projects samples onto the principal component space of a layer
-#'   and averages the coordinates within each time point, producing an ordered
-#'   trajectory through PCA space. When \code{group_col} is supplied a separate
-#'   trajectory is built for every group so that fermentation rhythms can be
-#'   compared between, for example, two production regions.
+#' @description 将样本投影到某层的 PCA 空间，并在每个时间点内对坐标取平均，
+#'   生成一条穿过 PCA 空间的有序轨迹。当提供 \code{group_col} 时，会为每组
+#'   分别构建轨迹，从而可比较两个生产区域等之间的发酵节律。
 #'
-#' @param expr_matrix Numeric matrix, features in rows and samples in columns.
-#' @param sample_info data.frame of sample annotation, rownames matching the
-#'   columns of \code{expr_matrix}.
-#' @param time_col Column holding the numeric time coordinate. Default: "day".
-#' @param group_col Optional column splitting the trajectory. Default: NULL.
-#' @param phase_col Optional column holding a discrete phase label attached to
-#'   each time point for annotation. Default: NULL.
-#' @param n_comp Number of principal components retained. Default: 2.
-#' @param verbose Logical, print progress. Default: TRUE.
+#' @param expr_matrix 数值矩阵，行为特征、列为样本。
+#' @param sample_info 样本注释 data.frame，其行名与 \code{expr_matrix} 的列对应。
+#' @param time_col 保存数值时间坐标的列。默认："day"。
+#' @param group_col 可选的用于拆分轨迹的列。默认：NULL。
+#' @param phase_col 可选的列，保存附在每个时间点上用于注释的离散阶段标签。默认：NULL。
+#' @param n_comp 保留的主成分数量。默认：2。
+#' @param verbose 逻辑值，是否打印进度。默认：TRUE。
 #'
-#' @return A list with:
+#' @return 一个列表：
 #'   \itemize{
-#'     \item \code{trajectory}: data.frame with group, time, phase, n_samples
-#'       and the mean PC coordinates.
-#'     \item \code{scores}: data.frame of per-sample PC coordinates.
-#'     \item \code{variance}: Numeric vector of variance explained per PC (%).
-#'     \item \code{path_length}: data.frame of cumulative trajectory length per
-#'       group, a summary of how far the system travels during fermentation.
+#'     \item \code{trajectory}: 含 group、time、phase、n_samples
+#'       与平均 PC 坐标的数据框。
+#'     \item \code{scores}: 逐样本 PC 坐标的数据框。
+#'     \item \code{variance}: 每个 PC 解释方差（%）的数值向量。
+#'     \item \code{path_length}: 每组的累计轨迹长度数据框，概括发酵过程中系统
+#'       行进的距离。
 #'   }
 #'
 #' @examples
@@ -61,7 +56,7 @@ run_temporal_trajectory <- function(expr_matrix, sample_info,
   expr_matrix <- expr_matrix[, common, drop = FALSE]
   sample_info <- sample_info[common, , drop = FALSE]
 
-  # Drop zero-variance features, otherwise prcomp with scale. = TRUE fails.
+  # 剔除零方差特征，否则 prcomp 配合 scale. = TRUE 会失败。
   fvar <- apply(expr_matrix, 1, stats::var, na.rm = TRUE)
   keep <- is.finite(fvar) & fvar > 0
   if (sum(keep) < 2) {
