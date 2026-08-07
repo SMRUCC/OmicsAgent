@@ -1,3 +1,4 @@
+Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Data.Trinity
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.MIME.application.json.LenientJson
@@ -142,7 +143,9 @@ Public MustInherit Class AnalysisModuleBase
 
         If ModuleName = ComparisonDesignModule.Name Then
             _context.Comparisons = plan.comparisons
-            JsonContract.GetJson(plan.comparisons).SaveTo($"{_context.AnalysisDir}/design.json")
+
+            Call JsonContract.GetJson(plan.comparisons).SaveTo($"{_context.AnalysisDir}/design.json")
+            Call plan.comparisons.SaveTo($"{_context.AnalysisDir}/comparison_design.csv", silent:=True)
         End If
 
         Return conclusion

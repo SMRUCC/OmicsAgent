@@ -2,7 +2,6 @@
 ' 数据模型 - 分析上下文、模块计划、组学数据描述等
 ' ============================================================================
 
-Imports OmicsAgent.AppRuntime
 Imports OmicsAgent.Dataset
 
 ''' <summary>
@@ -157,7 +156,6 @@ Public Class AnalysisContext
     ' ------------------------------------------------------------------
     ' 配置
     ' ------------------------------------------------------------------
-    Public Property Config As AgentConfig
     Public Property ModuleResults As New List(Of ModuleResult)
 
     ' ------------------------------------------------------------------
