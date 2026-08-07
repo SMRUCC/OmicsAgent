@@ -1,0 +1,6 @@
+omics,unit,n_samples,n_features,na_cells,inf_cells,zero_cells,nonpos_cells,imputed_cells,raw_min,raw_max,raw_median,log_transform,log_base,log_note,normalization,median_scale,out_min,out_max,out_median
+rna,FPKM,312,2000,0,0,0,0,0,0.103148,111.427335,5.174984,TRUE,2,"log2 applied (raw max >100, judged as not log-transformed)",column-sum to1 then x10000,subtract row median (median centering),-4.656686,4.871037,0
+proteome,LFQ intensity,312,1000,0,0,0,0,0,0.452773,414.851893,21.610453,TRUE,2,"log2 applied (raw max >100, judged as not log-transformed)",column-sum to1 then x10000,subtract row median (median centering),-4.572186,4.582594,0
+metabolome,peak area,312,1000,0,0,0,0,0,0.010068,49.569288,1.518181,FALSE,,"NO log transform (raw max <=100, judged as already log-scaled)",column-sum to1 then x10000,subtract row median (median centering),-24.857486,209.251987,0
+microbiome,TPM,312,131,0,0,0,0,0,0.154713,39100.35597,49.958547,TRUE,2,"log2 applied (raw max >100, judged as not log-transformed)",column-sum to1 then x10000,subtract row median (median centering),-6.313657,6.166761,0
+volatilome,peak area,312,300,0,0,0,0,0,0.003349,11.163542,0.325501,FALSE,,"NO log transform (raw max <=100, judged as already log-scaled)",column-sum to1 then x10000,subtract row median (median centering),-86.526518,586.366529,0

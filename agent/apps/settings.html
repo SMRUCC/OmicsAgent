@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>应用参数配置 · Settings</title>
+    <link href="styles/kb.css" rel="stylesheet">
+    <link href="styles/settings.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app">
+        <header class="topbar" id="topbar">
+            <div class="brand">
+                <div class="logo">⚙️</div>
+                <div>
+                    <h1>应用参数配置</h1>
+                    <div class="topic" id="topicLine">Application Settings</div>
+                </div>
+            </div>
+            <div class="spacer"></div>
+            <div id="btn-group">
+                <button class="btn" id="loadBtn" title="加载 JSON 配置">
+                    <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 3v12m0 0l-4-4m4 4l4-4" />
+                        <path d="M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" />
+                    </svg>
+                    加载配置
+                </button>
+                <button class="btn primary" id="genBtn" title="生成 JSON 字符串">
+                    <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4h16v16H4z" />
+                        <path d="M9 9l-2 3 2 3M15 9l2 3-2 3" />
+                    </svg>
+                    生成 JSON
+                </button>
+                <button class="btn" id="themeBtn" title="切换主题">
+                    <span id="themeIcon">🌙</span><span id="themeLabel">暗色</span>
+                </button>
+            </div>
+        </header>
+
+        <aside class="sidebar" id="sidebar">
+            <h2>配置分组</h2>
+            <input class="search" id="navSearch" placeholder="筛选分组…" />
+            <div class="nav-list" id="navList"></div>
+            <div class="hidden" id="navEmpty" style="color:var(--ui-foreground-muted);font-size:12.5px;padding:6px;">
+                无匹配分组</div>
+        </aside>
+        <div class="scrim" id="scrim"></div>
+
+        <main class="content" id="content">
+            <div class="view">
+                <div id="cards"></div>
+
+                <div class="card" id="jsonCard">
+                    <h3><span class="dot"></span>生成的 JSON 配置</h3>
+                    <div class="json-toolbar">
+                        <button class="btn" id="copyBtn">保存</button>
+                        <button class="btn" id="downloadBtn">下载 app-config.json</button>
+                        <span id="jsonMeta"
+                            style="font-size:12px;color:var(--ui-foreground-muted);margin-left:auto;"></span>
+                    </div>
+                    <pre class="json-out" id="jsonOut">点击「生成 JSON」以生成当前配置字符串…</pre>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 隐藏的文件选择器 -->
+    <input type="file" id="fileInput" accept=".json,application/json" class="hidden" />
+
+    <!-- 吐司提示容器（右下角） -->
+    <div class="toast-host" id="toastHost" aria-live="polite"></div>
+
+    <script src="js/settings.js" type="text/javascript"></script>
+</body>
+
+</html>

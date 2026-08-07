@@ -73,3 +73,11 @@ wgcna_top_mad = 20000
 
 ; 差异分析结果按 |logFC| 降序取 top 分子数量
 diff_top_count = 200
+
+[report]
+; 最终研究报告的输出格式（可选值：pdf / docx / both）
+;   pdf  - 仅生成 HTML 报告，并由 wkhtmltopdf 转换为 PDF 文件（默认值）
+;   docx - 仅生成 Word 文档格式的报告
+;   both - PDF 与 Word 文档两种格式的报告均生成
+; 该配置项亦可通过命令行参数 --report-format 覆盖
+format = pdf

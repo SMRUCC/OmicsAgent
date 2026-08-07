@@ -2,8 +2,8 @@
 Imports Galaxy.Workbench.CommonDialogs
 Imports Microsoft.VisualStudio.WinForms.Docking
 Imports Ollama
+Imports OmicsAgent.AppRuntime.Ini
 Imports OmicsWorks.RibbonLib.Controls
-Imports OmicsWorks.Settings
 Imports WebView2UI
 
 Module RibbonMenu
@@ -20,14 +20,15 @@ Module RibbonMenu
         AddHandler ribbon.ButtonLicense.ExecuteEvent, Sub() Call OpenLicenseDialog()
         AddHandler ribbon.ButtonVennTool.ExecuteEvent, Sub() Call OpenJVennTool()
         AddHandler ribbon.ButtonLLMTool.ExecuteEvent, Sub() Call OpenLLmTool()
+        AddHandler ribbon.ButtonSettings.ExecuteEvent, Sub() Call CommonRuntime.ShowDocument(Of FormSettings)()
     End Sub
 
     Public Function OpenLLmTool() As FormLLMWindow
         Dim llm As FormLLMWindow = CommonRuntime.TryGetToolWindow("llm_window")
 
         If llm Is Nothing Then
-            Dim config As llm = Workbench.config.llm
-            Dim agent As New LLMClient(LLMUrl.Create(config.endpoint, config.apiKey), config.model)
+            Dim config As LLMConfig = Workbench.config.LLM
+            Dim agent As New LLMClient(LLMUrl.Create(config.LLMServiceUrl, config.LLMApiKey), config.LLMModelName)
 
             llm = New FormLLMWindow With {
                 .Name = "llm_window"
@@ -57,17 +58,30 @@ Module RibbonMenu
     Public Sub OpenFolder()
         Using dir As New FolderBrowserDialog
             If dir.ShowDialog = DialogResult.OK Then
-                Call CommonRuntime.RegisterToolWindow(New FormFolderWorkspace With {.Folder = dir.SelectedPath}, DockState.DockRight)
+                Call OpenFolder(dir.SelectedPath)
             End If
         End Using
+    End Sub
+
+    Public Sub OpenFolder(folder As String)
+        Dim ws As FormFolderWorkspace = CommonRuntime.TryGetToolWindow("agent_folder")
+
+        If ws Is Nothing Then
+            ws = New FormFolderWorkspace With {.Folder = folder, .Name = "agent_folder"}
+        End If
+
+        Call CommonRuntime.RegisterToolWindow(ws, DockState.DockRight)
+        Call ws.LoadFolder(folder)
     End Sub
 
     Public Sub OpenResearch()
         Using dir As New FolderBrowserDialog With {.ShowNewFolderButton = True}
             If dir.ShowDialog = DialogResult.OK Then
-                Dim page As New FormResearchWork With {.Workspace = dir.SelectedPath}
-
-                Call CommonRuntime.ShowDocument(page)
+                If License.CheckLicense Then
+                    Call CommonRuntime.ShowDocument(New FormResearchWork With {.Workspace = dir.SelectedPath})
+                Else
+                    Call CommonRuntime.Warning("Unlicensed software, please apply a valid license file and then start your research work.")
+                End If
             End If
         End Using
     End Sub

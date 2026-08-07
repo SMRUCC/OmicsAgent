@@ -35,6 +35,8 @@ Partial Class FormFolderWorkspace
         ContextMenuStrip1 = New ContextMenuStrip(components)
         PinToolStripMenuItem = New ToolStripMenuItem()
         ImageList1 = New ImageList(components)
+        ToolStripMenuItem1 = New ToolStripSeparator()
+        ViewAsTextFileToolStripMenuItem = New ToolStripMenuItem()
         ToolStrip1.SuspendLayout()
         ContextMenuStrip1.SuspendLayout()
         SuspendLayout()
@@ -94,15 +96,15 @@ Partial Class FormFolderWorkspace
         ' 
         ' ContextMenuStrip1
         ' 
-        ContextMenuStrip1.Items.AddRange(New ToolStripItem() {PinToolStripMenuItem})
+        ContextMenuStrip1.Items.AddRange(New ToolStripItem() {PinToolStripMenuItem, ToolStripMenuItem1, ViewAsTextFileToolStripMenuItem})
         ContextMenuStrip1.Name = "ContextMenuStrip1"
-        ContextMenuStrip1.Size = New Size(92, 26)
+        ContextMenuStrip1.Size = New Size(181, 76)
         ' 
         ' PinToolStripMenuItem
         ' 
         PinToolStripMenuItem.Image = CType(resources.GetObject("PinToolStripMenuItem.Image"), Image)
         PinToolStripMenuItem.Name = "PinToolStripMenuItem"
-        PinToolStripMenuItem.Size = New Size(91, 22)
+        PinToolStripMenuItem.Size = New Size(180, 22)
         PinToolStripMenuItem.Text = "Pin"
         ' 
         ' ImageList1
@@ -113,6 +115,17 @@ Partial Class FormFolderWorkspace
         ImageList1.Images.SetKeyName(0, "icons8-research-96.png")
         ImageList1.Images.SetKeyName(1, "icons8-file-explorer-new-96.png")
         ImageList1.Images.SetKeyName(2, "icons8-books-96.png")
+        ' 
+        ' ToolStripMenuItem1
+        ' 
+        ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        ToolStripMenuItem1.Size = New Size(177, 6)
+        ' 
+        ' ViewAsTextFileToolStripMenuItem
+        ' 
+        ViewAsTextFileToolStripMenuItem.Name = "ViewAsTextFileToolStripMenuItem"
+        ViewAsTextFileToolStripMenuItem.Size = New Size(180, 22)
+        ViewAsTextFileToolStripMenuItem.Text = "View As Text File"
         ' 
         ' FormFolderWorkspace
         ' 
@@ -143,4 +156,6 @@ Partial Class FormFolderWorkspace
     Friend WithEvents ToolStripDropDownButton1 As ToolStripDropDownButton
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents PinToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
+    Friend WithEvents ViewAsTextFileToolStripMenuItem As ToolStripMenuItem
 End Class

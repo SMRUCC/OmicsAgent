@@ -1,0 +1,92 @@
+﻿{
+ "source_file": "fmicb-14-1138877.txt",
+ "key_genes_proteins": [
+ "α-Amylase",
+ "glucoamylase",
+ "extracellular amylolytic enzymes",
+ "protease"
+ ],
+ "key_pathways": [
+ "Starch degradation/amylolysis",
+ "Microbial degradation of nitrogenous compounds",
+ "Alkaloid/nicotine degradation",
+ "Maillard reaction",
+ "Carotenoid degradation",
+ "Chlorophyll degradation",
+ "Cembranoid degradation",
+ "Flavor compound biosynthesis/accumulation"
+ ],
+ "key_metabolites": [
+ "total sugar",
+ "reducing sugar",
+ "starch",
+ "total nitrogen",
+ "alkaloids",
+ "nicotine",
+ "anatabine",
+ "cotinine",
+ "nornicotine",
+ "N-acetyl-DL-nornicotine",
+ "isonicoteine",
+ "(1's,2's)-nicotine-N'-oxide",
+ "amino acids",
+ "organic acids",
+ "volatile ammonia",
+ "terpenes",
+ "carbonyls",
+ "degradation products of carotenoids",
+ "Maillard reaction products",
+ "degradation products of chlorophyll",
+ "degradation products of cembranoids",
+ "neophytadiene",
+ "β-Damascone",
+ "megastigmatrienone",
+ "solanone",
+ "2,4-dimethyltetrahydrofuran",
+ "tetrahydro-2,2,5,5-tetramethylfuran",
+ "total flavor components"
+ ],
+ "biological_mechanisms": [
+ {
+ "mechanism": "Microbial enzymes degrade macromolecules and harmful compounds, generating flavor precursors and aroma compounds.",
+ "evidence": "The paper states that complex microbial communities on/in cigar leaves secrete enzymes to degrade macromolecules such as proteins, starch, and cellulose, as well as harmful compounds such as nicotine, while generating flavor components including terpenes and carbonyls."
+ },
+ {
+ "mechanism": "Starch is hydrolyzed to sugars during fermentation, but sugars decrease later due to microbial utilization and Maillard reactions.",
+ "evidence": "Total sugar and reducing sugar increased as starch was degraded into small sugars by microorganisms, then decreased in the later fermentation stage due to microbial utilization and the Maillard reaction."
+ },
+ {
+ "mechanism": "Nitrogenous compounds and alkaloids are degraded by microorganisms into smaller nitrogen-containing molecules.",
+ "evidence": "Total nitrogen decreased by12.6% and total alkaloids by26.1% during fermentation, attributed to microbial degradation into amino acids, organic acids, and volatile ammonia."
+ },
+ {
+ "mechanism": "Flavor formation arises from degradation of tobacco precursor metabolites.",
+ "evidence": "Detected flavor components mainly included degradation products of carotenoids, Maillard reaction products, degradation products of chlorophyll, and degradation products of cembranoids, which accumulated during fermentation."
+ },
+ {
+ "mechanism": "Microbial community succession is driven by environmental selection and tolerance, with dominant taxa peaking in mid-fermentation.",
+ "evidence": "Microbial richness decreased first and then increased; Staphylococcus and Aspergillus increased first then decreased, dominating bacterial and fungal communities on day21. PLS-DA showed significant community shifts during fermentation."
+ },
+ {
+ "mechanism": "Low-abundance co-occurring taxa can maintain microbial community stability and function.",
+ "evidence": "Network analysis identified Cryptococcus, unclassified Catabotrydaceae, Candida, and unclassified Ustilaginaceae as co-occurring taxa. Candida accounted for only0.42% of fungal abundance but was a late-fermentation biomarker and was proposed to contribute to community stability."
+ },
+ {
+ "mechanism": "Bioaugmentation with Candida strains reduces alkaloids and enhances specific flavor metabolite classes.",
+ "evidence": "Inoculation with C. parapsilosis or C. metapsilosis significantly decreased total alkaloid content and increased total flavor components. C. parapsilosis elevated chlorophyll and carotenoid degradation products, while C. metapsilosis elevated cembranoid degradation and Maillard reaction products."
+ }
+ ],
+ "key_findings": [
+ "The optimal cigar fermentation conditions used in this study were30% initial moisture,30°C,70% relative humidity, and35 days; total nitrogen and total alkaloids decreased by12.6% and26.1%, respectively, while total flavor components increased.",
+ "Dominant bacterial genera included Staphylococcus (47.8%), Pseudomonas (13.0%), Pantoea (11.7%), Sphingomonas (5.0%), Enterobacter (2.7%), Kosakonia (2.2%), and Methylobacterium methylarum (1.6%).",
+ "Dominant fungal genera included Aspergillus (41.6%), Alternaria (31.6%), Wallemia (12.1%), Cladosporium (5.3%), Penicillium (2.9%), and Stemphyllium (2.2%).",
+ "Staphylococcus and Aspergillus relative abundances increased first and then decreased, both reaching their highest levels on day21 of fermentation.",
+ "Correlation analysis predicted that Aspergillus, Staphylococcus, and Filobasidium contribute to sugar compound formation; Bacillus and Candida degrade nitrogenous substances; and Candida synthesizes flavor substances.",
+ "Candida, although only0.42% of total fungal abundance, was identified as a co-occurring genus and a late-fermentation biomarker important for microbial community stability.",
+ "Candida parapsilosis and Candida metapsilosis were isolated, representing74.0% and13.9% of Candida spp., respectively.",
+ "Bioaugmentation with C. parapsilosis or C. metapsilosis significantly reduced alkaloid content and increased flavor components in cigar tobacco leaves, with total flavor content ranked P > M > CK.",
+ "C. parapsilosis increased chlorophyll and carotenoid degradation products such as neophytadiene, β-damascone, and megastigmatrienone; C. metapsilosis increased cembranoid degradation and Maillard reaction products such as solanone,2,4-dimethyltetrahydrofuran, and tetrahydro-2,2,5,5-tetramethylfuran.",
+ "Nicotine accounted for92.7–98.0% of total alkaloids; seven alkaloids were detected, including cotinine, nornicotine, nicotine, N-acetyl-DL-nornicotine, isonicoteine, and (1's,2's)-nicotine-N'-oxide."
+ ],
+ "relevance_to_research_topic": "This paper is directly relevant as a microbiota-centered study of tobacco/cigar fermentation. It demonstrates an analytical framework combining high-throughput amplicon sequencing, physicochemical and flavor metabolite measurements, PLS-DA/LEfSe differential analyses, Spearman correlation, and microbial network analysis to link microbial community succession with functional metabolites. This provides a useful template for the user's planned differential and multi-omics association analyses, especially for correlating microbiome data with metabolome and volatile flavor data, identifying biomarkers and co-occurring taxa, and generating hypotheses about functional microbes. The paper also establishes functional roles for key microbes (Aspergillus, Staphylococcus, Filobasidium, Bacillus, Candida) in sugar accumulation, nitrogen/alkaloid degradation, flavor synthesis, and community stability, which can inform analysis of Yunnan vs. Henan tobacco fermentation samples. However, it does not address host dual RNA-seq/proteomics or geographic/altitude comparisons, so those would require additional integration of the user's multi-omics layers and location-specific metadata."
+}

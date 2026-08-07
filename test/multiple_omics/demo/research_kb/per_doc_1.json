@@ -1,0 +1,85 @@
+﻿{
+ "source_file": "12866_2024_Article_3702.txt",
+ "key_genes_proteins": [
+ "methyl-accepting chemotaxis protein",
+ "amylase",
+ "cellulase"
+ ],
+ "key_pathways": [
+ "carbohydrate metabolism",
+ "amino acid metabolism",
+ "cell motility",
+ "cell community-prokaryotes",
+ "bacterial chemotaxis",
+ "flagellar assembly",
+ "quorum sensing",
+ "biofilm formation",
+ "galactose metabolism",
+ "C5-branched dibasic acid metabolism",
+ "pentose and glucuronate interconversions",
+ "butanoate metabolism",
+ "glyoxylate and dicarboxylate metabolism",
+ "arginine and proline metabolism",
+ "tryptophan metabolism",
+ "histidine metabolism",
+ "lysine biosynthesis",
+ "nicotine degradation"
+ ],
+ "key_metabolites": [
+ "nicotine",
+ "galactose",
+ "butanoate",
+ "glyoxylate",
+ "arginine",
+ "proline",
+ "tryptophan",
+ "histidine",
+ "lysine",
+ "alcohols",
+ "ketones",
+ "esters"
+ ],
+ "biological_mechanisms": [
+ {
+ "mechanism": "Fermentation time acts as the dominant selective force shaping tobacco leaf bacterial community assembly, with deterministic processes (especially homogeneous selection) prevailing during middle fermentation stages and stochastic processes dominating at early and late stages.",
+ "evidence": "PERMANOVA attributed49.54% of bacterial community variation to fermentation time; βNTI/RCbray null model showed homogenizing dispersal and undominated processes at M0 and M12 (>80%) and homogeneous selection at M3, M6 and M9."
+ },
+ {
+ "mechanism": "Specific functional bacterial genera are recruited at different fermentation stages to degrade tobacco macromolecules and nicotine.",
+ "evidence": "Terribacillus, Pantoea and Franconibacter were enriched at M3/M6, Pseudomonas was enriched at M9, and Pseudomonas species are known nicotine degraders (e.g., Pseudomonas plecoglossicida TND35, Pseudomonas stutzeri ZCJ, Pseudomonas sp. HF-1)."
+ },
+ {
+ "mechanism": "Microbial community assembly involves competition for resources and space, reflected in negative co-occurrence and reduced diversity and network complexity during middle fermentation.",
+ "evidence": "Co-occurrence networks in M3 and M6 had fewer edges but significantly higher proportions of negative interactions; nutrient and space competition eliminated some microbes and reduced community diversity."
+ },
+ {
+ "mechanism": "Bacterial chemotaxis, flagellar motility, quorum sensing and biofilm formation mediate recruitment and interactions of beneficial microbes on tobacco leaf surfaces.",
+ "evidence": "PICRUSt2 predicted enrichment of cell motility and cell community-prokaryotes genes in M3, M6 and M9, including genes for bacterial chemotaxis, flagellar assembly, quorum sensing and biofilm formation."
+ },
+ {
+ "mechanism": "Polysaccharide degradation dominates early fermentation, while protein/amino acid degradation increases later.",
+ "evidence": "Carbohydrate metabolism genes (galactose metabolism, C5-branched dibasic acid metabolism, pentose and glucuronate interconversions) were more abundant in M3 and M6; amino acid metabolism genes (arginine and proline metabolism, tryptophan metabolism, histidine metabolism, lysine biosynthesis) were more abundant in M9."
+ },
+ {
+ "mechanism": "The same fermentation stage selects for convergent microbial communities regardless of leaf position.",
+ "evidence": "Differences in bacterial community diversity and composition between middle and top leaves gradually reduced or disappeared, and homogeneous selection was the dominant ecological process in M3, M6 and M9, with the same genera enriched at the same stages."
+ },
+ {
+ "mechanism": "Microbial functional diversity and community complexity decrease under strong selection pressure during fermentation but recover at later stages.",
+ "evidence": "Bacterial alpha diversity and KO diversity were significantly lower at M3, M6 and M9, then increased at M12; network complexity showed a similar reduction and recovery pattern."
+ }
+ ],
+ "key_findings": [
+ "Fermentation time had a much stronger impact on bacterial diversity, composition, co-occurrence network and functional profiles than leaf position and fermentation site (PERMANOVA:49.54% vs7.24% and2.25%).",
+ "Bacterial alpha diversity and KO functional diversity significantly decreased at3,6 and9 months of fermentation and rebounded at12 months.",
+ "Top leaves initially had higher bacterial diversity than middle leaves, but differences diminished or disappeared during fermentation.",
+ "Bacterial community assembly shifted from stochastic processes at M0/M12 to deterministic homogeneous selection at M3/M6/M9.",
+ "Dominant phyla were Proteobacteria (relative abundance39.27–94.97%) and Firmicutes (relative abundance2.86–59.10%).",
+ "Marker genera included Terribacillus, Bacillus, Sphingomonas and Pantoea by leaf position; Enterobacter and Kosakonia at M0; Franconibacter at M6; Pseudomonas at M9; and Xylella at M12.",
+ "Co-occurrence networks in M3, M6 and M9 had lower connectivity but higher proportions of negative interactions, then recovered at M12; keystone species were mostly Alphaproteobacteria and Gammaproteobacteria.",
+ "PICRUSt2 predicted enrichment of carbohydrate metabolism genes in early fermentation and amino acid metabolism genes in later fermentation, with chemotaxis, flagellar assembly, quorum sensing and biofilm formation enriched during M3/M6/M9.",
+ "Pseudomonas species are important contributors to nicotine degradation during tobacco fermentation.",
+ "Bacterial communities and functions converged at the same fermentation stages due to similar selective pressures, despite differences in leaf position."
+ ],
+ "relevance_to_research_topic": "This paper provides a reference framework for analyzing tobacco fermentation microbiome data. It demonstrates that fermentation time is the dominant factor shaping microbial community and function, and provides analytical approaches (alpha/beta diversity, PERMANOVA, βNTI/RCbray null model, DESeq2, LefSe, PICRUSt2, co-occurrence network analysis) that can be applied to the user's Yunnan vs Henan multi-omics data. It also links specific bacterial genera and metabolic pathways (carbohydrate metabolism, amino acid metabolism, chemotaxis, quorum sensing, biofilm formation) to tobacco macromolecule degradation and flavor formation, supporting the design of differential and multi-omics association analyses integrating microbiome, transcriptome, proteome, metabolome and volatile flavor data across locations and fermentation timepoints."
+}

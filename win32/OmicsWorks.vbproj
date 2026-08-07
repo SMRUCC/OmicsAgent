@@ -24,10 +24,12 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <OutputPath>G:\OmicsWorks\agent\bin</OutputPath>
+    <Optimize>False</Optimize>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutputPath>G:\OmicsWorks\agent\bin</OutputPath>
+    <Optimize>False</Optimize>
   </PropertyGroup>
 
   <ItemGroup>

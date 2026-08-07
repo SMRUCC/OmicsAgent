@@ -2,8 +2,8 @@
   "profiles": {
     "OmicsAgent": {
       "commandName": "Project",
-      "commandLineArgs": "-r=research.txt -e=expression.csv -a=metabolites.csv -s=sampleinfo.csv -k=./pubmed/ -w=./demo/ -c=config.ini --skip-literature --skip-kb  --make-report --debug-cache",
-      "workingDirectory": "G:\\OmicsWorks\\test\\metabolism"
+      "commandLineArgs": "/report --research=\"F:\\datapool\\20260715-spatial\\analysis_2\\limma\\research.txt\" --dirs=\"F:\\datapool\\20260715-spatial\\analysis_2\\limma\\dirs.txt\" --workspace \"F:\\datapool\\20260715-spatial\\analysis_2\\limma\\result\" --config \"F:\\datapool\\config.ini\" --skip-kb --report-format docx",
+      "workingDirectory": "G:\\OmicsWorks\\test\\multiple_omics\\demo"
     }
   }
 }

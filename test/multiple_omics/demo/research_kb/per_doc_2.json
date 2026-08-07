@@ -1,0 +1,113 @@
+﻿{
+ "source_file": "13568_2026_Article_2034.txt",
+ "key_genes_proteins": [
+ "ACO",
+ "acnB",
+ "sucD",
+ "aarC",
+ "PDHA",
+ "PDHB",
+ "phhA",
+ "yhhY",
+ "alpha-amylase (α-AL)",
+ "neutral protease (NP)",
+ "polyphenol oxidase (PPO)",
+ "phenylalanine ammonia lyase (PAL)",
+ "citrate synthase",
+ "proteases secreted by Staphylococcus",
+ "nicotine oxidase",
+ "glucoamylase",
+ "protease from Bacillus"
+ ],
+ "key_pathways": [
+ "Citrate cycle (TCA cycle)",
+ "Phenylalanine metabolism",
+ "Carbohydrate metabolism",
+ "Amino acid metabolism",
+ "Maillard reaction",
+ "Biosynthesis of aromatic amino acids"
+ ],
+ "key_metabolites": [
+ "L-malic acid",
+ "glucose",
+ "nicotine",
+ "free nicotine",
+ "NH4+-N (ammonium nitrogen)",
+ "NH3",
+ "acetyl-CoA",
+ "citrate",
+ "isocitrate",
+ "isocitric acid",
+ "cis-aconitate",
+ "fumarate",
+ "pyruvate",
+ "succinate",
+ "N-acetyl-L-phenylalanine",
+ "L-tyrosine",
+ "trans-2-hydroxycinnamic acid",
+ "phenylacetyl-L-glutamine",
+ "3-hydroxyphenylacetic acid",
+ "4-hydroxyphenylacetic acid",
+ "phenaceturic acid",
+ "xanthosine5'-monophosphate",
+ "D-erythro-imidazolylglycerol phosphate",
+ "aspartic acid (Asp)",
+ "serine (Ser)",
+ "glycine (Gly)",
+ "arginine (Arg)",
+ "threonine (Thr)",
+ "alanine (Ala)",
+ "proline (Pro)",
+ "tyrosine (Tyr)",
+ "leucine (Leu)",
+ "phenylalanine (Phe)",
+ "lysine (Lys)",
+ "citric acid",
+ "total sugar",
+ "reducing sugar",
+ "amino acids"
+ ],
+ "biological_mechanisms": [
+ {
+ "mechanism": "Acidic fermentation reduces tobacco irritancy by decreasing the proportion of free nicotine. Acidic substances from malic acid combine with nicotine to form nicotine salts, converting nicotine from free-base to bound state and reducing its release during smoking.",
+ "evidence": "Compared with unfermented CK, free nicotine proportion decreased by37.52% in T2 (0.8% malic acid) and46.98% in T3 (0.8% malic acid +1.5% glucose). Free nicotine proportion declined significantly with decreasing pH."
+ },
+ {
+ "mechanism": "Acidic fermentation stabilizes nitrogen in the form of NH4+, which is less volatile than NH3, thereby reducing ammonia release during combustion and lowering leaf irritancy.",
+ "evidence": "The paper states that under acidic conditions N exists as NH4+, which is more stable and less likely to volatilize as NH3 during combustion. NH4+-N content increased as fermentation pH decreased, while NH3 concentrations in the environment increased in fermented groups because high temperature drove volatilization."
+ },
+ {
+ "mechanism": "Acidic fermentation enhances the activities of carbon/nitrogen metabolism enzymes, browning-related enzymes, and polyphenol synthesis enzymes, leading to a more balanced chemical composition and improved sensory quality.",
+ "evidence": "PPO activity increased by44.62% in T3; PAL and NP activities increased by up to49.98% and39.14% in T2/T3; α-AL was significantly enhanced in T3. Protein and total nitrogen decreased, while total sugar and reducing sugar increased significantly after fermentation."
+ },
+ {
+ "mechanism": "Fermentation reshapes the microbial community, with bacteria acting as key drivers of metabolite formation during tobacco fermentation.",
+ "evidence": "Bacterial diversity and richness increased significantly after fermentation. Dominant genera included Staphylococcus, Pantoea, Ralstonia, Pseudomonas, and Bacillus. Mantel and correlation network analyses showed that Staphylococcus was significantly correlated with protein, nicotine, NH4+-N, acetyl-CoA, isocitrate, and trans-2-hydroxycinnamic acid, while Bacillus was significantly correlated with cis-aconitate and citrate. The authors concluded that bacterial communities were the key microorganisms affecting metabolite formation."
+ },
+ {
+ "mechanism": "Co-fermentation with malic acid and glucose promotes aroma formation through microbial metabolism and the Maillard reaction, producing sugar-amino acid condensates as aroma precursors.",
+ "evidence": "The T3 treatment (0.8% malic acid +1.5% glucose) produced the highest sensory quality scores, with improved aroma quality, sweetness, and reduced irritancy. Glucose serves as a microbial growth substrate and can react with amino acids to form sugar-amino acid condensates, which are important aroma precursors."
+ },
+ {
+ "mechanism": "Malic acid addition promotes microbial metabolic activity by feeding into the TCA cycle and phenylalanine metabolism, thereby influencing flavor-related metabolite accumulation.",
+ "evidence": "Differential metabolites were significantly enriched in the citrate cycle and phenylalanine metabolism pathways. In the citrate cycle, citrate and cis-aconitate were upregulated; key genes including ACO, acnB, sucD, aarC, PDHA, and PDHB showed differential abundances. Malic acid is an intermediate of the TCA cycle and can enhance microbial metabolic activity."
+ },
+ {
+ "mechanism": "Bacillus and Staphylococcus contribute to protein degradation and nitrogen transformation during fermentation.",
+ "evidence": "Bacillus can synthesize hydrolases such as glucoamylase and protease, and its increased abundance coincided with decreased protein and elevated amino acid levels. Staphylococcus was positively correlated with protein, nicotine, and NH4+-N, and can secrete proteases and may mediate nicotine transformation via nicotine oxidase."
+ }
+ ],
+ "key_findings": [
+ "The optimal malic acid concentration for acidic fermentation of cigar tobacco leaves was0.8%.",
+ "The combination of0.8% malic acid and1.5% glucose (T3) produced the best overall fermentation outcome, highest sensory quality, best aroma, lowest irritancy, and improved sweetness.",
+ "Acidic fermentation significantly reduced free nicotine content and free nicotine proportion; free nicotine content decreased by28.65%,47.48%, and54.24% in T1, T2, and T3, respectively, and free nicotine proportion decreased by37.52% and46.98% in T2 and T3.",
+ "Fermentation under acidic conditions increased NH4+-N stability and reduced NH3 release during combustion, contributing to lower irritancy.",
+ "Activities of PPO, PAL, neutral protease, and alpha-amylase were significantly higher in fermented leaves than in unfermented leaves.",
+ "Protein and total nitrogen contents decreased after fermentation, while total sugar and reducing sugar contents increased; total sugar increased by64.98% and reducing sugar by78.91% in T3 compared to CK.",
+ "Microbial diversity and richness increased after fermentation; the dominant bacterial genera were Staphylococcus, Pantoea, Ralstonia, Pseudomonas, and Bacillus, while Aspergillus dominated the fungal community.",
+ "Bacteria, especially Staphylococcus and Bacillus, were strongly correlated with key metabolites and chemical components, indicating that bacteria are the key microbial drivers of metabolite formation.",
+ "The primary enriched metabolic pathways were the citrate cycle and phenylalanine metabolism.",
+ "Acidic fermentation resulted in a more balanced chemical composition and significantly improved sensory quality of cigar tobacco leaves."
+ ],
+ "relevance_to_research_topic": "This paper directly addresses mechanisms of tobacco flavor fermentation, specifically how acidic fermentation improves cigar tobacco leaf quality and reduces irritancy. It provides biological insights and analytical strategies relevant to the user's multi-omics comparison of Yunnan vs Henan tobacco fermentation: microbial community dynamics (16S/ITS), dominant bacterial drivers, metabolomic pathway enrichment (citrate cycle, phenylalanine metabolism), enzyme activities (PPO, PAL, α-AL, neutral protease), pH-dependent nicotine and nitrogen forms, and correlation-based multi-omics integration (Mantel test, Cytoscape network, OPLS-DA, KEGG enrichment). Although the paper uses a controlled single-variety fermentation system rather than comparing geographic locations, its findings can help guide differential analysis and multi-omics association analysis in the user's dataset, especially regarding bacterial-metabolite correlations, flavor-related metabolic pathways, and the roles of pH, nicotine, nitrogen, sugars, and amino acids in high-quality tobacco flavor fermentation."
+}

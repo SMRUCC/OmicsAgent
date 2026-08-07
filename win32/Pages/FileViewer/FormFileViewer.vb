@@ -22,7 +22,7 @@ Public Class FormFileViewer
         Await WebViewLoader.Init(WebView21)
     End Sub
 
-    Public Async Function ViewFile(rel As String) As Task
+    Public Async Function ViewFile(rel As String, as_text As Boolean) As Task
         Await WebView21.ExecuteScriptAsync($"openFile('{rel}');")
         Me.BringToFront()
     End Function

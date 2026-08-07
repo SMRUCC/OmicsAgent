@@ -1,0 +1,126 @@
+﻿{
+ "source_file": "fbioe-13-1627842.txt",
+ "key_genes_proteins": [
+ "amylase",
+ "protease",
+ "cellulase",
+ "pectinase",
+ "alpha-amylase",
+ "neutral protease",
+ "16S rRNA"
+ ],
+ "key_pathways": [
+ "KEGG: metabolism",
+ "KEGG: environmental information processing",
+ "KEGG: cellular processes",
+ "KEGG: genetic information processing",
+ "KEGG: human diseases",
+ "KEGG: organismal systems",
+ "amino acid metabolism",
+ "carbohydrate metabolism",
+ "metabolism of cofactors and vitamins",
+ "lipid metabolism",
+ "metabolism of other amino acids",
+ "xenobiotics biodegradation and metabolism",
+ "signal transduction",
+ "metabolism of terpenoids and polyketides",
+ "folding, sorting and degradation",
+ "translation",
+ "cell growth and death",
+ "transport and catabolism",
+ "aromatic amino acid metabolic pathway",
+ "Maillard reaction"
+ ],
+ "key_metabolites": [
+ "cyclic AMP",
+ "proline",
+ "phenylacetaldehyde",
+ "quinic acid",
+ "threonic acid",
+ "quercetin",
+ "L-malic acid",
+ "tryptophan",
+ "maleic acid",
+ "phenylalanine",
+ "gulonic acid",
+ "tryptamine",
+ "trehalose",
+ "lactose",
+ "tyrosine",
+ "aspartic acid",
+ "terpineol",
+ "cinnamaldehyde",
+ "neryl acetate",
+ "gingerol",
+ "benzyl alcohol",
+ "phenol",
+ "coumarin",
+ "nicotine",
+ "alkaloids",
+ "prenol lipids",
+ "fatty acyls",
+ "organooxygen compounds",
+ "benzene and substituted derivatives",
+ "indoles and derivatives",
+ "glycerophospholipids",
+ "flavonoids",
+ "carboxylic acids and derivatives",
+ "steroids and steroid derivatives",
+ "benzopyrans",
+ "hydroxy acids and derivatives",
+ "cinnamic acids and derivatives",
+ "isoflavonoids",
+ "anthracenes",
+ "starch",
+ "cellulose",
+ "total sugars",
+ "reducing sugars"
+ ],
+ "biological_mechanisms": [
+ {
+ "mechanism": "Microbial community succession drives changes in tobacco metabolites during flue-cured tobacco fermentation, with different genera dominating at different stages and correlating with specific metabolite groups.",
+ "evidence": "Microbial succession leads to changes in metabolites, with Escherichia, Bacillus, Enterococcus, Alternaria, Vibrio, and Halomonas playing crucial roles in the breakdown of fundamental substances during the initial year of FCT fermentation. Correlation analysis based on absolute abundance showed stage-specific positive/negative correlations between top20 genera and metabolite groups I-IV."
+ },
+ {
+ "mechanism": "Bacillus species improve tobacco flavor by participating in aromatic amino acid metabolism and promoting production of aromatic volatile compounds.",
+ "evidence": "Bacillus is positively correlated with amino acids (tryptophan, tyrosine, aspartic acid, phenylalanine) and aromatic compounds (phenylacetaldehyde, phenol, benzyl alcohol, coumarin). After15 days of treatment with four Bacillus strains, phenylacetaldehyde and other aromatic compound contents significantly increased, consistent with involvement of Bacillus in the aromatic amino acid metabolic pathway."
+ },
+ {
+ "mechanism": "Bacillus secretes amylase, protease, and cellulase that degrade macromolecules during fermentation, improving sugar content, sweetness, softness, and reducing irritation.",
+ "evidence": "Bacillus secretes various enzymes, such as amylases, proteases, and cellulases, which degrade organic matter. These enzymes play a role in enhancing tobacco sweetness and softness, reducing irritation, and improving aroma and flavor."
+ },
+ {
+ "mechanism": "Targeted inoculation of composite Bacillus strains optimizes the sugar-to-nicotine ratio and sensory quality of flue-cured tobacco.",
+ "evidence": "The combination of four Bacillus strains (B. altitudinis YS193, B. pumilus YH186, B. tequilensis YS154, B. velezensis YS157) achieved a sugar-to-nicotine ratio closest to the optimal value of10, increased total/reducing sugars, decreased nicotine/total nitrogen, and significantly improved sensory evaluation scores."
+ },
+ {
+ "mechanism": "FCT aging is characterized by the metabolism, transformation, and synthesis of alkaloids, their derivatives, and benzene ring compounds.",
+ "evidence": "Volcano diagram based on fold change analysis revealed that the FCT aging process was characterized by the metabolism, transformation, and synthesis of alkaloids, their derivatives, and benzene ring compounds."
+ },
+ {
+ "mechanism": "Metabolite dynamics during FCT fermentation are staged, supporting two years as the optimal fermentation period.",
+ "evidence": "Group III substances reached their highest levels after the second year, including steroids and steroid derivatives; cinnamic acids and derivatives remained high in the second and fourth years; metabolites became stable after the second year, indicating most of the fermentation process was completed in the second year."
+ },
+ {
+ "mechanism": "Core microbial communities are negatively correlated with carbon sources and positively correlated with amino acids and flavor-promoting substances.",
+ "evidence": "During FCT fermentation, carbon sources such as lactose and trehalose were negatively correlated with the core microbial community, while the core microbial community was significantly positively correlated with amino acids and other flavor-promoting substances."
+ },
+ {
+ "mechanism": "Microbial alpha diversity decreases in the first year of FCT fermentation and then increases in later years, with different dominant bacteria metabolizing stage-specific substrates.",
+ "evidence": "After1 year of fermentation, sample abundance significantly decreased; richness and evenness gradually increased after2 years. The dominant bacterial genera undergo irregular changes at different stages of fermentation, indicating that different bacteria may be required to metabolize the metabolic products at each stage."
+ }
+ ],
+ "key_findings": [
+ "A total of1781 metabolites were identified from FCT samples aged0-4 years, with1072 from positive ion mode and709 from negative ion mode; lipids and lipid-like molecules were the most abundant superclass (27.12%).",
+ "The FCT aging process is dominated by the metabolism, transformation, and synthesis of alkaloids, their derivatives, and benzene ring compounds.",
+ "Metabolites can be classified into four temporal groups; flavor-related substances such as steroids, cinnamic acids, isoflavonoids, and alkaloids accumulate by the second to fourth years, and the second year appears to be the optimal practical fermentation endpoint.",
+ "Dominant microbial phyla included Proteobacteria, Actinobacteria, Firmicutes, Ascomycota, Bacteroidetes, and Chlorophyta.",
+ "Escherichia, Bacillus, Enterococcus, Alternaria, Vibrio, and Halomonas play core roles in degrading basic substances during the first year of FCT fermentation; Sphingomonas, Vibrio, Ralstonia, Pseudoalteromonas, and Halomonas are key players in producing flavor compounds from the second to fourth years.",
+ "Bacillus abundance increased from2.0% to4.3% during the first year of FCT fermentation and is a key functional genus for tobacco flavor improvement.",
+ "The four-Bacillus combination (Bacillus altitudinis YS193, Bacillus pumilus YH186, Bacillus tequilensis YS154, Bacillus velezensis YS157) increased total sugar content by approximately14.5%, reducing sugar by12.7%, optimized the sugar-to-nicotine ratio to9.67, and enhanced sensory flavor.",
+ "Bacillus and Escherichia were negatively correlated with bitter/spicy substances such as gingerol and positively correlated with amino acids and aromatic flavor-promoting substances.",
+ "KEGG functional prediction showed that metabolism pathways accounted for approximately59.1% of microbial functions, with amino acid metabolism and carbohydrate metabolism being particularly important.",
+ "A total of107 bacterial strains were isolated from tobacco leaf samples, predominantly Bacillus and Terribacillus."
+ ],
+ "relevance_to_research_topic": "This paper provides a directly relevant framework for the user's multi-omics tobacco fermentation study. It demonstrates how to integrate metagenomic microbiome data with metabolomic and volatile flavor data to identify stage-specific core microorganisms and flavor-related metabolic pathways, such as Bacillus-driven aromatic amino acid metabolism and sugar-nicotine balance. Although this paper focuses on temporal aging in Anhui, its analytical strategy — including differential metabolite classification, microbial alpha/beta diversity analysis, KEGG functional prediction, Spearman correlation networks, and functional strain screening — can inform the user's comparative Yunnan vs Henan multi-omics analysis by suggesting differential abundance testing, cross-omics correlation network construction, and targeted validation of functional Bacillus strains for flavor improvement."
+}

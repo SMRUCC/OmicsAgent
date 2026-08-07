@@ -76,15 +76,16 @@ Module License
                 Call MessageBox.Show("软件未授权，某些程序功能模块的使用将会受到限制。",
                                 "授权验证失败", MessageBoxButtons.OK, MessageBoxIcon.Warning)
 
-                Return False
-            Else
-                Call DirectCast(CommonRuntime.AppHost, FormMain).SetLicenseStatus()
+                Return SetLicenseStatus(False)
             End If
-        Else
-            Call DirectCast(CommonRuntime.AppHost, FormMain).SetLicenseStatus()
         End If
 
-        Return True
+        Return SetLicenseStatus(True)
+    End Function
+
+    Private Function SetLicenseStatus(flag As Boolean) As Boolean
+        Call DirectCast(CommonRuntime.AppHost, FormMain).SetLicenseStatus()
+        Return flag
     End Function
 
     Public Sub OpenLicenseDialog()

@@ -1,0 +1,127 @@
+﻿{
+ "source_file": "40643_2025_Article_998.txt",
+ "key_genes_proteins": [
+ "16S rRNA gene (V3-V4 region)",
+ "ITS1/ITS2 region (fungal ITS gene)",
+ "protease",
+ "amylase",
+ "lipase",
+ "glycosidase",
+ "neutral protease"
+ ],
+ "key_pathways": [
+ "Maillard reaction",
+ "Caramelization reaction",
+ "phenylalanine biosynthesis pathway",
+ "amino acid metabolic pathways",
+ "carbon metabolic pathways",
+ "nicotine degradation",
+ "carotenoid degradation",
+ "starch/cellulose/pectin degradation",
+ "protein degradation",
+ "polysaccharide degradation"
+ ],
+ "key_metabolites": [
+ "total sugar",
+ "reducing sugar",
+ "starch",
+ "protein",
+ "total acid",
+ "free amino acids (FAAs)",
+ "aspartic acid (Asp)",
+ "glutamic acid (Glu)",
+ "serine (Ser)",
+ "histidine (His)",
+ "umami amino acids",
+ "sweet amino acids",
+ "bitter amino acids",
+ "odorless amino acids",
+ "ammonia",
+ "nicotine",
+ "neophytadiene",
+ "β-ionone",
+ "solanone",
+ "geranylacetone",
+ "4,7,9-megastigmatrien-3-one A/B/D",
+ "benzeneacetaldehyde",
+ "phenylacetaldehyde",
+ "benzaldehyde",
+ "benzyl alcohol",
+ "nonanal",
+ "decanal",
+ "cedrol",
+ "2,6,6-trimethyl-2-cyclohexene-1,4-dione",
+ "5-methyl-2-furfural",
+ "dibutyl phthalate",
+ "3-methylvaleric acid",
+ "2,4-di-tert-butylphenol",
+ "ketones",
+ "aldehydes",
+ "esters",
+ "alcohols",
+ "acids",
+ "chlorogenic acid",
+ "flavonoids",
+ "polysaccharides",
+ "glycyrrhizin",
+ "glucose",
+ "fructose",
+ "inulin",
+ "sugars"
+ ],
+ "biological_mechanisms": [
+ {
+ "mechanism": "Exogenous additives enhance fermentation quality by promoting degradation of total sugar, starch and protein while increasing reducing sugar content in cigar tobacco leaves.",
+ "evidence": "Compared with the control T0_20, reducing sugar in T1_20, T2_20 and T3_20 increased by28.6%,14.3% and11.9%, respectively; EA-treated groups also showed more modest starch/protein accumulation and enhanced degradation (Table1)."
+ },
+ {
+ "mechanism": "Free amino acids, especially umami amino acids, are key non-volatile flavor contributors during cigar tobacco fermentation, with Asp, Glu, Ser and His serving as differential markers.",
+ "evidence": "Asp, Glu and His had TAV >1 across all samples; PLS-DA with VIP ≥1.0 and p <0.05 selected Asp, Glu, Ser and His as the key amino acids distinguishing CTLs."
+ },
+ {
+ "mechanism": "Exogenous additives shape volatile flavor profiles by promoting the formation of neophytadiene, ketones, esters and aldehydes, while facilitating nicotine degradation.",
+ "evidence": "After10 days of fermentation, the process promoted formation of neophytadiene, ketones, esters and aldehydes, especially rapid nicotine degradation;7 key differential VFCs were identified by VIP >1 and OAV >1."
+ },
+ {
+ "mechanism": "Bacteria and fungi synergistically degrade macromolecules such as starch, cellulose, pectin and protein, releasing sugars and flavor precursors.",
+ "evidence": "Firmicutes and Proteobacteria convert starch, cellulose and pectin into maltose, fructose and glucose; Aspergillus degrades organic matter, particularly sugars and proteins."
+ },
+ {
+ "mechanism": "Specific microbial genera contribute to flavor formation and quality during fermentation via enzymatic activities and metabolic transformations.",
+ "evidence": "Staphylococcus produces lipases and proteases that assist VFC formation; Pseudomonas has strong proteolytic activity and can degrade nicotine; Bacillus promotes carotenoid breakdown into aroma compounds; Sphingomonas metabolizes chlorogenic acid."
+ },
+ {
+ "mechanism": "Exogenous additives alter microbial community structure and enhance positive microbial interactions, leading to a more stable and coordinated symbiotic network.",
+ "evidence": "T2 and T3 networks showed increased edges, average degree, graph density and clustering coefficients, with shorter path lengths; positive interactions accounted for91.4% and81.8% in T2 and T3 vs64.4% in T0."
+ },
+ {
+ "mechanism": "Some exogenous additive formulations can inhibit mold growth during fermentation, particularly by reducing Aspergillus abundance.",
+ "evidence": "CTLs with T2 maintained lower Aspergillus from day10 to day20 compared with T0; honeysuckle flower, chrysanthemum and tangerine peel were noted for antifungal activities."
+ },
+ {
+ "mechanism": "Microbial communities are tightly correlated with chemical components and key flavor metabolites, indicating microbiome-metabolome interplay during fermentation.",
+ "evidence": "Mantel test and Spearman correlations showed reducing sugar positively correlated with Papiliotrema (r=0.58), pH negatively correlated with Trichothecium (r=-0.62), and protein negatively correlated with Aerococcus (r=-0.75); key differential VFCs were significantly correlated with dominant microorganisms."
+ },
+ {
+ "mechanism": "Total sugar content is a key regulator of microbial community assembly and volatile flavor formation during fermentation.",
+ "evidence": "PLS-SEM showed total sugar had the strongest effect on bacterial genera, a negative effect on fungal genera, and directly influenced flavor metabolites; lower total sugar in EA groups encouraged formation of flavor metabolites, especially aldehydes."
+ },
+ {
+ "mechanism": "Exogenous additives enhance overall cigar tobacco characteristics by altering bacterial alpha diversity and influencing the assembly of dominant microbial communities.",
+ "evidence": "PCA-based CTCs scores were higher in EA-fermented groups; PLS-SEM indicated bacterial diversity/richness had significant negative effects on CTCs, while dominant bacterial community composition showed a positive correlation with CTCs."
+ }
+ ],
+ "key_findings": [
+ "EA improved low-grade cigar tobacco leaf quality by decreasing total sugar, starch and protein while increasing reducing sugar content.",
+ "Asp, Glu, Ser and His were identified as key differential free amino acids, with umami amino acids being the predominant FAA class.",
+ "Total volatile flavor compounds initially increased and then declined during fermentation; EA promoted neophytadiene, ketones, esters and aldehydes and accelerated nicotine degradation.",
+ "Seven key differential VFCs were identified: nicotine,2,6,6-trimethyl-2-cyclohexene-1,4-dione, decanal,5-methyl-2-furfural, dibutyl phthalate,3-methylvaleric acid and2,4-di-tert-butylphenol.",
+ "Dominant bacteria included Staphylococcus and Pseudomonas, while dominant fungi included Aspergillus, Cladosporium and Sampaiozyma; EA altered their relative abundances.",
+ "LEfSe identified6 bacterial and3 fungal genera as differentially dominant microorganisms associated with flavor and chemical composition.",
+ "EA, especially T2 and T3, strengthened cooperative microbial interactions and increased network complexity and stability.",
+ "Mantel test, Spearman correlation and PLS-SEM revealed significant links between dominant microbial genera, chemical components and flavor metabolites.",
+ "PCA confirmed that EA significantly improved cigar tobacco characteristics, mainly through bacterial alpha diversity and dominant community composition.",
+ "Chinese herbal medicine-based exogenous additives represent a promising strategy for enhancing low-grade CTLs fermentation quality and customizing flavor profiles."
+ ],
+ "relevance_to_research_topic": "This paper provides an integrated multi-omics framework for studying cigar tobacco fermentation, combining physicochemical data, free amino acids, volatile flavor compounds,16S/ITS microbial community profiling, co-occurrence network analysis, Mantel tests, PLS-SEM and PCA. It identifies key chemical markers, flavor metabolites and dominant microbial genera and their interrelationships, which can directly inform the design of differential and multi-omics association analyses in the researcher's Yunnan vs Henan tobacco fermentation dataset, particularly for linking microbiome, transcriptome, proteome, metabolome and volatile flavor data and interpreting geographical effects on fermentation quality."
+}

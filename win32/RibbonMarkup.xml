@@ -49,7 +49,7 @@
         <Image MinDPI="192">Icons/icons8-file-explorer-new-96.png</Image>
       </Command.LargeImages>
     </Command>
-    <Command Name="cmdButtonOpenKb" Id="2" LabelTitle="Open Research KB">
+    <Command Name="cmdButtonOpenKb" Id="2" LabelTitle="Research KB">
       <Command.SmallImages>
         <Image MinDPI="192">Icons/icons8-books-96.png</Image>
       </Command.SmallImages>
@@ -95,6 +95,82 @@
     <Command Name="cmdTabKBLib" Id="11" LabelTitle="Knowledge Base" />
     <Command Name="cmdTabMain" Id="9" LabelTitle="Omics Research" />
     <Command Name="cmdTabResearchWork" Id="5" LabelTitle="Research" />
+    <Command Name="cmdButtonDataset" Id="26" LabelTitle="DataSet Editor">
+      <Command.SmallImages>
+        <Image MinDPI="192">Icons/icons8-excel-96.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Icons/icons8-excel-96.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdGroupResearchAgentWork" Id="27" LabelTitle="Agent Workflow" />
+    <Command Name="cmdButtonStart" Id="28" LabelTitle="Run">
+      <Command.SmallImages>
+        <Image MinDPI="192">Icons/icons8-play-graph-report-96.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Icons/icons8-play-graph-report-96.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdMenuDataSet" Id="29" LabelTitle="DataSet Editor" />
+    <Command Name="cmdTabDataSet" Id="30" LabelTitle="DataSet" />
+    <Command Name="cmdGroupDataSet" Id="31" LabelTitle="DataSet" />
+    <Command Name="cmdButtonLoadDataSet" Id="32" LabelTitle="Load">
+      <Command.SmallImages>
+        <Image MinDPI="192">Icons/icons8-file-explorer-new-96.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Icons/icons8-file-explorer-new-96.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdButtonSaveDataSet" Id="33" LabelTitle="Save">
+      <Command.SmallImages>
+        <Image MinDPI="192">Icons/icons8-save-96.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Icons/icons8-save-96.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdButtonSaveAsDataSet" Id="34" LabelTitle="Save As">
+      <Command.SmallImages>
+        <Image MinDPI="192">Icons/icons8-save-as-96.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Icons/icons8-save-as-96.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdButtonPreviewDataset" Id="35" LabelTitle="Preview">
+      <Command.SmallImages>
+        <Image MinDPI="192">Icons/icons8-json-96.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Icons/icons8-json-96.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdButtonDataSetEditorToggleTheme" Id="36" LabelTitle="Toggle Theme">
+      <Command.SmallImages>
+        <Image MinDPI="192">Icons/icons8-theme-96.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Icons/icons8-theme-96.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdButtonDataSetToggleOmics" Id="37" LabelTitle="Single/Multiple Omics">
+      <Command.SmallImages>
+        <Image MinDPI="192">Icons/icons8-analytics-96.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Icons/icons8-analytics-96.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdButtonSettings" Id="38" LabelTitle="Settings">
+      <Command.SmallImages>
+        <Image MinDPI="192">Icons/icons8-settings-96.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Icons/icons8-settings-96.png</Image>
+      </Command.LargeImages>
+    </Command>
   </Application.Commands>
   <Application.Views>
     <Ribbon>
@@ -112,6 +188,7 @@
             </DropDownButton>
           </MenuGroup>
           <MenuGroup>
+            <Button CommandName="cmdButtonSettings" />
             <Button CommandName="cmdButtonLicense" />
           </MenuGroup>
           <MenuGroup>
@@ -125,8 +202,12 @@
       <Ribbon.ContextualTabs>
         <TabGroup CommandName="cmdMenuResearchWork">
           <Tab CommandName="cmdTabResearchWork">
-            <Group CommandName="cmdGroupResearchWork" SizeDefinition="OneButton">
+            <Group CommandName="cmdGroupResearchWork" SizeDefinition="TwoButtons">
               <Button CommandName="cmdButtonOpenKb" />
+              <Button CommandName="cmdButtonDataset" />
+            </Group>
+            <Group CommandName="cmdGroupResearchAgentWork" SizeDefinition="OneButton">
+              <Button CommandName="cmdButtonStart" />
             </Group>
           </Tab>
         </TabGroup>
@@ -137,6 +218,22 @@
             </Group>
             <Group CommandName="cmdGroupTools" SizeDefinition="OneButton">
               <Button CommandName="cmdButtonToggleTheme" />
+            </Group>
+          </Tab>
+        </TabGroup>
+        <TabGroup CommandName="cmdMenuDataSet">
+          <Tab CommandName="cmdTabDataSet">
+            <Group CommandName="cmdGroupDataSet" SizeDefinition="ThreeButtons">
+              <Button CommandName="cmdButtonLoadDataSet" />
+              <Button CommandName="cmdButtonSaveDataSet" />
+              <Button CommandName="cmdButtonSaveAsDataSet" />
+            </Group>
+            <Group>
+              <Button CommandName="cmdButtonDataSetToggleOmics" />
+            </Group>
+            <Group SizeDefinition="TwoButtons">
+              <Button CommandName="cmdButtonPreviewDataset" />
+              <Button CommandName="cmdButtonDataSetEditorToggleTheme" />
             </Group>
           </Tab>
         </TabGroup>
