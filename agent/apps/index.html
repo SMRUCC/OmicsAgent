@@ -17,6 +17,14 @@
         document.documentElement.dataset.theme = "light";
       }
     })();
+
+    const host =
+      window.chrome &&
+      window.chrome.webview &&
+      window.chrome.webview.hostObjects &&
+      window.chrome.webview.hostObjects.win32;
+
+    console.log(host);
   </script>
 </head>
 
@@ -39,11 +47,11 @@
     <aside class="sidebar">
       <h2>功能导航</h2>
       <div class="doc-list">
-        <a class="doc-item active" href="kb.html"><span class="title">📚 开始数据研究</span></a>
+        <a class="doc-item active" href="#" onclick="host.openResearch();"><span class="title">📚 开始数据研究</span></a>
         <hr />
-        <a class="doc-item" href="jvenn.html"><span class="title">🔵 Venn 图工具</span></a>
-        <a class="doc-item" href="viewer.html"><span class="title">📄 文件查看器</span></a>
-        <a class="doc-item" href="settings.html"><span class="title">⚙️ 应用参数配置</span></a>
+        <a class="doc-item" href="#" onclick="host.openVennTool();"><span class="title">🔵 Venn 图工具</span></a>
+        <a class="doc-item" href="#" onclick="host.openFolder();"><span class="title">📄 文件查看器</span></a>
+        <a class="doc-item" href="#" onclick="host.openSettings();"><span class="title">⚙️ 应用参数配置</span></a>
       </div>
     </aside>
 
@@ -136,50 +144,6 @@
               <p style="margin:0;font-size:13px;line-height:1.6;color:var(--ui-foreground);">自动生成 PDF / DOCX
                 报告，中英图注齐全，可直接用于论文初稿。</p>
             </div>
-          </div>
-        </section>
-
-        <!-- 图形化功能模块入口 -->
-        <section class="card">
-          <h3><span class="dot"></span>🧭 图形化功能模块</h3>
-          <p style="margin:-4px 0 16px;color:var(--ui-foreground-muted);font-size:13px;">点击卡片进入对应工具</p>
-          <div class="meta-grid">
-            <a class="card card--blue" href="kb.html" style="text-decoration:none;display:block;">
-              <h3><span class="dot"></span>📚 文献知识库</h3>
-              <p style="margin:0 0 14px;font-size:13px;line-height:1.6;color:var(--ui-foreground);">检索 PubMed 与本地文献镜像，构建
-                RAG 知识库，支持全文检索、文献拆解与知识图谱化。</p>
-              <span class="btn btn-primary">进入 →</span>
-            </a>
-            <a class="card card--green" href="analysis.html" style="text-decoration:none;display:block;">
-              <h3><span class="dot"></span>📊 组学分析结果浏览器</h3>
-              <p style="margin:0 0 14px;font-size:13px;line-height:1.6;color:var(--ui-foreground);">
-                浏览、检索与比较智能体生成的多组学分析结果，快速定位关键发现。</p>
-              <span class="btn btn-primary">进入 →</span>
-            </a>
-            <a class="card card--purple" href="dataset.html" style="text-decoration:none;display:block;">
-              <h3><span class="dot"></span>🗂️ 数据集定义编辑器</h3>
-              <p style="margin:0 0 14px;font-size:13px;line-height:1.6;color:var(--ui-foreground);">以结构化 JSON
-                定义数据集（表达矩阵、注释、样本信息），支持多组学样本对齐。</p>
-              <span class="btn btn-primary">进入 →</span>
-            </a>
-            <a class="card card--orange" href="jvenn.html" style="text-decoration:none;display:block;">
-              <h3><span class="dot"></span>🔵 Venn 图工具</h3>
-              <p style="margin:0 0 14px;font-size:13px;line-height:1.6;color:var(--ui-foreground);">交互式生成 Venn /
-                集合可视化，用于差异基因等集合的直观比较。</p>
-              <span class="btn btn-primary">进入 →</span>
-            </a>
-            <a class="card card--teal" href="viewer.html" style="text-decoration:none;display:block;">
-              <h3><span class="dot"></span>📄 文件查看器</h3>
-              <p style="margin:0 0 14px;font-size:13px;line-height:1.6;color:var(--ui-foreground);">
-                在图形化外壳中直接查看分析产物、表格与报告文件内容。</p>
-              <span class="btn btn-primary">进入 →</span>
-            </a>
-            <a class="card card--gray" href="settings.html" style="text-decoration:none;display:block;">
-              <h3><span class="dot"></span>⚙️ 应用参数配置</h3>
-              <p style="margin:0 0 14px;font-size:13px;line-height:1.6;color:var(--ui-foreground);">配置 LLM 服务地址、输出路径、R
-                运行环境与报告格式等全局参数。</p>
-              <span class="btn btn-primary">进入 →</span>
-            </a>
           </div>
         </section>
 
