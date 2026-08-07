@@ -16,20 +16,18 @@
 # -----------------------------------------------------------------------------
 # 由边表构建显著关联子图（igraph 对象）
 # -----------------------------------------------------------------------------
-#' Build an igraph network from a significant-association edge table
+#' 由显著关联边表构建 igraph 网络
 #'
-#' @param edges A data.frame from \code{run_*_association} with columns
-#'   source, target, score, association (and spearman-rho, MIC).
-#' @param p_threshold Numeric, keep edges whose adjusted merged p
-#'   (\code{pvalue}) is below this cutoff.
-#' @param max_edges Integer, cap on number of edges kept (top by |score|).
-#' @param node_omics Optional named character vector mapping node name -> omics
-#'   layer. If NULL, the omics is inferred from node names that contain "__"
-#'   (cross-omics) or taken from \code{default_omics}.
-#' @param default_omics Character, omics label applied when inference fails.
-#' @param verbose Logical.
+#' @param edges 来自 \code{run_*_association} 的数据框，含 source、target、score、
+#'   association（以及 spearman-rho、MIC）列。
+#' @param p_threshold 数值，保留校正后合并 p（\code{pvalue}）低于该阈值的边。
+#' @param max_edges 整数，保留边数的上限（按 |score| 取前若干）。
+#' @param node_omics 可选的有名字符向量，映射节点名 -> 组学层。若为 NULL，
+#'   组学信息从含 "__" 的节点名（跨组学）推断，或从 \code{default_omics} 取得。
+#' @param default_omics 字符，推断失败时应用的组学标签。
+#' @param verbose 逻辑值。
 #'
-#' @return An \code{igraph} graph, or \code{NULL} if no significant edge exists.
+#' @return 一个 \code{igraph} 图；若不存在显著边则返回 \code{NULL}。
 #'
 #' @examples
 #' \dontrun{
@@ -91,15 +89,15 @@ build_association_network <- function(edges, p_threshold = 0.05, max_edges = 500
 # -----------------------------------------------------------------------------
 # 显著关联网络图（ggplot + layout_with_fr）
 # -----------------------------------------------------------------------------
-#' Plot a significant-association network
+#' 绘制显著关联网络
 #'
-#' @param g An \code{igraph} graph from \code{build_association_network}, or
-#'   an edge table (data.frame) which will be converted on the fly.
-#' @param p_threshold Numeric, used only when \code{g} is an edge table.
-#' @param label_top_n Integer, number of top-degree hubs to label.
-#' @param title Character, plot title.
+#' @param g 来自 \code{build_association_network} 的 \code{igraph} 图，或
+#'   一个边表（data.frame），将在运行时即时转换。
+#' @param p_threshold 数值，仅当 \code{g} 为边表时使用。
+#' @param label_top_n 整数，标注的 top-degree 枢纽节点数量。
+#' @param title 字符，图标题。
 #'
-#' @return A ggplot object, or \code{NULL} if the graph is empty.
+#' @return 一个 ggplot 对象；若图为空则返回 \code{NULL}。
 #'
 #' @examples
 #' \dontrun{
@@ -177,13 +175,13 @@ plot_association_network <- function(g, p_threshold = 0.05, label_top_n = 12,
 # -----------------------------------------------------------------------------
 # 各组合显著边数量 / 关联类型构成（堆叠柱状图）
 # -----------------------------------------------------------------------------
-#' Summary bar plot of association counts per combo
+#' 各组合关联数量的汇总柱状图
 #'
-#' @param results A named list of \code{run_*_association} results (each with
-#'   \code{edges} and \code{params}).
-#' @param title Character.
+#' @param results \code{run_*_association} 结果的有名列表（每个含 \code{edges}
+#'   与 \code{params}）。
+#' @param title 字符。
 #'
-#' @return A ggplot object.
+#' @return 一个 ggplot 对象。
 #'
 #' @examples
 #' \dontrun{
@@ -219,12 +217,12 @@ plot_association_summary <- function(results, title = "Association Summary") {
 # -----------------------------------------------------------------------------
 # 枢纽节点表（按 degree 排序）
 # -----------------------------------------------------------------------------
-#' Extract hub nodes by degree
+#' 按度数提取枢纽节点
 #'
-#' @param g An \code{igraph} graph from \code{build_association_network}.
-#' @param top_n Integer, number of top hubs to return.
+#' @param g 来自 \code{build_association_network} 的 \code{igraph} 图。
+#' @param top_n 整数，返回的 top 枢纽节点数量。
 #'
-#' @return A data.frame with name, omics, degree (sorted descending), or NULL.
+#' @return 含 name、omics、degree（降序排列）的数据框，或 NULL。
 #'
 #' @examples
 #' \dontrun{

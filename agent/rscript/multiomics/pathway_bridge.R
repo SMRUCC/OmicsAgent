@@ -45,32 +45,28 @@ split_by_organism <- function(feature_info,
 }
 
 
-#' Build cross-omics modules from a shared annotation column
+#' 基于共享注释列构建跨组学模块
 #'
-#' @description For every omics layer, groups features sharing an annotation
-#'   value and summarises each group by its module eigenvalue (first principal
-#'   component), following the aggregation idea already used by
-#'   \code{build_latent_def_from_annotation()} in the network module. Layers
-#'   lacking the annotation column are skipped with a message rather than
-#'   aborting, because the 16S annotation for instance carries no super class.
+#' @description 对每个组学层，将共享同一注释值的特征分组，并以模块特征值（第一主
+#'   成分）对每个组进行汇总，沿用 network 模块中 \code{build_latent_def_from_annotation()}
+#'   已有的聚合思路。缺少该注释列的层不会中断，而是给出提示并跳过，因为例如 16S
+#'   注释就不带超类信息。
 #'
-#' @param mo A MultiOmicsData object.
-#' @param category_col Annotation column used for grouping, for example
-#'   "super_class", "family" or "kegg". Default: "super_class".
-#' @param layers Optional character vector of layers. Default: NULL (all).
-#' @param min_size Minimum number of features per module. Default: 3.
-#' @param organism_col Optional column used to restrict features to one
-#'   organism class. Default: NULL.
-#' @param organism_keep One of "all", "host" or "microbe". Only applied when
-#'   \code{organism_col} exists in a layer. Default: "all".
-#' @param verbose Logical, print progress. Default: TRUE.
+#' @param mo 一个 MultiOmicsData 对象。
+#' @param category_col 用于分组的注释列，例如 "super_class"、"family" 或 "kegg"。
+#'   默认："super_class"。
+#' @param layers 可选的层字符向量。默认：NULL（全部）。
+#' @param min_size 每个模块的最小特征数。默认：3。
+#' @param organism_col 可选列，用于将特征限定到某一生物类群。默认：NULL。
+#' @param organism_keep "all"、"host" 或 "microbe" 之一。仅在层中存在
+#'   \code{organism_col} 时生效。默认："all"。
+#' @param verbose 逻辑值，是否打印进度。默认：TRUE。
 #'
-#' @return A list with:
+#' @return 一个列表：
 #'   \itemize{
-#'     \item \code{eigengenes}: Named list of module x sample matrices, one per
-#'       layer.
-#'     \item \code{definitions}: data.frame of layer, module, n_features.
-#'     \item \code{category_col}: The annotation column used.
+#'     \item \code{eigengenes}: 模块 x 样本矩阵的有名列表，每层一个。
+#'     \item \code{definitions}: 含 layer、module、n_features 的数据框。
+#'     \item \code{category_col}: 所使用的注释列。
 #'   }
 #'
 #' @examples
@@ -122,9 +118,8 @@ build_cross_omics_modules <- function(mo,
       }
     }
 
-    # The layer was matched on match_col, so feature_info rownames carry the
-    # identifiers used as rownames of the expression matrix. Expose them as an
-    # explicit column so predefined_module_eigengenes() can match on it.
+    # 该层是按 match_col 匹配的，因此 feature_info 的行名即为表达矩阵行名所用的
+    # 标识符。将其作为显式列暴露出来，以便 predefined_module_eigengenes() 能据此匹配。
     finfo <- finfo[rownames(finfo) %in% rownames(expr), , drop = FALSE]
     if (nrow(finfo) == 0) {
       if (verbose) cat(sprintf("  [%s] no feature matches expression, skipped.\n", nm))
@@ -154,7 +149,7 @@ build_cross_omics_modules <- function(mo,
       next
     }
 
-    # MEs is samples x modules; transpose to modules x samples.
+    # MEs 为 样本 x 模块；转置为 模块 x 样本。
     mat <- t(as.matrix(eg$MEs))
 
     eigengenes[[nm]] <- mat
@@ -186,25 +181,23 @@ build_cross_omics_modules <- function(mo,
 }
 
 
-#' Link shared modules across consecutive omics layers
+#' 跨相邻组学层连接共享模块
 #'
-#' @description Correlates module eigenvalues carrying the same annotation
-#'   label between successive layers of the central dogma, producing the
-#'   gene to protein to metabolite to aroma chain for every shared category.
+#' @description 针对中心法则中相邻的层，对携带相同注释标签的模块特征值做相关，
+#'   从而为每一个共享类别生成"基因→蛋白→代谢物→香气"的链路。
 #'
-#' @param modules Result of \code{build_cross_omics_modules()}.
-#' @param layer_order Character vector giving the biological ordering of the
-#'   layers. Default: c("transcriptome", "proteome", "metabolome", "volatilome").
-#' @param method Correlation method. Default: "pearson".
-#' @param p_adjust Multiple testing adjustment. Default: "BH".
-#' @param verbose Logical, print progress. Default: TRUE.
+#' @param modules \code{build_cross_omics_modules()} 的结果。
+#' @param layer_order 给出各层生物学顺序的字符向量。默认：
+#'   c("transcriptome", "proteome", "metabolome", "volatilome")。
+#' @param method 相关方法。默认："pearson"。
+#' @param p_adjust 多重检验校正方法。默认："BH"。
+#' @param verbose 逻辑值，是否打印进度。默认：TRUE。
 #'
-#' @return A list with:
+#' @return 一个列表：
 #'   \itemize{
-#'     \item \code{links}: data.frame of module, from_layer, to_layer, r, p,
-#'       padj and the module sizes.
-#'     \item \code{chains}: data.frame summarising, per module, how many
-#'       consecutive links are significant.
+#'     \item \code{links}: 含 module、from_layer、to_layer、r、p、
+#'       padj 与模块大小的数据框。
+#'     \item \code{chains}: 按模块汇总、统计有多少连续链路显著的数据框。
 #'   }
 #'
 #' @examples
