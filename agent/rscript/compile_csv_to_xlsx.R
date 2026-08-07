@@ -1,21 +1,21 @@
 # ============================================================
 # compile_csv_to_xlsx.R
-# Generic function: compile multiple CSV result tables into a
-# structured, styled XLSX workbook with merged annotation row.
+# 通用函数：将多个 CSV 结果表格编译为一个
+# 结构化、带样式、含合并注释行的 XLSX 工作簿。
 # ============================================================
 
-#' Compile multiple CSV files into a styled XLSX workbook
+#' 将多个 CSV 文件编译为一个带样式的 XLSX 工作簿
 #'
-#' @param csv_paths   Character vector of absolute CSV file paths.
-#' @param output_xlsx Character scalar; absolute path of output XLSX.
-#' @param json_path   Character scalar; path to table_descriptions.json
-#'                    used to look up sheet_name and annotation text.
+#' @param csv_paths   CSV 文件的绝对路径字符向量。
+#' @param output_xlsx 字符标量；输出 XLSX 的绝对路径。
+#' @param json_path   字符标量；table_descriptions.json 的路径，
+#'                    用于查找 sheet_name（工作表名）与注释文本。
 #'
-#' @return Invisibly returns the path to the generated XLSX file.
+#' @return 以不可见方式返回所生成 XLSX 文件的路径。
 #' @export
 compile_csv_to_xlsx <- function(csv_paths, output_xlsx, json_path) {
 
-  # ---- 1. Ensure required packages ----
+  # ---- 1. 确保已安装所需包 ----
   if (!require(openxlsx, quietly = TRUE)) {
     install.packages("openxlsx", repos = "https://cloud.r-project.org")
     library(openxlsx)
@@ -25,7 +25,7 @@ compile_csv_to_xlsx <- function(csv_paths, output_xlsx, json_path) {
     library(jsonlite)
   }
 
-  # ---- 2. Validate inputs ----
+  # ---- 2. 校验输入参数 ----
   if (!is.character(csv_paths) || length(csv_paths) == 0L)
     stop("'csv_paths' must be a non-empty character vector.")
   if (!is.character(output_xlsx) || length(output_xlsx) != 1L)
@@ -53,7 +53,7 @@ compile_csv_to_xlsx <- function(csv_paths, output_xlsx, json_path) {
   cat("JSON sheets :", nrow(sheets_df), "\n")
   cat("============================================================\n\n")
 
-  # ---- 4. Helpers ----
+  # ---- 4. 辅助函数 ----
   sanitize_sheet_name <- function(name) {
     name <- gsub("[:\\\\/?*\\[\\]]", "_", name)
     substr(name, 1, 31)
@@ -82,7 +82,7 @@ compile_csv_to_xlsx <- function(csv_paths, output_xlsx, json_path) {
     }
   }
 
-  # ---- 5. Cell styles (Cambria Math, 11) ----
+  # ---- 5. 单元格样式（Cambria Math，11 号字）----
   defaultStyle <- createStyle(
     fontName = "Cambria Math", fontSize = 11,
     fontColour = "#000000", bgFill = "#FFFFFF"
@@ -102,20 +102,20 @@ compile_csv_to_xlsx <- function(csv_paths, output_xlsx, json_path) {
     textDecoration = "italic"
   )
 
-  # ---- 6. Workbook setup ----
+  # ---- 6. 工作簿初始化 ----
   wb         <- createWorkbook()
   used_names <- character(0)
   processed  <- 0L
   n_csvs     <- length(csv_paths)
 
-  # ---- 7. Iterate over CSV paths ----
+  # ---- 7. 遍历 CSV 路径 ----
   for (i in seq_len(n_csvs)) {
     csv_path   <- csv_paths[i]
     meta       <- lookup_sheet_meta(csv_path)
     sheet_name <- meta$sheet_name
     annotation <- meta$annotation
 
-    # Ensure unique sheet name
+    # 确保工作表名唯一
     orig <- sheet_name; k <- 1L
     while (sheet_name %in% used_names) {
       suffix <- sprintf("_%d", k)
@@ -147,22 +147,22 @@ compile_csv_to_xlsx <- function(csv_paths, output_xlsx, json_path) {
 
     addWorksheet(wb, sheetName = sheet_name)
 
-    # Row 1: annotation
+    # 第 1 行：注释行
     writeData(wb, sheet_name, x = annotation,
               startRow = 1, startCol = 1,
               colNames = FALSE, rowNames = FALSE)
               
-    # ---- Merge cells in Row 1 across all used columns ----
+    # ---- 将第 1 行跨所有使用列合并单元格 ----
     if (n_cols > 1) {
       mergeCells(wb, sheet_name, cols = c(1, n_cols), rows = 1)
     }
 
-    # Row 2: headers
+    # 第 2 行：表头
     hdr_df <- as.data.frame(t(colnames(df)), stringsAsFactors = FALSE)
     writeData(wb, sheet_name, x = hdr_df,
               startRow = 2, startCol = 1,
               colNames = FALSE, rowNames = FALSE)
-    # Row 3+: data
+    # 第 3 行起：数据
     writeData(wb, sheet_name, x = df,
               startRow = 3, startCol = 1,
               colNames = FALSE, rowNames = FALSE)
@@ -170,29 +170,29 @@ compile_csv_to_xlsx <- function(csv_paths, output_xlsx, json_path) {
     last_row <- 2L + n_rows
     last_col <- n_cols
 
-    # Apply defaultStyle to entire used range
+    # 对全部已使用区域应用默认样式
     addStyle(wb, sheet_name, style = defaultStyle,
              rows = 1:last_row, cols = 1:last_col,
              gridExpand = TRUE, stack = FALSE)
              
-    # Apply annotStyle on row 1 (will apply to the active top-left cell of merge)
+    # 在第 1 行应用注释样式（作用于合并区域的活动左上角单元格）
     addStyle(wb, sheet_name, style = annotStyle,
              rows = 1, cols = 1:last_col,
              gridExpand = TRUE, stack = TRUE)
              
-    # Apply headerStyle on row 2
+    # 在第 2 行应用表头样式
     addStyle(wb, sheet_name, style = headerStyle,
              rows = 2, cols = 1:last_col,
              gridExpand = TRUE, stack = TRUE)
              
-    # Apply idStyle on column A, rows 3 to last data row
+    # 在第 A 列、第 3 行至最后数据行应用 id 列样式
     if (n_rows >= 1L) {
       addStyle(wb, sheet_name, style = idStyle,
                rows = 3:(2L + n_rows), cols = 1,
                gridExpand = TRUE, stack = TRUE)
     }
 
-    # Set column widths
+    # 设置列宽
     setColWidths(wb, sheet_name, cols = 1, widths = 30)
     if (n_cols > 1L) {
       setColWidths(wb, sheet_name,
@@ -200,12 +200,13 @@ compile_csv_to_xlsx <- function(csv_paths, output_xlsx, json_path) {
                    widths = rep(18, n_cols - 1L))
     }
     
-    # Set row heights (increased row 1 height for merged long text)
+    # 设置行高（第 1 行加高以容纳合并后的长文本）
     setRowHeights(wb, sheet_name, rows = 1, heights = 120)
     setRowHeights(wb, sheet_name, rows = 2, heights = 22)
 
-    # Freeze panes and zoom
+    # 冻结窗格与缩放
     freezePane(wb, sheet_name, firstRow = TRUE, firstCol = TRUE)
+    # 设置缩放（setZoom，已注释，缩放比例为 90）
     # setZoom(wb, sheet_name, zoom = 90)
 
     processed <- processed + 1L
@@ -224,13 +225,13 @@ compile_csv_to_xlsx <- function(csv_paths, output_xlsx, json_path) {
 
 
 # ============================================================
-# Example usage (uncomment to run end-to-end)
+# 示例用法（取消注释即可端到端运行）
 # ============================================================
 # json_path   <- "F:/datapool/20260715-spatial/analysis_2/limma/result/analysis/1_multiplevar_test/table_descriptions.json"
 # output_xlsx <- "F:/datapool/20260715-spatial/analysis_2/limma/result/analysis/1_multiplevar_test/1_multiplevar_test.xlsx"
 #
 # desc <- jsonlite::fromJSON(json_path, simplifyVector = TRUE)
-# csv_paths <- desc$sheets$csv   # use all CSVs listed in JSON
+# csv_paths <- desc$sheets$csv   # 使用 JSON 中列出的全部 CSV
 #
 # compile_csv_to_xlsx(
 #   csv_paths   = csv_paths,
