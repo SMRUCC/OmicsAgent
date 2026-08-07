@@ -36,7 +36,7 @@ clust <- cluster_protein_profiles(pre_log, samp,
 # 导出聚类成员表
 member_df <- data.frame(
   feature_id = names(clust$clusters),
-  cluster = as.integer(clust$clusters),
+  cluster = as.character(clust$clusters),
   stringsAsFactors = FALSE
 )
 export_table(member_df, RESULTS_DIR, "07_cluster_membership.csv")
@@ -57,11 +57,11 @@ if (!is.null(clust$profiles)) {
 section("绘制聚类轮廓图与中心图")
 
 step("绘制聚类表达轮廓图 (plot_profile_clusters)")
-p_clust <- plot_profile_clusters(clust, group_labels = NULL)
+p_clust <- plot_profile_clusters(clust, show_centers = TRUE, line_alpha = 0.2)
 export_plot(p_clust, FIGURES_DIR, "07_cluster_profiles", width = 10, height = 7)
 
 step("绘制聚类中心比较图 (plot_cluster_centers)")
-p_cent <- plot_cluster_centers(clust, group_labels = NULL)
+p_cent <- plot_cluster_centers(clust)
 export_plot(p_cent, FIGURES_DIR, "07_cluster_centers", width = 10, height = 7)
 
 cat("  -> figures/07_cluster_*.{pdf,png}\n")
@@ -80,7 +80,7 @@ clust_var <- cluster_protein_profiles(pre_log, samp,
                                       nstart = 25)
 member_var <- data.frame(
   feature_id = names(clust_var$clusters),
-  cluster = as.integer(clust_var$clusters),
+  cluster = as.character(clust_var$clusters),
   stringsAsFactors = FALSE
 )
 export_table(member_var, RESULTS_DIR, "07_cluster_membership_variety.csv")
