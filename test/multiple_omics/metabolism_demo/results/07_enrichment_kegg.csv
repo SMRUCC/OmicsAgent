@@ -1,136 +1,136 @@
 "pathway_id","pathway_name","sig_count","sig_total","bg_count","bg_total","p_value","fold_enrichment","p_adj","significant"
-"Efferocytosis","Efferocytosis",4,26,4,57,0.208822322324184,1.59615384615385,0.981303261827799,FALSE
-"Prolactin signaling pathway","Prolactin signaling pathway",3,26,3,57,0.27531242599295,1.59615384615385,0.981303261827799,FALSE
-"One carbon pool by folate","One carbon pool by folate",3,26,3,57,0.27531242599295,1.59615384615385,0.981303261827799,FALSE
-"Carbohydrate digestion and absorption","Carbohydrate digestion and absorption",4,26,5,57,0.29346344935159,1.41880341880342,0.981303261827799,FALSE
-"Cholinergic synapse","Cholinergic synapse",2,26,2,57,0.371050598056181,1.59615384615385,0.981303261827799,FALSE
-"Styrene degradation","Styrene degradation",2,26,2,57,0.371050598056181,1.59615384615385,0.981303261827799,FALSE
-"Butanoate metabolism","Butanoate metabolism",5,26,8,57,0.380711518198586,1.22781065088757,0.981303261827799,FALSE
-"Oxidative phosphorylation","Oxidative phosphorylation",3,26,4,57,0.381324619255038,1.36813186813187,0.981303261827799,FALSE
-"Fructose and mannose metabolism","Fructose and mannose metabolism",3,26,4,57,0.381324619255038,1.36813186813187,0.981303261827799,FALSE
-"Central carbon metabolism in cancer","Central carbon metabolism in cancer",9,26,17,57,0.423611696942441,1.10502958579882,0.981303261827799,FALSE
-"Degradation of aromatic compounds","Degradation of aromatic compounds",5,26,9,57,0.460624672298828,1.14010989010989,0.981303261827799,FALSE
-"Other carbon fixation pathways","Other carbon fixation pathways",5,26,9,57,0.460624672298828,1.14010989010989,0.981303261827799,FALSE
-"Glucagon signaling pathway","Glucagon signaling pathway",5,26,9,57,0.460624672298828,1.14010989010989,0.981303261827799,FALSE
-"Tyrosine metabolism","Tyrosine metabolism",3,26,5,57,0.48482599741355,1.19711538461538,0.981303261827799,FALSE
-"Nicotinate and nicotinamide metabolism","Nicotinate and nicotinamide metabolism",3,26,5,57,0.48482599741355,1.19711538461538,0.981303261827799,FALSE
-"HIF-1 signaling pathway","HIF-1 signaling pathway",3,26,5,57,0.48482599741355,1.19711538461538,0.981303261827799,FALSE
-"Mineral absorption","Mineral absorption",3,26,5,57,0.48482599741355,1.19711538461538,0.981303261827799,FALSE
-"Neuroactive ligand signaling","Neuroactive ligand signaling",3,26,5,57,0.48482599741355,1.19711538461538,0.981303261827799,FALSE
-"Carbon metabolism","Carbon metabolism",8,26,16,57,0.498135817738809,1.06410256410256,0.981303261827799,FALSE
-"Propanoate metabolism","Propanoate metabolism",2,26,3,57,0.502060728247972,1.27692307692308,0.981303261827799,FALSE
-"cAMP signaling pathway","cAMP signaling pathway",2,26,3,57,0.502060728247972,1.27692307692308,0.981303261827799,FALSE
-"Amino sugar and nucleotide sugar metabolism","Amino sugar and nucleotide sugar metabolism",2,26,3,57,0.502060728247972,1.27692307692308,0.981303261827799,FALSE
-"Starch and sucrose metabolism","Starch and sucrose metabolism",2,26,3,57,0.502060728247972,1.27692307692308,0.981303261827799,FALSE
-"Insulin secretion","Insulin secretion",2,26,3,57,0.502060728247972,1.27692307692308,0.981303261827799,FALSE
-"Type II diabetes mellitus","Type II diabetes mellitus",2,26,3,57,0.502060728247972,1.27692307692308,0.981303261827799,FALSE
-"Bile secretion","Bile secretion",2,26,3,57,0.502060728247972,1.27692307692308,0.981303261827799,FALSE
-"Thiamine metabolism","Thiamine metabolism",2,26,3,57,0.502060728247972,1.27692307692308,0.981303261827799,FALSE
-"Vancomycin resistance","Vancomycin resistance",2,26,3,57,0.502060728247972,1.27692307692308,0.981303261827799,FALSE
-"Synaptic vesicle cycle","Synaptic vesicle cycle",2,26,3,57,0.502060728247972,1.27692307692308,0.981303261827799,FALSE
-"Biosynthesis of secondary metabolites","Biosynthesis of secondary metabolites",18,26,38,57,0.512967671324593,1.0260989010989,0.981303261827799,FALSE
-"Biosynthesis of phenylpropanoids","Biosynthesis of phenylpropanoids",6,26,12,57,0.523291242292473,1.06410256410256,0.981303261827799,FALSE
-"Biosynthesis of alkaloids derived from shikimate pathway","Biosynthesis of alkaloids derived from shikimate pathway",6,26,12,57,0.523291242292473,1.06410256410256,0.981303261827799,FALSE
-"Protein digestion and absorption","Protein digestion and absorption",6,26,12,57,0.523291242292473,1.06410256410256,0.981303261827799,FALSE
-"Two-component system","Two-component system",5,26,10,57,0.538453135422541,1.06410256410256,0.981303261827799,FALSE
-"Pyruvate metabolism","Pyruvate metabolism",4,26,8,57,0.5567439905173,1.06410256410256,0.981303261827799,FALSE
-"Methane metabolism","Methane metabolism",4,26,8,57,0.5567439905173,1.06410256410256,0.981303261827799,FALSE
-"ABC transporters","ABC transporters",8,26,17,57,0.562649235741635,1.02153846153846,0.981303261827799,FALSE
-"Biosynthesis of various alkaloids","Biosynthesis of various alkaloids",3,26,6,57,0.580507271444531,1.06410256410256,0.981303261827799,FALSE
-"Glycolysis / Gluconeogenesis","Glycolysis / Gluconeogenesis",3,26,6,57,0.580507271444531,1.06410256410256,0.981303261827799,FALSE
-"Diabetic cardiomyopathy","Diabetic cardiomyopathy",3,26,6,57,0.580507271444531,1.06410256410256,0.981303261827799,FALSE
-"Phosphonate and phosphinate metabolism","Phosphonate and phosphinate metabolism",2,26,4,57,0.615434879375483,1.06410256410256,0.981303261827799,FALSE
-"Zeatin biosynthesis","Zeatin biosynthesis",2,26,4,57,0.615434879375483,1.06410256410256,0.981303261827799,FALSE
-"Biosynthesis of unsaturated fatty acids","Biosynthesis of unsaturated fatty acids",2,26,4,57,0.615434879375483,1.06410256410256,0.981303261827799,FALSE
-"Lysine degradation","Lysine degradation",2,26,4,57,0.615434879375483,1.06410256410256,0.981303261827799,FALSE
-"Phenylalanine, tyrosine and tryptophan biosynthesis","Phenylalanine, tyrosine and tryptophan biosynthesis",2,26,4,57,0.615434879375483,1.06410256410256,0.981303261827799,FALSE
-"Insulin resistance","Insulin resistance",2,26,4,57,0.615434879375483,1.06410256410256,0.981303261827799,FALSE
-"Thermogenesis","Thermogenesis",2,26,4,57,0.615434879375483,1.06410256410256,0.981303261827799,FALSE
-"Glycine, serine and threonine metabolism","Glycine, serine and threonine metabolism",2,26,4,57,0.615434879375483,1.06410256410256,0.981303261827799,FALSE
-"Monobactam biosynthesis","Monobactam biosynthesis",2,26,4,57,0.615434879375483,1.06410256410256,0.981303261827799,FALSE
-"Purine metabolism","Purine metabolism",2,26,4,57,0.615434879375483,1.06410256410256,0.981303261827799,FALSE
-"Parkinson disease","Parkinson disease",2,26,4,57,0.615434879375483,1.06410256410256,0.981303261827799,FALSE
-"Microbial metabolism in diverse environments","Microbial metabolism in diverse environments",13,26,29,57,0.621957412820931,0.988095238095238,0.981303261827799,FALSE
-"Biosynthesis of terpenoids and steroids","Biosynthesis of terpenoids and steroids",4,26,9,57,0.634980644881172,0.982248520710059,0.981303261827799,FALSE
-"Taste transduction","Taste transduction",4,26,9,57,0.634980644881172,0.982248520710059,0.981303261827799,FALSE
-"Aminoacyl-tRNA biosynthesis","Aminoacyl-tRNA biosynthesis",4,26,9,57,0.634980644881172,0.982248520710059,0.981303261827799,FALSE
-"Biosynthesis of plant hormones","Biosynthesis of plant hormones",6,26,14,57,0.65789903520521,0.957692307692308,0.981303261827799,FALSE
-"Biosynthesis of amino acids","Biosynthesis of amino acids",6,26,14,57,0.65789903520521,0.957692307692308,0.981303261827799,FALSE
-"Phenylalanine metabolism","Phenylalanine metabolism",3,26,7,57,0.665290485305959,0.957692307692308,0.981303261827799,FALSE
-"Citrate cycle (TCA cycle)","Citrate cycle (TCA cycle)",3,26,7,57,0.665290485305959,0.957692307692308,0.981303261827799,FALSE
-"Phosphotransferase system (PTS)","Phosphotransferase system (PTS)",3,26,7,57,0.665290485305959,0.957692307692308,0.981303261827799,FALSE
-"Isoquinoline alkaloid biosynthesis","Isoquinoline alkaloid biosynthesis",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
-"Ubiquinone and other terpenoid-quinone biosynthesis","Ubiquinone and other terpenoid-quinone biosynthesis",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
-"Alcoholic liver disease","Alcoholic liver disease",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
-"Pathways in cancer","Pathways in cancer",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
-"Renal cell carcinoma","Renal cell carcinoma",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
-"Nitrogen metabolism","Nitrogen metabolism",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
-"Biosynthesis of nucleotide sugars","Biosynthesis of nucleotide sugars",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
-"Glycerophospholipid metabolism","Glycerophospholipid metabolism",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
-"Nicotine addiction","Nicotine addiction",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
-"Pentose phosphate pathway","Pentose phosphate pathway",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
-"Neomycin, kanamycin and gentamicin biosynthesis","Neomycin, kanamycin and gentamicin biosynthesis",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
-"Sulfoquinovose metabolism","Sulfoquinovose metabolism",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
-"mTOR signaling pathway","mTOR signaling pathway",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
-"Glutathione metabolism","Glutathione metabolism",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
-"Cocaine addiction","Cocaine addiction",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
-"Amphetamine addiction","Amphetamine addiction",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
-"Alcoholism","Alcoholism",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
-"Vitamin digestion and absorption","Vitamin digestion and absorption",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
-"Photosynthesis","Photosynthesis",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
-"Lysosome biogenesis","Lysosome biogenesis",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
-"Platelet activation","Platelet activation",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
-"Metabolic pathways","Metabolic pathways",26,26,56,57,0.686746987951807,1.01219512195122,0.981303261827799,FALSE
-"Biosynthesis of plant secondary metabolites","Biosynthesis of plant secondary metabolites",11,26,26,57,0.697064278494954,0.949064449064449,0.981303261827799,FALSE
-"Glyoxylate and dicarboxylate metabolism","Glyoxylate and dicarboxylate metabolism",4,26,10,57,0.70472303391411,0.912087912087912,0.981303261827799,FALSE
-"Alanine, aspartate and glutamate metabolism","Alanine, aspartate and glutamate metabolism",4,26,10,57,0.70472303391411,0.912087912087912,0.981303261827799,FALSE
-"Phenylpropanoid biosynthesis","Phenylpropanoid biosynthesis",2,26,5,57,0.709078983423661,0.912087912087912,0.981303261827799,FALSE
-"Sulfur metabolism","Sulfur metabolism",2,26,5,57,0.709078983423661,0.912087912087912,0.981303261827799,FALSE
-"Arginine biosynthesis","Arginine biosynthesis",2,26,5,57,0.709078983423661,0.912087912087912,0.981303261827799,FALSE
-"Galactose metabolism","Galactose metabolism",2,26,5,57,0.709078983423661,0.912087912087912,0.981303261827799,FALSE
-"Pathways of neurodegeneration - multiple diseases","Pathways of neurodegeneration - multiple diseases",2,26,5,57,0.709078983423661,0.912087912087912,0.981303261827799,FALSE
-"Cyanoamino acid metabolism","Cyanoamino acid metabolism",2,26,5,57,0.709078983423661,0.912087912087912,0.981303261827799,FALSE
-"Neuroactive ligand-receptor interaction","Neuroactive ligand-receptor interaction",2,26,5,57,0.709078983423661,0.912087912087912,0.981303261827799,FALSE
-"Biosynthesis of alkaloids derived from terpenoid and polyketide","Biosynthesis of alkaloids derived from terpenoid and polyketide",3,26,8,57,0.737878853338005,0.870629370629371,0.981303261827799,FALSE
-"Biosynthesis of various antibiotics","Biosynthesis of various antibiotics",3,26,8,57,0.737878853338005,0.870629370629371,0.981303261827799,FALSE
-"Biosynthesis of alkaloids derived from ornithine, lysine and nicotinic acid","Biosynthesis of alkaloids derived from ornithine, lysine and nicotinic acid",5,26,13,57,0.738829509620026,0.886752136752137,0.981303261827799,FALSE
-"Biosynthesis of cofactors","Biosynthesis of cofactors",6,26,16,57,0.769599029342615,0.870629370629371,0.981303261827799,FALSE
-"Taurine and hypotaurine metabolism","Taurine and hypotaurine metabolism",2,26,6,57,0.783829978760364,0.798076923076923,0.981303261827799,FALSE
-"Aminobenzoate degradation","Aminobenzoate degradation",1,26,3,57,0.785042609462239,0.798076923076923,0.981303261827799,FALSE
-"GABAergic synapse","GABAergic synapse",1,26,3,57,0.785042609462239,0.798076923076923,0.981303261827799,FALSE
-"Biosynthesis of various siderophores","Biosynthesis of various siderophores",1,26,3,57,0.785042609462239,0.798076923076923,0.981303261827799,FALSE
-"Tropane, piperidine and pyridine alkaloid biosynthesis","Tropane, piperidine and pyridine alkaloid biosynthesis",1,26,3,57,0.785042609462239,0.798076923076923,0.981303261827799,FALSE
-"Porphyrin metabolism","Porphyrin metabolism",1,26,3,57,0.785042609462239,0.798076923076923,0.981303261827799,FALSE
-"Arginine and proline metabolism","Arginine and proline metabolism",1,26,3,57,0.785042609462239,0.798076923076923,0.981303261827799,FALSE
-"Lipoic acid metabolism","Lipoic acid metabolism",1,26,3,57,0.785042609462239,0.798076923076923,0.981303261827799,FALSE
-"Amyotrophic lateral sclerosis","Amyotrophic lateral sclerosis",1,26,3,57,0.785042609462239,0.798076923076923,0.981303261827799,FALSE
-"Glucosinolate biosynthesis","Glucosinolate biosynthesis",1,26,3,57,0.785042609462239,0.798076923076923,0.981303261827799,FALSE
-"Nucleotide metabolism","Nucleotide metabolism",1,26,3,57,0.785042609462239,0.798076923076923,0.981303261827799,FALSE
-"Renin secretion","Renin secretion",1,26,3,57,0.785042609462239,0.798076923076923,0.981303261827799,FALSE
-"Biosynthesis of alkaloids derived from histidine and purine","Biosynthesis of alkaloids derived from histidine and purine",3,26,9,57,0.798257140944906,0.798076923076923,0.988667101170296,FALSE
-"Biosynthesis of various plant secondary metabolites","Biosynthesis of various plant secondary metabolites",2,26,7,57,0.841922180850602,0.709401709401709,1,FALSE
-"C5-Branched dibasic acid metabolism","C5-Branched dibasic acid metabolism",1,26,4,57,0.855788079765806,0.638461538461539,1,FALSE
-"Cysteine and methionine metabolism","Cysteine and methionine metabolism",1,26,4,57,0.855788079765806,0.638461538461539,1,FALSE
-"FoxO signaling pathway","FoxO signaling pathway",1,26,4,57,0.855788079765806,0.638461538461539,1,FALSE
-"AMPK signaling pathway","AMPK signaling pathway",1,26,4,57,0.855788079765806,0.638461538461539,1,FALSE
-"Biosynthesis of various other secondary metabolites","Biosynthesis of various other secondary metabolites",2,26,8,57,0.886080104736763,0.638461538461539,1,FALSE
-"2-Oxocarboxylic acid metabolism","2-Oxocarboxylic acid metabolism",3,26,11,57,0.886108377723094,0.684065934065934,1,FALSE
-"D-Amino acid metabolism","D-Amino acid metabolism",3,26,11,57,0.886108377723094,0.684065934065934,1,FALSE
-"Carbon fixation by Calvin cycle","Carbon fixation by Calvin cycle",1,26,5,57,0.903858719843871,0.532051282051282,1,FALSE
-"Fatty acid biosynthesis","Fatty acid biosynthesis",0,26,2,57,1,0,1,FALSE
-"Cutin, suberine and wax biosynthesis","Cutin, suberine and wax biosynthesis",0,26,2,57,1,0,1,FALSE
-"Proximal tubule bicarbonate reclamation","Proximal tubule bicarbonate reclamation",0,26,4,57,1,0,1,FALSE
-"Pentose and glucuronate interconversions","Pentose and glucuronate interconversions",0,26,3,57,1,0,1,FALSE
-"Retrograde endocannabinoid signaling","Retrograde endocannabinoid signaling",0,26,2,57,1,0,1,FALSE
-"Regulation of lipolysis in adipocytes","Regulation of lipolysis in adipocytes",0,26,2,57,1,0,1,FALSE
-"Benzoate degradation","Benzoate degradation",0,26,3,57,1,0,1,FALSE
-"Dioxin degradation","Dioxin degradation",0,26,2,57,1,0,1,FALSE
-"Xylene degradation","Xylene degradation",0,26,2,57,1,0,1,FALSE
-"Chloroalkane and chloroalkene degradation","Chloroalkane and chloroalkene degradation",0,26,2,57,1,0,1,FALSE
-"Sulfur cycle","Sulfur cycle",0,26,2,57,1,0,1,FALSE
-"Ascorbate and aldarate metabolism","Ascorbate and aldarate metabolism",0,26,2,57,1,0,1,FALSE
-"Valine, leucine and isoleucine biosynthesis","Valine, leucine and isoleucine biosynthesis",0,26,2,57,1,0,1,FALSE
-"Pantothenate and CoA biosynthesis","Pantothenate and CoA biosynthesis",0,26,3,57,1,0,1,FALSE
-"Lysine biosynthesis","Lysine biosynthesis",0,26,3,57,1,0,1,FALSE
-"Histidine metabolism","Histidine metabolism",0,26,3,57,1,0,1,FALSE
-"Biotin metabolism","Biotin metabolism",0,26,2,57,1,0,1,FALSE
+"path:map04148","Efferocytosis",4,26,4,57,0.208822322324184,1.59615384615385,0.981303261827799,FALSE
+"path:map04917","Prolactin signaling pathway",3,26,3,57,0.27531242599295,1.59615384615385,0.981303261827799,FALSE
+"path:map00670","One carbon pool by folate",3,26,3,57,0.27531242599295,1.59615384615385,0.981303261827799,FALSE
+"path:map04973","Carbohydrate digestion and absorption",4,26,5,57,0.29346344935159,1.41880341880342,0.981303261827799,FALSE
+"path:map04725","Cholinergic synapse",2,26,2,57,0.371050598056181,1.59615384615385,0.981303261827799,FALSE
+"path:map00643","Styrene degradation",2,26,2,57,0.371050598056181,1.59615384615385,0.981303261827799,FALSE
+"path:map00650","Butanoate metabolism",5,26,8,57,0.380711518198586,1.22781065088757,0.981303261827799,FALSE
+"path:map00190","Oxidative phosphorylation",3,26,4,57,0.381324619255038,1.36813186813187,0.981303261827799,FALSE
+"path:map00051","Fructose and mannose metabolism",3,26,4,57,0.381324619255038,1.36813186813187,0.981303261827799,FALSE
+"path:map05230","Central carbon metabolism in cancer",9,26,17,57,0.423611696942441,1.10502958579882,0.981303261827799,FALSE
+"path:map01220","Degradation of aromatic compounds",5,26,9,57,0.460624672298828,1.14010989010989,0.981303261827799,FALSE
+"path:map00720","Other carbon fixation pathways",5,26,9,57,0.460624672298828,1.14010989010989,0.981303261827799,FALSE
+"path:map04922","Glucagon signaling pathway",5,26,9,57,0.460624672298828,1.14010989010989,0.981303261827799,FALSE
+"path:map00350","Tyrosine metabolism",3,26,5,57,0.48482599741355,1.19711538461538,0.981303261827799,FALSE
+"path:map00760","Nicotinate and nicotinamide metabolism",3,26,5,57,0.48482599741355,1.19711538461538,0.981303261827799,FALSE
+"path:map04066","HIF-1 signaling pathway",3,26,5,57,0.48482599741355,1.19711538461538,0.981303261827799,FALSE
+"path:map04978","Mineral absorption",3,26,5,57,0.48482599741355,1.19711538461538,0.981303261827799,FALSE
+"path:map04082","Neuroactive ligand signaling",3,26,5,57,0.48482599741355,1.19711538461538,0.981303261827799,FALSE
+"path:map01200","Carbon metabolism",8,26,16,57,0.498135817738809,1.06410256410256,0.981303261827799,FALSE
+"path:map00640","Propanoate metabolism",2,26,3,57,0.502060728247972,1.27692307692308,0.981303261827799,FALSE
+"path:map04024","cAMP signaling pathway",2,26,3,57,0.502060728247972,1.27692307692308,0.981303261827799,FALSE
+"path:map00520","Amino sugar and nucleotide sugar metabolism",2,26,3,57,0.502060728247972,1.27692307692308,0.981303261827799,FALSE
+"path:map00500","Starch and sucrose metabolism",2,26,3,57,0.502060728247972,1.27692307692308,0.981303261827799,FALSE
+"path:map04911","Insulin secretion",2,26,3,57,0.502060728247972,1.27692307692308,0.981303261827799,FALSE
+"path:map04930","Type II diabetes mellitus",2,26,3,57,0.502060728247972,1.27692307692308,0.981303261827799,FALSE
+"path:map04976","Bile secretion",2,26,3,57,0.502060728247972,1.27692307692308,0.981303261827799,FALSE
+"path:map00730","Thiamine metabolism",2,26,3,57,0.502060728247972,1.27692307692308,0.981303261827799,FALSE
+"path:map01502","Vancomycin resistance",2,26,3,57,0.502060728247972,1.27692307692308,0.981303261827799,FALSE
+"path:map04721","Synaptic vesicle cycle",2,26,3,57,0.502060728247972,1.27692307692308,0.981303261827799,FALSE
+"path:map01110","Biosynthesis of secondary metabolites",18,26,38,57,0.512967671324593,1.0260989010989,0.981303261827799,FALSE
+"path:map01061","Biosynthesis of phenylpropanoids",6,26,12,57,0.523291242292473,1.06410256410256,0.981303261827799,FALSE
+"path:map01063","Biosynthesis of alkaloids derived from shikimate pathway",6,26,12,57,0.523291242292473,1.06410256410256,0.981303261827799,FALSE
+"path:map04974","Protein digestion and absorption",6,26,12,57,0.523291242292473,1.06410256410256,0.981303261827799,FALSE
+"path:map02020","Two-component system",5,26,10,57,0.538453135422541,1.06410256410256,0.981303261827799,FALSE
+"path:map00620","Pyruvate metabolism",4,26,8,57,0.5567439905173,1.06410256410256,0.981303261827799,FALSE
+"path:map00680","Methane metabolism",4,26,8,57,0.5567439905173,1.06410256410256,0.981303261827799,FALSE
+"path:map02010","ABC transporters",8,26,17,57,0.562649235741635,1.02153846153846,0.981303261827799,FALSE
+"path:map00996","Biosynthesis of various alkaloids",3,26,6,57,0.580507271444531,1.06410256410256,0.981303261827799,FALSE
+"path:map00010","Glycolysis / Gluconeogenesis",3,26,6,57,0.580507271444531,1.06410256410256,0.981303261827799,FALSE
+"path:map05415","Diabetic cardiomyopathy",3,26,6,57,0.580507271444531,1.06410256410256,0.981303261827799,FALSE
+"path:map00440","Phosphonate and phosphinate metabolism",2,26,4,57,0.615434879375483,1.06410256410256,0.981303261827799,FALSE
+"path:map00908","Zeatin biosynthesis",2,26,4,57,0.615434879375483,1.06410256410256,0.981303261827799,FALSE
+"path:map01040","Biosynthesis of unsaturated fatty acids",2,26,4,57,0.615434879375483,1.06410256410256,0.981303261827799,FALSE
+"path:map00310","Lysine degradation",2,26,4,57,0.615434879375483,1.06410256410256,0.981303261827799,FALSE
+"path:map00400","Phenylalanine, tyrosine and tryptophan biosynthesis",2,26,4,57,0.615434879375483,1.06410256410256,0.981303261827799,FALSE
+"path:map04931","Insulin resistance",2,26,4,57,0.615434879375483,1.06410256410256,0.981303261827799,FALSE
+"path:map04714","Thermogenesis",2,26,4,57,0.615434879375483,1.06410256410256,0.981303261827799,FALSE
+"path:map00260","Glycine, serine and threonine metabolism",2,26,4,57,0.615434879375483,1.06410256410256,0.981303261827799,FALSE
+"path:map00261","Monobactam biosynthesis",2,26,4,57,0.615434879375483,1.06410256410256,0.981303261827799,FALSE
+"path:map00230","Purine metabolism",2,26,4,57,0.615434879375483,1.06410256410256,0.981303261827799,FALSE
+"path:map05012","Parkinson disease",2,26,4,57,0.615434879375483,1.06410256410256,0.981303261827799,FALSE
+"path:map01120","Microbial metabolism in diverse environments",13,26,29,57,0.621957412820931,0.988095238095238,0.981303261827799,FALSE
+"path:map01062","Biosynthesis of terpenoids and steroids",4,26,9,57,0.634980644881172,0.982248520710059,0.981303261827799,FALSE
+"path:map04742","Taste transduction",4,26,9,57,0.634980644881172,0.982248520710059,0.981303261827799,FALSE
+"path:map00970","Aminoacyl-tRNA biosynthesis",4,26,9,57,0.634980644881172,0.982248520710059,0.981303261827799,FALSE
+"path:map01070","Biosynthesis of plant hormones",6,26,14,57,0.65789903520521,0.957692307692308,0.981303261827799,FALSE
+"path:map01230","Biosynthesis of amino acids",6,26,14,57,0.65789903520521,0.957692307692308,0.981303261827799,FALSE
+"path:map00360","Phenylalanine metabolism",3,26,7,57,0.665290485305959,0.957692307692308,0.981303261827799,FALSE
+"path:map00020","Citrate cycle (TCA cycle)",3,26,7,57,0.665290485305959,0.957692307692308,0.981303261827799,FALSE
+"path:map02060","Phosphotransferase system (PTS)",3,26,7,57,0.665290485305959,0.957692307692308,0.981303261827799,FALSE
+"path:map00950","Isoquinoline alkaloid biosynthesis",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
+"path:map00130","Ubiquinone and other terpenoid-quinone biosynthesis",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
+"path:map04936","Alcoholic liver disease",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
+"path:map05200","Pathways in cancer",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
+"path:map05211","Renal cell carcinoma",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
+"path:map00910","Nitrogen metabolism",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
+"path:map01250","Biosynthesis of nucleotide sugars",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
+"path:map00564","Glycerophospholipid metabolism",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
+"path:map05033","Nicotine addiction",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
+"path:map00030","Pentose phosphate pathway",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
+"path:map00524","Neomycin, kanamycin and gentamicin biosynthesis",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
+"path:map00566","Sulfoquinovose metabolism",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
+"path:map04150","mTOR signaling pathway",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
+"path:map00480","Glutathione metabolism",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
+"path:map05030","Cocaine addiction",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
+"path:map05031","Amphetamine addiction",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
+"path:map05034","Alcoholism",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
+"path:map04977","Vitamin digestion and absorption",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
+"path:map00195","Photosynthesis",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
+"path:map04142","Lysosome biogenesis",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
+"path:map04611","Platelet activation",1,26,2,57,0.681544606610725,1.06410256410256,0.981303261827799,FALSE
+"path:map01100","Metabolic pathways",26,26,56,57,0.686746987951807,1.01219512195122,0.981303261827799,FALSE
+"path:map01060","Biosynthesis of plant secondary metabolites",11,26,26,57,0.697064278494954,0.949064449064449,0.981303261827799,FALSE
+"path:map00630","Glyoxylate and dicarboxylate metabolism",4,26,10,57,0.70472303391411,0.912087912087912,0.981303261827799,FALSE
+"path:map00250","Alanine, aspartate and glutamate metabolism",4,26,10,57,0.70472303391411,0.912087912087912,0.981303261827799,FALSE
+"path:map00940","Phenylpropanoid biosynthesis",2,26,5,57,0.709078983423661,0.912087912087912,0.981303261827799,FALSE
+"path:map00920","Sulfur metabolism",2,26,5,57,0.709078983423661,0.912087912087912,0.981303261827799,FALSE
+"path:map00220","Arginine biosynthesis",2,26,5,57,0.709078983423661,0.912087912087912,0.981303261827799,FALSE
+"path:map00052","Galactose metabolism",2,26,5,57,0.709078983423661,0.912087912087912,0.981303261827799,FALSE
+"path:map05022","Pathways of neurodegeneration - multiple diseases",2,26,5,57,0.709078983423661,0.912087912087912,0.981303261827799,FALSE
+"path:map00460","Cyanoamino acid metabolism",2,26,5,57,0.709078983423661,0.912087912087912,0.981303261827799,FALSE
+"path:map04080","Neuroactive ligand-receptor interaction",2,26,5,57,0.709078983423661,0.912087912087912,0.981303261827799,FALSE
+"path:map01066","Biosynthesis of alkaloids derived from terpenoid and polyketide",3,26,8,57,0.737878853338005,0.870629370629371,0.981303261827799,FALSE
+"path:map00998","Biosynthesis of various antibiotics",3,26,8,57,0.737878853338005,0.870629370629371,0.981303261827799,FALSE
+"path:map01064","Biosynthesis of alkaloids derived from ornithine, lysine and nicotinic acid",5,26,13,57,0.738829509620026,0.886752136752137,0.981303261827799,FALSE
+"path:map01240","Biosynthesis of cofactors",6,26,16,57,0.769599029342615,0.870629370629371,0.981303261827799,FALSE
+"path:map00430","Taurine and hypotaurine metabolism",2,26,6,57,0.783829978760364,0.798076923076923,0.981303261827799,FALSE
+"path:map00627","Aminobenzoate degradation",1,26,3,57,0.785042609462239,0.798076923076923,0.981303261827799,FALSE
+"path:map04727","GABAergic synapse",1,26,3,57,0.785042609462239,0.798076923076923,0.981303261827799,FALSE
+"path:map00975","Biosynthesis of various siderophores",1,26,3,57,0.785042609462239,0.798076923076923,0.981303261827799,FALSE
+"path:map00960","Tropane, piperidine and pyridine alkaloid biosynthesis",1,26,3,57,0.785042609462239,0.798076923076923,0.981303261827799,FALSE
+"path:map00860","Porphyrin metabolism",1,26,3,57,0.785042609462239,0.798076923076923,0.981303261827799,FALSE
+"path:map00330","Arginine and proline metabolism",1,26,3,57,0.785042609462239,0.798076923076923,0.981303261827799,FALSE
+"path:map00785","Lipoic acid metabolism",1,26,3,57,0.785042609462239,0.798076923076923,0.981303261827799,FALSE
+"path:map05014","Amyotrophic lateral sclerosis",1,26,3,57,0.785042609462239,0.798076923076923,0.981303261827799,FALSE
+"path:map00966","Glucosinolate biosynthesis",1,26,3,57,0.785042609462239,0.798076923076923,0.981303261827799,FALSE
+"path:map01232","Nucleotide metabolism",1,26,3,57,0.785042609462239,0.798076923076923,0.981303261827799,FALSE
+"path:map04924","Renin secretion",1,26,3,57,0.785042609462239,0.798076923076923,0.981303261827799,FALSE
+"path:map01065","Biosynthesis of alkaloids derived from histidine and purine",3,26,9,57,0.798257140944906,0.798076923076923,0.988667101170296,FALSE
+"path:map00999","Biosynthesis of various plant secondary metabolites",2,26,7,57,0.841922180850602,0.709401709401709,1,FALSE
+"path:map00660","C5-Branched dibasic acid metabolism",1,26,4,57,0.855788079765806,0.638461538461539,1,FALSE
+"path:map00270","Cysteine and methionine metabolism",1,26,4,57,0.855788079765806,0.638461538461539,1,FALSE
+"path:map04068","FoxO signaling pathway",1,26,4,57,0.855788079765806,0.638461538461539,1,FALSE
+"path:map04152","AMPK signaling pathway",1,26,4,57,0.855788079765806,0.638461538461539,1,FALSE
+"path:map00997","Biosynthesis of various other secondary metabolites",2,26,8,57,0.886080104736763,0.638461538461539,1,FALSE
+"path:map01210","2-Oxocarboxylic acid metabolism",3,26,11,57,0.886108377723094,0.684065934065934,1,FALSE
+"path:map00470","D-Amino acid metabolism",3,26,11,57,0.886108377723094,0.684065934065934,1,FALSE
+"path:map00710","Carbon fixation by Calvin cycle",1,26,5,57,0.903858719843871,0.532051282051282,1,FALSE
+"path:map00061","Fatty acid biosynthesis",0,26,2,57,1,0,1,FALSE
+"path:map00073","Cutin, suberine and wax biosynthesis",0,26,2,57,1,0,1,FALSE
+"path:map04964","Proximal tubule bicarbonate reclamation",0,26,4,57,1,0,1,FALSE
+"path:map00040","Pentose and glucuronate interconversions",0,26,3,57,1,0,1,FALSE
+"path:map04723","Retrograde endocannabinoid signaling",0,26,2,57,1,0,1,FALSE
+"path:map04923","Regulation of lipolysis in adipocytes",0,26,2,57,1,0,1,FALSE
+"path:map00362","Benzoate degradation",0,26,3,57,1,0,1,FALSE
+"path:map00621","Dioxin degradation",0,26,2,57,1,0,1,FALSE
+"path:map00622","Xylene degradation",0,26,2,57,1,0,1,FALSE
+"path:map00625","Chloroalkane and chloroalkene degradation",0,26,2,57,1,0,1,FALSE
+"path:map01320","Sulfur cycle",0,26,2,57,1,0,1,FALSE
+"path:map00053","Ascorbate and aldarate metabolism",0,26,2,57,1,0,1,FALSE
+"path:map00290","Valine, leucine and isoleucine biosynthesis",0,26,2,57,1,0,1,FALSE
+"path:map00770","Pantothenate and CoA biosynthesis",0,26,3,57,1,0,1,FALSE
+"path:map00300","Lysine biosynthesis",0,26,3,57,1,0,1,FALSE
+"path:map00340","Histidine metabolism",0,26,3,57,1,0,1,FALSE
+"path:map00780","Biotin metabolism",0,26,2,57,1,0,1,FALSE

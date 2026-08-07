@@ -382,13 +382,16 @@ if (nrow(er_kegg) > 0) {
   cat("    Top3:", paste(head(rownames(er_kegg), 3), collapse = ", "), "\n")
 }
 
-# 导出富集结果：行名替换为人类可读的通路名称，便于 CSV 与图形标签
+# 导出富集结果：er_kegg 行名为真实 pathway_id（path:mapXXXXX），
+# 且已含 pathway_name 列；直接以行名作为 pathway_id 首列导出。
+export_table(er_kegg, RESULT_DIR, "07_enrichment_kegg",
+             use_rownames = TRUE, id_col_name = "pathway_id")
+
+# 绘图副本：把行名替换为人类可读的通路名称（不影响导出的数据表）
 er_kegg_out <- er_kegg
 if (nrow(er_kegg_out) > 0) {
   rownames(er_kegg_out) <- make.unique(as.character(er_kegg_out$pathway_name))
 }
-export_table(er_kegg_out, RESULT_DIR, "07_enrichment_kegg",
-             use_rownames = TRUE, id_col_name = "pathway_id")
 
 # (4) 绘图：纵轴用通路名称（截断超长名），仍复用 plot_enrichment
 p_kegg <- if (nrow(er_kegg_out) > 0) {
