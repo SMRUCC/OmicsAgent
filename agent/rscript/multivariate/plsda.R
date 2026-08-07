@@ -1,29 +1,27 @@
 # ==============================================================================
-# OmicsFlow: PLS-DA Analysis and Visualization
+# OmicsFlow: PLS-DA 分析与可视化
 # ==============================================================================
-# Partial Least Squares Discriminant Analysis
+# 偏最小二乘判别分析（Partial Least Squares Discriminant Analysis）
 # ==============================================================================
 
-#' Perform PLS-DA analysis
+#' 执行 PLS-DA 分析
 #'
-#' @description Performs Partial Least Squares Discriminant Analysis (PLS-DA)
-#'   on the expression matrix. PLS-DA is a supervised method that maximizes
-#'   separation between predefined groups.
+#' @description 对表达矩阵执行偏最小二乘判别分析（PLS-DA）。PLS-DA 是一种
+#'   有监督方法，可最大化预定义分组之间的分离度。
 #'
-#' @param expr_matrix A numeric matrix (features x samples).
-#' @param sample_info A data.frame with sample metadata.
-#' @param group_col Column name for group labels. Default: "sample_info".
-#' @param ncomp Number of components. Default: 2.
-#' @param exclude_groups Optional character vector of groups to exclude
-#'   (e.g., "QC"). Default: NULL.
+#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param sample_info 含有样本元数据的数据框。
+#' @param group_col 分组标签所在的列名。默认："sample_info"。
+#' @param ncomp 组分数量。默认：2。
+#' @param exclude_groups 要排除的可选分组字符向量（如 "QC"）。默认：NULL。
 #'
-#' @return A list with:
+#' @return 一个列表，包含：
 #'   \itemize{
-#'     \item \code{scores}: Data.frame of PLS-DA scores.
-#'     \item \code{loadings}: Data.frame of PLS-DA loadings.
-#'     \item \code{vip}: VIP scores data.frame.
-#'     \item \code{model}: PLS-DA model object.
-#'     \item \code{groups}: Group levels.
+#'     \item \code{scores}：PLS-DA 得分数据框。
+#'     \item \code{loadings}：PLS-DA 载荷数据框。
+#'     \item \code{vip}：VIP 得分数据框。
+#'     \item \code{model}：PLS-DA 模型对象。
+#'     \item \code{groups}：分组水平。
 #'   }
 #'
 #' @examples
@@ -35,39 +33,39 @@
 #' @export
 run_plsda <- function(expr_matrix, sample_info, group_col = "sample_info",
                      ncomp = 2, exclude_groups = NULL) {
-  # Align samples
+  # 对齐样本
   common_samples <- intersect(colnames(expr_matrix), rownames(sample_info))
   expr_matrix <- expr_matrix[, common_samples, drop = FALSE]
   sample_info <- sample_info[common_samples, , drop = FALSE]
 
-  # Exclude groups
+  # 排除分组
   if (!is.null(exclude_groups)) {
     keep_samples <- rownames(sample_info)[!(sample_info[[group_col]] %in% exclude_groups)]
     expr_matrix <- expr_matrix[, keep_samples, drop = FALSE]
     sample_info <- sample_info[keep_samples, , drop = FALSE]
   }
 
-  # Get group factor
+  # 获取分组因子
   groups <- factor(sample_info[[group_col]])
 
-  # Transpose for analysis
+  # 转置以进行分析
   X <- t(expr_matrix)
 
-  # Use mixOmics if available, otherwise use base pls
+  # 优先使用 mixOmics，否则使用基础 PLS
   if (requireNamespace("mixOmics", quietly = TRUE)) {
     model <- mixOmics::plsda(X, groups, ncomp = ncomp)
     scores <- as.data.frame(model$variates$X)
     scores$sample_id <- rownames(scores)
     scores$group <- as.character(groups)
 
-    # VIP calculation
+    # 计算 VIP
     vip_scores <- .calculate_vip(model)
     loadings <- as.data.frame(model$loadings$X)
     loadings$feature_id <- rownames(loadings)
 
   } else {
-    # Fallback: use base PLS implementation
-    warning("Package 'mixOmics' not available. Using base PLS implementation.")
+    # 回退方案：使用基础 PLS 实现
+    warning("未安装 'mixOmics' 包，改用基础 PLS 实现。")
     result <- .plsda_base(X, groups, ncomp = ncomp)
     model <- result$model
     scores <- as.data.frame(result$scores)
@@ -78,7 +76,7 @@ run_plsda <- function(expr_matrix, sample_info, group_col = "sample_info",
     loadings$feature_id <- rownames(loadings)
   }
 
-  # Prepare VIP data.frame
+  # 准备 VIP 数据框
   vip_df <- data.frame(
     feature_id = rownames(expr_matrix),
     vip = vip_scores,
@@ -88,8 +86,8 @@ run_plsda <- function(expr_matrix, sample_info, group_col = "sample_info",
   rownames(vip_df) <- vip_df$feature_id
   vip_df$feature_id <- NULL
 
-  # Reset row names on scores/loadings so export_table does not prepend a
-  # duplicate sample_id/feature_id column; keep id columns as real columns.
+  # 重置 scores/loadings 的行名，以免 export_table 前置重复
+  # 的 sample_id/feature_id 列；保留 id 列作为真实列。
   if ("sample_id" %in% colnames(scores)) {
     scores <- scores[, c("sample_id", setdiff(colnames(scores), "sample_id")), drop = FALSE]
   }
@@ -109,14 +107,14 @@ run_plsda <- function(expr_matrix, sample_info, group_col = "sample_info",
 }
 
 
-#' Calculate VIP scores (internal)
+#' 计算 VIP 得分（内部函数）
 #'
 #' @keywords internal
 #' @noRd
 .calculate_vip <- function(model) {
-  # VIP calculation based on mixOmics
+  # 基于 mixOmics 的 VIP 计算
   if (inherits(model, "mixo_plsda") || inherits(model, "mixo_pls")) {
-    # Get the full VIP matrix
+    # 获取完整 VIP 矩阵
     vip <- mixOmics::vip(model)
     if (is.matrix(vip)) {
       return(vip[, ncol(vip)])
@@ -129,15 +127,15 @@ run_plsda <- function(expr_matrix, sample_info, group_col = "sample_info",
 }
 
 
-#' Base PLS-DA implementation (internal fallback)
+#' 基础 PLS-DA 实现（内部回退函数）
 #'
 #' @keywords internal
 #' @noRd
 .plsda_base <- function(X, Y, ncomp = 2) {
-  # Simple NIPALS PLS
+  # 简单的 NIPALS PLS
   X <- as.matrix(X)
 
-  # Dummy matrix for Y
+  # 为 Y 构造哑变量矩阵
   if (is.factor(Y)) {
     Y_dummy <- model.matrix(~ 0 + Y)
     colnames(Y_dummy) <- levels(Y)
@@ -149,7 +147,7 @@ run_plsda <- function(expr_matrix, sample_info, group_col = "sample_info",
   p <- ncol(X)
   q <- ncol(Y_dummy)
 
-  # Initialize
+  # 初始化
   scores_mat <- matrix(0, n, ncomp)
   loadings_mat <- matrix(0, p, ncomp)
   Y_loadings <- matrix(0, q, ncomp)
@@ -158,7 +156,7 @@ run_plsda <- function(expr_matrix, sample_info, group_col = "sample_info",
   Y_k <- Y_dummy
 
   for (a in 1:ncomp) {
-    # SVD of cross-product
+    # 交叉乘积的 SVD
     cross <- crossprod(X_k, Y_k)
     svd_result <- svd(cross)
     wa <- svd_result$u[, 1]
@@ -171,7 +169,7 @@ run_plsda <- function(expr_matrix, sample_info, group_col = "sample_info",
     loadings_mat[, a] <- as.vector(pa)
     Y_loadings[, a] <- as.vector(qa)
 
-    # Deflation
+    # 收缩（deflation）
     X_k <- X_k - tcrossprod(ta, pa)
     Y_k <- Y_k - tcrossprod(ta, qa)
   }
@@ -180,7 +178,7 @@ run_plsda <- function(expr_matrix, sample_info, group_col = "sample_info",
   colnames(loadings_mat) <- paste0("comp", 1:ncomp)
   rownames(loadings_mat) <- colnames(X)
 
-  # Simple VIP calculation
+  # 简单 VIP 计算
   # VIP_i = sqrt(p * sum_a(SSY_a * w_ia^2) / sum_a(SSY_a))
   SSY <- colSums(Y_loadings^2)
   vip <- sqrt(p * rowSums(sweep(loadings_mat^2, 2, SSY, "*")) / sum(SSY))
@@ -198,19 +196,19 @@ run_plsda <- function(expr_matrix, sample_info, group_col = "sample_info",
 }
 
 
-#' Plot PLS-DA score plot
+#' 绘制 PLS-DA 得分图
 #'
-#' @description Creates a publication-quality PLS-DA score plot.
+#' @description 创建发表级质量的 PLS-DA 得分图。
 #'
-#' @param plsda_result Result from \code{run_plsda()}.
-#' @param sample_info Sample metadata data.frame.
-#' @param color_col Column for color grouping. Default: "sample_info".
-#' @param comp_x Component for x-axis. Default: 1.
-#' @param comp_y Component for y-axis. Default: 2.
-#' @param show_ellipse Logical, show confidence ellipses. Default: TRUE.
-#' @param show_labels Logical, show sample labels. Default: FALSE.
+#' @param plsda_result 来自 \code{run_plsda()} 的结果。
+#' @param sample_info 样本元数据数据框。
+#' @param color_col 用于颜色分组的列名。默认："sample_info"。
+#' @param comp_x x 轴使用的组分。默认：1。
+#' @param comp_y y 轴使用的组分。默认：2。
+#' @param show_ellipse 逻辑值，是否显示置信椭圆。默认：TRUE。
+#' @param show_labels 逻辑值，是否显示样本标签。默认：FALSE。
 #'
-#' @return A ggplot object.
+#' @return 一个 ggplot 对象。
 #'
 #' @examples
 #' \dontrun{
@@ -237,7 +235,7 @@ plot_plsda_scores <- function(plsda_result, sample_info,
     group = scores$group
   )
 
-  # Colors
+  # 颜色
   groups <- unique(plot_data$group)
   colors <- make_group_colors(groups)
 
@@ -245,9 +243,9 @@ plot_plsda_scores <- function(plsda_result, sample_info,
     ggplot2::geom_point(ggplot2::aes(color = group), size = 3, alpha = 0.85) +
     ggplot2::scale_color_manual(values = colors) +
     ggplot2::labs(
-      title = "PLS-DA Score Plot",
-      x = paste0("Component ", comp_x),
-      y = paste0("Component ", comp_y)
+      title = "PLS-DA 得分图",
+      x = paste0("组分 ", comp_x),
+      y = paste0("组分 ", comp_y)
     ) +
     ggplot2::theme_bw() +
     ggplot2::theme(
@@ -258,7 +256,7 @@ plot_plsda_scores <- function(plsda_result, sample_info,
     ) +
     ggplot2::coord_equal()
 
-  # Ellipses
+  # 椭圆
   if (show_ellipse) {
     for (g in groups) {
       g_data <- plot_data[plot_data$group == g, , drop = FALSE]
@@ -294,15 +292,15 @@ plot_plsda_scores <- function(plsda_result, sample_info,
 }
 
 
-#' Plot VIP scores
+#' 绘制 VIP 得分图
 #'
-#' @description Creates a bar plot of top VIP scores from PLS-DA.
+#' @description 创建 PLS-DA 前 N 个 VIP 得分的条形图。
 #'
-#' @param plsda_result Result from \code{run_plsda()}.
-#' @param top_n Number of top features to show. Default: 20.
-#' @param threshold VIP threshold line. Default: 1.0.
+#' @param plsda_result 来自 \code{run_plsda()} 的结果。
+#' @param top_n 展示的前 N 个特征数量。默认：20。
+#' @param threshold VIP 阈值线。默认：1.0。
 #'
-#' @return A ggplot object.
+#' @return 一个 ggplot 对象。
 #'
 #' @examples
 #' \dontrun{
@@ -314,7 +312,7 @@ plot_vip <- function(plsda_result, top_n = 20, threshold = 1.0) {
   vip_df <- plsda_result$vip
   top_df <- head(vip_df, top_n)
 
-  # Reorder
+  # 重新排序
   top_df$feature_id <- factor(rownames(top_df),
                                levels = rownames(top_df)[nrow(top_df):1])
 
@@ -324,9 +322,9 @@ plot_vip <- function(plsda_result, top_n = 20, threshold = 1.0) {
                         linetype = "dashed", linewidth = 0.8) +
     ggplot2::coord_flip() +
     ggplot2::labs(
-      title = "VIP Scores (Top Features)",
-      x = "Feature",
-      y = "VIP Score"
+      title = "VIP 得分（前 N 个特征）",
+      x = "特征",
+      y = "VIP 得分"
     ) +
     ggplot2::theme_bw() +
     ggplot2::theme(

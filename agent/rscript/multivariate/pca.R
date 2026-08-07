@@ -1,26 +1,25 @@
 # ==============================================================================
-# OmicsFlow: PCA Analysis and Visualization
+# OmicsFlow: PCA 分析与可视化
 # ==============================================================================
-# Principal Component Analysis with score plot
+# 主成分分析（含得分图）
 # ==============================================================================
 
-#' Perform PCA analysis
+#' 执行 PCA 分析
 #'
-#' @description Performs Principal Component Analysis on the expression matrix.
-#'   Returns scores, loadings, and variance explained.
+#' @description 对表达矩阵执行主成分分析（PCA）。返回得分、载荷与方差解释率。
 #'
-#' @param expr_matrix A numeric matrix (features x samples).
-#' @param scale Logical, whether to scale features. Default: TRUE.
-#' @param center Logical, whether to center features. Default: TRUE.
-#' @param ncomp Number of components to compute. Default: min(n_samples - 1, 10).
+#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param scale 逻辑值，是否对特征进行标度变换。默认：TRUE。
+#' @param center 逻辑值，是否对特征进行中心化。默认：TRUE。
+#' @param ncomp 要计算的组分数量。默认：min(样本数 - 1, 10)。
 #'
-#' @return A list with:
+#' @return 一个列表，包含：
 #'   \itemize{
-#'     \item \code{pca_result}: prcomp result object.
-#'     \item \code{scores}: Data.frame of PC scores (samples x components).
-#'     \item \code{loadings}: Data.frame of PC loadings (features x components).
-#'     \item \code{var_explained}: Numeric vector of variance explained (%).
-#'     \item \code{ncomp}: Number of components computed.
+#'     \item \code{pca_result}：prcomp 结果对象。
+#'     \item \code{scores}：PC 得分数据框（样本 x 组分）。
+#'     \item \code{loadings}：PC 载荷数据框（特征 x 组分）。
+#'     \item \code{var_explained}：方差解释率（%）的数值向量。
+#'     \item \code{ncomp}：计算得到的组分数。
 #'   }
 #'
 #' @examples
@@ -37,22 +36,22 @@ run_pca <- function(expr_matrix, scale = TRUE, center = TRUE,
     mode(expr_matrix) <- "numeric"
   }
 
-  # Transpose for PCA (samples as rows)
+  # 转置以进行 PCA（样本作为行）
   data_t <- t(expr_matrix)
 
-  # Remove features with zero variance
+  # 移除零方差特征
   feature_var <- apply(data_t, 2, stats::var, na.rm = TRUE)
   data_t <- data_t[, feature_var > 0, drop = FALSE]
 
-  # Set number of components
+  # 设定组分数
   if (is.null(ncomp)) {
     ncomp <- min(nrow(data_t) - 1, ncol(data_t), 10)
   }
 
-  # Perform PCA (compute all components for correct variance)
+  # 执行 PCA（计算全部组分以获得正确的方差解释率）
   pca_result <- stats::prcomp(data_t, scale. = scale, center = center)
 
-  # Extract results
+  # 提取结果
   scores <- as.data.frame(pca_result$x[, 1:ncomp, drop = FALSE])
   scores$sample_id <- rownames(scores)
   scores <- scores[, c("sample_id", setdiff(colnames(scores), "sample_id")), drop = FALSE]
@@ -63,7 +62,7 @@ run_pca <- function(expr_matrix, scale = TRUE, center = TRUE,
   loadings <- loadings[, c("feature_id", setdiff(colnames(loadings), "feature_id")), drop = FALSE]
   rownames(loadings) <- NULL
 
-  # Variance explained: use total variance (sum of all sdev^2)
+  # 方差解释率：使用总方差（所有 sdev^2 之和）
   var_explained <- (pca_result$sdev^2 / sum(pca_result$sdev^2) * 100)[1:ncomp]
 
   return(list(
@@ -76,22 +75,22 @@ run_pca <- function(expr_matrix, scale = TRUE, center = TRUE,
 }
 
 
-#' Plot PCA score plot
+#' 绘制 PCA 得分图
 #'
-#' @description Creates a publication-quality PCA score plot using ggplot2.
+#' @description 使用 ggplot2 创建发表级质量的 PCA 得分图。
 #'
-#' @param pca_result Result from \code{run_pca()}.
-#' @param sample_info A data.frame with sample metadata.
-#' @param color_col Column name for color grouping. Default: "sample_info".
-#' @param shape_col Column name for shape grouping. Default: NULL.
-#' @param pc_x Integer, which PC for x-axis. Default: 1.
-#' @param pc_y Integer, which PC for y-axis. Default: 2.
-#' @param show_ellipse Logical, whether to draw confidence ellipses. Default: TRUE.
-#' @param ellipse_level Numeric, confidence level for ellipses. Default: 0.95.
-#' @param show_labels Logical, whether to show sample labels. Default: FALSE.
-#' @param label_col Column for labels. Default: "sample_name".
+#' @param pca_result 来自 \code{run_pca()} 的结果。
+#' @param sample_info 含有样本元数据的数据框。
+#' @param color_col 用于颜色分组的列名。默认："sample_info"。
+#' @param shape_col 用于形状分组的列名。默认：NULL。
+#' @param pc_x 整数，x 轴使用的 PC。默认：1。
+#' @param pc_y 整数，y 轴使用的 PC。默认：2。
+#' @param show_ellipse 逻辑值，是否绘制置信椭圆。默认：TRUE。
+#' @param ellipse_level 数值，椭圆的置信水平。默认：0.95。
+#' @param show_labels 逻辑值，是否显示样本标签。默认：FALSE。
+#' @param label_col 标签所用的列名。默认："sample_name"。
 #'
-#' @return A ggplot object.
+#' @return 一个 ggplot 对象。
 #'
 #' @examples
 #' \dontrun{
@@ -106,16 +105,16 @@ plot_pca_scores <- function(pca_result, sample_info,
                             pc_x = 1, pc_y = 2,
                             show_ellipse = TRUE, ellipse_level = 0.95,
                             show_labels = FALSE, label_col = "sample_name") {
-  # Get scores
+  # 获取得分
   scores <- pca_result$scores
   var_explained <- pca_result$var_explained
 
-  # Align sample info
+  # 对齐样本信息
   common_samples <- intersect(scores$sample_id, rownames(sample_info))
   scores <- scores[scores$sample_id %in% common_samples, ]
   sample_info <- sample_info[scores$sample_id, , drop = FALSE]
 
-  # Prepare data
+  # 准备数据
   pc_cols <- paste0("PC", c(pc_x, pc_y))
   plot_data <- data.frame(
     sample_id = scores$sample_id,
@@ -123,43 +122,43 @@ plot_pca_scores <- function(pca_result, sample_info,
     PCy = scores[[pc_cols[2]]]
   )
 
-  # Add color
+  # 添加颜色
   if (color_col %in% colnames(sample_info)) {
     plot_data$color <- sample_info[[color_col]]
   } else {
     plot_data$color <- "all"
   }
 
-  # Add shape
+  # 添加形状
   if (!is.null(shape_col) && shape_col %in% colnames(sample_info)) {
     plot_data$shape <- sample_info[[shape_col]]
   } else {
     plot_data$shape <- plot_data$color
   }
 
-  # Add labels
+  # 添加标签
   if (show_labels && label_col %in% colnames(sample_info)) {
     plot_data$label <- sample_info[[label_col]]
   } else {
     plot_data$label <- plot_data$sample_id
   }
 
-  # Colors
+  # 颜色
   groups <- unique(plot_data$color)
   colors <- make_group_colors(groups)
 
-  # Shapes
+  # 形状
   n_shapes <- length(unique(plot_data$shape))
   shapes <- 0:(n_shapes - 1) %% 25 + 1
 
-  # Build plot
+  # 构建图形
   p <- ggplot2::ggplot(plot_data, ggplot2::aes(x = PCx, y = PCy)) +
     ggplot2::geom_point(ggplot2::aes(color = color, shape = shape),
                         size = 3, alpha = 0.85) +
     ggplot2::scale_color_manual(values = colors, name = color_col) +
     ggplot2::scale_shape_manual(values = shapes, name = ifelse(is.null(shape_col), color_col, shape_col)) +
     ggplot2::labs(
-      title = "PCA Score Plot",
+      title = "PCA 得分图",
       x = paste0("PC", pc_x, " (", round(var_explained[pc_x], 1), "%)"),
       y = paste0("PC", pc_y, " (", round(var_explained[pc_y], 1), "%)")
     ) +
@@ -174,17 +173,17 @@ plot_pca_scores <- function(pca_result, sample_info,
     ) +
     ggplot2::coord_equal()
 
-  # Add ellipses
+  # 添加椭圆
   if (show_ellipse) {
     for (g in groups) {
       g_data <- plot_data[plot_data$color == g, , drop = FALSE]
       if (nrow(g_data) >= 3) {
-        # Calculate ellipse using stat_ellipse equivalent
-        # Using manual calculation for better control
+        # 使用与 stat_ellipse 等价的方式计算椭圆
+        # 采用手动计算以获得更好的控制
         center <- c(mean(g_data$PCx), mean(g_data$PCy))
         cov_mat <- stats::cov(g_data[, c("PCx", "PCy")])
 
-        # Skip if singular
+        # 若为奇异矩阵则跳过
         if (det(cov_mat) > 1e-10) {
           chi_sq <- stats::qchisq(ellipse_level, 2)
           eig <- eigen(cov_mat)
@@ -205,7 +204,7 @@ plot_pca_scores <- function(pca_result, sample_info,
     }
   }
 
-  # Add labels
+  # 添加标签
   if (show_labels) {
     p <- p + ggrepel::geom_text_repel(
       ggplot2::aes(label = label), size = 2.5, max.overlaps = 20
@@ -216,16 +215,16 @@ plot_pca_scores <- function(pca_result, sample_info,
 }
 
 
-#' Plot PCA loading plot
+#' 绘制 PCA 载荷图
 #'
-#' @description Creates a PCA loading plot showing feature contributions.
+#' @description 创建展示特征贡献的 PCA 载荷图。
 #'
-#' @param pca_result Result from \code{run_pca()}.
-#' @param pc_x Integer, which PC for x-axis. Default: 1.
-#' @param pc_y Integer, which PC for y-axis. Default: 2.
-#' @param top_n Integer, number of top features to label. Default: 10.
+#' @param pca_result 来自 \code{run_pca()} 的结果。
+#' @param pc_x 整数，x 轴使用的 PC。默认：1。
+#' @param pc_y 整数，y 轴使用的 PC。默认：2。
+#' @param top_n 整数，标注的前 N 个特征数量。默认：10。
 #'
-#' @return A ggplot object.
+#' @return 一个 ggplot 对象。
 #'
 #' @examples
 #' \dontrun{
@@ -243,10 +242,10 @@ plot_pca_loadings <- function(pca_result, pc_x = 1, pc_y = 2, top_n = 10) {
     loading_y = loadings[[pc_cols[2]]]
   )
 
-  # Calculate distance from origin
+  # 计算到原点的距离
   plot_data$dist <- sqrt(plot_data$loading_x^2 + plot_data$loading_y^2)
 
-  # Select top features
+  # 选取前 N 个特征
   top_features <- plot_data[order(plot_data$dist, decreasing = TRUE), ][1:min(top_n, nrow(plot_data)), ]
 
   p <- ggplot2::ggplot(plot_data, ggplot2::aes(x = loading_x, y = loading_y)) +
@@ -258,9 +257,9 @@ plot_pca_loadings <- function(pca_result, pc_x = 1, pc_y = 2, top_n = 10) {
     ggplot2::geom_hline(yintercept = 0, linetype = "dotted", color = "grey50") +
     ggplot2::geom_vline(xintercept = 0, linetype = "dotted", color = "grey50") +
     ggplot2::labs(
-      title = "PCA Loading Plot",
-      x = paste0("PC", pc_x, " Loading"),
-      y = paste0("PC", pc_y, " Loading")
+      title = "PCA 载荷图",
+      x = paste0("PC", pc_x, " 载荷"),
+      y = paste0("PC", pc_y, " 载荷")
     ) +
     ggplot2::theme_bw() +
     ggplot2::theme(
