@@ -136,9 +136,16 @@ const DEFAULT_CONFIG = {
 const $ = (sel, root = document) => root.querySelector(sel);
 
 function esc(s) {
-  return String(s).replace(/[&<>"]/g, (c) => ({
-    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"
-  }[c]));
+  return String(s).replace(
+    /[&<>"]/g,
+    (c) =>
+      ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+      })[c],
+  );
 }
 
 function toast(message, kind) {

@@ -52,6 +52,9 @@ namespace RibbonLib.Controls
             public const uint cmdTabMain = 9;
             public const uint cmdGroupMain = 7;
             public const uint cmdGroupWorkTools = 21;
+            public const uint cmdGroupWorkbench = 40;
+            public const uint cmdButtonStartPage = 39;
+            public const uint cmdButtonOpenOutput = 41;
             public const uint cmdTabInformation = 19;
             public const uint cmdGroupInformation = 20;
         }
@@ -93,6 +96,9 @@ namespace RibbonLib.Controls
         public RibbonTab TabMain { get; private set; }
         public RibbonGroup GroupMain { get; private set; }
         public RibbonGroup GroupWorkTools { get; private set; }
+        public RibbonGroup GroupWorkbench { get; private set; }
+        public RibbonButton ButtonStartPage { get; private set; }
+        public RibbonButton ButtonOpenOutput { get; private set; }
         public RibbonTab TabInformation { get; private set; }
         public RibbonGroup GroupInformation { get; private set; }
 
@@ -135,6 +141,9 @@ namespace RibbonLib.Controls
             TabMain = new RibbonTab(ribbon, Cmd.cmdTabMain);
             GroupMain = new RibbonGroup(ribbon, Cmd.cmdGroupMain);
             GroupWorkTools = new RibbonGroup(ribbon, Cmd.cmdGroupWorkTools);
+            GroupWorkbench = new RibbonGroup(ribbon, Cmd.cmdGroupWorkbench);
+            ButtonStartPage = new RibbonButton(ribbon, Cmd.cmdButtonStartPage);
+            ButtonOpenOutput = new RibbonButton(ribbon, Cmd.cmdButtonOpenOutput);
             TabInformation = new RibbonTab(ribbon, Cmd.cmdTabInformation);
             GroupInformation = new RibbonGroup(ribbon, Cmd.cmdGroupInformation);
         }

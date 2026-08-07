@@ -49,6 +49,9 @@ Namespace RibbonLib.Controls
             Public Const cmdTabMain As UInteger = 9
             Public Const cmdGroupMain As UInteger = 7
             Public Const cmdGroupWorkTools As UInteger = 21
+            Public Const cmdGroupWorkbench As UInteger = 40
+            Public Const cmdButtonStartPage As UInteger = 39
+            Public Const cmdButtonOpenOutput As UInteger = 41
             Public Const cmdTabInformation As UInteger = 19
             Public Const cmdGroupInformation As UInteger = 20
         End Class
@@ -265,6 +268,24 @@ Namespace RibbonLib.Controls
                 Return _GroupWorkTools
             End Get
         End Property
+        Private _GroupWorkbench As RibbonGroup
+        Public ReadOnly Property GroupWorkbench As RibbonGroup
+            Get
+                Return _GroupWorkbench
+            End Get
+        End Property
+        Private _ButtonStartPage As RibbonButton
+        Public ReadOnly Property ButtonStartPage As RibbonButton
+            Get
+                Return _ButtonStartPage
+            End Get
+        End Property
+        Private _ButtonOpenOutput As RibbonButton
+        Public ReadOnly Property ButtonOpenOutput As RibbonButton
+            Get
+                Return _ButtonOpenOutput
+            End Get
+        End Property
         Private _TabInformation As RibbonTab
         Public ReadOnly Property TabInformation As RibbonTab
             Get
@@ -317,6 +338,9 @@ Namespace RibbonLib.Controls
             _TabMain = New RibbonTab(_ribbon, Cmd.cmdTabMain)
             _GroupMain = New RibbonGroup(_ribbon, Cmd.cmdGroupMain)
             _GroupWorkTools = New RibbonGroup(_ribbon, Cmd.cmdGroupWorkTools)
+            _GroupWorkbench = New RibbonGroup(_ribbon, Cmd.cmdGroupWorkbench)
+            _ButtonStartPage = New RibbonButton(_ribbon, Cmd.cmdButtonStartPage)
+            _ButtonOpenOutput = New RibbonButton(_ribbon, Cmd.cmdButtonOpenOutput)
             _TabInformation = New RibbonTab(_ribbon, Cmd.cmdTabInformation)
             _GroupInformation = New RibbonGroup(_ribbon, Cmd.cmdGroupInformation)
         End Sub

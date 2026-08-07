@@ -366,6 +366,8 @@ Public Class UserDataTablesModule : Inherits AnalysisModuleBase
    - 说明用户可从该表获得的生物学知识/见解
 保持信息丰富但简洁（通常 2-5 句）。你还可以优化 'sheet_name' 为更清晰的英文名称（<=31 字符，不含 : \ / ? * [ ] 字符），但你必须保持 'csv' 绝对路径与给定值完全一致。
 
+在使用read_file函数直接读取文件全部内容之前，请先确认目标文件大小，避免一次性直接读取过多的数据
+
 仅返回填写完成的 JSON（不要额外解释，不要 markdown 代码围栏）。
 ]]></root>.Value
 
@@ -449,6 +451,8 @@ Public Class UserDataTablesModule : Inherits AnalysisModuleBase
 3. 该组数据与用户研究主题的关联性
 4. 从该组数据可以得出哪些生物学见解
 5. 必要时可以根据用户编写的数据分析用的R脚本的代码来理解用户的研究工作
+
+在使用read_file函数直接读取文件全部内容之前，请先确认目标文件大小，避免一次性直接读取过多的数据
 
 不要写入任何文件，仅以 Markdown 格式生成总结文本并返回。总结应为 400-800 字中文。内容须具体严谨，不得编造数据。
 ]]></root>.Value

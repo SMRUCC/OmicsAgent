@@ -1,38 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Application xmlns="http://schemas.microsoft.com/windows/2009/Ribbon">
   <Application.Commands>
-    <Command Name="cmdButtonLLMTool" Id="25" LabelTitle="LLM">
-      <Command.SmallImages>
-        <Image MinDPI="192">Icons/icons8-analyzing-skill-96.png</Image>
-      </Command.SmallImages>
-      <Command.LargeImages>
-        <Image MinDPI="192">Icons/icons8-analyzing-skill-96.png</Image>
-      </Command.LargeImages>
-    </Command>
-    <Command Name="cmdBtnOpenKBLib" Id="10" LabelTitle="View KB">
-      <Command.SmallImages>
-        <Image MinDPI="192">Icons/icons8-library-96.png</Image>
-      </Command.SmallImages>
-      <Command.LargeImages>
-        <Image MinDPI="192">Icons/icons8-library-96.png</Image>
-      </Command.LargeImages>
-    </Command>
-    <Command Name="cmdButtonExit" Id="17" LabelTitle="Exit">
-      <Command.SmallImages>
-        <Image MinDPI="192">Icons/icons8-exit-96.png</Image>
-      </Command.SmallImages>
-      <Command.LargeImages>
-        <Image MinDPI="192">Icons/icons8-exit-96.png</Image>
-      </Command.LargeImages>
-    </Command>
-    <Command Name="cmdButtonLicense" Id="18" LabelTitle="License">
-      <Command.SmallImages>
-        <Image MinDPI="192">Icons/icons8-information-96.png</Image>
-      </Command.SmallImages>
-      <Command.LargeImages>
-        <Image MinDPI="192">Icons/icons8-information-96.png</Image>
-      </Command.LargeImages>
-    </Command>
+    <Command Name="cmdGroupResearchAgentWork" Id="27" LabelTitle="Agent Workflow" />
     <Command Name="cmdButtonOpenConsole" Id="22" LabelTitle="Console">
       <Command.SmallImages>
         <Image MinDPI="192">Icons/icons8-bash-96.png</Image>
@@ -41,28 +10,44 @@
         <Image MinDPI="192">Icons/icons8-bash-96.png</Image>
       </Command.LargeImages>
     </Command>
-    <Command Name="cmdButtonOpenFolder" Id="16" LabelTitle="Open Folder">
+    <Command Name="cmdTabDataSet" Id="30" LabelTitle="DataSet" />
+    <Command Name="cmdGroupDataSet" Id="31" LabelTitle="DataSet" />
+    <Command Name="cmdButtonDataset" Id="26" LabelTitle="DataSet Editor">
       <Command.SmallImages>
-        <Image MinDPI="192">Icons/icons8-file-explorer-new-96.png</Image>
+        <Image MinDPI="192">Icons/icons8-excel-96.png</Image>
       </Command.SmallImages>
       <Command.LargeImages>
-        <Image MinDPI="192">Icons/icons8-file-explorer-new-96.png</Image>
+        <Image MinDPI="192">Icons/icons8-excel-96.png</Image>
       </Command.LargeImages>
     </Command>
-    <Command Name="cmdButtonOpenKb" Id="2" LabelTitle="Research KB">
+    <Command Name="cmdMenuDataSet" Id="29" LabelTitle="DataSet Editor" />
+    <Command Name="cmdButtonExit" Id="17" LabelTitle="Exit">
       <Command.SmallImages>
-        <Image MinDPI="192">Icons/icons8-books-96.png</Image>
+        <Image MinDPI="192">Icons/icons8-exit-96.png</Image>
       </Command.SmallImages>
       <Command.LargeImages>
-        <Image MinDPI="192">Icons/icons8-books-96.png</Image>
+        <Image MinDPI="192">Icons/icons8-exit-96.png</Image>
       </Command.LargeImages>
     </Command>
-    <Command Name="cmdButtonOpenResearch" Id="6" LabelTitle="Start">
+    <Command Name="cmdGroupInformation" Id="20" LabelTitle="Information" />
+    <Command Name="cmdTabInformation" Id="19" LabelTitle="Information" />
+    <Command Name="cmdButtonVennTool" Id="23" LabelTitle="jVenn Tool">
       <Command.SmallImages>
-        <Image MinDPI="192">Icons/icons8-research-96.png</Image>
+        <Image MinDPI="192">Icons/icons8-venn-diagram-100.png</Image>
       </Command.SmallImages>
       <Command.LargeImages>
-        <Image MinDPI="192">Icons/icons8-research-96.png</Image>
+        <Image MinDPI="192">Icons/icons8-venn-diagram-100.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdGroupKBLib" Id="13" LabelTitle="Knowledge Base" />
+    <Command Name="cmdMenuKBLib" Id="12" LabelTitle="Knowledge Base" />
+    <Command Name="cmdTabKBLib" Id="11" LabelTitle="Knowledge Base" />
+    <Command Name="cmdButtonLicense" Id="18" LabelTitle="License">
+      <Command.SmallImages>
+        <Image MinDPI="192">Icons/icons8-information-96.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Icons/icons8-information-96.png</Image>
       </Command.LargeImages>
     </Command>
     <Command Name="cmdButtonToggleTheme" Id="15" LabelTitle="Light/Dark Theme">
@@ -73,54 +58,66 @@
         <Image MinDPI="192">Icons/icons8-theme-96.png</Image>
       </Command.LargeImages>
     </Command>
-    <Command Name="cmdButtonVennTool" Id="23" LabelTitle="jVenn Tool">
+    <Command Name="cmdButtonLLMTool" Id="25" LabelTitle="LLM">
       <Command.SmallImages>
-        <Image MinDPI="192">Icons/icons8-venn-diagram-100.png</Image>
+        <Image MinDPI="192">Icons/icons8-analyzing-skill-96.png</Image>
       </Command.SmallImages>
       <Command.LargeImages>
-        <Image MinDPI="192">Icons/icons8-venn-diagram-100.png</Image>
+        <Image MinDPI="192">Icons/icons8-analyzing-skill-96.png</Image>
       </Command.LargeImages>
     </Command>
-    <Command Name="cmdGroupInformation" Id="20" LabelTitle="Information" />
-    <Command Name="cmdGroupKBLib" Id="13" LabelTitle="Knowledge Base" />
-    <Command Name="cmdGroupMain" Id="7" LabelTitle="Omics Research" />
-    <Command Name="cmdGroupResearchWork" Id="4" LabelTitle="Research" />
-    <Command Name="cmdGroupTools" Id="14" LabelTitle="Tools" />
-    <Command Name="cmdGroupWorkTools" Id="21" LabelTitle="Tools" />
-    <Command Name="cmdMenuKBLib" Id="12" LabelTitle="Knowledge Base" />
-    <Command Name="cmdMenuResearchWork" Id="3" LabelTitle="Research" />
-    <Command Name="cmdMenuTools" Id="24" LabelTitle="Tools" />
-    <Command Name="cmdPanelMain" Id="8" LabelTitle="Omics Research" />
-    <Command Name="cmdTabInformation" Id="19" LabelTitle="Information" />
-    <Command Name="cmdTabKBLib" Id="11" LabelTitle="Knowledge Base" />
-    <Command Name="cmdTabMain" Id="9" LabelTitle="Omics Research" />
-    <Command Name="cmdTabResearchWork" Id="5" LabelTitle="Research" />
-    <Command Name="cmdButtonDataset" Id="26" LabelTitle="DataSet Editor">
-      <Command.SmallImages>
-        <Image MinDPI="192">Icons/icons8-excel-96.png</Image>
-      </Command.SmallImages>
-      <Command.LargeImages>
-        <Image MinDPI="192">Icons/icons8-excel-96.png</Image>
-      </Command.LargeImages>
-    </Command>
-    <Command Name="cmdGroupResearchAgentWork" Id="27" LabelTitle="Agent Workflow" />
-    <Command Name="cmdButtonStart" Id="28" LabelTitle="Run">
-      <Command.SmallImages>
-        <Image MinDPI="192">Icons/icons8-play-graph-report-96.png</Image>
-      </Command.SmallImages>
-      <Command.LargeImages>
-        <Image MinDPI="192">Icons/icons8-play-graph-report-96.png</Image>
-      </Command.LargeImages>
-    </Command>
-    <Command Name="cmdMenuDataSet" Id="29" LabelTitle="DataSet Editor" />
-    <Command Name="cmdTabDataSet" Id="30" LabelTitle="DataSet" />
-    <Command Name="cmdGroupDataSet" Id="31" LabelTitle="DataSet" />
     <Command Name="cmdButtonLoadDataSet" Id="32" LabelTitle="Load">
       <Command.SmallImages>
         <Image MinDPI="192">Icons/icons8-file-explorer-new-96.png</Image>
       </Command.SmallImages>
       <Command.LargeImages>
         <Image MinDPI="192">Icons/icons8-file-explorer-new-96.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdGroupMain" Id="7" LabelTitle="Omics Research" />
+    <Command Name="cmdPanelMain" Id="8" LabelTitle="Omics Research" />
+    <Command Name="cmdTabMain" Id="9" LabelTitle="Omics Research" />
+    <Command Name="cmdButtonOpenFolder" Id="16" LabelTitle="Open Folder">
+      <Command.SmallImages>
+        <Image MinDPI="192">Icons/icons8-file-explorer-new-96.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Icons/icons8-file-explorer-new-96.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdButtonOpenOutput" Id="41" LabelTitle="Output Window">
+      <Command.SmallImages>
+        <Image MinDPI="192">Icons/icons8-bash-96.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Icons/icons8-bash-96.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdButtonPreviewDataset" Id="35" LabelTitle="Preview">
+      <Command.SmallImages>
+        <Image MinDPI="192">Icons/icons8-json-96.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Icons/icons8-json-96.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdGroupResearchWork" Id="4" LabelTitle="Research" />
+    <Command Name="cmdMenuResearchWork" Id="3" LabelTitle="Research" />
+    <Command Name="cmdTabResearchWork" Id="5" LabelTitle="Research" />
+    <Command Name="cmdButtonOpenKb" Id="2" LabelTitle="Research KB">
+      <Command.SmallImages>
+        <Image MinDPI="192">Icons/icons8-books-96.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Icons/icons8-books-96.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdButtonStart" Id="28" LabelTitle="Run">
+      <Command.SmallImages>
+        <Image MinDPI="192">Icons/icons8-play-graph-report-96.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Icons/icons8-play-graph-report-96.png</Image>
       </Command.LargeImages>
     </Command>
     <Command Name="cmdButtonSaveDataSet" Id="33" LabelTitle="Save">
@@ -139,20 +136,12 @@
         <Image MinDPI="192">Icons/icons8-save-as-96.png</Image>
       </Command.LargeImages>
     </Command>
-    <Command Name="cmdButtonPreviewDataset" Id="35" LabelTitle="Preview">
+    <Command Name="cmdButtonSettings" Id="38" LabelTitle="Settings">
       <Command.SmallImages>
-        <Image MinDPI="192">Icons/icons8-json-96.png</Image>
+        <Image MinDPI="192">Icons/icons8-settings-96.png</Image>
       </Command.SmallImages>
       <Command.LargeImages>
-        <Image MinDPI="192">Icons/icons8-json-96.png</Image>
-      </Command.LargeImages>
-    </Command>
-    <Command Name="cmdButtonDataSetEditorToggleTheme" Id="36" LabelTitle="Toggle Theme">
-      <Command.SmallImages>
-        <Image MinDPI="192">Icons/icons8-theme-96.png</Image>
-      </Command.SmallImages>
-      <Command.LargeImages>
-        <Image MinDPI="192">Icons/icons8-theme-96.png</Image>
+        <Image MinDPI="192">Icons/icons8-settings-96.png</Image>
       </Command.LargeImages>
     </Command>
     <Command Name="cmdButtonDataSetToggleOmics" Id="37" LabelTitle="Single/Multiple Omics">
@@ -163,14 +152,42 @@
         <Image MinDPI="192">Icons/icons8-analytics-96.png</Image>
       </Command.LargeImages>
     </Command>
-    <Command Name="cmdButtonSettings" Id="38" LabelTitle="Settings">
+    <Command Name="cmdButtonOpenResearch" Id="6" LabelTitle="Start">
       <Command.SmallImages>
-        <Image MinDPI="192">Icons/icons8-settings-96.png</Image>
+        <Image MinDPI="192">Icons/icons8-research-96.png</Image>
       </Command.SmallImages>
       <Command.LargeImages>
-        <Image MinDPI="192">Icons/icons8-settings-96.png</Image>
+        <Image MinDPI="192">Icons/icons8-research-96.png</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdButtonStartPage" Id="39" LabelTitle="Start Page">
+      <Command.SmallImages>
+        <Image MinDPI="192">Icons/icons8-biotech-96.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Icons/icons8-biotech-96.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdButtonDataSetEditorToggleTheme" Id="36" LabelTitle="Toggle Theme">
+      <Command.SmallImages>
+        <Image MinDPI="192">Icons/icons8-theme-96.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Icons/icons8-theme-96.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdGroupTools" Id="14" LabelTitle="Tools" />
+    <Command Name="cmdGroupWorkTools" Id="21" LabelTitle="Tools" />
+    <Command Name="cmdMenuTools" Id="24" LabelTitle="Tools" />
+    <Command Name="cmdBtnOpenKBLib" Id="10" LabelTitle="View KB">
+      <Command.SmallImages>
+        <Image MinDPI="192">Icons/icons8-library-96.png</Image>
+      </Command.SmallImages>
+      <Command.LargeImages>
+        <Image MinDPI="192">Icons/icons8-library-96.png</Image>
+      </Command.LargeImages>
+    </Command>
+    <Command Name="cmdGroupWorkbench" Id="40" LabelTitle="Workbench" />
   </Application.Commands>
   <Application.Views>
     <Ribbon>
@@ -188,6 +205,7 @@
             </DropDownButton>
           </MenuGroup>
           <MenuGroup>
+            <Button CommandName="cmdButtonSettings" />
             <Button CommandName="cmdButtonLicense" />
           </MenuGroup>
           <MenuGroup>
@@ -247,6 +265,10 @@
             <Button CommandName="cmdButtonOpenConsole" />
             <Button CommandName="cmdButtonVennTool" />
             <Button CommandName="cmdButtonLLMTool" />
+          </Group>
+          <Group CommandName="cmdGroupWorkbench" SizeDefinition="TwoButtons">
+            <Button CommandName="cmdButtonStartPage" />
+            <Button CommandName="cmdButtonOpenOutput" />
           </Group>
         </Tab>
         <Tab CommandName="cmdTabInformation">
