@@ -76,14 +76,29 @@ run_limma <- function(expr_matrix, sample_info, group_col = "sample_info",
     sample_info <- sample_info[keep_samples, , drop = FALSE]
   }
   
-  groups <- factor(sample_info[[group_col]])
+  # 统一转为 character 后再建 factor，避免 sample_info 列本身为 factor 时
+  # 残留未使用的水平（排除分组后原水平仍在），导致设计矩阵出现全零列。
+  groups <- factor(as.character(sample_info[[group_col]]))
   
   # 确定对照组与处理组
   if (is.null(control_group)) {
     control_group <- levels(groups)[1]
   }
+  if (!control_group %in% levels(groups)) {
+    stop(sprintf("control_group '%s' not found in column '%s'. Available: %s",
+                 control_group, group_col,
+                 paste(levels(groups), collapse = ", ")))
+  }
   if (is.null(case_groups)) {
     case_groups <- setdiff(levels(groups), control_group)
+  }
+  missing_case <- setdiff(case_groups, levels(groups))
+  if (length(missing_case) > 0) {
+    stop(sprintf("case_groups not found in column '%s': %s",
+                 group_col, paste(missing_case, collapse = ", ")))
+  }
+  if (length(case_groups) == 0) {
+    stop("No case groups available for comparison.")
   }
   
   # 清洗分组名以用于 makeContrasts
@@ -102,8 +117,11 @@ run_limma <- function(expr_matrix, sample_info, group_col = "sample_info",
     fit <- limma::lmFit(expr_matrix, design)
     
     # 对比矩阵
-    safe_case <- safe_levels[orig_levels %in% case_groups]
-    safe_control <- safe_levels[orig_levels == control_group]
+    # 注意：必须按 case_groups 的顺序取 safe 名称，而不是按 orig_levels 的顺序。
+    # 否则当调用方传入的 case_groups 顺序与因子水平顺序不一致时，
+    # 下方 colnames(contrast_mat) <- case_groups 会把对比列错误贴标签。
+    safe_case <- unname(safe_levels[case_groups])
+    safe_control <- unname(safe_levels[control_group])
     contrast_strs <- paste0(safe_case, " - ", safe_control)
     contrast_mat <- limma::makeContrasts(contrasts = contrast_strs,
                                          levels = design)
@@ -127,6 +145,9 @@ run_limma <- function(expr_matrix, sample_info, group_col = "sample_info",
     # 回退方案：使用基础 R 的 t 检验
     warning("Package 'limma' not installed, falling back to simple t-test.")
     combined <- .t_test_de(expr_matrix, groups, control_group, case_groups)
+    # 回退路径同样需要填充 all_results，否则末尾返回 comparisons 时
+    # 会因对象未定义而报 "object 'all_results' not found"。
+    all_results <- split(combined, combined$comparison)
   }
   
   # 必要时重命名列
@@ -156,13 +177,16 @@ run_limma <- function(expr_matrix, sample_info, group_col = "sample_info",
   } else if (strategy_norm == "pvalue_topn") {
     combined$significant <- FALSE
     for (comp in unique(combined$comparison)) {
-      comp_idx <- combined$comparison == comp & combined$p_adj < p_threshold
-      comp_data <- combined[comp_idx, ]
-      if (nrow(comp_data) > 0) {
-        # 按 logFC 绝对值降序排序
-        comp_data <- comp_data[order(abs(comp_data$logFC), decreasing = TRUE), ]
-        top_idx <- head(rownames(comp_data), top_n)
-        combined[top_idx, "significant"] <- TRUE
+      # 使用整数位置索引而非行名索引。combined 的行名在上游已被置为 NULL，
+      # 且 pvalue_vip 分支的 merge() 会重排行序，依赖行名会产生错位赋值。
+      comp_pos <- which(combined$comparison == comp &
+                          !is.na(combined$p_adj) &
+                          combined$p_adj < p_threshold)
+      if (length(comp_pos) > 0) {
+        # 按 logFC 绝对值降序排序，取前 top_n 个的原始位置
+        ord <- order(abs(combined$logFC[comp_pos]), decreasing = TRUE)
+        top_pos <- comp_pos[ord][seq_len(min(top_n, length(comp_pos)))]
+        combined[top_pos, "significant"] <- TRUE
       }
     }
     
@@ -178,6 +202,9 @@ run_limma <- function(expr_matrix, sample_info, group_col = "sample_info",
     combined$significant <- combined$p_adj < p_threshold &
       abs(combined$logFC) >= logfc_threshold
   }
+  # p_adj / logFC 为 NA 时上述比较会产生 NA，导致后续 combined[significant, ]
+  # 取出整行 NA 的"幽灵行"。统一按不显著处理。
+  combined$significant[is.na(combined$significant)] <- FALSE
   
   # 根据显著性与 logFC 方向添加 up/down/not sig 调节方向标记
   combined$regulation <- ifelse(combined$significant & combined$logFC > 0, "up",

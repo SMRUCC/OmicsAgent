@@ -1,0 +1,159 @@
+"column","category","n"
+"super_class","Unknown",369
+"super_class","Terpenoid",102
+"super_class","Phenylpropanoid/benzenoid compound",74
+"super_class","Ester",56
+"super_class","Carotenoid degradation product",49
+"super_class","Nitrogen compound",46
+"super_class","Maillard reaction product",45
+"super_class","Acid",42
+"super_class","Sulfur compound",36
+"super_class","Alcohol",35
+"super_class","Aldehyde",27
+"super_class","Lactone",21
+"super_class","Cembranoid degradation product",20
+"super_class","Ketone",20
+"super_class","Tobacco-specific compound",11
+"super_class","Amino_acid",10
+"super_class","Hydrocarbon",9
+"super_class","Organic_acid",9
+"super_class","Cembranoid degradation product / Diterpene",4
+"super_class","Carbohydrate",3
+"super_class","Ether",3
+"super_class","Nucleotide",3
+"super_class","Carotenoid",2
+"super_class","Alkaloid",1
+"super_class","Fatty_acid",1
+"super_class","Lipid",1
+"super_class","Phenylpropanoid",1
+"class","Unknown",369
+"class","Phenylpropanoid/benzenoid compound",66
+"class","Ester",53
+"class","Carotenoid degradation product (C13 norisoprenoid)",49
+"class","Terpenoid (Sesquiterpenoid)",40
+"class","Terpenoid (Monoterpenoid)",34
+"class","Alcohol",23
+"class","Aldehyde",21
+"class","Maillard reaction product (Pyrazine)",21
+"class","Acid (Fatty acid)",20
+"class","Cembranoid degradation product",20
+"class","Nitrogen compound (Pyridine)",15
+"class","Sulfur compound (Heterocyclic)",13
+"class","Ketone",11
+"class","Lactone (γ-Lactone)",11
+"class","Amino_acid",10
+"class","Sulfur compound",10
+"class","Terpenoid (Diterpenoid degradation product)",10
+"class","Hydrocarbon",9
+"class","Organic_acid",9
+"class","Nitrogen compound (Tobacco alkaloid)",8
+"class","Phenylpropanoid/benzenoid compound (Ether)",8
+"class","Terpenoid (Monoterpenoid ester)",7
+"class","Lactone (δ-Lactone)",6
+"class","Nitrogen compound (Pyrrole)",6
+"class","Acid (Phenolic acid ester)",5
+"class","Maillard reaction product (Furanone)",5
+"class","Acid (Aromatic acid)",4
+"class","Alcohol (Diol)",4
+"class","Alcohol (Polyol)",4
+"class","Cembranoid degradation product / Diterpene",4
+"class","Ketone (Hydroxy ketone)",4
+"class","Maillard reaction product (Furan)",4
+"class","Nitrogen compound (Indole)",4
+"class","Nitrogen compound (Quinoline)",4
+"class","Tobacco-specific compound (Cembranoid)",4
+"class","Tobacco-specific compound (Duvatriene)",4
+"class","Alcohol (Aromatic alcohol)",3
+"class","Aldehyde (Aromatic aldehyde)",3
+"class","Aldehyde (Furan aldehyde)",3
+"class","Carbohydrate",3
+"class","Ester (Thioester)",3
+"class","Nitrogen compound (Pyrazine)",3
+"class","Nucleotide",3
+"class","Sulfur compound (Aromatic thiol)",3
+"class","Sulfur compound (Thioester)",3
+"class","Terpenoid (Phytosterol)",3
+"class","Acid (Dicarboxylic acid)",2
+"class","Acid (Hydroxy acid)",2
+"class","Acid (Hydroxy cyclohexane carboxylic acid)",2
+"class","Acid (Hydroxy tricarboxylic acid)",2
+"class","Acid (Keto acid)",2
+"class","Carotenoid",2
+"class","Ether (Acetal)",2
+"class","Lactone (Coumarin)",2
+"class","Lactone (Pyranone)",2
+"class","Maillard reaction product (Aldehyde)",2
+"class","Maillard reaction product (Cyclopentenone)",2
+"class","Maillard reaction product (Furan thiol)",2
+"class","Maillard reaction product (Pyranone)",2
+"class","Terpenoid (Monoterpenoid oxide)",2
+"class","Terpenoid (Sesquiterpenoid oxide)",2
+"class","Acid (Heterocyclic acid)",1
+"class","Acid (Hydroxy dicarboxylic acid)",1
+"class","Acid (Keto dicarboxylic acid)",1
+"class","Alcohol (Cyclitol)",1
+"class","Alkaloid",1
+"class","Ether",1
+"class","Fatty_acid",1
+"class","Ketone (Aldehyde-ketone)",1
+"class","Ketone (Cyclopentenone)",1
+"class","Ketone (Dialdehyde)",1
+"class","Ketone (Diketone)",1
+"class","Ketone (Furanone)",1
+"class","Lipid",1
+"class","Maillard reaction product (Aromatic aldehyde)",1
+"class","Maillard reaction product (Pyrrole)",1
+"class","Maillard reaction product (Pyrroline)",1
+"class","Maillard reaction product (Sulfur alcohol)",1
+"class","Maillard reaction product (Sulfur aldehyde)",1
+"class","Maillard reaction product (Thiazole)",1
+"class","Maillard reaction product (Thiazoline)",1
+"class","Nitrogen compound (Bipyridyl)",1
+"class","Nitrogen compound (Pyridine acid)",1
+"class","Nitrogen compound (Pyridine amide)",1
+"class","Nitrogen compound (Pyridine ester)",1
+"class","Nitrogen compound (Pyrrolidine)",1
+"class","Nitrogen compound (Pyrroline)",1
+"class","Phenylpropanoid",1
+"class","Sulfur compound (Acid)",1
+"class","Sulfur compound (Amino acid derivative)",1
+"class","Sulfur compound (Furan thiol)",1
+"class","Sulfur compound (Thiol alcohol)",1
+"class","Sulfur compound (Thiol ester)",1
+"class","Sulfur compound (Thiol ketone)",1
+"class","Sulfur compound (Thiophene thiol)",1
+"class","Terpenoid (Diterpenoid)",1
+"class","Terpenoid (Monoterpenoid hydrocarbon)",1
+"class","Terpenoid (Sterol)",1
+"class","Terpenoid (Triterpenoid)",1
+"class","Tobacco-specific compound (Carotenoid degradation product)",1
+"class","Tobacco-specific compound (Cembranoid degradation product)",1
+"class","Tobacco-specific compound (Lactone)",1
+"family","Unknown",369
+"family","Terpenoid",102
+"family","Phenylpropanoid/benzenoid compound",74
+"family","Ester",56
+"family","Carotenoid degradation product",49
+"family","Nitrogen compound",46
+"family","Maillard reaction product",45
+"family","Acid",42
+"family","Sulfur compound",36
+"family","Alcohol",35
+"family","Aldehyde",27
+"family","Lactone",21
+"family","Cembranoid degradation product",20
+"family","Ketone",20
+"family","Tobacco-specific compound",11
+"family","Amino_acid",10
+"family","Hydrocarbon",9
+"family","Organic_acid",9
+"family","Cembranoid degradation product / Diterpene",4
+"family","Carbohydrate",3
+"family","Ether",3
+"family","Nucleotide",3
+"family","Carotenoid",2
+"family","Alkaloid",1
+"family","Fatty_acid",1
+"family","Lipid",1
+"family","Phenylpropanoid",1
+"type","metabolite",1000

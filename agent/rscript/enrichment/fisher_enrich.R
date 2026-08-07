@@ -116,6 +116,18 @@ run_fisher_enrich <- function(significant_features, all_features,
   }
   
   # 校正 p 值
+  # 注意：results 可能为 0 行（没有任何类别的显著计数达到 min_size）。
+  # 对 0 行数据框直接赋值 p.adjust(numeric(0)) 会破坏列结构，
+  # 因此空结果时显式构造 numeric(0) 列并提前返回，保证列名契约稳定。
+  if (nrow(results) == 0) {
+    results$p_adj <- numeric(0)
+    results$category <- NULL
+    warning(sprintf(
+      "No category reached min_size = %d in the significant set; returning empty result.",
+      min_size))
+    return(results)
+  }
+  
   results$p_adj <- stats::p.adjust(results$p_value, method = p_adj_method)
   
   # 按 p 值排序
