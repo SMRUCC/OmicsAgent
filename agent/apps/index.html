@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,6 +19,7 @@
     })();
   </script>
 </head>
+
 <body>
   <div class="app">
     <!-- 顶栏 -->
@@ -37,9 +39,8 @@
     <aside class="sidebar">
       <h2>功能导航</h2>
       <div class="doc-list">
-        <a class="doc-item active" href="kb.html"><span class="title">📚 文献知识库</span></a>
-        <a class="doc-item" href="analysis.html"><span class="title">📊 组学分析结果浏览器</span></a>
-        <a class="doc-item" href="dataset.html"><span class="title">🗂️ 数据集定义编辑器</span></a>
+        <a class="doc-item active" href="kb.html"><span class="title">📚 开始数据研究</span></a>
+        <hr />
         <a class="doc-item" href="jvenn.html"><span class="title">🔵 Venn 图工具</span></a>
         <a class="doc-item" href="viewer.html"><span class="title">📄 文件查看器</span></a>
         <a class="doc-item" href="settings.html"><span class="title">⚙️ 应用参数配置</span></a>
@@ -67,59 +68,73 @@
           <div class="meta-grid">
             <div class="card card--blue">
               <h3><span class="dot"></span>01 表达矩阵预处理</h3>
-              <p style="margin:0;font-size:13px;line-height:1.6;color:var(--ui-foreground);">缺失值填充、归一化、log 变换与中位数缩放，构建标准分析输入。</p>
+              <p style="margin:0;font-size:13px;line-height:1.6;color:var(--ui-foreground);">缺失值填充、归一化、log
+                变换与中位数缩放，构建标准分析输入。</p>
             </div>
             <div class="card card--green">
               <h3><span class="dot"></span>02 总体分析</h3>
-              <p style="margin:0;font-size:13px;line-height:1.6;color:var(--ui-foreground);">PCA / PLSDA / OPLSDA 降维可视化，F 检验 / ANOVA 初筛与样本重复性 QC。</p>
+              <p style="margin:0;font-size:13px;line-height:1.6;color:var(--ui-foreground);">PCA / PLSDA / OPLSDA
+                降维可视化，F 检验 / ANOVA 初筛与样本重复性 QC。</p>
             </div>
             <div class="card card--purple">
               <h3><span class="dot"></span>03 差异组别设计</h3>
-              <p style="margin:0;font-size:13px;line-height:1.6;color:var(--ui-foreground);">由 LLM 依据研究假设智能设计差异分析比对组别与对照方案。</p>
+              <p style="margin:0;font-size:13px;line-height:1.6;color:var(--ui-foreground);">由 LLM
+                依据研究假设智能设计差异分析比对组别与对照方案。</p>
             </div>
             <div class="card card--orange">
               <h3><span class="dot"></span>04 LIMMA 差异分析</h3>
-              <p style="margin:0;font-size:13px;line-height:1.6;color:var(--ui-foreground);">基于 LIMMA 的差异表达鉴定，输出火山图、文氏图与差异热图。</p>
+              <p style="margin:0;font-size:13px;line-height:1.6;color:var(--ui-foreground);">基于 LIMMA
+                的差异表达鉴定，输出火山图、文氏图与差异热图。</p>
             </div>
             <div class="card card--blue">
               <h3><span class="dot"></span>05 KEGG 功能分析</h3>
-              <p style="margin:0;font-size:13px;line-height:1.6;color:var(--ui-foreground);">差异基因 KEGG 富集分析与 GSVA 通路评分，条形图 / 热图 / 火山图呈现。</p>
+              <p style="margin:0;font-size:13px;line-height:1.6;color:var(--ui-foreground);">差异基因 KEGG 富集分析与 GSVA
+                通路评分，条形图 / 热图 / 火山图呈现。</p>
             </div>
             <div class="card card--green">
               <h3><span class="dot"></span>06 WGCNA 共表达网络</h3>
-              <p style="margin:0;font-size:13px;line-height:1.6;color:var(--ui-foreground);">构建共表达模块，关联生物学性状并进行 KEGG 富集解读。</p>
+              <p style="margin:0;font-size:13px;line-height:1.6;color:var(--ui-foreground);">构建共表达模块，关联生物学性状并进行 KEGG
+                富集解读。</p>
             </div>
             <div class="card card--purple">
               <h3><span class="dot"></span>07 CMeans 模糊聚类</h3>
-              <p style="margin:0;font-size:13px;line-height:1.6;color:var(--ui-foreground);">模糊 C 均值聚类识别样本亚型，结合 WGCNA 与 KEGG 进行功能注释。</p>
+              <p style="margin:0;font-size:13px;line-height:1.6;color:var(--ui-foreground);">模糊 C 均值聚类识别样本亚型，结合 WGCNA 与
+                KEGG 进行功能注释。</p>
             </div>
             <div class="card card--orange">
               <h3><span class="dot"></span>08 动态贝叶斯网络</h3>
-              <p style="margin:0;font-size:13px;line-height:1.6;color:var(--ui-foreground);">基于 bnlearn 推断变量间调控与因果关系网络。</p>
+              <p style="margin:0;font-size:13px;line-height:1.6;color:var(--ui-foreground);">基于 bnlearn 推断变量间调控与因果关系网络。
+              </p>
             </div>
             <div class="card card--teal">
               <h3><span class="dot"></span>09 PLS-PM 因果路径</h3>
-              <p style="margin:0;font-size:13px;line-height:1.6;color:var(--ui-foreground);">偏最小二乘路径建模，解析多组学层次潜变量间的因果路径。</p>
+              <p style="margin:0;font-size:13px;line-height:1.6;color:var(--ui-foreground);">偏最小二乘路径建模，解析多组学层次潜变量间的因果路径。
+              </p>
             </div>
             <div class="card card--pink">
               <h3><span class="dot"></span>10 随机森林预测</h3>
-              <p style="margin:0;font-size:13px;line-height:1.6;color:var(--ui-foreground);">RFE 特征选择、AUC 评估与特征重要性排序，挖掘生物标志物。</p>
+              <p style="margin:0;font-size:13px;line-height:1.6;color:var(--ui-foreground);">RFE 特征选择、AUC
+                评估与特征重要性排序，挖掘生物标志物。</p>
             </div>
             <div class="card card--blue">
               <h3><span class="dot"></span>11 回归分析</h3>
-              <p style="margin:0;font-size:13px;line-height:1.6;color:var(--ui-foreground);">逻辑 / 线性回归建模，导出回归方程并辅以 VIF / LASSO 诊断。</p>
+              <p style="margin:0;font-size:13px;line-height:1.6;color:var(--ui-foreground);">逻辑 / 线性回归建模，导出回归方程并辅以 VIF /
+                LASSO 诊断。</p>
             </div>
             <div class="card card--green">
               <h3><span class="dot"></span>12 跨组学整合分析</h3>
-              <p style="margin:0;font-size:13px;line-height:1.6;color:var(--ui-foreground);">多组学（转录 / 蛋白 / 代谢 / 脂质）样本对齐后的整合建模（多组学专用）。</p>
+              <p style="margin:0;font-size:13px;line-height:1.6;color:var(--ui-foreground);">多组学（转录 / 蛋白 / 代谢 /
+                脂质）样本对齐后的整合建模（多组学专用）。</p>
             </div>
             <div class="card card--purple">
               <h3><span class="dot"></span>13 结果表格整理</h3>
-              <p style="margin:0;font-size:13px;line-height:1.6;color:var(--ui-foreground);">汇总关键结果至 xlsx，套用 Cambria Math 样式与冻结窗格便于审阅。</p>
+              <p style="margin:0;font-size:13px;line-height:1.6;color:var(--ui-foreground);">汇总关键结果至 xlsx，套用 Cambria
+                Math 样式与冻结窗格便于审阅。</p>
             </div>
             <div class="card card--orange">
               <h3><span class="dot"></span>14 论文初稿撰写</h3>
-              <p style="margin:0;font-size:13px;line-height:1.6;color:var(--ui-foreground);">自动生成 PDF / DOCX 报告，中英图注齐全，可直接用于论文初稿。</p>
+              <p style="margin:0;font-size:13px;line-height:1.6;color:var(--ui-foreground);">自动生成 PDF / DOCX
+                报告，中英图注齐全，可直接用于论文初稿。</p>
             </div>
           </div>
         </section>
@@ -131,32 +146,38 @@
           <div class="meta-grid">
             <a class="card card--blue" href="kb.html" style="text-decoration:none;display:block;">
               <h3><span class="dot"></span>📚 文献知识库</h3>
-              <p style="margin:0 0 14px;font-size:13px;line-height:1.6;color:var(--ui-foreground);">检索 PubMed 与本地文献镜像，构建 RAG 知识库，支持全文检索、文献拆解与知识图谱化。</p>
+              <p style="margin:0 0 14px;font-size:13px;line-height:1.6;color:var(--ui-foreground);">检索 PubMed 与本地文献镜像，构建
+                RAG 知识库，支持全文检索、文献拆解与知识图谱化。</p>
               <span class="btn btn-primary">进入 →</span>
             </a>
             <a class="card card--green" href="analysis.html" style="text-decoration:none;display:block;">
               <h3><span class="dot"></span>📊 组学分析结果浏览器</h3>
-              <p style="margin:0 0 14px;font-size:13px;line-height:1.6;color:var(--ui-foreground);">浏览、检索与比较智能体生成的多组学分析结果，快速定位关键发现。</p>
+              <p style="margin:0 0 14px;font-size:13px;line-height:1.6;color:var(--ui-foreground);">
+                浏览、检索与比较智能体生成的多组学分析结果，快速定位关键发现。</p>
               <span class="btn btn-primary">进入 →</span>
             </a>
             <a class="card card--purple" href="dataset.html" style="text-decoration:none;display:block;">
               <h3><span class="dot"></span>🗂️ 数据集定义编辑器</h3>
-              <p style="margin:0 0 14px;font-size:13px;line-height:1.6;color:var(--ui-foreground);">以结构化 JSON 定义数据集（表达矩阵、注释、样本信息），支持多组学样本对齐。</p>
+              <p style="margin:0 0 14px;font-size:13px;line-height:1.6;color:var(--ui-foreground);">以结构化 JSON
+                定义数据集（表达矩阵、注释、样本信息），支持多组学样本对齐。</p>
               <span class="btn btn-primary">进入 →</span>
             </a>
             <a class="card card--orange" href="jvenn.html" style="text-decoration:none;display:block;">
               <h3><span class="dot"></span>🔵 Venn 图工具</h3>
-              <p style="margin:0 0 14px;font-size:13px;line-height:1.6;color:var(--ui-foreground);">交互式生成 Venn / 集合可视化，用于差异基因等集合的直观比较。</p>
+              <p style="margin:0 0 14px;font-size:13px;line-height:1.6;color:var(--ui-foreground);">交互式生成 Venn /
+                集合可视化，用于差异基因等集合的直观比较。</p>
               <span class="btn btn-primary">进入 →</span>
             </a>
             <a class="card card--teal" href="viewer.html" style="text-decoration:none;display:block;">
               <h3><span class="dot"></span>📄 文件查看器</h3>
-              <p style="margin:0 0 14px;font-size:13px;line-height:1.6;color:var(--ui-foreground);">在图形化外壳中直接查看分析产物、表格与报告文件内容。</p>
+              <p style="margin:0 0 14px;font-size:13px;line-height:1.6;color:var(--ui-foreground);">
+                在图形化外壳中直接查看分析产物、表格与报告文件内容。</p>
               <span class="btn btn-primary">进入 →</span>
             </a>
             <a class="card card--gray" href="settings.html" style="text-decoration:none;display:block;">
               <h3><span class="dot"></span>⚙️ 应用参数配置</h3>
-              <p style="margin:0 0 14px;font-size:13px;line-height:1.6;color:var(--ui-foreground);">配置 LLM 服务地址、输出路径、R 运行环境与报告格式等全局参数。</p>
+              <p style="margin:0 0 14px;font-size:13px;line-height:1.6;color:var(--ui-foreground);">配置 LLM 服务地址、输出路径、R
+                运行环境与报告格式等全局参数。</p>
               <span class="btn btn-primary">进入 →</span>
             </a>
           </div>
@@ -201,10 +222,11 @@
         var cur = document.documentElement.dataset.theme === "dark" ? "dark" : "light";
         var next = cur === "dark" ? "light" : "dark";
         document.documentElement.dataset.theme = next;
-        try { localStorage.setItem("kb-theme", next); } catch (e) {}
+        try { localStorage.setItem("kb-theme", next); } catch (e) { }
         sync();
       });
     })();
   </script>
 </body>
+
 </html>
