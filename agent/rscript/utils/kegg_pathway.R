@@ -1,29 +1,26 @@
 # ==============================================================================
-# OmicsFlow: KEGG Pathway Mapping and Analysis
+# OmicsFlow: KEGG 通路映射与分析
 # ==============================================================================
-# Map KEGG compound IDs to KEGG pathways, then perform pathway-level
-# enrichment analysis and GSVA. This corrects the scientific error of treating
-# compound IDs as pathway IDs.
+# 将 KEGG 化合物 ID 映射到 KEGG 通路，再进行通路层面的
+# 富集分析与 GSVA。此举纠正了把化合物 ID 当作通路 ID 的科学性错误。
 # ==============================================================================
 
-#' Map KEGG compound IDs to KEGG pathways
+#' 将 KEGG 化合物 ID 映射到 KEGG 通路
 #'
-#' @description Queries the KEGG REST API to map compound IDs (e.g., C02845)
-#'   to their associated metabolic pathways (e.g., map00010). A compound can
-#'   be associated with multiple pathways. Returns a data.frame with
-#'   compound-pathway pairs.
+#' @description 查询 KEGG REST API，将化合物 ID（如 C02845）映射到
+#'   其关联的代谢通路（如 map00010）。一个化合物可关联多条通路。
+#'   返回包含化合物-通路配对关系的数据框。
 #'
-#' @param kegg_ids Character vector of KEGG compound IDs (e.g., "C02845").
-#' @param cache_file Optional path to cache file for storing/retrieving
-#'   the mapping. Default: NULL.
-#' @param batch_size Number of compounds per API request (max 10). Default: 10.
-#' @param delay Seconds between API calls. Default: 0.3.
+#' @param kegg_ids KEGG 化合物 ID 的字符向量（如 "C02845"）。
+#' @param cache_file 用于缓存/读取映射结果的缓存文件路径（可选）。默认：NULL。
+#' @param batch_size 每次 API 请求的化合物数量（最多 10）。默认：10。
+#' @param delay 两次 API 调用之间的间隔秒数。默认：0.3。
 #'
-#' @return A data.frame with columns:
+#' @return 一个数据框，包含以下列：
 #'   \itemize{
-#'     \item \code{compound_id}: KEGG compound ID.
-#'     \item \code{pathway_id}: KEGG pathway ID (e.g., "map00010").
-#'     \item \code{pathway_name}: Pathway name (e.g., "Glycolysis / Gluconeogenesis").
+#'     \item \code{compound_id}：KEGG 化合物 ID。
+#'     \item \code{pathway_id}：KEGG 通路 ID（如 "map00010"）。
+#'     \item \code{pathway_name}：通路名称（如 "糖酵解 / 糖异生"）。
 #'   }
 #'
 #' @examples
@@ -35,11 +32,11 @@
 #' @export
 map_kegg_compound_to_pathway <- function(kegg_ids, cache_dir = NULL,
                                           batch_size = 10, delay = 0.3) {
-  # Clean input
+  # 清洗输入
   kegg_ids <- unique(kegg_ids[!is.na(kegg_ids) & kegg_ids != "" &
                                 kegg_ids != "NULL" & kegg_ids != "NA"])
   if (length(kegg_ids) == 0) {
-    warning("No valid KEGG compound IDs provided.")
+    warning("未提供有效的 KEGG 化合物 ID。")
     return(data.frame(
       compound_id = character(),
       pathway_id = character(),
@@ -48,14 +45,14 @@ map_kegg_compound_to_pathway <- function(kegg_ids, cache_dir = NULL,
     ))
   }
 
-  # Check cache
+  # 检查缓存
   cache_file <- if (!is.null(cache_dir)) file.path(cache_dir, "kegg_pathway_mapping.csv") else NULL
   if (!is.null(cache_file) && file.exists(cache_file)) {
     cached <- utils::read.csv(cache_file, stringsAsFactors = FALSE)
     cached_ids <- unique(cached$compound_id)
     new_ids <- setdiff(kegg_ids, cached_ids)
     if (length(new_ids) == 0) {
-      cat("  Using cached KEGG pathway mapping\n")
+      cat("  使用缓存的 KEGG 通路映射\n")
       return(cached[cached$compound_id %in% kegg_ids, ])
     }
     kegg_ids <- new_ids
@@ -64,10 +61,10 @@ map_kegg_compound_to_pathway <- function(kegg_ids, cache_dir = NULL,
     cached_data <- NULL
   }
 
-  # Ensure "cpd:" prefix
+  # 确保带有 "cpd:" 前缀
   query_ids <- paste0("cpd:", kegg_ids)
 
-  # Query KEGG API in batches
+  # 分批查询 KEGG API
   all_links <- character()
   n_batches <- ceiling(length(query_ids) / batch_size)
 
@@ -87,15 +84,15 @@ map_kegg_compound_to_pathway <- function(kegg_ids, cache_dir = NULL,
         all_links <- c(all_links, lines[nchar(lines) > 0])
       }
     }, error = function(e) {
-      warning("Failed to query KEGG API for batch ", b)
+      warning("查询 KEGG API 失败（批次 ", b, "）")
     })
 
-    if (b %% 10 == 0) cat("  KEGG API: batch", b, "/", n_batches, "\n")
+    if (b %% 10 == 0) cat("  KEGG API：批次", b, "/", n_batches, "\n")
     if (delay > 0) Sys.sleep(delay)
   }
 
   if (length(all_links) == 0) {
-    warning("No pathway associations found for any compound.")
+    warning("未找到任何化合物的通路关联。")
     return(data.frame(
       compound_id = character(),
       pathway_id = character(),
@@ -104,15 +101,14 @@ map_kegg_compound_to_pathway <- function(kegg_ids, cache_dir = NULL,
     ))
   }
 
-  # Parse links
+  # 解析链接
   links <- strsplit(all_links, "\t")
   compound_ids <- gsub("cpd:", "", sapply(links, `[`, 1))
   pathway_ids <- sapply(links, `[`, 2)
 
-  # Get pathway names
+  # 获取通路名称
   unique_pathways <- unique(pathway_ids)
-  cat("  Found", length(unique_pathways), "unique pathways for",
-      length(unique(compound_ids)), "compounds\n")
+  cat("  为", length(unique(compound_ids)), "个化合物找到", length(unique_pathways), "条唯一通路\n")
 
   pathway_names <- character(length(unique_pathways))
   names(pathway_names) <- unique_pathways
@@ -134,7 +130,7 @@ map_kegg_compound_to_pathway <- function(kegg_ids, cache_dir = NULL,
     }, error = function(e) {
       pathway_names[pw] <- pw
     })
-    if (i %% 20 == 0) cat("  Pathway names:", i, "/", length(unique_pathways), "\n")
+    if (i %% 20 == 0) cat("  通路名称：", i, "/", length(unique_pathways), "\n")
     if (delay > 0) Sys.sleep(delay)
   }
 
@@ -145,13 +141,13 @@ map_kegg_compound_to_pathway <- function(kegg_ids, cache_dir = NULL,
     stringsAsFactors = FALSE
   )
 
-  # Cache
+  # 缓存
   if (!is.null(cache_file)) {
     if (!is.null(cached_data)) {
       result <- rbind(cached_data, result)
     }
     utils::write.csv(result, cache_file, row.names = FALSE)
-    cat("  KEGG mapping cached to:", cache_file, "\n")
+    cat("  KEGG 映射已缓存至：", cache_file, "\n")
   } else if (!is.null(cached_data)) {
     result <- rbind(cached_data, result)
   }
@@ -160,21 +156,21 @@ map_kegg_compound_to_pathway <- function(kegg_ids, cache_dir = NULL,
 }
 
 
-#' KEGG pathway Fisher enrichment analysis
+#' KEGG 通路 Fisher 富集分析
 #'
-#' @description Performs Fisher's exact test for KEGG pathway over-representation
-#'   among significant compounds. Unlike compound-level enrichment, this
-#'   properly maps compounds to pathways first, then tests each pathway.
+#' @description 对显著化合物进行 KEGG 通路过表达（over-representation）的
+#'   Fisher 精确检验。与化合物层面的富集不同，本方法先正确地将化合物映射到
+#'   通路，再对每条通路分别检验。
 #'
-#' @param significant_compounds Character vector of significant compound IDs
-#'   (KEGG compound IDs, e.g., "C02845").
-#' @param all_compounds Character vector of all compound IDs (background).
-#' @param kegg_mapping Data.frame from \code{map_kegg_compound_to_pathway()}
-#'   with columns: compound_id, pathway_id, pathway_name.
-#' @param p_adj_method P-value adjustment method. Default: "BH".
-#' @param min_size Minimum number of compounds per pathway. Default: 2.
+#' @param significant_compounds 显著化合物 ID 的字符向量
+#'   （KEGG 化合物 ID，如 "C02845"）。
+#' @param all_compounds 全部化合物 ID 的字符向量（背景集）。
+#' @param kegg_mapping 来自 \code{map_kegg_compound_to_pathway()} 的数据框，
+#'   包含列：compound_id、pathway_id、pathway_name。
+#' @param p_adj_method P 值校正方法。默认："BH"。
+#' @param min_size 每条通路的最少化合物数量。默认：2。
 #'
-#' @return A data.frame with pathway enrichment results (pathway_name as row names).
+#' @return 含通路富集结果的数据框（以 pathway_name 作为行名）。
 #'
 #' @examples
 #' \dontrun{
@@ -187,31 +183,31 @@ run_kegg_pathway_enrich <- function(significant_compounds, all_compounds,
                                      kegg_mapping, p_adj_method = "BH",
                                      min_size = 2) {
   if (is.null(kegg_mapping) || nrow(kegg_mapping) == 0) {
-    warning("No KEGG pathway mapping provided.")
+    warning("未提供 KEGG 通路映射。")
     return(data.frame())
   }
 
-  # Filter mapping to compounds in all_compounds
+  # 将映射筛选到 all_compounds 中的化合物
   mapping <- kegg_mapping[kegg_mapping$compound_id %in% all_compounds, ]
 
-  # Get unique compounds with pathway annotations (background)
+  # 获取带有通路注释的唯一化合物（背景集）
   bg_compounds <- unique(mapping$compound_id)
   n_bg <- length(bg_compounds)
 
-  # Significant compounds with pathway annotations
+  # 带有通路注释的显著化合物
   sig_compounds <- unique(significant_compounds[significant_compounds %in% bg_compounds])
   n_sig <- length(sig_compounds)
 
-  cat("  KEGG pathway enrichment:\n")
-  cat("    Background compounds (with pathway):", n_bg, "\n")
-  cat("    Significant compounds (with pathway):", n_sig, "\n")
+  cat("  KEGG 通路富集：\n")
+  cat("    背景化合物（带通路注释）：", n_bg, "\n")
+  cat("    显著化合物（带通路注释）：", n_sig, "\n")
 
   if (n_sig == 0 || n_bg == 0) {
-    warning("No compounds with KEGG pathway annotations found.")
+    warning("未找到带 KEGG 通路注释的化合物。")
     return(data.frame())
   }
 
-  # Get pathway list
+  # 获取通路列表
   pathways <- unique(mapping$pathway_id)
 
   results <- data.frame(
@@ -236,11 +232,11 @@ run_kegg_pathway_enrich <- function(significant_compounds, all_compounds,
     not_cat_bg <- n_bg - cat_bg
     not_cat_sig <- n_sig - cat_sig
 
-    # Fisher's exact test (one-sided, greater)
+    # Fisher 精确检验（单侧，greater）
     contingency <- matrix(c(cat_sig, not_cat_sig, cat_bg, not_cat_bg), nrow = 2)
     ft <- stats::fisher.test(contingency, alternative = "greater")
 
-    # Fold enrichment
+    # 富集倍数
     expected <- (cat_sig + cat_bg) * n_sig / (n_sig + n_bg)
     fold <- if (expected > 0) cat_sig / expected else 0
 
@@ -260,18 +256,18 @@ run_kegg_pathway_enrich <- function(significant_compounds, all_compounds,
   }
 
   if (nrow(results) == 0) {
-    warning("No pathways with sufficient compounds found.")
+    warning("未找到含有足够化合物的通路。")
     return(data.frame())
   }
 
-  # Adjust p-values
+  # 校正 P 值
   results$p_adj <- stats::p.adjust(results$p_value, method = p_adj_method)
   results$significant <- results$p_adj < 0.05
 
-  # Sort by p-value
+  # 按 P 值排序
   results <- results[order(results$p_value), ]
 
-  # Set pathway_id as row names (unique), keep pathway_name as column
+  # 将 pathway_id 设为行名（保持唯一），同时保留 pathway_name 列
   rownames(results) <- make.unique(as.character(results$pathway_id))
   results$pathway_id <- NULL
 
@@ -279,27 +275,26 @@ run_kegg_pathway_enrich <- function(significant_compounds, all_compounds,
 }
 
 
-#' KEGG pathway GSVA analysis
+#' KEGG 通路 GSVA 分析
 #'
-#' @description Performs GSVA (Gene Set Variation Analysis) at the KEGG pathway
-#'   level. Compounds are grouped by their KEGG pathway membership, and pathway-
-#'   level activity scores are computed per sample. A compound can contribute
-#'   to multiple pathways.
+#' @description 在 KEGG 通路层面执行 GSVA（基因集变异分析）。化合物按其
+#'   KEGG 通路归属分组，并为每个样本计算通路层面的活性得分。一个化合物可
+#'   对多条通路产生贡献。
 #'
-#' @param expr_matrix A numeric matrix (features x samples). Row names must
-#'   match compound names in \code{kegg_mapping$compound_id}.
-#' @param kegg_mapping Data.frame from \code{map_kegg_compound_to_pathway()}
-#'   with columns: compound_id, pathway_id, pathway_name.
-#' @param method Method for score computation: "gsva", "ssgsea", "zscore", or
-#'   "mean". Default: "mean" (uses mean z-score when GSVA package unavailable).
-#' @param min_size Minimum pathway size. Default: 2.
-#' @param max_size Maximum pathway size. Default: 500.
+#' @param expr_matrix 数值矩阵（特征 x 样本）。行名必须与
+#'   \code{kegg_mapping$compound_id} 中的化合物名一致。
+#' @param kegg_mapping 来自 \code{map_kegg_compound_to_pathway()} 的数据框，
+#'   包含列：compound_id、pathway_id、pathway_name。
+#' @param method 得分计算方法："gsva"、"ssgsea"、"zscore" 或
+#'   "mean"。默认："mean"（当 GSVA 包不可用时使用平均 z-score）。
+#' @param min_size 通路最小规模。默认：2。
+#' @param max_size 通路最大规模。默认：500。
 #'
-#' @return A list with:
+#' @return 一个列表，包含：
 #'   \itemize{
-#'     \item \code{gsva_matrix}: Numeric matrix (pathways x samples).
-#'     \item \code{pathways}: Named list of compound vectors per pathway.
-#'     \item \code{n_pathways}: Number of pathways.
+#'     \item \code{gsva_matrix}：数值矩阵（通路 x 样本）。
+#'     \item \code{pathways}：每条通路的化合物向量命名列表。
+#'     \item \code{n_pathways}：通路数量。
 #'   }
 #'
 #' @examples
