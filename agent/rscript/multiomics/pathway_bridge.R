@@ -1,26 +1,22 @@
 # ==============================================================================
-# OmicsFlow: Annotation-Driven Pathway Bridging
+# OmicsFlow：基于注释的通路桥接
 # ==============================================================================
-# Aggregates features of different omics layers that share a biological
-# annotation (KEGG pathway, compound super class, taxonomic family) into module
-# eigenvalues, then links those modules across layers to trace the route from
-# gene to protein to metabolite to aroma compound.
+# 将共享同一生物学注释（KEGG 通路、化合物超类、分类学家族）的不同组学层特征
+# 聚合为模块特征值，再跨层连接这些模块，以追踪从基因到蛋白到代谢物再到香气
+# 化合物的路径。
 # ==============================================================================
 
-#' Split a feature annotation table by source organism
+#' 按来源生物拆分特征注释表
 #'
-#' @description Separates host features from microbial ones using the
-#'   \code{organism} column present in the transcriptome and proteome
-#'   annotations, so that host and microbial pathways can be modelled apart.
+#' @description 利用转录组与蛋白质组注释中的 \code{organism} 列，将宿主特征与
+#'   微生物特征分开，以便分别建模宿主与微生物的通路。
 #'
-#' @param feature_info data.frame of feature annotation.
-#' @param organism_col Column holding the organism label. Default: "organism".
-#' @param host_pattern Regular expression identifying host features.
-#'   Default: "Nicotiana".
+#' @param feature_info 特征注释 data.frame。
+#' @param organism_col 保存生物标签的列。默认："organism"。
+#' @param host_pattern 用于识别宿主特征的正则表达式。默认："Nicotiana"。
 #'
-#' @return A list with \code{host} and \code{microbe} data.frames. When the
-#'   column is absent everything is returned as \code{host} and a warning is
-#'   emitted.
+#' @return 一个列表，含 \code{host} 与 \code{microbe} 两个 data.frame。当该列
+#'   缺失时，所有特征都作为 \code{host} 返回，并发出警告。
 #'
 #' @examples
 #' \dontrun{

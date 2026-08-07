@@ -41,11 +41,11 @@
 }
 
 
-#' Total variation distance between two discrete distributions
+#' 两个离散分布之间的总变差距离
 #'
-#' @param p,q Named numeric vectors of probabilities.
+#' @param p,q 具名的数值概率向量。
 #'
-#' @return Numeric scalar in [0, 1].
+#' @return 取值 [0, 1] 的数值标量。
 #'
 #' @keywords internal
 .perturb_tvd <- function(p, q) {
@@ -56,12 +56,12 @@
 }
 
 
-#' Probability of the highest state of a discrete distribution
+#' 离散分布中最高状态的概率
 #'
-#' @param p Named numeric vector of probabilities.
-#' @param high_level Name of the "high" level.
+#' @param p 具名的数值概率向量。
+#' @param high_level "high" 水平的名称。
 #'
-#' @return Numeric probability, 0 when the level is absent.
+#' @return 数值概率；该水平不存在时为 0。
 #'
 #' @keywords internal
 .perturb_high_prob <- function(p, high_level) {
@@ -71,11 +71,11 @@
 }
 
 
-#' Empirical marginal distribution of a factor column
+#' 因子列的经验边际分布
 #'
-#' @param x A factor vector.
+#' @param x 一个因子向量。
 #'
-#' @return Named numeric vector of proportions.
+#' @return 具名的比例数值向量。
 #'
 #' @keywords internal
 .perturb_marginal <- function(x) {
@@ -89,18 +89,16 @@
 # Structural layer
 # ------------------------------------------------------------------------------
 
-#' Find all nodes reachable downstream of a node
+#' 查找节点下游可达的所有节点
 #'
-#' @description Returns the descendants of \code{node} in the directed network,
-#'   together with their shortest-path distance. This is the cheap structural
-#'   evidence layer of the perturbation analysis and is always available.
+#' @description 返回有向网络中 \code{node} 的所有后代节点及其最短路径距离。这是
+#'   扰动分析中最廉价的结构证据层，始终可用。
 #'
-#' @param dbn_result A DBN result object.
-#' @param node Name of the node to start from.
-#' @param max_distance Maximum path length to follow. Default: Inf.
+#' @param dbn_result 一个 DBN 结果对象。
+#' @param node 起始节点的名称。
+#' @param max_distance 跟随的最大路径长度。默认：Inf。
 #'
-#' @return A data.frame with \code{node} and \code{distance}, empty when the
-#'   node has no descendants.
+#' @return 含 \code{node} 与 \code{distance} 的数据框；节点无后代时为空。
 #'
 #' @examples
 #' \dontrun{
@@ -124,21 +122,17 @@ get_downstream_nodes <- function(dbn_result, node, max_distance = Inf) {
 }
 
 
-#' Simulate node knockout by removing nodes and their outgoing influence
+#' 通过移除节点及其出向影响来模拟节点敲除
 #'
-#' @description Deletes each candidate node from the network and measures the
-#'   structural damage: how many descendants lose their regulator, how many
-#'   arcs disappear and how fragmented the remaining network becomes.
+#' @description 从网络中删除每个候选节点，并量化结构损伤：多少后代失去了调控因子、
+#'   多少弧消失，以及剩余网络的碎片化程度。
 #'
-#' @param dbn_result A DBN result object.
-#' @param nodes Nodes to knock out. Default: all nodes with at least one
-#'   outgoing arc.
-#' @param top_n Keep only the \code{top_n} nodes with the largest out-degree.
-#'   Default: NULL (all).
+#' @param dbn_result 一个 DBN 结果对象。
+#' @param nodes 要敲除的节点。默认：所有至少有一条出弧的节点。
+#' @param top_n 仅保留出度最大的 \code{top_n} 个节点。默认：NULL（全部）。
 #'
-#' @return A data.frame with one row per knocked-out node, containing
-#'   \code{n_descendants}, \code{n_arcs_lost}, \code{n_components_after} and
-#'   \code{n_orphaned} (descendants left without any parent).
+#' @return 每个被敲除节点一行数据框，含 \code{n_descendants}、\code{n_arcs_lost}、
+#'   \code{n_components_after} 与 \code{n_orphaned}（失去任何父节点的后代）。
 #'
 #' @examples
 #' \dontrun{
@@ -196,15 +190,15 @@ run_node_knockout <- function(dbn_result, nodes = NULL, top_n = NULL) {
 # Intervention + inference layers
 # ------------------------------------------------------------------------------
 
-#' Sample the downstream distribution under an intervention
+#' 在干预下对下游分布进行采样
 #'
-#' @param fitted A \code{bn.fit} object.
-#' @param node Intervened node.
-#' @param state State the node is fixed to.
-#' @param targets Downstream nodes to observe.
-#' @param n_sim Number of samples.
+#' @param fitted 一个 \code{bn.fit} 对象。
+#' @param node 被干预的节点。
+#' @param state 节点被固定到的状态。
+#' @param targets 要观测的下游节点。
+#' @param n_sim 采样数量。
 #'
-#' @return Named list of marginal distributions, or NULL on failure.
+#' @return 边际分布的有名列表；失败时返回 NULL。
 #'
 #' @keywords internal
 .perturb_sample_intervention <- function(fitted, node, state, targets, n_sim) {
@@ -218,38 +212,36 @@ run_node_knockout <- function(dbn_result, nodes = NULL, top_n = NULL) {
 }
 
 
-#' Run virtual perturbation analysis on a Bayesian network
+#' 在贝叶斯网络上运行虚拟扰动分析
 #'
-#' @description Performs in-silico interventions on the nodes of a learned
-#'   network and quantifies how strongly each perturbation propagates to the
-#'   downstream nodes.
+#' @description 对一个学习得到的网络的节点执行计算机干预，并量化每个扰动向下游
+#'   节点的传播强度。
 #'
-#'   Three modes are supported:
+#'   支持三种模式：
 #'   \itemize{
-#'     \item \code{"knockout"}: the node is removed, downstream impact is
-#'       measured structurally (lost regulation, orphaned descendants).
-#'     \item \code{"overexpress"}: the node is clamped to its highest state.
-#'     \item \code{"inhibit"}: the node is clamped to its lowest state.
+#'     \item \code{"knockout"}: 移除该节点，从结构上衡量下游影响
+#'       （失去调控、后代成为孤儿）。
+#'     \item \code{"overexpress"}: 将节点固定到其最高状态。
+#'     \item \code{"inhibit"}: 将节点固定到其最低状态。
 #'   }
 #'
-#'   To keep the runtime bounded a two-stage strategy is used: all nodes are
-#'   first screened with the cheap structural layer, and only the \code{top_n}
-#'   most connected candidates are pushed through the sampling-based inference
-#'   layer. Leaf nodes are skipped because they have no downstream effect.
+#'   为控制运行时间，采用两阶段策略：先用廉价的结构层对所有节点做筛选，
+#'   仅将连接度最高的 \code{top_n} 个候选送入基于采样的推断层。叶节点由于没有
+#'   下游效应而被跳过。
 #'
-#' @param dbn_result A DBN result object with a fitted \code{bn.fit} model.
-#' @param nodes Candidate nodes. Default: all nodes with outgoing arcs.
-#' @param mode One of "knockout", "overexpress", "inhibit".
-#' @param n_sim Number of Monte-Carlo samples per intervention. Default: 5000.
-#' @param top_n Number of candidates sent to the inference layer. Default: 15.
-#' @param seed Random seed. Default: 42.
-#' @param verbose Print progress. Default: TRUE.
+#' @param dbn_result 一个带有拟合 \code{bn.fit} 模型的 DBN 结果对象。
+#' @param nodes 候选节点。默认：所有有出弧的节点。
+#' @param mode "knockout"、"overexpress"、"inhibit" 之一。
+#' @param n_sim 每次干预的蒙特卡洛采样数。默认：5000。
+#' @param top_n 送入推断层的候选数量。默认：15。
+#' @param seed 随机种子。默认：42。
+#' @param verbose 是否打印进度。默认：TRUE。
 #'
-#' @return A list with:
+#' @return 一个列表：
 #'   \itemize{
-#'     \item \code{node_summary}: one row per perturbed node.
-#'     \item \code{pair_details}: one row per (perturbed node, downstream node).
-#'     \item \code{params}: the settings used.
+#'     \item \code{node_summary}: 每个被扰动节点一行。
+#'     \item \code{pair_details}: 每个（被扰动节点, 下游节点）一行。
+#'     \item \code{params}: 所使用的设置。
 #'   }
 #'
 #' @examples
@@ -397,19 +389,16 @@ run_virtual_perturbation <- function(dbn_result,
 # Regulatory importance scoring
 # ------------------------------------------------------------------------------
 
-#' Rank nodes by their regulatory importance
+#' 按调控重要性对节点排序
 #'
-#' @description Combines the structural reach of a perturbation (number of
-#'   descendants), the strength of its probabilistic effect (mean total
-#'   variation distance) and the topological centrality of the node
-#'   (betweenness) into a single normalised score in [0, 1].
+#' @description 将扰动的结构波及范围（后代数量）、其概率效应的强度（平均总变差
+#'   距离）以及节点的拓扑中心性（betweenness）合并为一个归一化到 [0, 1] 的评分。
 #'
-#' @param perturb_result Output of \code{run_virtual_perturbation()}.
-#' @param weights Named numeric vector with the weights of the three
-#'   components. Default: c(descendants = 0.4, tvd = 0.4, betweenness = 0.2).
+#' @param perturb_result \code{run_virtual_perturbation()} 的输出。
+#' @param weights 含有三个分量权重的有名数值向量。默认：c(descendants = 0.4,
+#'   tvd = 0.4, betweenness = 0.2)。
 #'
-#' @return A data.frame ordered by \code{impact_score}, with a \code{rank}
-#'   column added.
+#' @return 按 \code{impact_score} 排序的数据框，新增一列 \code{rank}。
 #'
 #' @examples
 #' \dontrun{
