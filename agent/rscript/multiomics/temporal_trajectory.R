@@ -67,7 +67,7 @@ run_temporal_trajectory <- function(expr_matrix, sample_info,
   }
   mat <- expr_matrix[keep, , drop = FALSE]
 
-  # Impute residual missing values with the feature mean so prcomp can run.
+  # 用特征均值填补残差缺失值，使 prcomp 能够运行。
   if (anyNA(mat)) {
     rmeans <- rowMeans(mat, na.rm = TRUE)
     idx <- which(is.na(mat), arr.ind = TRUE)
@@ -99,7 +99,7 @@ run_temporal_trajectory <- function(expr_matrix, sample_info,
     scores$phase <- NA_character_
   }
 
-  # Average PC coordinates within each group x time point.
+  # 在每个 组 x 时间点 内对 PC 坐标取平均。
   key <- paste(scores$group, scores$time, sep = "||")
   traj_list <- lapply(split(seq_len(nrow(scores)), key), function(idx) {
     sub <- scores[idx, , drop = FALSE]
@@ -120,7 +120,7 @@ run_temporal_trajectory <- function(expr_matrix, sample_info,
   trajectory <- trajectory[order(trajectory$group, trajectory$time), , drop = FALSE]
   rownames(trajectory) <- NULL
 
-  # Cumulative euclidean path length through PC space per group.
+  # 每组在 PC 空间中累计的欧氏路径长度。
   path_list <- lapply(split(trajectory, trajectory$group), function(sub) {
     sub <- sub[order(sub$time), , drop = FALSE]
     coords <- as.matrix(sub[, pc_names, drop = FALSE])
@@ -158,21 +158,20 @@ run_temporal_trajectory <- function(expr_matrix, sample_info,
 }
 
 
-#' Trajectories for every layer of a MultiOmicsData object
+#' 对 MultiOmicsData 对象的每个层构建轨迹
 #'
-#' @description Applies \code{run_temporal_trajectory()} to each omics layer and
-#'   collects the results, allowing the fermentation dynamics of the different
-#'   molecular levels to be compared side by side.
+#' @description 对每层应用 \code{run_temporal_trajectory()} 并汇总结果，从而可
+#'   并排比较不同分子层次的发酵动态。
 #'
-#' @param mo A MultiOmicsData object.
-#' @param time_col Time column in sample_info. Default: "day".
-#' @param group_col Optional splitting column. Default: NULL.
-#' @param phase_col Optional phase label column. Default: NULL.
-#' @param layers Optional character vector of layers. Default: NULL (all).
-#' @param verbose Logical, print progress. Default: TRUE.
+#' @param mo 一个 MultiOmicsData 对象。
+#' @param time_col sample_info 中的时间列。默认："day"。
+#' @param group_col 可选的拆分列。默认：NULL。
+#' @param phase_col 可选的相标签列。默认：NULL。
+#' @param layers 可选的层字符向量。默认：NULL（全部）。
+#' @param verbose 逻辑值，是否打印进度。默认：TRUE。
 #'
-#' @return A list with \code{per_layer} (named list of trajectory results) and
-#'   \code{path_summary} (data.frame combining path lengths across layers).
+#' @return 一个列表，含 \code{per_layer}（轨迹结果的有名列表）与
+#'   \code{path_summary}（跨层合并路径长度的数据框）。
 #'
 #' @examples
 #' \dontrun{
@@ -235,29 +234,26 @@ run_all_temporal_trajectories <- function(mo,
 }
 
 
-#' Cluster features by their temporal expression pattern
+#' 按时间表达模式对特征聚类
 #'
-#' @description Averages each feature across the replicates of every time point
-#'   and clusters the resulting temporal profiles with the existing
-#'   \code{run_cmeans()} routine, yielding groups of features that rise, fall or
-#'   peak together during fermentation.
+#' @description 对每个特征在各时间点的重复样本上取平均，并用已有的 \code{run_cmeans()}
+#'   例程对所得时间轮廓聚类，得到在发酵过程中同步上升、下降或达到峰值的一组组特征。
 #'
-#' @param expr_matrix Numeric matrix, features in rows and samples in columns.
-#' @param sample_info data.frame of sample annotation.
-#' @param time_col Time column. Default: "day".
-#' @param n_clusters Number of clusters. Default: 6.
-#' @param top_n Retain only the \code{top_n} most variable features before
-#'   clustering; NULL keeps everything. Default: NULL.
-#' @param seed Random seed. Default: 42.
-#' @param verbose Logical, print progress. Default: TRUE.
+#' @param expr_matrix 数值矩阵，行为特征、列为样本。
+#' @param sample_info 样本注释 data.frame。
+#' @param time_col 时间列。默认："day"。
+#' @param n_clusters 聚类数。默认：6。
+#' @param top_n 聚类前仅保留 \code{top_n} 个变异最大的特征；NULL 表示保留全部。默认：NULL。
+#' @param seed 随机种子。默认：42。
+#' @param verbose 逻辑值，是否打印进度。默认：TRUE。
 #'
-#' @return A list with:
+#' @return 一个列表：
 #'   \itemize{
-#'     \item \code{cmeans}: The raw \code{run_cmeans()} result.
-#'     \item \code{profiles}: Long data.frame of scaled cluster profiles with
-#'       cluster, time and mean value, ready for plotting.
-#'     \item \code{membership}: data.frame of feature to cluster assignment.
-#'     \item \code{time_matrix}: The averaged feature x time matrix used.
+#'     \item \code{cmeans}: 原始 \code{run_cmeans()} 的结果。
+#'     \item \code{profiles}: 标准化聚类轮廓的长格式数据框，含 cluster、time 与均值，
+#'       可直接绘图。
+#'     \item \code{membership}: 特征到聚类分配的数据框。
+#'     \item \code{time_matrix}: 所用的平均特征 x 时间矩阵。
 #'   }
 #'
 #' @examples
@@ -296,7 +292,7 @@ run_temporal_clustering <- function(expr_matrix, sample_info,
   }
   time_levels <- sort(unique(time_vals[!is.na(time_vals)]))
 
-  # Collapse replicates: one column per time point.
+  # 合并重复样本：每个时间点一列。
   time_matrix <- vapply(time_levels, function(tp) {
     idx <- which(time_vals == tp)
     rowMeans(expr_matrix[, idx, drop = FALSE], na.rm = TRUE)
@@ -325,11 +321,11 @@ run_temporal_clustering <- function(expr_matrix, sample_info,
   cm <- run_cmeans(time_matrix, n_clusters = n_clusters, seed = seed)
 
   cluster_vec <- cm$cluster
-  # run_cmeans scales internally but does not return the scaled matrix, so the
-  # per-feature z-scores are recomputed here for the cluster profiles.
+  # run_cmeans 内部会做标准化但不返回标准化后的矩阵，因此这里为聚类轮廓
+  # 重新计算各特征的 z 分数。
   scaled <- t(scale(t(time_matrix)))
 
-  # Mean scaled profile per cluster and time point.
+  # 每个聚类、每个时间点的平均标准化轮廓。
   prof_list <- lapply(sort(unique(cluster_vec)), function(k) {
     members <- names(cluster_vec)[cluster_vec == k]
     members <- intersect(members, rownames(scaled))

@@ -8,26 +8,23 @@
 # layer B" and supports the trait-driven view of cross-omics integration.
 # ==============================================================================
 
-#' Build WGCNA modules on a multi-omics layer
+#' 在多组学层上构建 WGCNA 模块
 #'
-#' @description Thin wrapper around the shared \code{build_wgcna_modules()}
-#'   that guarantees a stable sample order and retains the module membership
-#'   table needed for downstream trait association. The expression matrix is
-#'   taken from a MultiOmicsData container so the sample alignment inherited
-#'   from the container is preserved.
+#' @description 对共享的 \code{build_wgcna_modules()} 的轻量封装，保证稳定的样本顺序，
+#'   并保留下游性状关联所需的模块成员表。表达矩阵取自 MultiOmicsData 容器，
+#'   从而保留容器继承而来的样本对齐。
 #'
-#' @param mo A MultiOmicsData object.
-#' @param layer Name of the omics layer used to build the modules.
-#' @param soft_power Numeric soft-thresholding power. Default: NULL (auto).
-#' @param min_module_size Minimum module size. Default: 10.
-#' @param merge_cut_height Module merging cut height. Default: 0.25.
-#' @param network_type Network type passed to WGCNA. Default: "signed".
-#' @param cor_fn Correlation function string. Default: "cor".
+#' @param mo 一个 MultiOmicsData 对象。
+#' @param layer 用于构建模块的组学层名称。
+#' @param soft_power 数值型软阈值幂。默认：NULL（自动）。
+#' @param min_module_size 最小模块大小。默认：10。
+#' @param merge_cut_height 模块合并截断高度。默认：0.25。
+#' @param network_type 传给 WGCNA 的网络类型。默认："signed"。
+#' @param cor_fn 相关函数字符串。默认："cor"。
 #'
-#' @return A list with \code{module_colors} (named vector per feature),
-#'   \code{MEs} (samples x modules), \code{soft_power}, \code{membership}
-#'   (data.frame of feature, module_color, module_label) and the original layer
-#'   name.
+#' @return 一个列表，含 \code{module_colors}（每特征的有名向量）、
+#'   \code{MEs}（样本 x 模块）、\code{soft_power}、\code{membership}
+#'   （含 feature、module_color、module_label 的数据框）以及原始层名。
 #'
 #' @examples
 #' \dontrun{
@@ -92,23 +89,19 @@ build_wgcna_modules_layer <- function(mo, layer,
 }
 
 
-#' Extract downstream omics features as a trait matrix
+#' 将下游组学特征提取为性状矩阵
 #'
-#' @description Converts the expression matrix of a downstream omics layer into
-#'   the samples x traits matrix expected by the trait association, aligning
-#'   samples to a reference sample order. Optionally only a subset of features
-#'   can be retained (e.g. features already shown to be differential or those
-#'   present in a signature list).
+#' @description 将下游组学层的表达矩阵转换为性状关联所需的 样本 x 性状 矩阵，
+#'   并将样本对齐到参考样本顺序。可选地只保留特征子集（例如已显示为差异的
+#'   特征，或出现在某特征签名列表中的特征）。
 #'
-#' @param mo A MultiOmicsData object.
-#' @param layer Name of the downstream omics layer.
-#' @param reference_samples Character vector of sample IDs to align to.
-#' @param features Optional character vector restricting the traits. Default:
-#'   NULL (all features).
-#' @param log_transform Logical, apply log2(x+1) to each trait. Default: FALSE.
+#' @param mo 一个 MultiOmicsData 对象。
+#' @param layer 下游组学层的名称。
+#' @param reference_samples 要对齐到的样本 ID 字符向量。
+#' @param features 可选字符向量，用于限定性状。默认：NULL（全部特征）。
+#' @param log_transform 逻辑值，是否对每个性状应用 log2(x+1)。默认：FALSE。
 #'
-#' @return A numeric matrix (samples x traits) with sample order matching
-#'   \code{reference_samples}.
+#' @return 数值矩阵（样本 x 性状），样本顺序与 \code{reference_samples} 一致。
 #'
 #' @examples
 #' \dontrun{
@@ -140,7 +133,7 @@ wgcna_traits_from_layer <- function(mo, layer, reference_samples,
   traits <- t(as.matrix(mat[, common, drop = FALSE]))
   if (isTRUE(log_transform)) traits <- log2(traits + 1)
 
-  # Ensure traits are numeric and drop any zero-variance columns.
+  # 确保性状为数值型，并丢弃所有零方差列。
   mode(traits) <- "numeric"
   v <- apply(traits, 2, function(x) stats::var(x, na.rm = TRUE))
   keep_col <- !is.na(v) & v > 0
@@ -150,35 +143,32 @@ wgcna_traits_from_layer <- function(mo, layer, reference_samples,
   }
   traits <- traits[, keep_col, drop = FALSE]
 
-  # Return in the reference order (rows are samples).
+  # 按参考顺序返回（行为样本）。
   traits <- traits[reference_samples[reference_samples %in% rownames(traits)], , drop = FALSE]
   return(traits)
 }
 
 
-#' WGCNA module eigengene vs downstream trait association
+#' WGCNA 模块特征基因 与 下游性状的关联分析
 #'
-#' @description Correlates every module eigengene of the module layer with every
-#'   molecular feature (trait) of a downstream omics layer, and additionally fits
-#'   a univariate linear model for each module-trait pair. P-values are adjusted
-#'   across all tested module-trait pairs so the results are ready for global
-#'   significance filtering.
+#' @description 将模块层的每个模块特征基因与下游组学层的每个分子特征（性状）做相关，
+#'   并为每对 模块-性状 额外拟合一个单变量线性模型。p 值在所有被测的
+#'   模块-性状 对上进行调整，使结果可直接用于全局显著性过滤。
 #'
-#' @param wgcna A WGCNA result from \code{build_wgcna_modules_layer()}.
-#' @param traits A numeric matrix (samples x traits) from
-#'   \code{wgcna_traits_from_layer()}.
-#' @param trait_layer Name of the downstream layer (used for labels).
-#' @param cor_method Correlation method. Default: "pearson".
-#' @param p_adjust Multiple testing adjustment. Default: "BH".
-#' @param verbose Logical, print a short summary. Default: TRUE.
+#' @param wgcna 来自 \code{build_wgcna_modules_layer()} 的 WGCNA 结果。
+#' @param traits 来自 \code{wgcna_traits_from_layer()} 的数值矩阵（样本 x 性状）。
+#' @param trait_layer 下游层的名称（用于标签）。
+#' @param cor_method 相关方法。默认："pearson"。
+#' @param p_adjust 多重检验校正方法。默认："BH"。
+#' @param verbose 逻辑值，是否打印简短摘要。默认：TRUE。
 #'
-#' @return A list with:
+#' @return 一个列表：
 #'   \itemize{
-#'     \item \code{module_trait}: data.frame of module, trait, r, p, padj,
-#'       and lm slope, intercept, r_squared.
-#'     \item \code{module_summary}: per-module summary of significant trait hits.
-#'     \item \code{trait_summary}: per-trait summary of significant module hits.
-#'     \item \code{used_traits}: data.frame of trait id and layer.
+#'     \item \code{module_trait}: 含 module、trait、r、p、padj、
+#'       以及 lm 的 slope、intercept、r_squared 的数据框。
+#'     \item \code{module_summary}: 每个模块的显著性状命中汇总。
+#'     \item \code{trait_summary}: 每个性状的显著模块命中汇总。
+#'     \item \code{used_traits}: 含性状 id 与层的数据框。
 #'   }
 #'
 #' @examples
