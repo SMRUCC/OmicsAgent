@@ -24,7 +24,8 @@ cran_packages <- c(
   "pheatmap", "WGCNA", "dynamicTreeCut", "plsdepot", "cluster",
   "bnlearn", "randomForest", "fastshap", "nnet", "MASS",
   "mixOmics", "glmnet", "metaboanalyst",
-  "vegan", "igraph"
+  "vegan", "igraph",
+  "minerva"                                  # MIC 计算（run_cross/intra_omics_association）
 )
 
 # Bioconductor 包（必须用 BiocManager::install 安装）
