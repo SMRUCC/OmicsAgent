@@ -61,6 +61,12 @@ build_wgcna_modules <- function(expr_matrix, soft_power = NULL,
     if (is.null(soft_power) || is.na(soft_power) || soft_power == 0) soft_power <- 6
   }
 
+  if (ncol(datExpr) < 3) {
+    stop(sprintf(
+      "build_wgcna_modules needs at least 3 non-constant features, got %d.",
+      ncol(datExpr)))
+  }
+
   # 计算邻接矩阵
   adjacency <- WGCNA::adjacency(datExpr, power = soft_power,
                                 type = network_type, corFnc = cor_fn_name)
@@ -78,11 +84,13 @@ build_wgcna_modules <- function(expr_matrix, soft_power = NULL,
     } else {
       WGCNA::cutreeDynamic
     }
+    # 不显式传 cutHeight：原实现固定为 2，而 diss_TOM 取值域为 [0,1]，
+    # 该值远超树高上限，等价于"永不剪枝"，会让 deepSplit 失效并倾向于
+    # 把绝大多数特征塞进单一模块。交由 cutreeDynamic 依据树高自适应确定。
     modules <- cutree_fn(
       dendro = gene_tree,
       distM = diss_TOM,
       minClusterSize = min_module_size,
-      cutHeight = 2,
       deepSplit = 2,
       pamRespectsDendro = FALSE
     )
@@ -103,9 +111,17 @@ build_wgcna_modules <- function(expr_matrix, soft_power = NULL,
   MEs_merged <- merge_result$newMEs
   rownames(MEs_merged) <- rownames(datExpr)
 
+  # module_labels 应为数值标签而非颜色字符串（原实现与 module_colors 完全重复）
+  module_labels_merged <- WGCNA::matchLabels(
+    as.numeric(as.factor(module_colors_merged)) - 1L,
+    modules
+  )
+  module_labels_merged <- as.vector(module_labels_merged)
+  names(module_labels_merged) <- colnames(datExpr)
+
   return(list(
     module_colors = module_colors_merged,
-    module_labels = merge_result$colors,
+    module_labels = module_labels_merged,
     MEs = MEs_merged,
     soft_power = soft_power,
     gene_tree = gene_tree,
@@ -120,29 +136,50 @@ build_wgcna_modules <- function(expr_matrix, soft_power = NULL,
 #'
 #' @param wgcna_result 来自 \code{build_wgcna_modules()} 的结果。
 #'
-#' @return 一个 ggplot 对象。
+#' @details 本函数使用 base R 图形（副作用绘图），会直接绘制到**当前**图形设备上。
+#'   因此它返回的是一个无参绘图函数（closure），而非 ggplot 对象，
+#'   可直接传给 \code{export_heatmap()} 完成落盘：
+#'   \code{export_heatmap(plot_wgcna_dendrogram(res), dir, "dendro")}。
+#'
+#'   历史实现曾调用 \code{grDevices::pdf(NULL)} 试图"抑制设备"，但该调用
+#'   既未配对 \code{dev.off()}（造成设备泄漏），又会把图形画进这个空设备里，
+#'   导致调用方打开的设备始终得到空白页。此处不再自行打开任何设备。
+#'
+#' @return 一个无参函数，调用时在当前图形设备上绘制树状图。
 #'
 #' @examples
 #' \dontrun{
-#' p <- plot_wgcna_dendrogram(wgcna_result)
-#' print(p)
+#' draw <- plot_wgcna_dendrogram(wgcna_result)
+#' export_heatmap(draw, "figures", "wgcna_dendrogram")
 #' }
 #'
 #' @export
 plot_wgcna_dendrogram <- function(wgcna_result) {
-  # 使用基础 R 绘图函数绘制树状图
-  grDevices::pdf(NULL)  # 抑制图形设备
+  if (!requireNamespace("WGCNA", quietly = TRUE)) {
+    stop("Package 'WGCNA' is required.")
+  }
+  gene_tree <- wgcna_result$gene_tree
+  module_colors <- wgcna_result$module_colors
+  if (is.null(gene_tree)) {
+    stop("wgcna_result$gene_tree is NULL; cannot plot dendrogram.")
+  }
 
-  old_par <- graphics::par(no.readonly = TRUE)
-  on.exit(graphics::par(old_par))
+  function() {
+    old_par <- graphics::par(no.readonly = TRUE)
+    on.exit(graphics::par(old_par), add = TRUE)
 
-  graphics::plot(wgcna_result$gene_tree, xlab = "", sub = "",
-                 main = "WGCNA Module Dendrogram",
-                 labels = FALSE)
-  WGCNA::plotColorUnderDendro(wgcna_result$gene_tree,
-                               wgcna_result$module_colors)
-
-  invisible(NULL)
+    WGCNA::plotDendroAndColors(
+      dendro = gene_tree,
+      colors = module_colors,
+      groupLabels = "Module",
+      main = "WGCNA Module Dendrogram",
+      dendroLabels = FALSE,
+      hang = 0.03,
+      addGuide = TRUE,
+      guideHang = 0.05
+    )
+    invisible(NULL)
+  }
 }
 
 
@@ -170,14 +207,23 @@ plot_soft_threshold <- function(expr_matrix, powers = 1:20,
   }
 
   datExpr <- t(as.matrix(expr_matrix))
+  # 零方差列会使相关系数为 NaN，须与 build_wgcna_modules 保持一致地剔除
+  keep <- apply(datExpr, 2, stats::var, na.rm = TRUE) > 0
+  keep[is.na(keep)] <- FALSE
+  datExpr <- datExpr[, keep, drop = FALSE]
+
   sft <- WGCNA::pickSoftThreshold(datExpr, powerVector = powers,
                                    networkType = network_type, verbose = 0)
 
   # 无标度拓扑拟合
+  # 标准 WGCNA 指标为 -sign(slope) * SFT.R.sq：用回归斜率的符号来区分
+  # "真正的无标度拓扑"（slope 为负）与伪拟合。原实现误用 -sign(SFT.R.sq)，
+  # 由于 R^2 恒非负，结果恒为负值，曲线与 0.85 参考线完全失去意义。
+  fi <- sft$fitIndices
   fit_data <- data.frame(
-    power = powers,
-    fit = -sign(sft$fitIndices$SFT.R.sq) * sft$fitIndices$SFT.R.sq,
-    mean_k = sft$fitIndices$mean.k.
+    power = fi$Power,
+    fit = -sign(fi$slope) * fi$SFT.R.sq,
+    mean_k = fi$mean.k.
   )
 
   p1 <- ggplot2::ggplot(fit_data, ggplot2::aes(x = power, y = fit)) +

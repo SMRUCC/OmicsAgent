@@ -250,7 +250,9 @@ ft_res <- if (is.list(ft) && !is.data.frame(ft)) ft$results else ft
 cat(sprintf("    F 检验结果行数: %d\n", nrow(ft_res)))
 cat(sprintf("    p_adj < 0.05 的特征数: %d\n",
             sum(ft_res$p_adj < 0.05, na.rm = TRUE)))
-export_table(ft_res, RESULT_DIR, "05_ftest_phase", use_rownames = FALSE)
+# run_f_test 将 feature_id 移入行名
+export_table(ft_res, RESULT_DIR, "05_ftest_phase",
+             use_rownames = TRUE, id_col_name = "feature_id")
 
 step("run_anova (factors = variety * phase)")
 av <- run_anova(log2_mat, sample_info,
@@ -259,17 +261,26 @@ av <- run_anova(log2_mat, sample_info,
 av_res <- if (is.list(av) && !is.data.frame(av)) av$results else av
 cat(sprintf("    ANOVA 结果行数: %d\n", nrow(av_res)))
 cat("    ANOVA 结果列名:", paste(colnames(av_res), collapse = ", "), "\n")
-export_table(av_res, RESULT_DIR, "05_anova_variety_phase", use_rownames = FALSE)
+cat("    各因素显著特征数:\n")
+for (fac in names(av$factor_results)) {
+  fr <- av$factor_results[[fac]]
+  cat(sprintf("      %-10s p_adj<0.05 : %d / %d\n",
+              fac, sum(fr$p_adj < 0.05, na.rm = TRUE), nrow(fr)))
+}
+# run_anova 将 feature_id 存放于行名中（多因素会重复，已 make.unique）
+export_table(av_res, RESULT_DIR, "05_anova_variety_phase",
+             use_rownames = TRUE, id_col_name = "feature_id")
 
 # ==============================================================================
 # SECTION 7: 聚类热图
 # ==============================================================================
 section("SECTION 7  聚类热图")
 
-# 取 F 检验最显著的 top 60 代谢物
+# 取 F 检验最显著的 top 60 代谢物（feature_id 位于 ft_res 行名中）
 ord_ft <- order(ft_res$p_adj, decreasing = FALSE)
-top_feats <- ft_res$feature_id[ord_ft][seq_len(min(60, nrow(ft_res)))]
+top_feats <- rownames(ft_res)[ord_ft][seq_len(min(60, nrow(ft_res)))]
 top_feats <- intersect(top_feats, rownames(log2_mat))
+stopifnot(length(top_feats) > 0)
 cat(sprintf("    热图特征数: %d\n", length(top_feats)))
 
 step("plot_heatmap (group_col=phase, family_col=super_class)")

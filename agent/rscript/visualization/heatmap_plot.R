@@ -40,8 +40,20 @@ plot_heatmap <- function(expr_matrix, sample_info, feature_info = NULL,
                          distance_method = "euclidean",
                          show_rownames = TRUE, show_colnames = FALSE,
                          n_features = 50) {
+  # 输入校验：空矩阵会在 hclust 阶段抛出难以定位的错误，此处提前给出明确信息
+  if (is.null(expr_matrix) || nrow(expr_matrix) < 2) {
+    stop(sprintf(
+      "plot_heatmap requires at least 2 features, got %d.",
+      if (is.null(expr_matrix)) 0L else nrow(expr_matrix)))
+  }
+  
   # 对齐样本
   common_samples <- intersect(colnames(expr_matrix), rownames(sample_info))
+  if (length(common_samples) < 2) {
+    stop(sprintf(
+      "plot_heatmap requires at least 2 shared samples between expr_matrix and sample_info, got %d.",
+      length(common_samples)))
+  }
   expr_matrix <- expr_matrix[, common_samples, drop = FALSE]
   sample_info <- sample_info[common_samples, , drop = FALSE]
   

@@ -78,6 +78,10 @@ run_anova <- function(expr_matrix, sample_info, factors = "sample_info",
     
     fit <- stats::aov(formula_obj, data = data_tmp)
     anova_summary <- summary(fit)[[1]]
+    # summary.aov 的行名带有对齐用的尾部空格（如 "variety    "），
+    # 直接用 fac %in% rownames(anova_summary) 永远不匹配，
+    # 会导致 factor_results 始终为空、下游 combined 为 NULL。
+    rownames(anova_summary) <- trimws(rownames(anova_summary))
     
     for (j in 1:n_factors) {
       fac <- factors[j]
@@ -105,6 +109,18 @@ run_anova <- function(expr_matrix, sample_info, factors = "sample_info",
   }
   
   # 合并结果
+  # 若所有因素都未出现在 aov 表中（例如因素为常量列），factor_results 为空，
+  # do.call(rbind, list()) 会返回 NULL，需显式构造空结果避免下游报错。
+  if (length(factor_results) == 0) {
+    warning("No factor produced valid ANOVA terms; returning empty result.")
+    combined <- data.frame(
+      F_stat = numeric(0), p_value = numeric(0),
+      p_adj = numeric(0), significant = logical(0),
+      factor = character(0), stringsAsFactors = FALSE
+    )
+    return(list(results = combined, factor_results = factor_results))
+  }
+  
   combined <- do.call(rbind, lapply(names(factor_results), function(fac) {
     df <- factor_results[[fac]]
     df$factor <- fac
@@ -113,7 +129,7 @@ run_anova <- function(expr_matrix, sample_info, factors = "sample_info",
   
   # 将 feature_id 设为行名（多个因素可能产生重复，
   # 因此创建唯一行名）
-  rownames(combined) <- make.unique(combined$feature_id)
+  rownames(combined) <- make.unique(as.character(combined$feature_id))
   combined$feature_id <- NULL
   
   return(list(
