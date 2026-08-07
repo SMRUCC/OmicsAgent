@@ -97,22 +97,22 @@ run_anova <- function(expr_matrix, sample_info, factors = "sample_info",
     }
   }
 
-  # Adjust p-values
+  # 校正 P 值
   for (fac in names(factor_results)) {
     factor_results[[fac]]$p_adj <- stats::p.adjust(factor_results[[fac]]$p_value,
                                                      method = p_adj_method)
     factor_results[[fac]]$significant <- factor_results[[fac]]$p_adj < 0.05
   }
 
-  # Combined results
+  # 合并结果
   combined <- do.call(rbind, lapply(names(factor_results), function(fac) {
     df <- factor_results[[fac]]
     df$factor <- fac
     return(df)
   }))
 
-  # Set feature_id as row names (may have duplicates from multiple factors,
-  # so create unique row names)
+  # 将 feature_id 设为行名（多个因素可能产生重复，
+  # 因此创建唯一行名）
   rownames(combined) <- make.unique(combined$feature_id)
   combined$feature_id <- NULL
 
