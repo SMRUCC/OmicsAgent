@@ -229,7 +229,11 @@ print.OmicsData <- function(x, ...) {
   for (g in names(group_tab)) {
     cat("  -", g, ":", group_tab[g], "samples\n")
   }
-  cat("Matched features:", x$metadata$matched, "/",
-      x$metadata$matched + x$metadata$unmatched, "\n")
+  # 使用完整字段名，避免依赖 `$` 的部分匹配（partial matching）
+  n_matched <- x$metadata$matched_features
+  n_unmatched <- x$metadata$unmatched_features
+  if (is.null(n_matched)) n_matched <- 0L
+  if (is.null(n_unmatched)) n_unmatched <- 0L
+  cat("Matched features:", n_matched, "/", n_matched + n_unmatched, "\n")
   invisible(x)
 }

@@ -22,6 +22,77 @@
 #' export_plot(pca_plot, "results/figures", "pca_score", width = 8, height = 6)
 #' }
 #'
+#' 打开 PDF 图形设备（内部辅助）
+#'
+#' @description 优先使用 `cairo_pdf`，因为标准 `grDevices::pdf()` 使用单字节编码，
+#'   遇到 Unicode 字符（如希腊字母 γ、中文标签）时会抛出
+#'   "conversion failure ... in 'mbcsToSbcs'" 警告并丢失字符。
+#'   若当前 R 未编译 cairo 支持，则回退到 `pdf()` 并显式指定 UTF-8 编码。
+#'
+#' @param file 输出文件路径。
+#' @param width,height 尺寸（英寸）。
+#'
+#' @return 不可见 NULL，副作用为打开图形设备。
+#'
+#' @keywords internal
+.open_pdf_device <- function(file, width, height) {
+  if (capabilities("cairo")) {
+    grDevices::cairo_pdf(file, width = width, height = height,
+                         onefile = TRUE)
+  } else {
+    grDevices::pdf(file, width = width, height = height,
+                   encoding = "UTF-8", useDingbats = FALSE)
+  }
+  invisible(NULL)
+}
+
+
+#' 打开 PNG 图形设备（内部辅助）
+#'
+#' @description 优先使用 cairo 后端（支持 Unicode 与抗锯齿）；不可用时回退到
+#'   系统默认后端，避免在无 cairo 的环境中直接报错。
+#'
+#' @param file 输出文件路径。
+#' @param width,height 尺寸（英寸）。
+#' @param dpi 分辨率。
+#'
+#' @return 不可见 NULL，副作用为打开图形设备。
+#'
+#' @keywords internal
+.open_png_device <- function(file, width, height, dpi = 300) {
+  px_w <- width * dpi
+  px_h <- height * dpi
+  if (capabilities("cairo")) {
+    grDevices::png(file, width = px_w, height = px_h, res = dpi,
+                   type = "cairo")
+  } else {
+    grDevices::png(file, width = px_w, height = px_h, res = dpi)
+  }
+  invisible(NULL)
+}
+
+
+#' 在图形设备中安全渲染（内部辅助）
+#'
+#' @description 用 `on.exit` 保证无论渲染是否抛错都会调用 `dev.off()`，
+#'   避免设备泄漏导致后续绘图全部写入错误的文件。
+#'
+#' @param open_fn 无参函数，负责打开设备。
+#' @param draw_fn 无参函数，负责绘图。
+#'
+#' @return 不可见 NULL。
+#'
+#' @keywords internal
+.with_device <- function(open_fn, draw_fn) {
+  open_fn()
+  on.exit({
+    if (grDevices::dev.cur() > 1L) grDevices::dev.off()
+  }, add = TRUE)
+  draw_fn()
+  invisible(NULL)
+}
+
+
 #' @export
 export_plot <- function(plot, output_dir = ".", filename = "plot",
                         width = 8, height = 6, dpi = 300) {
@@ -30,16 +101,14 @@ export_plot <- function(plot, output_dir = ".", filename = "plot",
   pdf_file <- file.path(output_dir, paste0(filename, ".pdf"))
   png_file <- file.path(output_dir, paste0(filename, ".png"))
 
+  draw_fn <- function() print(plot)
+
   # 保存 PDF
-  grDevices::pdf(pdf_file, width = width, height = height)
-  print(plot)
-  grDevices::dev.off()
+  .with_device(function() .open_pdf_device(pdf_file, width, height), draw_fn)
 
   # 保存 PNG
-  grDevices::png(png_file, width = width * dpi, height = height * dpi,
-                 res = dpi, type = "cairo")
-  print(plot)
-  grDevices::dev.off()
+  .with_device(function() .open_png_device(png_file, width, height, dpi),
+               draw_fn)
 
   invisible(list(pdf = pdf_file, png = png_file))
 }
@@ -63,30 +132,29 @@ export_heatmap <- function(heatmap, output_dir = ".", filename = "heatmap",
   pdf_file <- file.path(output_dir, paste0(filename, ".pdf"))
   png_file <- file.path(output_dir, paste0(filename, ".png"))
 
-  # 保存 PDF
-  grDevices::pdf(pdf_file, width = width, height = height)
-  if (inherits(heatmap, "Heatmap") || inherits(heatmap, "HeatmapList")) {
-    ComplexHeatmap::draw(heatmap)
-  } else if (inherits(heatmap, "pheatmap")) {
-    grid::grid.newpage()
-    grid::grid.draw(heatmap$gtable)
-  } else {
-    print(heatmap)
+  draw_fn <- function() {
+    if (inherits(heatmap, "Heatmap") || inherits(heatmap, "HeatmapList")) {
+      ComplexHeatmap::draw(heatmap)
+    } else if (inherits(heatmap, "pheatmap")) {
+      grid::grid.newpage()
+      grid::grid.draw(heatmap$gtable)
+    } else if (inherits(heatmap, "gtable")) {
+      grid::grid.newpage()
+      grid::grid.draw(heatmap)
+    } else if (is.function(heatmap)) {
+      # 支持 base R 副作用绘图：传入一个无参绘图函数
+      heatmap()
+    } else {
+      print(heatmap)
+    }
   }
-  grDevices::dev.off()
+
+  # 保存 PDF
+  .with_device(function() .open_pdf_device(pdf_file, width, height), draw_fn)
 
   # 保存 PNG
-  grDevices::png(png_file, width = width * 300, height = height * 300,
-                 res = 300, type = "cairo")
-  if (inherits(heatmap, "Heatmap") || inherits(heatmap, "HeatmapList")) {
-    ComplexHeatmap::draw(heatmap)
-  } else if (inherits(heatmap, "pheatmap")) {
-    grid::grid.newpage()
-    grid::grid.draw(heatmap$gtable)
-  } else {
-    print(heatmap)
-  }
-  grDevices::dev.off()
+  .with_device(function() .open_png_device(png_file, width, height, 300),
+               draw_fn)
 
   invisible(list(pdf = pdf_file, png = png_file))
 }

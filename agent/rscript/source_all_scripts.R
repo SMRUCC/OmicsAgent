@@ -65,8 +65,11 @@ if (length(all_r_files) == 0) {
 }
 
 # 标准化为相对路径，便于过滤与排序展示
-rel_files <- sub(paste0("^", fixed = normalizePath(script_dir), "/?"), "",
-                 normalizePath(all_r_files))
+# 注意：normalizePath 在 Windows 上返回反斜杠，统一转为正斜杠后再剥离根目录前缀，
+#       否则 rel_files 会退化为绝对路径，导致后续按 "^utils/" 排序的规则失效。
+norm_root <- gsub("\\\\", "/", normalizePath(script_dir, winslash = "/"))
+norm_all <- gsub("\\\\", "/", normalizePath(all_r_files, winslash = "/"))
+rel_files <- sub(paste0("^", norm_root, "/?"), "", norm_all)
 
 cat(sprintf("[scan] 共发现 %d 个 R 脚本文件。\n", length(all_r_files)))
 
@@ -74,8 +77,10 @@ cat(sprintf("[scan] 共发现 %d 个 R 脚本文件。\n", length(all_r_files)))
 # 2. 过滤：跳过引导/安装类脚本（自身、install_packages.R）
 # -----------------------------------------------------------------------------
 # 需要排除的文件名（不含路径，大小写不敏感）
+# install_packages.R 含顶层安装逻辑，source 时会触发联网安装，必须排除
 exclude_names <- c(
-  "source_all_scripts.R"
+  "source_all_scripts.R",
+  "install_packages.R"
 )
 
 to_exclude <- function(rel_path) {
@@ -118,7 +123,9 @@ for (i in seq_along(ordered_full)) {
   f <- ordered_full[i]
   r <- ordered_rel[i]
   ok <- tryCatch({
-    source(r, local = FALSE, echo = FALSE, keep.source = TRUE)
+    # 使用绝对路径 source，避免依赖调用方的工作目录
+    source(f, local = FALSE, echo = FALSE, keep.source = TRUE,
+           encoding = "UTF-8")
     TRUE
   }, error = function(e) {
     message(sprintf("[source] 错误: 加载 '%s' 失败 -> %s", r, conditionMessage(e)))
