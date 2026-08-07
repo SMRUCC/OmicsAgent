@@ -326,7 +326,7 @@ discretize_transition_data <- function(df, features, n_bins = 3) {
     bl[[length(bl) + 1]] <- expand.grid(from = t1_nodes, to = nodes,
                                         stringsAsFactors = FALSE)
   }
-  # (b) no contemporaneous arcs inside the past slice
+  # (b) 过去切片内部不允许同时刻的弧
   if (length(t0_nodes) > 1) {
     bl[[length(bl) + 1]] <- expand.grid(from = t0_nodes, to = t0_nodes,
                                         stringsAsFactors = FALSE)
@@ -339,7 +339,7 @@ discretize_transition_data <- function(df, features, n_bins = 3) {
   }
   bl <- bl[bl$from != bl$to, , drop = FALSE]
 
-  # (c) optional biological layer ordering constraint
+  # (c) 可选的生物学层顺序约束
   if (!is.null(node_omics) && !is.null(layer_order) && length(layer_order) > 1) {
     rank_of <- stats::setNames(seq_along(layer_order), layer_order)
     from_rank <- rank_of[node_omics[t0_nodes]]
@@ -360,16 +360,16 @@ discretize_transition_data <- function(df, features, n_bins = 3) {
 }
 
 
-#' Assemble the standard DBN result object from a learned bnlearn network
+#' 由学习得到的 bnlearn 网络组装标准 DBN 结果对象
 #'
-#' @param bn A learned bnlearn object.
-#' @param disc_df The discretised transition data.frame used for learning.
-#' @param strength_df Optional \code{bnlearn::boot.strength()} output.
-#' @param strength_threshold Minimum arc strength to retain.
-#' @param feature_map Optional named character vector clean_name -> label.
-#' @param node_omics Optional named character vector node -> omics layer.
+#' @param bn 学习得到的 bnlearn 对象。
+#' @param disc_df 用于学习离散化后的转移数据框。
+#' @param strength_df 可选，\code{bnlearn::boot.strength()} 的输出。
+#' @param strength_threshold 保留弧的最小强度阈值。
+#' @param feature_map 可选的有名字符向量，映射 clean_name -> label。
+#' @param node_omics 可选的有名字符向量，映射节点 -> 组学层。
 #'
-#' @return The standard DBN result list.
+#' @return 标准的 DBN 结果列表。
 #'
 #' @keywords internal
 .dbn_assemble_result <- function(bn, disc_df, strength_df = NULL,
@@ -481,32 +481,30 @@ discretize_transition_data <- function(df, features, n_bins = 3) {
 }
 
 
-#' Learn a dynamic Bayesian network for a single omics layer
+#' 为单个组学层学习动态贝叶斯网络
 #'
-#' @description Aggregates replicates, unrolls consecutive timepoints into
-#'   transition pairs, discretises them with shared bins and learns a
-#'   time-lagged Bayesian network whose arcs are forced to run from t0 to t1.
-#'   Arc reliability is assessed with non-parametric bootstrap.
+#' @description 聚合重复样本，将相邻时间点展开为转移对，使用共享分箱离散化，
+#'   并学习一个时间滞后的贝叶斯网络，其弧被强制从 t0 指向 t1。弧的可靠性
+#'   通过非参数自助法（bootstrap）评估。
 #'
-#' @param expr_matrix Numeric matrix (features x samples).
-#' @param sample_info Sample metadata with row names equal to sample IDs.
-#' @param feature_info Optional annotation data.frame whose row names match the
-#'   matrix row names; \code{name_col} supplies readable node labels.
-#' @param time_col Numeric time column in \code{sample_info}. Default: "day".
-#' @param group_cols Columns defining independent time series.
-#'   Default: c("location", "variety").
-#' @param max_nodes Maximum number of features (by variance). Default: 25.
-#' @param algorithm Structure-learning algorithm: "hc" or "tabu". Default: "hc".
-#' @param score Network score, e.g. "bic" or "aic". Default: "bic".
-#' @param boot_R Bootstrap replicates for arc strength; 0 disables. Default: 100.
-#' @param strength_threshold Minimum bootstrap arc strength to keep. Default: 0.5.
-#' @param n_bins Number of discretisation levels. Default: 3.
-#' @param name_col Annotation column used for labels. Default: "name".
-#' @param seed Random seed. Default: 42.
+#' @param expr_matrix 数值矩阵（特征 x 样本）。
+#' @param sample_info 样本元数据，行名等于样本 ID。
+#' @param feature_info 可选注释 data.frame，其行名与矩阵行名对应；\code{name_col}
+#'   提供可读的节点标签。
+#' @param time_col \code{sample_info} 中的数值时间列。默认："day"。
+#' @param group_cols 定义独立时间序列的列。默认：c("location", "variety")。
+#' @param max_nodes 特征的最大数量（按方差）。默认：25。
+#' @param algorithm 结构学习算法："hc" 或 "tabu"。默认："hc"。
+#' @param score 网络评分，如 "bic" 或 "aic"。默认："bic"。
+#' @param boot_R 用于弧强度的自助重复次数；0 表示关闭。默认：100。
+#' @param strength_threshold 保留的最小自助弧强度。默认：0.5。
+#' @param n_bins 离散化水平数。默认：3。
+#' @param name_col 用于标签的注释列。默认："name"。
+#' @param seed 随机种子。默认：42。
 #'
-#' @return A list with \code{network}, \code{fitted}, \code{arcs},
-#'   \code{edges_df}, \code{nodes}, \code{nodes_df}, \code{adjacency},
-#'   \code{data} and \code{stats}.
+#' @return 一个列表，含 \code{network}、\code{fitted}、\code{arcs}、
+#'   \code{edges_df}、\code{nodes}、\code{nodes_df}、\code{adjacency}、
+#'   \code{data} 与 \code{stats}。
 #'
 #' @examples
 #' \dontrun{
@@ -531,7 +529,7 @@ run_dbn_layer <- function(expr_matrix, sample_info, feature_info = NULL,
   if (nrow(mat) < 2) stop("At least 2 non-constant features are required.")
   mat <- .dbn_select_features(mat, max_nodes)
 
-  # readable labels keyed by the sanitised feature name
+  # 以清洗后的特征名为键的可读标签
   raw_names <- rownames(mat)
   clean <- .dbn_clean_names(raw_names)
   labels <- raw_names
@@ -596,33 +594,30 @@ run_dbn_layer <- function(expr_matrix, sample_info, feature_info = NULL,
 }
 
 
-#' Learn one merged dynamic Bayesian network across all omics layers
+#' 在所有组学层上学习一个合并的动态贝叶斯网络
 #'
-#' @description Selects the most variable features from every omics layer,
-#'   prefixes node names with a layer tag to avoid collisions, merges them into
-#'   a single matrix and learns one time-lagged Bayesian network spanning all
-#'   layers. Arcs are annotated as \code{intra_omics} or \code{inter_omics}.
+#' @description 从每个组学层选取变异最大的特征，为节点名添加层标签前缀以避免
+#'   冲突，将其合并为单一矩阵，并学习一个跨越所有层的时间滞后贝叶斯网络。
+#'   弧被标注为 \code{intra_omics} 或 \code{inter_omics}。
 #'
-#' @param mo A MultiOmicsData object.
-#' @param layers Omics layers to include. Default: all layers of \code{mo}.
-#' @param per_layer_nodes Number of features taken from each layer. Default: 8.
-#' @param time_col Numeric time column. Default: "day".
-#' @param group_cols Columns defining independent time series.
-#'   Default: c("location", "variety").
-#' @param enforce_layer_order Whether to forbid arcs that run against
-#'   \code{layer_order}. Default: FALSE.
-#' @param layer_order Biological ordering of the layers, upstream first.
-#' @param algorithm Structure-learning algorithm. Default: "hc".
-#' @param score Network score. Default: "bic".
-#' @param boot_R Bootstrap replicates. Default: 100.
-#' @param strength_threshold Minimum bootstrap arc strength. Default: 0.5.
-#' @param n_bins Discretisation levels. Default: 3.
-#' @param name_col Annotation column for labels. Default: "name".
-#' @param seed Random seed. Default: 42.
+#' @param mo 一个 MultiOmicsData 对象。
+#' @param layers 要包含的组学层。默认：\code{mo} 的所有层。
+#' @param per_layer_nodes 从每层选取的特征数。默认：8。
+#' @param time_col 数值时间列。默认："day"。
+#' @param group_cols 定义独立时间序列的列。默认：c("location", "variety")。
+#' @param enforce_layer_order 是否禁止与 \code{layer_order} 相悖的弧。默认：FALSE。
+#' @param layer_order 各层的生物学顺序，上游在前。
+#' @param algorithm 结构学习算法。默认："hc"。
+#' @param score 网络评分。默认："bic"。
+#' @param boot_R 自助重复次数。默认：100。
+#' @param strength_threshold 最小自助弧强度。默认：0.5。
+#' @param n_bins 离散化水平数。默认：3。
+#' @param name_col 用于标签的注释列。默认："name"。
+#' @param seed 随机种子。默认：42。
 #'
-#' @return The same structure as \code{run_dbn_layer()}, with \code{edges_df}
-#'   additionally carrying \code{from_omics}, \code{to_omics} and
-#'   \code{edge_type}, and \code{nodes_df} carrying \code{omics}.
+#' @return 与 \code{run_dbn_layer()} 相同的结构，其中 \code{edges_df} 额外携带
+#'   \code{from_omics}、\code{to_omics} 与 \code{edge_type}，\code{nodes_df}
+#'   额外携带 \code{omics}。
 #'
 #' @examples
 #' \dontrun{
@@ -762,16 +757,15 @@ run_dbn_multiomics <- function(mo, layers = NULL, per_layer_nodes = 8,
 
 
 # ------------------------------------------------------------------------------
-# Step 5: summaries
+# 步骤 5：汇总
 # ------------------------------------------------------------------------------
 
-#' Summarise a dynamic Bayesian network as a one-row data.frame
+#' 将动态贝叶斯网络汇总为单行数据框
 #'
-#' @param dbn_result Result of \code{run_dbn_layer()} or
-#'   \code{run_dbn_multiomics()}.
-#' @param label Optional label written into the \code{network} column.
+#' @param dbn_result \code{run_dbn_layer()} 或 \code{run_dbn_multiomics()} 的结果。
+#' @param label 可选标签，写入 \code{network} 列。
 #'
-#' @return A one-row data.frame of network-level statistics.
+#' @return 包含网络级统计量的单行数据框。
 #'
 #' @examples
 #' \dontrun{
@@ -813,7 +807,7 @@ summarise_dbn_network <- function(dbn_result, label = NULL) {
 }
 
 
-#' Null-coalescing helper
+#' 空值合并辅助函数
 #' @keywords internal
 #' @noRd
 `%||%` <- function(a, b) if (is.null(a)) b else a

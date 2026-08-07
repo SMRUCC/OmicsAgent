@@ -1,24 +1,22 @@
 # ==============================================================================
-# OmicsFlow: Matrix-Level Congruence Between Omics Layers
+# OmicsFlow：组学层之间的矩阵级一致性分析
 # ==============================================================================
-# Mantel tests and Procrustes analysis quantifying how consistently different
-# omics layers, and environmental factors, order the same samples.
+# 通过 Mantel 检验与 Procrustes 分析，量化不同组学层以及环境因子对相同样本的
+# 排序一致程度。
 # ==============================================================================
 
-#' Compute sample distance matrices for a list of omics matrices
+#' 为一组组学矩阵计算样本距离矩阵
 #'
-#' @description Builds one sample-by-sample distance matrix per omics layer.
-#'   Distances are computed in sample space, so the cost is independent of the
-#'   number of features and the full feature set can safely be used. The
-#'   resulting list is reused by Mantel, Procrustes and ordination functions.
+#' @description 为每个组学层构建一个样本对样本的距离矩阵。距离在样本空间上
+#'   计算，因此开销与特征数量无关，可以安全地使用全部特征集。所得列表会被
+#'   Mantel、Procrustes 与排序函数复用。
 #'
-#' @param mat_list Named list of numeric matrices (features x samples).
-#' @param method Distance method. "bray" requires vegan and non-negative data;
-#'   any method accepted by \code{stats::dist()} is also allowed.
-#'   Default: "euclidean".
-#' @param verbose Logical, print progress. Default: TRUE.
+#' @param mat_list 数值矩阵的有名列表（特征 x 样本）。
+#' @param method 距离方法。"bray" 需要 vegan 包且数据非负；\code{stats::dist()}
+#'   支持的任何方法亦可使用。默认："euclidean"。
+#' @param verbose 逻辑值，是否打印进度。默认：TRUE。
 #'
-#' @return A named list of \code{dist} objects, one per omics layer.
+#' @return 一个 \code{dist} 对象的有名列表，每个组学层对应一个。
 #'
 #' @examples
 #' \dontrun{
@@ -63,33 +61,29 @@ compute_omics_distances <- function(mat_list, method = "euclidean",
 }
 
 
-#' Mantel tests between omics layers and environmental factors
+#' 组学层之间及与环境因子的 Mantel 检验
 #'
-#' @description Tests whether pairs of omics layers order the samples in a
-#'   congruent way, and whether that ordering matches environmental gradients
-#'   such as temperature, humidity or altitude. Works on sample distance
-#'   matrices, so runtime does not depend on the number of features.
+#' @description 检验成对的组学层是否以一致的方式对样本排序，以及该排序是否匹配
+#'   温度、湿度或海拔等环境梯度。基于样本距离矩阵运算，因此运行时间与特征数量
+#'   无关。
 #'
-#' @param mat_list Named list of numeric matrices (features x samples), or a
-#'   named list of \code{dist} objects already computed.
-#' @param env_data Optional data.frame of numeric environmental variables with
-#'   samples as rows. Each variable is turned into a Euclidean distance matrix
-#'   and tested against every omics layer. Default: NULL.
-#' @param dist_method Distance method for the omics layers. Default:
-#'   "euclidean".
-#' @param env_dist_method Distance method for the environmental variables.
-#'   Default: "euclidean".
-#' @param method Mantel correlation method. Default: "pearson".
-#' @param permutations Number of permutations. Default: 999.
-#' @param verbose Logical, print progress. Default: TRUE.
+#' @param mat_list 数值矩阵的有名列表（特征 x 样本），或为已计算好的 \code{dist}
+#'   对象的有名列表。
+#' @param env_data 可选的数据框，包含以样本为行的数值型环境变量。每个变量会被
+#'   转换为欧氏距离矩阵，并与每个组学层进行检验。默认：NULL。
+#' @param dist_method 组学层的距离方法。默认："euclidean"。
+#' @param env_dist_method 环境变量的距离方法。默认："euclidean"。
+#' @param method Mantel 相关方法。默认："pearson"。
+#' @param permutations 置换次数。默认：999。
+#' @param verbose 逻辑值，是否打印进度。默认：TRUE。
 #'
-#' @return A list with:
+#' @return 一个列表：
 #'   \itemize{
-#'     \item \code{omics_omics}: data.frame with layer_x, layer_y, mantel_r,
-#'       p_value, significance.
-#'     \item \code{omics_env}: data.frame with layer, variable, mantel_r,
-#'       p_value, significance (empty when env_data is NULL).
-#'     \item \code{distances}: The distance matrices used.
+#'     \item \code{omics_omics}: 数据框，含 layer_x、layer_y、mantel_r、
+#'       p_value、significance。
+#'     \item \code{omics_env}: 数据框，含 layer、variable、mantel_r、
+#'       p_value、significance（env_data 为 NULL 时为空）。
+#'     \item \code{distances}: 所用的距离矩阵。
 #'   }
 #'
 #' @examples
@@ -229,11 +223,11 @@ run_mantel_test <- function(mat_list, env_data = NULL,
 }
 
 
-#' Significance star helper
+#' 显著性星号辅助函数
 #'
-#' @param p Numeric vector of p-values.
+#' @param p p 值的数值向量。
 #'
-#' @return A character vector of significance codes.
+#' @return 显著性标记的代码字符向量。
 #'
 #' @keywords internal
 .significance_stars <- function(p) {
@@ -245,33 +239,29 @@ run_mantel_test <- function(mat_list, env_data = NULL,
 }
 
 
-#' Procrustes analysis between two omics layers
+#' 两个组学层之间的 Procrustes 分析
 #'
-#' @description Rotates the ordination of one omics layer onto another and
-#'   tests the significance of their congruence with PROTEST. Returns the
-#'   superimposed coordinates so that per-sample residuals can be plotted.
+#' @description 将一个组学层的排序旋转到另一个组学层之上，并用 PROTEST 检验两者
+#'   一致性的显著性。返回叠加后的坐标，以便绘制逐样本残差。
 #'
-#' @param mat_x Numeric matrix of the first layer (features x samples), or a
-#'   \code{dist} object.
-#' @param mat_y Numeric matrix of the second layer (features x samples), or a
-#'   \code{dist} object.
-#' @param dist_method Distance method used when matrices are supplied.
-#'   Default: "euclidean".
-#' @param ncomp Number of ordination axes retained. Default: 2.
-#' @param permutations Number of permutations for PROTEST. Default: 999.
-#' @param name_x Label of the first layer. Default: "x".
-#' @param name_y Label of the second layer. Default: "y".
-#' @param verbose Logical, print progress. Default: TRUE.
+#' @param mat_x 第一层的数值矩阵（特征 x 样本），或 \code{dist} 对象。
+#' @param mat_y 第二层的数值矩阵（特征 x 样本），或 \code{dist} 对象。
+#' @param dist_method 传入矩阵时所用的距离方法。默认："euclidean"。
+#' @param ncomp 保留的排序轴数量。默认：2。
+#' @param permutations PROTEST 的置换次数。默认：999。
+#' @param name_x 第一层的标签。默认："x"。
+#' @param name_y 第二层的标签。默认："y"。
+#' @param verbose 逻辑值，是否打印进度。默认：TRUE。
 #'
-#' @return A list with:
+#' @return 一个列表：
 #'   \itemize{
-#'     \item \code{procrustes}: The vegan procrustes object.
-#'     \item \code{protest}: The PROTEST result.
-#'     \item \code{ss}: Procrustes sum of squares.
-#'     \item \code{correlation}: Procrustes correlation.
-#'     \item \code{p_value}: Permutation p-value.
-#'     \item \code{coordinates}: data.frame with sample, x1, y1, x2, y2 and
-#'       residual, ready for plotting.
+#'     \item \code{procrustes}: vegan 的 procrustes 对象。
+#'     \item \code{protest}: PROTEST 结果。
+#'     \item \code{ss}: Procrustes 残差平方和。
+#'     \item \code{correlation}: Procrustes 相关系数。
+#'     \item \code{p_value}: 置换 p 值。
+#'     \item \code{coordinates}: 含 sample、x1、y1、x2、y2 与
+#'       residual 的数据框，可直接用于绘图。
 #'   }
 #'
 #' @examples
@@ -343,17 +333,17 @@ run_procrustes <- function(mat_x, mat_y,
 }
 
 
-#' Run Procrustes analysis for several layer pairs
+#' 对多个层对运行 Procrustes 分析
 #'
-#' @param mo A MultiOmicsData object.
-#' @param layer_pairs List of length-2 character vectors naming layers.
-#' @param dist_method Distance method. Default: "euclidean".
-#' @param permutations Number of permutations. Default: 999.
-#' @param verbose Logical, print progress. Default: TRUE.
+#' @param mo 一个 MultiOmicsData 对象。
+#' @param layer_pairs 长度为 2 的字符向量组成的列表，用于指定层。
+#' @param dist_method 距离方法。默认："euclidean"。
+#' @param permutations 置换次数。默认：999。
+#' @param verbose 逻辑值，是否打印进度。默认：TRUE。
 #'
-#' @return A list with \code{results} (named list of \code{run_procrustes()}
-#'   outputs) and \code{summary} (data.frame with layer_x, layer_y, ss,
-#'   correlation, p_value, significance).
+#' @return 一个列表，含 \code{results}（\code{run_procrustes()} 输出的有名列表）
+#'   与 \code{summary}（含 layer_x、layer_y、ss、correlation、p_value、significance
+#'   的数据框）。
 #'
 #' @examples
 #' \dontrun{
