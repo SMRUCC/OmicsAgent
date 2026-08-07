@@ -1,18 +1,18 @@
 # ==============================================================================
-# OmicsFlow: Plot Utility Functions
+# OmicsFlow: 绘图工具函数
 # ==============================================================================
-# Helper functions for creating publication-quality plots
+# 用于生成发表级质量图形的辅助函数
 # ==============================================================================
 
-#' Create a default color palette for groups
+#' 为分组创建默认配色板
 #'
-#' @description Generates a named color palette for sample groups.
+#' @description 为样本分组生成一个命名配色板。
 #'
-#' @param groups Character vector of group names.
-#' @param palette_name Name of RColorBrewer palette. Default: "Set2".
-#' @param custom_colors Optional named vector of custom colors.
+#' @param groups 分组名称的字符向量。
+#' @param palette_name RColorBrewer 调色板名称。默认："Set2"。
+#' @param custom_colors 可选的自定义颜色命名向量。
 #'
-#' @return Named character vector of colors.
+#' @return 命名的颜色字符向量。
 #'
 #' @examples
 #' groups <- c("Control", "Treatment", "QC")
@@ -40,19 +40,18 @@ make_group_colors <- function(groups, palette_name = "Set2", custom_colors = NUL
 }
 
 
-#' Save a ggplot to PDF and PNG
+#' 将 ggplot 保存为 PDF 与 PNG
 #'
-#' @description Saves a ggplot object to both PDF and PNG files with
-#'   publication-quality settings.
+#' @description 以发表级质量设置将 ggplot 对象同时保存为 PDF 与 PNG 文件。
 #'
-#' @param plot A ggplot object.
-#' @param filename Output filename (without extension). Default: "plot".
-#' @param output_dir Output directory. Default: ".".
-#' @param width Plot width in inches. Default: 8.
-#' @param height Plot height in inches. Default: 6.
-#' @param dpi DPI for PNG output. Default: 300.
+#' @param plot 一个 ggplot 对象。
+#' @param filename 输出文件名（不含扩展名）。默认："plot"。
+#' @param output_dir 输出目录。默认："."。
+#' @param width 图形宽度（英寸）。默认：8。
+#' @param height 图形高度（英寸）。默认：6。
+#' @param dpi PNG 输出的 DPI。默认：300。
 #'
-#' @return Invisible list of file paths.
+#' @return 文件路径的不可见列表。
 #'
 #' @examples
 #' \dontrun{
@@ -63,18 +62,18 @@ make_group_colors <- function(groups, palette_name = "Set2", custom_colors = NUL
 #' @export
 save_plot <- function(plot, filename = "plot", output_dir = ".",
                       width = 8, height = 6, dpi = 300) {
-  # Create output directory if it doesn't exist
+  # 若输出目录不存在则创建
   if (!dir.exists(output_dir)) {
     dir.create(output_dir, recursive = TRUE)
   }
 
-  # PDF output
+  # 输出 PDF
   pdf_file <- file.path(output_dir, paste0(filename, ".pdf"))
   grDevices::pdf(pdf_file, width = width, height = height)
   print(plot)
   grDevices::dev.off()
 
-  # PNG output
+  # 输出 PNG
   png_file <- file.path(output_dir, paste0(filename, ".png"))
   ggplot2::ggsave(png_file, plot = plot, width = width, height = height,
                   dpi = dpi, units = "in")
@@ -83,22 +82,22 @@ save_plot <- function(plot, filename = "plot", output_dir = ".",
 }
 
 
-#' Extract metadata for plotting from sample info
+#' 从样本信息中提取用于绘图的元数据
 #'
-#' @description Extracts specified columns from sample metadata for use in
-#'   ggplot aesthetics (color, shape, size).
+#' @description 从样本元数据中提取指定列，供 ggplot 的美学映射
+#'   （颜色、形状、大小）使用。
 #'
-#' @param sample_info A data.frame with sample metadata.
-#' @param color_col Column name to use for color grouping. Default: "sample_info".
-#' @param shape_col Column name to use for shape grouping. Default: NULL.
-#' @param size_col Column name to use for size mapping. Default: NULL.
+#' @param sample_info 含有样本元数据的数据框。
+#' @param color_col 用于颜色分组的列名。默认："sample_info"。
+#' @param shape_col 用于形状分组的列名。默认：NULL。
+#' @param size_col 用于大小映射的列名。默认：NULL。
 #'
-#' @return A list with:
+#' @return 一个列表，包含：
 #'   \itemize{
-#'     \item \code{color_values}: Named vector of colors.
-#'     \item \code{shape_values}: Named vector of shapes.
-#'     \item \code{size_values}: Named vector of sizes.
-#'     \item \code{meta}: Subset metadata with selected columns.
+#'     \item \code{color_values}：命名的颜色向量。
+#'     \item \code{shape_values}：命名的形状向量。
+#'     \item \code{size_values}：命名的大小向量。
+#'     \item \code{meta}：含所选列的子集元数据。
 #'   }
 #'
 #' @examples
@@ -111,7 +110,7 @@ extract_plot_meta <- function(sample_info, color_col = "sample_info",
                                shape_col = NULL, size_col = NULL) {
   meta <- data.frame(row.names = rownames(sample_info))
 
-  # Color
+  # 颜色
   if (!is.null(color_col) && color_col %in% colnames(sample_info)) {
     meta$color <- sample_info[[color_col]]
     color_values <- make_group_colors(meta$color)
@@ -119,20 +118,20 @@ extract_plot_meta <- function(sample_info, color_col = "sample_info",
     color_values <- NULL
   }
 
-  # Shape
+  # 形状
   if (!is.null(shape_col) && shape_col %in% colnames(sample_info)) {
     meta$shape <- sample_info[[shape_col]]
     n_shapes <- length(unique(meta$shape))
     shape_values <- setNames(0:(n_shapes - 1) %% 25 + 1, unique(meta$shape))
-    if (n_shapes > 25) warning("More than 25 shape groups. Shapes will repeat.")
+    if (n_shapes > 25) warning("形状分组超过 25 个，形状将会重复。")
   } else {
     shape_values <- NULL
   }
 
-  # Size
+  # 大小
   if (!is.null(size_col) && size_col %in% colnames(sample_info)) {
     meta$size <- as.numeric(sample_info[[size_col]])
-    size_values <- NULL  # Continuous mapping
+    size_values <- NULL  # 连续型映射
   } else {
     size_values <- NULL
   }
