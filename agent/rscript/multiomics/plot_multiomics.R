@@ -1,10 +1,9 @@
 # ==============================================================================
 # OmicsFlow: Multi-Omics Visualisation
 # ==============================================================================
-# Plotting companions for the multi-omics analysis functions. Every function
-# returns a ggplot object, or a pheatmap object where a heatmap is the natural
-# representation, so that the existing export_plot() and export_heatmap()
-# helpers can be used directly.
+# 多组学分析函数的绘图配套模块。每个函数都返回一个 ggplot 对象，或在以热图作为
+# 自然表达形式时返回 pheatmap 对象，从而可直接使用已有的 export_plot() 与
+# export_heatmap() 辅助函数。
 # ==============================================================================
 
 #' 跨组学相关矩阵的热力图

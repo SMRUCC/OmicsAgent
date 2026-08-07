@@ -1,20 +1,17 @@
 # ==============================================================================
-# OmicsFlow: Hierarchical Multi-Omics PLS Path Modelling (PLS-PM)
+# OmicsFlow：分层多组学 PLS 路径建模（PLS-PM）
 # ==============================================================================
-# Builds latent variables from biological annotation (EC numbers, KEGG pathway
-# mappings, compound classes, microbial taxonomy) and connects them across the
-# omics hierarchy with a PLS path model solved by the plspm package.
+# 从生物学注释（EC 编号、KEGG 通路映射、化合物类别、微生物分类学）构建潜变量，
+# 并用 plspm 包求解的 PLS 路径模型将它们在组学层级间连接起来。
 #
-# Typical workflow:
-#   1. build_multiomics_latent_def()     annotation -> latent variable blocks
-#   2. build_hierarchical_inner_model()  layer ordering -> lower-triangular
-#                                        path matrix
-#   3. run_multiomics_plspm()            solve and flatten the results
-#   4. summarise_plspm_paths()           per-layer path summary
+# 典型流程：
+#   1. build_multiomics_latent_def()     注释 -> 潜变量块
+#   2. build_hierarchical_inner_model()  层排序 -> 下三角路径矩阵
+#   3. run_multiomics_plspm()            求解并展开结果
+#   4. summarise_plspm_paths()           逐层路径汇总
 #
-# Unlike the simplified run_plspm() in network/plspm_net.R (PCA scores plus
-# pairwise lm), this module calls plspm::plspm() so weights, loadings and path
-# coefficients are estimated jointly.
+# 与 network/plspm_net.R 中简化的 run_plspm()（PCA 分数加两两 lm）不同，本模块
+# 调用 plspm::plspm()，从而联合估计权重、载荷与路径系数。
 # ==============================================================================
 
 
@@ -22,19 +19,16 @@
 # Annotation helpers
 # ------------------------------------------------------------------------------
 
-#' Normalise and truncate EC numbers to a given hierarchy level
+#' 将 EC 编号规范化并截断到指定层级
 #'
-#' @description Enzyme Commission numbers in the annotation tables are stored
-#'   with a textual prefix (e.g. \code{"EC 1.13.11.71"}). Full EC numbers are
-#'   far too granular to form usable latent blocks, so the identifier is
-#'   cleaned and truncated to the first \code{level} components, which groups
-#'   enzymes into meaningful functional classes.
+#' @description 注释表中的酶学委员会（EC）编号以文本前缀形式存储（如
+#'   \code{"EC 1.13.11.71"}）。完整的 EC 编号过于细碎，无法构成可用的潜变量块，
+#'   因此将标识符清洗并截断到前 \code{level} 个分量，从而把酶归入有意义的功能类别。
 #'
-#' @param x Character vector of raw EC annotations.
-#' @param level Number of EC components to keep. Default: 2 (e.g. "1.13").
+#' @param x 原始 EC 注释的字符向量。
+#' @param level 保留的 EC 分量数。默认：2（如 "1.13"）。
 #'
-#' @return Character vector of truncated EC classes, \code{NA} where the input
-#'   carries no usable EC number.
+#' @return 截断后 EC 类别的字符向量，输入不含可用 EC 编号处为 \code{NA}。
 #'
 #' @examples
 #' \dontrun{
@@ -61,14 +55,14 @@ clean_ec_number <- function(x, level = 2) {
 }
 
 
-#' Resolve the grouping vector of one omics layer
+#' 解析单个组学层的分组向量
 #'
-#' @param finfo Feature annotation data.frame (row names = matrix row names).
-#' @param features Feature IDs present in the expression matrix.
-#' @param source Name of the annotation column, or "ec_number" / "kegg".
-#' @param ec_level EC truncation level.
+#' @param finfo 特征注释 data.frame（行名 = 矩阵行名）。
+#' @param features 表达矩阵中出现的特征 ID。
+#' @param source 注释列的名称，或 "ec_number" / "kegg"。
+#' @param ec_level EC 截断层级。
 #'
-#' @return Character vector aligned with \code{features}, NA where unusable.
+#' @return 与 \code{features} 对齐的字符向量，不可用处为 NA。
 #'
 #' @keywords internal
 .plspm_group_vector <- function(finfo, features, source, ec_level = 2) {
@@ -83,11 +77,11 @@ clean_ec_number <- function(x, level = 2) {
 }
 
 
-#' Coverage of a candidate annotation column
+#' 候选注释列的覆盖率
 #'
-#' @param v Character vector returned by \code{.plspm_group_vector()}.
+#' @param v 由 \code{.plspm_group_vector()} 返回的字符向量。
 #'
-#' @return Fraction of non-missing entries in [0, 1].
+#' @return 非缺失项所占比例，取值 [0, 1]。
 #'
 #' @keywords internal
 .plspm_coverage <- function(v) {
@@ -100,40 +94,33 @@ clean_ec_number <- function(x, level = 2) {
 # Latent variable construction
 # ------------------------------------------------------------------------------
 
-#' Build multi-omics latent variable definitions from annotation
+#' 基于注释构建多组学潜变量定义
 #'
-#' @description Groups the features of every omics layer into latent variables
-#'   using biological annotation. Each layer may use a different grouping
-#'   source, which is required because the layers carry different metadata:
-#'   transcriptome and proteome have EC numbers and KEGG orthologs, metabolome
-#'   and volatilome have compound classes, and the 16S layer only has taxonomy.
+#' @description 利用生物学注释，将每个组学层的特征分组为潜变量。每层可使用不同的
+#'   分组来源，这是必需的，因为各层携带的元数据不同：转录组与蛋白质组有 EC 编号
+#'   和 KEGG 直系同源，代谢组与挥发组有化合物类别，而 16S 层只有分类学信息。
 #'
-#'   When the requested source has poor coverage the function automatically
-#'   falls back to the next usable column instead of failing, so a layer is
-#'   only skipped when no annotation at all can be used.
+#'   当所请求的来源覆盖率较低时，函数会自动回退到下一个可用列，而非失败，
+#'   因此仅当完全无任何可用注释时层才会被跳过。
 #'
-#' @param mo A MultiOmicsData object.
-#' @param layer_sources Named list mapping layer name to the annotation column
-#'   to group by, e.g. \code{list(transcriptome = "ec_number",
-#'   metabolome = "super_class", microbiome = "taxonomy_phylum")}.
-#' @param min_size Minimum number of features per latent variable. Default: 3.
-#' @param max_latent_per_layer Cap on the number of latent variables kept per
-#'   layer, selected by total variance. Default: NULL (no cap).
-#' @param max_features_per_latent Cap on the manifest variables per latent
-#'   variable, selected by variance. Default: 15.
-#' @param ec_level EC truncation level. Default: 2.
-#' @param fallback_sources Columns tried when the requested source has
-#'   insufficient coverage.
-#' @param min_coverage Minimum fraction of annotated features required to
-#'   accept a source. Default: 0.2.
-#' @param verbose Print progress. Default: TRUE.
+#' @param mo 一个 MultiOmicsData 对象。
+#' @param layer_sources 映射层名到用于分组的注释列的有名列表，例如
+#'   \code{list(transcriptome = "ec_number", metabolome = "super_class",
+#'   microbiome = "taxonomy_phylum")}。
+#' @param min_size 每个潜变量的最小特征数。默认：3。
+#' @param max_latent_per_layer 每层保留的潜变量数量上限，按总方差选取。默认：NULL（无上限）。
+#' @param max_features_per_latent 每个潜变量的显变量数量上限，按方差选取。默认：15。
+#' @param ec_level EC 截断层级。默认：2。
+#' @param fallback_sources 当所请求来源覆盖率不足时尝试的列。
+#' @param min_coverage 接受某来源所需的最小注释特征比例。默认：0.2。
+#' @param verbose 是否打印进度。默认：TRUE。
 #'
-#' @return A list with:
+#' @return 一个列表：
 #'   \itemize{
-#'     \item \code{latent_def}: named list latent -> feature IDs.
-#'     \item \code{definitions}: data.frame with \code{latent}, \code{layer},
-#'       \code{source}, \code{group}, \code{n_features}.
-#'     \item \code{layer_sources_used}: the source actually used per layer.
+#'     \item \code{latent_def}: latent -> 特征 ID 的有名列表。
+#'     \item \code{definitions}: 含 \code{latent}、\code{layer}、
+#'       \code{source}、\code{group}、\code{n_features} 的数据框。
+#'     \item \code{layer_sources_used}: 每层实际使用的来源。
 #'   }
 #'
 #' @examples
@@ -251,23 +238,20 @@ build_multiomics_latent_def <- function(mo, layer_sources, min_size = 3,
 # Hierarchical inner model
 # ------------------------------------------------------------------------------
 
-#' Build the lower-triangular inner model matrix for a layered PLS path model
+#' 为分层 PLS 路径模型构建下三角内模型矩阵
 #'
-#' @description Orders the latent variables by the biological hierarchy of
-#'   their omics layer and connects every latent variable to all latent
-#'   variables of downstream layers. plspm requires a lower-triangular path
-#'   matrix, which this ordering guarantees.
+#' @description 按各潜变量所属组学层的生物学层级对它们排序，并将每个潜变量连接到
+#'   所有下游层的潜变量。plspm 要求下三角路径矩阵，而此排序恰好保证这一点。
 #'
-#' @param definitions The \code{definitions} data.frame produced by
-#'   \code{build_multiomics_latent_def()}.
-#' @param layer_order Character vector of layers, most upstream first.
-#' @param allow_within_layer Whether latent variables of the same layer may be
-#'   connected. Default: FALSE.
-#' @param adjacent_only Connect each layer only to the next layer in
-#'   \code{layer_order} rather than to all downstream layers. Default: FALSE.
+#' @param definitions 由 \code{build_multiomics_latent_def()} 生成的 \code{definitions}
+#'   数据框。
+#' @param layer_order 层的字符向量，最上游在前。
+#' @param allow_within_layer 同一层的潜变量是否允许相连。默认：FALSE。
+#' @param adjacent_only 是否仅连接到 \code{layer_order} 中的下一层，而非所有下游层。
+#'   默认：FALSE。
 #'
-#' @return A list with \code{path_matrix} (lower-triangular 0/1 matrix) and
-#'   \code{definitions} reordered to match its row order.
+#' @return 一个列表，含 \code{path_matrix}（下三角 0/1 矩阵）与
+#'   重新排序以匹配其行顺序的 \code{definitions}。
 #'
 #' @examples
 #' \dontrun{
@@ -319,30 +303,26 @@ build_hierarchical_inner_model <- function(definitions, layer_order,
 # Solving the path model
 # ------------------------------------------------------------------------------
 
-#' Fit a hierarchical multi-omics PLS path model
+#' 拟合分层多组学 PLS 路径模型
 #'
-#' @description Assembles a wide sample-by-manifest-variable table from all
-#'   omics layers, maps every latent variable to its column indices and solves
-#'   the path model with \code{plspm::plspm()}. Zero-variance and duplicated
-#'   manifest variables are removed beforehand because they make the PLS
-#'   algorithm unstable.
+#' @description 从所有组学层汇总为一张样本 x 显变量的宽表，将每个潜变量映射到其列索引，
+#'   并用 \code{plspm::plspm()} 求解路径模型。零方差与重复的显变量会事先移除，
+#'   因为它们会使 PLS 算法不稳定。
 #'
-#' @param mo A MultiOmicsData object.
-#' @param latent_def Named list latent -> feature IDs.
-#' @param definitions Definitions data.frame, already ordered to match
-#'   \code{path_matrix} (as returned by
-#'   \code{build_hierarchical_inner_model()}).
-#' @param path_matrix Lower-triangular 0/1 inner model matrix.
-#' @param scale Standardise manifest variables. Default: TRUE.
-#' @param boot_val Run bootstrap validation. Default: FALSE.
-#' @param br Bootstrap resamples when \code{boot_val} is TRUE. Default: 100.
-#' @param min_block_size Minimum manifest variables per block after cleaning.
-#'   Default: 2.
-#' @param verbose Print progress. Default: TRUE.
+#' @param mo 一个 MultiOmicsData 对象。
+#' @param latent_def latent -> 特征 ID 的有名列表。
+#' @param definitions 定义数据框，已按 \code{path_matrix} 排序（即由
+#'   \code{build_hierarchical_inner_model()} 返回者）。
+#' @param path_matrix 下三角 0/1 内模型矩阵。
+#' @param scale 是否对显变量标准化。默认：TRUE。
+#' @param boot_val 是否运行自助法验证。默认：FALSE。
+#' @param br 当 \code{boot_val} 为 TRUE 时的自助重采样次数。默认：100。
+#' @param min_block_size 清洗后每块的最小显变量数。默认：2。
+#' @param verbose 是否打印进度。默认：TRUE。
 #'
-#' @return A list with \code{model}, \code{inner_paths}, \code{outer_loadings},
-#'   \code{scores}, \code{fit_summary}, \code{effects}, \code{gof} and
-#'   \code{definitions}.
+#' @return 一个列表，含 \code{model}、\code{inner_paths}、\code{outer_loadings}、
+#'   \code{scores}、\code{fit_summary}、\code{effects}、\code{gof} 与
+#'   \code{definitions}。
 #'
 #' @examples
 #' \dontrun{
@@ -515,12 +495,12 @@ run_multiomics_plspm <- function(mo, latent_def, definitions, path_matrix,
 }
 
 
-#' Summarise PLS path model results per layer transition
+#' 按层间转移汇总 PLS 路径模型结果
 #'
-#' @param plspm_result Output of \code{run_multiomics_plspm()}.
-#' @param p_threshold Significance threshold. Default: 0.05.
+#' @param plspm_result \code{run_multiomics_plspm()} 的输出。
+#' @param p_threshold 显著性阈值。默认：0.05。
 #'
-#' @return A data.frame with one row per (from_layer, to_layer) transition.
+#' @return 每个 (from_layer, to_layer) 转移一行数据框。
 #'
 #' @examples
 #' \dontrun{

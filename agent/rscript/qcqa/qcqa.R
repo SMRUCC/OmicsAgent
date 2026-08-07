@@ -56,7 +56,7 @@ qc_variation <- function(expr_matrix, sample_info, qc_group = "QC",
   qc_sd <- apply(qc_data, 1, stats::sd, na.rm = TRUE)
   qc_cv <- (qc_sd / abs(qc_mean)) * 100  # CV as percentage
 
-  # Summary data.frame
+  # 汇总数据框
   summary_df <- data.frame(
     feature_id = rownames(qc_data),
     qc_mean = qc_mean,
@@ -65,7 +65,7 @@ qc_variation <- function(expr_matrix, sample_info, qc_group = "QC",
     stringsAsFactors = FALSE
   )
 
-  # Plot: CV distribution
+  # 绘图：CV 分布
   cv_df <- data.frame(cv = qc_cv)
   p <- ggplot2::ggplot(cv_df, ggplot2::aes(x = cv)) +
     ggplot2::geom_histogram(bins = 50, fill = "#4a90d9", color = "white") +

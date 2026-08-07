@@ -92,7 +92,7 @@ plot_heatmap <- function(expr_matrix, sample_info, feature_info = NULL,
       annotation_name_side = "left"
     )
 
-    # Row annotation (family)
+    # 行注释（家族）
     row_anno <- NULL
     if (!is.null(feature_info) && !is.null(family_col) &&
         family_col %in% colnames(feature_info)) {

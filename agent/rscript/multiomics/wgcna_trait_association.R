@@ -1,11 +1,10 @@
 # ==============================================================================
 # OmicsFlow: WGCNA Module - Downstream Trait Association
 # ==============================================================================
-# Builds WGCNA co-expression modules on one omics layer, then treats the
-# molecular features of a downstream omics layer as biological traits and tests
-# the association between every module eigengene and every downstream feature.
-# This answers "which co-expressed module of layer A tracks which molecule of
-# layer B" and supports the trait-driven view of cross-omics integration.
+# 在一个组学层上构建 WGCNA 共表达模块，再将下游组学层的分子特征视为生物学性状，
+# 检验每个模块特征基因（eigengene）与每个下游特征之间的关联。它回答了
+# "层 A 的哪个共表达模块与层 B 的哪个分子相关联"，并支持跨组学整合中
+# 以性状驱动的视角。
 # ==============================================================================
 
 #' 在多组学层上构建 WGCNA 模块
