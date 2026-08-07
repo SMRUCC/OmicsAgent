@@ -216,27 +216,44 @@ select_top_features <- function(mat, top_n = NULL, label = "matrix",
   }
   
   # ---- pvalue（Fisher 合并 Spearman 与 MIC 两个 p 值）----
-  # X^2 = -2 * (ln p_rho + ln p_MIC) ~ chi-square(df=4)
-  #   MIC p 缺失时退化为 Spearman p 值。
+  # X^2 = -2 * sum(ln p_i) ~ chi-square(df = 2k)，k 为参与合并的 p 值个数。
+  #
+  # 关键：MIC 只对候选对（按 |rho| 取 Top max_pairs_for_mic）计算，
+  # 其余边的 mic_p 恒为 NA。原实现按"整体是否存在非 NA 的 mic_p"来决定
+  # 是否走双 p 合并，一旦走双 p 分支，非候选边的 log(NA) 会让 chisq 变成 NA，
+  # 随后被统一置为 merged_p = 1，等价于把所有非候选边强制判为不显著，
+  # 使显著边数恒等于 max_pairs_for_mic。
+  # 正确做法是**逐边**判断：有 MIC p 的用 df=4 合并，没有的仅用 Spearman p
+  # 并以 df=2 计算（即退化为 Spearman 自身的 p 值）。
   p_rho <- pmax(rho_p, 1e-300)
-  if (!is.null(mic_p) && !all(is.na(mic_p))) {
+  log_rho <- log(p_rho)
+  
+  if (!is.null(mic_p) && any(!is.na(mic_p))) {
     p_mic <- pmax(mic_p, 1e-300)
-    chisq <- -2 * (log(p_rho) + log(p_mic))
+    has_mic <- !is.na(p_mic)
+    chisq <- ifelse(has_mic, -2 * (log_rho + log(ifelse(has_mic, p_mic, 1))),
+                    -2 * log_rho)
+    df_vec <- ifelse(has_mic, 4, 2)
   } else {
-    chisq <- -2 * log(p_rho)
+    chisq <- -2 * log_rho
+    df_vec <- rep(2, n)
   }
-  merged_p <- stats::pchisq(chisq, df = 4, lower.tail = FALSE)
+  merged_p <- stats::pchisq(chisq, df = df_vec, lower.tail = FALSE)
   merged_p[is.na(merged_p)] <- 1
   
   # BH 校正
   padj <- stats::p.adjust(merged_p, method = p_adjust)
   
   # ---- association 分类 ----
-  sig <- padj < p_threshold
+  sig <- !is.na(padj) & padj < p_threshold
   assoc <- rep("not_significant", n)
   assoc[sig & rho >= 0]  <- "positive"
   assoc[sig & rho < 0]   <- "negative"
-  assoc[sig & abs(rho) < rho_linear_min] <- "nonlinear"
+  # 只有在实际算过 MIC 的边上才可能判定为 "nonlinear"：
+  # |rho| 低但显著，且 MIC 提供了非线性关联证据。
+  # 若 MIC 为 NA（非候选对），缺乏非线性证据，仍按 rho 的符号归类。
+  has_mic_val <- if (is.null(mic)) rep(FALSE, n) else !is.na(mic)
+  assoc[sig & abs(rho) < rho_linear_min & has_mic_val] <- "nonlinear"
   
   df <- data.frame(
     source        = src,
