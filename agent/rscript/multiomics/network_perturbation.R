@@ -1,21 +1,17 @@
 # ==============================================================================
-# OmicsFlow: Virtual Perturbation Analysis on Bayesian Networks
+# OmicsFlow：贝叶斯网络上的虚拟扰动分析
 # ==============================================================================
-# In-silico interventions on a learned (dynamic) Bayesian network to rank the
-# regulatory importance of nodes. Three complementary layers of evidence are
-# combined, from cheap to expensive:
+# 对已学习（动态）贝叶斯网络进行计算机干预，以对各节点的调控重要性排序。
+# 将三层互补的证据由廉价到昂贵地结合起来：
 #
-#   1. Structural layer  - igraph reachability: which nodes are downstream of
-#                          the perturbed node (O(V+E), always available).
-#   2. Intervention layer- bnlearn::mutilated() implements Pearl's do-operator
-#                          by cutting the incoming arcs of the target node and
-#                          fixing it to a chosen state.
-#   3. Inference layer   - bnlearn::cpdist() sampling compares the downstream
-#                          state distributions before and after the
-#                          intervention (total variation distance).
+#   1. 结构层  - igraph 可达性：哪些节点位于被扰动节点的下游
+#                          （O(V+E)，始终可用）。
+#   2. 干预层  - bnlearn::mutilated() 通过切断目标节点的入弧并将其
+#                          固定到选定状态，实现 Pearl 的 do-算子。
+#   3. 推断层  - bnlearn::cpdist() 采样比较干预前后下游状态分布的
+#                          差异（总变差距离）。
 #
-# The gRain package is intentionally not required; all inference is performed
-# with bnlearn's built-in approximate methods.
+# 有意不依赖 gRain 包；所有推断均使用 bnlearn 内置的近似方法完成。
 # ==============================================================================
 
 
@@ -23,11 +19,11 @@
 # Internal helpers
 # ------------------------------------------------------------------------------
 
-#' Build an igraph object from a DBN result
+#' 从 DBN 结果构建 igraph 对象
 #'
-#' @param dbn_result Result of \code{run_dbn_layer()} / \code{run_dbn_multiomics()}.
+#' @param dbn_result \code{run_dbn_layer()} / \code{run_dbn_multiomics()} 的结果。
 #'
-#' @return An igraph directed graph, or NULL when igraph is unavailable.
+#' @return 一个 igraph 有向图；igraph 不可用时返回 NULL。
 #'
 #' @keywords internal
 .perturb_graph <- function(dbn_result) {

@@ -1,36 +1,30 @@
 # ==============================================================================
-# OmicsFlow: Multi-Omics Data Container
+# OmicsFlow：多组学数据容器
 # ==============================================================================
-# Container construction, sample alignment and batch preprocessing for
-# multi-omics integration analysis.
+# 用于多组学整合分析的容器构建、样本对齐与批量预处理。
 # ==============================================================================
 
-#' Create a MultiOmicsData container
+#' 创建 MultiOmicsData 容器
 #'
-#' @description Builds a multi-omics container from several expression
-#'   matrices sharing a common sample metadata table. Each omics layer is
-#'   wrapped with \code{create_omics_data()} and all layers are aligned to the
-#'   set of samples present in every layer, so that downstream cross-omics
-#'   functions can assume identical sample order across layers.
+#' @description 由多个共享同一份样本元数据表的表达矩阵构建多组学容器。每个组学层
+#'   都用 \code{create_omics_data()} 包装，且所有层都被对齐到每个层中都存在的样本
+#'   集合，以便下游跨组学函数可以假定各层样本顺序完全一致。
 #'
-#' @param expr_list Named list of numeric matrices (features x samples). Names
-#'   are used as omics layer names.
-#' @param sample_info A data.frame with sample metadata, row names are sample
-#'   IDs (as returned by \code{load_sample_info()}).
-#' @param feature_info_list Named list of feature annotation data.frames, with
-#'   the same names as \code{expr_list}. Layers missing from this list get an
-#'   automatically generated minimal annotation.
-#' @param match_cols Character vector giving the \code{match_col} passed to
-#'   \code{create_omics_data()} for each layer. Either length 1 (recycled) or a
-#'   named vector with one entry per layer. Default: "name".
+#' @param expr_list 数值矩阵的有名列表（特征 x 样本）。名称用作组学层名。
+#' @param sample_info 含样本元数据的 data.frame，行名为样本 ID（由
+#'   \code{load_sample_info()} 返回）。
+#' @param feature_info_list 特征注释 data.frame 的有名列表，名称与 \code{expr_list}
+#'   相同。该列表中缺失的层会获得自动生成的最小注释。
+#' @param match_cols 字符向量，给出传给每层 \code{create_omics_data()} 的
+#'   \code{match_col}。可为长度 1（循环使用）或每层一个条目的有名向量。默认："name"。
 #'
-#' @return A MultiOmicsData object (list) with:
+#' @return 一个 MultiOmicsData 对象（列表），包含：
 #'   \itemize{
-#'     \item \code{omics}: Named list of OmicsData objects.
-#'     \item \code{sample_info}: Sample metadata restricted to common samples.
-#'     \item \code{common_samples}: Character vector of shared sample IDs.
-#'     \item \code{metadata}: List with n_omics, omics_names, n_samples and
-#'       n_features_per_omics.
+#'     \item \code{omics}: OmicsData 对象的有名列表。
+#'     \item \code{sample_info}: 仅保留共有样本的样本元数据。
+#'     \item \code{common_samples}: 共有样本 ID 的字符向量。
+#'     \item \code{metadata}: 含 n_omics、omics_names、n_samples 与
+#'       n_features_per_omics 的列表。
 #'   }
 #'
 #' @examples
@@ -61,7 +55,7 @@ create_multiomics_data <- function(expr_list, sample_info,
   layer_names <- names(expr_list)
   n_layers <- length(layer_names)
 
-  # Resolve per-layer match columns -------------------------------------------
+  # 解析每层的匹配列 -------------------------------------------
   if (length(match_cols) == 1 && is.null(names(match_cols))) {
     match_cols <- stats::setNames(rep(match_cols, n_layers), layer_names)
   } else if (!is.null(names(match_cols))) {
@@ -78,7 +72,7 @@ create_multiomics_data <- function(expr_list, sample_info,
     stop("match_cols must be length 1, length(expr_list), or a named vector.")
   }
 
-  # Determine the samples shared by every layer and the metadata table --------
+  # 确定每层与元数据表共享的样本 --------
   common_samples <- rownames(sample_info)
   for (nm in layer_names) {
     mat <- expr_list[[nm]]
@@ -100,7 +94,7 @@ create_multiomics_data <- function(expr_list, sample_info,
 
   aligned_info <- sample_info[common_samples, , drop = FALSE]
 
-  # Build one OmicsData per layer on the aligned sample set -------------------
+  # 在对齐的样本集上为每个层构建一个 OmicsData -------------------
   omics <- vector("list", n_layers)
   names(omics) <- layer_names
 
@@ -160,10 +154,10 @@ create_multiomics_data <- function(expr_list, sample_info,
 }
 
 
-#' Print method for MultiOmicsData object
+#' MultiOmicsData 对象的打印方法
 #'
-#' @param x A MultiOmicsData object.
-#' @param ... Additional arguments (ignored).
+#' @param x 一个 MultiOmicsData 对象。
+#' @param ... 额外参数（忽略）。
 #'
 #' @export
 print.MultiOmicsData <- function(x, ...) {
@@ -187,12 +181,12 @@ print.MultiOmicsData <- function(x, ...) {
 }
 
 
-#' Extract one expression matrix from a MultiOmicsData object
+#' 从 MultiOmicsData 对象中提取单个表达矩阵
 #'
-#' @param mo A MultiOmicsData object.
-#' @param name Name of the omics layer.
+#' @param mo 一个 MultiOmicsData 对象。
+#' @param name 组学层的名称。
 #'
-#' @return A numeric matrix (features x samples).
+#' @return 一个数值矩阵（特征 x 样本）。
 #'
 #' @examples
 #' \dontrun{
@@ -212,13 +206,12 @@ get_omics_matrix <- function(mo, name) {
 }
 
 
-#' Extract all expression matrices from a MultiOmicsData object
+#' 从 MultiOmicsData 对象中提取全部表达矩阵
 #'
-#' @param mo A MultiOmicsData object.
-#' @param layers Optional character vector restricting the returned layers.
-#'   Default: NULL (all layers).
+#' @param mo 一个 MultiOmicsData 对象。
+#' @param layers 可选字符向量，限定返回的层。默认：NULL（所有层）。
 #'
-#' @return A named list of numeric matrices (features x samples).
+#' @return 数值矩阵的有名列表（特征 x 样本）。
 #'
 #' @examples
 #' \dontrun{
@@ -242,12 +235,12 @@ get_omics_list <- function(mo, layers = NULL) {
 }
 
 
-#' Extract feature annotation of one omics layer
+#' 提取某个组学层的特征注释
 #'
-#' @param mo A MultiOmicsData object.
-#' @param name Name of the omics layer.
+#' @param mo 一个 MultiOmicsData 对象。
+#' @param name 组学层的名称。
 #'
-#' @return A data.frame with feature annotation.
+#' @return 含特征注释的 data.frame。
 #'
 #' @examples
 #' \dontrun{
@@ -266,32 +259,26 @@ get_feature_info <- function(mo, name) {
 }
 
 
-#' Batch preprocessing of all omics layers
+#' 对所有组学层进行批量预处理
 #'
-#' @description Applies the standard OmicsFlow preprocessing chain
-#'   (missing-value filtering, imputation, sample normalization and scaling)
-#'   to every layer of a MultiOmicsData object. Each step can be switched off
-#'   globally or skipped for specific layers.
+#' @description 将标准的 OmicsFlow 预处理链路（缺失值过滤、插补、样本归一化与
+#'   标准化）应用到 MultiOmicsData 对象的每一层。每个步骤都可在全局关闭，或针对
+#'   特定层跳过。
 #'
-#' @param mo A MultiOmicsData object.
-#' @param filter Logical, run \code{filter_missing_values()}. Default: TRUE.
-#' @param filter_threshold Minimum fraction of valid values required to keep a
-#'   feature. Default: 0.5.
-#' @param filter_method Filtering strategy, "group" or "overall". Default:
-#'   "group".
-#' @param group_col Grouping column in sample_info used by group filtering.
-#'   Default: "sample_info".
-#' @param impute Logical, run \code{impute_min_half()}. Default: TRUE.
-#' @param normalize Logical, run \code{normalize_sample_total()}. Default: TRUE.
-#' @param scale Logical, run \code{scale_pareto()}. Default: TRUE.
-#' @param log_transform Logical, apply \code{log2(x + 1)} before scaling.
-#'   Default: FALSE.
-#' @param skip_normalize Character vector of layer names for which sample-total
-#'   normalization is skipped (e.g. already-normalized layers). Default: NULL.
+#' @param mo 一个 MultiOmicsData 对象。
+#' @param filter 逻辑值，是否执行 \code{filter_missing_values()}。默认：TRUE。
+#' @param filter_threshold 保留某一特征所需的有效值最小比例。默认：0.5。
+#' @param filter_method 过滤策略，"group" 或 "overall"。默认："group"。
+#' @param group_col 组过滤所用的 sample_info 分组列。默认："sample_info"。
+#' @param impute 逻辑值，是否执行 \code{impute_min_half()}。默认：TRUE。
+#' @param normalize 逻辑值，是否执行 \code{normalize_sample_total()}。默认：TRUE。
+#' @param scale 逻辑值，是否执行 \code{scale_pareto()}。默认：TRUE。
+#' @param log_transform 逻辑值，标准化前是否应用 \code{log2(x + 1)}。默认：FALSE。
+#' @param skip_normalize 字符向量，指定跳过样本总量归一化的层名
+#'   （例如已归一化的层）。默认：NULL。
 #'
-#' @return A MultiOmicsData object with preprocessed expression matrices. A
-#'   \code{preprocessing} element records the steps applied and the number of
-#'   features kept per layer.
+#' @return 一个携带预处理后表达矩阵的 MultiOmicsData 对象。\code{preprocessing}
+#'   元素记录了所执行的步骤及各层保留的特征数。
 #'
 #' @examples
 #' \dontrun{
@@ -361,7 +348,7 @@ preprocess_multiomics <- function(mo,
       mat <- scale_pareto(mat)
     }
 
-    # Keep the feature annotation aligned with the surviving features
+    # 使特征注释与保留下来的特征保持一致
     finfo <- mo$omics[[nm]]$feature_info
     keep <- intersect(rownames(mat), rownames(finfo))
     if (length(keep) == nrow(mat)) {
@@ -401,19 +388,17 @@ preprocess_multiomics <- function(mo,
 }
 
 
-#' Subset a MultiOmicsData object by samples
+#' 按样本对 MultiOmicsData 对象取子集
 #'
-#' @description Restricts every omics layer and the sample metadata to a
-#'   subset of samples, e.g. one geographic location or one fermentation phase.
+#' @description 将每个组学层与样本元数据限制为样本的一个子集，例如某一地理区域
+#'   或某一发酵阶段。
 #'
-#' @param mo A MultiOmicsData object.
-#' @param samples Character vector of sample IDs to keep. Ignored when
-#'   \code{subset_col} is supplied.
-#' @param subset_col Column name in sample_info used for selection.
-#'   Default: NULL.
-#' @param subset_values Values of \code{subset_col} to keep. Default: NULL.
+#' @param mo 一个 MultiOmicsData 对象。
+#' @param samples 要保留的样本 ID 字符向量。提供 \code{subset_col} 时忽略。
+#' @param subset_col sample_info 中用于筛选的列名。默认：NULL。
+#' @param subset_values 要保留的 \code{subset_col} 取值。默认：NULL。
 #'
-#' @return A MultiOmicsData object restricted to the selected samples.
+#' @return 限定为所选样本的 MultiOmicsData 对象。
 #'
 #' @examples
 #' \dontrun{
@@ -459,17 +444,16 @@ subset_multiomics <- function(mo, samples = NULL, subset_col = NULL,
 }
 
 
-#' Remove zero-variance features from a matrix
+#' 从矩阵中移除零方差特征
 #'
-#' @description Utility used by cross-omics correlation and integration
-#'   functions. Features with zero or undefined variance produce NaN
-#'   correlations and must be discarded before analysis.
+#' @description 跨组学相关与整合函数使用的工具。零方差或方差未定义的特征会产生
+#'   NaN 相关，必须在分析前剔除。
 #'
-#' @param mat A numeric matrix (features x samples).
-#' @param label Optional label used in the reporting message. Default: "matrix".
-#' @param verbose Logical, report the number of removed features. Default: TRUE.
+#' @param mat 数值矩阵（特征 x 样本）。
+#' @param label 报告信息中使用的可选标签。默认："matrix"。
+#' @param verbose 逻辑值，是否报告移除的特征数。默认：TRUE。
 #'
-#' @return A numeric matrix without zero-variance features.
+#' @return 不含零方差特征的数值矩阵。
 #'
 #' @examples
 #' \dontrun{
