@@ -34,16 +34,18 @@ Partial Class FormFolderWorkspace
         TreeView1 = New TreeView()
         ContextMenuStrip1 = New ContextMenuStrip(components)
         PinToolStripMenuItem = New ToolStripMenuItem()
-        ImageList1 = New ImageList(components)
         ToolStripMenuItem1 = New ToolStripSeparator()
         ViewAsTextFileToolStripMenuItem = New ToolStripMenuItem()
+        ImageList1 = New ImageList(components)
+        ToolStripButton3 = New ToolStripButton()
+        OpenConsoleAtHereToolStripMenuItem = New ToolStripMenuItem()
         ToolStrip1.SuspendLayout()
         ContextMenuStrip1.SuspendLayout()
         SuspendLayout()
         ' 
         ' ToolStrip1
         ' 
-        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripDropDownButton1, ToolStripSeparator1, ToolStripButton2})
+        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripDropDownButton1, ToolStripSeparator1, ToolStripButton2, ToolStripButton3})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
         ToolStrip1.Size = New Size(420, 25)
@@ -96,16 +98,27 @@ Partial Class FormFolderWorkspace
         ' 
         ' ContextMenuStrip1
         ' 
-        ContextMenuStrip1.Items.AddRange(New ToolStripItem() {PinToolStripMenuItem, ToolStripMenuItem1, ViewAsTextFileToolStripMenuItem})
+        ContextMenuStrip1.Items.AddRange(New ToolStripItem() {PinToolStripMenuItem, ToolStripMenuItem1, ViewAsTextFileToolStripMenuItem, OpenConsoleAtHereToolStripMenuItem})
         ContextMenuStrip1.Name = "ContextMenuStrip1"
-        ContextMenuStrip1.Size = New Size(181, 76)
+        ContextMenuStrip1.Size = New Size(193, 76)
         ' 
         ' PinToolStripMenuItem
         ' 
         PinToolStripMenuItem.Image = CType(resources.GetObject("PinToolStripMenuItem.Image"), Image)
         PinToolStripMenuItem.Name = "PinToolStripMenuItem"
-        PinToolStripMenuItem.Size = New Size(180, 22)
+        PinToolStripMenuItem.Size = New Size(160, 22)
         PinToolStripMenuItem.Text = "Pin"
+        ' 
+        ' ToolStripMenuItem1
+        ' 
+        ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        ToolStripMenuItem1.Size = New Size(157, 6)
+        ' 
+        ' ViewAsTextFileToolStripMenuItem
+        ' 
+        ViewAsTextFileToolStripMenuItem.Name = "ViewAsTextFileToolStripMenuItem"
+        ViewAsTextFileToolStripMenuItem.Size = New Size(160, 22)
+        ViewAsTextFileToolStripMenuItem.Text = "View As Text File"
         ' 
         ' ImageList1
         ' 
@@ -116,16 +129,21 @@ Partial Class FormFolderWorkspace
         ImageList1.Images.SetKeyName(1, "icons8-file-explorer-new-96.png")
         ImageList1.Images.SetKeyName(2, "icons8-books-96.png")
         ' 
-        ' ToolStripMenuItem1
+        ' ToolStripButton3
         ' 
-        ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        ToolStripMenuItem1.Size = New Size(177, 6)
+        ToolStripButton3.DisplayStyle = ToolStripItemDisplayStyle.Image
+        ToolStripButton3.Image = CType(resources.GetObject("ToolStripButton3.Image"), Image)
+        ToolStripButton3.ImageTransparentColor = Color.Magenta
+        ToolStripButton3.Name = "ToolStripButton3"
+        ToolStripButton3.Size = New Size(23, 22)
+        ToolStripButton3.Text = "Open Terminal"
         ' 
-        ' ViewAsTextFileToolStripMenuItem
+        ' OpenConsoleAtHereToolStripMenuItem
         ' 
-        ViewAsTextFileToolStripMenuItem.Name = "ViewAsTextFileToolStripMenuItem"
-        ViewAsTextFileToolStripMenuItem.Size = New Size(180, 22)
-        ViewAsTextFileToolStripMenuItem.Text = "View As Text File"
+        OpenConsoleAtHereToolStripMenuItem.Image = CType(resources.GetObject("OpenConsoleAtHereToolStripMenuItem.Image"), Image)
+        OpenConsoleAtHereToolStripMenuItem.Name = "OpenConsoleAtHereToolStripMenuItem"
+        OpenConsoleAtHereToolStripMenuItem.Size = New Size(192, 22)
+        OpenConsoleAtHereToolStripMenuItem.Text = "Open Console At Here"
         ' 
         ' FormFolderWorkspace
         ' 
@@ -158,4 +176,6 @@ Partial Class FormFolderWorkspace
     Friend WithEvents PinToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
     Friend WithEvents ViewAsTextFileToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripButton3 As ToolStripButton
+    Friend WithEvents OpenConsoleAtHereToolStripMenuItem As ToolStripMenuItem
 End Class

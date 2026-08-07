@@ -197,4 +197,22 @@ Public Class FormFolderWorkspace
             Await ViewFile(fsNode:=DirectCast(node.Tag, FileSystemTree), as_text:=True)
         End If
     End Sub
+
+    ''' <summary>
+    ''' open terminal at file folder
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub OpenConsoleAtHereToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenConsoleAtHereToolStripMenuItem.Click
+
+    End Sub
+
+    ''' <summary>
+    ''' open terminal at workspace root
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
+
+    End Sub
 End Class
