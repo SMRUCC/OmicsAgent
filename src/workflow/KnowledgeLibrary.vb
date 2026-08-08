@@ -27,34 +27,23 @@ Module KnowledgeLibrary
         ' 研究主题文件
         _context.ResearchFile = parsed.research
         _context.ResearchTopic = parsed.research.ReadAllText
-
-        ' 用户数据文件夹列表文件
-        _context.UserDataDirsFile = parsed.dirs
-
-        ' 参考文献文件夹（可选）
-        If Not parsed.reference.StringEmpty(, True) Then
-            _context.ReferenceDir = parsed.reference
-        End If
+        _context.ReferenceDir = parsed.reference
 
         ' 工作区
         If Not parsed.workspace.StringEmpty(, True) Then
             _context.WorkspaceDir = parsed.workspace.GetDirectoryFullPath
         Else
-            _context.WorkspaceDir = Path.Combine(Directory.GetCurrentDirectory(), "report_output").GetDirectoryFullPath
+            _context.WorkspaceDir = _context.ReferenceDir
         End If
 
         ' 创建工作区目录结构
         Call _context.WorkspaceDir.MakeDir
-        Call Path.Combine(_context.WorkspaceDir, "research_kb").MakeDir
-        Call Path.Combine(_context.WorkspaceDir, "tmp").MakeDir
-        Call Path.Combine(_context.WorkspaceDir, "scripts").MakeDir
-        Call Path.Combine(_context.WorkspaceDir, "analysis").MakeDir
 
         Return Await Build()
     End Function
 
     Private Async Function Build() As Task(Of Integer)
-        Dim agent As New KnowledgeBaseBuilder(_config, _context)
+        Dim agent As New KnowledgeBaseBuilder(_config, _context, knowledgeDir:=_context.WorkspaceDir)
 
     End Function
 

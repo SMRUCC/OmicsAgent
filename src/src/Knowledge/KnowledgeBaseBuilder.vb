@@ -23,14 +23,16 @@ Imports Researcher
 ''' </summary>
 Public Class KnowledgeBaseBuilder
 
-    Private ReadOnly _config As AgentConfig
-    Private ReadOnly _context As AnalysisContext
-    Private ReadOnly _logger As Action(Of String)
+    ReadOnly _config As AgentConfig
+    ReadOnly _context As AnalysisContext
+    ReadOnly _logger As Action(Of String)
+    ReadOnly _knowledgeDir As String
 
-    Public Sub New(config As AgentConfig, context As AnalysisContext, Optional logger As Action(Of String) = Nothing)
+    Public Sub New(config As AgentConfig, context As AnalysisContext, Optional logger As Action(Of String) = Nothing, Optional knowledgeDir As String = Nothing)
         _config = config
         _context = context
         _logger = If(logger, AddressOf Console.WriteLine)
+        _knowledgeDir = If(knowledgeDir, context.KnowledgeDir)
     End Sub
 
     ''' <summary>
@@ -40,7 +42,7 @@ Public Class KnowledgeBaseBuilder
         LogInfo("========== 知识库构建 ==========")
 
         ' 1. 确保知识库目录存在
-        _context.KnowledgeDir.MakeDir
+        _knowledgeDir.MakeDir
 
         ' 2. 处理参考文献
         Dim referenceFiles = Await CollectReferenceFiles(cancellationToken)
@@ -71,7 +73,7 @@ Public Class KnowledgeBaseBuilder
 
         For Each f In Directory.GetFiles(_context.ReferenceDir, "*.pdf")
             Dim text_cache As String = $"{_context.ReferenceDir}/{f.BaseName}.txt".GetFullPath
-            Dim dst = Path.Combine(_context.KnowledgeDir, $"{f.BaseName}.txt").GetFullPath
+            Dim dst = Path.Combine(_knowledgeDir, $"{f.BaseName}.txt").GetFullPath
 
             If text_cache <> dst AndAlso Not text_cache.FileExists Then
                 Using llm As LLMClient = _config.CreateLLMClient("extract_pdf_text", _context.TmpDir),
@@ -91,7 +93,7 @@ Public Class KnowledgeBaseBuilder
 
         For Each f In Directory.GetFiles(_context.ReferenceDir, "*.txt")
             ' 复制到 research_kb 目录
-            Dim dst = Path.Combine(_context.KnowledgeDir, Path.GetFileName(f)).GetFullPath
+            Dim dst = Path.Combine(_knowledgeDir, Path.GetFileName(f)).GetFullPath
 
             ' 20260808 假若reference dir和knowledge dir是同一个文件夹
             ' 则dst文件肯定会存在
@@ -137,7 +139,7 @@ Public Class KnowledgeBaseBuilder
                 Dim papers = ParseSearchResults(json)
                 For Each paper In papers
                     Dim fileName = $"ref_{result.Count + 1}_{SafeFileName(paper("title"))}.txt"
-                    Dim filePath = Path.Combine(_context.KnowledgeDir, fileName)
+                    Dim filePath = Path.Combine(_knowledgeDir, fileName)
                     File.WriteAllText(filePath, FormatPaperText(paper), Encoding.UTF8)
                     result.Add(filePath)
                 Next
@@ -158,7 +160,7 @@ Public Class KnowledgeBaseBuilder
 
             ' 生成 Python 检索脚本
             Dim pyScript = Path.Combine(_context.ScriptsDir, "search_pubmed.py")
-            File.WriteAllText(pyScript, GenerateNcbiSearchScript(keywords, _config.Literature.MaxLiteratureCount, _context.KnowledgeDir), Encoding.UTF8)
+            File.WriteAllText(pyScript, GenerateNcbiSearchScript(keywords, _config.Literature.MaxLiteratureCount, _knowledgeDir), Encoding.UTF8)
 
             ' 执行 Python 脚本
             Dim shell As New ShellTool(_config, _context.WorkspaceDir, _logger)
@@ -166,7 +168,7 @@ Public Class KnowledgeBaseBuilder
             LogInfo($"Python 检索脚本执行结果：{runResult.Substring(0, Math.Min(200, runResult.Length))}...")
 
             ' 读取生成的 txt 文件
-            For Each f In Directory.GetFiles(_context.KnowledgeDir, "ref_*.txt")
+            For Each f In Directory.GetFiles(_knowledgeDir, "ref_*.txt")
                 result.Add(f)
             Next
 
@@ -185,7 +187,7 @@ Public Class KnowledgeBaseBuilder
     Private Sub FetchPmcFullText()
         Try
             Dim scriptPath = Path.Combine(_context.ScriptsDir, "fetch_pmc.py")
-            File.WriteAllText(scriptPath, GeneratePmcFetchScript(_context.KnowledgeDir), Encoding.UTF8)
+            File.WriteAllText(scriptPath, GeneratePmcFetchScript(_knowledgeDir), Encoding.UTF8)
 
             Dim shell As New ShellTool(_config, _context.WorkspaceDir, _logger)
             Dim runResult = shell.run_python("scripts/fetch_pmc.py")
@@ -262,7 +264,7 @@ $"Research topic:{vbCrLf}{researchTopic}"
                         perDocJson = $"{{""source_file"": ""{EscapeJson(fileName)}"", ""raw_output"": ""{EscapeJson(resp.output)}""}}"
                     End If
                     ' 保存单篇提取结果
-                    Dim perDocPath = Path.Combine(_context.KnowledgeDir, $"per_doc_{i + 1}.json")
+                    Dim perDocPath = Path.Combine(_knowledgeDir, $"per_doc_{i + 1}.json")
                     File.WriteAllText(perDocPath, perDocJson, Encoding.UTF8)
                     perDocFiles.Add(perDocPath)
                     LogInfo($"    已保存单篇提取结果：{perDocPath}")
