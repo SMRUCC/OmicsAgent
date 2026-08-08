@@ -1,4 +1,5 @@
 ﻿Imports Galaxy.Workbench
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.Web.WebView2.Core
 Imports RibbonLib.Interop
 
@@ -35,8 +36,23 @@ Public Class FormKnowledgeBase
         Await WebView21.CoreWebView2.ExecuteScriptAsync("toggleTheme();")
     End Function
 
-    Private Sub UpdateBuildKB()
+    Dim WithEvents agentContainer As FormOmicsAgent
 
+    Private Sub UpdateBuildKB()
+        Dim ws As String = base.Workspace
+
+        If agentContainer Is Nothing Then
+            If MessageBox.Show("Start to run a long time LLM agent task for create/update the knowledge library?", "Run Task", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk) = DialogResult.OK Then
+                agentContainer = New FormOmicsAgent With {
+                    .workspace = ws,
+                    .AgentTask = False
+                }
+            End If
+        End If
+
+        If Not agentContainer Is Nothing Then
+            Call CommonRuntime.ShowDocument(agentContainer)
+        End If
     End Sub
 
     Private Sub OpenFolder()
