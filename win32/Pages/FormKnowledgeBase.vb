@@ -1,5 +1,4 @@
 ﻿Imports Galaxy.Workbench
-Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.Web.WebView2.Core
 Imports RibbonLib.Interop
 

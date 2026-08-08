@@ -47,7 +47,9 @@ Namespace RibbonLib.Controls
             Public Const cmdButtonLoadDataSet As UInteger = 32
             Public Const cmdButtonSaveDataSet As UInteger = 33
             Public Const cmdButtonSaveAsDataSet As UInteger = 34
+            Public Const cmdGroupOmicsData As UInteger = 46
             Public Const cmdButtonDataSetToggleOmics As UInteger = 37
+            Public Const cmdGroupDatasetEditorTool As UInteger = 47
             Public Const cmdButtonPreviewDataset As UInteger = 35
             Public Const cmdButtonDataSetEditorToggleTheme As UInteger = 36
             Public Const cmdTabMain As UInteger = 9
@@ -260,10 +262,22 @@ Namespace RibbonLib.Controls
                 Return _ButtonSaveAsDataSet
             End Get
         End Property
+        Private _GroupOmicsData As RibbonGroup
+        Public ReadOnly Property GroupOmicsData As RibbonGroup
+            Get
+                Return _GroupOmicsData
+            End Get
+        End Property
         Private _ButtonDataSetToggleOmics As RibbonButton
         Public ReadOnly Property ButtonDataSetToggleOmics As RibbonButton
             Get
                 Return _ButtonDataSetToggleOmics
+            End Get
+        End Property
+        Private _GroupDatasetEditorTool As RibbonGroup
+        Public ReadOnly Property GroupDatasetEditorTool As RibbonGroup
+            Get
+                Return _GroupDatasetEditorTool
             End Get
         End Property
         Private _ButtonPreviewDataset As RibbonButton
@@ -364,7 +378,9 @@ Namespace RibbonLib.Controls
             _ButtonLoadDataSet = New RibbonButton(_ribbon, Cmd.cmdButtonLoadDataSet)
             _ButtonSaveDataSet = New RibbonButton(_ribbon, Cmd.cmdButtonSaveDataSet)
             _ButtonSaveAsDataSet = New RibbonButton(_ribbon, Cmd.cmdButtonSaveAsDataSet)
+            _GroupOmicsData = New RibbonGroup(_ribbon, Cmd.cmdGroupOmicsData)
             _ButtonDataSetToggleOmics = New RibbonButton(_ribbon, Cmd.cmdButtonDataSetToggleOmics)
+            _GroupDatasetEditorTool = New RibbonGroup(_ribbon, Cmd.cmdGroupDatasetEditorTool)
             _ButtonPreviewDataset = New RibbonButton(_ribbon, Cmd.cmdButtonPreviewDataset)
             _ButtonDataSetEditorToggleTheme = New RibbonButton(_ribbon, Cmd.cmdButtonDataSetEditorToggleTheme)
             _TabMain = New RibbonTab(_ribbon, Cmd.cmdTabMain)

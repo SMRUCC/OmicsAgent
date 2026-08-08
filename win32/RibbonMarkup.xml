@@ -220,6 +220,8 @@
         <Image MinDPI="192">Icons/icons8-refresh-96.png</Image>
       </Command.LargeImages>
     </Command>
+    <Command Name="cmdGroupOmicsData" Id="46" LabelTitle="Omics Data" />
+    <Command Name="cmdGroupDatasetEditorTool" Id="47" LabelTitle="Editor" />
   </Application.Commands>
   <Application.Views>
     <Ribbon>
@@ -281,10 +283,10 @@
               <Button CommandName="cmdButtonSaveDataSet" />
               <Button CommandName="cmdButtonSaveAsDataSet" />
             </Group>
-            <Group>
+            <Group CommandName="cmdGroupOmicsData">
               <Button CommandName="cmdButtonDataSetToggleOmics" />
             </Group>
-            <Group SizeDefinition="TwoButtons">
+            <Group CommandName="cmdGroupDatasetEditorTool" SizeDefinition="TwoButtons">
               <Button CommandName="cmdButtonPreviewDataset" />
               <Button CommandName="cmdButtonDataSetEditorToggleTheme" />
             </Group>

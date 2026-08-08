@@ -143,6 +143,8 @@
 #define cmdButtonUpdateKB_LabelTitle_RESID 60092
 #define cmdButtonUpdateKB_SmallImages_192__RESID 60093
 #define cmdButtonUpdateKB_LargeImages_192__RESID 60094
-#define InternalCmd2_LabelTitle_RESID 60095
-#define InternalCmd6_LabelTitle_RESID 60096
-#define InternalCmd8_LabelTitle_RESID 60097
+#define cmdGroupOmicsData 46 
+#define cmdGroupOmicsData_LabelTitle_RESID 60095
+#define cmdGroupDatasetEditorTool 47 
+#define cmdGroupDatasetEditorTool_LabelTitle_RESID 60096
+#define InternalCmd2_LabelTitle_RESID 60097

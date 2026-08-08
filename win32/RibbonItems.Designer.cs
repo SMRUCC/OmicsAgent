@@ -50,7 +50,9 @@ namespace RibbonLib.Controls
             public const uint cmdButtonLoadDataSet = 32;
             public const uint cmdButtonSaveDataSet = 33;
             public const uint cmdButtonSaveAsDataSet = 34;
+            public const uint cmdGroupOmicsData = 46;
             public const uint cmdButtonDataSetToggleOmics = 37;
+            public const uint cmdGroupDatasetEditorTool = 47;
             public const uint cmdButtonPreviewDataset = 35;
             public const uint cmdButtonDataSetEditorToggleTheme = 36;
             public const uint cmdTabMain = 9;
@@ -98,7 +100,9 @@ namespace RibbonLib.Controls
         public RibbonButton ButtonLoadDataSet { get; private set; }
         public RibbonButton ButtonSaveDataSet { get; private set; }
         public RibbonButton ButtonSaveAsDataSet { get; private set; }
+        public RibbonGroup GroupOmicsData { get; private set; }
         public RibbonButton ButtonDataSetToggleOmics { get; private set; }
+        public RibbonGroup GroupDatasetEditorTool { get; private set; }
         public RibbonButton ButtonPreviewDataset { get; private set; }
         public RibbonButton ButtonDataSetEditorToggleTheme { get; private set; }
         public RibbonTab TabMain { get; private set; }
@@ -147,7 +151,9 @@ namespace RibbonLib.Controls
             ButtonLoadDataSet = new RibbonButton(ribbon, Cmd.cmdButtonLoadDataSet);
             ButtonSaveDataSet = new RibbonButton(ribbon, Cmd.cmdButtonSaveDataSet);
             ButtonSaveAsDataSet = new RibbonButton(ribbon, Cmd.cmdButtonSaveAsDataSet);
+            GroupOmicsData = new RibbonGroup(ribbon, Cmd.cmdGroupOmicsData);
             ButtonDataSetToggleOmics = new RibbonButton(ribbon, Cmd.cmdButtonDataSetToggleOmics);
+            GroupDatasetEditorTool = new RibbonGroup(ribbon, Cmd.cmdGroupDatasetEditorTool);
             ButtonPreviewDataset = new RibbonButton(ribbon, Cmd.cmdButtonPreviewDataset);
             ButtonDataSetEditorToggleTheme = new RibbonButton(ribbon, Cmd.cmdButtonDataSetEditorToggleTheme);
             TabMain = new RibbonTab(ribbon, Cmd.cmdTabMain);
