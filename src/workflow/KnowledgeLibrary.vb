@@ -1,4 +1,5 @@
-﻿Imports OmicsAgent.AppRuntime
+﻿Imports Microsoft.VisualBasic.ApplicationServices.Terminal.Utility
+Imports OmicsAgent.AppRuntime
 
 ''' <summary>
 ''' 仅用于构建知识库的流程
@@ -44,7 +45,9 @@ Module KnowledgeLibrary
 
     Private Async Function Build() As Task(Of Integer)
         Dim agent As New KnowledgeBaseBuilder(_config, _context, knowledgeDir:=_context.WorkspaceDir)
-
+        Dim cancel = UserTaskCancelAction.GetConsoleCancellationToken
+        Await agent.BuildAsync(cancel)
+        Return 0
     End Function
 
     ''' <summary>验证 /report 模式必需的参数</summary>

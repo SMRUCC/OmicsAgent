@@ -27,12 +27,14 @@ Public Class KnowledgeBaseBuilder
     ReadOnly _context As AnalysisContext
     ReadOnly _logger As Action(Of String)
     ReadOnly _knowledgeDir As String
+    ReadOnly _knowledgeBaseFile As String
 
     Public Sub New(config As AgentConfig, context As AnalysisContext, Optional logger As Action(Of String) = Nothing, Optional knowledgeDir As String = Nothing)
         _config = config
         _context = context
         _logger = If(logger, AddressOf Console.WriteLine)
         _knowledgeDir = If(knowledgeDir, context.KnowledgeDir)
+        _knowledgeBaseFile = _knowledgeDir & "/kb.json"
     End Sub
 
     ''' <summary>
@@ -61,7 +63,7 @@ Public Class KnowledgeBaseBuilder
             Await GenerateKnowledgeFromLLMAsync(cancellationToken)
         End If
 
-        LogInfo($"知识库已生成：{_context.KnowledgeBaseFile}")
+        LogInfo($"知识库已生成：{_knowledgeBaseFile}")
     End Function
 
     ''' <summary>收集用户提供的参考文献 txt 文件</summary>
@@ -303,18 +305,18 @@ $"Research topic:{vbCrLf}{researchTopic}"
                 kbJson = LenientJson.ParseJsonLenient(kbJson).BuildJsonString
 
                 If Not String.IsNullOrEmpty(kbJson) Then
-                    File.WriteAllText(_context.KnowledgeBaseFile, kbJson, Encoding.UTF8)
+                    File.WriteAllText(_knowledgeBaseFile, kbJson, Encoding.UTF8)
                 Else
                     ' 回退：直接保存 LLM 输出文本
                     Dim fallback = $"{{""research_topic"": ""{EscapeJson(_context.ResearchTopic)}"", ""summary"": ""{EscapeJson(resp.output)}"", ""references"": []}}"
-                    File.WriteAllText(_context.KnowledgeBaseFile, fallback, Encoding.UTF8)
+                    File.WriteAllText(_knowledgeBaseFile, fallback, Encoding.UTF8)
                 End If
             End Using
         Catch ex As Exception
             LogInfo($"[警告] 知识汇总失败：{ex.Message}")
             ' 回退：已逐篇提取了知识点，汇总失败不影响中间文件
             Dim fallback = $"{{""research_topic"": ""{EscapeJson(_context.ResearchTopic)}"", ""summary"": ""Error during summarization: {EscapeJson(ex.Message)}. Individual extraction files are available in research_kb/per_doc_*.json."", ""references"": []}}"
-            File.WriteAllText(_context.KnowledgeBaseFile, fallback, Encoding.UTF8)
+            File.WriteAllText(_knowledgeBaseFile, fallback, Encoding.UTF8)
         End Try
     End Function
 
@@ -329,12 +331,12 @@ $"Research topic:{vbCrLf}{researchTopic}"
                 If String.IsNullOrEmpty(kbJson) Then
                     kbJson = $"{{""research_topic"": ""{EscapeJson(_context.ResearchTopic)}"", ""summary"": ""{EscapeJson(resp.output)}"", ""references"": []}}"
                 End If
-                File.WriteAllText(_context.KnowledgeBaseFile, kbJson, Encoding.UTF8)
+                File.WriteAllText(_knowledgeBaseFile, kbJson, Encoding.UTF8)
             End Using
         Catch ex As Exception
             LogInfo($"[警告] LLM 知识生成失败：{ex.Message}")
             Dim fallback = $"{{""research_topic"": ""{EscapeJson(_context.ResearchTopic)}"", ""error"": ""{EscapeJson(ex.Message)}"", ""references"": []}}"
-            File.WriteAllText(_context.KnowledgeBaseFile, fallback, Encoding.UTF8)
+            File.WriteAllText(_knowledgeBaseFile, fallback, Encoding.UTF8)
         End Try
     End Function
 
