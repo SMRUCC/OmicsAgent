@@ -7,6 +7,12 @@ Public Class FormOmicsAgent
 
     Public Property workspace As String
 
+    Public ReadOnly Property CheckAgentTask As Boolean
+        Get
+            Return WebViewConsole1.IsProcessRunning
+        End Get
+    End Property
+
     Private Sub FormOmicsAgent_Load(sender As Object, e As EventArgs) Handles Me.Load
         Dim config As AppConfig = Workbench.config
         Dim temp As String = TempFileSystem.GetAppSysTempFile(".ini", sessionID:=App.NextTempName, prefix:="omics-agent-runtime_")

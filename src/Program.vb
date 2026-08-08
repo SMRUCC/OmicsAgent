@@ -9,7 +9,10 @@ Imports OmicsAgent.AppRuntime.Ini
 ' 主程序入口 - 命令行参数解析与主流程编排
 ' ============================================================================
 
+<GroupingDefine(Program.GroupWorkflow, Description:="This command set constitutes a category of uninterrupted, long-running workflows executed via LLM agents, all of which rely on user-provided research background knowledge as their foundational basis. Such commands necessitate the configuration of specific LLM service parameters, offering dual compatibility with local Ollama services and remote OpenAI-format-compatible LLM services.")>
 <CLI> Module Program
+
+    Friend Const GroupWorkflow As String = "Agent Workflow"
 
     ''' <summary>命令行参数帮助文本</summary>
     Friend Const HelpText As String = "
@@ -108,6 +111,8 @@ Omics Data Analysis LLM Agent [OmicsWorks]
 
   * 对齐后，程序会把各组学矩阵的样本列名统一替换为 subject_id、仅保留各组学共有的个体，
     并将新矩阵写入工作区的 aligned/ 目录，后续所有分析模块均引用这些对齐后的文件。
+
+采用 ?? 命令可以得到程序的全部命令列表  
 "
 
     ''' <summary>程序主入口</summary>
@@ -140,6 +145,22 @@ Omics Data Analysis LLM Agent [OmicsWorks]
         Return 0
     End Function
 
+    <ExportAPI("/kb")>
+    <Description("The proposed workflow facilitates the construction of a knowledge base. The procedural steps include extracting full-text data from PDF documents, employing a Large Language Model (LLM) to extract knowledge points, and ultimately aggregating all extracted literature points to construct a three-level knowledge base.")>
+    <Usage("/kb --research=research.txt --reference=/path/to/pdf/folder 
+            [
+                --workspace,-w <workspace directory, default=./> 
+                --config,-c <runtime config, default=./config.ini>
+            ]")>
+    <Argument("--reference", True, CLITypes.File, Description:="A directory path to a knowledge base that stores reference materials for data analysis. This directory contains a number of scientific literature PDF files used for knowledge reference.")>
+    <Argument("--research", False, CLITypes.File, Description:="A plain text file that outlines the user's scientific research background, research objectives, data sample content, and research project description.")>
+    <Argument("--workspace", True, CLITypes.File, Description:="A directory path to the workspace directory. Default is the current directory ('./').")>
+    <Argument("--config", True, CLITypes.File, Description:="Path to the INI configuration file. Default is './config.ini'.")>
+    <Group(GroupWorkflow)>
+    Public Async Function MakeKBLibrary(args As CommandLine) As Task(Of Integer)
+        Return Await KnowledgeLibrary.Run(args.CreateOpts(Of Opts))
+    End Function
+
     <ExportAPI("/report")>
     <Description("Collate the results from existing analysis data in the target folders. Optionally, a research agent can be used to regenerate plots based on these results. Ultimately, a data analysis report is generated as a draft paper based on the existing results.")>
     <Usage("/report --research=research.txt --dirs=dirs.txt 
@@ -159,6 +180,7 @@ Omics Data Analysis LLM Agent [OmicsWorks]
     <Argument("--skip-literature", True, CLITypes.Boolean, Description:="Skip the literature search step.")>
     <Argument("--skip-kb", True, CLITypes.Boolean, Description:="Skip the knowledge base construction step.")>
     <Argument("--report-format", True, CLITypes.String, Description:="Report output format: pdf (default) / docx / both. The priority of this parameter is higher than the [report] format setting in the configuration file.")>
+    <Group(GroupWorkflow)>
     Public Async Function MakeReport(args As CommandLine) As Task(Of Integer)
         ' 解析命令行参数
         Return Await Reporter.Run(args.CreateOpts(Of Opts))
@@ -194,6 +216,7 @@ Omics Data Analysis LLM Agent [OmicsWorks]
     <Argument("--report-format", True, CLITypes.String, Description:="Report output format: pdf (default) / docx / both. The priority of this parameter is higher than the [report] format setting in the configuration file.")>
     <Argument("--debug-cache", True, CLITypes.Boolean, Description:="[Agent debugging] Skip modules that already have result.json output files.")>
     <Argument("--make-report", True, CLITypes.Boolean, Description:="[Agent debugging] Used for debugging the report module.")>
+    <Group(GroupWorkflow)>
     Public Async Function AgentWorkflow(args As CommandLine) As Task(Of Integer)
         ' 解析命令行参数
         Dim parsed As Opts = args.CreateOpts(Of Opts)
