@@ -13,7 +13,17 @@ Public Class FormOmicsAgent
         End Get
     End Property
 
+    Public Property AgentTask As Boolean = True
+
     Private Sub FormOmicsAgent_Load(sender As Object, e As EventArgs) Handles Me.Load
+        If AgentTask Then
+            Call RunOmicsWorkflow()
+        Else
+            Call RunKBWorkflow()
+        End If
+    End Sub
+
+    Private Sub RunOmicsWorkflow()
         Dim config As AppConfig = Workbench.config
         Dim temp As String = TempFileSystem.GetAppSysTempFile(".ini", sessionID:=App.NextTempName, prefix:="omics-agent-runtime_")
         Dim kbfile As String = $"{workspace}/research_kb/kb.json"
@@ -36,6 +46,25 @@ Public Class FormOmicsAgent
         Call config.WriteProfile(temp)
 
         TabText = $"Agent [{workspace.BaseName} - {workspace.ParentPath}]"
+        WebViewConsole1.StartProcess(App.HOME & "/research.exe", args.JoinBy(" "))
+    End Sub
+
+    Private Sub RunKBWorkflow()
+        Dim config As AppConfig = Workbench.config
+        Dim temp As String = TempFileSystem.GetAppSysTempFile(".ini", sessionID:=App.NextTempName, prefix:="omics-agent-runtime_")
+        Dim kbfile As String = $"{workspace}/research_kb/kb.json"
+        Dim backgroundfile As String = $"{workspace}/research.txt"
+        Dim args As New List(Of String)
+
+        Call args.Add("/kb")
+        Call args.Add($"--research={backgroundfile.CLIPath}")
+        Call args.Add($"--reference={kbfile.ParentPath.CLIPath}")
+        Call args.Add($"--config {temp.CLIPath}")
+        Call args.Add($"--workspace {workspace.CLIPath}")
+
+        Call config.WriteProfile(temp)
+
+        TabText = $"Build KB Library [{workspace.BaseName} - {workspace.ParentPath}]"
         WebViewConsole1.StartProcess(App.HOME & "/research.exe", args.JoinBy(" "))
     End Sub
 End Class
